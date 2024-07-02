@@ -126,7 +126,7 @@ namespace mage
                 if (File.Exists(romSymbolPath)) File.Copy(romSymbolPath, testSymbolPath, true);
 
                 Sound.PlaySound("test.wav");
-                RunEmulator(path);
+                RunEmulator($"\"{path}\"");
             }
             catch (Exception e)
             {
