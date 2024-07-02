@@ -92,7 +92,7 @@
             // 
             // button_y2
             // 
-            button_y2.Location = new System.Drawing.Point(118, 171);
+            button_y2.Location = new System.Drawing.Point(118, 225);
             button_y2.Name = "button_y2";
             button_y2.Size = new System.Drawing.Size(47, 47);
             button_y2.TabIndex = 8;
@@ -102,7 +102,7 @@
             // 
             // button_y1
             // 
-            button_y1.Location = new System.Drawing.Point(118, 224);
+            button_y1.Location = new System.Drawing.Point(118, 171);
             button_y1.Name = "button_y1";
             button_y1.Size = new System.Drawing.Size(47, 47);
             button_y1.TabIndex = 7;
@@ -112,7 +112,7 @@
             // 
             // button_y_n2
             // 
-            button_y_n2.Location = new System.Drawing.Point(118, 65);
+            button_y_n2.Location = new System.Drawing.Point(118, 12);
             button_y_n2.Name = "button_y_n2";
             button_y_n2.Size = new System.Drawing.Size(47, 47);
             button_y_n2.TabIndex = 6;
@@ -122,7 +122,7 @@
             // 
             // button_y_n1
             // 
-            button_y_n1.Location = new System.Drawing.Point(118, 12);
+            button_y_n1.Location = new System.Drawing.Point(118, 65);
             button_y_n1.Name = "button_y_n1";
             button_y_n1.Size = new System.Drawing.Size(47, 47);
             button_y_n1.TabIndex = 5;
