@@ -615,42 +615,42 @@
             // 
             menuItem_zoom100.Name = "menuItem_zoom100";
             menuItem_zoom100.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0;
-            menuItem_zoom100.Size = new System.Drawing.Size(180, 22);
+            menuItem_zoom100.Size = new System.Drawing.Size(163, 22);
             menuItem_zoom100.Text = "100%";
             menuItem_zoom100.Click += menuItem_zoom100_Click;
             // 
             // menuItem_zoom200
             // 
             menuItem_zoom200.Name = "menuItem_zoom200";
-            menuItem_zoom200.Size = new System.Drawing.Size(180, 22);
+            menuItem_zoom200.Size = new System.Drawing.Size(163, 22);
             menuItem_zoom200.Text = "200%";
             menuItem_zoom200.Click += menuItem_zoom200_Click;
             // 
             // menuItem_zoom400
             // 
             menuItem_zoom400.Name = "menuItem_zoom400";
-            menuItem_zoom400.Size = new System.Drawing.Size(180, 22);
+            menuItem_zoom400.Size = new System.Drawing.Size(163, 22);
             menuItem_zoom400.Text = "400%";
             menuItem_zoom400.Click += menuItem_zoom400_Click;
             // 
             // menuItem_zoom800
             // 
             menuItem_zoom800.Name = "menuItem_zoom800";
-            menuItem_zoom800.Size = new System.Drawing.Size(180, 22);
+            menuItem_zoom800.Size = new System.Drawing.Size(163, 22);
             menuItem_zoom800.Text = "800%";
             menuItem_zoom800.Click += menuItem_zoom800_Click;
             // 
             // toolStripSeparator20
             // 
             toolStripSeparator20.Name = "toolStripSeparator20";
-            toolStripSeparator20.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator20.Size = new System.Drawing.Size(160, 6);
             // 
             // menuItem_zoomIn
             // 
             menuItem_zoomIn.Name = "menuItem_zoomIn";
             menuItem_zoomIn.ShortcutKeyDisplayString = "Ctrl +";
             menuItem_zoomIn.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus;
-            menuItem_zoomIn.Size = new System.Drawing.Size(180, 22);
+            menuItem_zoomIn.Size = new System.Drawing.Size(163, 22);
             menuItem_zoomIn.Text = "Zoom In";
             menuItem_zoomIn.Click += menuItem_zoomIn_Click;
             // 
@@ -659,7 +659,7 @@
             menuItem_zoomOut.Name = "menuItem_zoomOut";
             menuItem_zoomOut.ShortcutKeyDisplayString = "Ctrl -";
             menuItem_zoomOut.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus;
-            menuItem_zoomOut.Size = new System.Drawing.Size(180, 22);
+            menuItem_zoomOut.Size = new System.Drawing.Size(163, 22);
             menuItem_zoomOut.Text = "Zoom Out";
             menuItem_zoomOut.Click += menuItem_zoomOut_Click;
             // 
@@ -1754,7 +1754,7 @@
             // lbl_spring
             // 
             lbl_spring.Name = "lbl_spring";
-            lbl_spring.Size = new System.Drawing.Size(667, 19);
+            lbl_spring.Size = new System.Drawing.Size(698, 19);
             lbl_spring.Spring = true;
             // 
             // lbl_zoom_percent
@@ -1777,28 +1777,28 @@
             // toolStrip_zoom800
             // 
             toolStrip_zoom800.Name = "toolStrip_zoom800";
-            toolStrip_zoom800.Size = new System.Drawing.Size(180, 22);
+            toolStrip_zoom800.Size = new System.Drawing.Size(102, 22);
             toolStrip_zoom800.Text = "800%";
             toolStrip_zoom800.Click += menuItem_zoom800_Click;
             // 
             // toolStrip_zoom400
             // 
             toolStrip_zoom400.Name = "toolStrip_zoom400";
-            toolStrip_zoom400.Size = new System.Drawing.Size(180, 22);
+            toolStrip_zoom400.Size = new System.Drawing.Size(102, 22);
             toolStrip_zoom400.Text = "400%";
             toolStrip_zoom400.Click += menuItem_zoom400_Click;
             // 
             // toolStrip_zoom200
             // 
             toolStrip_zoom200.Name = "toolStrip_zoom200";
-            toolStrip_zoom200.Size = new System.Drawing.Size(180, 22);
+            toolStrip_zoom200.Size = new System.Drawing.Size(102, 22);
             toolStrip_zoom200.Text = "200%";
             toolStrip_zoom200.Click += menuItem_zoom200_Click;
             // 
             // toolStrip_zoom100
             // 
             toolStrip_zoom100.Name = "toolStrip_zoom100";
-            toolStrip_zoom100.Size = new System.Drawing.Size(180, 22);
+            toolStrip_zoom100.Size = new System.Drawing.Size(102, 22);
             toolStrip_zoom100.Text = "100%";
             toolStrip_zoom100.Click += menuItem_zoom100_Click;
             // 
@@ -2188,7 +2188,7 @@
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             MinimumSize = new System.Drawing.Size(945, 612);
             Name = "FormMain";
-            Text = "MAGE 1.4";
+            Text = "MAGE Themes";
             FormClosing += FormMain_FormClosing;
             DragDrop += FormMain_DragDrop;
             DragEnter += FormMain_DragEnter;

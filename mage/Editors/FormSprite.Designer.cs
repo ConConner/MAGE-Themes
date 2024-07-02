@@ -264,8 +264,10 @@
             // textBox_healthXP
             // 
             textBox_healthXP.BorderColor = System.Drawing.Color.Black;
+            textBox_healthXP.DisplayBorder = true;
             textBox_healthXP.Location = new System.Drawing.Point(0, 0);
             textBox_healthXP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_healthXP.MaxLength = 32767;
             textBox_healthXP.Multiline = false;
             textBox_healthXP.Name = "textBox_healthXP";
             textBox_healthXP.OnTextChanged = null;
@@ -276,13 +278,16 @@
             textBox_healthXP.Size = new System.Drawing.Size(47, 23);
             textBox_healthXP.TabIndex = 10;
             textBox_healthXP.Tag = "textBox_healthX";
+            textBox_healthXP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_healthXP.WordWrap = true;
             // 
             // textBox_powerBombP
             // 
             textBox_powerBombP.BorderColor = System.Drawing.Color.Black;
+            textBox_powerBombP.DisplayBorder = true;
             textBox_powerBombP.Location = new System.Drawing.Point(0, 231);
             textBox_powerBombP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_powerBombP.MaxLength = 32767;
             textBox_powerBombP.Multiline = false;
             textBox_powerBombP.Name = "textBox_powerBombP";
             textBox_powerBombP.OnTextChanged = null;
@@ -293,13 +298,16 @@
             textBox_powerBombP.Size = new System.Drawing.Size(47, 23);
             textBox_powerBombP.TabIndex = 18;
             textBox_powerBombP.Tag = "textBox_powerBomb";
+            textBox_powerBombP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_powerBombP.WordWrap = true;
             // 
             // textBox_missileXP
             // 
             textBox_missileXP.BorderColor = System.Drawing.Color.Black;
+            textBox_missileXP.DisplayBorder = true;
             textBox_missileXP.Location = new System.Drawing.Point(0, 29);
             textBox_missileXP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_missileXP.MaxLength = 32767;
             textBox_missileXP.Multiline = false;
             textBox_missileXP.Name = "textBox_missileXP";
             textBox_missileXP.OnTextChanged = null;
@@ -310,13 +318,16 @@
             textBox_missileXP.Size = new System.Drawing.Size(47, 23);
             textBox_missileXP.TabIndex = 11;
             textBox_missileXP.Tag = "textBox_missileX";
+            textBox_missileXP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_missileXP.WordWrap = true;
             // 
             // textBox_superMissileP
             // 
             textBox_superMissileP.BorderColor = System.Drawing.Color.Black;
+            textBox_superMissileP.DisplayBorder = true;
             textBox_superMissileP.Location = new System.Drawing.Point(0, 202);
             textBox_superMissileP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_superMissileP.MaxLength = 32767;
             textBox_superMissileP.Multiline = false;
             textBox_superMissileP.Name = "textBox_superMissileP";
             textBox_superMissileP.OnTextChanged = null;
@@ -327,13 +338,16 @@
             textBox_superMissileP.Size = new System.Drawing.Size(47, 23);
             textBox_superMissileP.TabIndex = 17;
             textBox_superMissileP.Tag = "textBox_superMissile";
+            textBox_superMissileP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_superMissileP.WordWrap = true;
             // 
             // textBox_redXP
             // 
             textBox_redXP.BorderColor = System.Drawing.Color.Black;
+            textBox_redXP.DisplayBorder = true;
             textBox_redXP.Location = new System.Drawing.Point(0, 58);
             textBox_redXP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_redXP.MaxLength = 32767;
             textBox_redXP.Multiline = false;
             textBox_redXP.Name = "textBox_redXP";
             textBox_redXP.OnTextChanged = null;
@@ -344,13 +358,16 @@
             textBox_redXP.Size = new System.Drawing.Size(47, 23);
             textBox_redXP.TabIndex = 12;
             textBox_redXP.Tag = "textBox_redX";
+            textBox_redXP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_redXP.WordWrap = true;
             // 
             // textBox_missileP
             // 
             textBox_missileP.BorderColor = System.Drawing.Color.Black;
+            textBox_missileP.DisplayBorder = true;
             textBox_missileP.Location = new System.Drawing.Point(0, 173);
             textBox_missileP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_missileP.MaxLength = 32767;
             textBox_missileP.Multiline = false;
             textBox_missileP.Name = "textBox_missileP";
             textBox_missileP.OnTextChanged = null;
@@ -361,13 +378,16 @@
             textBox_missileP.Size = new System.Drawing.Size(47, 23);
             textBox_missileP.TabIndex = 16;
             textBox_missileP.Tag = "textBox_missile";
+            textBox_missileP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_missileP.WordWrap = true;
             // 
             // textBox_noDropP
             // 
             textBox_noDropP.BorderColor = System.Drawing.Color.Black;
+            textBox_noDropP.DisplayBorder = true;
             textBox_noDropP.Location = new System.Drawing.Point(0, 87);
             textBox_noDropP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_noDropP.MaxLength = 32767;
             textBox_noDropP.Multiline = false;
             textBox_noDropP.Name = "textBox_noDropP";
             textBox_noDropP.OnTextChanged = null;
@@ -378,13 +398,16 @@
             textBox_noDropP.Size = new System.Drawing.Size(47, 23);
             textBox_noDropP.TabIndex = 13;
             textBox_noDropP.Tag = "textBox_noDrop";
+            textBox_noDropP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_noDropP.WordWrap = true;
             // 
             // textBox_largeHealthP
             // 
             textBox_largeHealthP.BorderColor = System.Drawing.Color.Black;
+            textBox_largeHealthP.DisplayBorder = true;
             textBox_largeHealthP.Location = new System.Drawing.Point(0, 144);
             textBox_largeHealthP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_largeHealthP.MaxLength = 32767;
             textBox_largeHealthP.Multiline = false;
             textBox_largeHealthP.Name = "textBox_largeHealthP";
             textBox_largeHealthP.OnTextChanged = null;
@@ -395,13 +418,16 @@
             textBox_largeHealthP.Size = new System.Drawing.Size(47, 23);
             textBox_largeHealthP.TabIndex = 15;
             textBox_largeHealthP.Tag = "textBox_largeHealth";
+            textBox_largeHealthP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_largeHealthP.WordWrap = true;
             // 
             // textBox_smallHealthP
             // 
             textBox_smallHealthP.BorderColor = System.Drawing.Color.Black;
+            textBox_smallHealthP.DisplayBorder = true;
             textBox_smallHealthP.Location = new System.Drawing.Point(0, 116);
             textBox_smallHealthP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_smallHealthP.MaxLength = 32767;
             textBox_smallHealthP.Multiline = false;
             textBox_smallHealthP.Name = "textBox_smallHealthP";
             textBox_smallHealthP.OnTextChanged = null;
@@ -412,6 +438,7 @@
             textBox_smallHealthP.Size = new System.Drawing.Size(47, 23);
             textBox_smallHealthP.TabIndex = 14;
             textBox_smallHealthP.Tag = "textBox_smallHealth";
+            textBox_smallHealthP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_smallHealthP.WordWrap = true;
             // 
             // label_totalPercent
@@ -497,8 +524,10 @@
             // textBox_powerBomb
             // 
             textBox_powerBomb.BorderColor = System.Drawing.Color.Black;
+            textBox_powerBomb.DisplayBorder = true;
             textBox_powerBomb.Location = new System.Drawing.Point(98, 276);
             textBox_powerBomb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_powerBomb.MaxLength = 32767;
             textBox_powerBomb.Multiline = false;
             textBox_powerBomb.Name = "textBox_powerBomb";
             textBox_powerBomb.OnTextChanged = null;
@@ -509,14 +538,17 @@
             textBox_powerBomb.Size = new System.Drawing.Size(47, 23);
             textBox_powerBomb.TabIndex = 8;
             textBox_powerBomb.Tag = "textBox_powerBombP";
+            textBox_powerBomb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_powerBomb.WordWrap = true;
             textBox_powerBomb.TextChanged += textBox_dropProb_TextChanged;
             // 
             // textBox_superMissile
             // 
             textBox_superMissile.BorderColor = System.Drawing.Color.Black;
+            textBox_superMissile.DisplayBorder = true;
             textBox_superMissile.Location = new System.Drawing.Point(98, 247);
             textBox_superMissile.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_superMissile.MaxLength = 32767;
             textBox_superMissile.Multiline = false;
             textBox_superMissile.Name = "textBox_superMissile";
             textBox_superMissile.OnTextChanged = null;
@@ -527,14 +559,17 @@
             textBox_superMissile.Size = new System.Drawing.Size(47, 23);
             textBox_superMissile.TabIndex = 7;
             textBox_superMissile.Tag = "textBox_superMissileP";
+            textBox_superMissile.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_superMissile.WordWrap = true;
             textBox_superMissile.TextChanged += textBox_dropProb_TextChanged;
             // 
             // textBox_missile
             // 
             textBox_missile.BorderColor = System.Drawing.Color.Black;
+            textBox_missile.DisplayBorder = true;
             textBox_missile.Location = new System.Drawing.Point(98, 218);
             textBox_missile.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_missile.MaxLength = 32767;
             textBox_missile.Multiline = false;
             textBox_missile.Name = "textBox_missile";
             textBox_missile.OnTextChanged = null;
@@ -545,14 +580,17 @@
             textBox_missile.Size = new System.Drawing.Size(47, 23);
             textBox_missile.TabIndex = 6;
             textBox_missile.Tag = "textBox_missileP";
+            textBox_missile.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_missile.WordWrap = true;
             textBox_missile.TextChanged += textBox_dropProb_TextChanged;
             // 
             // textBox_largeHealth
             // 
             textBox_largeHealth.BorderColor = System.Drawing.Color.Black;
+            textBox_largeHealth.DisplayBorder = true;
             textBox_largeHealth.Location = new System.Drawing.Point(98, 189);
             textBox_largeHealth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_largeHealth.MaxLength = 32767;
             textBox_largeHealth.Multiline = false;
             textBox_largeHealth.Name = "textBox_largeHealth";
             textBox_largeHealth.OnTextChanged = null;
@@ -563,14 +601,17 @@
             textBox_largeHealth.Size = new System.Drawing.Size(47, 23);
             textBox_largeHealth.TabIndex = 5;
             textBox_largeHealth.Tag = "textBox_largeHealthP";
+            textBox_largeHealth.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_largeHealth.WordWrap = true;
             textBox_largeHealth.TextChanged += textBox_dropProb_TextChanged;
             // 
             // textBox_smallHealth
             // 
             textBox_smallHealth.BorderColor = System.Drawing.Color.Black;
+            textBox_smallHealth.DisplayBorder = true;
             textBox_smallHealth.Location = new System.Drawing.Point(98, 160);
             textBox_smallHealth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_smallHealth.MaxLength = 32767;
             textBox_smallHealth.Multiline = false;
             textBox_smallHealth.Name = "textBox_smallHealth";
             textBox_smallHealth.OnTextChanged = null;
@@ -581,14 +622,17 @@
             textBox_smallHealth.Size = new System.Drawing.Size(47, 23);
             textBox_smallHealth.TabIndex = 4;
             textBox_smallHealth.Tag = "textBox_smallHealthP";
+            textBox_smallHealth.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_smallHealth.WordWrap = true;
             textBox_smallHealth.TextChanged += textBox_dropProb_TextChanged;
             // 
             // textBox_noDrop
             // 
             textBox_noDrop.BorderColor = System.Drawing.Color.Black;
+            textBox_noDrop.DisplayBorder = true;
             textBox_noDrop.Location = new System.Drawing.Point(98, 132);
             textBox_noDrop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_noDrop.MaxLength = 32767;
             textBox_noDrop.Multiline = false;
             textBox_noDrop.Name = "textBox_noDrop";
             textBox_noDrop.OnTextChanged = null;
@@ -599,6 +643,7 @@
             textBox_noDrop.Size = new System.Drawing.Size(47, 23);
             textBox_noDrop.TabIndex = 3;
             textBox_noDrop.Tag = "textBox_noDropP";
+            textBox_noDrop.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_noDrop.WordWrap = true;
             textBox_noDrop.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -626,8 +671,10 @@
             // textBox_redX
             // 
             textBox_redX.BorderColor = System.Drawing.Color.Black;
+            textBox_redX.DisplayBorder = true;
             textBox_redX.Location = new System.Drawing.Point(98, 103);
             textBox_redX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_redX.MaxLength = 32767;
             textBox_redX.Multiline = false;
             textBox_redX.Name = "textBox_redX";
             textBox_redX.OnTextChanged = null;
@@ -638,6 +685,7 @@
             textBox_redX.Size = new System.Drawing.Size(47, 23);
             textBox_redX.TabIndex = 2;
             textBox_redX.Tag = "textBox_redXP";
+            textBox_redX.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_redX.WordWrap = true;
             textBox_redX.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -654,8 +702,10 @@
             // textBox_missileX
             // 
             textBox_missileX.BorderColor = System.Drawing.Color.Black;
+            textBox_missileX.DisplayBorder = true;
             textBox_missileX.Location = new System.Drawing.Point(98, 74);
             textBox_missileX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_missileX.MaxLength = 32767;
             textBox_missileX.Multiline = false;
             textBox_missileX.Name = "textBox_missileX";
             textBox_missileX.OnTextChanged = null;
@@ -666,6 +716,7 @@
             textBox_missileX.Size = new System.Drawing.Size(47, 23);
             textBox_missileX.TabIndex = 1;
             textBox_missileX.Tag = "textBox_missileX";
+            textBox_missileX.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_missileX.WordWrap = true;
             textBox_missileX.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -682,8 +733,10 @@
             // textBox_healthX
             // 
             textBox_healthX.BorderColor = System.Drawing.Color.Black;
+            textBox_healthX.DisplayBorder = true;
             textBox_healthX.Location = new System.Drawing.Point(98, 45);
             textBox_healthX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_healthX.MaxLength = 32767;
             textBox_healthX.Multiline = false;
             textBox_healthX.Name = "textBox_healthX";
             textBox_healthX.OnTextChanged = null;
@@ -694,6 +747,7 @@
             textBox_healthX.Size = new System.Drawing.Size(47, 23);
             textBox_healthX.TabIndex = 0;
             textBox_healthX.Tag = "textBox_healthXP";
+            textBox_healthX.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_healthX.WordWrap = true;
             textBox_healthX.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -749,8 +803,10 @@
             // textBox_damage
             // 
             textBox_damage.BorderColor = System.Drawing.Color.Black;
+            textBox_damage.DisplayBorder = true;
             textBox_damage.Location = new System.Drawing.Point(72, 47);
             textBox_damage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_damage.MaxLength = 32767;
             textBox_damage.Multiline = false;
             textBox_damage.Name = "textBox_damage";
             textBox_damage.OnTextChanged = null;
@@ -760,14 +816,17 @@
             textBox_damage.SelectionStart = 0;
             textBox_damage.Size = new System.Drawing.Size(49, 23);
             textBox_damage.TabIndex = 1;
+            textBox_damage.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_damage.WordWrap = true;
             textBox_damage.TextChanged += SpriteValueChanged;
             // 
             // textBox_health
             // 
             textBox_health.BorderColor = System.Drawing.Color.Black;
+            textBox_health.DisplayBorder = true;
             textBox_health.Location = new System.Drawing.Point(72, 17);
             textBox_health.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_health.MaxLength = 32767;
             textBox_health.Multiline = false;
             textBox_health.Name = "textBox_health";
             textBox_health.OnTextChanged = null;
@@ -777,6 +836,7 @@
             textBox_health.SelectionStart = 0;
             textBox_health.Size = new System.Drawing.Size(49, 23);
             textBox_health.TabIndex = 0;
+            textBox_health.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_health.WordWrap = true;
             textBox_health.TextChanged += SpriteValueChanged;
             // 
@@ -901,8 +961,10 @@
             // textBox_gfxOffsetVal
             // 
             textBox_gfxOffsetVal.BorderColor = System.Drawing.Color.Black;
+            textBox_gfxOffsetVal.DisplayBorder = true;
             textBox_gfxOffsetVal.Location = new System.Drawing.Point(8, 39);
             textBox_gfxOffsetVal.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_gfxOffsetVal.MaxLength = 32767;
             textBox_gfxOffsetVal.Multiline = false;
             textBox_gfxOffsetVal.Name = "textBox_gfxOffsetVal";
             textBox_gfxOffsetVal.OnTextChanged = null;
@@ -912,6 +974,7 @@
             textBox_gfxOffsetVal.SelectionStart = 0;
             textBox_gfxOffsetVal.Size = new System.Drawing.Size(61, 23);
             textBox_gfxOffsetVal.TabIndex = 0;
+            textBox_gfxOffsetVal.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_gfxOffsetVal.WordWrap = true;
             textBox_gfxOffsetVal.TextChanged += SpriteValueChanged;
             // 
@@ -949,8 +1012,10 @@
             // textBox_palOffsetVal
             // 
             textBox_palOffsetVal.BorderColor = System.Drawing.Color.Black;
+            textBox_palOffsetVal.DisplayBorder = true;
             textBox_palOffsetVal.Location = new System.Drawing.Point(8, 120);
             textBox_palOffsetVal.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_palOffsetVal.MaxLength = 32767;
             textBox_palOffsetVal.Multiline = false;
             textBox_palOffsetVal.Name = "textBox_palOffsetVal";
             textBox_palOffsetVal.OnTextChanged = null;
@@ -960,6 +1025,7 @@
             textBox_palOffsetVal.SelectionStart = 0;
             textBox_palOffsetVal.Size = new System.Drawing.Size(61, 23);
             textBox_palOffsetVal.TabIndex = 2;
+            textBox_palOffsetVal.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_palOffsetVal.WordWrap = true;
             textBox_palOffsetVal.TextChanged += SpriteValueChanged;
             // 
@@ -1017,8 +1083,10 @@
             // textBox_AIoffset
             // 
             textBox_AIoffset.BorderColor = System.Drawing.Color.Black;
-            textBox_AIoffset.Location = new System.Drawing.Point(177, 336);
+            textBox_AIoffset.DisplayBorder = false;
+            textBox_AIoffset.Location = new System.Drawing.Point(174, 336);
             textBox_AIoffset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_AIoffset.MaxLength = 32767;
             textBox_AIoffset.Multiline = false;
             textBox_AIoffset.Name = "textBox_AIoffset";
             textBox_AIoffset.OnTextChanged = null;
@@ -1029,6 +1097,7 @@
             textBox_AIoffset.Size = new System.Drawing.Size(64, 23);
             textBox_AIoffset.TabIndex = 0;
             textBox_AIoffset.TabStop = false;
+            textBox_AIoffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_AIoffset.WordWrap = true;
             // 
             // statusStrip
