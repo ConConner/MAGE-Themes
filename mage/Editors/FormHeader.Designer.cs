@@ -52,6 +52,10 @@
             label_BG3scroll = new System.Windows.Forms.Label();
             label_transparency = new System.Windows.Forms.Label();
             groupBox_BGdata = new System.Windows.Forms.GroupBox();
+            btn_bg3_prop = new System.Windows.Forms.Button();
+            btn_bg0_prop = new System.Windows.Forms.Button();
+            btn_bg1_prop = new System.Windows.Forms.Button();
+            btn_bg2_prop = new System.Windows.Forms.Button();
             btn_bg3_presets = new System.Windows.Forms.Button();
             textBox_effectYpos = new Theming.CustomControls.FlatTextBox();
             label1 = new System.Windows.Forms.Label();
@@ -440,6 +444,10 @@
             // 
             // groupBox_BGdata
             // 
+            groupBox_BGdata.Controls.Add(btn_bg3_prop);
+            groupBox_BGdata.Controls.Add(btn_bg0_prop);
+            groupBox_BGdata.Controls.Add(btn_bg1_prop);
+            groupBox_BGdata.Controls.Add(btn_bg2_prop);
             groupBox_BGdata.Controls.Add(btn_bg3_presets);
             groupBox_BGdata.Controls.Add(textBox_BG0pointer);
             groupBox_BGdata.Controls.Add(label_transparency);
@@ -475,6 +483,46 @@
             groupBox_BGdata.TabIndex = 0;
             groupBox_BGdata.TabStop = false;
             groupBox_BGdata.Text = "Background Data";
+            // 
+            // btn_bg3_prop
+            // 
+            btn_bg3_prop.Image = Properties.Resources.toolbar_patches;
+            btn_bg3_prop.Location = new System.Drawing.Point(323, 130);
+            btn_bg3_prop.Name = "btn_bg3_prop";
+            btn_bg3_prop.Size = new System.Drawing.Size(23, 23);
+            btn_bg3_prop.TabIndex = 18;
+            btn_bg3_prop.UseVisualStyleBackColor = true;
+            btn_bg3_prop.Click += btn_bg3_prop_Click;
+            // 
+            // btn_bg0_prop
+            // 
+            btn_bg0_prop.Image = Properties.Resources.toolbar_patches;
+            btn_bg0_prop.Location = new System.Drawing.Point(323, 41);
+            btn_bg0_prop.Name = "btn_bg0_prop";
+            btn_bg0_prop.Size = new System.Drawing.Size(23, 23);
+            btn_bg0_prop.TabIndex = 17;
+            btn_bg0_prop.UseVisualStyleBackColor = true;
+            btn_bg0_prop.Click += btn_bg0_prop_Click;
+            // 
+            // btn_bg1_prop
+            // 
+            btn_bg1_prop.Image = Properties.Resources.toolbar_patches;
+            btn_bg1_prop.Location = new System.Drawing.Point(323, 71);
+            btn_bg1_prop.Name = "btn_bg1_prop";
+            btn_bg1_prop.Size = new System.Drawing.Size(23, 23);
+            btn_bg1_prop.TabIndex = 16;
+            btn_bg1_prop.UseVisualStyleBackColor = true;
+            btn_bg1_prop.Click += btn_bg1_prop_Click;
+            // 
+            // btn_bg2_prop
+            // 
+            btn_bg2_prop.Image = Properties.Resources.toolbar_patches;
+            btn_bg2_prop.Location = new System.Drawing.Point(323, 100);
+            btn_bg2_prop.Name = "btn_bg2_prop";
+            btn_bg2_prop.Size = new System.Drawing.Size(23, 23);
+            btn_bg2_prop.TabIndex = 15;
+            btn_bg2_prop.UseVisualStyleBackColor = true;
+            btn_bg2_prop.Click += btn_bg2_prop_Click;
             // 
             // btn_bg3_presets
             // 
@@ -1101,5 +1149,9 @@
         private System.Windows.Forms.Button btn_open_map;
         private System.Windows.Forms.Button button_close;
         private System.Windows.Forms.Button btn_bg3_presets;
+        private System.Windows.Forms.Button btn_bg2_prop;
+        private System.Windows.Forms.Button btn_bg3_prop;
+        private System.Windows.Forms.Button btn_bg0_prop;
+        private System.Windows.Forms.Button btn_bg1_prop;
     }
 }

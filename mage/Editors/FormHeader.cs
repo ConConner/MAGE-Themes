@@ -253,11 +253,41 @@ namespace mage
             textBox_mapY.Text = Hex.ToString(p.Y);
         }
 
+        #region PRESETS
         private void btn_bg3_presets_Click(object sender, EventArgs e)
         {
             BG3ScrollDialog d = new BG3ScrollDialog();
             if (d.ShowDialog() != DialogResult.OK) return;
             textBox_BG3scroll.Text = Hex.ToString(d.Value);
         }
+
+        private void btn_bg0_prop_Click(object sender, EventArgs e)
+        {
+            BackgroundPropertyDialog d = new BackgroundPropertyDialog();
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_BG0prop.Text = Hex.ToString(d.Value);
+        }
+
+        private void btn_bg1_prop_Click(object sender, EventArgs e)
+        {
+            BackgroundPropertyDialog d = new BackgroundPropertyDialog();
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_BG1prop.Text = Hex.ToString(d.Value);
+        }
+
+        private void btn_bg2_prop_Click(object sender, EventArgs e)
+        {
+            BackgroundPropertyDialog d = new BackgroundPropertyDialog();
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_BG2prop.Text = Hex.ToString(d.Value);
+        }
+
+        private void btn_bg3_prop_Click(object sender, EventArgs e)
+        {
+            BackgroundPropertyDialog d = new BackgroundPropertyDialog();
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_BG3prop.Text = Hex.ToString(d.Value);
+        }
+        #endregion
     }
 }
