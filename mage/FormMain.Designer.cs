@@ -264,6 +264,7 @@
             toolStrip_patches = new System.Windows.Forms.ToolStripButton();
             comboBox_spriteset = new Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
+            btn_test = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -1065,7 +1066,7 @@
             // 
             // menuStrip_options
             // 
-            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_backgroundColor, toolStripSeparator31, menuItem_defaultView, menuItem_numberBase, toolStripSeparator28, themeToolStripMenuItem, btn_soundpacks, toolStripSeparator21, menuItem_tooltips, changeEmulatorPathToolStripMenuItem });
+            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_backgroundColor, toolStripSeparator31, menuItem_defaultView, menuItem_numberBase, toolStripSeparator28, themeToolStripMenuItem, btn_soundpacks, toolStripSeparator21, menuItem_tooltips, changeEmulatorPathToolStripMenuItem, btn_test });
             menuStrip_options.Name = "menuStrip_options";
             menuStrip_options.Size = new System.Drawing.Size(61, 20);
             menuStrip_options.Text = "Options";
@@ -2166,6 +2167,13 @@
             comboBox_spriteset.TabIndex = 11;
             comboBox_spriteset.SelectedIndexChanged += comboBox_spriteset_SelectedIndexChanged;
             // 
+            // btn_test
+            // 
+            btn_test.Name = "btn_test";
+            btn_test.Size = new System.Drawing.Size(193, 22);
+            btn_test.Text = "Test";
+            btn_test.Click += btn_test_Click;
+            // 
             // FormMain
             // 
             AllowDrop = true;
@@ -2451,6 +2459,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStrip_zoom400;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_zoom200;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_zoom100;
+        private System.Windows.Forms.ToolStripMenuItem btn_test;
     }
 }
 

@@ -1,9 +1,10 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mage", "mage\mage.csproj", "{3ACB7AC5-3905-45E1-ACDA-3A21A44256BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MageNet", "MageNet\MageNet.csproj", "{2EDC4C40-99E7-4344-BBB9-F11BB381CC96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +16,15 @@ Global
 		{3ACB7AC5-3905-45E1-ACDA-3A21A44256BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ACB7AC5-3905-45E1-ACDA-3A21A44256BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ACB7AC5-3905-45E1-ACDA-3A21A44256BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EDC4C40-99E7-4344-BBB9-F11BB381CC96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EDC4C40-99E7-4344-BBB9-F11BB381CC96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EDC4C40-99E7-4344-BBB9-F11BB381CC96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EDC4C40-99E7-4344-BBB9-F11BB381CC96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A000B292-A85D-4028-BD67-0745DD52AC80}
 	EndGlobalSection
 EndGlobal

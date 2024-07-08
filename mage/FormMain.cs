@@ -13,6 +13,8 @@ using System.Drawing.Text;
 using mage.Data;
 using mage.Tools;
 using System.IO.Compression;
+using MageNet.IO;
+using MageNet.Packets;
 
 namespace mage
 {
@@ -2747,5 +2749,25 @@ namespace mage
 
         private void contextItem_removeEffectPos_Click(object sender, EventArgs e) => SetNewEffectYPosition(0xFF);
         #endregion
+
+        private void btn_test_Click(object sender, EventArgs e)
+        {
+            new NetworkTest(this).Show();
+        }
+
+        public void AddTileFromNetwork(byte[] buffer)
+        {
+            MemoryStream ms = new MemoryStream();
+            ms.Write(buffer, 0, buffer.Length);
+            ms.Position = 0;
+
+            PacketReader r = new PacketReader(ms);
+            r.ReadByte();
+            string json = r.ReadMessage();
+            TileChange tc = JsonSerializer.Deserialize<TileChange>(json);
+
+            Action a = new EditBlocks(room.backgrounds, blocks, new Point(tc.X, tc.Y), 1, 0x10, false);
+            PerformAction(a);
+        }
     }
 }
