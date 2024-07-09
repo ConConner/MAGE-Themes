@@ -68,19 +68,6 @@ namespace mage
                 Block b = room.backgrounds.GetBlock(p.X, p.Y);
                 backup.Add(p, b);
                 room.backgrounds.SetBlock(kvp.Value, p.X, p.Y);
-
-                TileChange tc = new TileChange()
-                {
-                    Area = room.AreaID,
-                    Room = room.RoomID,
-                    X = (ushort)p.X,
-                    Y = (ushort)p.Y,
-                    TileID = kvp.Value.BG1
-                };
-                PacketBuilder pb = new PacketBuilder();
-                pb.WriteMessage(JsonSerializer.Serialize(tc));
-                NetworkTest.client?.SendPacket(pb.GetPacketBytes());
-
             }
 
             blocks = backup;

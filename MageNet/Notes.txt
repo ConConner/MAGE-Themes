@@ -1,0 +1,21 @@
+A single packet has the following structure:
+	
+	Byte:	PacketType
+	UInt:	Length
+
+	Repeat(Length) {
+		Byte: Payload
+	}
+
+
+Possible packets to send:
+	- MessagePacket		[variable]	:		Sends a string of text
+	- TileChange		[8 bytes]	:		Sends a change of a tile
+
+
+Planned packets:
+	- ByteChange		[variable]	:		Sends a list of changes in bytes
+
+	- StartFileTransfer	[fixed]		:		Prepares a file transfer, sending Metadata and Hashes
+	- TransferFile		[variable]	:		Transfer the actual content of a file
+	- EndFileTransfer	[fixed]		:		Confirms that the file was transferred successfully.

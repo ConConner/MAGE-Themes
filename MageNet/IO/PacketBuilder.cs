@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MageNet.Packets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,30 +10,31 @@ namespace MageNet.IO;
 
 public class PacketBuilder
 {
-    MemoryStream stream;
+    public MemoryStream Stream { get; }
     public PacketBuilder()
     {
-        stream = new MemoryStream();
+        Stream = new MemoryStream();
     }
 
     public void WriteType(PacketType type)
     {
-        stream.WriteByte((byte)type);
+        Stream.WriteByte((byte)type);
     }
 
-    public void WriteMessage(string message)
+    public void AddPacket(PacketType type, IPacket packet)
     {
-        WriteType(PacketType.Message);
-
-        stream.Write(BitConverter.GetBytes(message.Length));
-        stream.Write(Encoding.ASCII.GetBytes(message));
+        WriteType(type);
+        byte[] data = packet.Serialize();
+        Stream.Write(BitConverter.GetBytes(data.Length));
+        Stream.Write(data);
     }
 
     public byte[] GetPacketBytes()
     {
-        return stream.ToArray();
+        return Stream.ToArray();
     }
 
+
+    //Operators
     public static explicit operator byte[](PacketBuilder builder) => builder.GetPacketBytes();
-    public static explicit operator MemoryStream(PacketBuilder builder) => builder.stream;
 }

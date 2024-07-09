@@ -9,5 +9,10 @@ namespace MageNet.IO;
 
 public enum PacketType : byte
 {
-    Message
+    Ok,
+    Error,
+    Dummy,
+    UserConnect,
+    Message,
+    TileChange
 }

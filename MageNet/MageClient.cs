@@ -18,4 +18,9 @@ public class MageClient
         ClientSocket = client;
         UID = Guid.NewGuid();
     }
+
+    public void Disconnect()
+    {
+        ClientSocket.Close();
+    }
 }
