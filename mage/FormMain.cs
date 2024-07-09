@@ -15,6 +15,7 @@ using mage.Tools;
 using System.IO.Compression;
 using MageNet.IO;
 using MageNet.Packets;
+using mage.Networking;
 
 namespace mage
 {
@@ -63,7 +64,6 @@ namespace mage
 
         public PrivateFontCollection pfc { get; set; } = new PrivateFontCollection();
         public sRam TestRoomSettings { get; set; } = null;
-
         #endregion
 
         #region fields
@@ -1030,6 +1030,11 @@ namespace mage
         private void changeEmulatorPathToolStripMenuItem_Click(object sender, EventArgs e) => Test.SetEmulatorPath();
 
         private void themeToolStripMenuItem_Click(object sender, EventArgs e) => new ThemeEditor().ShowDialog();
+
+        private void btn_collab_session_Click(object sender, EventArgs e)
+        {
+            new FormCollabSession(this).Show();
+        }
 
         // help
         private void menuItem_viewHelp_Click(object sender, EventArgs e)

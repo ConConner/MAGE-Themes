@@ -102,6 +102,7 @@ public class ServerHost
         {
             while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) != 0)
             {
+                LogAction($"Received {bytesRead} Bytes");
             }
         }
         catch (Exception e)
@@ -115,7 +116,6 @@ public class ServerHost
             client.ClientSocket.Close();
         }
     }
-
 
     /// <summary>
     /// Propegates the Data to every other Client, except the one that it was send from

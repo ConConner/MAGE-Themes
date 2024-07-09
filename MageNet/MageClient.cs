@@ -10,6 +10,7 @@ namespace MageNet;
 
 public class MageClient
 {
+    public string Username { get; set; }
     public Guid UID { get; set; }
     public TcpClient ClientSocket { get; set; }
 
