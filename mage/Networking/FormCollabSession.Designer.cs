@@ -88,7 +88,7 @@
             txb_host_name.ScrollBars = System.Windows.Forms.ScrollBars.None;
             txb_host_name.SelectionStart = 0;
             txb_host_name.Size = new System.Drawing.Size(158, 23);
-            txb_host_name.TabIndex = 4;
+            txb_host_name.TabIndex = 1;
             txb_host_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             txb_host_name.WordWrap = true;
             // 
@@ -98,7 +98,7 @@
             lbl_host_name.Location = new System.Drawing.Point(7, 54);
             lbl_host_name.Name = "lbl_host_name";
             lbl_host_name.Size = new System.Drawing.Size(42, 15);
-            lbl_host_name.TabIndex = 3;
+            lbl_host_name.TabIndex = 99;
             lbl_host_name.Text = "Name:";
             // 
             // txb_host_port
@@ -126,7 +126,7 @@
             lbl_host_port.Location = new System.Drawing.Point(6, 83);
             lbl_host_port.Name = "lbl_host_port";
             lbl_host_port.Size = new System.Drawing.Size(32, 15);
-            lbl_host_port.TabIndex = 1;
+            lbl_host_port.TabIndex = 99;
             lbl_host_port.Text = "Port:";
             // 
             // grp_join
@@ -160,7 +160,7 @@
             txb_join_name.ScrollBars = System.Windows.Forms.ScrollBars.None;
             txb_join_name.SelectionStart = 0;
             txb_join_name.Size = new System.Drawing.Size(158, 23);
-            txb_join_name.TabIndex = 7;
+            txb_join_name.TabIndex = 1;
             txb_join_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             txb_join_name.WordWrap = true;
             // 
@@ -170,7 +170,7 @@
             lbl_join_name.Location = new System.Drawing.Point(7, 54);
             lbl_join_name.Name = "lbl_join_name";
             lbl_join_name.Size = new System.Drawing.Size(42, 15);
-            lbl_join_name.TabIndex = 6;
+            lbl_join_name.TabIndex = 99;
             lbl_join_name.Text = "Name:";
             // 
             // txb_join_port
@@ -188,7 +188,7 @@
             txb_join_port.ScrollBars = System.Windows.Forms.ScrollBars.None;
             txb_join_port.SelectionStart = 0;
             txb_join_port.Size = new System.Drawing.Size(158, 23);
-            txb_join_port.TabIndex = 5;
+            txb_join_port.TabIndex = 3;
             txb_join_port.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             txb_join_port.WordWrap = true;
             // 
@@ -198,7 +198,7 @@
             lbl_join_port.Location = new System.Drawing.Point(7, 112);
             lbl_join_port.Name = "lbl_join_port";
             lbl_join_port.Size = new System.Drawing.Size(32, 15);
-            lbl_join_port.TabIndex = 4;
+            lbl_join_port.TabIndex = 99;
             lbl_join_port.Tag = "";
             lbl_join_port.Text = "Port:";
             // 
@@ -217,7 +217,7 @@
             txb_join_ip.ScrollBars = System.Windows.Forms.ScrollBars.None;
             txb_join_ip.SelectionStart = 0;
             txb_join_ip.Size = new System.Drawing.Size(158, 23);
-            txb_join_ip.TabIndex = 3;
+            txb_join_ip.TabIndex = 2;
             txb_join_ip.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             txb_join_ip.WordWrap = true;
             // 
@@ -227,7 +227,7 @@
             lbl_join_ip.Location = new System.Drawing.Point(7, 83);
             lbl_join_ip.Name = "lbl_join_ip";
             lbl_join_ip.Size = new System.Drawing.Size(20, 15);
-            lbl_join_ip.TabIndex = 2;
+            lbl_join_ip.TabIndex = 99;
             lbl_join_ip.Text = "IP:";
             // 
             // btn_join_session

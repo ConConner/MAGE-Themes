@@ -17,11 +17,17 @@ public static class Session
     public static bool IsHost { get; set; } = false;
     public static bool SelfHosting { get; set; } = false;
     public static bool InSession { get; set; } = false;
+    public static string Username { get; set; }
 
     public static IPAddress InternalIP { get; set; }
     public static int HostPort { get; set; }
     #endregion
 
+    #region Events
+    public static event EventHandler ConnectedToServer;
+    #endregion
+
+    #region Methods
     public static void CreateSession(int port)
     {
         HostPort = port;
@@ -34,16 +40,17 @@ public static class Session
         SessionServer.AcceptClients();
     }
 
-    public static void JoinSession()
+    public static void JoinSession(string username)
     {
-        SessionClient = new ServerClient();
-        SessionClient.ConnectToServer(InternalIP, HostPort);
+        JoinSession(username, InternalIP, HostPort);
     }
 
-    public static void JoinSession(IPAddress address, int port)
+    public static void JoinSession(string username, IPAddress address, int port)
     {
-        SessionClient = new ServerClient();
+        SessionClient = new ServerClient(username);
         SessionClient.ConnectToServer(address, port);
+
+        InSession = true;
     }
 
     public static void EndSession()
@@ -54,4 +61,5 @@ public static class Session
         IsHost = false;
         SelfHosting = false;
     }
+    #endregion
 }

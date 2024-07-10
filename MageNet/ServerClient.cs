@@ -1,4 +1,5 @@
 ﻿using MageNet.IO;
+using MageNet.Packets;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,14 +14,15 @@ namespace MageNet;
 public class ServerClient
 {
     TcpClient client;
-    PacketBuilder builder;
-    Action<string> consoleWriteLine;
+    string username;
+    Action<string> clientOutput;
 
-    public ServerClient(Action<string> ConsoleWriteLine = null)
+    public ServerClient(string username, Action<string> ClientOutput = null)
     {
         client = new TcpClient();
-        if (ConsoleWriteLine == null) consoleWriteLine = (s) => { Debug.WriteLine(s); };
-        else consoleWriteLine = ConsoleWriteLine;
+        this.username = username;
+        if (ClientOutput == null) clientOutput = (s) => { Debug.WriteLine(s); };
+        else clientOutput = ClientOutput;
     }
 
     public void ConnectToServer(IPAddress address, int port)
@@ -28,6 +30,13 @@ public class ServerClient
         if (client.Connected) return; //TODO: Error handling
 
         client.Connect(address, port);
+
+        //Send Username
+        MessagePacket packet = new MessagePacket() { Message = username };
+        PacketBuilder pb = new PacketBuilder();
+        pb.AddPacket(PacketType.Username, packet);
+        SendPacket(pb.GetPacketBytes());
+
         HandlePackets();
     }
     
@@ -54,12 +63,12 @@ public class ServerClient
             while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) != 0)
             {
                 //Handle received data
-                consoleWriteLine($"Received: {bytesRead} bytes");
+                clientOutput($"[Client]: Received: {bytesRead} bytes");
             }
         }
         catch (Exception e)
         {
-            consoleWriteLine($"Exception: {e.Message}");
+            clientOutput($"Exception: {e.Message}");
         }
         finally
         {

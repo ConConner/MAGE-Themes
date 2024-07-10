@@ -30,19 +30,19 @@ public class ServerHost
 
         this.address = address;
         this.port = port;
-        LogAction = logAction;
+        ServerOutput = logAction;
     }
 
     #region Properties
-    Action<string> logAction = null;
-    Action<string> LogAction
+    Action<string> serverOutput;
+    Action<string> ServerOutput
     {
         get
         {
-            if (logAction != null) return logAction;
-            else return (s) => { };
+            if (serverOutput != null) return serverOutput;
+            else return (s) => { Debug.WriteLine(s); };
         }
-        set => logAction = value;
+        set => serverOutput = value;
     }
     #endregion
 
@@ -55,34 +55,31 @@ public class ServerHost
         try
         {
             listener.Start();
-            LogAction($"Server started. Listening on {address}:{port}");
+            ServerOutput($"Server started. Listening on {address}:{port}");
 
             //Continously accept new connections
             while (true)
             {
                 MageClient client = new MageClient(await listener.AcceptTcpClientAsync());
-                LogAction($"Connected User {client.UID.ToString()}");
+                ServerOutput($"Connected User {client.UID.ToString()}");
                 clients.Add(client);
-
-                //Send the current user List to every client
-                SendUserList();
 
                 HandleClient(client);
             }
         }
         catch (SocketException e)
         {
-            LogAction($"SocketException: {e.Message}");
-            LogAction($"Error Code: {e.ErrorCode}");
+            ServerOutput($"SocketException: {e.Message}");
+            ServerOutput($"Error Code: {e.ErrorCode}");
         }
         catch (Exception e)
         {
-            LogAction($"Exception: {e.Message}");
+            ServerOutput($"Exception: {e.Message}");
         }
         finally
         {
             listener?.Stop();
-            LogAction("Server stopped");
+            ServerOutput("Server stopped");
         }
     }
 
@@ -93,27 +90,33 @@ public class ServerHost
     public async void HandleClient(MageClient client)
     {
         NetworkStream stream = client.ClientSocket.GetStream();
-
-        //Buffer
-        byte[] buffer = new byte[8192];
-        int bytesRead;
-
         try
         {
-            while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+            //Get the Username first
+            client.Username = await GetClientUsername(client);
+            ServerOutput($"[Server]: {client.UID} is now known as: {client.Username}");
+
+            //Send the current user List to every client
+            SendUserList();
+
+            //Keep listening to packets
+            while (true)
             {
-                LogAction($"Received {bytesRead} Bytes");
+                byte[] packet = await PacketReader.ReadPacketFromStream(stream);
+                if (packet.Length == 0) break;
+
+                ServerOutput($"[Server]: Received: {packet.Length} Bytes");
             }
         }
         catch (Exception e)
         {
-            LogAction($"Exception: {e.Message}");
+            ServerOutput($"Exception: {e.Message}");
         }
         finally
         {
             //Close things
             stream.Close();
-            client.ClientSocket.Close();
+            client.Disconnect();
         }
     }
 
@@ -140,10 +143,29 @@ public class ServerHost
         stream.Write(data, 0, data.Length);
     }
 
+    /// <summary>
+    /// Starts listening for a Packet of the type Username and returns the Username as a string if received
+    /// </summary>
+    private async Task<string> GetClientUsername(MageClient client)
+    {
+        while (true)
+        {
+            byte[] namePacket = await PacketReader.ReadPacketFromStream(client.ClientSocket.GetStream());
+            if (namePacket.Length == 0) throw new Exception($"Client {client.UID} closed the connection");
+
+            //Check for proper type
+            if (namePacket[0] != (byte)PacketType.Username) throw new Exception($"Client {client.UID} did not provide a Username as their first packet");
+
+            //Read Packet content
+            MessagePacket mp = (MessagePacket)new MessagePacket().Deserialize(namePacket[5..namePacket.Length]);
+            return mp.Message;
+        }
+    }
+
     public void SendUserList()
     {
         PacketBuilder builder = new PacketBuilder();
-        builder.AddPacket(PacketType.UserConnect, new UserList(clients));
+        builder.AddPacket(PacketType.UserList, new UserList(clients));
 
         PropagatePacketToClients(null, builder.GetPacketBytes());
     }

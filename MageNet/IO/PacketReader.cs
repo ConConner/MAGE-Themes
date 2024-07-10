@@ -15,16 +15,12 @@ public class PacketReader : BinaryReader
         this.Stream = ns;
     }
 
-    public string ReadMessage()
+    public static async Task<byte[]> ReadPacketFromStream(NetworkStream ns)
     {
-        byte[] msgBuffer;
+        byte[] buffer = new byte[8192];
+        int bytesRead;
 
-        var length = ReadInt32();
-        msgBuffer = new byte[length];
-
-        Stream.Read(msgBuffer, 0, length);
-
-        var msg = Encoding.ASCII.GetString(msgBuffer);
-        return msg;
+        bytesRead = await ns.ReadAsync(buffer);
+        return buffer[0..bytesRead];
     }
 }

@@ -65,13 +65,6 @@ public partial class FormCollabSession : Form
         txb_join_name.Enabled = true;
         txb_join_port.Enabled = true;
     }
-    private void SendUserName(string name)
-    {
-        MessagePacket mp = new MessagePacket() { Message = name };
-        PacketBuilder pb = new PacketBuilder();
-        pb.AddPacket(PacketType.Message, mp);
-        Session.SessionClient.SendPacket(pb.GetPacketBytes());
-    }
 
     /// <summary>
     /// Start hosting a server and connect to it
@@ -90,10 +83,7 @@ public partial class FormCollabSession : Form
         Session.CreateSession(port);
         Session.SelfHosting = true;
 
-        Session.JoinSession();
-
-        //Send Username
-        SendUserName(txb_host_name.Text);
+        Session.JoinSession(txb_host_name.Text);
 
         //Set UI
         SetUIButtons();
@@ -104,13 +94,20 @@ public partial class FormCollabSession : Form
     /// </summary>
     private void btn_join_session_Click(object sender, EventArgs e)
     {
+        if (Session.InSession)
+        {
+            Session.EndSession();
+            ResetUIButtons();
+            return;
+        }
+
         //Join a Session
-        int port = Convert.ToInt32(txb_host_port.Text, 10);
+        int port = Convert.ToInt32(txb_join_port.Text, 10);
         IPAddress address = IPAddress.Parse(txb_join_ip.Text);
 
-        Session.JoinSession(address, port);
+        Session.JoinSession(txb_join_name.Text, address, port);
 
-        //Send Username
-        SendUserName(txb_join_name.Text);
+        //Set UI Buttons
+        SetUIButtons();
     }
 }

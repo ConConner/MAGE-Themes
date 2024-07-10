@@ -12,7 +12,8 @@ public enum PacketType : byte
     Ok,
     Error,
     Dummy,
-    UserConnect,
+    Username,
+    UserList,
     Message,
     TileChange
 }

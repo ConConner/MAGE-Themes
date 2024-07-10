@@ -41,7 +41,7 @@ public partial class NetworkTest : Form
         IPAddress address = IPAddress.Parse(txb_ip.Text);
         int port = (int)num_port.Value;
 
-        Client = new ServerClient(AddLogMessage);
+        Client = new ServerClient("", AddLogMessage);
         Client.ConnectToServer(address, port);
     }
 

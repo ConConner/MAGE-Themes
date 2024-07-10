@@ -22,6 +22,6 @@ public class MageClient
 
     public void Disconnect()
     {
-        ClientSocket.Close();
+        ClientSocket?.Close();
     }
 }
