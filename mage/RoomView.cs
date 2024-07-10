@@ -161,10 +161,6 @@ namespace mage
                 {
                     room.backgrounds.clipTypes.DrawCollision(g, rect);
                 }
-                if (main.OutlineEffect)
-                {
-                    DrawEffectPosition(g, room.header.effectY);
-                }
                 else if (main.ViewBreakable)
                 {
                     room.backgrounds.clipTypes.DrawBreakable(g, rect);
@@ -172,6 +168,10 @@ namespace mage
                 else if (main.ViewValues)
                 {
                     room.backgrounds.clipTypes.DrawValues(g, rect);
+                }
+                if (main.OutlineEffect)
+                {
+                    DrawEffectPosition(g, room.header.effectY);
                 }
                 if (main.OutlineScreens)
                 {
