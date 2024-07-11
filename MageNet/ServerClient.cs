@@ -1,4 +1,5 @@
-﻿using MageNet.IO;
+﻿using MageNet.EventArguments;
+using MageNet.IO;
 using MageNet.Packets;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,10 @@ public class ServerClient
         else clientOutput = ClientOutput;
     }
 
+    #region Events
+    public event EventHandler<UsersConnectedArgument> UserConnected;
+    #endregion
+
     public void ConnectToServer(IPAddress address, int port)
     {
         if (client.Connected) return; //TODO: Error handling
@@ -32,12 +37,12 @@ public class ServerClient
         client.Connect(address, port);
 
         //Send Username
-        MessagePacket packet = new MessagePacket() { Message = username };
+        MessagePacket packet = new MessagePacket(username);
         PacketBuilder pb = new PacketBuilder();
         pb.AddPacket(PacketType.Username, packet);
         SendPacket(pb.GetPacketBytes());
 
-        HandlePackets();
+        ListenToPackets();
     }
     
     public void Disconnect()
@@ -50,20 +55,32 @@ public class ServerClient
         client.Client.Send(payload);
     }
 
-    private async void HandlePackets()
+    private async void ListenToPackets()
     {
         NetworkStream stream = client.GetStream();
 
-        //Buffer
-        byte[] buffer = new byte[8192];
-        int bytesRead;
-
         try
         {
-            while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+            while (true)
             {
+                byte[] packet = await PacketReader.ReadPacketFromStream(stream);
+                if (packet.Length == 0) break;
+
                 //Handle received data
-                clientOutput($"[Client]: Received: {bytesRead} bytes");
+                clientOutput($"[Client]: Received: {packet.Length} bytes");
+
+                //Read UserList
+                MemoryStream ms = new MemoryStream(packet);
+                if (ms.ReadByte() != (byte)PacketType.UserList) continue;
+                ms.Seek(5, SeekOrigin.Begin); //Skip packet length, since its irrelevant
+
+                UserList ul = UserList.Deserialize(ms);
+                UsersConnectedArgument argument = new UsersConnectedArgument()
+                {
+                    ConnectedUsers = ul.Clients,
+                    LatestConnect = ul.Clients.Last()
+                };
+                UserConnected?.Invoke(this, argument);
             }
         }
         catch (Exception e)
@@ -76,5 +93,10 @@ public class ServerClient
             stream.Close();
             Disconnect();
         }
+    }
+
+    private void HandlePacket(byte[] packet)
+    {
+
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json;
 
@@ -9,29 +10,26 @@ namespace MageNet.Packets;
 
 public class UserList : IPacket
 {
-    public List<Guid> ClientUIDs { get; set; }
+    public List<MageClient> Clients { get; set; }
 
     public UserList(List<MageClient> clients)
     {
-        ClientUIDs = new();
-        foreach (MageClient client in clients) ClientUIDs.Add(client.UID);
+        Clients = clients;
     }
     public UserList() { }
 
-    public IPacket Deserialize(byte[] data)
+    public static UserList Deserialize(Stream s)
     {
-        UserList result = new UserList();
-        MessagePacket message = new MessagePacket();
-        message = (MessagePacket)message.Deserialize(data);
+        string jsonString = MessagePacket.Deserialize(s).Message;
 
-        result.ClientUIDs = JsonSerializer.Deserialize<List<Guid>>(message.Message);
+        UserList result = new UserList();
+        result.Clients = JsonSerializer.Deserialize<List<MageClient>>(jsonString);
         return result;
     }
 
     public byte[] Serialize()
     {
-        MessagePacket packet = new MessagePacket();
-        packet.Message = JsonSerializer.Serialize(ClientUIDs);
+        MessagePacket packet = new MessagePacket(JsonSerializer.Serialize(Clients));
         return packet.Serialize();
     }
 }

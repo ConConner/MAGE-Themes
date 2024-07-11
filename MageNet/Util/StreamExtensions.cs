@@ -20,4 +20,11 @@ public static class StreamExtensions
         byte high = (byte)stream.ReadByte();
         return (ushort)(high << 8 | low);
     }
+
+    public static byte[] ReadNumberOfBytes(this Stream s, int count)
+    {
+        byte[] buffer = new byte[count];
+        s.Read(buffer, 0, count);
+        return buffer;
+    }
 }

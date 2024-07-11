@@ -15,7 +15,7 @@ public class TileChange : IPacket
     public ushort Y { get; set; }
     public ushort TileID { get; set; }
 
-    public IPacket Deserialize(byte[] data)
+    public static TileChange Deserialize(byte[] data)
     {
         MemoryStream stream = new MemoryStream(data);
         return new TileChange()

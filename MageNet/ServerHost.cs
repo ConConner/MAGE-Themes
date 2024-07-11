@@ -116,6 +116,7 @@ public class ServerHost
         {
             //Close things
             stream.Close();
+            clients.Remove(client);
             client.Disconnect();
         }
     }
@@ -154,10 +155,12 @@ public class ServerHost
             if (namePacket.Length == 0) throw new Exception($"Client {client.UID} closed the connection");
 
             //Check for proper type
-            if (namePacket[0] != (byte)PacketType.Username) throw new Exception($"Client {client.UID} did not provide a Username as their first packet");
+            MemoryStream ms = new MemoryStream(namePacket);
+            if (ms.ReadByte() != (byte)PacketType.Username) throw new Exception($"Client {client.UID} did not provide a Username as their first packet");
+            ms.Seek(5, SeekOrigin.Begin);
 
             //Read Packet content
-            MessagePacket mp = (MessagePacket)new MessagePacket().Deserialize(namePacket[5..namePacket.Length]);
+            MessagePacket mp = MessagePacket.Deserialize(ms);
             return mp.Message;
         }
     }

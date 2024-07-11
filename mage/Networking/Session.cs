@@ -2,6 +2,7 @@
 using MageNet.Util;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -48,10 +49,23 @@ public static class Session
     public static void JoinSession(string username, IPAddress address, int port)
     {
         SessionClient = new ServerClient(username);
+        SessionClient.UserConnected += SessionClient_UserConnected;
+
         SessionClient.ConnectToServer(address, port);
 
         InSession = true;
     }
+
+    #region Event Handling
+    private static void SessionClient_UserConnected(object sender, MageNet.EventArguments.UsersConnectedArgument e)
+    {
+        Debug.WriteLine("[Client]: Connected Users");
+        foreach (MageClient c in e.ConnectedUsers)
+        {
+            Debug.WriteLine(c.Username);
+        }
+    }
+    #endregion
 
     public static void EndSession()
     {

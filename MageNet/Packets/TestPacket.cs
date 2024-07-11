@@ -14,7 +14,7 @@ public class TestPacket : IPacket
         length = Length;
     }
 
-    public IPacket Deserialize(byte[] data)
+    public static TestPacket Deserialize(byte[] data)
     {
         return new TestPacket(data.Length);
     }
