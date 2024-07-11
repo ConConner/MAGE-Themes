@@ -44,8 +44,10 @@
             lbl_join_ip = new System.Windows.Forms.Label();
             btn_join_session = new System.Windows.Forms.Button();
             grp_users = new System.Windows.Forms.GroupBox();
+            lst_users = new System.Windows.Forms.ListBox();
             grp_host.SuspendLayout();
             grp_join.SuspendLayout();
+            grp_users.SuspendLayout();
             SuspendLayout();
             // 
             // btn_host
@@ -131,6 +133,7 @@
             // 
             // grp_join
             // 
+            grp_join.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             grp_join.Controls.Add(txb_join_name);
             grp_join.Controls.Add(lbl_join_name);
             grp_join.Controls.Add(txb_join_port);
@@ -243,13 +246,27 @@
             // 
             // grp_users
             // 
-            grp_users.Enabled = false;
+            grp_users.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            grp_users.Controls.Add(lst_users);
             grp_users.Location = new System.Drawing.Point(237, 12);
             grp_users.Name = "grp_users";
+            grp_users.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
             grp_users.Size = new System.Drawing.Size(219, 291);
             grp_users.TabIndex = 3;
             grp_users.TabStop = false;
             grp_users.Text = "Users";
+            // 
+            // lst_users
+            // 
+            lst_users.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            lst_users.Dock = System.Windows.Forms.DockStyle.Fill;
+            lst_users.FormattingEnabled = true;
+            lst_users.ItemHeight = 15;
+            lst_users.Items.AddRange(new object[] { "Not connected to a server..." });
+            lst_users.Location = new System.Drawing.Point(6, 19);
+            lst_users.Name = "lst_users";
+            lst_users.Size = new System.Drawing.Size(207, 266);
+            lst_users.TabIndex = 0;
             // 
             // FormCollabSession
             // 
@@ -266,6 +283,7 @@
             grp_host.PerformLayout();
             grp_join.ResumeLayout(false);
             grp_join.PerformLayout();
+            grp_users.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -286,5 +304,6 @@
         private Theming.CustomControls.FlatTextBox txb_join_ip;
         private Theming.CustomControls.FlatTextBox txb_host_name;
         private Theming.CustomControls.FlatTextBox txb_join_name;
+        private System.Windows.Forms.ListBox lst_users;
     }
 }

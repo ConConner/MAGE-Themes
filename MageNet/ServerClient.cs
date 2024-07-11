@@ -32,7 +32,7 @@ public class ServerClient
 
     public void ConnectToServer(IPAddress address, int port)
     {
-        if (client.Connected) return; //TODO: Error handling
+        if (client.Connected) throw new Exception("Client is already connected to a Server");
 
         client.Connect(address, port);
 
@@ -67,25 +67,12 @@ public class ServerClient
                 if (packet.Length == 0) break;
 
                 //Handle received data
-                clientOutput($"[Client]: Received: {packet.Length} bytes");
-
-                //Read UserList
-                MemoryStream ms = new MemoryStream(packet);
-                if (ms.ReadByte() != (byte)PacketType.UserList) continue;
-                ms.Seek(5, SeekOrigin.Begin); //Skip packet length, since its irrelevant
-
-                UserList ul = UserList.Deserialize(ms);
-                UsersConnectedArgument argument = new UsersConnectedArgument()
-                {
-                    ConnectedUsers = ul.Clients,
-                    LatestConnect = ul.Clients.Last()
-                };
-                UserConnected?.Invoke(this, argument);
+                HandlePacket(packet);
             }
         }
         catch (Exception e)
         {
-            clientOutput($"Exception: {e.Message}");
+            clientOutput($"[{username}]: Exception: {e.Message}");
         }
         finally
         {
@@ -97,6 +84,27 @@ public class ServerClient
 
     private void HandlePacket(byte[] packet)
     {
+        MemoryStream ms = new MemoryStream(packet);
+        BinaryReader br = new BinaryReader(ms);
 
+        switch (ms.ReadByte())
+        {
+            case (byte)PacketType.UserList:
+                ms.Seek(5, SeekOrigin.Begin); //Skip packet length, since its irrelevant
+
+                UserList ul = UserList.Deserialize(ms);
+                UsersConnectedArgument argument = new UsersConnectedArgument()
+                {
+                    ConnectedUsers = ul.Clients,
+                    LatestConnect = ul.Clients.Last()
+                };
+                UserConnected?.Invoke(this, argument);
+                break;
+
+
+            default:
+                clientOutput($"[{username}]: Received: {packet.Length} bytes");
+                break;
+        }
     }
 }

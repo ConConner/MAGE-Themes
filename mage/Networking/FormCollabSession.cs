@@ -26,11 +26,22 @@ public partial class FormCollabSession : Form
         ThemeSwitcher.InjectPaintOverrides(Controls);
         this.main = main;
 
+        Session.UserListChanged += UpdateUserList;
+
         //If no session connected
         if (Session.InSession)
         {
-            grp_users.Enabled = true;
+            UpdateUserList(null, null);
             SetUIButtons();
+        }
+    }
+
+    private void UpdateUserList(object sender, MageNet.EventArguments.UsersConnectedArgument e)
+    {
+        lst_users.Items.Clear();
+        foreach (MageClient c in Session.ConnectedUsers)
+        {
+            lst_users.Items.Add(c.Username);
         }
     }
 
@@ -39,11 +50,21 @@ public partial class FormCollabSession : Form
         if (Session.SelfHosting)
         {
             btn_host.Text = "Stop collaboration session";
+            lbl_host_port.Enabled = false;
+            lbl_host_name.Enabled = false;
+            txb_host_port.Enabled = false;
+            txb_host_name.Enabled = false;
             grp_join.Enabled = false;
         }
         else
         {
             btn_join_session.Text = "Leave collaboration session";
+            lbl_join_port.Enabled = false;
+            lbl_join_name.Enabled = false;
+            txb_join_port.Enabled = false;
+            txb_join_name.Enabled = false;
+            lbl_join_ip.Enabled = false;
+            txb_join_ip.Enabled = false;
             grp_host.Enabled = false;
         }
         txb_host_name.Enabled = false;
@@ -57,7 +78,6 @@ public partial class FormCollabSession : Form
         btn_host.Text = "Host a collaboration session";
         btn_join_session.Text = "Join a collaboration session";
         grp_join.Enabled = true;
-        grp_users.Enabled = false;
         grp_host.Enabled = true;
         txb_host_name.Enabled = true;
         txb_host_port.Enabled = true;

@@ -1,4 +1,5 @@
 ﻿using MageNet;
+using MageNet.EventArguments;
 using MageNet.Util;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace mage.Networking;
 public static class Session
 {
     #region Properties
+    public static System.Version MageNetVersion { get; } = MageNet.Meta.MageNetVersion;
     public static ServerHost SessionServer { get; set; } = null;
     public static ServerClient SessionClient { get; set; } = null;
     public static bool IsHost { get; set; } = false;
@@ -20,12 +22,30 @@ public static class Session
     public static bool InSession { get; set; } = false;
     public static string Username { get; set; }
 
+    /// <summary>
+    /// List of all Clients connected to the server. Including the own client
+    /// </summary>
+    public static List<MageClient> ConnectedUsers
+    {
+        get => connectedUsers;
+        set
+        {
+            connectedUsers = value;
+            UserListChanged?.Invoke(null, new UsersConnectedArgument(value));
+        }
+    }
+    private static List<MageClient> connectedUsers;
+
+    /// <summary>
+    /// The IP address of the current machine
+    /// </summary>
     public static IPAddress InternalIP { get; set; }
     public static int HostPort { get; set; }
     #endregion
 
     #region Events
     public static event EventHandler ConnectedToServer;
+    public static event EventHandler<UsersConnectedArgument> UserListChanged;
     #endregion
 
     #region Methods
@@ -56,17 +76,6 @@ public static class Session
         InSession = true;
     }
 
-    #region Event Handling
-    private static void SessionClient_UserConnected(object sender, MageNet.EventArguments.UsersConnectedArgument e)
-    {
-        Debug.WriteLine("[Client]: Connected Users");
-        foreach (MageClient c in e.ConnectedUsers)
-        {
-            Debug.WriteLine(c.Username);
-        }
-    }
-    #endregion
-
     public static void EndSession()
     {
         SessionServer?.EndSession();
@@ -75,5 +84,18 @@ public static class Session
         IsHost = false;
         SelfHosting = false;
     }
+
+    #region Event Handling
+    private static void SessionClient_UserConnected(object sender, MageNet.EventArguments.UsersConnectedArgument e)
+    {
+        Debug.WriteLine("[Client]: Connected Users");
+        foreach (MageClient c in e.ConnectedUsers)
+        {
+            Debug.WriteLine(c.Username);
+        }
+        ConnectedUsers = e.ConnectedUsers;
+    }
+    #endregion
+
     #endregion
 }
