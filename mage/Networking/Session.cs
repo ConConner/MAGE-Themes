@@ -69,7 +69,7 @@ public static class Session
     public static void JoinSession(string username, IPAddress address, int port)
     {
         SessionClient = new ServerClient(username);
-        SessionClient.UserConnected += SessionClient_UserConnected;
+        BindEvents();
 
         SessionClient.ConnectToServer(address, port);
 
@@ -85,8 +85,14 @@ public static class Session
         SelfHosting = false;
     }
 
+    public static void BindEvents()
+    {
+        SessionClient.UserConnected += SessionClient_UserConnected;
+        SessionClient.RomChanged += SessionClient_RomChanged;
+    }
+
     #region Event Handling
-    private static void SessionClient_UserConnected(object sender, MageNet.EventArguments.UsersConnectedArgument e)
+    private static void SessionClient_UserConnected(object sender, UsersConnectedArgument e)
     {
         Debug.WriteLine("[Client]: Connected Users");
         foreach (MageClient c in e.ConnectedUsers)
@@ -94,6 +100,18 @@ public static class Session
             Debug.WriteLine(c.Username);
         }
         ConnectedUsers = e.ConnectedUsers;
+    }
+
+    private static void SessionClient_RomChanged(object sender, RomChangeArgument e)
+    {
+        int offset = e.Change.Offset;
+        byte[] data = e.Change.Data;
+
+        ROM.Stream.Seek(offset);
+        for (int i = 0; i < data.Length; i++)
+        {
+            ROM.Stream.Write8(data[i]);
+        }
     }
     #endregion
 

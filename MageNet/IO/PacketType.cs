@@ -12,8 +12,10 @@ public enum PacketType : byte
     Ok,
     Error,
     Dummy,
+    
+    RomChange,
+
     Username,
     UserList,
     Message,
-    TileChange
 }

@@ -1,4 +1,5 @@
-﻿using MageNet.IO;
+﻿using MageNet.EventArguments;
+using MageNet.IO;
 using MageNet.Packets;
 using System;
 using System.Collections.Generic;
@@ -87,7 +88,7 @@ public class ServerHost
     /// Continuously handle incoming packets from a client
     /// </summary>
     /// <param name="client"></param>
-    public async void HandleClient(MageClient client)
+    private async void HandleClient(MageClient client)
     {
         NetworkStream stream = client.ClientSocket.GetStream();
         try
@@ -105,12 +106,12 @@ public class ServerHost
                 byte[] packet = await PacketReader.ReadPacketFromStream(stream);
                 if (packet.Length == 0) break;
 
-                ServerOutput($"[Server]: Received: {packet.Length} Bytes");
+                HandlePacket(client, packet);
             }
         }
         catch (Exception e)
         {
-            ServerOutput($"Exception: {e.Message}");
+            ServerOutput($"[Server]: Exception: {e.Message}");
         }
         finally
         {
@@ -118,6 +119,28 @@ public class ServerHost
             stream.Close();
             clients.Remove(client);
             client.Disconnect();
+        }
+    }
+
+    private void HandlePacket(MageClient origin, byte[] packet)
+    {
+        MemoryStream ms = new MemoryStream(packet);
+        BinaryReader br = new BinaryReader(ms);
+
+        switch (ms.ReadByte())
+        {
+            case (byte)PacketType.UserList:
+                
+                break;
+
+            case (byte)PacketType.RomChange:
+                ms.Seek(5, SeekOrigin.Begin);
+                PropagatePacketToClients(origin, packet);
+                break;
+
+            default:
+                ServerOutput($"[Server]: Received: {packet.Length} Bytes");
+                break;
         }
     }
 
@@ -172,6 +195,7 @@ public class ServerHost
 
         PropagatePacketToClients(null, builder.GetPacketBytes());
     }
+
 
     public void EndSession()
     {

@@ -17,7 +17,7 @@ public class PacketReader : BinaryReader
 
     public static async Task<byte[]> ReadPacketFromStream(NetworkStream ns)
     {
-        byte[] buffer = new byte[8192];
+        byte[] buffer = new byte[Config.MaximumPacketSize];
         int bytesRead;
 
         bytesRead = await ns.ReadAsync(buffer);

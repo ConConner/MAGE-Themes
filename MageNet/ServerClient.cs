@@ -28,6 +28,7 @@ public class ServerClient
 
     #region Events
     public event EventHandler<UsersConnectedArgument> UserConnected;
+    public event EventHandler<RomChangeArgument> RomChanged;
     #endregion
 
     public void ConnectToServer(IPAddress address, int port)
@@ -93,14 +94,21 @@ public class ServerClient
                 ms.Seek(5, SeekOrigin.Begin); //Skip packet length, since its irrelevant
 
                 UserList ul = UserList.Deserialize(ms);
-                UsersConnectedArgument argument = new UsersConnectedArgument()
+                UsersConnectedArgument ucArgument = new UsersConnectedArgument()
                 {
                     ConnectedUsers = ul.Clients,
                     LatestConnect = ul.Clients.Last()
                 };
-                UserConnected?.Invoke(this, argument);
+                UserConnected?.Invoke(this, ucArgument);
                 break;
 
+            case (byte)PacketType.RomChange:
+                ms.Seek(5, SeekOrigin.Begin);
+
+                RomChange rc = RomChange.Deserialize(ms);
+                RomChangeArgument rcArgument = new RomChangeArgument(rc);
+                RomChanged?.Invoke(this, rcArgument);
+                break;
 
             default:
                 clientOutput($"[{username}]: Received: {packet.Length} bytes");

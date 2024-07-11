@@ -1,4 +1,7 @@
-﻿using System;
+﻿using mage.Networking;
+using MageNet.IO;
+using MageNet.Packets;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -142,7 +145,8 @@ namespace mage
                 }
             }
 
-            data[pos++] = val; 
+            data[pos++] = val;
+            SendRomChangePacket(pos, val);
         }
 
         public void Write16(ushort val)
@@ -159,7 +163,9 @@ namespace mage
             }
 
             data[pos] = (byte)val;
+            SendRomChangePacket(pos, (byte)val);
             data[pos + 1] = (byte)(val >> 8);
+            SendRomChangePacket(pos + 1, (byte)(val >> 8));
             pos += 2;
         }
 
@@ -180,9 +186,13 @@ namespace mage
             }
 
             data[pos] = (byte)val;
+            SendRomChangePacket(pos, (byte)val);
             data[pos + 1] = (byte)(val >> 8);
+            SendRomChangePacket(pos + 1, (byte)(val >> 8));
             data[pos + 2] = (byte)(val >> 16);
+            SendRomChangePacket(pos + 2, (byte)(val >> 16));
             data[pos + 3] = (byte)(val >> 24);
+            SendRomChangePacket(pos + 3, (byte)(val >> 24));
             pos += 4;
         }
 
@@ -200,9 +210,13 @@ namespace mage
             }
 
             data[pos] = (byte)val;
+            SendRomChangePacket(pos, (byte)val);
             data[pos + 1] = (byte)(val >> 8);
+            SendRomChangePacket(pos + 1, (byte)(val >> 8));
             data[pos + 2] = (byte)(val >> 16);
+            SendRomChangePacket(pos + 2, (byte)(val >> 16));
             data[pos + 3] = (byte)((val >> 24) + 8);
+            SendRomChangePacket(pos + 3, (byte)((val >> 24) + 8));
             pos += 4;
         }
 
@@ -258,20 +272,27 @@ namespace mage
         public void Write8(int offset, byte val)
         {
             data[offset] = val;
+            SendRomChangePacket(offset, val);
         }
 
         public void Write16(int offset, ushort val)
         {
             data[offset] = (byte)val;
+            SendRomChangePacket(offset, (byte)val);
             data[offset + 1] = (byte)(val >> 8);
+            SendRomChangePacket(offset + 1, (byte)(val >> 8));
         }
 
         public void Write32(int offset, int val)
         {
             data[offset] = (byte)val;
+            SendRomChangePacket(offset, (byte)val);
             data[offset + 1] = (byte)(val >> 8);
+            SendRomChangePacket(offset + 1, (byte)(val >> 8));
             data[offset + 2] = (byte)(val >> 16);
+            SendRomChangePacket(offset + 2, (byte)(val >> 16));
             data[offset + 3] = (byte)(val >> 24);
+            SendRomChangePacket(offset + 3, (byte)(val >> 24));
         }
 
         public void WritePtr(int offset, int val)
@@ -280,6 +301,12 @@ namespace mage
             data[offset + 1] = (byte)(val >> 8);
             data[offset + 2] = (byte)(val >> 16);
             data[offset + 3] = (byte)((val >> 24) + 8);
+
+            SendRomChangePacket(offset, (byte)val);
+            SendRomChangePacket(offset + 1, (byte)(val >> 8));
+            SendRomChangePacket(offset + 2, (byte)(val >> 16));
+            SendRomChangePacket(offset + 3, (byte)((val >> 24) + 8));
+
         }
 
         public void WriteASCII(int offset, string str)
@@ -703,5 +730,16 @@ namespace mage
 
         #endregion
 
+
+        private void SendRomChangePacket(int offset, byte change)
+        {
+            if (!Session.InSession) return;
+
+            PacketBuilder pb = new PacketBuilder();
+            RomChange packet = new RomChange(offset, change);
+            pb.AddPacket(PacketType.RomChange, packet);
+
+            Session.SessionClient.SendPacket(pb.GetPacketBytes());
+        }
     }
 }
