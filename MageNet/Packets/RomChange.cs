@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MageNet.Packets;
 
-public class RomChange : IPacket
+public class RomChange : IPacketContent
 {
     public int Offset
     {

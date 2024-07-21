@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MageNet.Packets;
 
-public interface IPacket
+public interface IPacketContent
 {
     public byte[] Serialize();
 }

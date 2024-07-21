@@ -15,26 +15,4 @@ public class PacketBuilder
     {
         Stream = new MemoryStream();
     }
-
-    public void WriteType(PacketType type)
-    {
-        Stream.WriteByte((byte)type);
-    }
-
-    public void AddPacket(PacketType type, IPacket packet)
-    {
-        WriteType(type);
-        byte[] data = packet.Serialize();
-        Stream.Write(BitConverter.GetBytes(data.Length));
-        Stream.Write(data);
-    }
-
-    public byte[] GetPacketBytes()
-    {
-        return Stream.ToArray();
-    }
-
-
-    //Operators
-    public static explicit operator byte[](PacketBuilder builder) => builder.GetPacketBytes();
 }

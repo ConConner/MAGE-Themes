@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MageNet.Packets;
 
-public class TileChange : IPacket
+public class TileChange : IPacketContent
 {
     public byte Area { get; set; }
     public byte Room { get; set; }

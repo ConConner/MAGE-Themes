@@ -103,8 +103,8 @@ public class ServerHost
             //Keep listening to packets
             while (true)
             {
-                byte[] packet = await PacketReader.ReadPacketFromStream(stream);
-                if (packet.Length == 0) break;
+                Packet packet = await PacketReader.ReadSinglePacketFromStream(stream);
+                if (packet == null || packet.Length == 0) break;
 
                 HandlePacket(client, packet);
             }
@@ -122,24 +122,23 @@ public class ServerHost
         }
     }
 
-    private void HandlePacket(MageClient origin, byte[] packet)
+    private void HandlePacket(MageClient origin, Packet packet)
     {
-        MemoryStream ms = new MemoryStream(packet);
+        MemoryStream ms = new MemoryStream(packet.Content);
         BinaryReader br = new BinaryReader(ms);
-
-        switch (ms.ReadByte())
+        ServerOutput($"[Server]: Received: {packet.Length} Bytes");
+        switch (packet.Type)
         {
-            case (byte)PacketType.UserList:
+            case PacketType.UserList:
                 
                 break;
 
-            case (byte)PacketType.RomChange:
-                ms.Seek(5, SeekOrigin.Begin);
+            case PacketType.RomChange:
                 PropagatePacketToClients(origin, packet);
                 break;
 
             default:
-                ServerOutput($"[Server]: Received: {packet.Length} Bytes");
+                
                 break;
         }
     }
@@ -148,12 +147,12 @@ public class ServerHost
     /// Propegates the Data to every other Client, except the one that it was send from
     /// </summary>
     /// <param name="data"></param>
-    public void PropagatePacketToClients(MageClient origin, byte[] data)
+    public void PropagatePacketToClients(MageClient origin, Packet p)
     {
         foreach (MageClient c in clients)
         {
             if (c.UID == origin?.UID) continue;
-            SendPacketToClient(c, data);
+            SendPacketToClientAsync(c, p);
         }
     }
 
@@ -161,10 +160,15 @@ public class ServerHost
     /// Sends a packet to a client
     /// </summary>
     /// <param name="data"></param>
-    public void SendPacketToClient(MageClient client, byte[] data)
+    public async void SendPacketToClientAsync(MageClient client, Packet packet)
     {
         NetworkStream stream = client.ClientSocket.GetStream();
-        stream.Write(data, 0, data.Length);
+        await stream.WriteAsync(packet.Serialize());
+    }
+    public void SendPacketToClient(MageClient client, Packet packet)
+    {
+        NetworkStream stream = client.ClientSocket.GetStream();
+        stream.Write(packet.Serialize());
     }
 
     /// <summary>
@@ -174,15 +178,14 @@ public class ServerHost
     {
         while (true)
         {
-            byte[] namePacket = await PacketReader.ReadPacketFromStream(client.ClientSocket.GetStream());
+            Packet namePacket = await PacketReader.ReadSinglePacketFromStream(client.ClientSocket.GetStream());
             if (namePacket.Length == 0) throw new Exception($"Client {client.UID} closed the connection");
 
             //Check for proper type
-            MemoryStream ms = new MemoryStream(namePacket);
-            if (ms.ReadByte() != (byte)PacketType.Username) throw new Exception($"Client {client.UID} did not provide a Username as their first packet");
-            ms.Seek(5, SeekOrigin.Begin);
+            if (namePacket.Type != PacketType.Username) throw new Exception($"Client {client.UID} did not provide a Username as their first packet");
 
             //Read Packet content
+            MemoryStream ms = new MemoryStream(namePacket.Content);
             MessagePacket mp = MessagePacket.Deserialize(ms);
             return mp.Message;
         }
@@ -190,10 +193,9 @@ public class ServerHost
 
     public void SendUserList()
     {
-        PacketBuilder builder = new PacketBuilder();
-        builder.AddPacket(PacketType.UserList, new UserList(clients));
+        Packet p = new(PacketType.UserList, new UserList(clients));
 
-        PropagatePacketToClients(null, builder.GetPacketBytes());
+        PropagatePacketToClients(null, p);
     }
 
 

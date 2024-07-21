@@ -15,6 +15,7 @@ namespace MageNet;
 public class ServerClient
 {
     TcpClient client;
+    NetworkStream clientStream => client.GetStream();
     string username;
     Action<string> clientOutput;
 
@@ -39,9 +40,8 @@ public class ServerClient
 
         //Send Username
         MessagePacket packet = new MessagePacket(username);
-        PacketBuilder pb = new PacketBuilder();
-        pb.AddPacket(PacketType.Username, packet);
-        SendPacket(pb.GetPacketBytes());
+        Packet p = new Packet(PacketType.Username, packet);
+        SendPacketToServerAsync(p);
 
         ListenToPackets();
     }
@@ -51,9 +51,13 @@ public class ServerClient
         if (client.Connected) client.Close();
     }
 
-    public void SendPacket(byte[] payload)
+    public async Task SendPacketToServerAsync(Packet p)
     {
-        client.Client.Send(payload);
+        await clientStream.WriteAsync(p.Serialize());
+    }
+    public void SendPacketToServer(Packet p)
+    {
+        clientStream.Write(p.Serialize());
     }
 
     private async void ListenToPackets()
@@ -64,7 +68,7 @@ public class ServerClient
         {
             while (true)
             {
-                byte[] packet = await PacketReader.ReadPacketFromStream(stream);
+                Packet packet = await PacketReader.ReadSinglePacketFromStream(stream);
                 if (packet.Length == 0) break;
 
                 //Handle received data
@@ -83,16 +87,14 @@ public class ServerClient
         }
     }
 
-    private void HandlePacket(byte[] packet)
+    private void HandlePacket(Packet packet)
     {
-        MemoryStream ms = new MemoryStream(packet);
+        MemoryStream ms = new MemoryStream(packet.Content);
         BinaryReader br = new BinaryReader(ms);
 
-        switch (ms.ReadByte())
+        switch (packet.Type)
         {
-            case (byte)PacketType.UserList:
-                ms.Seek(5, SeekOrigin.Begin); //Skip packet length, since its irrelevant
-
+            case PacketType.UserList:
                 UserList ul = UserList.Deserialize(ms);
                 UsersConnectedArgument ucArgument = new UsersConnectedArgument()
                 {
@@ -102,16 +104,14 @@ public class ServerClient
                 UserConnected?.Invoke(this, ucArgument);
                 break;
 
-            case (byte)PacketType.RomChange:
-                ms.Seek(5, SeekOrigin.Begin);
-
+            case PacketType.RomChange:
                 RomChange rc = RomChange.Deserialize(ms);
                 RomChangeArgument rcArgument = new RomChangeArgument(rc);
                 RomChanged?.Invoke(this, rcArgument);
                 break;
 
             default:
-                clientOutput($"[{username}]: Received: {packet.Length} bytes");
+                clientOutput($"[{username}] Received {packet.Length + 5} bytes");
                 break;
         }
     }

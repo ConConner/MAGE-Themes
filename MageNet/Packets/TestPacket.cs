@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MageNet.Packets;
 
-public class TestPacket : IPacket
+public class TestPacket : IPacketContent
 {
     int length;
     public TestPacket(int Length)

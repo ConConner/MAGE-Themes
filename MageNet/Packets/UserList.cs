@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace MageNet.Packets;
 
-public class UserList : IPacket
+public class UserList : IPacketContent
 {
     public List<MageClient> Clients { get; set; }
 

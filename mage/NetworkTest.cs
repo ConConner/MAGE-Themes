@@ -48,10 +48,9 @@ public partial class NetworkTest : Form
     private void btn_test_packet_Click(object sender, EventArgs e)
     {
         TestPacket t = new TestPacket(20);
-        PacketBuilder b = new PacketBuilder();
-        b.AddPacket(PacketType.Dummy, t);
+        Packet p = new(PacketType.Dummy, t);
 
-        Client.SendPacket(t.Serialize());
+        Client.SendPacketToServerAsync(p);
     }
 
     void AddLogMessage(string message)

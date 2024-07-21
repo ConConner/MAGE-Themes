@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MageNet.Packets;
 
-public class MessagePacket : IPacket
+public class MessagePacket : IPacketContent
 {
     public string Message { get; set; } = "";
 
