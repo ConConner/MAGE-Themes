@@ -496,6 +496,12 @@ namespace mage
             }
         }
 
-
+        public void SetAllBGsEdited()
+        {
+            BG0.Edited = true;
+            BG1.Edited = true;
+            BG2.Edited = true;
+            Clip.Edited = true;
+        }
     }
 }

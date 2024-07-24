@@ -23,6 +23,8 @@ namespace mage
     {
 
         #region properties
+        public static FormMain MainWindow { get; private set; }
+
 
         public Room Room
         {
@@ -98,6 +100,7 @@ namespace mage
         {
             InitializeComponent();
 
+            MainWindow = this;
             InitFont(Properties.Resources.zm_digits);
 
             DisplayRecentFiles();
@@ -108,6 +111,8 @@ namespace mage
 
             ThemeSwitcher.ChangeTheme(Controls, this);
             ThemeSwitcher.InjectPaintOverrides(Controls);
+
+            Session.ConnectedToServer += ConnectedToCollabSession;
         }
 
         #region opening/closing
@@ -211,6 +216,10 @@ namespace mage
             //Louding Sound path
             Sound.SoundPacksPath = Settings.Default.soundPackPath;
             Sound.SoundPackName = Settings.Default.soundPackName;
+
+            //Loading Collab Profile
+            string jsonString = Settings.Default.collabProfile;
+            if (jsonString != null && jsonString != "") Session.Profile = JsonSerializer.Deserialize<CollaborationProfile>(jsonString); 
         }
 
         private void SaveSettings()
@@ -246,6 +255,9 @@ namespace mage
             //Sound
             Settings.Default.soundPackPath = Sound.SoundPacksPath;
             Settings.Default.soundPackName = Sound.SoundPackName;
+
+            //Collab Profile
+            Settings.Default.collabProfile = JsonSerializer.Serialize(Session.Profile);
 
             Settings.Default.Save();
         }
@@ -2169,21 +2181,6 @@ namespace mage
             }
 
             EditBlocks a;
-            //if (blocks.Length == 1)
-            //{ 
-            //    if (clip == 0x13)
-            //    {
-            //        Block b = blocks[0, 0];
-            //        blocks = new Block[2,1];
-            //
-            //        b.CLP = 0x13;
-            //        blocks[0,0] = b;
-            //        b.CLP = 0x14;
-            //        blocks[1,0] = b;
-            //
-            //        clip = 0xFFFE;
-            //    }
-            //}
             a = new EditBlocks(room.backgrounds, blocks, roomCursor, bgNum, clip, combine);
             PerformAction(a);
         }
@@ -2755,9 +2752,44 @@ namespace mage
         private void contextItem_removeEffectPos_Click(object sender, EventArgs e) => SetNewEffectYPosition(0xFF);
         #endregion
 
+        #region Networking
+
+        private void ConnectedToCollabSession(object sender, EventArgs e)
+        {
+            Session.SessionClient.TileChanged += RoomTileChanged;
+        }
+
+        private void RoomTileChanged(object sender, TileChange tc)
+        {
+            Room target = room;
+            if (tc.Area != room.AreaID || tc.Room != room.RoomID) target = new Room(tc.Area, tc.Room);
+
+            foreach (var block in tc.Blocks)
+            {
+                Block b = new Block()
+                {
+                    BG0 = block.BG0,
+                    BG1 = block.BG1,
+                    BG2 = block.BG2,
+                    CLP = block.Clip
+                };
+                target.backgrounds.SetBlock(b, block.Location.X, block.Location.Y);
+            }
+            target.SetAllBGsEdited();
+            target.SaveObjects();
+            if (target == room) UpdateUI(null);
+        }
+
+        #endregion
+
         private void btn_test_Click(object sender, EventArgs e)
         {
-            new NetworkTest(this).Show();
+            if (!Session.InSession) return;
+
+            RomChange r = new RomChange(0x0, 0xFF);
+            Packet p = new Packet(PacketType.RomChange, r);
+
+            Session.SessionClient.SendPacketToServerAsync(p);
         }
     }
 }

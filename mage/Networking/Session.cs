@@ -1,5 +1,6 @@
 ﻿using MageNet;
 using MageNet.EventArguments;
+using MageNet.Packets;
 using MageNet.Util;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace mage.Networking;
@@ -15,6 +17,7 @@ public static class Session
 {
     #region Properties
     public static System.Version MageNetVersion { get; } = MageNet.Meta.MageNetVersion;
+    public static CollaborationProfile Profile { get; set; } = new CollaborationProfile();
     public static ServerHost SessionServer { get; set; } = null;
     public static ServerClient SessionClient { get; set; } = null;
     public static bool IsHost { get; set; } = false;
@@ -74,6 +77,7 @@ public static class Session
         SessionClient.ConnectToServer(address, port);
 
         InSession = true;
+        ConnectedToServer?.Invoke(null, new EventArgs());
     }
 
     public static void EndSession()

@@ -35,7 +35,7 @@ public class RomChange : IPacketContent
         get => data;
         set
         {
-            Length = (byte)data.Length;
+            Length = (byte)value.Length;
             data = value;
         }
     }

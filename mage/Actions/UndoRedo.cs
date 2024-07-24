@@ -1,4 +1,12 @@
-﻿using System;
+﻿using mage.Networking;
+using MageNet.Data;
+using MageNet.IO;
+using MageNet.Packets;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Net.Sockets;
+using System.Text.Json;
 
 namespace mage
 {
@@ -59,7 +67,43 @@ namespace mage
             {
                 undoStack.Peek().combine = false;
             }
+            SendActionToServer();
         }
 
+        private void SendActionToServer()
+        {
+            if (!Session.InSession) return;
+
+            //Serialize the current action
+            Action a = undoStack.Peek();
+
+            //Check action type
+            if (a is EditBlocks)
+            {
+                EditBlocks action = a as EditBlocks;
+
+                //Convert all the changed blocks in the action
+                List<BlockChange> changes = new();
+                foreach (KeyValuePair<Point, Block> kvp in action.oldBlocks)
+                {
+                    BlockChange b = new BlockChange()
+                    {
+                        BG0 = kvp.Value.BG0,
+                        BG1 = kvp.Value.BG1,
+                        BG2 = kvp.Value.BG2,
+                        Clip = kvp.Value.CLP,
+                        Location = kvp.Key
+                    };
+
+                    changes.Add(b);
+                }
+
+                TileChange tc = new TileChange(FormMain.MainWindow.Room.AreaID, FormMain.MainWindow.Room.RoomID, changes);
+                Packet p = new Packet(PacketType.TileChange, tc);
+                _ = Session.SessionClient.SendPacketToServerAsync(p);
+            }
+
+            //TODO: Handle other actions here
+        }
     }
 }

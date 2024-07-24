@@ -30,6 +30,7 @@ public class ServerClient
     #region Events
     public event EventHandler<UsersConnectedArgument> UserConnected;
     public event EventHandler<RomChangeArgument> RomChanged;
+    public event EventHandler<TileChange> TileChanged;
     #endregion
 
     public void ConnectToServer(IPAddress address, int port)
@@ -45,20 +46,6 @@ public class ServerClient
 
         ListenToPackets();
     }
-    
-    public void Disconnect()
-    {
-        if (client.Connected) client.Close();
-    }
-
-    public async Task SendPacketToServerAsync(Packet p)
-    {
-        await clientStream.WriteAsync(p.Serialize());
-    }
-    public void SendPacketToServer(Packet p)
-    {
-        clientStream.Write(p.Serialize());
-    }
 
     private async void ListenToPackets()
     {
@@ -69,7 +56,7 @@ public class ServerClient
             while (true)
             {
                 Packet packet = await PacketReader.ReadSinglePacketFromStream(stream);
-                if (packet.Length == 0) break;
+                if (packet == null || packet.Length == 0) break;
 
                 //Handle received data
                 HandlePacket(packet);
@@ -110,9 +97,31 @@ public class ServerClient
                 RomChanged?.Invoke(this, rcArgument);
                 break;
 
+            case PacketType.TileChange:
+                TileChange tc = TileChange.Deserialize(ms);
+                TileChanged?.Invoke(this, tc);
+                break;
+
             default:
                 clientOutput($"[{username}] Received {packet.Length + 5} bytes");
                 break;
         }
+    }
+
+
+
+
+    public void Disconnect()
+    {
+        if (client.Connected) client.Close();
+    }
+
+    public async Task SendPacketToServerAsync(Packet p)
+    {
+        await clientStream.WriteAsync(p.Serialize());
+    }
+    public void SendPacketToServer(Packet p)
+    {
+        clientStream.Write(p.Serialize());
     }
 }

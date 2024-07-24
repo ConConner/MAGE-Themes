@@ -14,6 +14,7 @@ public enum PacketType : byte
     Dummy,
     
     RomChange,
+    TileChange,
 
     Username,
     UserList,

@@ -28,6 +28,11 @@ public partial class FormCollabSession : Form
 
         Session.UserListChanged += UpdateUserList;
 
+        txb_join_name.Text = txb_host_name.Text = Session.Profile.Username;
+        txb_host_port.Text = Convert.ToString(Session.Profile.HostPort);
+        txb_join_port.Text = Convert.ToString(Session.Profile.JoinPort);
+        txb_join_ip.Text = Session.Profile.JoinAddress;
+
         //If no session connected
         if (Session.InSession)
         {
@@ -107,6 +112,10 @@ public partial class FormCollabSession : Form
 
         //Set UI
         SetUIButtons();
+
+        //Update Profile
+        Session.Profile.Username = txb_host_name.Text;
+        Session.Profile.HostPort = port;
     }
 
     /// <summary>
@@ -129,5 +138,10 @@ public partial class FormCollabSession : Form
 
         //Set UI Buttons
         SetUIButtons();
+
+        //Update Profile
+        Session.Profile.Username = txb_join_name.Text;
+        Session.Profile.JoinPort = port;
+        Session.Profile.JoinAddress = txb_join_ip.Text;
     }
 }

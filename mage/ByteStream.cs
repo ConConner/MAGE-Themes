@@ -731,14 +731,14 @@ namespace mage
         #endregion
 
 
-        private async void SendRomChangePacket(int offset, byte change)
+        private void SendRomChangePacket(int offset, byte change)
         {
             //if (!Session.InSession) return;
             //
             //RomChange packet = new RomChange(offset, change);
             //Packet p = new(PacketType.RomChange, packet);
             //
-            //await Session.SessionClient.SendPacketToServerAsync(p);
+            //_ = Session.SessionClient.SendPacketToServerAsync(p);
         }
     }
 }

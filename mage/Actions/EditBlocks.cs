@@ -10,8 +10,10 @@ namespace mage
     public class EditBlocks : RoomAction
     {
         // fields
-        private Dictionary<Point, Block> blocks;
-        private Rectangle region;
+        public Dictionary<Point, Block> blocks { get; set; }
+        public Rectangle region { get; set; }
+
+        public Dictionary<Point, Block> oldBlocks { get; set; }
 
         // constructor
         public EditBlocks(Backgrounds backgrounds, Block[,] clipboard, Point ptDst, int bgNum, ushort clipVal, bool combine)
@@ -24,6 +26,7 @@ namespace mage
 
             bool updateClip = (clipVal != 0xFFFF);
             blocks = new Dictionary<Point, Block>();
+            oldBlocks = blocks;
 
             for (int y = 0; y < height; y++)
             {
@@ -58,6 +61,8 @@ namespace mage
             }
         }
 
+        public EditBlocks() { }
+
         public override void Do(Room room)
         {
             Dictionary<Point, Block> backup = new Dictionary<Point, Block>();
@@ -70,6 +75,7 @@ namespace mage
                 room.backgrounds.SetBlock(kvp.Value, p.X, p.Y);
             }
 
+            oldBlocks = blocks;
             blocks = backup;
         }
 
@@ -103,6 +109,11 @@ namespace mage
                 {
                     blocks.Add(kvp.Key, kvp.Value);
                 }
+            }
+            foreach (KeyValuePair<Point, Block> kvp in newer.oldBlocks)
+            {
+                if (oldBlocks.ContainsKey(kvp.Key)) continue;
+                oldBlocks.Add(kvp.Key, kvp.Value);
             }
 
             return true;

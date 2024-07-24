@@ -48,6 +48,9 @@ public class ServerHost
     #endregion
 
     #region Methods
+
+    #region Client Handling
+
     /// <summary>
     /// Starts accepting clients on the TCPListener through the given address and port
     /// </summary>
@@ -130,18 +133,23 @@ public class ServerHost
         switch (packet.Type)
         {
             case PacketType.UserList:
-                
+
                 break;
 
             case PacketType.RomChange:
+            case PacketType.TileChange:
                 PropagatePacketToClients(origin, packet);
                 break;
 
             default:
-                
+
                 break;
         }
     }
+
+    #endregion
+
+    #region Packet Operations
 
     /// <summary>
     /// Propegates the Data to every other Client, except the one that it was send from
@@ -171,6 +179,9 @@ public class ServerHost
         stream.Write(packet.Serialize());
     }
 
+    #endregion
+
+
     /// <summary>
     /// Starts listening for a Packet of the type Username and returns the Username as a string if received
     /// </summary>
@@ -198,7 +209,6 @@ public class ServerHost
         PropagatePacketToClients(null, p);
     }
 
-
     public void EndSession()
     {
         foreach (MageClient c in clients)
@@ -207,5 +217,6 @@ public class ServerHost
         }
         listener.Stop();
     }
+
     #endregion
 }
