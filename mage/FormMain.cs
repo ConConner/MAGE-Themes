@@ -2387,8 +2387,6 @@ namespace mage
 
         private void roomView_MouseDown(object sender, MouseEventArgs e)
         {
-            roomView.Focus();
-
             if (e.Button == MouseButtons.Left && pivot.X == -1)
             {
                 if (EditBGs)
