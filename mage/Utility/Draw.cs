@@ -314,5 +314,21 @@ namespace mage
             g.DrawImage(nums, new Rectangle(numberTens.X, numberTens.Y, 8, 8),
                 new Rectangle((tens + 1) * 8, 0, 8, 8), GraphicsUnit.Pixel);
         }
+
+        public static void DrawArrow(Graphics g, Point point, ArrowDirection dir)
+        {
+            Bitmap arrows = Properties.Resources.arrows;
+            int num = (int)dir;
+
+            g.DrawImage(arrows, new Rectangle(point.X + 4, point.Y + 4, 8, 8),
+                new Rectangle(num * 8, 0, 8, 8), GraphicsUnit.Pixel);
+        }
+
+        public enum ArrowDirection : int {
+            Right = 0,
+            Down = 1,
+            Left = 2,
+            Up = 3
+        }
     }
 }

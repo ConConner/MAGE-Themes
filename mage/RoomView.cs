@@ -151,7 +151,7 @@ namespace mage
                 }
                 if (main.OutlineDoors)
                 {
-                    room.doorList.Draw(g, rect);
+                    room.doorList.Draw(g, rect, true);
                 }
                 if (main.OutlineScrolls)
                 {

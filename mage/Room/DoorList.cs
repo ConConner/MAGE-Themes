@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 
@@ -45,7 +46,7 @@ namespace mage
             doors = DoorData.GetRoomDoors(room.AreaID, room.RoomID);
         }
 
-        public void Draw(Graphics g, Rectangle rect)
+        public void Draw(Graphics g, Rectangle rect, bool drawNumbers = false)
         {
             Pen p = Pens.Blue;
             foreach (Door d in doors)
@@ -58,6 +59,31 @@ namespace mage
                         xSize * 16 - 1, ySize * 16 - 1));
                     g.DrawRectangle(p, new Rectangle(d.xStart * 16 + 1, d.yStart * 16 + 1,
                         xSize * 16 - 3, ySize * 16 - 3));
+
+                    // Draw Door Numbers
+                    if (!drawNumbers) continue;
+                    Point pnt = new Point(d.xStart * 16, d.yStart * 16);
+                    mage.Draw.DrawNumber(g, pnt, d.doorNum);
+
+                    // Draw connected door ID
+                    if (ySize >= 3)
+                    {
+                        Point dstPnt = new Point(d.xStart * 16, d.yEnd * 16);
+                        mage.Draw.DrawNumber(g, dstPnt, d.dstDoor);
+
+                        //Draw Arrow
+                        Point arrowPoint = new Point(d.xStart * 16, (d.yStart * 16 + d.yEnd * 16) / 2);
+                        mage.Draw.DrawArrow(g, arrowPoint, mage.Draw.ArrowDirection.Down);
+                    }
+                    else if (xSize >= 3)
+                    {
+                        Point dstPnt = new Point(d.xEnd * 16, d.yStart * 16);
+                        mage.Draw.DrawNumber(g, dstPnt, d.dstDoor);
+
+                        //Draw Arrow
+                        Point arrowPoint = new Point((d.xStart * 16 + d.xEnd * 16) / 2, d.yStart * 16);
+                        mage.Draw.DrawArrow(g, arrowPoint, mage.Draw.ArrowDirection.Right);
+                    }
                 }
             }
         }
