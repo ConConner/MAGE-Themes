@@ -299,5 +299,20 @@ namespace mage
                 pos += 160;
             }
         }
+
+        public static void DrawNumber(Graphics g, Point point, byte num)
+        {
+            //Drawing numbers
+            Point numberTens = new Point(point.X, point.Y + 4);
+            Point numberOnes = new Point(point.X + 8, point.Y + 4);
+            byte tens = (byte)(num >> 4);
+            byte ones = (byte)(num & 0xF);
+
+            Bitmap nums = Properties.Resources.scrollNums;
+            g.DrawImage(nums, new Rectangle(numberOnes.X, numberOnes.Y, 8, 8),
+                new Rectangle((ones + 1) * 8, 0, 8, 8), GraphicsUnit.Pixel);
+            g.DrawImage(nums, new Rectangle(numberTens.X, numberTens.Y, 8, 8),
+                new Rectangle((tens + 1) * 8, 0, 8, 8), GraphicsUnit.Pixel);
+        }
     }
 }

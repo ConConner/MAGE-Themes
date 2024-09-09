@@ -197,23 +197,8 @@ namespace mage
             g.FillRectangle(mp.Brush, new Rectangle(p2.X - 16 + 4, p2.Y + 14, 8, 2));
 
             //Draw numbers
-            DrawNumber(g, p1, effectY);
-            DrawNumber(g, new Point(p2.X - 16, p2.Y), effectY);
-        }
-
-        private void DrawNumber(Graphics g, Point point, byte num)
-        {
-            //Drawing numbers
-            Point numberTens = new Point(point.X, point.Y + 4);
-            Point numberOnes = new Point(point.X + 8, point.Y + 4);
-            byte tens = (byte)(num >> 4);
-            byte ones = (byte)(num & 0xF);
-
-            Bitmap nums = Properties.Resources.scrollNums;
-            g.DrawImage(nums, new Rectangle(numberOnes.X, numberOnes.Y, 8, 8),
-                new Rectangle((ones + 1) * 8, 0, 8, 8), GraphicsUnit.Pixel);
-            g.DrawImage(nums, new Rectangle(numberTens.X, numberTens.Y, 8, 8),
-                new Rectangle((tens + 1) * 8, 0, 8, 8), GraphicsUnit.Pixel);
+            Draw.DrawNumber(g, p1, effectY);
+            Draw.DrawNumber(g, new Point(p2.X - 16, p2.Y), effectY);
         }
 
         private void DrawScreenOutlines(Graphics g, Rectangle rect)
