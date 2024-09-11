@@ -1,10 +1,11 @@
 MAGE 1.5.0:
 - Theming support
 - Fix crashes
-- Drag on Minimap Editor
+- Drag to draw on Minimap Editor
 - Enable apply on "Auto connect" in Edit Door
 - Edit Sprites/Scrolls/Doors with double click
 - Added 'Go through Door' to right-click menu
+- Doors display their ID and connected ID
 - Input screens directly in Room Options
 - Input screens directly in Add Room
 - Screen number gets displayed as hex
@@ -28,3 +29,6 @@ MAGE 1.5.0:
 - Copy symbol file of current ROM into the test ROM Folder
 - The Color behind BG3 can be adjusted
 - Add optional Soundpack support to add sounds to the MAGE UI
+- Presets for Background Property in Header Editor
+- Presets for BG3 Scroll in Header Editor
+- Tileset preview selection in Header Editor
