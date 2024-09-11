@@ -219,7 +219,7 @@
             statusLabel_sel = new System.Windows.Forms.ToolStripStatusLabel();
             statusLabel_clip = new System.Windows.Forms.ToolStripStatusLabel();
             lbl_spring = new System.Windows.Forms.ToolStripStatusLabel();
-            lbl_zoom_percent = new System.Windows.Forms.ToolStripStatusLabel();
+            statusStrip_theme = new System.Windows.Forms.ToolStripDropDownButton();
             statusStrip_zoom = new System.Windows.Forms.ToolStripDropDownButton();
             toolStrip_zoom800 = new System.Windows.Forms.ToolStripMenuItem();
             toolStrip_zoom400 = new System.Windows.Forms.ToolStripMenuItem();
@@ -1712,7 +1712,7 @@
             // statusStrip
             // 
             statusStrip.Enabled = false;
-            statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_coor, statusLabel_sel, statusLabel_clip, lbl_spring, lbl_zoom_percent, statusStrip_zoom });
+            statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_coor, statusLabel_sel, statusLabel_clip, lbl_spring, statusStrip_theme, statusStrip_zoom });
             statusStrip.Location = new System.Drawing.Point(0, 549);
             statusStrip.Name = "statusStrip";
             statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
@@ -1754,25 +1754,30 @@
             // lbl_spring
             // 
             lbl_spring.Name = "lbl_spring";
-            lbl_spring.Size = new System.Drawing.Size(698, 19);
+            lbl_spring.Size = new System.Drawing.Size(554, 19);
             lbl_spring.Spring = true;
             // 
-            // lbl_zoom_percent
+            // statusStrip_theme
             // 
-            lbl_zoom_percent.Name = "lbl_zoom_percent";
-            lbl_zoom_percent.Size = new System.Drawing.Size(35, 19);
-            lbl_zoom_percent.Text = "100%";
+            statusStrip_theme.AutoToolTip = false;
+            statusStrip_theme.Image = Properties.Resources.toolbar_palette;
+            statusStrip_theme.ImageTransparentColor = System.Drawing.Color.Magenta;
+            statusStrip_theme.Name = "statusStrip_theme";
+            statusStrip_theme.Size = new System.Drawing.Size(144, 22);
+            statusStrip_theme.Text = "CurrentThemeName";
+            statusStrip_theme.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             // 
             // statusStrip_zoom
             // 
             statusStrip_zoom.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            statusStrip_zoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            statusStrip_zoom.AutoToolTip = false;
             statusStrip_zoom.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStrip_zoom800, toolStrip_zoom400, toolStrip_zoom200, toolStrip_zoom100 });
             statusStrip_zoom.Image = Properties.Resources.toolbar_zoom;
             statusStrip_zoom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             statusStrip_zoom.Name = "statusStrip_zoom";
-            statusStrip_zoom.Size = new System.Drawing.Size(29, 22);
-            statusStrip_zoom.Text = "Zoom";
+            statusStrip_zoom.Size = new System.Drawing.Size(64, 22);
+            statusStrip_zoom.Text = "100%";
+            statusStrip_zoom.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             // 
             // toolStrip_zoom800
             // 
@@ -2445,12 +2450,12 @@
         private System.Windows.Forms.ToolStripMenuItem menuItem_backgroundColor;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator31;
         private System.Windows.Forms.ToolStripStatusLabel lbl_spring;
-        private System.Windows.Forms.ToolStripStatusLabel lbl_zoom_percent;
         private System.Windows.Forms.ToolStripDropDownButton statusStrip_zoom;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_zoom800;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_zoom400;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_zoom200;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_zoom100;
+        private System.Windows.Forms.ToolStripDropDownButton statusStrip_theme;
     }
 }
 

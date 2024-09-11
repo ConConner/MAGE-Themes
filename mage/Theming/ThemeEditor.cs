@@ -19,6 +19,7 @@ namespace mage.Theming
     {
         bool init = false;
         ColorTheme selectedTheme;
+        public event EventHandler ThemesChanged;
 
         public ThemeEditor()
         {
@@ -144,6 +145,7 @@ namespace mage.Theming
                 ThemeSwitcher.Themes.Add(newName, selectedTheme);
                 ThemeSwitcher.Themes.Remove(currentName);
                 comboBox_theme.Items[comboBox_theme.SelectedIndex] = newName;
+                ThemesChanged?.Invoke(this, null);
             }
         }
 
@@ -172,6 +174,7 @@ namespace mage.Theming
 
             comboBox_theme.Items.Add(name);
             comboBox_theme.SelectedIndex = comboBox_theme.Items.IndexOf(name);
+            ThemesChanged?.Invoke(this, null);
         }
 
         private void menuItem_export_Click(object sender, EventArgs e)
@@ -288,6 +291,7 @@ namespace mage.Theming
             ThemeSwitcher.Themes.Add(name, pair.Value);
             comboBox_theme.Items.Add(name);
             comboBox_theme.SelectedIndex = comboBox_theme.Items.IndexOf(name);
+            ThemesChanged?.Invoke(this, null);
         }
 
         private void flatTextBox_name_TextChanged(object sender, EventArgs e)

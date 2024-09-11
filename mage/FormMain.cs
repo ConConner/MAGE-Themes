@@ -100,12 +100,14 @@ namespace mage
 
             DisplayRecentFiles();
             InitializeSettings();
+            PopulateThemeList(null, null);
             ShowSplash();
 
             roomView.Scrolled += roomView_Scrolled;
 
             ThemeSwitcher.ChangeTheme(Controls, this);
             ThemeSwitcher.InjectPaintOverrides(Controls);
+            ThemeSwitcher.ThemeChanged += SwitchedTheme;
         }
 
         #region opening/closing
@@ -319,6 +321,25 @@ namespace mage
             pfc.AddMemoryFont(data, fontLength);
 
             Marshal.FreeCoTaskMem(data);
+        }
+
+        private void PopulateThemeList(object sender, EventArgs e)
+        {
+            statusStrip_theme.DropDown.Items.Clear();
+            statusStrip_theme.Text = ThemeSwitcher.ProjectThemeName;
+            foreach (string name in ThemeSwitcher.Themes.Keys)
+            {
+                statusStrip_theme.DropDown.Items.Add(name);
+            }
+            foreach (ToolStripMenuItem item in statusStrip_theme.DropDown.Items)
+            {
+                item.Click += (o, e) => { ThemeSwitcher.ProjectThemeName = item.Text; };
+            }
+        }
+
+        private void SwitchedTheme(object sender, EventArgs e)
+        {
+            statusStrip_theme.Text = ThemeSwitcher.ProjectThemeName;
         }
         #endregion
 
@@ -1027,7 +1048,12 @@ namespace mage
 
         private void changeEmulatorPathToolStripMenuItem_Click(object sender, EventArgs e) => Test.SetEmulatorPath();
 
-        private void themeToolStripMenuItem_Click(object sender, EventArgs e) => new ThemeEditor().ShowDialog();
+        private void themeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var editor = new ThemeEditor();
+            editor.ThemesChanged += PopulateThemeList;
+            editor.ShowDialog();
+        }
 
         // help
         private void menuItem_viewHelp_Click(object sender, EventArgs e)
@@ -1684,7 +1710,7 @@ namespace mage
             menuItem_zoom400.Checked = zoom == 2;
             menuItem_zoom800.Checked = zoom == 3;
 
-            lbl_zoom_percent.Text = $"{1 << zoom}00%";
+            statusStrip_zoom.Text = $"{1 << zoom}00%";
 
             if (!roomView.UpdateZoom(zoom, true)) { return; }
 
