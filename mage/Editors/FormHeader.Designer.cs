@@ -52,6 +52,7 @@
             label_BG3scroll = new System.Windows.Forms.Label();
             label_transparency = new System.Windows.Forms.Label();
             groupBox_BGdata = new System.Windows.Forms.GroupBox();
+            btn_tileset_preset = new System.Windows.Forms.Button();
             btn_bg3_prop = new System.Windows.Forms.Button();
             btn_bg0_prop = new System.Windows.Forms.Button();
             btn_bg1_prop = new System.Windows.Forms.Button();
@@ -444,6 +445,7 @@
             // 
             // groupBox_BGdata
             // 
+            groupBox_BGdata.Controls.Add(btn_tileset_preset);
             groupBox_BGdata.Controls.Add(btn_bg3_prop);
             groupBox_BGdata.Controls.Add(btn_bg0_prop);
             groupBox_BGdata.Controls.Add(btn_bg1_prop);
@@ -483,6 +485,16 @@
             groupBox_BGdata.TabIndex = 0;
             groupBox_BGdata.TabStop = false;
             groupBox_BGdata.Text = "Background Data";
+            // 
+            // btn_tileset_preset
+            // 
+            btn_tileset_preset.Image = Properties.Resources.toolbar_patches;
+            btn_tileset_preset.Location = new System.Drawing.Point(144, 40);
+            btn_tileset_preset.Name = "btn_tileset_preset";
+            btn_tileset_preset.Size = new System.Drawing.Size(23, 23);
+            btn_tileset_preset.TabIndex = 19;
+            btn_tileset_preset.UseVisualStyleBackColor = true;
+            btn_tileset_preset.Click += btn_tileset_preset_Click;
             // 
             // btn_bg3_prop
             // 
@@ -1153,5 +1165,6 @@
         private System.Windows.Forms.Button btn_bg3_prop;
         private System.Windows.Forms.Button btn_bg0_prop;
         private System.Windows.Forms.Button btn_bg1_prop;
+        private System.Windows.Forms.Button btn_tileset_preset;
     }
 }

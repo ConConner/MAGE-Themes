@@ -288,6 +288,13 @@ namespace mage
             if (d.ShowDialog() != DialogResult.OK) return;
             textBox_BG3prop.Text = Hex.ToString(d.Value);
         }
+
+        private void btn_tileset_preset_Click(object sender, EventArgs e)
+        {
+            TilesetDialog d = new TilesetDialog();
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_tileset.Text = Hex.ToString(d.SelectedTileset);
+        }
         #endregion
     }
 }

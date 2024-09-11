@@ -73,6 +73,7 @@ namespace mage
         {
             ushort[] tileTable = tileset.tileTable;
             int tilesetHeight = tileTable.Length / 64;
+            image?.Dispose();
             image = new Bitmap(256, tilesetHeight * 16, PixelFormat.Format16bppArgb1555);
 
             // lock bitmap
