@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 
 namespace mage
@@ -46,22 +47,27 @@ namespace mage
             doors = DoorData.GetRoomDoors(room.AreaID, room.RoomID);
         }
 
-        public void Draw(Graphics g, Rectangle rect, bool drawNumbers = false)
+        public void Draw(Graphics g, Rectangle rect, bool includeMoreInfo = false)
         {
             Pen p = Pens.Blue;
+            Pen xp = new Pen(Color.Red, 2f);
+            Pen xpWhite = new Pen(Color.White, 3f);
             foreach (Door d in doors)
             {
                 if (d.DrawingBounds.IntersectsWith(rect) && d.srcRoom == room.RoomID)
                 {
                     int xSize = d.xEnd - d.xStart + 1;
                     int ySize = d.yEnd - d.yStart + 1;
+
+                    // Draw Outline
                     g.DrawRectangle(p, new Rectangle(d.xStart * 16, d.yStart * 16,
                         xSize * 16 - 1, ySize * 16 - 1));
                     g.DrawRectangle(p, new Rectangle(d.xStart * 16 + 1, d.yStart * 16 + 1,
                         xSize * 16 - 3, ySize * 16 - 3));
 
+                    if (!includeMoreInfo) continue;
+
                     // Draw Door Numbers
-                    if (!drawNumbers) continue;
                     Point pnt = new Point(d.xStart * 16, d.yStart * 16);
                     mage.Draw.DrawNumber(g, pnt, d.doorNum);
 
@@ -84,6 +90,18 @@ namespace mage
                         Point arrowPoint = new Point((d.xStart * 16 + d.xEnd * 16) / 2, d.yStart * 16);
                         mage.Draw.DrawArrow(g, arrowPoint, mage.Draw.ArrowDirection.Right);
                     }
+
+                    //Draw X
+                    Point startPoint = new Point(
+                        d.xStart * 16 + 8,
+                        (d.yEnd + 1) * 16
+                    );
+                    Point exitPoint = new Point(
+                        startPoint.X + (sbyte)d.xExitDistance,
+                        startPoint.Y + (sbyte)d.yExitDistance
+                    );
+                    g.DrawLine(xp, exitPoint.X - 3, exitPoint.Y - 3, exitPoint.X + 3, exitPoint.Y + 3);
+                    g.DrawLine(xp, exitPoint.X - 3, exitPoint.Y + 3, exitPoint.X + 3, exitPoint.Y - 3);
                 }
             }
         }
