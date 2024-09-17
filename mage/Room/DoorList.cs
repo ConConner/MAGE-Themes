@@ -49,7 +49,6 @@ namespace mage
 
         public void Draw(Graphics g, Rectangle rect, bool includeMoreInfo = false)
         {
-            Pen p = Pens.Blue;
             Pen xp = new Pen(Color.Red, 2f);
             Pen xpWhite = new Pen(Color.White, 3f);
             foreach (Door d in doors)
@@ -60,6 +59,7 @@ namespace mage
                     int ySize = d.yEnd - d.yStart + 1;
 
                     // Draw Outline
+                    Pen p = (d.type & 0xF) == 1 ? Pens.Cyan : Pens.Blue;
                     g.DrawRectangle(p, new Rectangle(d.xStart * 16, d.yStart * 16,
                         xSize * 16 - 1, ySize * 16 - 1));
                     g.DrawRectangle(p, new Rectangle(d.xStart * 16 + 1, d.yStart * 16 + 1,
