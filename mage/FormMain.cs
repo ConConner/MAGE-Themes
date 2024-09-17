@@ -13,6 +13,7 @@ using System.Drawing.Text;
 using mage.Data;
 using mage.Tools;
 using System.IO.Compression;
+using System.Numerics;
 
 namespace mage
 {
@@ -1881,7 +1882,8 @@ namespace mage
                 }
             }
 
-            roomView.RedrawAll();
+            if (a is RoomAction) roomView.Redraw((a as RoomAction).AffectedRegion);
+            else roomView.RedrawAll();
         }
 
         public void UpdateUiAfterClear()
@@ -2105,6 +2107,7 @@ namespace mage
         #region mouse events
 
         private Point roomCursor;
+        private Point pixelCursor;
         private Point tileCursor;
 
         private Point pivot;
@@ -2114,6 +2117,7 @@ namespace mage
 
         private int selEnemy;
         private int selDoor;
+        private int exitLocationDoor;
         private int selScroll;
         private bool selEffect;
 
@@ -2234,6 +2238,7 @@ namespace mage
             if (OutlineDoors)
             {
                 selDoor = room.doorList.FindDoor(roomCursor);
+                exitLocationDoor = room.doorList.FindExitLocation(pixelCursor);
             }
             if (OutlineScrolls)
             {
@@ -2475,14 +2480,24 @@ namespace mage
         {
             int x = e.X >> (4 + zoom);
             int y = e.Y >> (4 + zoom);
-            if (x == roomCursor.X && y == roomCursor.Y) { return; }
             if (x < 0 || x >= room.Width || y < 0 || y >= room.Height) { return; }
+
+            int pixelX = e.X >> zoom;
+            int pixelY = e.Y >> zoom;
+            if (pixelX == pixelCursor.X && pixelY == pixelCursor.Y) return;
+            pixelCursor.X = pixelX;
+            pixelCursor.Y = pixelY;
+
+            bool handledExitDistance = handleExitDistanceEditing(e);
+            if (x == roomCursor.X && y == roomCursor.Y) { return; }
+            
 
             if (contextMenuOpen)
             {
                 selEnemy = -1;
                 selDoor = -1;
                 selScroll = -1;
+                exitLocationDoor = -1;
                 selEffect = false;
                 contextMenuOpen = false;
                 return;
@@ -2492,6 +2507,8 @@ namespace mage
             roomCursor.X = x;
             roomCursor.Y = y;
             ResetRoomTip(true);
+
+            if (handledExitDistance) return;
 
             if (e.Button == MouseButtons.Left && pivot.X == -1)
             {
@@ -2549,6 +2566,8 @@ namespace mage
                         UpdateStatusCoor();
                         return;
                     }
+
+                    
                 }
             }
             else if (e.Button == MouseButtons.Right)
@@ -2577,6 +2596,22 @@ namespace mage
             UpdateStatusCoor();
         }
 
+        private bool handleExitDistanceEditing(MouseEventArgs e)
+        {
+            //Exit location moving
+            if (exitLocationDoor == -1 || e.Button != MouseButtons.Left || pivot.X != -1 || EditBGs) return false;
+            RoomObject obj = room.doorList[exitLocationDoor];
+            Door d = obj as Door;
+
+            Point diff = new Point(pixelCursor.X - d.startPoint.X, pixelCursor.Y - d.startPoint.Y);
+            Door changed = (Door)d.Copy();
+            changed.xExitDistance = Hex.ToByte(Math.Clamp(diff.X, -128, 127));
+            changed.yExitDistance = Hex.ToByte(Math.Clamp(diff.Y, -128, 127));
+            EditRoomObject a = new EditRoomObject(changed, exitLocationDoor, true);
+            PerformAction(a);
+            return true;
+        }
+
         private void roomView_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -2584,6 +2619,7 @@ namespace mage
                 selEnemy = -1;
                 selDoor = -1;
                 selScroll = -1;
+                exitLocationDoor = -1;
                 selEffect = false;
                 undoRedo.FinalizePreviousAction();
             }

@@ -92,16 +92,8 @@ namespace mage
                     }
 
                     //Draw X
-                    Point startPoint = new Point(
-                        d.xStart * 16 + 8,
-                        (d.yEnd + 1) * 16
-                    );
-                    Point exitPoint = new Point(
-                        startPoint.X + (sbyte)d.xExitDistance,
-                        startPoint.Y + (sbyte)d.yExitDistance
-                    );
-                    g.DrawLine(xp, exitPoint.X - 3, exitPoint.Y - 3, exitPoint.X + 3, exitPoint.Y + 3);
-                    g.DrawLine(xp, exitPoint.X - 3, exitPoint.Y + 3, exitPoint.X + 3, exitPoint.Y - 3);
+                    g.DrawLine(xp, d.exitPoint.X - 3, d.exitPoint.Y - 3, d.exitPoint.X + 3, d.exitPoint.Y + 3);
+                    g.DrawLine(xp, d.exitPoint.X - 3, d.exitPoint.Y + 3, d.exitPoint.X + 3, d.exitPoint.Y - 3);
                 }
             }
         }
@@ -156,6 +148,18 @@ namespace mage
                 {
                     return num;
                 }
+                num++;
+            }
+            return -1;
+        }
+
+        public int FindExitLocation(Point p)
+        {
+            int num = 0;
+            foreach (Door d in doors)
+            {
+                Rectangle r = new Rectangle(d.exitPoint.X - 4, d.exitPoint.Y - 4, 8, 8);
+                if (r.Contains(p)) return num;
                 num++;
             }
             return -1;

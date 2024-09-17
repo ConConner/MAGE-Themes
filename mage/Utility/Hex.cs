@@ -28,6 +28,11 @@ namespace mage
             return Convert.ToByte(text, radix);
         }
 
+        public static byte ToByte(int value)
+        {
+            return value < 0 ? (byte)(256 + value) : (byte)value;
+        }
+
         public static ushort ToUshort(string text)
         {
             return Convert.ToUInt16(text, radix);
@@ -37,6 +42,5 @@ namespace mage
         {
             return Convert.ToInt32(text, radix);
         }
-
     }
 }

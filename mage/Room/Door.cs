@@ -22,6 +22,9 @@ namespace mage
         public int xScreen => (xStart - 2) / 15;
         public int yScreen => (yStart - 2) / 10;
 
+        public Point startPoint => new Point(xStart * 16 + 8, (yEnd + 1) * 16);
+        public Point exitPoint => new Point(startPoint.X + (sbyte)xExitDistance, startPoint.Y + (sbyte)yExitDistance);
+
         // constructor
         public Door()
         {
@@ -30,7 +33,12 @@ namespace mage
 
         public override Rectangle DrawingBounds
         {
-            get { return new Rectangle(xStart * 16, yStart * 16, (xEnd - xStart + 1) * 16, (yEnd - yStart + 1) * 16); }
+            get
+            {
+                Rectangle doorBounds = new Rectangle(xStart * 16, yStart * 16, (xEnd - xStart + 1) * 16, (yEnd - yStart + 1) * 16);
+                Rectangle exitBounds = new Rectangle(exitPoint.X - 3, exitPoint.Y - 3, 6, 6);
+                return Rectangle.Union(doorBounds, exitBounds);
+            }
         }
 
         public override RoomObject Copy()
