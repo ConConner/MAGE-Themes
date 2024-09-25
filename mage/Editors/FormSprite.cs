@@ -334,14 +334,17 @@ namespace mage
         {
             if (Version.IsMF && comboBox_type.SelectedIndex == 1) { return; }
 
-            var controls = panel_percentage.Controls;
-            double total = 0;
+            var controls = groupBox_dropProbability.Controls;
+            int total = 0;
             
             try
             {
                 foreach (Control ctrl in controls)
                 {
-                    if (ctrl is FlatTextBox && ctrl.Enabled) total += Math.Round(Convert.ToDouble(ctrl.Text), 1);
+                    if (ctrl is FlatTextBox && ctrl.Enabled)
+                    {
+                        total += Hex.ToUshort(ctrl.Text);
+                    }
                 }
             }
             catch
@@ -351,8 +354,8 @@ namespace mage
                 return;
             }
 
-            label_totalPercent.Text = $"{Convert.ToString(total)}%";
-            if (total == 100 || total == 0) label_totalPercent.ForeColor = ThemeSwitcher.ProjectTheme.TextColor;
+            label_totalPercent.Text = $"{Convert.ToString(Convert.ToDouble(total) * 100 / 0x400)}%";
+            if (total == 0x400 || total == 0) label_totalPercent.ForeColor = ThemeSwitcher.ProjectTheme.TextColor;
             else
             {
                 label_totalPercent.ForeColor = ThemeSwitcher.ProjectTheme.AccentColor;
