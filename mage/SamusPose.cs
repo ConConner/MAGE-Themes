@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace mage
+﻿namespace mage
 {
     public class SamusPose
     {

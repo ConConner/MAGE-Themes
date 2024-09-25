@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using mage.Properties;
 using mage.Theming;
 
 namespace mage

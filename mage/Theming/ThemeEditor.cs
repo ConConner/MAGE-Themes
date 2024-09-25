@@ -1,15 +1,9 @@
 ﻿using mage.Theming.CustomControls;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
-using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 

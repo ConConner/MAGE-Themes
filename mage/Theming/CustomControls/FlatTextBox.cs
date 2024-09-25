@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.Versioning;
-using System.Drawing.Drawing2D;
 
 namespace mage.Theming.CustomControls;
 

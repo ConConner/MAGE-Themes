@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using mage.Properties;
 using mage.Theming;
-using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Runtime.InteropServices;
 using System.Drawing.Text;
 using mage.Data;
 using mage.Tools;
 using System.IO.Compression;
-using System.Numerics;
 
 namespace mage
 {

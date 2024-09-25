@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Data;
 using System.Windows.Forms;
 using System.Drawing.Design;
 using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
-using System.IO;
 
 namespace mage.Theming.CustomControls
 {
