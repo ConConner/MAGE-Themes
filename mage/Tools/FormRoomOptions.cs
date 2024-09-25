@@ -1,7 +1,6 @@
 ﻿using mage.Theming;
 using mage.Theming.CustomControls;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace mage
