@@ -1882,8 +1882,9 @@ namespace mage
                 }
             }
 
-            if (a is RoomAction) roomView.Redraw((a as RoomAction).AffectedRegion);
-            else roomView.RedrawAll();
+            //if (a is RoomAction) roomView.Redraw((a as RoomAction)!.AffectedRegion);
+            //else 
+                roomView.RedrawAll();
         }
 
         public void UpdateUiAfterClear()
