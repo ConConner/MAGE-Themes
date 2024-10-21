@@ -14,6 +14,7 @@ using mage.Data;
 using mage.Tools;
 using System.IO.Compression;
 using System.Numerics;
+using System.Diagnostics.Eventing.Reader;
 
 namespace mage
 {
@@ -1363,7 +1364,8 @@ namespace mage
 
         private void FormMain_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) && paths.Length == 1)
             {
                 e.Effect = DragDropEffects.Copy;
             }
@@ -1379,25 +1381,31 @@ namespace mage
             if (paths.Length != 1) return;
             string path = paths[0];
 
+            bool romLoaded = ROM.Stream != null;
+
             switch (Path.GetExtension(path))
             {
                 case ".mgt":
+                    if (!romLoaded) break;
                     new FormImportTileset(this, path).ShowDialog();
                     break;
 
                 case ".rlebg":
+                    if (!romLoaded) break;
                     new FormPortBG(this, 0, path).ShowDialog();
                     break;
 
                 case ".lzbg":
+                    if (!romLoaded) break;
                     new FormPortBG(this, 1, path).ShowDialog();
                     break;
 
                 case ".mgr":
+                    if (!romLoaded) break;
                     new FormImportRoom(this, path).ShowDialog();
                     break;
 
-                // All supported image formats*.png;*.bmp;*.gif;*.jpeg;*.jpg;*.tif;*.tiff
+                // All supported image formats: *.png;*.bmp;*.gif;*.jpeg;*.jpg;*.tif;*.tiff
                 case ".png":
                 case ".bmp":
                 case ".gif":
@@ -1405,6 +1413,7 @@ namespace mage
                 case ".jpg":
                 case ".tif":
                 case ".tiff":
+                    if (!romLoaded) break;
                     new FormImportRLEBG(this, path).ShowDialog();
                     break;
 
