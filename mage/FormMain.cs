@@ -1382,19 +1382,30 @@ namespace mage
             switch (Path.GetExtension(path))
             {
                 case ".mgt":
-                    new FormImportTileset(this, path);
+                    new FormImportTileset(this, path).ShowDialog();
                     break;
 
                 case ".rlebg":
-                    new FormPortBG(this, 0, path).Show();
+                    new FormPortBG(this, 0, path).ShowDialog();
                     break;
 
                 case ".lzbg":
-                    new FormPortBG(this, 1, path).Show();
+                    new FormPortBG(this, 1, path).ShowDialog();
                     break;
 
                 case ".mgr":
-                    new FormImportRoom(this, path).Show();
+                    new FormImportRoom(this, path).ShowDialog();
+                    break;
+
+                // All supported image formats*.png;*.bmp;*.gif;*.jpeg;*.jpg;*.tif;*.tiff
+                case ".png":
+                case ".bmp":
+                case ".gif":
+                case ".jpeg":
+                case ".jpg":
+                case ".tif":
+                case ".tiff":
+                    new FormImportRLEBG(this, path).ShowDialog();
                     break;
 
                 default:

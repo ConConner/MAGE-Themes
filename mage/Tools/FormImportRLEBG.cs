@@ -18,7 +18,7 @@ namespace mage
         private Room room;
 
         // constructor
-        public FormImportRLEBG(FormMain main)
+        public FormImportRLEBG(FormMain main, string file = "")
         {
             InitializeComponent();
 
@@ -34,6 +34,9 @@ namespace mage
                 comboBox_tileset.Items.Add(Hex.ToString(i));
             }
             comboBox_tileset.SelectedIndex = 0;
+
+            if (file == string.Empty) return;
+            OpenImageFile(file);
         }
 
         private void button_open_Click(object sender, EventArgs e)
@@ -42,45 +45,50 @@ namespace mage
             tilesetFile.Filter = "Bitmaps (*.png, *.bmp, *.gif, *.jpeg, *.jpg, *.tif, *.tiff)|*.png;*.bmp;*.gif;*.jpeg;*.jpg;*.tif;*.tiff";
             if (tilesetFile.ShowDialog() == DialogResult.OK)
             {
-                // check image
-                Bitmap image = new Bitmap(tilesetFile.FileName);
-
-                if (image.PixelFormat != System.Drawing.Imaging.PixelFormat.Format32bppArgb)
-                {
-                    errorMessage("Invalid pixel format. Image must be 32bpp.");
-                    image.Dispose();
-                    return;
-                }
-
-                if (image.Width != 256 || image.Height % 16 != 0 || image.Height > 1024)
-                {
-                    string message = "Invalid dimensions.\n\r";
-
-                    if (image.Width != 256) message += "\n\rImage width is not 256!";
-                    if (image.Height % 16 != 0) message += "\n\rImage height is not divisible by 16!";
-                    if (image.Height > 1024) message += "\n\rImage height is bigger than 1024!";
-
-                    errorMessage(message);
-                    image.Dispose();
-                    return;
-                }
-
-                try
-                {
-                    pi = new PortImage(image);
-                }
-                catch (FormatException ex)
-                {
-                    errorMessage(ex.Message);
-                    return;
-                }
-
-                groupBox_select.Enabled = true;
-                groupBox_palette.Enabled = true;
-                checkBox_preserveData.Enabled = true;
-                button_ok.Enabled = true;
-                radioButton_current.Checked = true;
+                OpenImageFile(tilesetFile.FileName);
             }
+        }
+
+        private void OpenImageFile(string file)
+        {
+            // check image
+            Bitmap image = new Bitmap(file);
+
+            if (image.PixelFormat != System.Drawing.Imaging.PixelFormat.Format32bppArgb)
+            {
+                errorMessage("Invalid pixel format. Image must be 32bpp.");
+                image.Dispose();
+                return;
+            }
+
+            if (image.Width != 256 || image.Height % 16 != 0 || image.Height > 1024)
+            {
+                string message = "Invalid dimensions.\n\r";
+
+                if (image.Width != 256) message += "\n\rImage width is not 256!";
+                if (image.Height % 16 != 0) message += "\n\rImage height is not divisible by 16!";
+                if (image.Height > 1024) message += "\n\rImage height is bigger than 1024!";
+
+                errorMessage(message);
+                image.Dispose();
+                return;
+            }
+
+            try
+            {
+                pi = new PortImage(image);
+            }
+            catch (FormatException ex)
+            {
+                errorMessage(ex.Message);
+                return;
+            }
+
+            groupBox_select.Enabled = true;
+            groupBox_palette.Enabled = true;
+            checkBox_preserveData.Enabled = true;
+            button_ok.Enabled = true;
+            radioButton_current.Checked = true;
         }
 
         private void errorMessage(string message) => MessageBox.Show(message,"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

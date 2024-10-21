@@ -33,3 +33,4 @@ MAGE Themes:
 - Presets for BG3 Scroll in Header Editor
 - Tileset preview selection in Header Editor
 - .mgt, .mgr, .rlebg and lzbg can be imported via drag & drop
+- Tilesets can be imported via drag & drop with an image
