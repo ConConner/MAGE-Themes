@@ -1,4 +1,4 @@
-MAGE 1.5.0:
+MAGE Themes:
 - Theming support
 - Fix crashes
 - Drag to draw on Minimap Editor
@@ -32,3 +32,4 @@ MAGE 1.5.0:
 - Presets for Background Property in Header Editor
 - Presets for BG3 Scroll in Header Editor
 - Tileset preview selection in Header Editor
+- .mgt, .mgr, .rlebg and lzbg can be imported via drag & drop

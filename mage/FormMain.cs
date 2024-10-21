@@ -1375,9 +1375,34 @@ namespace mage
 
         private void FormMain_DragDrop(object sender, DragEventArgs e)
         {
-            if (!CheckUnsaved()) { return; }
             string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
-            OpenROM(paths[0]);
+            if (paths.Length != 1) return;
+            string path = paths[0];
+
+            switch (Path.GetExtension(path))
+            {
+                case ".mgt":
+                    new FormImportTileset(this, path);
+                    break;
+
+                case ".rlebg":
+                    new FormPortBG(this, 0, path).Show();
+                    break;
+
+                case ".lzbg":
+                    new FormPortBG(this, 1, path).Show();
+                    break;
+
+                case ".mgr":
+                    new FormImportRoom(this, path).Show();
+                    break;
+
+                default:
+                    // Open rom
+                    if (!CheckUnsaved()) { return; }
+                    OpenROM(paths[0]);
+                    break;
+            }
         }
 
         #endregion
