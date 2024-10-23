@@ -98,8 +98,12 @@ namespace mage
             List<Room> rooms = new();
             for (byte room = 0; room < Version.RoomsPerArea[srcDoor.areaID]; room++)
             {
-                Room r = new Room(srcDoor.areaID, room);
-                if (r.Contains(goalScreenX, goalScreenY)) rooms.Add(r);
+                try
+                {
+                    Room r = new Room(srcDoor.areaID, room);
+                    if (r.Contains(goalScreenX, goalScreenY)) rooms.Add(r);
+                }
+                catch {}
             }
 
             //Check each room if they contain a door on the goal screen
