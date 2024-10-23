@@ -9,6 +9,13 @@ namespace mage
 {
     public partial class FormEditDoor : Form
     {
+        private struct AdjacentDoor
+        {
+            public Door Door { get; set; }
+            public Room Room { get; set; }
+            public int RoomDoorNumber { get; set; }
+        }
+
         // fields
         private int doorNum;
         private string[] areaNames;
@@ -20,7 +27,7 @@ namespace mage
         private bool onEdge => doorPosition != DoorPosition.None;
         private DoorPosition doorPosition => room.doorList[doorNum].EdgePosition();
         private bool loading;
-        Door adjacentDoor = null;
+        AdjacentDoor adjacentDoor;
         bool foundAdjacent = false;
 
         // constructor
@@ -131,7 +138,12 @@ namespace mage
                     if (d.EdgePosition() == opposite)
                     {
                         lbl_door_found.Text = "Adjacent Door found:";
-                        adjacentDoor = d;
+                        adjacentDoor = new AdjacentDoor()
+                        {
+                            Door = d,
+                            Room = room,
+                            RoomDoorNumber = i
+                        };
                         grp_setup.Enabled = true;
                         foundAdjacent = true;
                     }
@@ -410,7 +422,7 @@ namespace mage
             button_apply_Click(sender, e);
 
             Door srcDoor = room.doorList[doorNum].Copy() as Door;
-            Door dstDoor = adjacentDoor;
+            Door dstDoor = adjacentDoor.Door;
 
             //Create link between them
             srcDoor.dstDoor = dstDoor.doorNum;
@@ -427,6 +439,8 @@ namespace mage
 
             EditRoomObject src = new EditRoomObject(srcDoor, doorNum, false);
             main.PerformAction(src);
+            EditRoomObject dst = new EditRoomObject(dstDoor, adjacentDoor.RoomDoorNumber, false);
+            dst.Do(adjacentDoor.Room);
             status.Save();
             UpdateInfoText(srcDoor, dstDoor);
         }
@@ -438,7 +452,7 @@ namespace mage
             button_apply_Click(sender, e);
 
             Door srcDoor = room.doorList[doorNum].Copy() as Door;
-            Door dstDoor = adjacentDoor;
+            Door dstDoor = adjacentDoor.Door;
 
             //Create link between them
             srcDoor.dstDoor = dstDoor.doorNum;
@@ -446,6 +460,8 @@ namespace mage
 
             EditRoomObject src = new EditRoomObject(srcDoor, doorNum, false);
             main.PerformAction(src);
+            EditRoomObject dst = new EditRoomObject(dstDoor, adjacentDoor.RoomDoorNumber, false);
+            dst.Do(adjacentDoor.Room);
             status.Save();
             UpdateInfoText(srcDoor, dstDoor);
         }
