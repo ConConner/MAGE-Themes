@@ -2650,6 +2650,15 @@ namespace mage
             Door d = obj as Door;
 
             Point diff = new Point(pixelCursor.X - d.startPoint.X, pixelCursor.Y - d.startPoint.Y);
+
+            // Snap to grid
+            if (ModifierKeys == Keys.Shift)
+            {
+                diff.X = (diff.X + Math.Sign(diff.X) * 8) / 16 * 16;
+                diff.Y = (diff.Y + Math.Sign(diff.Y) * 8) / 16 * 16;
+            }
+
+            //Update Door
             Door changed = (Door)d.Copy();
             changed.xExitDistance = Hex.ToByte(Math.Clamp(diff.X, -128, 127));
             changed.yExitDistance = Hex.ToByte(Math.Clamp(diff.Y, -128, 127));
