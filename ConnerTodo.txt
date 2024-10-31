@@ -6,6 +6,7 @@ MAGE Themes:
 - Edit Sprites/Scrolls/Doors with double click
 - Added 'Go through Door' to right-click menu
 - Doors display their ID and connected ID
+- Exit distance of Doors can be edited in the room editor
 - Input screens directly in Room Options
 - Input screens directly in Add Room
 - Screen number gets displayed as hex
