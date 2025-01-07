@@ -15,6 +15,7 @@ using mage.Tools;
 using System.IO.Compression;
 using System.Numerics;
 using System.Diagnostics.Eventing.Reader;
+using System.Windows.Forms.Design.Behavior;
 
 namespace mage
 {
@@ -619,6 +620,17 @@ namespace mage
             if (!FindOpenForm(typeof(FormAnimation), false))
             {
                 FormAnimation form = new FormAnimation(this, 0, room.tileset.animTileset.number);
+                form.Show();
+            }
+        }
+
+        private void menuItem_oamViewer_Click(object sender, EventArgs e)
+        {
+            if (!FindOpenForm(typeof(FormOam), false))
+            {
+                int gfxOffset = room.tileset.RLEgfx.Offset;
+                int palOffset = room.tileset.palette.Offset + 0x20;
+                FormOam form = new FormOam(this, 0x2C4194, 32, 0, 0x2C4780, 0x2C4AD0);
                 form.Show();
             }
         }
@@ -1929,7 +1941,7 @@ namespace mage
 
             //if (a is RoomAction) roomView.Redraw((a as RoomAction)!.AffectedRegion);
             //else 
-                roomView.RedrawAll();
+            roomView.RedrawAll();
         }
 
         public void UpdateUiAfterClear()
@@ -2536,7 +2548,7 @@ namespace mage
 
             bool handledExitDistance = handleExitDistanceEditing(e);
             if (x == roomCursor.X && y == roomCursor.Y) { return; }
-            
+
 
             if (contextMenuOpen)
             {
@@ -2613,7 +2625,7 @@ namespace mage
                         return;
                     }
 
-                    
+
                 }
             }
             else if (e.Button == MouseButtons.Right)
@@ -2649,10 +2661,11 @@ namespace mage
             RoomObject obj = room.doorList[exitLocationDoor];
             Door d = obj as Door;
 
-            Point diff = new Point(pixelCursor.X - d.startPoint.X, pixelCursor.Y - d.startPoint.Y);
-
             // Snap to grid
-            if (ModifierKeys == Keys.Shift)
+            Point diff = new Point(pixelCursor.X - d.startPoint.X, pixelCursor.Y - d.startPoint.Y);
+            
+            // Free Movement
+            if (ModifierKeys != Keys.Shift)
             {
                 diff.X = (diff.X + Math.Sign(diff.X) * 8) / 16 * 16;
                 diff.Y = (diff.Y + Math.Sign(diff.Y) * 8) / 16 * 16;

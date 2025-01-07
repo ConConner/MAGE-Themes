@@ -42,13 +42,17 @@ namespace mage
 
         public struct Part
         {
+            //Fields
             public int xPos, yPos;
             public int shape;
             public int flip;
             public int size;
             public int tileNum;
             public int palRow;
+            public bool Xflip { get { return (flip & 0b1) != 0; } }
+            public bool Yflip { get { return (flip & 0b10) != 0; } }
 
+            //Constructor
             public Part(ushort attr0, ushort attr1, ushort attr2)
             {
                 yPos = attr0 & 0xFF;
@@ -56,14 +60,11 @@ namespace mage
                 xPos = attr1 & 0x1FF;
                 if (xPos >= 256) { xPos -= 512; }
                 shape = attr0 >> 14;
-                flip = (attr1 >> 12) & 3;
+                flip = (attr1 >> 12) & 0b11;
                 size = attr1 >> 14;
                 tileNum = attr2 & 0x3FF;
                 palRow = attr2 >> 12;
             }
-
-            public bool Xflip { get { return (flip & 1) != 0; } }
-            public bool Yflip { get { return (flip & 2) != 0; } }
 
             public Size Dimensions
             {

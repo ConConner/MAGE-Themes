@@ -28,9 +28,7 @@
     <StartupObject></StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="Dialogs\BackgroundPropertyDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="Dialogs\BackgroundPropertyDialog.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -264,6 +264,7 @@
             toolStrip_patches = new System.Windows.Forms.ToolStripButton();
             comboBox_spriteset = new Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
+            menuItem_oamViewer = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -665,7 +666,7 @@
             // 
             // menuStrip_editors
             // 
-            menuStrip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_headerEditor, menuItem_tilesetEditor, toolStripSeparator24, menuItem_graphicsEditor, menuItem_paletteEditor, menuItem_tileTableEditor, menuItem_animationEditor, toolStripSeparator25, menuItem_spriteEditor, menuItem_spritesetEditor, menuItem_minimapEditor, menuItem_connectionEditor, toolStripSeparator26, menuItem_textEditor, menuItem_demoEditor, menuItem_physicsEditor, menuItem_weaponEditor });
+            menuStrip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_headerEditor, menuItem_tilesetEditor, toolStripSeparator24, menuItem_graphicsEditor, menuItem_paletteEditor, menuItem_tileTableEditor, menuItem_animationEditor, menuItem_oamViewer, toolStripSeparator25, menuItem_spriteEditor, menuItem_spritesetEditor, menuItem_minimapEditor, menuItem_connectionEditor, toolStripSeparator26, menuItem_textEditor, menuItem_demoEditor, menuItem_physicsEditor, menuItem_weaponEditor });
             menuStrip_editors.Enabled = false;
             menuStrip_editors.Name = "menuStrip_editors";
             menuStrip_editors.Size = new System.Drawing.Size(55, 20);
@@ -674,113 +675,113 @@
             // menuItem_headerEditor
             // 
             menuItem_headerEditor.Name = "menuItem_headerEditor";
-            menuItem_headerEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_headerEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_headerEditor.Text = "Header Editor";
             menuItem_headerEditor.Click += menuItem_headerEditor_Click;
             // 
             // menuItem_tilesetEditor
             // 
             menuItem_tilesetEditor.Name = "menuItem_tilesetEditor";
-            menuItem_tilesetEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_tilesetEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_tilesetEditor.Text = "Tileset Editor";
             menuItem_tilesetEditor.Click += menuItem_tilesetEditor_Click;
             // 
             // toolStripSeparator24
             // 
             toolStripSeparator24.Name = "toolStripSeparator24";
-            toolStripSeparator24.Size = new System.Drawing.Size(167, 6);
+            toolStripSeparator24.Size = new System.Drawing.Size(177, 6);
             // 
             // menuItem_graphicsEditor
             // 
             menuItem_graphicsEditor.Name = "menuItem_graphicsEditor";
-            menuItem_graphicsEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_graphicsEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_graphicsEditor.Text = "Graphics Editor";
             menuItem_graphicsEditor.Click += menuItem_graphicsEditor_Click;
             // 
             // menuItem_paletteEditor
             // 
             menuItem_paletteEditor.Name = "menuItem_paletteEditor";
-            menuItem_paletteEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_paletteEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_paletteEditor.Text = "Palette Editor";
             menuItem_paletteEditor.Click += menuItem_paletteEditor_Click;
             // 
             // menuItem_tileTableEditor
             // 
             menuItem_tileTableEditor.Name = "menuItem_tileTableEditor";
-            menuItem_tileTableEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_tileTableEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_tileTableEditor.Text = "Tile Table Editor";
             menuItem_tileTableEditor.Click += menuItem_tileTableEditor_Click;
             // 
             // menuItem_animationEditor
             // 
             menuItem_animationEditor.Name = "menuItem_animationEditor";
-            menuItem_animationEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_animationEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_animationEditor.Text = "Animation Editor";
             menuItem_animationEditor.Click += menuItem_animationEditor_Click;
             // 
             // toolStripSeparator25
             // 
             toolStripSeparator25.Name = "toolStripSeparator25";
-            toolStripSeparator25.Size = new System.Drawing.Size(167, 6);
+            toolStripSeparator25.Size = new System.Drawing.Size(177, 6);
             // 
             // menuItem_spriteEditor
             // 
             menuItem_spriteEditor.Name = "menuItem_spriteEditor";
-            menuItem_spriteEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_spriteEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_spriteEditor.Text = "Sprite Editor";
             menuItem_spriteEditor.Click += menuItem_spriteEditor_Click;
             // 
             // menuItem_spritesetEditor
             // 
             menuItem_spritesetEditor.Name = "menuItem_spritesetEditor";
-            menuItem_spritesetEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_spritesetEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_spritesetEditor.Text = "Spriteset Editor";
             menuItem_spritesetEditor.Click += menuItem_spritesetEditor_Click;
             // 
             // menuItem_minimapEditor
             // 
             menuItem_minimapEditor.Name = "menuItem_minimapEditor";
-            menuItem_minimapEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_minimapEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_minimapEditor.Text = "Minimap Editor";
             menuItem_minimapEditor.Click += menuItem_minimapEditor_Click;
             // 
             // menuItem_connectionEditor
             // 
             menuItem_connectionEditor.Name = "menuItem_connectionEditor";
-            menuItem_connectionEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_connectionEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_connectionEditor.Text = "Connection Editor";
             menuItem_connectionEditor.Click += menuItem_connectionEditor_Click;
             // 
             // toolStripSeparator26
             // 
             toolStripSeparator26.Name = "toolStripSeparator26";
-            toolStripSeparator26.Size = new System.Drawing.Size(167, 6);
+            toolStripSeparator26.Size = new System.Drawing.Size(177, 6);
             // 
             // menuItem_textEditor
             // 
             menuItem_textEditor.Name = "menuItem_textEditor";
-            menuItem_textEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_textEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_textEditor.Text = "Text Editor";
             menuItem_textEditor.Click += menuItem_textEditor_Click;
             // 
             // menuItem_demoEditor
             // 
             menuItem_demoEditor.Name = "menuItem_demoEditor";
-            menuItem_demoEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_demoEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_demoEditor.Text = "Demo Editor";
             menuItem_demoEditor.Click += menuItem_demoEditor_Click;
             // 
             // menuItem_physicsEditor
             // 
             menuItem_physicsEditor.Name = "menuItem_physicsEditor";
-            menuItem_physicsEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_physicsEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_physicsEditor.Text = "Physics Editor";
             menuItem_physicsEditor.Click += menuItem_physicsEditor_Click;
             // 
             // menuItem_weaponEditor
             // 
             menuItem_weaponEditor.Name = "menuItem_weaponEditor";
-            menuItem_weaponEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_weaponEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_weaponEditor.Text = "Weapon Editor";
             menuItem_weaponEditor.Click += menuItem_weaponEditor_Click;
             // 
@@ -2171,6 +2172,13 @@
             comboBox_spriteset.TabIndex = 11;
             comboBox_spriteset.SelectedIndexChanged += comboBox_spriteset_SelectedIndexChanged;
             // 
+            // menuItem_oamViewer
+            // 
+            menuItem_oamViewer.Name = "menuItem_oamViewer";
+            menuItem_oamViewer.Size = new System.Drawing.Size(180, 22);
+            menuItem_oamViewer.Text = "OAM Viewer";
+            menuItem_oamViewer.Click += menuItem_oamViewer_Click;
+            // 
             // FormMain
             // 
             AllowDrop = true;
@@ -2456,6 +2464,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStrip_zoom200;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_zoom100;
         private System.Windows.Forms.ToolStripDropDownButton statusStrip_theme;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_oamViewer;
     }
 }
 

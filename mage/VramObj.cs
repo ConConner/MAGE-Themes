@@ -14,6 +14,20 @@ namespace mage
         private Dictionary<int, int> rowAssignments;
         private ByteStream romStream;
         
+        public VramObj(GFX gfx, Palette pal)
+        {
+            romStream = ROM.Stream;
+            LoadGenericData();
+
+            // copy gfx
+            int dstOffset = 0x4000;
+            int length = Math.Min(0x8000 - dstOffset, gfx.data.Length);
+            Buffer.BlockCopy(gfx.data, 0, objTiles, dstOffset, length);
+
+            //palette
+            palette.Copy(pal, 0, 8 % 16, pal.Rows);
+        }
+
         public VramObj(Spriteset spriteset)
         {
             romStream = ROM.Stream;
