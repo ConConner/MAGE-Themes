@@ -165,6 +165,13 @@ namespace mage
             int ptr = Header.GetBgPointer(room.AreaID, room.RoomID, comboBox_bg.SelectedIndex);
 
             romStream.WritePtr(ptr, offset);
+
+            if (rle)
+            {
+                Layer layer = (Layer)comboBox_bg.SelectedIndex;
+                ROM.RemoveBG(room.AreaID, room.RoomID, layer);
+            }
+
             main.ReloadRoom(true);
         }
 
