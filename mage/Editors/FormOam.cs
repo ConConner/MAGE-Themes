@@ -1,4 +1,5 @@
-﻿using mage.Theming;
+﻿using mage.Properties;
+using mage.Theming;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,8 @@ public partial class FormOam : Form
     private Bitmap gfxImage;
     private VramObj vram;
 
+    Pen partOutline = new Pen(Color.Aqua, 1);
+
     private bool loading;
     private int gfxZoom;
     private int oamZoom;
@@ -29,16 +32,30 @@ public partial class FormOam : Form
     private FormMain main;
     private ByteStream romStream;
 
-    private Bitmap oamImage
+    private Timer animationTimer;
+    private bool PlayingAnimation
     {
-        get => (Bitmap)gfxView_oam.BackgroundImage;
+        get => playingAnimation;
         set
         {
-            if (oamImage != null) oamImage.Dispose();
-            gfxView_oam.BackgroundImage = value;
-            updateOamZoom();
+            playingAnimation = value;
+            button_playAnimation.Image = playingAnimation ? Resources.control_pause_blue : Resources.toolbar_test;
+
+            // Disable/enable controls
+            groupBox_part.Enabled = !playingAnimation;
+            comboBox_Frame.Enabled = !playingAnimation;
+            label_OAMFrame.Enabled = !playingAnimation;
+            textBox_duration.Enabled = !playingAnimation;
+            label_frameDuration.Enabled = !playingAnimation;
+
+            // Stop timer if needed
+            if (playingAnimation) return;
+            if (animationTimer == null) return;
+            animationTimer.Stop();
         }
     }
+    private bool playingAnimation = false;
+
 
     // constructor
     public FormOam(FormMain main, int gfxOffset, int width, int height, int palOffset, int oamOffset)
@@ -53,7 +70,6 @@ public partial class FormOam : Form
         this.romStream = ROM.Stream;
         this.palette = new Palette(romStream, palOffset, 1);
         gfxZoom = 0;
-        oamZoom = 3;
 
         loading = true;
 
@@ -67,11 +83,15 @@ public partial class FormOam : Form
             numericUpDown_height.Value = height;
         }
 
+        animationTimer = new Timer();
+        animationTimer.Tick += AnimationTimer_Tick;
+
         loading = false;
         DrawNewGFX();
         DrawPalette();
         SetOAM();
     }
+
 
     #region GFX
     private void DrawNewGFX()
@@ -121,8 +141,6 @@ public partial class FormOam : Form
         DrawFrame(comboBox_Frame.SelectedIndex);
         DrawImage();
         UpdateZoom();
-
-        statusLabel_changes.Text = "";
     }
 
     private void DrawImage()
@@ -228,9 +246,26 @@ public partial class FormOam : Form
     #endregion
 
     #region OAM
-    private void button_oamGo_Click(object sender, EventArgs e)
+    private void SetOAM()
     {
-        SetOAM();
+        PlayingAnimation = false;
+        try
+        {
+            int offset = Hex.ToInt(textBox_oamOffset.Text);
+            oam = new OAM(offset);
+
+            //Populate frame selection
+            comboBox_Frame.Items.Clear();
+            for (int i = 0; i < oam.numFrames; i++)
+            {
+                comboBox_Frame.Items.Add(i);
+            }
+            comboBox_Frame.SelectedIndex = 0;
+        }
+        catch
+        {
+            MessageBox.Show("No valid OAM found.", "Invalid OAM", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     private void CreateVram()
@@ -238,221 +273,131 @@ public partial class FormOam : Form
         vram = new VramObj(gfxObject, palette);
     }
 
-    private void SetOAM()
-    { 
-        int offset = Hex.ToInt(textBox_oamOffset.Text);
-        oam = new OAM(offset);
-
-        comboBox_Frame.Items.Clear();
-        for (int i = 0; i < oam.numFrames; i++)
-        {
-            comboBox_Frame.Items.Add(i);
-        }
-        comboBox_Frame.SelectedIndex = 0;
-    }
-
     private void DrawFrame(int frameNumber)
     {
         if (oam == null || vram == null) return;
-        Bitmap frame = oam.Draw(vram.objTiles, vram.palette, 0, frameNumber);
-        oamImage = frame;
+        Bitmap frame = oam.DrawReal(vram.objTiles, vram.palette, 0, frameNumber);
+        oamView_oam.OamImage = frame;
+
+        // Display Part boxes
+        AddPartOutlines(oam.frames[frameNumber]);
     }
+
+    private void AddPartOutlines(OAM.Frame frame)
+    {
+        oamView_oam.ResetDrawables();
+        foreach (OAM.Part p in frame.parts)
+        {
+            Size s = p.Dimensions;
+            Rectangle r = new Rectangle(p.xPos + OAM.FrameOriginX, p.yPos + OAM.FrameOriginY, s.Width, s.Height);
+            OamView.Drawable outline = new(r, partOutline)
+            {
+                Visible = false,
+            };
+            oamView_oam.Drawables.Add(outline);
+        }
+    }
+
+    private void SetTimerInterval(int frame)
+    {
+        OAM.Frame f = oam.frames[frame];
+        int timeInMs = (int)(16.67f * f.duration);
+        animationTimer.Interval = Math.Max(1, timeInMs);
+    }
+
+    private void button_oamGo_Click(object sender, EventArgs e) => SetOAM();
 
     private void comboBox_Frame_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (loading) return;
         DrawFrame(comboBox_Frame.SelectedIndex);
+        textBox_duration.Text = Hex.ToString(oam.frames[comboBox_Frame.SelectedIndex].duration);
     }
 
-    private void updateOamZoom()
+    private void button_playAnimation_Click(object sender, EventArgs e)
     {
-        gfxView_oam.Size = new Size(oamImage.Width << oamZoom, oamImage.Height << oamZoom);
-    }
-    #endregion
+        PlayingAnimation = !PlayingAnimation;
+        if (!PlayingAnimation) return;
 
-    #region IMPORT / EXPORT
-    private void ImportImage()
-    {
-        loading = true;
-
-        DrawImage();
-        UpdateZoom();
-        int prevOffset = gfxObject.Offset;
-        gfxObject.Write(romStream, false);
-        textBox_imageOffset.Text = Hex.ToString(gfxObject.Offset);
-        numericUpDown_height.Value = Math.Min(gfxObject.height, 32);
-
-        FormMain.UpdateEditors();
-        statusLabel_changes.Text = "Changes saved";
-        loading = false;
-
-        if (prevOffset != gfxObject.Offset)
-        {
-            string message = "Graphics were repointed to " + Hex.ToString(gfxObject.Offset);
-            MessageBox.Show(message, "Repointed Graphics", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
+        SetTimerInterval(comboBox_Frame.SelectedIndex);
+        animationTimer.Start();
     }
 
-    private void menuItem_gfxImportRaw_Click(object sender, EventArgs e)
+    private void AnimationTimer_Tick(object? sender, EventArgs e)
     {
-        OpenFileDialog openRaw = new OpenFileDialog();
-        openRaw.Filter = "GFX files (*.gfx)|*.gfx|All files (*.*)|*.*";
-        if (openRaw.ShowDialog() == DialogResult.OK)
-        {
-            byte[] data = File.ReadAllBytes(openRaw.FileName);
-
-            gfxObject = new GFX(gfxObject, data);
-            ImportImage();
-        }
-    }
-
-    private void menuItem_gfxImportImg_Click(object sender, EventArgs e)
-    {
-        OpenFileDialog openImg = new OpenFileDialog();
-        openImg.Filter = "Bitmaps (*.png, *.bmp, *.gif, *.jpeg, *.jpg, *.tif, *.tiff)|*.png;*.bmp;*.gif;*.jpeg;*.jpg;*.tif;*.tiff";
-        if (openImg.ShowDialog() == DialogResult.OK)
-        {
-            Bitmap inputImg = new Bitmap(openImg.FileName);
-
-            try
-            {
-                PortImage pi = new PortImage(inputImg);
-                pi.GetGfx(palette, false);
-                gfxObject = new GFX(gfxObject, pi.gfxData);
-                ImportImage();
-            }
-            catch (FormatException ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-    }
-
-    private void menuItem_gfxExportRaw_Click(object sender, EventArgs e)
-    {
-        SaveFileDialog saveRaw = new SaveFileDialog();
-        saveRaw.Filter = "GFX files (*.gfx)|*.gfx|All files (*.*)|*.*";
-        if (saveRaw.ShowDialog() == DialogResult.OK)
-        {
-            File.WriteAllBytes(saveRaw.FileName, gfxObject.data);
-        }
-    }
-
-    private void menuItem_gfxExportImg_Click(object sender, EventArgs e)
-    {
-        SaveFileDialog saveImg = new SaveFileDialog();
-        saveImg.Filter = "PNG files (*.png)|*.png";
-        if (saveImg.ShowDialog() == DialogResult.OK)
-        {
-            PixelFormat format = PixelFormat.Undefined;
-            if (menuItem_4bitIndexed.Checked) { format = PixelFormat.Format4bppIndexed; }
-            else if (menuItem_24bitRGB.Checked) { format = PixelFormat.Format24bppRgb; }
-            else if (menuItem_32bitARGB.Checked) { format = PixelFormat.Format32bppArgb; }
-
-            Bitmap output = PortImage.Export(gfxImage, format);
-            output.Save(saveImg.FileName);
-        }
-    }
-
-    private void menuItem_pixelFormat_Click(object sender, EventArgs e)
-    {
-        menuItem_4bitIndexed.Checked = false;
-        menuItem_24bitRGB.Checked = false;
-        menuItem_32bitARGB.Checked = false;
-
-        ToolStripMenuItem item = sender as ToolStripMenuItem;
-        item.Checked = true;
-    }
-
-    private void ImportPalette(PalFileType type)
-    {
-        OpenFileDialog import = new OpenFileDialog();
-        import.Filter = FormPalette.GetFileFilter(type);
-        if (import.ShowDialog() == DialogResult.OK)
-        {
-            palette.Import(import.FileName, type);
-            palette.Write(romStream);
-            DrawPalette();
-        }
-    }
-
-    private void ExportPalette(PalFileType type)
-    {
-        SaveFileDialog export = new SaveFileDialog();
-        export.Filter = FormPalette.GetFileFilter(type);
-        if (export.ShowDialog() == DialogResult.OK)
-        {
-            palette.Export(export.FileName, type);
-        }
-    }
-
-    private void menuItem_palImport_raw_Click(object sender, EventArgs e)
-    {
-        ImportPalette(PalFileType.Raw);
-    }
-
-    private void menuItem_palImport_tlp_Click(object sender, EventArgs e)
-    {
-        ImportPalette(PalFileType.TLP);
-    }
-
-    private void menuItem_palImport_yychr_Click(object sender, EventArgs e)
-    {
-        ImportPalette(PalFileType.YYCHR);
-    }
-
-    private void menuItem_palExport_raw_Click(object sender, EventArgs e)
-    {
-        ExportPalette(PalFileType.Raw);
-
-    }
-
-    private void menuItem_palExport_tlp_Click(object sender, EventArgs e)
-    {
-        ExportPalette(PalFileType.TLP);
-
-    }
-
-    private void menuItem_palExport_yychr_Click(object sender, EventArgs e)
-    {
-        ExportPalette(PalFileType.YYCHR);
+        comboBox_Frame.SelectedIndex = (comboBox_Frame.SelectedIndex + 1) % oam.numFrames;
+        SetTimerInterval(comboBox_Frame.SelectedIndex);
     }
     #endregion
 
     #region ZOOM
+    #region GFX
     private void toolStrip_zoom100_Click(object sender, EventArgs e)
     {
-        statusLabel_zoomLevel.Text = "100%";
+        statusStrip_zoom.Text = "100%";
         gfxZoom = 0;
         UpdateZoom();
     }
 
     private void toolStrip_zoom200_Click(object sender, EventArgs e)
     {
-        statusLabel_zoomLevel.Text = "200%";
+        statusStrip_zoom.Text = "200%";
         gfxZoom = 1;
         UpdateZoom();
     }
 
     private void toolStrip_zoom400_Click(object sender, EventArgs e)
     {
-        statusLabel_zoomLevel.Text = "400%";
+        statusStrip_zoom.Text = "400%";
         gfxZoom = 2;
         UpdateZoom();
     }
 
     private void toolStrip_zoom800_Click(object sender, EventArgs e)
     {
-        statusLabel_zoomLevel.Text = "800%";
+        statusStrip_zoom.Text = "800%";
         gfxZoom = 3;
         UpdateZoom();
     }
 
     private void toolStrip_zoom1600_Click(object sender, EventArgs e)
     {
-        statusLabel_zoomLevel.Text = "1600%";
+        statusStrip_zoom.Text = "1600%";
         gfxZoom = 4;
         UpdateZoom();
     }
     #endregion
+    #region OAM
+    private void toolStrip_zoomOam100_Click(object sender, EventArgs e)
+    {
+        toolStrip_zoomOam.Text = "100%";
+        oamView_oam.Zoom = 0;
+    }
+
+    private void toolStrip_zoomOam200_Click(object sender, EventArgs e)
+    {
+        toolStrip_zoomOam.Text = "200%";
+        oamView_oam.Zoom = 1;
+    }
+
+    private void toolStrip_zoomOam400_Click(object sender, EventArgs e)
+    {
+        toolStrip_zoomOam.Text = "400%";
+        oamView_oam.Zoom = 2;
+    }
+
+    private void toolStrip_zoomOam800_Click(object sender, EventArgs e)
+    {
+        toolStrip_zoomOam.Text = "800%";
+        oamView_oam.Zoom = 3;
+    }
+
+    private void toolStrip_zoomOam1600_Click(object sender, EventArgs e)
+    {
+        toolStrip_zoomOam.Text = "1600%";
+        oamView_oam.Zoom = 4;
+    }
+    #endregion
+    #endregion
+
 }

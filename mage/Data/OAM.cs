@@ -8,6 +8,14 @@ namespace mage
 {
     public class OAM
     {
+        public static int XPosRange => 1 << 9;
+        public static int YPosRange => 1 << 8;
+        public static int MaxPartSize => 64;
+        public static int MaxWidth => XPosRange + MaxPartSize;
+        public static int MaxHeight => YPosRange + MaxPartSize;
+        public static int FrameOriginX => XPosRange / 2;
+        public static int FrameOriginY => YPosRange / 2;
+
         public struct Frame
         {
             public int duration;
@@ -142,6 +150,11 @@ namespace mage
             this.numFrames = frames.Count;
         }
 
+        #region Normal Drawing
+        /// <summary>
+        /// Returns a Bitmap where the sprite is drawn in the top left corner. Bitmap size matches that of the sprite.
+        /// </summary>
+        /// <returns></returns>
         public Bitmap Draw(byte[] gfx, Palette pal, int row, int frameNum)
         {
             int xEnd = 0;
@@ -208,6 +221,7 @@ namespace mage
             {
                 for (int x = region.X; x < xEnd; x++)  // for each tile across
                 {
+                    //              row in vram; tile;  max vram size;
                     int index = (y * 0x400 + x * 0x20) % 0x8000;
 
                     for (int r = 0; r < 8; r++)  // for each row in tile
@@ -290,7 +304,44 @@ namespace mage
 
             src.UnlockBits(srcData);
         }
+        #endregion
 
+        #region Real Drawing
 
+        /// <summary>
+        /// Creates a Bitmap where the sprite is drawn in the center/the sprites origin. 
+        /// </summary>
+        /// <returns></returns>
+        public Bitmap DrawReal(byte[] gfx, Palette pal, int row, int frameNum)
+        {
+            Bitmap spriteImg = new Bitmap(MaxWidth, MaxHeight, PixelFormat.Format16bppArgb1555);
+            Rectangle dstRect = new Rectangle(0, 0, spriteImg.Width, spriteImg.Height);
+
+            // The center/"origin" of the bitmap
+            Point originPos = new Point(XPosRange / 2, YPosRange/2);
+
+            // draw for each part
+            BitmapData spriteData = spriteImg.LockBits(dstRect, ImageLockMode.WriteOnly, spriteImg.PixelFormat);
+            Frame frame = frames[frameNum];
+
+            for (int i = frame.numParts - 1; i >= 0; i--)
+            {
+                Part part = frame.parts[i];
+
+                // get bitmap of part
+                int tileNum = (part.tileNum + row * 64) % 1024;
+                int palRow = (part.palRow + row) % 16;
+                Size s = part.Dimensions;
+                Rectangle rect = new Rectangle(tileNum % 32, tileNum / 32, s.Width / 8, s.Height / 8);
+                Bitmap gfxImg = DrawRegion(gfx, pal, palRow, rect);
+
+                // draw
+                DrawPart(gfxImg, spriteData, part.flip, part.xPos + FrameOriginX, part.yPos + FrameOriginY);
+            }
+
+            spriteImg.UnlockBits(spriteData);
+            return spriteImg;
+        }
+        #endregion
     }
 }

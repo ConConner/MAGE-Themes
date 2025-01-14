@@ -117,13 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="statusStrip_gfx.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>126, 17</value>
+    <value>289, 17</value>
+  </metadata>
+  <metadata name="statusStrip_oam.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStrip_oamView.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGBSURBVFhH7dSxS8NAFMfx/B06Oek/4OSWv6CDq+jukNVF
+        cNAiOLo51cWsLrWI6CAIiuBQUKjooG1tqUrrkKxXfoEHCXm9Xrw0d4UEvgR6D/Ih5cUJw1DY3PwAfd8X
+        nudZESwpIA5c17UiWOYbOBr+GakEyvrtd8Tb9bFoNapRneZVasYYsPf6IO6PVsXt7kKi1kU1MWcM+HRS
+        SeGo+Js0BuRgFP5umiuBk7rbX2ZxCItDc8aAQHA4LA62m+aMARGQ8TeJxRl8vCRmcgHWmt/s73mkDdy+
+        6YvF08/ozp3rpgUkHDUL5L+A7cFIbFz2ErhZITMDgXPPuyyOyhOZCaiCo/JCKgOfu0NlHJUHUgm4tr4l
+        Vs7aLGJausipQOCWau/sw1VTQWKGm5MCN3cOtHGUDImzSXNS4OHjT+IhunHIOI6q1L+ihSwciOJIDkdh
+        IaOvRtFABJgMRwGJHSgcmCXsAJDWAhGQWFhrgQiWEqhTCdSNBdqa/cAgCPZszikvrctxxoauqIz1ddem
+        AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <metadata name="statusStrip_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>148, 17</value>
+  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAIAEBAAAAAAGABoAwAAJgAAACAgAAAAABgAqAwAAI4DAAAoAAAAEAAAACAAAAABABgAAAAAAAAD
