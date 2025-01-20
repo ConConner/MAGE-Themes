@@ -330,14 +330,20 @@ namespace mage
         {
             statusStrip_theme.DropDown.Items.Clear();
             statusStrip_theme.Text = ThemeSwitcher.ProjectThemeName;
+
             foreach (string name in ThemeSwitcher.Themes.Keys)
             {
-                statusStrip_theme.DropDown.Items.Add(name);
+                ToolStripMenuItem i = new ToolStripMenuItem();
+                i.Text = name;
+                i.Click += (o, e) => { ThemeSwitcher.ProjectThemeName = name; };
+                statusStrip_theme.DropDown.Items.Add(i);
             }
-            foreach (ToolStripMenuItem item in statusStrip_theme.DropDown.Items)
-            {
-                item.Click += (o, e) => { ThemeSwitcher.ProjectThemeName = item.Text; };
-            }
+
+            statusStrip_theme.DropDown.Items.Add( new ToolStripSeparator() );
+
+            ToolStripMenuItem editThemes = new() { Text = "Edit Themes" };
+            editThemes.Click += themeToolStripMenuItem_Click;
+            statusStrip_theme.DropDown.Items.Add(editThemes);
         }
 
         private void SwitchedTheme(object sender, EventArgs e)
@@ -1930,7 +1936,7 @@ namespace mage
 
             //if (a is RoomAction) roomView.Redraw((a as RoomAction)!.AffectedRegion);
             //else 
-                roomView.RedrawAll();
+            roomView.RedrawAll();
         }
 
         public void UpdateUiAfterClear()
@@ -2537,7 +2543,7 @@ namespace mage
 
             bool handledExitDistance = handleExitDistanceEditing(e);
             if (x == roomCursor.X && y == roomCursor.Y) { return; }
-            
+
 
             if (contextMenuOpen)
             {
@@ -2614,7 +2620,7 @@ namespace mage
                         return;
                     }
 
-                    
+
                 }
             }
             else if (e.Button == MouseButtons.Right)
@@ -2864,6 +2870,7 @@ namespace mage
         private void contextItem_setEffectPos_Click(object sender, EventArgs e) => SetNewEffectYPosition((byte)roomCursor.Y);
 
         private void contextItem_removeEffectPos_Click(object sender, EventArgs e) => SetNewEffectYPosition(0xFF);
+
         #endregion
     }
 }

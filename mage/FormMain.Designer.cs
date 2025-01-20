@@ -1754,7 +1754,7 @@
             // lbl_spring
             // 
             lbl_spring.Name = "lbl_spring";
-            lbl_spring.Size = new System.Drawing.Size(554, 19);
+            lbl_spring.Size = new System.Drawing.Size(523, 19);
             lbl_spring.Spring = true;
             // 
             // statusStrip_theme

@@ -70,6 +70,7 @@
             statusStrip.Name = "statusStrip";
             statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
             statusStrip.Size = new System.Drawing.Size(362, 22);
+            statusStrip.SizingGrip = false;
             statusStrip.TabIndex = 0;
             statusStrip.Text = "statusStrip1";
             // 
@@ -158,6 +159,7 @@
             panel_main.Name = "panel_main";
             panel_main.Size = new System.Drawing.Size(326, 151);
             panel_main.TabIndex = 0;
+            panel_main.Tag = "";
             // 
             // panel_accent
             // 
@@ -213,10 +215,13 @@
             // 
             flatTextBox_accent.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             flatTextBox_accent.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            flatTextBox_accent.DisplayBorder = true;
             flatTextBox_accent.Location = new System.Drawing.Point(124, 123);
             flatTextBox_accent.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            flatTextBox_accent.MaxLength = 32767;
             flatTextBox_accent.Multiline = false;
             flatTextBox_accent.Name = "flatTextBox_accent";
+            flatTextBox_accent.OnTextChanged = null;
             flatTextBox_accent.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
             flatTextBox_accent.ReadOnly = false;
             flatTextBox_accent.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -224,6 +229,7 @@
             flatTextBox_accent.Size = new System.Drawing.Size(167, 23);
             flatTextBox_accent.TabIndex = 9;
             flatTextBox_accent.Tag = "panel_accent";
+            flatTextBox_accent.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             flatTextBox_accent.WordWrap = true;
             flatTextBox_accent.TextChanged += ColorValueChanged;
             // 
@@ -231,10 +237,13 @@
             // 
             flatTextBox_secondary.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             flatTextBox_secondary.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            flatTextBox_secondary.DisplayBorder = true;
             flatTextBox_secondary.Location = new System.Drawing.Point(124, 93);
             flatTextBox_secondary.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            flatTextBox_secondary.MaxLength = 32767;
             flatTextBox_secondary.Multiline = false;
             flatTextBox_secondary.Name = "flatTextBox_secondary";
+            flatTextBox_secondary.OnTextChanged = null;
             flatTextBox_secondary.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
             flatTextBox_secondary.ReadOnly = false;
             flatTextBox_secondary.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -242,6 +251,7 @@
             flatTextBox_secondary.Size = new System.Drawing.Size(167, 23);
             flatTextBox_secondary.TabIndex = 8;
             flatTextBox_secondary.Tag = "panel_secondary";
+            flatTextBox_secondary.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             flatTextBox_secondary.WordWrap = true;
             flatTextBox_secondary.TextChanged += ColorValueChanged;
             // 
@@ -249,10 +259,13 @@
             // 
             flatTextBox_primary.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             flatTextBox_primary.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            flatTextBox_primary.DisplayBorder = true;
             flatTextBox_primary.Location = new System.Drawing.Point(124, 63);
             flatTextBox_primary.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            flatTextBox_primary.MaxLength = 32767;
             flatTextBox_primary.Multiline = false;
             flatTextBox_primary.Name = "flatTextBox_primary";
+            flatTextBox_primary.OnTextChanged = null;
             flatTextBox_primary.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
             flatTextBox_primary.ReadOnly = false;
             flatTextBox_primary.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -260,6 +273,7 @@
             flatTextBox_primary.Size = new System.Drawing.Size(167, 23);
             flatTextBox_primary.TabIndex = 7;
             flatTextBox_primary.Tag = "panel_primary";
+            flatTextBox_primary.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             flatTextBox_primary.WordWrap = true;
             flatTextBox_primary.TextChanged += ColorValueChanged;
             // 
@@ -267,10 +281,13 @@
             // 
             flatTextBox_background.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             flatTextBox_background.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            flatTextBox_background.DisplayBorder = true;
             flatTextBox_background.Location = new System.Drawing.Point(124, 33);
             flatTextBox_background.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            flatTextBox_background.MaxLength = 32767;
             flatTextBox_background.Multiline = false;
             flatTextBox_background.Name = "flatTextBox_background";
+            flatTextBox_background.OnTextChanged = null;
             flatTextBox_background.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
             flatTextBox_background.ReadOnly = false;
             flatTextBox_background.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -278,6 +295,7 @@
             flatTextBox_background.Size = new System.Drawing.Size(167, 23);
             flatTextBox_background.TabIndex = 6;
             flatTextBox_background.Tag = "panel_background";
+            flatTextBox_background.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             flatTextBox_background.WordWrap = true;
             flatTextBox_background.TextChanged += ColorValueChanged;
             // 
@@ -285,10 +303,13 @@
             // 
             flatTextBox_text.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             flatTextBox_text.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            flatTextBox_text.DisplayBorder = true;
             flatTextBox_text.Location = new System.Drawing.Point(124, 3);
             flatTextBox_text.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            flatTextBox_text.MaxLength = 32767;
             flatTextBox_text.Multiline = false;
             flatTextBox_text.Name = "flatTextBox_text";
+            flatTextBox_text.OnTextChanged = null;
             flatTextBox_text.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
             flatTextBox_text.ReadOnly = false;
             flatTextBox_text.ScrollBars = System.Windows.Forms.ScrollBars.None;
@@ -296,6 +317,7 @@
             flatTextBox_text.Size = new System.Drawing.Size(167, 23);
             flatTextBox_text.TabIndex = 5;
             flatTextBox_text.Tag = "panel_text";
+            flatTextBox_text.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             flatTextBox_text.WordWrap = true;
             flatTextBox_text.TextChanged += ColorValueChanged;
             // 
@@ -389,16 +411,20 @@
             // 
             flatTextBox_name.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             flatTextBox_name.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            flatTextBox_name.DisplayBorder = true;
             flatTextBox_name.Location = new System.Drawing.Point(14, 45);
             flatTextBox_name.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            flatTextBox_name.MaxLength = 32767;
             flatTextBox_name.Multiline = false;
             flatTextBox_name.Name = "flatTextBox_name";
+            flatTextBox_name.OnTextChanged = null;
             flatTextBox_name.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
             flatTextBox_name.ReadOnly = false;
             flatTextBox_name.ScrollBars = System.Windows.Forms.ScrollBars.None;
             flatTextBox_name.SelectionStart = 0;
             flatTextBox_name.Size = new System.Drawing.Size(334, 23);
             flatTextBox_name.TabIndex = 6;
+            flatTextBox_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             flatTextBox_name.WordWrap = true;
             flatTextBox_name.TextChanged += flatTextBox_name_TextChanged;
             // 
@@ -428,7 +454,10 @@
             Controls.Add(statusStrip);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MaximumSize = new System.Drawing.Size(378, 355);
+            MinimumSize = new System.Drawing.Size(378, 355);
             Name = "ThemeEditor";
+            Tag = "";
             Text = "Themes";
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
