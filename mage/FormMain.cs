@@ -186,6 +186,7 @@ namespace mage
             else if (zoom == 2) { menuItem_zoom400.Checked = true; }
             else if (zoom == 3) { menuItem_zoom800.Checked = true; }
             roomView.UpdateZoom(zoom, false);
+            statusStrip_zoom.Text = $"{1 << zoom}00%";
 
             //Room Viewer Settings
             Bg3Color = Settings.Default.bg3color;
