@@ -236,7 +236,7 @@ namespace mage
             openImg.Filter = "Bitmaps (*.png, *.bmp, *.gif, *.jpeg, *.jpg, *.tif, *.tiff)|*.png;*.bmp;*.gif;*.jpeg;*.jpg;*.tif;*.tiff";
             if (openImg.ShowDialog() == DialogResult.OK)
             {
-                Bitmap inputImg = new Bitmap(openImg.FileName);
+                Bitmap inputImg = Draw.BitmapFromFile(openImg.FileName);
 
                 try
                 {

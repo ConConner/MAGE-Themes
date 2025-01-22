@@ -52,7 +52,7 @@ namespace mage
         private void OpenImageFile(string file)
         {
             // check image
-            Bitmap image = new Bitmap(file);
+            Bitmap image = Draw.BitmapFromFile(file);
 
             if (image.PixelFormat != System.Drawing.Imaging.PixelFormat.Format32bppArgb)
             {
