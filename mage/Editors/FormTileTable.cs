@@ -867,8 +867,9 @@ namespace mage
                 dataToWrite.Write8(2);
                 dataToWrite.Write8((byte)(numOfTiles / 64));
 
-                foreach (ushort tile in tileTable)
+                for (int i = 0; i < numOfTiles; i++)
                 {
+                    ushort tile = tileTable[i];
                     dataToWrite.Write16(tile);
                 }
 
