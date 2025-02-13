@@ -1,4 +1,5 @@
 ﻿using mage.Theming;
+using mage.Utility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -89,6 +90,9 @@ namespace mage
             buttons_vflip = new Button[] { button_vflipTL, button_vflipTR, button_vflipBL, button_vflipBR };
 
             comboBox_tileset.SelectedIndex = tsNum;
+
+            // Enable experimental flipping
+            button_flip_h.Visible = button_flip_v.Visible = Program.ExperimentalFeaturesEnabled;
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -311,7 +315,7 @@ namespace mage
             comboBox_size.Enabled = true;
             comboBox_size.SelectedIndex = size;
             SetBackgroundSize();
-            
+
             ResetTile();
             blank = false;
         }
@@ -826,7 +830,7 @@ namespace mage
         private void gfxView_tile_MouseDown(object sender, MouseEventArgs e)
         {
             if (tileNums == null) { return; }
-            if (gfxSelection.X == -1) { return;}
+            if (gfxSelection.X == -1) { return; }
 
             // get corner
             int corner = 0;
@@ -989,6 +993,16 @@ namespace mage
             }
         }
 
+        private void button_flip_h_Click(object sender, EventArgs e)
+        {
+            Flip.FlipTiletable(tileTable, numOfTiles, true, false, 0x50 * 4);
+            Save();
+        }
 
+        private void button_flip_v_Click(object sender, EventArgs e)
+        {
+            Flip.FlipTiletable(tileTable, numOfTiles, false, true, 0x50 * 4);
+            Save();
+        }
     }
 }

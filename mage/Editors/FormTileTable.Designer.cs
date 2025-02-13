@@ -90,6 +90,8 @@
             statusStrip_exportTileTable = new System.Windows.Forms.ToolStripMenuItem();
             checkBox_preserveData = new System.Windows.Forms.CheckBox();
             gfxView_tile = new GfxView();
+            button_flip_h = new System.Windows.Forms.Button();
+            button_flip_v = new System.Windows.Forms.Button();
             panel_result.SuspendLayout();
             panel_gfx.SuspendLayout();
             tabControl.SuspendLayout();
@@ -387,6 +389,8 @@
             // tabPage_tileset
             // 
             tabPage_tileset.BackColor = System.Drawing.SystemColors.Control;
+            tabPage_tileset.Controls.Add(button_flip_v);
+            tabPage_tileset.Controls.Add(button_flip_h);
             tabPage_tileset.Controls.Add(label_height);
             tabPage_tileset.Controls.Add(numericUpDown_height);
             tabPage_tileset.Controls.Add(comboBox_tileset);
@@ -438,7 +442,7 @@
             tabPage_background.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage_background.Name = "tabPage_background";
             tabPage_background.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage_background.Size = new System.Drawing.Size(192, 71);
+            tabPage_background.Size = new System.Drawing.Size(235, 86);
             tabPage_background.TabIndex = 0;
             tabPage_background.Text = "Background";
             // 
@@ -501,7 +505,7 @@
             tabPage_offset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage_offset.Name = "tabPage_offset";
             tabPage_offset.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage_offset.Size = new System.Drawing.Size(192, 71);
+            tabPage_offset.Size = new System.Drawing.Size(235, 86);
             tabPage_offset.TabIndex = 2;
             tabPage_offset.Text = "Offset";
             // 
@@ -791,6 +795,26 @@
             gfxView_tile.TabStop = false;
             gfxView_tile.MouseDown += gfxView_tile_MouseDown;
             // 
+            // button_flip_h
+            // 
+            button_flip_h.Location = new System.Drawing.Point(128, 12);
+            button_flip_h.Name = "button_flip_h";
+            button_flip_h.Size = new System.Drawing.Size(75, 23);
+            button_flip_h.TabIndex = 10;
+            button_flip_h.Text = "Flip H";
+            button_flip_h.UseVisualStyleBackColor = true;
+            button_flip_h.Click += button_flip_h_Click;
+            // 
+            // button_flip_v
+            // 
+            button_flip_v.Location = new System.Drawing.Point(128, 46);
+            button_flip_v.Name = "button_flip_v";
+            button_flip_v.Size = new System.Drawing.Size(75, 23);
+            button_flip_v.TabIndex = 11;
+            button_flip_v.Text = "Flip V";
+            button_flip_v.UseVisualStyleBackColor = true;
+            button_flip_v.Click += button_flip_v_Click;
+            // 
             // FormTileTable
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -908,5 +932,7 @@
         private System.Windows.Forms.ToolStripDropDownButton statusStrip_export;
         private System.Windows.Forms.ToolStripMenuItem statusStrip_importTileTable;
         private System.Windows.Forms.ToolStripMenuItem statusStrip_exportTileTable;
+        private System.Windows.Forms.Button button_flip_v;
+        private System.Windows.Forms.Button button_flip_h;
     }
 }

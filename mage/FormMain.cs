@@ -15,6 +15,8 @@ using mage.Tools;
 using System.IO.Compression;
 using System.Numerics;
 using System.Diagnostics.Eventing.Reader;
+using mage.Utility;
+using mage.Actions;
 
 namespace mage
 {
@@ -110,6 +112,9 @@ namespace mage
             ThemeSwitcher.ChangeTheme(Controls, this);
             ThemeSwitcher.InjectPaintOverrides(Controls);
             ThemeSwitcher.ThemeChanged += SwitchedTheme;
+
+            // Enable experimental features
+            seperator_flip.Visible = menuItem_flip_h.Visible = menuItem_flip_v.Visible = Program.ExperimentalFeaturesEnabled;
         }
 
         #region opening/closing
@@ -179,6 +184,8 @@ namespace mage
             menuItem_defaultScreens.Checked = Settings.Default.viewScreenOutlines;
             menuItem_hexadecimal.Checked = Settings.Default.hexadecimal;
             menuItem_tooltips.Checked = Settings.Default.tooltips;
+            button_experimental.Checked = Settings.Default.experimentalFeatures;
+            Program.ExperimentalFeaturesEnabled = Settings.Default.experimentalFeatures;
 
             zoom = Settings.Default.zoom;
             if (zoom == 0) { menuItem_zoom100.Checked = true; }
@@ -233,6 +240,7 @@ namespace mage
             Settings.Default.hexadecimal = menuItem_hexadecimal.Checked;
             Settings.Default.tooltips = menuItem_tooltips.Checked;
             Settings.Default.zoom = zoom;
+            Settings.Default.experimentalFeatures = Program.ExperimentalFeaturesEnabled;
 
             //Room Viewer Settings
             Settings.Default.bg3color = Bg3Color;
@@ -339,7 +347,7 @@ namespace mage
                 statusStrip_theme.DropDown.Items.Add(i);
             }
 
-            statusStrip_theme.DropDown.Items.Add( new ToolStripSeparator() );
+            statusStrip_theme.DropDown.Items.Add(new ToolStripSeparator());
 
             ToolStripMenuItem editThemes = new() { Text = "Edit Themes" };
             editThemes.Click += themeToolStripMenuItem_Click;
@@ -1064,6 +1072,11 @@ namespace mage
             editor.ShowDialog();
         }
 
+        private void button_experimental_Click(object sender, EventArgs e)
+        {
+            Program.ExperimentalFeaturesEnabled = !Program.ExperimentalFeaturesEnabled;
+            button_experimental.Checked = Program.ExperimentalFeaturesEnabled;
+        }
         // help
         private void menuItem_viewHelp_Click(object sender, EventArgs e)
         {
@@ -2872,5 +2885,11 @@ namespace mage
         private void contextItem_removeEffectPos_Click(object sender, EventArgs e) => SetNewEffectYPosition(0xFF);
 
         #endregion
+
+        private void flipRoomToolStripMenuItem_Click(object sender, EventArgs e)
+            => PerformAction(new FlipRoom(room, true, false));
+
+        private void flipRoomVToolStripMenuItem_Click(object sender, EventArgs e)
+            => PerformAction(new FlipRoom(room, false, true));
     }
 }
