@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mage.Properties;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Runtime.Versioning;
@@ -37,5 +38,16 @@ namespace mage
         public static string Version { get { return "1.4.0"; } }
         public static string ShortVersion { get { return "1.4"; } }
 
+        private static bool experimentalFeaturesEnabled = false;
+        public static bool ExperimentalFeaturesEnabled 
+        { 
+            get => experimentalFeaturesEnabled; 
+            set
+            {
+                experimentalFeaturesEnabled = value;
+                if (Settings.Default.experimentalFeatures == value) return;
+                MessageBox.Show("You may need to restart the program for all changes to take effect.", "Restart required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } 
+        }
     }
 }
