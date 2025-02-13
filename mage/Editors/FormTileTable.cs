@@ -30,6 +30,8 @@ namespace mage
         private ByteStream romStream;
         private Status status;
 
+        private int oldTabIndex;
+
         // constructor
         public FormTileTable(FormMain main, int tsNum)
         {
@@ -97,6 +99,16 @@ namespace mage
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Prevent changing tabs if unsaved changes
+            if (oldTabIndex == tabControl.SelectedIndex) return;
+            if (status.UnsavedChanges)
+                if (MessageBox.Show("Unsaved Changes. Do you want to continue?", "Unsaved Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                {
+                    tabControl.SelectedIndex = oldTabIndex;
+                    return;
+                }
+
+            oldTabIndex = tabControl.SelectedIndex;
             Reset();
             status.LoadNew();
         }
