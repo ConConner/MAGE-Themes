@@ -17,6 +17,7 @@ using System.Numerics;
 using System.Diagnostics.Eventing.Reader;
 using mage.Utility;
 using mage.Actions;
+using mage.Editors;
 
 namespace mage
 {
@@ -622,6 +623,16 @@ namespace mage
 
         private void menuItem_tileTableEditor_Click(object sender, EventArgs e)
         {
+            if (Program.ExperimentalFeaturesEnabled)
+            {
+                if (!FindOpenForm(typeof(FormTileTableNew), false))
+                {   
+                    FormTileTableNew form = new FormTileTableNew();
+                    form.Show();
+                }
+                return;
+            }
+
             if (!FindOpenForm(typeof(FormTileTable), false))
             {
                 FormTileTable form = new FormTileTable(this, room.tileset.number);
