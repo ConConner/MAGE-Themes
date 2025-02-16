@@ -98,6 +98,8 @@ public partial class TileDisplay : Control
     public event EventHandler<TileDisplayArgs>? TileMouseUp;
     public event EventHandler<TileDisplayArgs>? TileMouseMove;
 
+    public event EventHandler<MouseEventArgs>? Scrolled;
+
     private TileDisplayArgs generateArgs(MouseEventArgs e)
     {
         Point pixelPos = new Point(e.X >> zoom, e.Y >> zoom);
@@ -110,8 +112,6 @@ public partial class TileDisplay : Control
             e.Delta
         );
     }
-
-    private void OnMouseEvent(object sender, MouseEventArgs e) => TileMouseDown?.Invoke( this, generateArgs(e) );
     #endregion
 
     // CTOR
@@ -195,5 +195,11 @@ public partial class TileDisplay : Control
         pevent.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
         pevent.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
         base.OnPaintBackground(pevent);
+    }
+
+    protected override void OnMouseWheel(MouseEventArgs e)
+    {
+        Scrolled?.Invoke(this, e);
+        base.OnMouseWheel(e);
     }
 }

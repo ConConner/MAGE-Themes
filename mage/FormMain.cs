@@ -627,7 +627,7 @@ namespace mage
             {
                 if (!FindOpenForm(typeof(FormTileTableNew), false))
                 {   
-                    FormTileTableNew form = new FormTileTableNew();
+                    FormTileTableNew form = new FormTileTableNew(room);
                     form.Show();
                 }
                 return;

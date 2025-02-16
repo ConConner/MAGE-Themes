@@ -24,11 +24,13 @@ public class Drawable
         this.Indent = indent;
     }
 
+
     public int X => Rectangle.X;
     public int Y => Rectangle.Y;
     public int Width => Rectangle.Width;
     public int Height => Rectangle.Height;
     public Point Location => Rectangle.Location;
+
 
     private Rectangle rectangle = Rectangle.Empty;
     public Rectangle Rectangle
@@ -47,6 +49,16 @@ public class Drawable
     public Rectangle OldRectangle { get; set; }
     public List<Pen> DrawPens { get; set; }
     public int Indent { get; set; }
-    public bool Visible { get; set; } = true;
+    private bool visible = true;
+    public bool Visible
+    {
+        get => visible;
+        set
+        {
+            if (visible == value) return;
+            visible = value;
+            if (InvalidateDrawable != null) InvalidateDrawable(this);
+        }
+    }
     public Action<Drawable> InvalidateDrawable { get; set; }
 }

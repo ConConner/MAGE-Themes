@@ -55,6 +55,8 @@
             button_palBR = new System.Windows.Forms.Button();
             tabControl = new Theming.CustomControls.FlatTabControl();
             tabPage_tileset = new System.Windows.Forms.TabPage();
+            button_flip_v = new System.Windows.Forms.Button();
+            button_flip_h = new System.Windows.Forms.Button();
             label_height = new System.Windows.Forms.Label();
             numericUpDown_height = new Theming.CustomControls.FlatNumericUpDown();
             tabPage_background = new System.Windows.Forms.TabPage();
@@ -90,8 +92,6 @@
             statusStrip_exportTileTable = new System.Windows.Forms.ToolStripMenuItem();
             checkBox_preserveData = new System.Windows.Forms.CheckBox();
             gfxView_tile = new GfxView();
-            button_flip_h = new System.Windows.Forms.Button();
-            button_flip_v = new System.Windows.Forms.Button();
             panel_result.SuspendLayout();
             panel_gfx.SuspendLayout();
             tabControl.SuspendLayout();
@@ -403,6 +403,26 @@
             tabPage_tileset.TabIndex = 1;
             tabPage_tileset.Text = "Tileset";
             // 
+            // button_flip_v
+            // 
+            button_flip_v.Location = new System.Drawing.Point(128, 46);
+            button_flip_v.Name = "button_flip_v";
+            button_flip_v.Size = new System.Drawing.Size(75, 23);
+            button_flip_v.TabIndex = 11;
+            button_flip_v.Text = "Flip V";
+            button_flip_v.UseVisualStyleBackColor = true;
+            button_flip_v.Click += button_flip_v_Click;
+            // 
+            // button_flip_h
+            // 
+            button_flip_h.Location = new System.Drawing.Point(128, 12);
+            button_flip_h.Name = "button_flip_h";
+            button_flip_h.Size = new System.Drawing.Size(75, 23);
+            button_flip_h.TabIndex = 10;
+            button_flip_h.Text = "Flip H";
+            button_flip_h.UseVisualStyleBackColor = true;
+            button_flip_h.Click += button_flip_h_Click;
+            // 
             // label_height
             // 
             label_height.AutoSize = true;
@@ -442,7 +462,7 @@
             tabPage_background.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage_background.Name = "tabPage_background";
             tabPage_background.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage_background.Size = new System.Drawing.Size(235, 86);
+            tabPage_background.Size = new System.Drawing.Size(192, 71);
             tabPage_background.TabIndex = 0;
             tabPage_background.Text = "Background";
             // 
@@ -505,7 +525,7 @@
             tabPage_offset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage_offset.Name = "tabPage_offset";
             tabPage_offset.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage_offset.Size = new System.Drawing.Size(235, 86);
+            tabPage_offset.Size = new System.Drawing.Size(192, 71);
             tabPage_offset.TabIndex = 2;
             tabPage_offset.Text = "Offset";
             // 
@@ -794,26 +814,6 @@
             gfxView_tile.TabIndex = 25;
             gfxView_tile.TabStop = false;
             gfxView_tile.MouseDown += gfxView_tile_MouseDown;
-            // 
-            // button_flip_h
-            // 
-            button_flip_h.Location = new System.Drawing.Point(128, 12);
-            button_flip_h.Name = "button_flip_h";
-            button_flip_h.Size = new System.Drawing.Size(75, 23);
-            button_flip_h.TabIndex = 10;
-            button_flip_h.Text = "Flip H";
-            button_flip_h.UseVisualStyleBackColor = true;
-            button_flip_h.Click += button_flip_h_Click;
-            // 
-            // button_flip_v
-            // 
-            button_flip_v.Location = new System.Drawing.Point(128, 46);
-            button_flip_v.Name = "button_flip_v";
-            button_flip_v.Size = new System.Drawing.Size(75, 23);
-            button_flip_v.TabIndex = 11;
-            button_flip_v.Text = "Flip V";
-            button_flip_v.UseVisualStyleBackColor = true;
-            button_flip_v.Click += button_flip_v_Click;
             // 
             // FormTileTable
             // 
