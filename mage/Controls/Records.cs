@@ -43,7 +43,7 @@ public class Drawable
             OldRectangle = rectangle;
             rectangle = value;
 
-            InvalidateDrawable(this);
+            if (InvalidateDrawable != null) InvalidateDrawable(this);
         }
     }
     public Rectangle OldRectangle { get; set; }

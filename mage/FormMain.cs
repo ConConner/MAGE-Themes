@@ -18,6 +18,7 @@ using System.Diagnostics.Eventing.Reader;
 using mage.Utility;
 using mage.Actions;
 using mage.Editors;
+using System.Linq.Expressions;
 
 namespace mage
 {
@@ -196,18 +197,16 @@ namespace mage
             roomView.UpdateZoom(zoom, false);
             statusStrip_zoom.Text = $"{1 << zoom}00%";
 
+            // Config object
+            try { Program.Config = JsonSerializer.Deserialize<Config>(Settings.Default.config); }
+            catch { Program.Config = new(); }
+
             //Room Viewer Settings
             Bg3Color = Settings.Default.bg3color;
 
             //Loading themes
-            try
-            {
-                ThemeSwitcher.Themes = ThemeSwitcher.Deserialize<Dictionary<string, ColorTheme>>(Settings.Default.themes);
-            }
-            catch
-            {
-                ThemeSwitcher.Themes = null;
-            }
+            try { ThemeSwitcher.Themes = ThemeSwitcher.Deserialize<Dictionary<string, ColorTheme>>(Settings.Default.themes); }
+            catch { ThemeSwitcher.Themes = null; }
             CheckIfThemesExist();
             ThemeSwitcher.ProjectThemeName = Settings.Default.selectedTheme;
 
@@ -242,6 +241,9 @@ namespace mage
             Settings.Default.tooltips = menuItem_tooltips.Checked;
             Settings.Default.zoom = zoom;
             Settings.Default.experimentalFeatures = Program.ExperimentalFeaturesEnabled;
+
+            //Config
+            Settings.Default.config = JsonSerializer.Serialize(Program.Config);
 
             //Room Viewer Settings
             Settings.Default.bg3color = Bg3Color;

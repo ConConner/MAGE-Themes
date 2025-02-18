@@ -49,5 +49,6 @@ namespace mage
                 MessageBox.Show("You may need to restart the program for all changes to take effect.", "Restart required", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } 
         }
+        public static Config Config { get; set; }
     }
 }

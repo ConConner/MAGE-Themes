@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace mage
+namespace mage;
+
+public interface Editor
 {
-    interface Editor
-    {
-        void UpdateEditor();
-    }
+    void UpdateEditor();
 }

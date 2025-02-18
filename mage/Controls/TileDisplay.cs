@@ -122,6 +122,7 @@ public partial class TileDisplay : Control
         // Setup
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
         BackgroundImageLayout = ImageLayout.Stretch;
+        BackColor = Color.FromArgb(32, 32, 32);
         TabStop = false;
 
         Drawables.Clear();
@@ -141,7 +142,7 @@ public partial class TileDisplay : Control
 
     public Drawable GetDrawable(int index) => Drawables[index];
 
-    private Rectangle ScaleDrawable(Drawable drawable)
+    public Rectangle ScaleDrawable(Drawable drawable)
     {
         Rectangle r = drawable.Rectangle;
         r.Size = new Size((r.Width << Zoom) - drawable.Indent, (r.Height << Zoom) - drawable.Indent);

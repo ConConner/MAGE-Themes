@@ -34,6 +34,8 @@
             panel_Main = new System.Windows.Forms.SplitContainer();
             panel_gfxAndPal = new System.Windows.Forms.SplitContainer();
             group_palette = new System.Windows.Forms.GroupBox();
+            checkBox_copyPalette = new System.Windows.Forms.CheckBox();
+            checkBox_showPalette = new System.Windows.Forms.CheckBox();
             paletteView = new Controls.TileDisplay();
             comboBox_palette = new Theming.CustomControls.FlatComboBox();
             label_pal = new System.Windows.Forms.Label();
@@ -55,6 +57,9 @@
             panel_tableView = new System.Windows.Forms.Panel();
             tableView = new Controls.TileDisplay();
             toolStrip_table = new System.Windows.Forms.ToolStrip();
+            button_flipH = new System.Windows.Forms.ToolStripButton();
+            button_flipV = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             button_tableZoomIn = new System.Windows.Forms.ToolStripButton();
             button_tableZoomOut = new System.Windows.Forms.ToolStripButton();
             label_tableZoom = new System.Windows.Forms.ToolStripLabel();
@@ -87,18 +92,20 @@
             panel_gfxView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_gfxView.Location = new System.Drawing.Point(3, 44);
             panel_gfxView.Name = "panel_gfxView";
-            panel_gfxView.Size = new System.Drawing.Size(438, 400);
+            panel_gfxView.Size = new System.Drawing.Size(438, 610);
             panel_gfxView.TabIndex = 0;
             // 
             // gfxView
             // 
+            gfxView.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
             gfxView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             gfxView.Location = new System.Drawing.Point(0, 6);
             gfxView.Name = "gfxView";
             gfxView.ShowGrid = false;
-            gfxView.Size = new System.Drawing.Size(202, 129);
+            gfxView.Size = new System.Drawing.Size(98, 72);
             gfxView.TabIndex = 0;
             gfxView.TabStop = false;
+            gfxView.Tag = "unthemed";
             gfxView.Text = "tileDisplay1";
             gfxView.TileImage = null;
             gfxView.TileSize = 8;
@@ -124,7 +131,7 @@
             // 
             panel_Main.Panel2.Controls.Add(group_table);
             panel_Main.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
-            panel_Main.Size = new System.Drawing.Size(1278, 859);
+            panel_Main.Size = new System.Drawing.Size(976, 859);
             panel_Main.SplitterDistance = 453;
             panel_Main.TabIndex = 1;
             // 
@@ -132,6 +139,7 @@
             // 
             panel_gfxAndPal.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_gfxAndPal.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            panel_gfxAndPal.IsSplitterFixed = true;
             panel_gfxAndPal.Location = new System.Drawing.Point(0, 132);
             panel_gfxAndPal.Name = "panel_gfxAndPal";
             panel_gfxAndPal.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -146,35 +154,68 @@
             panel_gfxAndPal.Panel2.Controls.Add(group_gfx);
             panel_gfxAndPal.Panel2.Padding = new System.Windows.Forms.Padding(6, 3, 3, 3);
             panel_gfxAndPal.Size = new System.Drawing.Size(453, 727);
-            panel_gfxAndPal.SplitterDistance = 270;
+            panel_gfxAndPal.SplitterDistance = 60;
             panel_gfxAndPal.TabIndex = 1;
             // 
             // group_palette
             // 
+            group_palette.Controls.Add(checkBox_copyPalette);
+            group_palette.Controls.Add(checkBox_showPalette);
             group_palette.Controls.Add(paletteView);
             group_palette.Controls.Add(comboBox_palette);
             group_palette.Controls.Add(label_pal);
             group_palette.Dock = System.Windows.Forms.DockStyle.Fill;
+            group_palette.Enabled = false;
             group_palette.Location = new System.Drawing.Point(6, 3);
             group_palette.Name = "group_palette";
-            group_palette.Size = new System.Drawing.Size(444, 264);
+            group_palette.Size = new System.Drawing.Size(444, 54);
             group_palette.TabIndex = 0;
             group_palette.TabStop = false;
             group_palette.Text = "Palette";
             // 
+            // checkBox_copyPalette
+            // 
+            checkBox_copyPalette.AutoSize = true;
+            checkBox_copyPalette.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            checkBox_copyPalette.Checked = true;
+            checkBox_copyPalette.CheckState = System.Windows.Forms.CheckState.Checked;
+            checkBox_copyPalette.Location = new System.Drawing.Point(180, 24);
+            checkBox_copyPalette.Name = "checkBox_copyPalette";
+            checkBox_copyPalette.Size = new System.Drawing.Size(93, 19);
+            checkBox_copyPalette.TabIndex = 4;
+            checkBox_copyPalette.Text = "Copy Palette";
+            checkBox_copyPalette.UseVisualStyleBackColor = true;
+            checkBox_copyPalette.CheckedChanged += checkBox_copyPalette_CheckedChanged;
+            // 
+            // checkBox_showPalette
+            // 
+            checkBox_showPalette.AutoSize = true;
+            checkBox_showPalette.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            checkBox_showPalette.Location = new System.Drawing.Point(107, 24);
+            checkBox_showPalette.Name = "checkBox_showPalette";
+            checkBox_showPalette.Size = new System.Drawing.Size(67, 19);
+            checkBox_showPalette.TabIndex = 3;
+            checkBox_showPalette.Text = "Preview";
+            checkBox_showPalette.UseVisualStyleBackColor = true;
+            checkBox_showPalette.CheckedChanged += checkBox_showPalette_CheckedChanged;
+            // 
             // paletteView
             // 
+            paletteView.BackColor = System.Drawing.SystemColors.Control;
             paletteView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             paletteView.Location = new System.Drawing.Point(8, 51);
             paletteView.Name = "paletteView";
             paletteView.ShowGrid = false;
-            paletteView.Size = new System.Drawing.Size(75, 23);
+            paletteView.Size = new System.Drawing.Size(273, 273);
             paletteView.TabIndex = 2;
             paletteView.TabStop = false;
             paletteView.Text = "tileDisplay1";
             paletteView.TileImage = null;
-            paletteView.TileSize = 16;
+            paletteView.TileSize = 17;
+            paletteView.Visible = false;
             paletteView.Zoom = 0;
+            paletteView.TileMouseDown += paletteView_TileMouseDown;
+            paletteView.TileMouseMove += paletteView_TileMouseMove;
             // 
             // comboBox_palette
             // 
@@ -201,7 +242,7 @@
             group_gfx.Dock = System.Windows.Forms.DockStyle.Fill;
             group_gfx.Location = new System.Drawing.Point(6, 3);
             group_gfx.Name = "group_gfx";
-            group_gfx.Size = new System.Drawing.Size(444, 447);
+            group_gfx.Size = new System.Drawing.Size(444, 657);
             group_gfx.TabIndex = 0;
             group_gfx.TabStop = false;
             group_gfx.Text = "Graphics";
@@ -263,7 +304,7 @@
             tab_select.Location = new System.Drawing.Point(6, 3);
             tab_select.Name = "tab_select";
             tab_select.SelectedIndex = 0;
-            tab_select.Size = new System.Drawing.Size(274, 126);
+            tab_select.Size = new System.Drawing.Size(281, 126);
             tab_select.TabIndex = 2;
             // 
             // tabPage_tileset
@@ -275,7 +316,7 @@
             tabPage_tileset.Location = new System.Drawing.Point(4, 25);
             tabPage_tileset.Name = "tabPage_tileset";
             tabPage_tileset.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
-            tabPage_tileset.Size = new System.Drawing.Size(266, 97);
+            tabPage_tileset.Size = new System.Drawing.Size(273, 97);
             tabPage_tileset.TabIndex = 0;
             tabPage_tileset.Text = "Tileset";
             // 
@@ -346,7 +387,7 @@
             group_table.Dock = System.Windows.Forms.DockStyle.Fill;
             group_table.Location = new System.Drawing.Point(3, 3);
             group_table.Name = "group_table";
-            group_table.Size = new System.Drawing.Size(812, 853);
+            group_table.Size = new System.Drawing.Size(510, 853);
             group_table.TabIndex = 0;
             group_table.TabStop = false;
             group_table.Text = "Tile Table";
@@ -358,34 +399,62 @@
             panel_tableView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_tableView.Location = new System.Drawing.Point(3, 44);
             panel_tableView.Name = "panel_tableView";
-            panel_tableView.Size = new System.Drawing.Size(806, 806);
+            panel_tableView.Size = new System.Drawing.Size(504, 806);
             panel_tableView.TabIndex = 1;
             // 
             // tableView
             // 
+            tableView.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
             tableView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             tableView.Location = new System.Drawing.Point(0, 6);
             tableView.Name = "tableView";
             tableView.ShowGrid = false;
-            tableView.Size = new System.Drawing.Size(307, 176);
+            tableView.Size = new System.Drawing.Size(171, 101);
             tableView.TabIndex = 0;
             tableView.TabStop = false;
+            tableView.Tag = "unthemed";
             tableView.Text = "tileDisplay1";
             tableView.TileImage = null;
-            tableView.TileSize = 16;
+            tableView.TileSize = 8;
             tableView.Zoom = 0;
+            tableView.TileMouseDown += tableView_TileMouseDown;
+            tableView.TileMouseUp += tableView_TileMouseUp;
+            tableView.TileMouseMove += tableView_TileMouseMove;
             tableView.Scrolled += tableView_Scrolled;
             // 
             // toolStrip_table
             // 
             toolStrip_table.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_table.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_tableZoomIn, button_tableZoomOut, label_tableZoom });
+            toolStrip_table.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_tableZoomIn, button_tableZoomOut, label_tableZoom, toolStripSeparator1, button_flipH, button_flipV });
             toolStrip_table.Location = new System.Drawing.Point(3, 19);
             toolStrip_table.Name = "toolStrip_table";
             toolStrip_table.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_table.Size = new System.Drawing.Size(806, 25);
+            toolStrip_table.Size = new System.Drawing.Size(504, 25);
             toolStrip_table.TabIndex = 0;
             toolStrip_table.Text = "toolStrip1";
+            // 
+            // button_flipH
+            // 
+            button_flipH.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_flipH.Image = Properties.Resources.flip_h;
+            button_flipH.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_flipH.Name = "button_flipH";
+            button_flipH.Size = new System.Drawing.Size(23, 22);
+            button_flipH.Text = "Flip Horizontally";
+            // 
+            // button_flipV
+            // 
+            button_flipV.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_flipV.Image = Properties.Resources.flip_v;
+            button_flipV.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_flipV.Name = "button_flipV";
+            button_flipV.Size = new System.Drawing.Size(23, 22);
+            button_flipV.Text = "Flip Vertically";
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // button_tableZoomIn
             // 
@@ -409,15 +478,17 @@
             // 
             // label_tableZoom
             // 
+            label_tableZoom.AutoSize = false;
             label_tableZoom.Name = "label_tableZoom";
-            label_tableZoom.Size = new System.Drawing.Size(35, 22);
-            label_tableZoom.Text = "100%";
+            label_tableZoom.Size = new System.Drawing.Size(42, 22);
+            label_tableZoom.Text = "1600%";
+            label_tableZoom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // statusStrip_main
             // 
             statusStrip_main.Location = new System.Drawing.Point(0, 859);
             statusStrip_main.Name = "statusStrip_main";
-            statusStrip_main.Size = new System.Drawing.Size(1278, 22);
+            statusStrip_main.Size = new System.Drawing.Size(976, 22);
             statusStrip_main.TabIndex = 2;
             statusStrip_main.Text = "statusStrip1";
             // 
@@ -425,7 +496,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            ClientSize = new System.Drawing.Size(1278, 881);
+            ClientSize = new System.Drawing.Size(976, 881);
             Controls.Add(panel_Main);
             Controls.Add(statusStrip_main);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
@@ -492,5 +563,10 @@
         private Theming.CustomControls.FlatComboBox comboBox_tileset;
         private System.Windows.Forms.Label label_tileset;
         private Controls.TileDisplay paletteView;
+        private System.Windows.Forms.CheckBox checkBox_showPalette;
+        private System.Windows.Forms.CheckBox checkBox_copyPalette;
+        private System.Windows.Forms.ToolStripButton button_flipH;
+        private System.Windows.Forms.ToolStripButton button_flipV;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
