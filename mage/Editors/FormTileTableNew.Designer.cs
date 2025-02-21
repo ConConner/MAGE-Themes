@@ -57,12 +57,15 @@
             panel_tableView = new System.Windows.Forms.Panel();
             tableView = new Controls.TileDisplay();
             toolStrip_table = new System.Windows.Forms.ToolStrip();
-            button_flipH = new System.Windows.Forms.ToolStripButton();
-            button_flipV = new System.Windows.Forms.ToolStripButton();
-            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             button_tableZoomIn = new System.Windows.Forms.ToolStripButton();
             button_tableZoomOut = new System.Windows.Forms.ToolStripButton();
             label_tableZoom = new System.Windows.Forms.ToolStripLabel();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            button_flipH = new System.Windows.Forms.ToolStripButton();
+            button_flipV = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            button_paletteIncrease = new System.Windows.Forms.ToolStripButton();
+            button_paletteDecrease = new System.Windows.Forms.ToolStripButton();
             statusStrip_main = new System.Windows.Forms.StatusStrip();
             panel_gfxView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panel_Main).BeginInit();
@@ -425,36 +428,13 @@
             // toolStrip_table
             // 
             toolStrip_table.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_table.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_tableZoomIn, button_tableZoomOut, label_tableZoom, toolStripSeparator1, button_flipH, button_flipV });
+            toolStrip_table.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_tableZoomIn, button_tableZoomOut, label_tableZoom, toolStripSeparator1, button_flipH, button_flipV, toolStripSeparator2, button_paletteIncrease, button_paletteDecrease });
             toolStrip_table.Location = new System.Drawing.Point(3, 19);
             toolStrip_table.Name = "toolStrip_table";
             toolStrip_table.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             toolStrip_table.Size = new System.Drawing.Size(504, 25);
             toolStrip_table.TabIndex = 0;
             toolStrip_table.Text = "toolStrip1";
-            // 
-            // button_flipH
-            // 
-            button_flipH.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_flipH.Image = Properties.Resources.flip_h;
-            button_flipH.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_flipH.Name = "button_flipH";
-            button_flipH.Size = new System.Drawing.Size(23, 22);
-            button_flipH.Text = "Flip Horizontally";
-            // 
-            // button_flipV
-            // 
-            button_flipV.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_flipV.Image = Properties.Resources.flip_v;
-            button_flipV.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_flipV.Name = "button_flipV";
-            button_flipV.Size = new System.Drawing.Size(23, 22);
-            button_flipV.Text = "Flip Vertically";
-            // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // button_tableZoomIn
             // 
@@ -483,6 +463,52 @@
             label_tableZoom.Size = new System.Drawing.Size(42, 22);
             label_tableZoom.Text = "1600%";
             label_tableZoom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // button_flipH
+            // 
+            button_flipH.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_flipH.Image = Properties.Resources.flip_h;
+            button_flipH.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_flipH.Name = "button_flipH";
+            button_flipH.Size = new System.Drawing.Size(23, 22);
+            button_flipH.Text = "Flip Horizontally";
+            // 
+            // button_flipV
+            // 
+            button_flipV.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_flipV.Image = Properties.Resources.flip_v;
+            button_flipV.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_flipV.Name = "button_flipV";
+            button_flipV.Size = new System.Drawing.Size(23, 22);
+            button_flipV.Text = "Flip Vertically";
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // button_paletteIncrease
+            // 
+            button_paletteIncrease.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_paletteIncrease.Image = (System.Drawing.Image)resources.GetObject("button_paletteIncrease.Image");
+            button_paletteIncrease.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_paletteIncrease.Name = "button_paletteIncrease";
+            button_paletteIncrease.Size = new System.Drawing.Size(23, 22);
+            button_paletteIncrease.Text = "toolStripButton1";
+            // 
+            // button_paletteDecrease
+            // 
+            button_paletteDecrease.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_paletteDecrease.Image = (System.Drawing.Image)resources.GetObject("button_paletteDecrease.Image");
+            button_paletteDecrease.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_paletteDecrease.Name = "button_paletteDecrease";
+            button_paletteDecrease.Size = new System.Drawing.Size(23, 22);
+            button_paletteDecrease.Text = "toolStripButton2";
             // 
             // statusStrip_main
             // 
@@ -568,5 +594,8 @@
         private System.Windows.Forms.ToolStripButton button_flipH;
         private System.Windows.Forms.ToolStripButton button_flipV;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton button_paletteIncrease;
+        private System.Windows.Forms.ToolStripButton button_paletteDecrease;
     }
 }
