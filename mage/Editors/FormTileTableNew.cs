@@ -75,6 +75,8 @@ namespace mage.Editors
                 // Activate/deactivate buttons
                 button_flipH.Enabled = value;
                 button_flipV.Enabled = value;
+                button_paletteDecrease.Enabled = value;
+                button_paletteIncrease.Enabled = value;
             }
         }
 
@@ -226,6 +228,26 @@ namespace mage.Editors
                 }
 
             DrawTileTable((Bitmap)tableView.TileImage);
+        }
+
+        private void TransformSelection(Func<ushort, ushort> transformation)
+        {
+            if (!TableSelectionVisible) return;
+
+            int xPos = TableSelection.X / 8;
+            int yPos = TableSelection.Y / 8;
+
+            for (int x = 0; x < selectedTilesSize.Width; x++)
+                for (int y = 0; y < selectedTilesSize.Height; y++)
+                {
+                    int index = GetIndexFromLocation(xPos + x, yPos + y, tableView.TileImage.Width / 16);
+                    ushort tile = tileTable[index];
+                    ushort newTile = transformation(tile);
+                    tileTable[index] = newTile;
+                }
+
+            DrawTileTable((Bitmap)tableView.TileImage);
+            TableSelection.InvalidateDrawable(TableSelection);
         }
         #endregion
 
@@ -424,6 +446,25 @@ namespace mage.Editors
             throw new NotImplementedException();
         }
 
+        private void KeyPressed(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.H:
+                case Keys.X:
+                    button_flipH_Click(sender, e);
+                    break;
+
+                case Keys.V:
+                case Keys.Y:
+                    button_flipV_Click(sender, e);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         private void comboBox_tileset_SelectedIndexChanged(object sender, EventArgs e) => InitializeWithTileset();
 
         private void comboBox_palette_SelectedIndexChanged(object sender, EventArgs e)
@@ -437,6 +478,29 @@ namespace mage.Editors
             if (GfxSelection.Visible) SelectTilesFromGFX();
         }
 
+        private void button_flipH_Click(object sender, EventArgs e)
+            => TransformSelection((ushort tile) => (ushort)(tile ^ 0x400));
+
+        private void button_flipV_Click(object sender, EventArgs e)
+            => TransformSelection((ushort tile) => (ushort)(tile ^ 0x800));
+
+        private void button_paletteIncrease_Click(object sender, EventArgs e)
+            => TransformSelection((ushort tile) =>
+            {
+                int palette = tile >> 12;
+                palette = (palette + 1) % 16;
+                tile = (ushort)((tile & 0x0FFF) | (palette << 12));
+                return tile;
+            });
+
+        private void button_paletteDecrease_Click(object sender, EventArgs e)
+            => TransformSelection((ushort tile) =>
+            {
+                int palette = tile >> 12;
+                palette = (palette + 16 - 1) % 16;
+                tile = (ushort)((tile & 0x0FFF) | (palette << 12));
+                return tile;
+            });
         #region Palette Display
         private void checkBox_showPalette_CheckedChanged(object sender, EventArgs e) => ShowPalette = checkBox_showPalette.Checked;
         private void checkBox_copyPalette_CheckedChanged(object sender, EventArgs e) => CopyPalette = checkBox_copyPalette.Checked;
@@ -532,7 +596,7 @@ namespace mage.Editors
         #endregion
 
         #region Table Display
-        // ZOOM
+        //ZOOM
         private void button_tableZoomIn_Click(object sender, EventArgs e) => updateTableZoom(tableView.Zoom + 1);
 
         private void button_tableZoomOut_Click(object sender, EventArgs e) => updateTableZoom(tableView.Zoom - 1);
