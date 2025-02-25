@@ -951,6 +951,26 @@ namespace mage.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap shape_flip_horizontal {
+            get {
+                object obj = ResourceManager.GetObject("shape_flip_horizontal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap shape_flip_vertical {
+            get {
+                object obj = ResourceManager.GetObject("shape_flip_vertical", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap shortcut_acid {
             get {
                 object obj = ResourceManager.GetObject("shortcut_acid", resourceCulture);
@@ -2441,6 +2461,26 @@ namespace mage.Properties {
         public static string ZM_U_weapons {
             get {
                 return ResourceManager.GetString("ZM_U_weapons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap zoom_in {
+            get {
+                object obj = ResourceManager.GetObject("zoom_in", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap zoom_out {
+            get {
+                object obj = ResourceManager.GetObject("zoom_out", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
