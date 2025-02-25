@@ -8,12 +8,17 @@ namespace mage
         public bool UnsavedChanges { get; private set; }
         private ToolStripStatusLabel statusLabel;
         private Button applyButton;
+        private ToolStripDropDownButton altApplyButton;
 
         public Status(ToolStripStatusLabel statusLabel, Button applyButton = null)
         {
             this.statusLabel = statusLabel;
             this.applyButton = applyButton;
             UnsavedChanges = false;
+        }
+        public Status(ToolStripStatusLabel statusLabel, ToolStripDropDownButton applyButton) : this(statusLabel)
+        {
+            this.altApplyButton = applyButton;
         }
 
         public void ChangeMade()
@@ -66,6 +71,10 @@ namespace mage
             if (applyButton != null)
             {
                 applyButton.Enabled = enable;
+            }
+            if (altApplyButton != null)
+            {
+                altApplyButton.Enabled = enable;
             }
         }
 

@@ -50,11 +50,13 @@ public partial class TileDisplay : Control
         }
     }
     private bool showGrid = false;
+    public int GridCellWidth { get; set; } = 16;
+    public int GridCellHeight { get; set; } = 16;
 
     /// <summary>
     /// Pen used for the tile grid if <see cref="ShowGrid"/> is set to true
     /// </summary>
-    public Pen GridPen { get; set; } = new Pen(Color.White, 1);
+    public Pen GridPen { get; set; } = Pens.White;
 
     /// <summary>
     /// Scale of the display
@@ -171,6 +173,15 @@ public partial class TileDisplay : Control
 
     protected override void OnPaint(PaintEventArgs pe)
     {
+        if (ShowGrid)
+        {
+            for (int i = 0; i < TileImage.Width / GridCellWidth; i++)
+                pe.Graphics.DrawLine(GridPen, (i * GridCellWidth) << Zoom, 0, (i * GridCellWidth) << Zoom, TileImage.Height << Zoom);
+
+            for (int i = 0; i < TileImage.Height / GridCellHeight; i++)
+                pe.Graphics.DrawLine(GridPen, 0, (i * GridCellHeight) << Zoom, TileImage.Width << Zoom, (i * GridCellHeight) << Zoom);
+        }
+
         foreach (Drawable d in Drawables)
         {
             if (!d.Visible) continue;
@@ -179,15 +190,6 @@ public partial class TileDisplay : Control
             Rectangle r = ScaleDrawable(d);
 
             foreach (Pen p in d.DrawPens) pe.Graphics.DrawRectangle(p, r);
-        }
-
-        if (ShowGrid)
-        {
-            for (int i = 0; i < TileImage.Width / TileSize; i++)
-                pe.Graphics.DrawLine(GridPen, (i * TileSize) << Zoom, 0, (i * TileSize) << Zoom, TileImage.Height << Zoom);
-
-            for (int i = 0; i < TileImage.Height / TileSize; i++)
-                pe.Graphics.DrawLine(GridPen, 0, (i * TileSize) << Zoom, TileImage.Width << Zoom, (i * TileSize) << Zoom);
         }
     }
 

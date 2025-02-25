@@ -13,6 +13,9 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using mage.Dialogs;
+using System.Xml;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace mage.Editors
 {
@@ -77,10 +80,12 @@ namespace mage.Editors
                 button_flipV.Enabled = value;
                 button_paletteDecrease.Enabled = value;
                 button_paletteIncrease.Enabled = value;
+                button_setPalette.Enabled = value;
             }
         }
 
         private Room? openedInRoom;
+        private Status Status;
 
         // Current loaded TileTable related Data
         private ushort[] tileTable;
@@ -98,6 +103,10 @@ namespace mage.Editors
                 return new Size(selectedTiles.GetLength(0), selectedTiles.GetLength(1));
             }
         }
+
+        // Old values
+        private int oldSelectedTab;
+        private int oldSelectedTileset;
         #endregion
 
         public FormTileTableNew()
@@ -133,6 +142,9 @@ namespace mage.Editors
             tableView.AddDrawable(TableCursor);
             tableView.AddDrawable(TableSelection);
             updateTableZoom(0);
+
+            // Status
+            Status = new Status(statusLabel_changes, button_apply);
 
             // Controls Setup
             SetupComboboxes();
@@ -228,6 +240,7 @@ namespace mage.Editors
                 }
 
             DrawTileTable((Bitmap)tableView.TileImage);
+            Status.ChangeMade();
         }
 
         private void TransformSelection(Func<ushort, ushort> transformation)
@@ -248,6 +261,115 @@ namespace mage.Editors
 
             DrawTileTable((Bitmap)tableView.TileImage);
             TableSelection.InvalidateDrawable(TableSelection);
+            Status.ChangeMade();
+        }
+
+        private bool PreserveExistingData(int offset)
+        {
+            offset = ROM.Stream.ReadPtr(offset); // Not sure why but mage does this
+
+            List<int> pointers = ROM.Stream.GetPointers(offset);
+            if (pointers.Count <= 1) return false;
+
+            if (MessageBox.Show(
+                $"This Tile Table is referenced {pointers.Count} times.\n" +
+                $"Do you want to change all references?",
+                "Preserve existing data",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            ) != DialogResult.Yes) return true;
+            return false;
+        }
+
+        private void Save()
+        {
+            if (tab_select.SelectedIndex == 0)
+            {
+                int ptr = Version.TilesetOffset + comboBox_tileset.SelectedIndex * 0x14 + 0xC;
+                bool shared = !PreserveExistingData(ptr);
+
+                // tileset
+                ByteStream dataToWrite = new ByteStream();
+                dataToWrite.Write8(2);
+                dataToWrite.Write8((byte)(numOfTiles / 64));
+
+                for (int i = 0; i < numOfTiles; i++)
+                {
+                    ushort tile = tileTable[i];
+                    dataToWrite.Write16(tile);
+                }
+
+                ROM.Stream.Write(dataToWrite, origLen * 2 + 2, ptr, shared);
+            }
+            else if (tab_select.SelectedIndex == 1)
+            {
+                //bool shared = !PreserveExistingData();
+
+                //// background
+                //int length = tileTable.Length * 2;
+                //byte[] uncompTemp = new byte[length];
+                //Buffer.BlockCopy(tileTable, 0, uncompTemp, 0, length);
+                //ByteStream uncompData = new ByteStream(uncompTemp);
+
+                //// compress by LZ77
+                //ByteStream compData = new ByteStream();
+                //compData.Write32(comboBox_size.SelectedIndex);
+                //int newCompLen = Compress.CompLZ77(uncompData, length, compData);
+
+                //// get pointer
+                //int area = comboBox_area.SelectedIndex;
+                //int room = comboBox_room.SelectedIndex;
+                //int bg = comboBox_bg.SelectedIndex;
+                //int ptr = romStream.ReadPtr(Version.AreaHeaderOffset + area * 4) + (room * 0x3C);
+                //if (bg == 0)
+                //{
+                //    ptr += 8;
+                //}
+                //else
+                //{
+                //    ptr += 0x18;
+                //}
+
+                //// write data
+                //romStream.Write(compData, origLen, ptr, shared);
+            }
+            else if (tab_select.SelectedIndex == 2)
+            {
+                //bool shared = !PreserveExistingData();
+
+                //// offset
+                //int length = tileTable.Length * 2;
+                //byte[] uncompTemp = new byte[length];
+                //Buffer.BlockCopy(tileTable, 0, uncompTemp, 0, length);
+                //ByteStream uncompData = new ByteStream(uncompTemp);
+
+                //// compress by LZ77
+                //ByteStream compData = new ByteStream();
+                //int newCompLen = Compress.CompLZ77(uncompData, length, compData);
+
+                //// write data
+                //int prevOffset = ttbOffset;
+                //romStream.Write2(compData, origLen, ref ttbOffset, true);
+                //textBox_ttb.Text = Hex.ToString(ttbOffset);
+
+                //if (prevOffset != ttbOffset)
+                //{
+                //    string message = "Tile table was repointed to " + Hex.ToString(ttbOffset);
+                //    MessageBox.Show(message, "Repointed Tile Table", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //}
+            }
+
+            FormMain.UpdateEditors();
+            Status.Save();
+        }
+
+        private bool CheckUnsaved()
+        {
+            DialogResult result = MessageBox.Show("Do you want to save changes to the ROM?",
+                "Unsaved Changes", MessageBoxButtons.YesNoCancel);
+            if (result == DialogResult.Cancel) return false;
+            if (result == DialogResult.Yes) Save();
+            return true;
         }
         #endregion
 
@@ -269,6 +391,7 @@ namespace mage.Editors
         private void InitializeWithTileset()
         {
             init = true;
+            Status.LoadNew();
 
             // get tileset and vram
             Tileset tileset = new Tileset(ROM.Stream, (byte)comboBox_tileset.SelectedIndex);
@@ -443,8 +566,24 @@ namespace mage.Editors
         #region Events
         public void UpdateEditor()
         {
-            throw new NotImplementedException();
+            if (!Status.UnsavedChanges)
+            {
+                switch (tab_select.SelectedIndex)
+                {
+                    case 0:
+                        InitializeWithTileset();
+                        break;
+                    case 1:
+                        //InitializeWithBackground();
+                        break;
+                    case 2:
+                        //InitializeWithOffset();
+                        break;
+                }
+            }
         }
+
+        private void button_apply_Click(object sender, EventArgs e) => Save();
 
         private void KeyPressed(object sender, KeyEventArgs e)
         {
@@ -460,12 +599,52 @@ namespace mage.Editors
                     button_flipV_Click(sender, e);
                     break;
 
+                case Keys.W:
+                case Keys.I:
+                    button_paletteIncrease_Click(sender, e);
+                    break;
+
+                case Keys.S:
+                case Keys.D:
+                    button_paletteDecrease_Click(sender, e);
+                    break;
+
+                case Keys.G:
+                    button_grid.Checked = !button_grid.Checked;
+                    break;
+
+                case Keys.P:
+                    button_setPalette_Click(sender, e);
+                    break;
+
                 default:
                     break;
             }
         }
 
-        private void comboBox_tileset_SelectedIndexChanged(object sender, EventArgs e) => InitializeWithTileset();
+        #region Tileset tab
+        private void comboBox_tileset_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox_tileset.SelectedIndex == oldSelectedTileset) return;
+            if (Status.UnsavedChanges && !CheckUnsaved())
+            {
+                comboBox_tileset.SelectedIndex = oldSelectedTileset;
+                return;
+            }
+
+            oldSelectedTileset = comboBox_tileset.SelectedIndex;
+
+            InitializeWithTileset();
+        }
+
+        private void numericUpDown_height_ValueChanged(object sender, EventArgs e)
+        {
+            if (init) return;
+            numOfTiles = (int)numericUpDown_height.Value * 64;
+            SetTileTableImage(256, numOfTiles / 4);
+            Status.ChangeMade();
+        }
+        #endregion
 
         private void comboBox_palette_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -501,6 +680,26 @@ namespace mage.Editors
                 tile = (ushort)((tile & 0x0FFF) | (palette << 12));
                 return tile;
             });
+
+        private void button_setPalette_Click(object sender, EventArgs e)
+        {
+            if (!TableSelectionVisible) return;
+
+            PaletteDialog dialog = new PaletteDialog(palette, 16);
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+
+            int pal = dialog.SelectedIndex;
+            TransformSelection((ushort tile) => (ushort)((tile & 0x0FFF) | (pal << 12)));
+        }
+
+        private void button_grid_CheckStateChanged(object sender, EventArgs e) => tableView.ShowGrid = button_grid.Checked;
+
+        private void FormTileTableNew_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!Status.UnsavedChanges) return;
+            if (!CheckUnsaved()) e.Cancel = true;
+        }
+
         #region Palette Display
         private void checkBox_showPalette_CheckedChanged(object sender, EventArgs e) => ShowPalette = checkBox_showPalette.Checked;
         private void checkBox_copyPalette_CheckedChanged(object sender, EventArgs e) => CopyPalette = checkBox_copyPalette.Checked;
