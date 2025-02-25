@@ -25,6 +25,7 @@ namespace mage.Editors
         private bool init = false;
 
         Pen CursorPen = new Pen(Color.Red, 1);
+        Pen GridPen = new Pen(Color.Gray, 1);
         Pen SelectionPenWhite = new Pen(Color.White, 1) { DashPattern = new float[] { 2, 3 } };
         Pen SelectionPenBlack = new Pen(Color.Black, 1) { DashPattern = new float[] { 2, 3 }, DashOffset = 2 };
 
@@ -141,6 +142,7 @@ namespace mage.Editors
             TableSelection.DrawPens.Add(SelectionPenBlack);
             tableView.AddDrawable(TableCursor);
             tableView.AddDrawable(TableSelection);
+            tableView.GridPen = GridPen;
             updateTableZoom(0);
 
             // Status
@@ -374,6 +376,24 @@ namespace mage.Editors
         #endregion
 
         #region Drawing and Setup Code
+        /// <summary>
+        /// Resets all the view stuff
+        /// </summary>
+        private void Reset()
+        {
+            gfxView.TileImage = null;
+            tableView.TileImage = null;
+            paletteView.TileImage = null;
+
+            comboBox_palette.SelectedIndex = -1;
+            group_palette.Enabled = false;
+            comboBox_size.SelectedIndex = -1;
+            comboBox_size.Enabled = false;
+            numericUpDown_height.Enabled = false;
+
+            init = true;
+        }
+
         private void SetupComboboxes()
         {
             int numTilesets = Version.NumOfTilesets;
@@ -386,6 +406,8 @@ namespace mage.Editors
             {
                 comboBox_palette.Items.Add(Hex.ToString(i));
             }
+
+            comboBox_area.Items.AddRange(Version.AreaNames);
         }
 
         private void InitializeWithTileset()
@@ -425,6 +447,88 @@ namespace mage.Editors
             init = false;
         }
 
+        private void InitializeWithBackground()
+        {
+            init = true;
+
+            int room = comboBox_room.SelectedIndex;
+            if (room == -1)
+            {
+                Reset();
+                return;
+            }
+            int bg = comboBox_bg.SelectedIndex;
+            if (bg == -1)
+            {
+                Reset();
+                return;
+            }
+
+            // get tile table
+            int area = comboBox_area.SelectedIndex;
+            int offset = ROM.Stream.ReadPtr(Version.AreaHeaderOffset + area * 4) + (room * 0x3C);
+            int addr;
+            if (bg == 0)
+            {
+                byte prop = ROM.Stream.Read8(offset + 1);
+                if ((prop & 0x40) == 0)
+                {
+                    Reset();
+                    return;
+                }
+                addr = ROM.Stream.ReadPtr(offset + 8);
+            }
+            else
+            {
+                addr = ROM.Stream.ReadPtr(offset + 0x18);
+            }
+
+            int size = ROM.Stream.Read8(addr);
+            int length = ROM.Stream.Read32(addr + 4) >> 8;
+            ByteStream ttb = new ByteStream(length);
+            try
+            {
+                ROM.Stream.Seek(addr + 4);
+                origLen = Compress.DecompLZ77(ROM.Stream, ttb);
+            }
+            catch
+            {
+                Reset();
+                return;
+            }
+
+            tileTable = new ushort[0x800];
+            ttb.CopyToArray(0, tileTable, 0, ttb.Length);
+            if (size == 0)
+            {
+                for (int i = 0x400; i < 0x800; i++)
+                {
+                    tileTable[i] = 0x3FF;
+                }
+            }
+
+            // get tileset and vram
+            byte tsNum = ROM.Stream.Read8(offset);
+            Tileset tileset = new Tileset(ROM.Stream, tsNum);
+            VramBG vram = new VramBG(tileset, false);
+            gfxData = new byte[0x8000];
+            Array.Copy(vram.BGtiles, 0x4000, gfxData, 0, 0x8000);
+            palette = vram.BGpalette;
+
+            // Palette
+            comboBox_palette.SelectedIndex = 0;
+            paletteView.TileImage = palette.Draw(16, 0, 16, 0x0);
+            group_palette.Enabled = true;
+
+            // set result image
+            comboBox_size.Enabled = true;
+            comboBox_size.SelectedIndex = size;
+            DrawGFX();
+            SetBackgroundImage();
+
+            init = false;
+        }
+
         private void DrawGFX()
         {
             GFX gfx = new GFX(gfxData, 32);
@@ -438,6 +542,27 @@ namespace mage.Editors
             Bitmap resultImg = new Bitmap(width, height, PixelFormat.Format16bppArgb1555);
             DrawTileTable(resultImg);
             tableView.TileImage = resultImg;
+        }
+
+        private void SetBackgroundImage()
+        {
+            int size = comboBox_size.SelectedIndex;
+            if (size == -1) { return; }
+
+            int width = 256;
+            int height = 256;
+            numOfTiles = 0x400;
+            if (size == 1)
+            {
+                width = 512;
+                numOfTiles = 0x800;
+            }
+            else if (size == 2)
+            {
+                height = 512;
+                numOfTiles = 0x800;
+            }
+            SetTileTableImage(width, height);
         }
 
         private unsafe void DrawTileTable(Bitmap image)
@@ -462,19 +587,19 @@ namespace mage.Editors
                         y = (t / 64) * 16 + ((t % 4) / 2) * 8;
                         break;
                     case 1:
-                    //switch (comboBox_size.SelectedIndex)
-                    //{
-                    //    case 0:
-                    //    case 2:
-                    //        x = (t % 32) * 8;
-                    //        y = (t / 32) * 8;
-                    //        break;
-                    //    case 1:
-                    //        x = (t / 0x400) * 256 + (t % 32) * 8;
-                    //        y = ((t / 32) % 32) * 8;
-                    //        break;
-                    //}
-                    //break;
+                        switch (comboBox_size.SelectedIndex)
+                        {
+                            case 0:
+                            case 2:
+                                x = (t % 32) * 8;
+                                y = (t / 32) * 8;
+                                break;
+                            case 1:
+                                x = (t / 0x400) * 256 + (t % 32) * 8;
+                                y = ((t / 32) % 32) * 8;
+                                break;
+                        }
+                        break;
                     case 2:
                         x = (t % 32) * 8;
                         y = (t / 32) * 8;
@@ -642,6 +767,36 @@ namespace mage.Editors
             if (init) return;
             numOfTiles = (int)numericUpDown_height.Value * 64;
             SetTileTableImage(256, numOfTiles / 4);
+            Status.ChangeMade();
+        }
+        #endregion
+
+        #region Background Tab
+        private void comboBox_area_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int area = comboBox_area.SelectedIndex;
+            int numOfRooms = Version.RoomsPerArea[area];
+            int currNum = comboBox_room.Items.Count;
+
+            if (numOfRooms > currNum)
+                for (int i = currNum; i < numOfRooms; i++) comboBox_room.Items.Add(Hex.ToString(i));
+
+            else if (numOfRooms < currNum)
+                for (int i = currNum - 1; i >= numOfRooms; i--) comboBox_room.Items.RemoveAt(i);
+
+            comboBox_room.SelectedIndex = 0;
+        }
+
+        private void RoomOrBackgroundChanged(object sender, EventArgs e)
+        {
+            InitializeWithBackground();
+            Status.LoadNew();
+        }
+
+        private void comboBox_size_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (init) return;
+            SetBackgroundImage();
             Status.ChangeMade();
         }
         #endregion

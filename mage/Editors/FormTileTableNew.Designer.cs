@@ -123,7 +123,7 @@
             gfxView.Location = new System.Drawing.Point(0, 6);
             gfxView.Name = "gfxView";
             gfxView.ShowGrid = false;
-            gfxView.Size = new System.Drawing.Size(98, 72);
+            gfxView.Size = new System.Drawing.Size(0, 0);
             gfxView.TabIndex = 0;
             gfxView.TabStop = false;
             gfxView.Tag = "unthemed";
@@ -157,7 +157,7 @@
             panel_Main.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             panel_Main.Panel2MinSize = 262;
             panel_Main.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            panel_Main.Size = new System.Drawing.Size(819, 802);
+            panel_Main.Size = new System.Drawing.Size(1075, 802);
             panel_Main.SplitterDistance = 544;
             panel_Main.TabIndex = 1;
             // 
@@ -236,7 +236,7 @@
             paletteView.Location = new System.Drawing.Point(8, 51);
             paletteView.Name = "paletteView";
             paletteView.ShowGrid = false;
-            paletteView.Size = new System.Drawing.Size(273, 273);
+            paletteView.Size = new System.Drawing.Size(0, 0);
             paletteView.TabIndex = 2;
             paletteView.TabStop = false;
             paletteView.Text = "tileDisplay1";
@@ -453,6 +453,7 @@
             comboBox_size.Name = "comboBox_size";
             comboBox_size.Size = new System.Drawing.Size(90, 23);
             comboBox_size.TabIndex = 17;
+            comboBox_size.SelectedIndexChanged += comboBox_size_SelectedIndexChanged;
             // 
             // comboBox_bg
             // 
@@ -464,6 +465,7 @@
             comboBox_bg.Name = "comboBox_bg";
             comboBox_bg.Size = new System.Drawing.Size(90, 23);
             comboBox_bg.TabIndex = 16;
+            comboBox_bg.SelectedIndexChanged += RoomOrBackgroundChanged;
             // 
             // comboBox_area
             // 
@@ -474,6 +476,7 @@
             comboBox_area.Name = "comboBox_area";
             comboBox_area.Size = new System.Drawing.Size(90, 23);
             comboBox_area.TabIndex = 13;
+            comboBox_area.SelectedIndexChanged += comboBox_area_SelectedIndexChanged;
             // 
             // comboBox_room
             // 
@@ -484,6 +487,7 @@
             comboBox_room.Name = "comboBox_room";
             comboBox_room.Size = new System.Drawing.Size(90, 23);
             comboBox_room.TabIndex = 15;
+            comboBox_room.SelectedIndexChanged += RoomOrBackgroundChanged;
             // 
             // label_size
             // 
@@ -510,7 +514,7 @@
             group_table.Dock = System.Windows.Forms.DockStyle.Fill;
             group_table.Location = new System.Drawing.Point(3, 3);
             group_table.Name = "group_table";
-            group_table.Size = new System.Drawing.Size(262, 796);
+            group_table.Size = new System.Drawing.Size(518, 796);
             group_table.TabIndex = 0;
             group_table.TabStop = false;
             group_table.Text = "Tile Table";
@@ -522,7 +526,7 @@
             panel_tableView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_tableView.Location = new System.Drawing.Point(3, 44);
             panel_tableView.Name = "panel_tableView";
-            panel_tableView.Size = new System.Drawing.Size(256, 749);
+            panel_tableView.Size = new System.Drawing.Size(512, 749);
             panel_tableView.TabIndex = 1;
             // 
             // tableView
@@ -534,7 +538,7 @@
             tableView.Location = new System.Drawing.Point(0, 6);
             tableView.Name = "tableView";
             tableView.ShowGrid = false;
-            tableView.Size = new System.Drawing.Size(256, 101);
+            tableView.Size = new System.Drawing.Size(0, 0);
             tableView.TabIndex = 0;
             tableView.TabStop = false;
             tableView.Tag = "unthemed";
@@ -554,7 +558,7 @@
             toolStrip_table.Location = new System.Drawing.Point(3, 19);
             toolStrip_table.Name = "toolStrip_table";
             toolStrip_table.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_table.Size = new System.Drawing.Size(256, 25);
+            toolStrip_table.Size = new System.Drawing.Size(512, 25);
             toolStrip_table.TabIndex = 0;
             toolStrip_table.Text = "toolStrip1";
             // 
@@ -593,7 +597,8 @@
             button_paletteIncrease.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_paletteIncrease.Name = "button_paletteIncrease";
             button_paletteIncrease.Size = new System.Drawing.Size(23, 22);
-            button_paletteIncrease.Text = "Increase Palette (Up, I)";
+            button_paletteIncrease.Text = "Increase Palette (W, I)";
+            button_paletteIncrease.ToolTipText = "Increase Palette (W, I)";
             button_paletteIncrease.Click += button_paletteIncrease_Click;
             // 
             // button_paletteDecrease
@@ -604,7 +609,7 @@
             button_paletteDecrease.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_paletteDecrease.Name = "button_paletteDecrease";
             button_paletteDecrease.Size = new System.Drawing.Size(23, 22);
-            button_paletteDecrease.Text = "Decrease Palette (Down, D)";
+            button_paletteDecrease.Text = "Decrease Palette (S, D)";
             button_paletteDecrease.Click += button_paletteDecrease_Click;
             // 
             // button_setPalette
@@ -632,7 +637,7 @@
             button_grid.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_grid.Name = "button_grid";
             button_grid.Size = new System.Drawing.Size(23, 22);
-            button_grid.Text = "toolStripButton1";
+            button_grid.Text = "Grid (G)";
             button_grid.CheckStateChanged += button_grid_CheckStateChanged;
             // 
             // toolStripSeparator2
@@ -673,7 +678,7 @@
             statusStrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_changes, spring, button_apply });
             statusStrip_main.Location = new System.Drawing.Point(0, 802);
             statusStrip_main.Name = "statusStrip_main";
-            statusStrip_main.Size = new System.Drawing.Size(819, 22);
+            statusStrip_main.Size = new System.Drawing.Size(1075, 22);
             statusStrip_main.TabIndex = 2;
             statusStrip_main.Text = "statusStrip1";
             // 
@@ -686,7 +691,7 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(734, 17);
+            spring.Size = new System.Drawing.Size(990, 17);
             spring.Spring = true;
             // 
             // button_apply
@@ -704,7 +709,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            ClientSize = new System.Drawing.Size(819, 824);
+            ClientSize = new System.Drawing.Size(1075, 824);
             Controls.Add(panel_Main);
             Controls.Add(statusStrip_main);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");

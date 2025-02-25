@@ -167,7 +167,11 @@ public partial class TileDisplay : Control
 
     private void ScaleImage()
     {
-        if (BackgroundImage == null) return;
+        if (BackgroundImage == null)
+        {
+            Size = Size.Empty;
+            return;
+        }
         Size = new Size(BackgroundImage.Width << Zoom, BackgroundImage.Height << Zoom);
     }
 
