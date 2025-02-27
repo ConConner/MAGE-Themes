@@ -21,6 +21,15 @@ namespace mage.Editors
 {
     public partial class FormTileTableNew : Form, Editor
     {
+        #region Tab Enum
+        private enum Tab
+        {
+            Tileset,
+            Background,
+            Offset
+        }
+        #endregion
+
         #region Fields
         private bool init = false;
 
@@ -89,6 +98,15 @@ namespace mage.Editors
         private Status Status;
 
         // Current loaded TileTable related Data
+        private Tab selectedTab
+        {
+            get
+            {
+                if (tab_select.SelectedIndex == 0) return Tab.Tileset;
+                if (tab_select.SelectedIndex == 1) return Tab.Background;
+                return Tab.Offset;
+            }
+        }
         private ushort[] tileTable;
         private int numOfTiles;
         private int origLen;
@@ -162,21 +180,38 @@ namespace mage.Editors
         /// <summary>
         /// Gets the index for a single tile from the tile x and y position on a metatile canvas.
         /// </summary>
-        /// <param name="canvasWidth">Width of the metatile canvas. Width in metatiles</param>
-        private int GetIndexFromLocation(int x, int y, int canvasWidth)
+        private int GetIndexFromLocation(int x, int y)
         {
-            int xx = x / 2;
-            int yy = y / 2;
-            int tile = (yy * canvasWidth + xx) * 4;
-            int align = (y % 2 * 2) + (x % 2);
-            return (tile + align);
+            switch (selectedTab)
+            {
+                case Tab.Tileset:
+                    {
+                        int canvasWidth = 16;
+                        int xx = x / 2;
+                        int yy = y / 2;
+                        int tile = (yy * canvasWidth + xx) * 4;
+                        int align = (y % 2 * 2) + (x % 2);
+                        return (tile + align);
+                    }
+
+                case Tab.Background:
+                    {
+                        int onRightPage = x / 32;
+                        int tile = (y + onRightPage * 31) * 32 + x;
+                        return tile;
+                    }
+
+                case Tab.Offset:
+                    break;
+            }
+            return -1;
         }
 
         /// <summary>
         /// Gets the index for a single tile from the tile x and y position on a metatile canvas.
         /// </summary>
         /// <param name="canvasWidth">Width of the metatile canvas. Width in metatiles</param>
-        private int GetIndexFromLocation(Point location, int canvasWidth) => GetIndexFromLocation(location.X, location.Y, canvasWidth);
+        private int GetIndexFromLocation(Point location, int canvasWidth) => GetIndexFromLocation(location.X, location.Y);
 
         private void SelectTilesFromGFX()
         {
@@ -206,7 +241,7 @@ namespace mage.Editors
             for (int x = 0; x < width; x++)
                 for (int y = 0; y < height; y++)
                 {
-                    int index = GetIndexFromLocation(TableSelection.X / 8 + x, TableSelection.Y / 8 + y, tableView.TileImage.Width / 16);
+                    int index = GetIndexFromLocation(TableSelection.X / 8 + x, TableSelection.Y / 8 + y);
                     selectedTiles[x, y] = tileTable[index];
                 }
         }
@@ -234,7 +269,7 @@ namespace mage.Editors
                 {
                     if (location.X + x >= canvasWidth || location.Y + y >= canvasHeight || location.X + x < 0 || location.Y + y < 0) continue;
 
-                    int index = GetIndexFromLocation(location.X + x, location.Y + y, tableView.TileImage.Width / 16);
+                    int index = GetIndexFromLocation(location.X + x, location.Y + y);
                     ushort tile = selectedTiles[x, y];
                     if (!CopyPalette) tile = (ushort)(tile & 0xFFF | tileTable[index] & 0xF000);
 
@@ -255,7 +290,7 @@ namespace mage.Editors
             for (int x = 0; x < selectedTilesSize.Width; x++)
                 for (int y = 0; y < selectedTilesSize.Height; y++)
                 {
-                    int index = GetIndexFromLocation(xPos + x, yPos + y, tableView.TileImage.Width / 16);
+                    int index = GetIndexFromLocation(xPos + x, yPos + y);
                     ushort tile = tileTable[index];
                     ushort newTile = transformation(tile);
                     tileTable[index] = newTile;
@@ -285,9 +320,9 @@ namespace mage.Editors
 
         private void Save()
         {
-            if (tab_select.SelectedIndex == 0)
+            if (oldSelectedTab == (int)Tab.Tileset)
             {
-                int ptr = Version.TilesetOffset + comboBox_tileset.SelectedIndex * 0x14 + 0xC;
+                int ptr = Version.TilesetOffset + oldSelectedTileset * 0x14 + 0xC;
                 bool shared = !PreserveExistingData(ptr);
 
                 // tileset
@@ -303,39 +338,38 @@ namespace mage.Editors
 
                 ROM.Stream.Write(dataToWrite, origLen * 2 + 2, ptr, shared);
             }
-            else if (tab_select.SelectedIndex == 1)
+            else if (oldSelectedTab == (int)Tab.Background)
             {
-                //bool shared = !PreserveExistingData();
+                // background
+                int length = tileTable.Length * 2;
+                byte[] uncompTemp = new byte[length];
+                Buffer.BlockCopy(tileTable, 0, uncompTemp, 0, length);
+                ByteStream uncompData = new ByteStream(uncompTemp);
 
-                //// background
-                //int length = tileTable.Length * 2;
-                //byte[] uncompTemp = new byte[length];
-                //Buffer.BlockCopy(tileTable, 0, uncompTemp, 0, length);
-                //ByteStream uncompData = new ByteStream(uncompTemp);
+                // compress by LZ77
+                ByteStream compData = new ByteStream();
+                compData.Write32(comboBox_size.SelectedIndex);
+                int newCompLen = Compress.CompLZ77(uncompData, length, compData);
 
-                //// compress by LZ77
-                //ByteStream compData = new ByteStream();
-                //compData.Write32(comboBox_size.SelectedIndex);
-                //int newCompLen = Compress.CompLZ77(uncompData, length, compData);
+                // get pointer
+                int area = comboBox_area.SelectedIndex;
+                int room = comboBox_room.SelectedIndex;
+                int bg = comboBox_bg.SelectedIndex;
+                int ptr = ROM.Stream.ReadPtr(Version.AreaHeaderOffset + area * 4) + (room * 0x3C);
+                if (bg == 0)
+                {
+                    ptr += 8;
+                }
+                else
+                {
+                    ptr += 0x18;
+                }
 
-                //// get pointer
-                //int area = comboBox_area.SelectedIndex;
-                //int room = comboBox_room.SelectedIndex;
-                //int bg = comboBox_bg.SelectedIndex;
-                //int ptr = romStream.ReadPtr(Version.AreaHeaderOffset + area * 4) + (room * 0x3C);
-                //if (bg == 0)
-                //{
-                //    ptr += 8;
-                //}
-                //else
-                //{
-                //    ptr += 0x18;
-                //}
-
-                //// write data
-                //romStream.Write(compData, origLen, ptr, shared);
+                // write data
+                bool shared = !PreserveExistingData(ptr);
+                ROM.Stream.Write(compData, origLen, ptr, shared);
             }
-            else if (tab_select.SelectedIndex == 2)
+            else if (oldSelectedTab == (int)Tab.Offset)
             {
                 //bool shared = !PreserveExistingData();
 
@@ -367,7 +401,7 @@ namespace mage.Editors
 
         private bool CheckUnsaved()
         {
-            DialogResult result = MessageBox.Show("Do you want to save changes to the ROM?",
+            DialogResult result = MessageBox.Show("Do you want to save changes to Tile Table?",
                 "Unsaved Changes", MessageBoxButtons.YesNoCancel);
             if (result == DialogResult.Cancel) return false;
             if (result == DialogResult.Yes) Save();
@@ -381,17 +415,19 @@ namespace mage.Editors
         /// </summary>
         private void Reset()
         {
+            Status.LoadNew();
+
             gfxView.TileImage = null;
             tableView.TileImage = null;
             paletteView.TileImage = null;
+
+            init = true;
 
             comboBox_palette.SelectedIndex = -1;
             group_palette.Enabled = false;
             comboBox_size.SelectedIndex = -1;
             comboBox_size.Enabled = false;
             numericUpDown_height.Enabled = false;
-
-            init = true;
         }
 
         private void SetupComboboxes()
@@ -747,6 +783,33 @@ namespace mage.Editors
             }
         }
 
+        private void tab_select_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tab_select.SelectedIndex == oldSelectedTab) return;
+            if (Status.UnsavedChanges && !CheckUnsaved())
+            {
+                tab_select.SelectedIndex = oldSelectedTab;
+                return;
+            }
+
+            oldSelectedTab = tab_select.SelectedIndex;
+            Reset();
+
+            if (openedInRoom == null) return;
+            if (selectedTab == Tab.Tileset)
+            {
+                comboBox_tileset.SelectedIndex = openedInRoom.tileset.number;
+                InitializeWithTileset();
+            }
+            if (selectedTab == Tab.Background)
+            {
+                comboBox_area.SelectedIndex = openedInRoom.AreaID;
+                comboBox_room.SelectedIndex = openedInRoom.RoomID;
+                comboBox_bg.SelectedIndex = 1;
+                InitializeWithBackground();
+            }
+        }
+
         #region Tileset tab
         private void comboBox_tileset_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -789,6 +852,7 @@ namespace mage.Editors
 
         private void RoomOrBackgroundChanged(object sender, EventArgs e)
         {
+            if (init) return;
             InitializeWithBackground();
             Status.LoadNew();
         }
@@ -803,6 +867,7 @@ namespace mage.Editors
 
         private void comboBox_palette_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (comboBox_palette.SelectedIndex == -1) return;
             // Update UI Selection
             int index = comboBox_palette.SelectedIndex;
             PaletteSelection.Rectangle = new Rectangle(0, index * 17, 16 * 16 + 17, 17);
