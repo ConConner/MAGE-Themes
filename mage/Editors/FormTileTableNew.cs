@@ -454,6 +454,7 @@ namespace mage.Editors
             comboBox_size.SelectedIndex = -1;
             comboBox_size.Enabled = false;
             numericUpDown_height.Enabled = false;
+            statusLabel_tile.Text = "Tile:";
 
             init = false;
         }
@@ -763,7 +764,7 @@ namespace mage.Editors
                         InitializeWithTileset();
                         break;
                     case 1:
-                        //InitializeWithBackground();
+                        InitializeWithBackground();
                         break;
                     case 2:
                         //InitializeWithOffset();
@@ -1014,6 +1015,7 @@ namespace mage.Editors
             if (e.X < 0 || e.Y < 0 || e.X >= gfxView.Width || e.Y >= gfxView.Height) return;
 
             GfxCursor.Rectangle = new Rectangle(e.TilePixelPosition.X, e.TilePixelPosition.Y, e.TileSize, e.TileSize);
+            statusLabel_tile.Text = $"Tile: {Hex.ToString(e.TileIndexPosition.Y * 32 + e.TileIndexPosition.X)}";
 
             if ((e.Button == MouseButtons.Left || e.Button == MouseButtons.Right) && GfxSelection.Visible)
             {
@@ -1140,6 +1142,48 @@ namespace mage.Editors
                 if (e.Delta > 0) updateTableZoom(tableView.Zoom + 1);
                 if (e.Delta < 0) updateTableZoom(tableView.Zoom - 1);
             }
+        }
+        #endregion
+
+        #region Import/Export
+        private void statusButton_import_Click(object sender, EventArgs e)
+        {
+            if (tableView.TileImage == null) return;
+
+            OpenFileDialog openRaw = new OpenFileDialog();
+            openRaw.Filter = "All files (*.*)|*.*";
+            if (openRaw.ShowDialog() != DialogResult.OK) return;
+            
+            try
+            {
+                byte[] temp = System.IO.File.ReadAllBytes(openRaw.FileName);
+                numOfTiles = temp.Length / 2;
+                Array.Resize(ref tileTable, numOfTiles);
+                Buffer.BlockCopy(temp, 0, tileTable, 0, temp.Length);
+                Save();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Status.ChangeMade();
+            Status.Save();
+        }
+
+        private void statusButton_export_Click(object sender, EventArgs e)
+        {
+            if (tableView.TileImage == null) return;
+
+            SaveFileDialog saveRaw = new SaveFileDialog();
+            saveRaw.Filter = "All files (*.*)|*.*";
+            if (saveRaw.ShowDialog() != DialogResult.OK) return;
+
+            ByteStream output = new ByteStream();
+            for (int i = 0; i < numOfTiles; i++) output.Write16(tileTable[i]);
+
+            output.Export(saveRaw.FileName);
         }
         #endregion
         #endregion

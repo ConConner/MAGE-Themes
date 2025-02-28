@@ -78,8 +78,11 @@
             button_tableZoomOut = new System.Windows.Forms.ToolStripButton();
             label_tableZoom = new System.Windows.Forms.ToolStripLabel();
             statusStrip_main = new System.Windows.Forms.StatusStrip();
+            statusLabel_tile = new System.Windows.Forms.ToolStripStatusLabel();
             statusLabel_changes = new System.Windows.Forms.ToolStripStatusLabel();
             spring = new System.Windows.Forms.ToolStripStatusLabel();
+            statusButton_import = new System.Windows.Forms.ToolStripDropDownButton();
+            statusButton_export = new System.Windows.Forms.ToolStripDropDownButton();
             button_apply = new System.Windows.Forms.ToolStripDropDownButton();
             panel_gfxView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panel_Main).BeginInit();
@@ -409,7 +412,7 @@
             tabPage_background.Controls.Add(label_size);
             tabPage_background.Location = new System.Drawing.Point(4, 25);
             tabPage_background.Name = "tabPage_background";
-            tabPage_background.Size = new System.Drawing.Size(527, 70);
+            tabPage_background.Size = new System.Drawing.Size(192, 71);
             tabPage_background.TabIndex = 1;
             tabPage_background.Text = "Background";
             // 
@@ -676,12 +679,22 @@
             // 
             // statusStrip_main
             // 
-            statusStrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_changes, spring, button_apply });
+            statusStrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_tile, statusLabel_changes, spring, statusButton_import, statusButton_export, button_apply });
             statusStrip_main.Location = new System.Drawing.Point(0, 802);
             statusStrip_main.Name = "statusStrip_main";
             statusStrip_main.Size = new System.Drawing.Size(1075, 22);
             statusStrip_main.TabIndex = 2;
             statusStrip_main.Text = "statusStrip1";
+            // 
+            // statusLabel_tile
+            // 
+            statusLabel_tile.AutoSize = false;
+            statusLabel_tile.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            statusLabel_tile.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            statusLabel_tile.Name = "statusLabel_tile";
+            statusLabel_tile.Size = new System.Drawing.Size(80, 17);
+            statusLabel_tile.Text = "Tile:";
+            statusLabel_tile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // statusLabel_changes
             // 
@@ -692,8 +705,30 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(990, 17);
+            spring.Size = new System.Drawing.Size(787, 17);
             spring.Spring = true;
+            // 
+            // statusButton_import
+            // 
+            statusButton_import.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            statusButton_import.Image = (System.Drawing.Image)resources.GetObject("statusButton_import.Image");
+            statusButton_import.ImageTransparentColor = System.Drawing.Color.Magenta;
+            statusButton_import.Name = "statusButton_import";
+            statusButton_import.ShowDropDownArrow = false;
+            statusButton_import.Size = new System.Drawing.Size(47, 20);
+            statusButton_import.Text = "Import";
+            statusButton_import.Click += statusButton_import_Click;
+            // 
+            // statusButton_export
+            // 
+            statusButton_export.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            statusButton_export.Image = (System.Drawing.Image)resources.GetObject("statusButton_export.Image");
+            statusButton_export.ImageTransparentColor = System.Drawing.Color.Magenta;
+            statusButton_export.Name = "statusButton_export";
+            statusButton_export.ShowDropDownArrow = false;
+            statusButton_export.Size = new System.Drawing.Size(45, 20);
+            statusButton_export.Text = "Export";
+            statusButton_export.Click += statusButton_export_Click;
             // 
             // button_apply
             // 
@@ -807,5 +842,8 @@
         private Theming.CustomControls.FlatComboBox comboBox_area;
         private Theming.CustomControls.FlatComboBox comboBox_room;
         private System.Windows.Forms.Label label_size;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel_tile;
+        private System.Windows.Forms.ToolStripDropDownButton statusButton_import;
+        private System.Windows.Forms.ToolStripDropDownButton statusButton_export;
     }
 }
