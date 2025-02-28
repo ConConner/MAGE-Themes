@@ -108,6 +108,7 @@ namespace mage.Editors
             }
         }
         private ushort[] tileTable;
+        private int ttbOffset;
         private int numOfTiles;
         private int origLen;
         private byte[] gfxData;
@@ -206,6 +207,9 @@ namespace mage.Editors
                     }
 
                 case Tab.Offset:
+                    {
+                        return y * 32 + x;
+                    }
                     break;
             }
             return -1;
@@ -375,28 +379,26 @@ namespace mage.Editors
             }
             else if (oldSelectedTab == (int)Tab.Offset)
             {
-                //bool shared = !PreserveExistingData();
+                // offset
+                int length = tileTable.Length * 2;
+                byte[] uncompTemp = new byte[length];
+                Buffer.BlockCopy(tileTable, 0, uncompTemp, 0, length);
+                ByteStream uncompData = new ByteStream(uncompTemp);
 
-                //// offset
-                //int length = tileTable.Length * 2;
-                //byte[] uncompTemp = new byte[length];
-                //Buffer.BlockCopy(tileTable, 0, uncompTemp, 0, length);
-                //ByteStream uncompData = new ByteStream(uncompTemp);
+                // compress by LZ77
+                ByteStream compData = new ByteStream();
+                int newCompLen = Compress.CompLZ77(uncompData, length, compData);
 
-                //// compress by LZ77
-                //ByteStream compData = new ByteStream();
-                //int newCompLen = Compress.CompLZ77(uncompData, length, compData);
+                // write data
+                int prevOffset = ttbOffset;
+                ROM.Stream.Write2(compData, origLen, ref ttbOffset, true);
+                textBox_ttb.Text = Hex.ToString(ttbOffset);
 
-                //// write data
-                //int prevOffset = ttbOffset;
-                //romStream.Write2(compData, origLen, ref ttbOffset, true);
-                //textBox_ttb.Text = Hex.ToString(ttbOffset);
-
-                //if (prevOffset != ttbOffset)
-                //{
-                //    string message = "Tile table was repointed to " + Hex.ToString(ttbOffset);
-                //    MessageBox.Show(message, "Repointed Tile Table", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //}
+                if (prevOffset != ttbOffset)
+                {
+                    string message = "Tile table was repointed to " + Hex.ToString(ttbOffset);
+                    MessageBox.Show(message, "Repointed Tile Table", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
 
             FormMain.UpdateEditors();
@@ -594,6 +596,50 @@ namespace mage.Editors
             init = false;
         }
 
+        private void InitializeWithOffset()
+        {
+            try
+            {
+                init = true;
+
+                ttbOffset = Hex.ToInt(textBox_ttb.Text);
+                int gfxOffset = Hex.ToInt(textBox_gfx.Text);
+                int palOffset = Hex.ToInt(textBox_pal.Text);
+
+                // gfx
+                ByteStream temp = new ByteStream();
+                ROM.Stream.Seek(gfxOffset);
+                Compress.DecompLZ77(ROM.Stream, temp);
+                gfxData = temp.Data;
+
+                // tile table
+                temp = new ByteStream();
+                ROM.Stream.Seek(ttbOffset);
+                origLen = Compress.DecompLZ77(ROM.Stream, temp);
+                numOfTiles = temp.Length / 2;
+                tileTable = new ushort[numOfTiles];
+                temp.CopyToArray(0, tileTable, 0, temp.Length);
+
+                // palette
+                palette = new Palette(ROM.Stream, palOffset, 16);
+                comboBox_palette.SelectedIndex = 0;
+                paletteView.TileImage = palette.Draw(16, 0, 16, 0x0);
+
+                DrawGFX();
+                SetTileTableImage(256, numOfTiles / 4);
+
+                init = false;
+
+            }
+            catch
+            {
+                Reset();
+                return;
+            }
+
+            group_palette.Enabled = true;
+        }
+
         private void DrawGFX()
         {
             GFX gfx = new GFX(gfxData, 32);
@@ -675,11 +721,11 @@ namespace mage.Editors
                 ushort currTile = tileTable[index++];
                 int tileNum = currTile & 0x3FF;
                 // check for valid tile number
-                //if (tab_select.SelectedIndex == 2)
-                //{
-                //    tileNum -= (int)numericUpDown_shift.Value;
-                //    if (tileNum < 0) { continue; }
-                //}
+                if (tab_select.SelectedIndex == 2)
+                {
+                    tileNum -= (int)numericUpDown_shift.Value;
+                    if (tileNum < 0) { continue; }
+                }
                 tileNum *= 0x20;
                 if (tileNum >= gfxData.Length) { continue; }
                 int pal = currTile >> 12;
@@ -812,6 +858,62 @@ namespace mage.Editors
             }
         }
 
+        private void comboBox_palette_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox_palette.SelectedIndex == -1) return;
+            // Update UI Selection
+            int index = comboBox_palette.SelectedIndex;
+            PaletteSelection.Rectangle = new Rectangle(0, index * 17, 16 * 16 + 17, 17);
+
+            if (init) return;
+            DrawGFX();
+            if (GfxSelection.Visible) SelectTilesFromGFX();
+        }
+
+        private void button_flipH_Click(object sender, EventArgs e)
+            => TransformSelection((ushort tile) => (ushort)(tile ^ 0x400));
+
+        private void button_flipV_Click(object sender, EventArgs e)
+            => TransformSelection((ushort tile) => (ushort)(tile ^ 0x800));
+
+        private void button_paletteIncrease_Click(object sender, EventArgs e)
+            => TransformSelection((ushort tile) =>
+            {
+                int palette = tile >> 12;
+                palette = (palette + 1) % 16;
+                tile = (ushort)((tile & 0x0FFF) | (palette << 12));
+                return tile;
+            });
+
+        private void button_paletteDecrease_Click(object sender, EventArgs e)
+            => TransformSelection((ushort tile) =>
+            {
+                int palette = tile >> 12;
+                palette = (palette + 16 - 1) % 16;
+                tile = (ushort)((tile & 0x0FFF) | (palette << 12));
+                return tile;
+            });
+
+        private void button_setPalette_Click(object sender, EventArgs e)
+        {
+            if (!TableSelectionVisible) return;
+
+            PaletteDialog dialog = new PaletteDialog(palette, 16);
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+
+            int pal = dialog.SelectedIndex;
+            TransformSelection((ushort tile) => (ushort)((tile & 0x0FFF) | (pal << 12)));
+        }
+
+        private void button_grid_CheckStateChanged(object sender, EventArgs e) => tableView.ShowGrid = button_grid.Checked;
+
+        private void FormTileTableNew_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!Status.UnsavedChanges) return;
+            if (!CheckUnsaved()) e.Cancel = true;
+        }
+
+
         private void tab_select_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tab_select.SelectedIndex == oldSelectedTab) return;
@@ -839,7 +941,7 @@ namespace mage.Editors
             }
         }
 
-        #region Tileset tab
+        #region Tileset Tab
         private void comboBox_tileset_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox_tileset.SelectedIndex == oldSelectedTileset) return;
@@ -906,60 +1008,16 @@ namespace mage.Editors
         }
         #endregion
 
-        private void comboBox_palette_SelectedIndexChanged(object sender, EventArgs e)
+        #region Offset Tab
+        private void button_go_Click(object sender, EventArgs e)
         {
-            if (comboBox_palette.SelectedIndex == -1) return;
-            // Update UI Selection
-            int index = comboBox_palette.SelectedIndex;
-            PaletteSelection.Rectangle = new Rectangle(0, index * 17, 16 * 16 + 17, 17);
+            if (Status.UnsavedChanges && !CheckUnsaved()) return;
 
-            if (init) return;
-            DrawGFX();
-            if (GfxSelection.Visible) SelectTilesFromGFX();
+            InitializeWithOffset();
+            Status.LoadNew();
         }
+        #endregion
 
-        private void button_flipH_Click(object sender, EventArgs e)
-            => TransformSelection((ushort tile) => (ushort)(tile ^ 0x400));
-
-        private void button_flipV_Click(object sender, EventArgs e)
-            => TransformSelection((ushort tile) => (ushort)(tile ^ 0x800));
-
-        private void button_paletteIncrease_Click(object sender, EventArgs e)
-            => TransformSelection((ushort tile) =>
-            {
-                int palette = tile >> 12;
-                palette = (palette + 1) % 16;
-                tile = (ushort)((tile & 0x0FFF) | (palette << 12));
-                return tile;
-            });
-
-        private void button_paletteDecrease_Click(object sender, EventArgs e)
-            => TransformSelection((ushort tile) =>
-            {
-                int palette = tile >> 12;
-                palette = (palette + 16 - 1) % 16;
-                tile = (ushort)((tile & 0x0FFF) | (palette << 12));
-                return tile;
-            });
-
-        private void button_setPalette_Click(object sender, EventArgs e)
-        {
-            if (!TableSelectionVisible) return;
-
-            PaletteDialog dialog = new PaletteDialog(palette, 16);
-            if (dialog.ShowDialog() != DialogResult.OK) return;
-
-            int pal = dialog.SelectedIndex;
-            TransformSelection((ushort tile) => (ushort)((tile & 0x0FFF) | (pal << 12)));
-        }
-
-        private void button_grid_CheckStateChanged(object sender, EventArgs e) => tableView.ShowGrid = button_grid.Checked;
-
-        private void FormTileTableNew_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (!Status.UnsavedChanges) return;
-            if (!CheckUnsaved()) e.Cancel = true;
-        }
 
         #region Palette Display
         private void checkBox_showPalette_CheckedChanged(object sender, EventArgs e) => ShowPalette = checkBox_showPalette.Checked;
@@ -1145,6 +1203,7 @@ namespace mage.Editors
         }
         #endregion
 
+
         #region Import/Export
         private void statusButton_import_Click(object sender, EventArgs e)
         {
@@ -1153,7 +1212,7 @@ namespace mage.Editors
             OpenFileDialog openRaw = new OpenFileDialog();
             openRaw.Filter = "All files (*.*)|*.*";
             if (openRaw.ShowDialog() != DialogResult.OK) return;
-            
+
             try
             {
                 byte[] temp = System.IO.File.ReadAllBytes(openRaw.FileName);

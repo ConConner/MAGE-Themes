@@ -61,6 +61,15 @@
             comboBox_room = new Theming.CustomControls.FlatComboBox();
             label_size = new System.Windows.Forms.Label();
             tabPage_offset = new System.Windows.Forms.TabPage();
+            label_shift = new System.Windows.Forms.Label();
+            numericUpDown_shift = new Theming.CustomControls.FlatNumericUpDown();
+            button_go = new System.Windows.Forms.Button();
+            textBox_pal = new Theming.CustomControls.FlatTextBox();
+            textBox_gfx = new Theming.CustomControls.FlatTextBox();
+            textBox_ttb = new Theming.CustomControls.FlatTextBox();
+            label_palette = new System.Windows.Forms.Label();
+            label_graphics = new System.Windows.Forms.Label();
+            label_tileTable = new System.Windows.Forms.Label();
             group_table = new System.Windows.Forms.GroupBox();
             panel_tableView = new System.Windows.Forms.Panel();
             tableView = new Controls.TileDisplay();
@@ -101,6 +110,8 @@
             tabPage_tileset.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_height).BeginInit();
             tabPage_background.SuspendLayout();
+            tabPage_offset.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_shift).BeginInit();
             group_table.SuspendLayout();
             panel_tableView.SuspendLayout();
             toolStrip_table.SuspendLayout();
@@ -505,11 +516,138 @@
             // 
             // tabPage_offset
             // 
+            tabPage_offset.Controls.Add(label_shift);
+            tabPage_offset.Controls.Add(numericUpDown_shift);
+            tabPage_offset.Controls.Add(button_go);
+            tabPage_offset.Controls.Add(textBox_pal);
+            tabPage_offset.Controls.Add(textBox_gfx);
+            tabPage_offset.Controls.Add(textBox_ttb);
+            tabPage_offset.Controls.Add(label_palette);
+            tabPage_offset.Controls.Add(label_graphics);
+            tabPage_offset.Controls.Add(label_tileTable);
             tabPage_offset.Location = new System.Drawing.Point(4, 25);
             tabPage_offset.Name = "tabPage_offset";
-            tabPage_offset.Size = new System.Drawing.Size(192, 71);
+            tabPage_offset.Size = new System.Drawing.Size(527, 70);
             tabPage_offset.TabIndex = 2;
             tabPage_offset.Text = "Offset";
+            // 
+            // label_shift
+            // 
+            label_shift.AutoSize = true;
+            label_shift.Location = new System.Drawing.Point(145, 41);
+            label_shift.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_shift.Name = "label_shift";
+            label_shift.Size = new System.Drawing.Size(34, 15);
+            label_shift.TabIndex = 19;
+            label_shift.Text = "Shift:";
+            // 
+            // numericUpDown_shift
+            // 
+            numericUpDown_shift.Hexadecimal = true;
+            numericUpDown_shift.Location = new System.Drawing.Point(199, 38);
+            numericUpDown_shift.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            numericUpDown_shift.Maximum = new decimal(new int[] { 1024, 0, 0, 0 });
+            numericUpDown_shift.Name = "numericUpDown_shift";
+            numericUpDown_shift.Size = new System.Drawing.Size(39, 23);
+            numericUpDown_shift.TabIndex = 18;
+            // 
+            // button_go
+            // 
+            button_go.Location = new System.Drawing.Point(246, 38);
+            button_go.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_go.Name = "button_go";
+            button_go.Size = new System.Drawing.Size(34, 23);
+            button_go.TabIndex = 17;
+            button_go.Text = "Go";
+            button_go.UseVisualStyleBackColor = true;
+            button_go.Click += button_go_Click;
+            // 
+            // textBox_pal
+            // 
+            textBox_pal.BorderColor = System.Drawing.Color.Black;
+            textBox_pal.DisplayBorder = true;
+            textBox_pal.Location = new System.Drawing.Point(199, 9);
+            textBox_pal.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_pal.MaxLength = 32767;
+            textBox_pal.Multiline = false;
+            textBox_pal.Name = "textBox_pal";
+            textBox_pal.OnTextChanged = null;
+            textBox_pal.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_pal.ReadOnly = false;
+            textBox_pal.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_pal.SelectionStart = 0;
+            textBox_pal.Size = new System.Drawing.Size(81, 23);
+            textBox_pal.TabIndex = 16;
+            textBox_pal.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_pal.WordWrap = true;
+            // 
+            // textBox_gfx
+            // 
+            textBox_gfx.BorderColor = System.Drawing.Color.Black;
+            textBox_gfx.DisplayBorder = true;
+            textBox_gfx.Location = new System.Drawing.Point(69, 38);
+            textBox_gfx.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_gfx.MaxLength = 32767;
+            textBox_gfx.Multiline = false;
+            textBox_gfx.Name = "textBox_gfx";
+            textBox_gfx.OnTextChanged = null;
+            textBox_gfx.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_gfx.ReadOnly = false;
+            textBox_gfx.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_gfx.SelectionStart = 0;
+            textBox_gfx.Size = new System.Drawing.Size(68, 23);
+            textBox_gfx.TabIndex = 15;
+            textBox_gfx.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_gfx.WordWrap = true;
+            // 
+            // textBox_ttb
+            // 
+            textBox_ttb.BorderColor = System.Drawing.Color.Black;
+            textBox_ttb.DisplayBorder = true;
+            textBox_ttb.Location = new System.Drawing.Point(69, 9);
+            textBox_ttb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_ttb.MaxLength = 32767;
+            textBox_ttb.Multiline = false;
+            textBox_ttb.Name = "textBox_ttb";
+            textBox_ttb.OnTextChanged = null;
+            textBox_ttb.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_ttb.ReadOnly = false;
+            textBox_ttb.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_ttb.SelectionStart = 0;
+            textBox_ttb.Size = new System.Drawing.Size(68, 23);
+            textBox_ttb.TabIndex = 14;
+            textBox_ttb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_ttb.WordWrap = true;
+            // 
+            // label_palette
+            // 
+            label_palette.AutoSize = true;
+            label_palette.Location = new System.Drawing.Point(145, 12);
+            label_palette.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_palette.Name = "label_palette";
+            label_palette.Size = new System.Drawing.Size(46, 15);
+            label_palette.TabIndex = 13;
+            label_palette.Text = "Palette:";
+            // 
+            // label_graphics
+            // 
+            label_graphics.AutoSize = true;
+            label_graphics.Location = new System.Drawing.Point(4, 41);
+            label_graphics.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_graphics.Name = "label_graphics";
+            label_graphics.Size = new System.Drawing.Size(56, 15);
+            label_graphics.TabIndex = 12;
+            label_graphics.Text = "Graphics:";
+            // 
+            // label_tileTable
+            // 
+            label_tileTable.AutoSize = true;
+            label_tileTable.Location = new System.Drawing.Point(4, 12);
+            label_tileTable.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_tileTable.Name = "label_tileTable";
+            label_tileTable.Size = new System.Drawing.Size(57, 15);
+            label_tileTable.TabIndex = 11;
+            label_tileTable.Text = "Tile table:";
             // 
             // group_table
             // 
@@ -705,7 +843,7 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(787, 17);
+            spring.Size = new System.Drawing.Size(818, 17);
             spring.Spring = true;
             // 
             // statusButton_import
@@ -743,8 +881,7 @@
             // 
             // FormTileTableNew
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             ClientSize = new System.Drawing.Size(1075, 824);
             Controls.Add(panel_Main);
             Controls.Add(statusStrip_main);
@@ -777,6 +914,9 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDown_height).EndInit();
             tabPage_background.ResumeLayout(false);
             tabPage_background.PerformLayout();
+            tabPage_offset.ResumeLayout(false);
+            tabPage_offset.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_shift).EndInit();
             group_table.ResumeLayout(false);
             group_table.PerformLayout();
             panel_tableView.ResumeLayout(false);
@@ -845,5 +985,14 @@
         private System.Windows.Forms.ToolStripStatusLabel statusLabel_tile;
         private System.Windows.Forms.ToolStripDropDownButton statusButton_import;
         private System.Windows.Forms.ToolStripDropDownButton statusButton_export;
+        private System.Windows.Forms.Label label_shift;
+        private Theming.CustomControls.FlatNumericUpDown numericUpDown_shift;
+        private System.Windows.Forms.Button button_go;
+        private Theming.CustomControls.FlatTextBox textBox_pal;
+        private Theming.CustomControls.FlatTextBox textBox_gfx;
+        private Theming.CustomControls.FlatTextBox textBox_ttb;
+        private System.Windows.Forms.Label label_palette;
+        private System.Windows.Forms.Label label_graphics;
+        private System.Windows.Forms.Label label_tileTable;
     }
 }
