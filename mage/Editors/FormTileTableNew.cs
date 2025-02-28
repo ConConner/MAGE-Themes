@@ -126,6 +126,10 @@ namespace mage.Editors
         // Old values
         private int oldSelectedTab;
         private int oldSelectedTileset;
+        private int oldSelectedArea;
+        private int oldSelectedRoom;
+        private int oldSelectedBG;
+        private int oldSelectedSize;
         #endregion
 
         public FormTileTableNew()
@@ -348,13 +352,13 @@ namespace mage.Editors
 
                 // compress by LZ77
                 ByteStream compData = new ByteStream();
-                compData.Write32(comboBox_size.SelectedIndex);
+                compData.Write32(oldSelectedSize);
                 int newCompLen = Compress.CompLZ77(uncompData, length, compData);
 
                 // get pointer
-                int area = comboBox_area.SelectedIndex;
-                int room = comboBox_room.SelectedIndex;
-                int bg = comboBox_bg.SelectedIndex;
+                int area = oldSelectedArea;
+                int room = oldSelectedRoom;
+                int bg = oldSelectedBG;
                 int ptr = ROM.Stream.ReadPtr(Version.AreaHeaderOffset + area * 4) + (room * 0x3C);
                 if (bg == 0)
                 {
@@ -399,6 +403,10 @@ namespace mage.Editors
             Status.Save();
         }
 
+        /// <summary>
+        /// Prompts the user if they want to save the current changes or cancel.
+        /// </summary>
+        /// <returns>False if cancelled. True for other options. Saves if yes is clicked</returns>
         private bool CheckUnsaved()
         {
             DialogResult result = MessageBox.Show("Do you want to save changes to Tile Table?",
@@ -406,6 +414,24 @@ namespace mage.Editors
             if (result == DialogResult.Cancel) return false;
             if (result == DialogResult.Yes) Save();
             return true;
+        }
+
+        /// <summary>
+        /// Checks if a value changed for the background input and asks if the user wants to save changes
+        /// </summary>
+        /// <returns>True if the user wants to cancel the switch or values didnt change</returns>
+        private bool CheckUnsavedForBackgrounds()
+        {
+            if (oldSelectedArea == comboBox_area.SelectedIndex && oldSelectedRoom == comboBox_room.SelectedIndex && oldSelectedBG == comboBox_bg.SelectedIndex)
+                return true;
+            if (Status.UnsavedChanges && !CheckUnsaved())
+            {
+                comboBox_area.SelectedIndex = oldSelectedArea;
+                comboBox_room.SelectedIndex = oldSelectedRoom;
+                comboBox_bg.SelectedIndex = oldSelectedBG;
+                return true;
+            }
+            return false;
         }
         #endregion
 
@@ -428,6 +454,8 @@ namespace mage.Editors
             comboBox_size.SelectedIndex = -1;
             comboBox_size.Enabled = false;
             numericUpDown_height.Enabled = false;
+
+            init = false;
         }
 
         private void SetupComboboxes()
@@ -837,6 +865,11 @@ namespace mage.Editors
         #region Background Tab
         private void comboBox_area_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (CheckUnsavedForBackgrounds()) return;
+            oldSelectedArea = comboBox_area.SelectedIndex;
+
+            init = true;
+
             int area = comboBox_area.SelectedIndex;
             int numOfRooms = Version.RoomsPerArea[area];
             int currNum = comboBox_room.Items.Count;
@@ -848,11 +881,17 @@ namespace mage.Editors
                 for (int i = currNum - 1; i >= numOfRooms; i--) comboBox_room.Items.RemoveAt(i);
 
             comboBox_room.SelectedIndex = 0;
+            InitializeWithBackground();
+            Status.LoadNew();
         }
 
         private void RoomOrBackgroundChanged(object sender, EventArgs e)
         {
             if (init) return;
+            if (CheckUnsavedForBackgrounds()) return;
+            oldSelectedRoom = comboBox_room.SelectedIndex;
+            oldSelectedBG = comboBox_bg.SelectedIndex;
+
             InitializeWithBackground();
             Status.LoadNew();
         }
@@ -860,6 +899,7 @@ namespace mage.Editors
         private void comboBox_size_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (init) return;
+            oldSelectedSize = comboBox_size.SelectedIndex;
             SetBackgroundImage();
             Status.ChangeMade();
         }
