@@ -33,7 +33,7 @@ namespace mage
             bg3File.Filter = "Bitmaps (*.png, *.bmp, *.gif, *.jpeg, *.jpg, *.tif, *.tiff)|*.png;*.bmp;*.gif;*.jpeg;*.jpg;*.tif;*.tiff";
             if (bg3File.ShowDialog() == DialogResult.OK)
             {
-                Bitmap image = new Bitmap(bg3File.FileName);
+                Bitmap image = Draw.BitmapFromFile(bg3File.FileName);
 
                 // check dimensions
                 bool valid = false;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace mage
 {
@@ -322,6 +323,15 @@ namespace mage
 
             g.DrawImage(arrows, new Rectangle(point.X + 4, point.Y + 4, 8, 8),
                 new Rectangle(num * 8, 0, 8, 8), GraphicsUnit.Pixel);
+        }
+
+        public static Bitmap BitmapFromFile(string filename)
+        {
+            FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            Bitmap b = (Bitmap) Bitmap.FromStream(fs);
+
+            fs.Dispose();
+            return b;
         }
 
         public enum ArrowDirection : int {

@@ -51,7 +51,7 @@ namespace mage
             fd.Filter = "Bitmaps (*.png, *.bmp, *.gif, *.jpeg, *.jpg, *.tif, *.tiff)|*.png;*.bmp;*.gif;*.jpeg;*.jpg;*.tif;*.tiff";
             if (fd.ShowDialog() == DialogResult.OK)
             {
-                Bitmap image = new Bitmap(fd.FileName);
+                Bitmap image = Draw.BitmapFromFile(fd.FileName);
 
                 // check dimensions
                 if (image.Width != 240 || image.Height != 416)

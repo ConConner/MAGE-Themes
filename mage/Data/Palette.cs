@@ -92,14 +92,14 @@ namespace mage
             img.Palette = cp;
         }
 
-        public Bitmap Draw(int size, int row, int len)
+        public Bitmap Draw(int size, int row, int len, long gridColorArgb = 0xFFD8D8D8)
         {
             Bitmap img = new Bitmap(16 * size + 17, len * size + len + 1, PixelFormat.Format16bppRgb555);
 
             using (Graphics g = Graphics.FromImage(img))
             {
                 // fill to make grid
-                SolidBrush b = new SolidBrush(Color.FromArgb(0xD8, 0xD8, 0xD8));
+                SolidBrush b = new SolidBrush(Color.FromArgb((int)gridColorArgb));
                 g.FillRectangle(b, new Rectangle(0, 0, img.Width, img.Height));
 
                 // draw individual colors

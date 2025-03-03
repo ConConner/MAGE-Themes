@@ -102,6 +102,8 @@ namespace mage.Theming
 
             if (Base != null)
             {
+                if (Base.Tag?.ToString() == "unthemed") return;
+
                 Base.BackColor = theme.BackgroundColor;
                 Base.ForeColor = theme.TextColor;
             }

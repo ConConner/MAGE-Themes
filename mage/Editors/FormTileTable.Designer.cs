@@ -55,6 +55,8 @@
             button_palBR = new System.Windows.Forms.Button();
             tabControl = new Theming.CustomControls.FlatTabControl();
             tabPage_tileset = new System.Windows.Forms.TabPage();
+            button_flip_v = new System.Windows.Forms.Button();
+            button_flip_h = new System.Windows.Forms.Button();
             label_height = new System.Windows.Forms.Label();
             numericUpDown_height = new Theming.CustomControls.FlatNumericUpDown();
             tabPage_background = new System.Windows.Forms.TabPage();
@@ -387,6 +389,8 @@
             // tabPage_tileset
             // 
             tabPage_tileset.BackColor = System.Drawing.SystemColors.Control;
+            tabPage_tileset.Controls.Add(button_flip_v);
+            tabPage_tileset.Controls.Add(button_flip_h);
             tabPage_tileset.Controls.Add(label_height);
             tabPage_tileset.Controls.Add(numericUpDown_height);
             tabPage_tileset.Controls.Add(comboBox_tileset);
@@ -398,6 +402,26 @@
             tabPage_tileset.Size = new System.Drawing.Size(235, 86);
             tabPage_tileset.TabIndex = 1;
             tabPage_tileset.Text = "Tileset";
+            // 
+            // button_flip_v
+            // 
+            button_flip_v.Location = new System.Drawing.Point(128, 46);
+            button_flip_v.Name = "button_flip_v";
+            button_flip_v.Size = new System.Drawing.Size(75, 23);
+            button_flip_v.TabIndex = 11;
+            button_flip_v.Text = "Flip V";
+            button_flip_v.UseVisualStyleBackColor = true;
+            button_flip_v.Click += button_flip_v_Click;
+            // 
+            // button_flip_h
+            // 
+            button_flip_h.Location = new System.Drawing.Point(128, 12);
+            button_flip_h.Name = "button_flip_h";
+            button_flip_h.Size = new System.Drawing.Size(75, 23);
+            button_flip_h.TabIndex = 10;
+            button_flip_h.Text = "Flip H";
+            button_flip_h.UseVisualStyleBackColor = true;
+            button_flip_h.Click += button_flip_h_Click;
             // 
             // label_height
             // 
@@ -908,5 +932,7 @@
         private System.Windows.Forms.ToolStripDropDownButton statusStrip_export;
         private System.Windows.Forms.ToolStripMenuItem statusStrip_importTileTable;
         private System.Windows.Forms.ToolStripMenuItem statusStrip_exportTileTable;
+        private System.Windows.Forms.Button button_flip_v;
+        private System.Windows.Forms.Button button_flip_h;
     }
 }

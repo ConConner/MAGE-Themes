@@ -142,6 +142,9 @@
             menuItem_addSpriteset = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_addAnim = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_patches = new System.Windows.Forms.ToolStripMenuItem();
+            seperator_flip = new System.Windows.Forms.ToolStripSeparator();
+            menuItem_flip_h = new System.Windows.Forms.ToolStripMenuItem();
+            menuItem_flip_v = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip_options = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_backgroundColor = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator31 = new System.Windows.Forms.ToolStripSeparator();
@@ -169,6 +172,8 @@
             toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_tooltips = new System.Windows.Forms.ToolStripMenuItem();
             changeEmulatorPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator33 = new System.Windows.Forms.ToolStripSeparator();
+            button_experimental = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip_help = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_viewHelp = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_about = new System.Windows.Forms.ToolStripMenuItem();
@@ -787,7 +792,7 @@
             // 
             // menuStrip_tools
             // 
-            menuStrip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_roomOptions, menuItem_testRoom, menuItem_clipShortcuts, toolStripSeparator2, menuItem_import, menuItem_export, bulkToolStripMenuItem, menuItem_compression, toolStripSeparator23, menuItem_tileBuilder, menuItem_add, menuItem_patches });
+            menuStrip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_roomOptions, menuItem_testRoom, menuItem_clipShortcuts, toolStripSeparator2, menuItem_import, menuItem_export, bulkToolStripMenuItem, menuItem_compression, toolStripSeparator23, menuItem_tileBuilder, menuItem_add, menuItem_patches, seperator_flip, menuItem_flip_h, menuItem_flip_v });
             menuStrip_tools.Enabled = false;
             menuStrip_tools.Name = "menuStrip_tools";
             menuStrip_tools.Size = new System.Drawing.Size(46, 20);
@@ -1064,9 +1069,31 @@
             menuItem_patches.Text = "Patches";
             menuItem_patches.Click += menuItem_patches_Click;
             // 
+            // seperator_flip
+            // 
+            seperator_flip.Name = "seperator_flip";
+            seperator_flip.Size = new System.Drawing.Size(180, 6);
+            seperator_flip.Visible = false;
+            // 
+            // menuItem_flip_h
+            // 
+            menuItem_flip_h.Name = "menuItem_flip_h";
+            menuItem_flip_h.Size = new System.Drawing.Size(183, 22);
+            menuItem_flip_h.Text = "Flip Room H";
+            menuItem_flip_h.Visible = false;
+            menuItem_flip_h.Click += flipRoomToolStripMenuItem_Click;
+            // 
+            // menuItem_flip_v
+            // 
+            menuItem_flip_v.Name = "menuItem_flip_v";
+            menuItem_flip_v.Size = new System.Drawing.Size(183, 22);
+            menuItem_flip_v.Text = "Flip Room V";
+            menuItem_flip_v.Visible = false;
+            menuItem_flip_v.Click += flipRoomVToolStripMenuItem_Click;
+            // 
             // menuStrip_options
             // 
-            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_backgroundColor, toolStripSeparator31, menuItem_defaultView, menuItem_numberBase, toolStripSeparator28, themeToolStripMenuItem, btn_soundpacks, toolStripSeparator21, menuItem_tooltips, changeEmulatorPathToolStripMenuItem });
+            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_backgroundColor, toolStripSeparator31, menuItem_defaultView, menuItem_numberBase, toolStripSeparator28, themeToolStripMenuItem, btn_soundpacks, toolStripSeparator21, menuItem_tooltips, changeEmulatorPathToolStripMenuItem, toolStripSeparator33, button_experimental });
             menuStrip_options.Name = "menuStrip_options";
             menuStrip_options.Size = new System.Drawing.Size(61, 20);
             menuStrip_options.Text = "Options";
@@ -1263,6 +1290,18 @@
             changeEmulatorPathToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             changeEmulatorPathToolStripMenuItem.Text = "Change Emulator Path";
             changeEmulatorPathToolStripMenuItem.Click += changeEmulatorPathToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator33
+            // 
+            toolStripSeparator33.Name = "toolStripSeparator33";
+            toolStripSeparator33.Size = new System.Drawing.Size(190, 6);
+            // 
+            // button_experimental
+            // 
+            button_experimental.Name = "button_experimental";
+            button_experimental.Size = new System.Drawing.Size(193, 22);
+            button_experimental.Text = "Experimental Features";
+            button_experimental.Click += button_experimental_Click;
             // 
             // menuStrip_help
             // 
@@ -2465,6 +2504,11 @@
         private System.Windows.Forms.ToolStripMenuItem toolStrip_zoom100;
         private System.Windows.Forms.ToolStripDropDownButton statusStrip_theme;
         private System.Windows.Forms.ToolStripMenuItem menuItem_oamViewer;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_flip_h;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_flip_v;
+        private System.Windows.Forms.ToolStripSeparator seperator_flip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator33;
+        private System.Windows.Forms.ToolStripMenuItem button_experimental;
     }
 }
 

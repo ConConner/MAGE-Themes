@@ -16,6 +16,10 @@ using System.IO.Compression;
 using System.Numerics;
 using System.Diagnostics.Eventing.Reader;
 using System.Windows.Forms.Design.Behavior;
+using mage.Utility;
+using mage.Actions;
+using mage.Editors;
+using System.Linq.Expressions;
 
 namespace mage
 {
@@ -111,6 +115,9 @@ namespace mage
             ThemeSwitcher.ChangeTheme(Controls, this);
             ThemeSwitcher.InjectPaintOverrides(Controls);
             ThemeSwitcher.ThemeChanged += SwitchedTheme;
+
+            // Enable experimental features
+            seperator_flip.Visible = menuItem_flip_h.Visible = menuItem_flip_v.Visible = Program.ExperimentalFeaturesEnabled;
         }
 
         #region opening/closing
@@ -180,6 +187,8 @@ namespace mage
             menuItem_defaultScreens.Checked = Settings.Default.viewScreenOutlines;
             menuItem_hexadecimal.Checked = Settings.Default.hexadecimal;
             menuItem_tooltips.Checked = Settings.Default.tooltips;
+            button_experimental.Checked = Settings.Default.experimentalFeatures;
+            Program.ExperimentalFeaturesEnabled = Settings.Default.experimentalFeatures;
 
             zoom = Settings.Default.zoom;
             if (zoom == 0) { menuItem_zoom100.Checked = true; }
@@ -187,19 +196,18 @@ namespace mage
             else if (zoom == 2) { menuItem_zoom400.Checked = true; }
             else if (zoom == 3) { menuItem_zoom800.Checked = true; }
             roomView.UpdateZoom(zoom, false);
+            statusStrip_zoom.Text = $"{1 << zoom}00%";
+
+            // Config object
+            try { Program.Config = JsonSerializer.Deserialize<Config>(Settings.Default.config); }
+            catch { Program.Config = new(); }
 
             //Room Viewer Settings
             Bg3Color = Settings.Default.bg3color;
 
             //Loading themes
-            try
-            {
-                ThemeSwitcher.Themes = ThemeSwitcher.Deserialize<Dictionary<string, ColorTheme>>(Settings.Default.themes);
-            }
-            catch
-            {
-                ThemeSwitcher.Themes = null;
-            }
+            try { ThemeSwitcher.Themes = ThemeSwitcher.Deserialize<Dictionary<string, ColorTheme>>(Settings.Default.themes); }
+            catch { ThemeSwitcher.Themes = null; }
             CheckIfThemesExist();
             ThemeSwitcher.ProjectThemeName = Settings.Default.selectedTheme;
 
@@ -233,6 +241,10 @@ namespace mage
             Settings.Default.hexadecimal = menuItem_hexadecimal.Checked;
             Settings.Default.tooltips = menuItem_tooltips.Checked;
             Settings.Default.zoom = zoom;
+            Settings.Default.experimentalFeatures = Program.ExperimentalFeaturesEnabled;
+
+            //Config
+            Settings.Default.config = JsonSerializer.Serialize(Program.Config);
 
             //Room Viewer Settings
             Settings.Default.bg3color = Bg3Color;
@@ -330,14 +342,20 @@ namespace mage
         {
             statusStrip_theme.DropDown.Items.Clear();
             statusStrip_theme.Text = ThemeSwitcher.ProjectThemeName;
+
             foreach (string name in ThemeSwitcher.Themes.Keys)
             {
-                statusStrip_theme.DropDown.Items.Add(name);
+                ToolStripMenuItem i = new ToolStripMenuItem();
+                i.Text = name;
+                i.Click += (o, e) => { ThemeSwitcher.ProjectThemeName = name; };
+                statusStrip_theme.DropDown.Items.Add(i);
             }
-            foreach (ToolStripMenuItem item in statusStrip_theme.DropDown.Items)
-            {
-                item.Click += (o, e) => { ThemeSwitcher.ProjectThemeName = item.Text; };
-            }
+
+            statusStrip_theme.DropDown.Items.Add(new ToolStripSeparator());
+
+            ToolStripMenuItem editThemes = new() { Text = "Edit Themes" };
+            editThemes.Click += themeToolStripMenuItem_Click;
+            statusStrip_theme.DropDown.Items.Add(editThemes);
         }
 
         private void SwitchedTheme(object sender, EventArgs e)
@@ -608,6 +626,16 @@ namespace mage
 
         private void menuItem_tileTableEditor_Click(object sender, EventArgs e)
         {
+            if (Program.ExperimentalFeaturesEnabled)
+            {
+                if (!FindOpenForm(typeof(FormTileTableNew), false))
+                {   
+                    FormTileTableNew form = new FormTileTableNew(room);
+                    form.Show();
+                }
+                return;
+            }
+
             if (!FindOpenForm(typeof(FormTileTable), false))
             {
                 FormTileTable form = new FormTileTable(this, room.tileset.number);
@@ -1069,6 +1097,11 @@ namespace mage
             editor.ShowDialog();
         }
 
+        private void button_experimental_Click(object sender, EventArgs e)
+        {
+            Program.ExperimentalFeaturesEnabled = !Program.ExperimentalFeaturesEnabled;
+            button_experimental.Checked = Program.ExperimentalFeaturesEnabled;
+        }
         // help
         private void menuItem_viewHelp_Click(object sender, EventArgs e)
         {
@@ -2876,6 +2909,13 @@ namespace mage
         private void contextItem_setEffectPos_Click(object sender, EventArgs e) => SetNewEffectYPosition((byte)roomCursor.Y);
 
         private void contextItem_removeEffectPos_Click(object sender, EventArgs e) => SetNewEffectYPosition(0xFF);
+
         #endregion
+
+        private void flipRoomToolStripMenuItem_Click(object sender, EventArgs e)
+            => PerformAction(new FlipRoom(room, true, false));
+
+        private void flipRoomVToolStripMenuItem_Click(object sender, EventArgs e)
+            => PerformAction(new FlipRoom(room, false, true));
     }
 }
