@@ -671,17 +671,19 @@
             // 
             toolStrip_origin.Checked = true;
             toolStrip_origin.CheckState = System.Windows.Forms.CheckState.Checked;
+            toolStrip_origin.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             toolStrip_origin.Name = "toolStrip_origin";
             toolStrip_origin.Size = new System.Drawing.Size(180, 22);
             toolStrip_origin.Text = "Origin";
+            toolStrip_origin.Click += toolStrip_origin_Click;
             // 
             // toolStrip_partOutline
             // 
-            toolStrip_partOutline.Checked = true;
-            toolStrip_partOutline.CheckState = System.Windows.Forms.CheckState.Checked;
+            toolStrip_partOutline.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             toolStrip_partOutline.Name = "toolStrip_partOutline";
             toolStrip_partOutline.Size = new System.Drawing.Size(180, 22);
             toolStrip_partOutline.Text = "Part outline";
+            toolStrip_partOutline.Click += toolStrip_partOutline_Click;
             // 
             // toolStrip_zoomOam
             // 

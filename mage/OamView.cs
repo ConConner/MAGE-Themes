@@ -83,6 +83,7 @@ namespace mage
         public void InvalidateDrawable(Drawable drawable)
         {
             Rectangle r = ScaleDrawable(drawable);
+            r.Inflate(1, 1);
             Invalidate(r);
         }
 

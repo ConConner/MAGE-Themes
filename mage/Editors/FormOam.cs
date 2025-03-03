@@ -27,7 +27,6 @@ public partial class FormOam : Form
 
     private bool loading;
     private int gfxZoom;
-    private int oamZoom;
 
     private FormMain main;
     private ByteStream romStream;
@@ -292,7 +291,7 @@ public partial class FormOam : Form
             Rectangle r = new Rectangle(p.xPos + OAM.FrameOriginX, p.yPos + OAM.FrameOriginY, s.Width, s.Height);
             OamView.Drawable outline = new(r, partOutline)
             {
-                Visible = false,
+                Visible = toolStrip_partOutline.Checked,
             };
             oamView_oam.Drawables.Add(outline);
         }
@@ -328,6 +327,25 @@ public partial class FormOam : Form
         comboBox_Frame.SelectedIndex = (comboBox_Frame.SelectedIndex + 1) % oam.numFrames;
         SetTimerInterval(comboBox_Frame.SelectedIndex);
     }
+
+    private void toolStrip_origin_Click(object sender, EventArgs e)
+    {
+        oamView_oam.DisplayOrigin = toolStrip_origin.Checked = !toolStrip_origin.Checked;
+        oamView_oam.Invalidate();
+    }
+
+    private void toolStrip_partOutline_Click(object sender, EventArgs e)
+    {
+        bool value = toolStrip_partOutline.Checked = !toolStrip_partOutline.Checked;
+        foreach (OamView.Drawable d in oamView_oam.Drawables)
+        {
+            d.Visible = value;
+            oamView_oam.InvalidateDrawable(d);
+        }
+    }
+    #endregion
+
+    #region
     #endregion
 
     #region ZOOM
