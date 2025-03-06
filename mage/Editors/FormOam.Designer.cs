@@ -255,6 +255,7 @@
             gfxView_gfx.Location = new System.Drawing.Point(0, 0);
             gfxView_gfx.Name = "gfxView_gfx";
             gfxView_gfx.ShowGrid = false;
+            gfxView_gfx.ShowOamOrigin = false;
             gfxView_gfx.Size = new System.Drawing.Size(0, 0);
             gfxView_gfx.TabIndex = 0;
             gfxView_gfx.TabStop = false;
@@ -264,6 +265,7 @@
             gfxView_gfx.TileSize = 8;
             gfxView_gfx.Zoom = 0;
             gfxView_gfx.TileMouseMove += gfxView_gfx_MouseMove;
+            gfxView_gfx.Scrolled += gfxView_gfx_Scrolled;
             // 
             // statusStrip_gfx
             // 
@@ -623,6 +625,7 @@
             oamView_oam.Location = new System.Drawing.Point(0, 0);
             oamView_oam.Name = "oamView_oam";
             oamView_oam.ShowGrid = false;
+            oamView_oam.ShowOamOrigin = false;
             oamView_oam.Size = new System.Drawing.Size(0, 0);
             oamView_oam.TabIndex = 0;
             oamView_oam.TabStop = false;
@@ -631,6 +634,8 @@
             oamView_oam.TileImage = null;
             oamView_oam.TileSize = 16;
             oamView_oam.Zoom = 0;
+            oamView_oam.TileMouseMove += oamView_oam_TileMouseMove;
+            oamView_oam.Scrolled += oamView_oam_Scrolled;
             // 
             // statusStrip_oam
             // 

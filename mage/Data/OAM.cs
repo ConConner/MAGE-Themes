@@ -74,6 +74,9 @@ namespace mage
                 palRow = attr2 >> 12;
             }
 
+            //Properties
+            public Rectangle Area => new Rectangle(xPos, yPos, Dimensions.Width, Dimensions.Height);
+
             public Size Dimensions
             {
                 get

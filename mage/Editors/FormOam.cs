@@ -21,10 +21,12 @@ public partial class FormOam : Form
     private GFX gfxObject;
     private Palette palette;
     private OAM oam;
+    private int selectedPartIndex = -1;
     private Bitmap gfxImage;
     private VramObj vram;
 
     Pen partOutline = new Pen(Color.Aqua, 1);
+    Pen partOutlineHighlight = new Pen(Color.Orange, 1);
     List<Drawable> partOutlines = new List<Drawable>();
 
     private bool loading;
@@ -154,12 +156,14 @@ public partial class FormOam : Form
 
     private void UpdateGfxZoom(int zoom)
     {
+        zoom = Math.Clamp(zoom, 0, 4);
         gfxView_gfx.Zoom = zoom;
         statusStrip_zoom.Text = $"{1 << zoom}00%";
     }
 
     private void UpdateOamZoom(int zoom)
     {
+        zoom = Math.Clamp(zoom, 0, 4);
         oamView_oam.Zoom = zoom;
         toolStrip_zoomOam.Text = $"{1 << zoom}00%";
     }
@@ -189,6 +193,16 @@ public partial class FormOam : Form
     {
         statusLabel_coor.Text = "(" + (e.TileIndexPosition.X) + ", " + (e.TileIndexPosition.Y) + ")";
     }
+
+    private void gfxView_gfx_Scrolled(object sender, MouseEventArgs e)
+    {
+        if ((ModifierKeys & Keys.Control) == Keys.Control)
+        {
+            if (e.Delta > 0) UpdateGfxZoom(gfxView_gfx.Zoom + 1);
+            if (e.Delta < 0) UpdateGfxZoom(gfxView_gfx.Zoom - 1);
+        }
+    }
+
     #endregion
 
     #region PAL
@@ -255,6 +269,31 @@ public partial class FormOam : Form
     #endregion
 
     #region OAM
+    private int FindPart(OAM.Frame frame, int pixelX, int pixelY)
+    {
+        Point position = new Point(
+            pixelX - OAM.FrameOriginX,
+            pixelY - OAM.FrameOriginY
+        );
+
+        for (int i = 0; i < frame.parts.Count; i++)
+        {
+            OAM.Part p = frame.parts[i];
+            if (p.Area.Contains(position)) return i;
+        }
+
+        return -1;
+    }
+
+    private void ResetSelectedPart()
+    {
+        if (selectedPartIndex == -1) return;
+        Drawable d = partOutlines[^(selectedPartIndex + 1)];
+        d.DrawPens.Clear();
+        d.DrawPens.Add(partOutline);
+        oamView_oam.Invalidate();
+    }
+
     private void SetOAM()
     {
         PlayingAnimation = false;
@@ -296,8 +335,10 @@ public partial class FormOam : Form
     {
         partOutlines.Clear();
         oamView_oam.ResetDrawables();
-        foreach (OAM.Part p in frame.parts)
+        for (int i = frame.parts.Count - 1; i >= 0; i--)
         {
+            OAM.Part p = frame.parts[i];
+
             Size s = p.Dimensions;
             Rectangle r = new Rectangle(p.xPos + OAM.FrameOriginX, p.yPos + OAM.FrameOriginY, s.Width, s.Height);
             Drawable outline = new(r, partOutline)
@@ -350,6 +391,34 @@ public partial class FormOam : Form
     {
         bool value = toolStrip_partOutline.Checked = !toolStrip_partOutline.Checked;
         foreach (Drawable d in partOutlines) d.Visible = value;
+        oamView_oam.Invalidate();
+    }
+
+    private void oamView_oam_Scrolled(object sender, MouseEventArgs e)
+    {
+        if ((ModifierKeys & Keys.Control) == Keys.Control)
+        {
+            if (e.Delta > 0) UpdateOamZoom(oamView_oam.Zoom + 1);
+            if (e.Delta < 0) UpdateOamZoom(oamView_oam.Zoom - 1);
+        }
+    }
+
+    private void oamView_oam_TileMouseMove(object sender, TileDisplay.TileDisplayArgs e)
+    {
+        if (PlayingAnimation) return;
+        OAM.Frame selectedFrame = oam.frames[comboBox_Frame.SelectedIndex];
+
+        int selected = FindPart(selectedFrame, e.PixelPosition.X, e.PixelPosition.Y);
+        if (selected == selectedPartIndex) 
+            return;
+
+        ResetSelectedPart();
+        selectedPartIndex = selected;
+
+        if (selectedPartIndex == -1) return;
+        Drawable d = partOutlines[^(selectedPartIndex + 1)];
+        d.DrawPens.Clear();
+        d.DrawPens.Add(partOutlineHighlight);
         oamView_oam.Invalidate();
     }
     #endregion
