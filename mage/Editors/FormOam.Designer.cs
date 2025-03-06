@@ -40,7 +40,7 @@
             label_imageOffset = new System.Windows.Forms.Label();
             groupBox_image = new System.Windows.Forms.GroupBox();
             panel_gfx = new System.Windows.Forms.Panel();
-            gfxView_gfx = new GfxView();
+            gfxView_gfx = new Controls.TileDisplay();
             statusStrip_gfx = new System.Windows.Forms.StatusStrip();
             statusLabel_coor = new System.Windows.Forms.ToolStripStatusLabel();
             statusLabel_size = new System.Windows.Forms.ToolStripStatusLabel();
@@ -72,7 +72,7 @@
             groupBox_part = new System.Windows.Forms.GroupBox();
             groupBox_oamDisplay = new System.Windows.Forms.GroupBox();
             panel_oam = new System.Windows.Forms.Panel();
-            oamView_oam = new OamView();
+            oamView_oam = new Controls.TileDisplay();
             statusStrip_oam = new System.Windows.Forms.StatusStrip();
             toolStrip_coorOam = new System.Windows.Forms.ToolStripStatusLabel();
             toolStrip_sizeOam = new System.Windows.Forms.ToolStripStatusLabel();
@@ -248,14 +248,22 @@
             // 
             // gfxView_gfx
             // 
+            gfxView_gfx.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
             gfxView_gfx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            gfxView_gfx.GridCellHeight = 16;
+            gfxView_gfx.GridCellWidth = 16;
             gfxView_gfx.Location = new System.Drawing.Point(0, 0);
-            gfxView_gfx.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             gfxView_gfx.Name = "gfxView_gfx";
-            gfxView_gfx.Size = new System.Drawing.Size(275, 114);
+            gfxView_gfx.ShowGrid = false;
+            gfxView_gfx.Size = new System.Drawing.Size(0, 0);
             gfxView_gfx.TabIndex = 0;
             gfxView_gfx.TabStop = false;
-            gfxView_gfx.MouseMove += gfxView_gfx_MouseMove;
+            gfxView_gfx.Tag = "unthemed";
+            gfxView_gfx.Text = "tileDisplay1";
+            gfxView_gfx.TileImage = null;
+            gfxView_gfx.TileSize = 8;
+            gfxView_gfx.Zoom = 0;
+            gfxView_gfx.TileMouseMove += gfxView_gfx_MouseMove;
             // 
             // statusStrip_gfx
             // 
@@ -608,15 +616,20 @@
             // 
             // oamView_oam
             // 
+            oamView_oam.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
             oamView_oam.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            oamView_oam.DisplayOrigin = true;
+            oamView_oam.GridCellHeight = 16;
+            oamView_oam.GridCellWidth = 16;
             oamView_oam.Location = new System.Drawing.Point(0, 0);
             oamView_oam.Name = "oamView_oam";
-            oamView_oam.OamImage = null;
-            oamView_oam.Size = new System.Drawing.Size(208, 93);
-            oamView_oam.TabIndex = 1;
+            oamView_oam.ShowGrid = false;
+            oamView_oam.Size = new System.Drawing.Size(0, 0);
+            oamView_oam.TabIndex = 0;
             oamView_oam.TabStop = false;
-            oamView_oam.Text = "oamView1";
+            oamView_oam.Tag = "unthemed";
+            oamView_oam.Text = "tileDisplay1";
+            oamView_oam.TileImage = null;
+            oamView_oam.TileSize = 16;
             oamView_oam.Zoom = 0;
             // 
             // statusStrip_oam
@@ -654,7 +667,7 @@
             // toolStrip_springOam
             // 
             toolStrip_springOam.Name = "toolStrip_springOam";
-            toolStrip_springOam.Size = new System.Drawing.Size(143, 17);
+            toolStrip_springOam.Size = new System.Drawing.Size(174, 17);
             toolStrip_springOam.Spring = true;
             // 
             // toolStrip_oamView
@@ -673,7 +686,7 @@
             toolStrip_origin.CheckState = System.Windows.Forms.CheckState.Checked;
             toolStrip_origin.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             toolStrip_origin.Name = "toolStrip_origin";
-            toolStrip_origin.Size = new System.Drawing.Size(180, 22);
+            toolStrip_origin.Size = new System.Drawing.Size(135, 22);
             toolStrip_origin.Text = "Origin";
             toolStrip_origin.Click += toolStrip_origin_Click;
             // 
@@ -681,7 +694,7 @@
             // 
             toolStrip_partOutline.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             toolStrip_partOutline.Name = "toolStrip_partOutline";
-            toolStrip_partOutline.Size = new System.Drawing.Size(180, 22);
+            toolStrip_partOutline.Size = new System.Drawing.Size(135, 22);
             toolStrip_partOutline.Text = "Part outline";
             toolStrip_partOutline.Click += toolStrip_partOutline_Click;
             // 
@@ -835,7 +848,6 @@
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.Button button_editPal;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel_size;
-        private GfxView gfxView_gfx;
         private System.Windows.Forms.GroupBox groupBox_oam;
         private mage.Theming.CustomControls.FlatComboBox comboBox_Frame;
         private System.Windows.Forms.Label label_OAMFrame;
@@ -845,7 +857,6 @@
         private System.Windows.Forms.GroupBox groupBox_part;
         private System.Windows.Forms.GroupBox groupBox_oamDisplay;
         private System.Windows.Forms.Panel panel_oam;
-        private OamView oamView_oam;
         private System.Windows.Forms.SplitContainer splitContainer_main;
         private System.Windows.Forms.StatusStrip statusStrip_main;
         private System.Windows.Forms.Label label_frameDuration;
@@ -864,5 +875,7 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStrip_oamView;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_origin;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_partOutline;
+        private Controls.TileDisplay gfxView_gfx;
+        private Controls.TileDisplay oamView_oam;
     }
 }

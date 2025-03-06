@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using mage.Controls;
 
 namespace mage;
 
@@ -24,9 +25,9 @@ public partial class FormOam : Form
     private VramObj vram;
 
     Pen partOutline = new Pen(Color.Aqua, 1);
+    List<Drawable> partOutlines = new List<Drawable>();
 
     private bool loading;
-    private int gfxZoom;
 
     private FormMain main;
     private ByteStream romStream;
@@ -68,7 +69,9 @@ public partial class FormOam : Form
         this.main = main;
         this.romStream = ROM.Stream;
         this.palette = new Palette(romStream, palOffset, 1);
-        gfxZoom = 0;
+
+        //Origin
+        oamView_oam.ShowOamOrigin = true;
 
         loading = true;
 
@@ -139,7 +142,7 @@ public partial class FormOam : Form
         CreateVram();
         DrawFrame(comboBox_Frame.SelectedIndex);
         DrawImage();
-        UpdateZoom();
+        UpdateGfxZoom(gfxView_gfx.Zoom);
     }
 
     private void DrawImage()
@@ -149,9 +152,16 @@ public partial class FormOam : Form
         statusLabel_size.Text = gfxImage.Width + " x " + gfxImage.Height;
     }
 
-    private void UpdateZoom()
+    private void UpdateGfxZoom(int zoom)
     {
-        gfxView_gfx.Size = new Size(gfxImage.Width << gfxZoom, gfxImage.Height << gfxZoom);
+        gfxView_gfx.Zoom = zoom;
+        statusStrip_zoom.Text = $"{1 << zoom}00%";
+    }
+
+    private void UpdateOamZoom(int zoom)
+    {
+        oamView_oam.Zoom = zoom;
+        toolStrip_zoomOam.Text = $"{1 << zoom}00%";
     }
 
     private void button_imageGo_Click(object sender, EventArgs e)
@@ -173,6 +183,11 @@ public partial class FormOam : Form
     {
         numericUpDown_height.Enabled = !checkBox_compressed.Checked;
         if (!loading) { DrawNewGFX(); }
+    }
+
+    private void gfxView_gfx_MouseMove(object sender, TileDisplay.TileDisplayArgs e)
+    {
+        statusLabel_coor.Text = "(" + (e.TileIndexPosition.X) + ", " + (e.TileIndexPosition.Y) + ")";
     }
     #endregion
 
@@ -237,11 +252,6 @@ public partial class FormOam : Form
                     + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
-
-    private void gfxView_gfx_MouseMove(object sender, MouseEventArgs e)
-    {
-        statusLabel_coor.Text = "(" + (e.X >> gfxZoom) + ", " + (e.Y >> gfxZoom) + ")";
-    }
     #endregion
 
     #region OAM
@@ -276,7 +286,7 @@ public partial class FormOam : Form
     {
         if (oam == null || vram == null) return;
         Bitmap frame = oam.DrawReal(vram.objTiles, vram.palette, 0, frameNumber);
-        oamView_oam.OamImage = frame;
+        oamView_oam.TileImage = frame;
 
         // Display Part boxes
         AddPartOutlines(oam.frames[frameNumber]);
@@ -284,16 +294,18 @@ public partial class FormOam : Form
 
     private void AddPartOutlines(OAM.Frame frame)
     {
+        partOutlines.Clear();
         oamView_oam.ResetDrawables();
         foreach (OAM.Part p in frame.parts)
         {
             Size s = p.Dimensions;
             Rectangle r = new Rectangle(p.xPos + OAM.FrameOriginX, p.yPos + OAM.FrameOriginY, s.Width, s.Height);
-            OamView.Drawable outline = new(r, partOutline)
+            Drawable outline = new(r, partOutline)
             {
                 Visible = toolStrip_partOutline.Checked,
             };
-            oamView_oam.Drawables.Add(outline);
+            partOutlines.Add(outline);
+            oamView_oam.AddDrawable(outline);
         }
     }
 
@@ -330,92 +342,35 @@ public partial class FormOam : Form
 
     private void toolStrip_origin_Click(object sender, EventArgs e)
     {
-        oamView_oam.DisplayOrigin = toolStrip_origin.Checked = !toolStrip_origin.Checked;
+        oamView_oam.ShowOamOrigin = toolStrip_origin.Checked = !toolStrip_origin.Checked;
         oamView_oam.Invalidate();
     }
 
     private void toolStrip_partOutline_Click(object sender, EventArgs e)
     {
         bool value = toolStrip_partOutline.Checked = !toolStrip_partOutline.Checked;
-        foreach (OamView.Drawable d in oamView_oam.Drawables)
-        {
-            d.Visible = value;
-            oamView_oam.InvalidateDrawable(d);
-        }
+        foreach (Drawable d in partOutlines) d.Visible = value;
+        oamView_oam.Invalidate();
     }
-    #endregion
-
-    #region
     #endregion
 
     #region ZOOM
+
     #region GFX
-    private void toolStrip_zoom100_Click(object sender, EventArgs e)
-    {
-        statusStrip_zoom.Text = "100%";
-        gfxZoom = 0;
-        UpdateZoom();
-    }
-
-    private void toolStrip_zoom200_Click(object sender, EventArgs e)
-    {
-        statusStrip_zoom.Text = "200%";
-        gfxZoom = 1;
-        UpdateZoom();
-    }
-
-    private void toolStrip_zoom400_Click(object sender, EventArgs e)
-    {
-        statusStrip_zoom.Text = "400%";
-        gfxZoom = 2;
-        UpdateZoom();
-    }
-
-    private void toolStrip_zoom800_Click(object sender, EventArgs e)
-    {
-        statusStrip_zoom.Text = "800%";
-        gfxZoom = 3;
-        UpdateZoom();
-    }
-
-    private void toolStrip_zoom1600_Click(object sender, EventArgs e)
-    {
-        statusStrip_zoom.Text = "1600%";
-        gfxZoom = 4;
-        UpdateZoom();
-    }
+    private void toolStrip_zoom100_Click(object sender, EventArgs e) => UpdateGfxZoom(0);
+    private void toolStrip_zoom200_Click(object sender, EventArgs e) => UpdateGfxZoom(1);
+    private void toolStrip_zoom400_Click(object sender, EventArgs e) => UpdateGfxZoom(2);
+    private void toolStrip_zoom800_Click(object sender, EventArgs e) => UpdateGfxZoom(3);
+    private void toolStrip_zoom1600_Click(object sender, EventArgs e) => UpdateGfxZoom(4);
     #endregion
+
     #region OAM
-    private void toolStrip_zoomOam100_Click(object sender, EventArgs e)
-    {
-        toolStrip_zoomOam.Text = "100%";
-        oamView_oam.Zoom = 0;
-    }
-
-    private void toolStrip_zoomOam200_Click(object sender, EventArgs e)
-    {
-        toolStrip_zoomOam.Text = "200%";
-        oamView_oam.Zoom = 1;
-    }
-
-    private void toolStrip_zoomOam400_Click(object sender, EventArgs e)
-    {
-        toolStrip_zoomOam.Text = "400%";
-        oamView_oam.Zoom = 2;
-    }
-
-    private void toolStrip_zoomOam800_Click(object sender, EventArgs e)
-    {
-        toolStrip_zoomOam.Text = "800%";
-        oamView_oam.Zoom = 3;
-    }
-
-    private void toolStrip_zoomOam1600_Click(object sender, EventArgs e)
-    {
-        toolStrip_zoomOam.Text = "1600%";
-        oamView_oam.Zoom = 4;
-    }
-    #endregion
+    private void toolStrip_zoomOam100_Click(object sender, EventArgs e) => UpdateOamZoom(0);
+    private void toolStrip_zoomOam200_Click(object sender, EventArgs e) => UpdateOamZoom(1);
+    private void toolStrip_zoomOam400_Click(object sender, EventArgs e) => UpdateOamZoom(2);
+    private void toolStrip_zoomOam800_Click(object sender, EventArgs e) => UpdateOamZoom(3);
+    private void toolStrip_zoomOam1600_Click(object sender, EventArgs e) => UpdateOamZoom(4);
     #endregion
 
+    #endregion
 }
