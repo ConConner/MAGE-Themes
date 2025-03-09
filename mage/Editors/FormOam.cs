@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using mage.Controls;
+using mage.Utility;
+using System.Drawing.Drawing2D;
 
 namespace mage;
 
@@ -21,13 +23,17 @@ public partial class FormOam : Form
     private GFX gfxObject;
     private Palette palette;
     private OAM oam;
+    private int hoveredPartIndex = -1;
     private int selectedPartIndex = -1;
     private Bitmap gfxImage;
     private VramObj vram;
 
     Pen partOutline = new Pen(Color.Aqua, 1);
-    Pen partOutlineHighlight = new Pen(Color.Orange, 1);
+    Pen partOutlineHovered = new Pen(Color.Orange, 2) { Alignment = PenAlignment.Inset};
+    Pen partOutlineSelected = new Pen(Color.Red, 1);
     List<Drawable> partOutlines = new List<Drawable>();
+    Drawable selectedDrawable;
+    Drawable hoveredDrawable;
 
     private bool loading;
 
@@ -96,6 +102,13 @@ public partial class FormOam : Form
         SetOAM();
     }
 
+    #region general
+    private void ChangePen(Drawable drawable, Pen pen)
+    {
+        drawable.DrawPens.Clear();
+        drawable.DrawPens.Add(pen);
+    }
+    #endregion
 
     #region GFX
     private void DrawNewGFX()
@@ -159,13 +172,6 @@ public partial class FormOam : Form
         zoom = Math.Clamp(zoom, 0, 4);
         gfxView_gfx.Zoom = zoom;
         statusStrip_zoom.Text = $"{1 << zoom}00%";
-    }
-
-    private void UpdateOamZoom(int zoom)
-    {
-        zoom = Math.Clamp(zoom, 0, 4);
-        oamView_oam.Zoom = zoom;
-        toolStrip_zoomOam.Text = $"{1 << zoom}00%";
     }
 
     private void button_imageGo_Click(object sender, EventArgs e)
@@ -269,6 +275,40 @@ public partial class FormOam : Form
     #endregion
 
     #region OAM
+    private void UpdateOamZoom(int zoom)
+    {
+        zoom = Math.Clamp(zoom, 0, 4);
+        if (zoom == oamView_oam.Zoom) return;
+
+        oamView_oam.Zoom = zoom;
+        toolStrip_zoomOam.Text = $"{1 << zoom}00%";
+
+        //Update Pen Width
+        switch (zoom)
+        {
+            case 0:
+            case 1:
+                partOutlineHovered.Width = 2;
+                partOutlineSelected.Width = 2;
+                break;
+            case 2:
+                partOutlineHovered.Width = 3;
+                partOutlineSelected.Width = 3;
+                break;
+            case 3:
+            case 4:
+                partOutlineHovered.Width = 4;
+                partOutlineSelected.Width = 4;
+                break;
+        }
+
+        // Center view
+        int centerX = (panel_oam.DisplayRectangle.Width - panel_oam.ClientSize.Width) / 2;
+        int centerY = (panel_oam.DisplayRectangle.Height - panel_oam.ClientSize.Height) / 2;
+
+        panel_oam.AutoScrollPosition = new Point(centerX, centerY);
+    }
+
     private int FindPart(OAM.Frame frame, int pixelX, int pixelY)
     {
         Point position = new Point(
@@ -283,15 +323,6 @@ public partial class FormOam : Form
         }
 
         return -1;
-    }
-
-    private void ResetSelectedPart()
-    {
-        if (selectedPartIndex == -1) return;
-        Drawable d = partOutlines[^(selectedPartIndex + 1)];
-        d.DrawPens.Clear();
-        d.DrawPens.Add(partOutline);
-        oamView_oam.Invalidate();
     }
 
     private void SetOAM()
@@ -328,16 +359,20 @@ public partial class FormOam : Form
         oamView_oam.TileImage = frame;
 
         // Display Part boxes
-        AddPartOutlines(oam.frames[frameNumber]);
+        SetPartOutlines(oam.frames[frameNumber]);
     }
 
-    private void AddPartOutlines(OAM.Frame frame)
+    private void SetPartOutlines(OAM.Frame frame)
     {
         partOutlines.Clear();
         oamView_oam.ResetDrawables();
+        if (selectedPartIndex == -1) selectedDrawable = null;
+        if (hoveredPartIndex == -1) hoveredDrawable = null;
+
         for (int i = frame.parts.Count - 1; i >= 0; i--)
         {
             OAM.Part p = frame.parts[i];
+            bool hovered = hoveredPartIndex == i;
 
             Size s = p.Dimensions;
             Rectangle r = new Rectangle(p.xPos + OAM.FrameOriginX, p.yPos + OAM.FrameOriginY, s.Width, s.Height);
@@ -345,9 +380,31 @@ public partial class FormOam : Form
             {
                 Visible = toolStrip_partOutline.Checked,
             };
+
+            if (hovered)
+            {
+                outline.Indent = -1;
+                ChangePen(outline, partOutlineHovered);
+                hoveredDrawable = outline;
+                continue;
+            }
+
             partOutlines.Add(outline);
             oamView_oam.AddDrawable(outline);
         }
+
+        if (selectedDrawable != null)
+        {
+            partOutlines.Add(selectedDrawable);
+            oamView_oam.AddDrawable(selectedDrawable);
+        }
+        if (hoveredDrawable != null)
+        {
+            partOutlines.Add(hoveredDrawable);
+            oamView_oam.AddDrawable(hoveredDrawable);
+        }
+
+        oamView_oam.Invalidate();
     }
 
     private void SetTimerInterval(int frame)
@@ -409,17 +466,10 @@ public partial class FormOam : Form
         OAM.Frame selectedFrame = oam.frames[comboBox_Frame.SelectedIndex];
 
         int selected = FindPart(selectedFrame, e.PixelPosition.X, e.PixelPosition.Y);
-        if (selected == selectedPartIndex) 
-            return;
+        if (selected == hoveredPartIndex) return;
+        hoveredPartIndex = selected;
 
-        ResetSelectedPart();
-        selectedPartIndex = selected;
-
-        if (selectedPartIndex == -1) return;
-        Drawable d = partOutlines[^(selectedPartIndex + 1)];
-        d.DrawPens.Clear();
-        d.DrawPens.Add(partOutlineHighlight);
-        oamView_oam.Invalidate();
+        SetPartOutlines(selectedFrame);
     }
     #endregion
 
