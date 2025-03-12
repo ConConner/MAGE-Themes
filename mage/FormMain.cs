@@ -19,6 +19,7 @@ using mage.Utility;
 using mage.Actions;
 using mage.Editors;
 using System.Linq.Expressions;
+using System.Diagnostics;
 
 namespace mage
 {
@@ -1097,7 +1098,15 @@ namespace mage
             path = Path.Combine(path, "doc.html");
             if (File.Exists(path))
             {
-                System.Diagnostics.Process.Start(path);
+                var process = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = path,
+                        UseShellExecute = true
+                    }
+                };
+                process.Start();
             }
             else
             {
