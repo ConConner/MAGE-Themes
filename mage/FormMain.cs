@@ -20,6 +20,7 @@ using mage.Actions;
 using mage.Editors;
 using System.Linq.Expressions;
 using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace mage
 {
@@ -1091,18 +1092,24 @@ namespace mage
             Program.ExperimentalFeaturesEnabled = !Program.ExperimentalFeaturesEnabled;
             button_experimental.Checked = Program.ExperimentalFeaturesEnabled;
         }
+
         // help
         private void menuItem_viewHelp_Click(object sender, EventArgs e)
         {
             string path = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             path = Path.Combine(path, "doc.html");
+
             if (File.Exists(path))
             {
+                string url = new Uri(path).AbsoluteUri;
+                url += "#import";
+
                 var process = new Process
                 {
                     StartInfo = new ProcessStartInfo
                     {
-                        FileName = path,
+                        FileName = GetDefaultBrowserPath(),
+                        Arguments = url,
                         UseShellExecute = true
                     }
                 };
@@ -1113,6 +1120,19 @@ namespace mage
                 MessageBox.Show("Documentation file could not be found.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private string GetDefaultBrowserPath()
+        {
+            var progID = (string)Registry.CurrentUser
+                .OpenSubKey("SOFTWARE\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice")
+                .GetValue("ProgID");
+
+            var command = (string)Registry.ClassesRoot
+                .OpenSubKey($"{progID}\\shell\\open\\command")
+                .GetValue(null);
+
+            return command;
         }
 
         private void menuItem_about_Click(object sender, EventArgs e)
