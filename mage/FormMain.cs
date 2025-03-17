@@ -21,6 +21,7 @@ using mage.Editors;
 using System.Linq.Expressions;
 using System.Diagnostics;
 using Microsoft.Win32;
+using System.Linq;
 
 namespace mage
 {
@@ -630,7 +631,7 @@ namespace mage
             if (Program.ExperimentalFeaturesEnabled)
             {
                 if (!FindOpenForm(typeof(FormTileTableNew), false))
-                {   
+                {
                     FormTileTableNew form = new FormTileTableNew(room);
                     form.Show();
                 }
@@ -2933,5 +2934,133 @@ namespace mage
 
         private void flipRoomVToolStripMenuItem_Click(object sender, EventArgs e)
             => PerformAction(new FlipRoom(room, false, true));
+
+        private void flipHackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int[] excludedTilesets = new int[] { 0x0 };
+
+            bool horizontal = false;
+            bool vertical = true;
+
+            // Flipping rooms
+            // For each area
+            for (int areaID = 0; areaID < areaNames.Length; areaID++)
+            {
+                // For each room
+                for (int roomID = 0; roomID < roomsPerArea[areaID]; roomID++)
+                {
+                    Room room;
+                    try { room = new Room(areaID, roomID); }
+                    catch { continue; }
+
+                    // Flip the room
+                    FlipRoom flipRoom = new FlipRoom(room, horizontal, vertical);
+                    undoRedo.Do(flipRoom, room);
+
+                    Flip.SubstituteTiles(room, Maps.horizontalTileSubstitutionMap);
+                    Flip.SubstituteClipdata(room, Maps.horizontalClipdataSubstitutionMap);
+
+                    // Flip room objects
+                    // Doors
+                    for (int doorNumber = 0; doorNumber < room.doorList.Count; doorNumber++)
+                    {
+                        Door door = room.doorList[doorNumber];
+
+                        Point topLeft = new
+                        (
+                            horizontal ? room.Width - 1 - door.xEnd : door.xStart,
+                            vertical ? room.Height - 1 - door.yEnd : door.yStart
+                        );
+                        Point bottomRight = new
+                        (
+                            horizontal ? room.Width - 1 - door.xStart : door.xEnd,
+                            vertical ? room.Height - 1 - door.yStart : door.yEnd
+                        );
+                        door.xStart = (byte)topLeft.X;
+                        door.yStart = (byte)topLeft.Y;
+                        door.xEnd = (byte)bottomRight.X;
+                        door.yEnd = (byte)bottomRight.Y;
+
+                        //TODO properly mirror exit distance instead of just negating it
+                        door.xExitDistance = horizontal ? (byte)(0xFF - door.xExitDistance + 1) : door.xExitDistance;
+                        door.yExitDistance = vertical ? (byte)(0xFF - door.yExitDistance + 1) : door.yExitDistance;
+
+                        EditRoomObject edit = new EditRoomObject(door, doorNumber, true);
+                        undoRedo.Do(edit, room);
+                        room.SaveObjects();
+                    }
+                    // Enemies
+                    foreach (EnemyList el in room.enemyLists)
+                    {
+                        if (el == null) continue;
+                        room.enemyList = el;
+
+                        for (int enemyNumber = 0; enemyNumber < el.Count; enemyNumber++)
+                        {
+                            Enemy enemy = el[enemyNumber];
+
+                            int x = horizontal ? room.Width - 1 - enemy.xPos : enemy.xPos;
+                            int y = vertical ? room.Height - 1 - enemy.yPos : enemy.yPos;
+                            Point enemyDifference = new Point(x - enemy.xPos, y - enemy.yPos);
+
+                            RoomObject moved = enemy.Move(enemyDifference, enemyNumber);
+                            EditRoomObject edit = new EditRoomObject(moved, enemyNumber, true);
+                            undoRedo.Do(edit, room);
+                        }
+                        room.SaveObjects();
+                    }
+                    // Scrolls
+                    for (int scrollNumber = 0; scrollNumber < room.scrollList.Count; scrollNumber++)
+                    {
+                        Scroll scroll = room.scrollList[scrollNumber];
+
+                        Point topLeft = new
+                        (
+                            horizontal ? room.Width - 1 - scroll.xEnd : scroll.xStart,
+                            vertical ? room.Height - 1 - scroll.yEnd : scroll.yStart
+                        );
+                        Point bottomRight = new
+                        (
+                            horizontal ? room.Width - 1 - scroll.xStart : scroll.xEnd,
+                            vertical ? room.Height - 1 - scroll.yStart : scroll.yEnd
+                        );
+                        scroll.xStart = (byte)topLeft.X;
+                        scroll.yStart = (byte)topLeft.Y;
+                        scroll.xEnd = (byte)bottomRight.X;
+                        scroll.yEnd = (byte)bottomRight.Y;
+
+                        EditRoomObject edit = new EditRoomObject(scroll, scrollNumber * 6, true);
+                        undoRedo.Do(edit, room);
+
+                        room.SaveObjects();
+                    }
+                }
+            }
+
+            // Flipping Tiletables
+            // For each tileset
+            for (int tilesetID = 0; tilesetID < Version.NumOfTilesets; tilesetID++)
+            {
+                if (excludedTilesets.Contains(tilesetID)) continue;
+                Tileset tileset = new Tileset(ROM.Stream, (byte)tilesetID);
+
+                //Get Tiletable
+                int ttLength = tileset.tileTable.Length;
+                ushort[] tileTable = new ushort[ttLength];
+                tileset.tileTable.CopyTo(tileTable, 0);
+
+                //Flip Tiletable
+                Flip.FlipTiletable(tileTable, ttLength, horizontal, vertical, 0x50 * 4);
+
+                //Save Tiletable
+                ByteStream dataToWrite = new ByteStream();
+                dataToWrite.Write8(2);
+                dataToWrite.Write8((byte)(ttLength / 64));
+                for (int i = 0; i < ttLength; i++) dataToWrite.Write16(tileTable[i]);
+
+                int ptr = Version.TilesetOffset + tilesetID * 0x14 + 0xC;
+                ROM.Stream.Write(dataToWrite, ttLength * 2 + 2, ptr, true); //shared is potentially bad if two tilesets share a tiletable and it got already flipped
+            }
+        }
     }
 }

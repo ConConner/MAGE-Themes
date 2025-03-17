@@ -145,6 +145,7 @@
             seperator_flip = new System.Windows.Forms.ToolStripSeparator();
             menuItem_flip_h = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_flip_v = new System.Windows.Forms.ToolStripMenuItem();
+            flipHackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip_options = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_backgroundColor = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator31 = new System.Windows.Forms.ToolStripSeparator();
@@ -791,7 +792,7 @@
             // 
             // menuStrip_tools
             // 
-            menuStrip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_roomOptions, menuItem_testRoom, menuItem_clipShortcuts, toolStripSeparator2, menuItem_import, menuItem_export, bulkToolStripMenuItem, menuItem_compression, toolStripSeparator23, menuItem_tileBuilder, menuItem_add, menuItem_patches, seperator_flip, menuItem_flip_h, menuItem_flip_v });
+            menuStrip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_roomOptions, menuItem_testRoom, menuItem_clipShortcuts, toolStripSeparator2, menuItem_import, menuItem_export, bulkToolStripMenuItem, menuItem_compression, toolStripSeparator23, menuItem_tileBuilder, menuItem_add, menuItem_patches, seperator_flip, menuItem_flip_h, menuItem_flip_v, flipHackToolStripMenuItem });
             menuStrip_tools.Enabled = false;
             menuStrip_tools.Name = "menuStrip_tools";
             menuStrip_tools.Size = new System.Drawing.Size(46, 20);
@@ -1089,6 +1090,13 @@
             menuItem_flip_v.Text = "Flip Room V";
             menuItem_flip_v.Visible = false;
             menuItem_flip_v.Click += flipRoomVToolStripMenuItem_Click;
+            // 
+            // flipHackToolStripMenuItem
+            // 
+            flipHackToolStripMenuItem.Name = "flipHackToolStripMenuItem";
+            flipHackToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            flipHackToolStripMenuItem.Text = "Flip Game";
+            flipHackToolStripMenuItem.Click += flipHackToolStripMenuItem_Click;
             // 
             // menuStrip_options
             // 
@@ -2500,6 +2508,7 @@
         private System.Windows.Forms.ToolStripSeparator seperator_flip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator33;
         private System.Windows.Forms.ToolStripMenuItem button_experimental;
+        private System.Windows.Forms.ToolStripMenuItem flipHackToolStripMenuItem;
     }
 }
 

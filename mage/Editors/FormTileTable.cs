@@ -94,7 +94,7 @@ namespace mage
             comboBox_tileset.SelectedIndex = tsNum;
 
             // Enable experimental flipping
-            button_flip_h.Visible = button_flip_v.Visible = Program.ExperimentalFeaturesEnabled;
+            button_flip_h.Visible = button_flip_v.Visible = true;
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
