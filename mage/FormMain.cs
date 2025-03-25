@@ -2938,9 +2938,12 @@ namespace mage
         private void flipHackToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int[] excludedTilesets = new int[] { 0x0 };
+            List<int> flippedTiletables = new List<int>();
+            int[] chozosSpriteIDs = new int[] { 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F, 0x30, 0x31, 0x58, 0x59, 0x94 };
+            int[] spriteIDsAlignHorizontal = new int[] { 0x18, 0x19, 0x56, 0x57, 0x5B, 0x5C, 0x7A, 0x7B, 0x9D, 0x9E, 0x9F, 0xA0, 0xA1, 0xA2, 0xAA, 0xAB, 0xAC, 0x61, 0x77 };
 
-            bool horizontal = false;
-            bool vertical = true;
+            bool horizontal = true;
+            bool vertical = false;
 
             // Flipping rooms
             // For each area
@@ -2959,6 +2962,23 @@ namespace mage
 
                     Flip.SubstituteTiles(room, Maps.horizontalTileSubstitutionMap);
                     Flip.SubstituteClipdata(room, Maps.horizontalClipdataSubstitutionMap);
+
+                    // Flip room header
+                    // Get new pos
+                    int xStart = room.header.mapX;
+                    int yStart = room.header.mapY;
+                    int xEnd = room.header.mapX + room.WidthInScreens - 1;
+                    int yEnd = room.header.mapY + room.HeightInScreens - 1;
+
+                    Point newPos = new(
+                        horizontal ? 32 - 1 - xEnd : xStart,
+                        vertical ? 32 - 1 - yEnd : yStart
+                    );
+
+                    // Write new header
+                    int headerOffset = ROM.Stream.ReadPtr(Version.AreaHeaderOffset + areaID * 4) + (roomID * 0x3C);
+                    ROM.Stream.Write8(headerOffset + 0x35, (byte)newPos.X);
+                    ROM.Stream.Write8(headerOffset + 0x36, (byte)newPos.Y);
 
                     // Flip room objects
                     // Doors
@@ -2982,26 +3002,37 @@ namespace mage
                         door.yEnd = (byte)bottomRight.Y;
 
                         //TODO properly mirror exit distance instead of just negating it
-                        door.xExitDistance = horizontal ? (byte)(0xFF - door.xExitDistance + 1) : door.xExitDistance;
-                        door.yExitDistance = vertical ? (byte)(0xFF - door.yExitDistance + 1) : door.yExitDistance;
+                        if (door.xEnd - door.xStart == 0)
+                        {
+                            door.xExitDistance = horizontal ? (byte)(0xFF - door.xExitDistance + 1) : door.xExitDistance;
+                            door.yExitDistance = vertical ? (byte)(0xFF - door.yExitDistance + 1) : door.yExitDistance;
+                        }
 
                         EditRoomObject edit = new EditRoomObject(door, doorNumber, true);
                         undoRedo.Do(edit, room);
                         room.SaveObjects();
                     }
                     // Enemies
-                    foreach (EnemyList el in room.enemyLists)
+                    for (int spritesetID = 0; spritesetID < 3; spritesetID ++)
                     {
+                        EnemyList el = room.enemyLists[spritesetID];
                         if (el == null) continue;
                         room.enemyList = el;
+                        Spriteset spriteset = room.spritesets[spritesetID];
 
                         for (int enemyNumber = 0; enemyNumber < el.Count; enemyNumber++)
                         {
                             Enemy enemy = el[enemyNumber];
+                            int enemyID = spriteset.GetSpriteID(enemy.SlotNum);
 
                             int x = horizontal ? room.Width - 1 - enemy.xPos : enemy.xPos;
                             int y = vertical ? room.Height - 1 - enemy.yPos : enemy.yPos;
                             Point enemyDifference = new Point(x - enemy.xPos, y - enemy.yPos);
+
+                            // Align certain enemies if horizontal flipped
+                            if (horizontal && spriteIDsAlignHorizontal.Contains(enemyID)) {
+                                enemyDifference.X -= 1;
+                            }
 
                             RoomObject moved = enemy.Move(enemyDifference, enemyNumber);
                             EditRoomObject edit = new EditRoomObject(moved, enemyNumber, true);
@@ -3035,13 +3066,34 @@ namespace mage
                         room.SaveObjects();
                     }
                 }
+
+                // Flipping the map
+                Minimap areaMap = new Minimap(ROM.Stream, (byte)areaID);
+                Minimap flippedMap = new Minimap(ROM.Stream, (byte)areaID);
+
+                // For each square in the map
+                for (int mapX = 0; mapX < 32; mapX++)
+                    for (int mapY = 0; mapY < 32; mapY++)
+                    {
+                        Point currentPos = new(mapX, mapY);
+                        Point flippedPos = new(horizontal ? 31 - mapX : mapX, vertical ? 31 - mapY : mapY );
+
+                        ushort squareValue = areaMap.GetSquare(currentPos);
+                        if (horizontal) squareValue ^= 0x400;
+                        if (vertical) squareValue ^= 0x800;
+                        flippedMap.SetSquare(flippedPos, squareValue);
+                    }
+                ROM.SaveMinimap(flippedMap);
             }
 
             // Flipping Tiletables
             // For each tileset
             for (int tilesetID = 0; tilesetID < Version.NumOfTilesets; tilesetID++)
             {
+                int ptr = Version.TilesetOffset + tilesetID * 0x14 + 0xC;
+                if (flippedTiletables.Contains(ROM.Stream.ReadPtr(ptr))) continue;
                 if (excludedTilesets.Contains(tilesetID)) continue;
+
                 Tileset tileset = new Tileset(ROM.Stream, (byte)tilesetID);
 
                 //Get Tiletable
@@ -3058,8 +3110,22 @@ namespace mage
                 dataToWrite.Write8((byte)(ttLength / 64));
                 for (int i = 0; i < ttLength; i++) dataToWrite.Write16(tileTable[i]);
 
-                int ptr = Version.TilesetOffset + tilesetID * 0x14 + 0xC;
-                ROM.Stream.Write(dataToWrite, ttLength * 2 + 2, ptr, true); //shared is potentially bad if two tilesets share a tiletable and it got already flipped
+                ROM.Stream.Write(dataToWrite, ttLength * 2 + 2, ptr, true);
+                flippedTiletables.Add(ROM.Stream.ReadPtr(ptr));
+            }
+
+            if (!horizontal) return;
+
+            // Flip Chozo Sprites
+            foreach (int spriteID in chozosSpriteIDs)
+            {
+                int ptr = 0x13C08 + (spriteID - 0x22) * 4;
+                byte value = ROM.Stream.Read8(ptr);
+
+                if (value == 0xDC) value = 0xD4;
+                else if (value == 0xD4) value = 0xDC;
+
+                ROM.Stream.Write8(ptr, value);
             }
         }
     }
