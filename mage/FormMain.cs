@@ -630,7 +630,7 @@ namespace mage
             if (Program.ExperimentalFeaturesEnabled)
             {
                 if (!FindOpenForm(typeof(FormTileTableNew), false))
-                {   
+                {
                     FormTileTableNew form = new FormTileTableNew(room);
                     form.Show();
                 }
@@ -907,6 +907,18 @@ namespace mage
             if (saveRoom.ShowDialog() == DialogResult.OK)
             {
                 roomView.BackgroundImage.Save(saveRoom.FileName);
+            }
+        }
+
+        private void menuItem_exportCroppedRoomImage_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveRoom = new SaveFileDialog();
+            saveRoom.Filter = "PNG files (*.png)|*.png";
+            if (saveRoom.ShowDialog() == DialogResult.OK)
+            {
+                Rectangle cropArea = new Rectangle(16 * 2, 16 * 2, (room.Width - 4) * 16, (room.Height - 4) * 16);
+                Bitmap roomBitmap = new Bitmap(roomView.BackgroundImage);
+                roomBitmap.Clone(cropArea, roomView.BackgroundImage.PixelFormat).Save(saveRoom.FileName);
             }
         }
 
