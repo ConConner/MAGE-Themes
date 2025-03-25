@@ -124,6 +124,8 @@
             menuItem_exportBG0image = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_exportBG3image = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_exportRoomImage = new System.Windows.Forms.ToolStripMenuItem();
+            regularToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            croppedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             bulkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             button_exportAllRooms = new System.Windows.Forms.ToolStripMenuItem();
             button_areaImage = new System.Windows.Forms.ToolStripMenuItem();
@@ -269,8 +271,6 @@
             toolStrip_patches = new System.Windows.Forms.ToolStripButton();
             comboBox_spriteset = new Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
-            croppedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            regularToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -945,8 +945,21 @@
             menuItem_exportRoomImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { regularToolStripMenuItem, croppedToolStripMenuItem });
             menuItem_exportRoomImage.Name = "menuItem_exportRoomImage";
             menuItem_exportRoomImage.Size = new System.Drawing.Size(180, 22);
-            menuItem_exportRoomImage.Text = "Room Image...";
-            menuItem_exportRoomImage.Click += menuItem_exportRoomImage_Click;
+            menuItem_exportRoomImage.Text = "Room Image";
+            // 
+            // regularToolStripMenuItem
+            // 
+            regularToolStripMenuItem.Name = "regularToolStripMenuItem";
+            regularToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            regularToolStripMenuItem.Text = "Regular...";
+            regularToolStripMenuItem.Click += menuItem_exportRoomImage_Click;
+            // 
+            // croppedToolStripMenuItem
+            // 
+            croppedToolStripMenuItem.Name = "croppedToolStripMenuItem";
+            croppedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            croppedToolStripMenuItem.Text = "Cropped...";
+            croppedToolStripMenuItem.Click += menuItem_exportCroppedRoomImage_Click;
             // 
             // bulkToolStripMenuItem
             // 
@@ -2212,20 +2225,6 @@
             comboBox_spriteset.Size = new System.Drawing.Size(79, 23);
             comboBox_spriteset.TabIndex = 11;
             comboBox_spriteset.SelectedIndexChanged += comboBox_spriteset_SelectedIndexChanged;
-            // 
-            // croppedToolStripMenuItem
-            // 
-            croppedToolStripMenuItem.Name = "croppedToolStripMenuItem";
-            croppedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            croppedToolStripMenuItem.Text = "Cropped";
-            croppedToolStripMenuItem.Click += menuItem_exportCroppedRoomImage_Click;
-            // 
-            // regularToolStripMenuItem
-            // 
-            regularToolStripMenuItem.Name = "regularToolStripMenuItem";
-            regularToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            regularToolStripMenuItem.Text = "Regular";
-            regularToolStripMenuItem.Click += menuItem_exportRoomImage_Click;
             // 
             // FormMain
             // 
