@@ -3127,6 +3127,15 @@ namespace mage
 
                 ROM.Stream.Write8(ptr, value);
             }
+
+            // Flip Chozo Hints
+            for (int hintId = 0; hintId < 16; hintId++)
+            {
+                int hintPtr = 0x40DF78 + hintId * 12;
+                ROM.Stream.Write8(hintPtr + 1, (byte)(31 - ROM.Stream.Read8(hintPtr + 1)));
+                ROM.Stream.Write8(hintPtr + 2, (byte)(31 - ROM.Stream.Read8(hintPtr + 2)));
+                ROM.Stream.Write8(hintPtr + 7, (byte)(31 - ROM.Stream.Read8(hintPtr + 7)));
+            }
         }
     }
 }
