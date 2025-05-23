@@ -185,7 +185,7 @@
             // button_apply
             // 
             button_apply.Enabled = false;
-            button_apply.Location = new System.Drawing.Point(882, 121);
+            button_apply.Location = new System.Drawing.Point(797, 121);
             button_apply.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_apply.Name = "button_apply";
             button_apply.Size = new System.Drawing.Size(86, 27);
@@ -196,7 +196,7 @@
             // 
             // button_close
             // 
-            button_close.Location = new System.Drawing.Point(882, 153);
+            button_close.Location = new System.Drawing.Point(797, 153);
             button_close.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_close.Name = "button_close";
             button_close.Size = new System.Drawing.Size(88, 27);
@@ -221,7 +221,7 @@
             groupBox_map.Controls.Add(label_area);
             groupBox_map.Controls.Add(label_view);
             groupBox_map.Controls.Add(comboBox_view);
-            groupBox_map.Location = new System.Drawing.Point(619, 12);
+            groupBox_map.Location = new System.Drawing.Point(534, 12);
             groupBox_map.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_map.Name = "groupBox_map";
             groupBox_map.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -238,7 +238,7 @@
             groupBox_selection.Controls.Add(label_type);
             groupBox_selection.Controls.Add(checkBox_yflip);
             groupBox_selection.Controls.Add(checkBox_xflip);
-            groupBox_selection.Location = new System.Drawing.Point(786, 12);
+            groupBox_selection.Location = new System.Drawing.Point(701, 12);
             groupBox_selection.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_selection.Name = "groupBox_selection";
             groupBox_selection.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -285,7 +285,7 @@
             panel_squares.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             panel_squares.AutoScroll = true;
             panel_squares.Controls.Add(gfxView_squares);
-            panel_squares.Location = new System.Drawing.Point(619, 186);
+            panel_squares.Location = new System.Drawing.Point(534, 186);
             panel_squares.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_squares.Name = "panel_squares";
             panel_squares.Size = new System.Drawing.Size(351, 347);
@@ -310,7 +310,7 @@
             groupBox_tiles.Controls.Add(button_editGFX);
             groupBox_tiles.Controls.Add(comboBox_palette);
             groupBox_tiles.Controls.Add(label_palette);
-            groupBox_tiles.Location = new System.Drawing.Point(619, 121);
+            groupBox_tiles.Location = new System.Drawing.Point(534, 121);
             groupBox_tiles.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_tiles.Name = "groupBox_tiles";
             groupBox_tiles.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -334,10 +334,10 @@
             // statusStrip
             // 
             statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_coor, statusLabel_tile, statusLabel_changes, statusStrip_spring, statusStrip_import, statusStrip_export });
-            statusStrip.Location = new System.Drawing.Point(0, 619);
+            statusStrip.Location = new System.Drawing.Point(0, 542);
             statusStrip.Name = "statusStrip";
             statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            statusStrip.Size = new System.Drawing.Size(983, 24);
+            statusStrip.Size = new System.Drawing.Size(899, 24);
             statusStrip.TabIndex = 11;
             statusStrip.Text = "statusStrip1";
             // 
@@ -370,7 +370,7 @@
             // statusStrip_spring
             // 
             statusStrip_spring.Name = "statusStrip_spring";
-            statusStrip_spring.Size = new System.Drawing.Size(704, 19);
+            statusStrip_spring.Size = new System.Drawing.Size(620, 19);
             statusStrip_spring.Spring = true;
             // 
             // statusStrip_import
@@ -416,7 +416,7 @@
             gfxView_map.Location = new System.Drawing.Point(14, 14);
             gfxView_map.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             gfxView_map.Name = "gfxView_map";
-            gfxView_map.Size = new System.Drawing.Size(597, 591);
+            gfxView_map.Size = new System.Drawing.Size(512, 512);
             gfxView_map.TabIndex = 6;
             gfxView_map.TabStop = false;
             gfxView_map.MouseDown += gfxView_map_MouseDown;
@@ -424,9 +424,8 @@
             // 
             // FormMinimap
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(983, 643);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            ClientSize = new System.Drawing.Size(899, 566);
             Controls.Add(statusStrip);
             Controls.Add(groupBox_tiles);
             Controls.Add(panel_squares);
@@ -438,7 +437,7 @@
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            MinimumSize = new System.Drawing.Size(906, 608);
+            MinimumSize = new System.Drawing.Size(915, 605);
             Name = "FormMinimap";
             Text = "Minimap Editor";
             KeyDown += FormMinimap_KeyDown;

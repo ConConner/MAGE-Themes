@@ -871,10 +871,80 @@ namespace mage.Editors
         }
 
         private void button_flipH_Click(object sender, EventArgs e)
-            => TransformSelection((ushort tile) => (ushort)(tile ^ 0x400));
+        {
+            if (!TableSelectionVisible) return;
+
+            int xPos = TableSelection.X / 8;
+            int yPos = TableSelection.Y / 8;
+            int width = selectedTilesSize.Width;
+            int height = selectedTilesSize.Height;
+
+            ushort[,] flippedTiles = new ushort[width, height];
+
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                {
+                    int realPosX = xPos + x;
+                    int realPosY = yPos + y;
+                    int index = GetIndexFromLocation(realPosX, realPosY);
+                    ushort tile = tileTable[index];
+
+                    tile = (ushort)(tile ^ 0x400); // flip x
+                    flippedTiles[width - x - 1, y] = tile;
+                }
+
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                {
+                    int realPosX = xPos + x;
+                    int realPosY = yPos + y;
+                    int index = GetIndexFromLocation(realPosX, realPosY);
+                    ushort tile = flippedTiles[x, y];
+                    tileTable[index] = tile;
+                }
+
+            DrawTileTable((Bitmap)tableView.TileImage);
+            TableSelection.InvalidateDrawable(TableSelection);
+            Status.ChangeMade();
+        }
 
         private void button_flipV_Click(object sender, EventArgs e)
-            => TransformSelection((ushort tile) => (ushort)(tile ^ 0x800));
+        {
+            if (!TableSelectionVisible) return;
+
+            int xPos = TableSelection.X / 8;
+            int yPos = TableSelection.Y / 8;
+            int width = selectedTilesSize.Width;
+            int height = selectedTilesSize.Height;
+
+            ushort[,] flippedTiles = new ushort[width, height];
+
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                {
+                    int realPosX = xPos + x;
+                    int realPosY = yPos + y;
+                    int index = GetIndexFromLocation(realPosX, realPosY);
+                    ushort tile = tileTable[index];
+
+                    tile = (ushort)(tile ^ 0x800); // flip y
+                    flippedTiles[x, height - y - 1] = tile;
+                }
+
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                {
+                    int realPosX = xPos + x;
+                    int realPosY = yPos + y;
+                    int index = GetIndexFromLocation(realPosX, realPosY);
+                    ushort tile = flippedTiles[x, y];
+                    tileTable[index] = tile;
+                }
+
+            DrawTileTable((Bitmap)tableView.TileImage);
+            TableSelection.InvalidateDrawable(TableSelection);
+            Status.ChangeMade();
+        }
 
         private void button_paletteIncrease_Click(object sender, EventArgs e)
             => TransformSelection((ushort tile) =>

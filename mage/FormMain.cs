@@ -20,6 +20,8 @@ using mage.Utility;
 using mage.Actions;
 using mage.Editors;
 using System.Linq.Expressions;
+using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace mage
 {
@@ -629,7 +631,7 @@ namespace mage
             if (Program.ExperimentalFeaturesEnabled)
             {
                 if (!FindOpenForm(typeof(FormTileTableNew), false))
-                {   
+                {
                     FormTileTableNew form = new FormTileTableNew(room);
                     form.Show();
                 }
@@ -920,6 +922,18 @@ namespace mage
             }
         }
 
+        private void menuItem_exportCroppedRoomImage_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveRoom = new SaveFileDialog();
+            saveRoom.Filter = "PNG files (*.png)|*.png";
+            if (saveRoom.ShowDialog() == DialogResult.OK)
+            {
+                Rectangle cropArea = new Rectangle(16 * 2, 16 * 2, (room.Width - 4) * 16, (room.Height - 4) * 16);
+                Bitmap roomBitmap = new Bitmap(roomView.BackgroundImage);
+                roomBitmap.Clone(cropArea, roomView.BackgroundImage.PixelFormat).Save(saveRoom.FileName);
+            }
+        }
+
         private void menuItem_areaImage_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveArea = new SaveFileDialog();
@@ -1102,20 +1116,47 @@ namespace mage
             Program.ExperimentalFeaturesEnabled = !Program.ExperimentalFeaturesEnabled;
             button_experimental.Checked = Program.ExperimentalFeaturesEnabled;
         }
+
         // help
         private void menuItem_viewHelp_Click(object sender, EventArgs e)
         {
             string path = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             path = Path.Combine(path, "doc.html");
+
             if (File.Exists(path))
             {
-                System.Diagnostics.Process.Start(path);
+                string url = new Uri(path).AbsoluteUri;
+                url += "#import";
+
+                var process = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = GetDefaultBrowserPath(),
+                        Arguments = url,
+                        UseShellExecute = true
+                    }
+                };
+                process.Start();
             }
             else
             {
                 MessageBox.Show("Documentation file could not be found.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private string GetDefaultBrowserPath()
+        {
+            var progID = (string)Registry.CurrentUser
+                .OpenSubKey("SOFTWARE\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice")
+                .GetValue("ProgID");
+
+            var command = (string)Registry.ClassesRoot
+                .OpenSubKey($"{progID}\\shell\\open\\command")
+                .GetValue(null);
+
+            return command;
         }
 
         private void menuItem_about_Click(object sender, EventArgs e)
