@@ -111,6 +111,16 @@ namespace mage.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap delete {
+            get {
+                object obj = ResourceManager.GetObject("delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [AMTE]
         ///A2DE0,A2DE4,A2DEC,A2DF4,A2E00,Over 4 hours;0-99%
         ///A2E2C,A2E30,A2E38,A2E40,A2E4C,2-4 hours;0-99%

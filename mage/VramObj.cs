@@ -10,6 +10,7 @@ namespace mage
     {
         public byte[] objTiles;
         public Palette palette;
+        public GFX VramGFX => new GFX(objTiles, 32);
 
         private Dictionary<int, int> rowAssignments;
         private ByteStream romStream;
@@ -163,6 +164,5 @@ namespace mage
 
             return gfxImg;
         }
-
     }
 }

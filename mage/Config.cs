@@ -16,4 +16,6 @@ public class Config
 {
     public bool TileTableEditorShowPalettePreview { get; set; } = false;
     public bool TileTableEditorCopyPalette { get; set; } = true;
+    public bool OamEditorViewOrigin { get; set; } = true;
+    public bool OamEditorViewPartOutlines { get; set; } = true;
 }

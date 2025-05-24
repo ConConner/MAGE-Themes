@@ -61,6 +61,8 @@
             pictureBox_palette = new System.Windows.Forms.PictureBox();
             menuStrip = new System.Windows.Forms.MenuStrip();
             groupBox_oam = new System.Windows.Forms.GroupBox();
+            button_removeFrame = new System.Windows.Forms.Button();
+            button_addFrame = new System.Windows.Forms.Button();
             button_playAnimation = new System.Windows.Forms.Button();
             textBox_duration = new Theming.CustomControls.FlatTextBox();
             label_frameDuration = new System.Windows.Forms.Label();
@@ -465,6 +467,8 @@
             // 
             // groupBox_oam
             // 
+            groupBox_oam.Controls.Add(button_removeFrame);
+            groupBox_oam.Controls.Add(button_addFrame);
             groupBox_oam.Controls.Add(button_playAnimation);
             groupBox_oam.Controls.Add(textBox_duration);
             groupBox_oam.Controls.Add(label_frameDuration);
@@ -482,10 +486,28 @@
             groupBox_oam.TabStop = false;
             groupBox_oam.Text = "OAM Control";
             // 
+            // button_removeFrame
+            // 
+            button_removeFrame.Image = Properties.Resources.delete;
+            button_removeFrame.Location = new System.Drawing.Point(182, 51);
+            button_removeFrame.Name = "button_removeFrame";
+            button_removeFrame.Size = new System.Drawing.Size(26, 23);
+            button_removeFrame.TabIndex = 9;
+            button_removeFrame.UseVisualStyleBackColor = true;
+            // 
+            // button_addFrame
+            // 
+            button_addFrame.Image = Properties.Resources.toolbar_add;
+            button_addFrame.Location = new System.Drawing.Point(149, 51);
+            button_addFrame.Name = "button_addFrame";
+            button_addFrame.Size = new System.Drawing.Size(26, 23);
+            button_addFrame.TabIndex = 8;
+            button_addFrame.UseVisualStyleBackColor = true;
+            // 
             // button_playAnimation
             // 
             button_playAnimation.Image = Properties.Resources.toolbar_test;
-            button_playAnimation.Location = new System.Drawing.Point(149, 49);
+            button_playAnimation.Location = new System.Drawing.Point(149, 80);
             button_playAnimation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_playAnimation.Name = "button_playAnimation";
             button_playAnimation.Size = new System.Drawing.Size(58, 25);
@@ -634,6 +656,7 @@
             oamView_oam.TileImage = null;
             oamView_oam.TileSize = 16;
             oamView_oam.Zoom = 0;
+            oamView_oam.TileMouseDown += oamView_oam_TileMouseDown;
             oamView_oam.TileMouseMove += oamView_oam_TileMouseMove;
             oamView_oam.Scrolled += oamView_oam_Scrolled;
             // 
@@ -691,7 +714,7 @@
             toolStrip_origin.CheckState = System.Windows.Forms.CheckState.Checked;
             toolStrip_origin.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             toolStrip_origin.Name = "toolStrip_origin";
-            toolStrip_origin.Size = new System.Drawing.Size(135, 22);
+            toolStrip_origin.Size = new System.Drawing.Size(180, 22);
             toolStrip_origin.Text = "Origin";
             toolStrip_origin.Click += toolStrip_origin_Click;
             // 
@@ -699,7 +722,7 @@
             // 
             toolStrip_partOutline.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             toolStrip_partOutline.Name = "toolStrip_partOutline";
-            toolStrip_partOutline.Size = new System.Drawing.Size(135, 22);
+            toolStrip_partOutline.Size = new System.Drawing.Size(180, 22);
             toolStrip_partOutline.Text = "Part outline";
             toolStrip_partOutline.Click += toolStrip_partOutline_Click;
             // 
@@ -882,5 +905,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStrip_partOutline;
         private Controls.TileDisplay gfxView_gfx;
         private Controls.TileDisplay oamView_oam;
+        private System.Windows.Forms.Button button_removeFrame;
+        private System.Windows.Forms.Button button_addFrame;
     }
 }
