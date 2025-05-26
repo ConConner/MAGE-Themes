@@ -57,8 +57,8 @@ namespace mage
             public int size;
             public int tileNum;
             public int palRow;
-            public bool Xflip { get { return (flip & 0b1) != 0; } }
-            public bool Yflip { get { return (flip & 0b10) != 0; } }
+            public bool Xflip => (flip & 0b1) != 0;
+            public bool Yflip => (flip & 0b10) != 0;
 
             //Constructor
             public Part(ushort attr0, ushort attr1, ushort attr2)

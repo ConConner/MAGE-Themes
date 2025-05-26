@@ -660,7 +660,7 @@ namespace mage
             {
                 int gfxOffset = room.tileset.RLEgfx.Offset;
                 int palOffset = room.tileset.palette.Offset + 0x20;
-                FormOam form = new FormOam(this, 0x2C4194, 32, 0, 0x2C4780, 0x2C4AD0);
+                FormOam form = new FormOam(this, 0x2C4194, 0x2C4780, 0x2C4AD0);
                 form.Show();
             }
         }

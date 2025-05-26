@@ -24,23 +24,31 @@ public partial class FormOam : Form
     private Palette palette;
     private OAM oam;
     private int hoveredPartIndex = -1;
-    private int selectedPartIndex = -1;
     private Bitmap gfxImage;
     private VramObj vram;
 
-    Pen partOutline = new Pen(Color.Aqua, 1);
-    Pen partOutlineHovered = new Pen(Color.Orange, 1) { Alignment = PenAlignment.Inset };
-    Pen partOutlineSelected = new Pen(Color.Red, 1);
-    List<Drawable> partOutlines = new List<Drawable>();
-    Drawable selectedDrawable;
-    Drawable hoveredDrawable;
+    private Status Status;
 
     private bool loading;
+    private bool loadingPart;
 
     private FormMain main;
     private ByteStream romStream;
 
     private Timer animationTimer;
+
+    // Drawables
+    Pen partOutline = new Pen(Color.Aqua, 1);
+    Pen partOutlineHovered = new Pen(Color.Orange, 1) { Alignment = PenAlignment.Inset };
+    Pen partOutlineSelected = new Pen(Color.Red, 1);
+    Pen CursorPen = new Pen(Color.Red, 1);
+    Pen SelectionPenWhite = new Pen(Color.White, 1) { DashPattern = new float[] { 2, 3 } };
+    Pen SelectionPenBlack = new Pen(Color.Black, 1) { DashPattern = new float[] { 2, 3 }, DashOffset = 2 };
+    List<Drawable> partOutlines = new List<Drawable>();
+    Drawable selectedDrawable;
+    Drawable hoveredDrawable;
+    Drawable gfxSelection;
+    Drawable gfxCursor;
 
     // properties
     private bool PlayingAnimation
@@ -57,6 +65,8 @@ public partial class FormOam : Form
             label_OAMFrame.Enabled = !playingAnimation;
             textBox_duration.Enabled = !playingAnimation;
             label_frameDuration.Enabled = !playingAnimation;
+            button_addFrame.Enabled = !playingAnimation;
+            button_removeFrame.Enabled = !playingAnimation;
 
             // Stop timer if needed
             if (playingAnimation) return;
@@ -73,7 +83,7 @@ public partial class FormOam : Form
         set
         {
             viewOrigin = value;
-            toolStrip_origin.Checked = value;
+            button_viewOrigin.Checked = value;
             Program.Config.OamEditorViewOrigin = value;
 
             oamView_oam.ShowOamOrigin = value;
@@ -88,7 +98,7 @@ public partial class FormOam : Form
         set
         {
             viewPartOutline = value;
-            toolStrip_partOutline.Checked = value;
+            button_viewOutline.Checked = value;
             Program.Config.OamEditorViewPartOutlines = value;
 
             foreach (Drawable d in partOutlines) d.Visible = value;
@@ -96,8 +106,63 @@ public partial class FormOam : Form
         }
     }
 
+    private bool viewPalette = true;
+    private bool ViewPalette
+    {
+        get => viewPalette;
+        set
+        {
+            viewPalette = value;
+            Program.Config.OamEditorViewPalette = value;
+            button_viewPalette.Checked = value;
+            panel_palette.Visible = value;
+        }
+    }
+
+    private bool viewVram = false;
+    private bool ViewVram
+    {
+        get => viewVram;
+        set
+        {
+            viewVram = value;
+            Program.Config.OamEditorViewVram = value;
+            button_viewVram.Checked = value;
+
+            DrawImage();
+        }
+    }
+
+    private int selectedPartIndex = -1;
+    private int SelectedPartIndex
+    {
+        get => selectedPartIndex;
+        set
+        {
+            selectedPartIndex = value;
+            comboBox_part.SelectedIndex = value;
+            SetPartOutlines(oam.frames[comboBox_Frame.SelectedIndex]);
+
+            panel_partEditing.Enabled = selectedPartIndex != -1;
+            HandleChangedPart(value);
+        }
+    }
+
+    private int selectedPaletteRow = 8;
+    private int SelectedPaletteRow
+    {
+        get => selectedPaletteRow;
+        set
+        {
+            selectedPaletteRow = value;
+        }
+    }
+
+    private int SelectedFrameIndex => comboBox_Frame.SelectedIndex;
+    private OAM.Frame SelectedFrame => oam.frames[comboBox_Frame.SelectedIndex];
+
     // constructor
-    public FormOam(FormMain main, int gfxOffset, int width, int height, int palOffset, int oamOffset)
+    public FormOam(FormMain main, int gfxOffset, int palOffset, int oamOffset, bool compressed = true)
     {
         InitializeComponent();
 
@@ -112,21 +177,28 @@ public partial class FormOam : Form
         // Load Settings
         ViewOrigin = Program.Config.OamEditorViewOrigin;
         ViewPartOutline = Program.Config.OamEditorViewPartOutlines;
+        ViewPalette = Program.Config.OamEditorViewPalette;
+        UpdateGfxZoom(Program.Config.OamEditorGfxZoom);
+        UpdateOamZoom(Program.Config.OamEditorOamZoom);
 
         loading = true;
 
         textBox_imageOffset.Text = Hex.ToString(gfxOffset);
         textBox_palOffset.Text = Hex.ToString(palOffset);
         textBox_oamOffset.Text = Hex.ToString(oamOffset);
-        if (height == 0) { checkBox_compressed.Checked = true; }
-        else
-        {
-            numericUpDown_width.Value = width;
-            numericUpDown_height.Value = height;
-        }
+        checkBox_compressed.Checked = compressed;
 
         animationTimer = new Timer();
         animationTimer.Tick += AnimationTimer_Tick;
+
+        //Creating Drawables
+        gfxSelection = new Drawable(Rectangle.Empty, SelectionPenWhite, 1) { Visible = false };
+        gfxSelection.DrawPens.Add(SelectionPenBlack);
+        gfxCursor = new Drawable(Rectangle.Empty, CursorPen, 1) { Visible = false };
+        gfxView_gfx.AddDrawable(gfxSelection);
+        gfxView_gfx.AddDrawable(gfxCursor);
+
+        Status = new Status(label_Status, button_save);
 
         loading = false;
         DrawNewGFX();
@@ -140,6 +212,31 @@ public partial class FormOam : Form
         drawable.DrawPens.Clear();
         drawable.DrawPens.Add(pen);
     }
+
+    private bool CheckUnsaved()
+    {
+        DialogResult result = MessageBox.Show("Do you want to save changes to Tile Table?",
+            "Unsaved Changes", MessageBoxButtons.YesNoCancel);
+        if (result == DialogResult.Cancel) return false;
+        //if (result == DialogResult.Yes) Save();
+        return true;
+    }
+
+    private void button_save_Click(object sender, EventArgs e)
+    {
+        Status.Save();
+    }
+    #endregion
+
+    #region ZOOM
+    int maxZoom = 4;
+
+    private void button_gfxZoomIn_Click(object sender, EventArgs e) => UpdateGfxZoom(gfxView_gfx.Zoom + 1);
+    private void button_gfxZoomOut_Click(object sender, EventArgs e) => UpdateGfxZoom(gfxView_gfx.Zoom - 1);
+
+    private void button_oamZoomIn_Click(object sender, EventArgs e) => UpdateOamZoom(oamView_oam.Zoom + 1);
+    private void button_oamZoomOut_Click(object sender, EventArgs e) => UpdateOamZoom(oamView_oam.Zoom - 1);
+
     #endregion
 
     #region GFX
@@ -156,7 +253,7 @@ public partial class FormOam : Form
                     + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
-        int width = (int)numericUpDown_width.Value;
+        int width = 32;
 
         if (checkBox_compressed.Checked)
         {
@@ -182,7 +279,7 @@ public partial class FormOam : Form
         }
         else
         {
-            int height = (int)numericUpDown_height.Value;
+            int height = 16;
             gfxObject = new GFX(romStream, offset, width, height);
         }
 
@@ -194,43 +291,49 @@ public partial class FormOam : Form
 
     private void DrawImage()
     {
-        //gfxImage = gfxObject.Draw4bpp(palette, 0, true);
-        gfxImage = vram.VramGFX.Draw15bpp(vram.palette, 8, true);
-        gfxView_gfx.BackgroundImage = gfxImage;
-        statusLabel_size.Text = gfxImage.Width + " x " + gfxImage.Height;
+        if (!ViewVram) gfxImage = gfxObject.Draw4bpp(palette, 0, true);
+        else gfxImage = vram.VramGFX.Draw15bpp(vram.palette, selectedPaletteRow, true);
+        gfxView_gfx.TileImage = gfxImage;
     }
 
     private void UpdateGfxZoom(int zoom)
     {
         zoom = Math.Clamp(zoom, 0, 4);
         gfxView_gfx.Zoom = zoom;
-        statusStrip_zoom.Text = $"{1 << zoom}00%";
+        Program.Config.OamEditorGfxZoom = zoom;
+        button_gfxZoomIn.Enabled = zoom < maxZoom;
+        button_gfxZoomOut.Enabled = zoom > 0;
+        label_gfxZoom.Text = $"{1 << zoom}00%";
     }
 
-    private void button_imageGo_Click(object sender, EventArgs e)
-    {
-        DrawNewGFX();
-    }
-
-    private void numericUpDown_width_ValueChanged(object sender, EventArgs e)
-    {
-        if (!loading) { DrawNewGFX(); }
-    }
-
-    private void numericUpDown_height_ValueChanged(object sender, EventArgs e)
-    {
-        if (!loading) { DrawNewGFX(); }
-    }
+    private void button_viewPalette_Click(object sender, EventArgs e) => ViewPalette = !button_viewPalette.Checked;
+    private void button_viewVram_Click(object sender, EventArgs e) => ViewVram = !button_viewVram.Checked;
 
     private void checkBox_compressed_CheckedChanged(object sender, EventArgs e)
     {
-        numericUpDown_height.Enabled = !checkBox_compressed.Checked;
-        if (!loading) { DrawNewGFX(); }
+        if (!loading) DrawNewGFX();
     }
 
     private void gfxView_gfx_MouseMove(object sender, TileDisplay.TileDisplayArgs e)
     {
-        statusLabel_coor.Text = "(" + (e.TileIndexPosition.X) + ", " + (e.TileIndexPosition.Y) + ")";
+        int offset = ViewVram ? 0 : 16;
+        statusLabel_coor.Text = "(" + (e.TileIndexPosition.X) + ", " + (e.TileIndexPosition.Y + offset) + ")";
+
+        if (SelectedPartIndex == -1)
+        {
+            gfxCursor.Visible = false;
+            return;
+        }
+        OAM.Part selectedPart = SelectedFrame.parts[SelectedPartIndex];
+
+        // Set Cursor
+        gfxCursor.Visible = true;
+        gfxCursor.Rectangle = new Rectangle(
+            e.TilePixelPosition.X,
+            e.TilePixelPosition.Y,
+            selectedPart.Dimensions.Width,
+            selectedPart.Dimensions.Height
+        );
     }
 
     private void gfxView_gfx_Scrolled(object sender, MouseEventArgs e)
@@ -247,9 +350,8 @@ public partial class FormOam : Form
     #region PAL
     private void DrawPalette()
     {
-        pictureBox_palette.Image = palette.Draw(16, 0, 1);
-
         CreateVram();
+        paletteView.TileImage = vram.palette.Draw(16, 0, 16, 0);
         DrawFrame(comboBox_Frame.SelectedIndex);
     }
 
@@ -265,6 +367,7 @@ public partial class FormOam : Form
             }
 
             palette = new Palette(romStream, offset, 1);
+            CreateVram();
             DrawImage();
             DrawPalette();
         }
@@ -275,20 +378,8 @@ public partial class FormOam : Form
         }
     }
 
-    private void button_paletteGo_Click(object sender, EventArgs e)
-    {
-        LoadPalette(0);
-    }
-
-    private void button_plus_Click(object sender, EventArgs e)
-    {
-        LoadPalette(32);
-    }
-
-    private void button_minus_Click(object sender, EventArgs e)
-    {
-        LoadPalette(-32);
-    }
+    private void button_increasePalette_Click(object sender, EventArgs e) => LoadPalette(32);
+    private void button_decreasePalette_Click(object sender, EventArgs e) => LoadPalette(-32);
 
     private void button_editPal_Click(object sender, EventArgs e)
     {
@@ -314,7 +405,10 @@ public partial class FormOam : Form
         if (zoom == oamView_oam.Zoom) return;
 
         oamView_oam.Zoom = zoom;
-        toolStrip_zoomOam.Text = $"{1 << zoom}00%";
+        Program.Config.OamEditorOamZoom = zoom;
+        button_oamZoomIn.Enabled = zoom < maxZoom;
+        button_oamZoomOut.Enabled = zoom > 0;
+        label_oamZoom.Text = $"{1 << zoom}00%";
 
         //Update Pen Width
         switch (zoom)
@@ -342,20 +436,17 @@ public partial class FormOam : Form
         panel_oam.AutoScrollPosition = new Point(centerX, centerY);
     }
 
-    private int FindPart(OAM.Frame frame, int pixelX, int pixelY)
+    private void button_go_Click(object sender, EventArgs e)
     {
-        Point position = new Point(
-            pixelX - OAM.FrameOriginX,
-            pixelY - OAM.FrameOriginY
-        );
-
-        for (int i = 0; i < frame.parts.Count; i++)
+        if (Status.UnsavedChanges && !CheckUnsaved())
         {
-            OAM.Part p = frame.parts[i];
-            if (p.Area.Contains(position)) return i;
+            return;
         }
 
-        return -1;
+        Status.LoadNew();
+        DrawNewGFX();
+        LoadPalette(0);
+        SetOAM();
     }
 
     private void SetOAM()
@@ -392,7 +483,7 @@ public partial class FormOam : Form
         oamView_oam.TileImage = frame;
 
         // Display Part boxes
-        SetPartOutlines(oam.frames[frameNumber]);
+        SetPartOutlines(SelectedFrame);
     }
 
     private void SetPartOutlines(OAM.Frame frame)
@@ -406,25 +497,27 @@ public partial class FormOam : Form
         {
             OAM.Part p = frame.parts[i];
             bool hovered = hoveredPartIndex == i;
-            bool selected = selectedPartIndex == i;
+            bool selected = SelectedPartIndex == i;
 
             Size s = p.Dimensions;
             Rectangle r = new Rectangle(p.xPos + OAM.FrameOriginX, p.yPos + OAM.FrameOriginY, s.Width, s.Height);
             Drawable outline = new(r, partOutline)
             {
-                Visible = toolStrip_partOutline.Checked,
+                Visible = ViewPartOutline,
             };
 
             if (selected)
             {
                 ChangePen(outline, partOutlineSelected);
                 selectedDrawable = outline;
+                selectedDrawable.Visible = true;
                 continue;
             }
             if (hovered)
             {
                 ChangePen(outline, partOutlineHovered);
                 hoveredDrawable = outline;
+                hoveredDrawable.Visible = true;
                 continue;
             }
 
@@ -453,13 +546,17 @@ public partial class FormOam : Form
         animationTimer.Interval = Math.Max(1, timeInMs);
     }
 
-    private void button_oamGo_Click(object sender, EventArgs e) => SetOAM();
-
     private void comboBox_Frame_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (loading) return;
         DrawFrame(comboBox_Frame.SelectedIndex);
         textBox_duration.Text = Hex.ToString(oam.frames[comboBox_Frame.SelectedIndex].duration);
+        SelectedPartIndex = -1;
+
+        if (playingAnimation) return;
+
+        comboBox_part.Items.Clear();
+        for (int i = 0; i < oam.frames[comboBox_Frame.SelectedIndex].parts.Count; i++) comboBox_part.Items.Add(i);
     }
 
     private void button_playAnimation_Click(object sender, EventArgs e)
@@ -477,8 +574,79 @@ public partial class FormOam : Form
         SetTimerInterval(comboBox_Frame.SelectedIndex);
     }
 
-    private void toolStrip_origin_Click(object sender, EventArgs e) => ViewOrigin = !toolStrip_origin.Checked;
-    private void toolStrip_partOutline_Click(object sender, EventArgs e) => ViewPartOutline = !toolStrip_partOutline.Checked;
+    private void button_viewOrigin_Click(object sender, EventArgs e) => ViewOrigin = !button_viewOrigin.Checked;
+
+    private void button_viewOutline_Click(object sender, EventArgs e) => ViewPartOutline = !button_viewOutline.Checked;
+
+
+    #region PART EDITING
+    private int FindPart(OAM.Frame frame, int pixelX, int pixelY)
+    {
+        Point position = new Point(
+            pixelX - OAM.FrameOriginX,
+            pixelY - OAM.FrameOriginY
+        );
+
+        for (int i = 0; i < frame.parts.Count; i++)
+        {
+            OAM.Part p = frame.parts[i];
+            if (p.Area.Contains(position)) return i;
+        }
+
+        return -1;
+    }
+
+    private void ResetPartData()
+    {
+        textBox_tile.Text = string.Empty;
+        comboBox_palette.SelectedIndex = -1;
+        textBox_x.Text = string.Empty;
+        textBox_y.Text = string.Empty;
+        checkBox_xFlip.Checked = false;
+        checkBox_yFlip.Checked = false;
+        comboBox_size.SelectedIndex = -1;
+    }
+
+    private void DisplayPartData(OAM.Part p)
+    {
+        textBox_tile.Text = Hex.ToString(p.tileNum);
+        comboBox_palette.SelectedIndex = p.palRow;
+        textBox_x.Text = Hex.ToString(p.xPos);
+        textBox_y.Text = Hex.ToString(p.yPos);
+        checkBox_xFlip.Checked = p.Xflip;
+        checkBox_yFlip.Checked = p.Yflip;
+        comboBox_size.SelectedIndex = p.shape * 4 + p.size;
+    }
+
+    private void HandleChangedPart(int partIndex)
+    {
+        if (partIndex == -1)
+        {
+            loadingPart = false;
+            ResetPartData();
+            gfxSelection.Visible = false;
+            gfxCursor.Visible = false;
+            return;
+        }
+
+        OAM.Part part = SelectedFrame.parts[partIndex];
+
+        // Display Part on GFX View
+        int subtract = ViewVram ? 0 : 16;
+        Point gfxPosition = new(part.tileNum % 32 * gfxView_gfx.TileSize, (part.tileNum / 32 - subtract) * gfxView_gfx.TileSize);
+        gfxSelection.Rectangle = new Rectangle(gfxPosition, part.Dimensions);
+        gfxSelection.Visible = true;
+
+        // Load Part data
+        DisplayPartData(part);
+    }
+
+    private void comboBox_part_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        SelectedPartIndex = comboBox_part.SelectedIndex;
+    }
+    #endregion
+
 
     private void oamView_oam_Scrolled(object sender, MouseEventArgs e)
     {
@@ -497,20 +665,18 @@ public partial class FormOam : Form
 
         // Set Cursor
         if (hovered == -1) Cursor = Cursors.Default;
-        else if (hovered == selectedPartIndex) Cursor = Cursors.SizeAll;
+        else if (hovered == SelectedPartIndex) Cursor = Cursors.SizeAll;
         else if (hovered != -1) Cursor = Cursors.Hand;
 
         // Deselect old selection
-        if (selectedPartIndex != -1 && hovered == -1)
-        {    
-            selectedPartIndex = -1;
-            SetPartOutlines(selectedFrame);
+        if (SelectedPartIndex != -1 && hovered == -1)
+        {
+            SelectedPartIndex = -1;
             return;
         }
-        else if (hovered != -1 && selectedPartIndex != hovered)
+        else if (hovered != -1 && SelectedPartIndex != hovered)
         {
-            selectedPartIndex = hovered;
-            SetPartOutlines(selectedFrame);
+            SelectedPartIndex = hovered;
             return;
         }
     }
@@ -523,36 +689,13 @@ public partial class FormOam : Form
 
         // Set Cursor
         if (hovered == -1) Cursor = Cursors.Default;
-        else if (hovered == selectedPartIndex) Cursor = Cursors.SizeAll;
+        else if (hovered == SelectedPartIndex) Cursor = Cursors.SizeAll;
         else if (hovered != -1) Cursor = Cursors.Hand;
 
         if (hovered == hoveredPartIndex) return;
-        
         hoveredPartIndex = hovered;
 
         SetPartOutlines(selectedFrame);
     }
     #endregion
-
-    #region ZOOM
-
-    #region GFX
-    private void toolStrip_zoom100_Click(object sender, EventArgs e) => UpdateGfxZoom(0);
-    private void toolStrip_zoom200_Click(object sender, EventArgs e) => UpdateGfxZoom(1);
-    private void toolStrip_zoom400_Click(object sender, EventArgs e) => UpdateGfxZoom(2);
-    private void toolStrip_zoom800_Click(object sender, EventArgs e) => UpdateGfxZoom(3);
-    private void toolStrip_zoom1600_Click(object sender, EventArgs e) => UpdateGfxZoom(4);
-    #endregion
-
-    #region OAM
-    private void toolStrip_zoomOam100_Click(object sender, EventArgs e) => UpdateOamZoom(0);
-    private void toolStrip_zoomOam200_Click(object sender, EventArgs e) => UpdateOamZoom(1);
-    private void toolStrip_zoomOam400_Click(object sender, EventArgs e) => UpdateOamZoom(2);
-    private void toolStrip_zoomOam800_Click(object sender, EventArgs e) => UpdateOamZoom(3);
-    private void toolStrip_zoomOam1600_Click(object sender, EventArgs e) => UpdateOamZoom(4);
-    #endregion
-
-    #endregion
-
-    
 }
