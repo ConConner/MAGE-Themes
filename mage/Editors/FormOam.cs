@@ -50,6 +50,10 @@ public partial class FormOam : Form
     Drawable gfxSelection;
     Drawable gfxCursor;
 
+    // Moving related
+    Point PartStartLocation = Point.Empty;
+    Point MouseStartLocation = Point.Empty;
+
     // properties
     private bool PlayingAnimation
     {
@@ -158,8 +162,20 @@ public partial class FormOam : Form
         }
     }
 
+    private string partErrorText;
+    private string PartErrorText
+    {
+        get => partErrorText;
+        set
+        {
+            partErrorText = value;
+            label_error.Visible = value != string.Empty;
+        }
+    }
+
     private int SelectedFrameIndex => comboBox_Frame.SelectedIndex;
     private OAM.Frame SelectedFrame => oam.frames[comboBox_Frame.SelectedIndex];
+
 
     // constructor
     public FormOam(FormMain main, int gfxOffset, int palOffset, int oamOffset, bool compressed = true)
@@ -188,6 +204,11 @@ public partial class FormOam : Form
         textBox_oamOffset.Text = Hex.ToString(oamOffset);
         checkBox_compressed.Checked = compressed;
 
+        //Event based
+        textBox_tile.TextChanged += controlElements_changeMade;
+        textBox_x.TextChanged += controlElements_changeMade;
+        textBox_y.TextChanged += controlElements_changeMade;
+
         animationTimer = new Timer();
         animationTimer.Tick += AnimationTimer_Tick;
 
@@ -205,6 +226,7 @@ public partial class FormOam : Form
         DrawPalette();
         SetOAM();
     }
+
 
     #region general
     private void ChangePen(Drawable drawable, Pen pen)
@@ -317,7 +339,8 @@ public partial class FormOam : Form
     private void gfxView_gfx_MouseMove(object sender, TileDisplay.TileDisplayArgs e)
     {
         int offset = ViewVram ? 0 : 16;
-        statusLabel_coor.Text = "(" + (e.TileIndexPosition.X) + ", " + (e.TileIndexPosition.Y + offset) + ")";
+        int tileNum = e.TileIndexPosition.X + (e.TileIndexPosition.Y + offset) * 32;
+        statusLabel_coor.Text = Hex.ToString(tileNum);
 
         if (SelectedPartIndex == -1)
         {
@@ -345,6 +368,14 @@ public partial class FormOam : Form
         }
     }
 
+    private void gfxView_gfx_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        int offset = ViewVram ? 0 : 16;
+        int tileNum = e.TileIndexPosition.X + (e.TileIndexPosition.Y + offset) * 32;
+
+        if (SelectedPartIndex == -1) return;
+        textBox_tile.Text = Hex.ToString(tileNum);
+    }
     #endregion
 
     #region PAL
@@ -468,6 +499,7 @@ public partial class FormOam : Form
         catch
         {
             MessageBox.Show("No valid OAM found.", "Invalid OAM", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            oam = null;
         }
     }
 
@@ -596,6 +628,15 @@ public partial class FormOam : Form
         return -1;
     }
 
+    private bool CheckPartHovered(OAM.Part part, int pixelX, int pixelY)
+    {
+        Point position = new Point(
+            pixelX - OAM.FrameOriginX,
+            pixelY - OAM.FrameOriginY
+        );
+        return part.Area.Contains(position);
+    }
+
     private void ResetPartData()
     {
         textBox_tile.Text = string.Empty;
@@ -611,11 +652,24 @@ public partial class FormOam : Form
     {
         textBox_tile.Text = Hex.ToString(p.tileNum);
         comboBox_palette.SelectedIndex = p.palRow;
-        textBox_x.Text = Hex.ToString(p.xPos);
-        textBox_y.Text = Hex.ToString(p.yPos);
+        int xVal = p.xPos;
+        if (xVal < 0) xVal += 512;
+        textBox_x.Text = Hex.ToString(xVal);
+        int yVal = p.yPos;
+        if (yVal < 0) yVal += 256;
+        textBox_y.Text = Hex.ToString(yVal);
         checkBox_xFlip.Checked = p.Xflip;
         checkBox_yFlip.Checked = p.Yflip;
         comboBox_size.SelectedIndex = p.shape * 4 + p.size;
+    }
+
+    private void HighlightPartInGfx(OAM.Part part)
+    {
+        // Display Part on GFX View
+        int subtract = ViewVram ? 0 : 16;
+        Point gfxPosition = new(part.tileNum % 32 * gfxView_gfx.TileSize, (part.tileNum / 32 - subtract) * gfxView_gfx.TileSize);
+        gfxSelection.Rectangle = new Rectangle(gfxPosition, part.Dimensions);
+        gfxSelection.Visible = true;
     }
 
     private void HandleChangedPart(int partIndex)
@@ -626,24 +680,67 @@ public partial class FormOam : Form
             ResetPartData();
             gfxSelection.Visible = false;
             gfxCursor.Visible = false;
+            partErrorText = string.Empty;
             return;
         }
 
         OAM.Part part = SelectedFrame.parts[partIndex];
 
-        // Display Part on GFX View
-        int subtract = ViewVram ? 0 : 16;
-        Point gfxPosition = new(part.tileNum % 32 * gfxView_gfx.TileSize, (part.tileNum / 32 - subtract) * gfxView_gfx.TileSize);
-        gfxSelection.Rectangle = new Rectangle(gfxPosition, part.Dimensions);
-        gfxSelection.Visible = true;
+        HighlightPartInGfx(part);
 
         // Load Part data
+        loadingPart = true;
         DisplayPartData(part);
+        loadingPart = false;
     }
 
     private void comboBox_part_SelectedIndexChanged(object sender, EventArgs e)
     {
         SelectedPartIndex = comboBox_part.SelectedIndex;
+    }
+
+    private void controlElements_changeMade(object? sender, EventArgs e)
+    {
+        if (loadingPart || SelectedPartIndex == -1) return;
+        OAM.Part part = SelectedFrame.parts[SelectedPartIndex];
+
+        //Validate values or throw error
+        try
+        {
+            int tileNum = Hex.ToInt(textBox_tile.Text);
+            if (tileNum < 0 || tileNum > 0x3FF) throw new ArgumentOutOfRangeException(nameof(tileNum), "Tile number must be between 0 and 0x3FF.");
+            int temp_xPos = Hex.ToUshort(textBox_x.Text);
+            if (temp_xPos < 0 || temp_xPos > 0x1FF) throw new ArgumentOutOfRangeException(nameof(temp_xPos), "X position must be between 0 and 0x1FF.");
+            int temp_yPos = Hex.ToByte(textBox_y.Text);
+
+            // Convert to signed int
+            int xPos = temp_xPos < 256 ? temp_xPos : temp_xPos - 512;
+            int yPos = temp_yPos < 128 ? temp_yPos : temp_yPos - 256;
+
+            byte palRow = (byte)comboBox_palette.SelectedIndex;
+            bool xFlip = checkBox_xFlip.Checked;
+            bool yFlip = checkBox_yFlip.Checked;
+            byte shape = (byte)(comboBox_size.SelectedIndex / 4);
+            byte size = (byte)(comboBox_size.SelectedIndex % 4);
+
+            // Update Part
+            part.tileNum = tileNum;
+            part.xPos = xPos;
+            part.yPos = yPos;
+            part.palRow = palRow;
+            part.flip = (byte)((xFlip ? 0b01 : 0) | (yFlip ? 0b10 : 0));
+            part.shape = shape;
+            part.size = size;
+
+            SelectedFrame.parts[SelectedPartIndex] = part;
+            DrawFrame(SelectedFrameIndex);
+            HighlightPartInGfx(part);
+            PartErrorText = string.Empty;
+        }
+        catch (Exception exc)
+        {
+            PartErrorText = exc.Message;
+        }
     }
     #endregion
 
@@ -659,9 +756,17 @@ public partial class FormOam : Form
 
     private void oamView_oam_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
+        // General Part selection code
         if (PlayingAnimation) return;
         OAM.Frame selectedFrame = oam.frames[comboBox_Frame.SelectedIndex];
         int hovered = FindPart(selectedFrame, e.PixelPosition.X, e.PixelPosition.Y);
+
+        // Check if hovered part overlaps with selected
+        if (SelectedPartIndex != -1 && hovered != SelectedPartIndex)
+        {
+            if (CheckPartHovered(selectedFrame.parts[SelectedPartIndex], e.PixelPosition.X, e.PixelPosition.Y))
+                hovered = SelectedPartIndex;
+        }
 
         // Set Cursor
         if (hovered == -1) Cursor = Cursors.Default;
@@ -679,23 +784,65 @@ public partial class FormOam : Form
             SelectedPartIndex = hovered;
             return;
         }
+
+        // SPECIFIC EDITING CODE
+        if (SelectedPartIndex == -1) return;
+        OAM.Part part = selectedFrame.parts[SelectedPartIndex];
+
+        MouseStartLocation = e.PixelPosition;
+        PartStartLocation = new Point(
+            part.xPos,
+            part.yPos
+        );
     }
 
     private void oamView_oam_TileMouseMove(object sender, TileDisplay.TileDisplayArgs e)
     {
+        // General Part selection code
         if (PlayingAnimation) return;
         OAM.Frame selectedFrame = oam.frames[comboBox_Frame.SelectedIndex];
         int hovered = FindPart(selectedFrame, e.PixelPosition.X, e.PixelPosition.Y);
+
+        // Check if hovered part overlaps with selected
+        if (SelectedPartIndex != -1 && hovered != SelectedPartIndex)
+        {
+            if (CheckPartHovered(selectedFrame.parts[SelectedPartIndex], e.PixelPosition.X, e.PixelPosition.Y))
+                hovered = SelectedPartIndex;
+        }
 
         // Set Cursor
         if (hovered == -1) Cursor = Cursors.Default;
         else if (hovered == SelectedPartIndex) Cursor = Cursors.SizeAll;
         else if (hovered != -1) Cursor = Cursors.Hand;
 
-        if (hovered == hoveredPartIndex) return;
-        hoveredPartIndex = hovered;
+        if (hovered != hoveredPartIndex && MouseStartLocation == Point.Empty)
+        {
+            hoveredPartIndex = hovered;
+            SetPartOutlines(selectedFrame);
+        }
 
-        SetPartOutlines(selectedFrame);
+
+        // SPECIFIC EDITING CODE
+        if (SelectedPartIndex == -1) return;
+        OAM.Part part = selectedFrame.parts[SelectedPartIndex];
+
+        if (MouseStartLocation == Point.Empty || PartStartLocation == Point.Empty || e.Button != MouseButtons.Left) return;
+        Point diff = new Point(
+            e.PixelPosition.X - MouseStartLocation.X,
+            e.PixelPosition.Y - MouseStartLocation.Y
+        );
+        Point newPartLocation = new Point(
+            Math.Clamp(PartStartLocation.X + diff.X, -256, 255),
+            Math.Clamp(PartStartLocation.Y + diff.Y, -128, 127)
+        );
+        textBox_x.Text = Hex.ToString(newPartLocation.X < 0 ? newPartLocation.X + 512 : newPartLocation.X);
+        textBox_y.Text = Hex.ToString(newPartLocation.Y < 0 ? newPartLocation.Y + 256 : newPartLocation.Y);
+    }
+
+    private void oamView_oam_TileMouseUp(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        MouseStartLocation = Point.Empty;
+        PartStartLocation = Point.Empty;
     }
     #endregion
 }

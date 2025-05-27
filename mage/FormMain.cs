@@ -658,9 +658,11 @@ namespace mage
         {
             if (!FindOpenForm(typeof(FormOam), false))
             {
+                FormOam form;
                 int gfxOffset = room.tileset.RLEgfx.Offset;
                 int palOffset = room.tileset.palette.Offset + 0x20;
-                FormOam form = new FormOam(this, 0x2C4194, 0x2C4780, 0x2C4AD0);
+                if (!Version.IsMF) form = new FormOam(this, 0x2C4194, 0x2C4780, 0x2C4AD0);
+                else form = new FormOam(this, 0x2E926C, 0x2EAA6C, 0x2CD5C4, false);
                 form.Show();
             }
         }

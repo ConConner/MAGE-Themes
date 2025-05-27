@@ -64,6 +64,7 @@
             label_OAMFrame = new System.Windows.Forms.Label();
             groupBox_part = new System.Windows.Forms.GroupBox();
             panel_partEditing = new System.Windows.Forms.Panel();
+            label_error = new System.Windows.Forms.Label();
             comboBox_size = new Theming.CustomControls.FlatComboBox();
             comboBox_palette = new Theming.CustomControls.FlatComboBox();
             label_size = new System.Windows.Forms.Label();
@@ -322,6 +323,7 @@
             gfxView_gfx.TileImage = null;
             gfxView_gfx.TileSize = 8;
             gfxView_gfx.Zoom = 0;
+            gfxView_gfx.TileMouseDown += gfxView_gfx_TileMouseDown;
             gfxView_gfx.TileMouseMove += gfxView_gfx_MouseMove;
             gfxView_gfx.Scrolled += gfxView_gfx_Scrolled;
             // 
@@ -536,6 +538,7 @@
             // 
             // panel_partEditing
             // 
+            panel_partEditing.Controls.Add(label_error);
             panel_partEditing.Controls.Add(comboBox_size);
             panel_partEditing.Controls.Add(comboBox_palette);
             panel_partEditing.Controls.Add(label_size);
@@ -554,6 +557,16 @@
             panel_partEditing.Size = new System.Drawing.Size(242, 461);
             panel_partEditing.TabIndex = 11;
             // 
+            // label_error
+            // 
+            label_error.AutoSize = true;
+            label_error.Location = new System.Drawing.Point(4, 11);
+            label_error.Name = "label_error";
+            label_error.Size = new System.Drawing.Size(183, 15);
+            label_error.TabIndex = 18;
+            label_error.Text = "One of the values below is invalid";
+            label_error.Visible = false;
+            // 
             // comboBox_size
             // 
             comboBox_size.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -563,6 +576,7 @@
             comboBox_size.Name = "comboBox_size";
             comboBox_size.Size = new System.Drawing.Size(70, 23);
             comboBox_size.TabIndex = 17;
+            comboBox_size.SelectedIndexChanged += controlElements_changeMade;
             // 
             // comboBox_palette
             // 
@@ -573,6 +587,7 @@
             comboBox_palette.Name = "comboBox_palette";
             comboBox_palette.Size = new System.Drawing.Size(70, 23);
             comboBox_palette.TabIndex = 16;
+            comboBox_palette.SelectedIndexChanged += controlElements_changeMade;
             // 
             // label_size
             // 
@@ -629,6 +644,7 @@
             checkBox_yFlip.TabIndex = 5;
             checkBox_yFlip.Text = "Flip on Y";
             checkBox_yFlip.UseVisualStyleBackColor = true;
+            checkBox_yFlip.CheckedChanged += controlElements_changeMade;
             // 
             // checkBox_xFlip
             // 
@@ -639,6 +655,7 @@
             checkBox_xFlip.TabIndex = 3;
             checkBox_xFlip.Text = "Flip on X";
             checkBox_xFlip.UseVisualStyleBackColor = true;
+            checkBox_xFlip.CheckedChanged += controlElements_changeMade;
             // 
             // textBox_y
             // 
@@ -789,6 +806,7 @@
             oamView_oam.TileSize = 16;
             oamView_oam.Zoom = 0;
             oamView_oam.TileMouseDown += oamView_oam_TileMouseDown;
+            oamView_oam.TileMouseUp += oamView_oam_TileMouseUp;
             oamView_oam.TileMouseMove += oamView_oam_TileMouseMove;
             oamView_oam.Scrolled += oamView_oam_Scrolled;
             // 
@@ -954,7 +972,7 @@
             // label_spring
             // 
             label_spring.Name = "label_spring";
-            label_spring.Size = new System.Drawing.Size(1010, 17);
+            label_spring.Size = new System.Drawing.Size(1012, 17);
             label_spring.Spring = true;
             // 
             // button_save
@@ -962,8 +980,9 @@
             button_save.Image = Properties.Resources.toolbar_save;
             button_save.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_save.Name = "button_save";
-            button_save.Size = new System.Drawing.Size(60, 20);
-            button_save.Text = "Save";
+            button_save.ShowDropDownArrow = false;
+            button_save.Size = new System.Drawing.Size(58, 20);
+            button_save.Text = "Apply";
             button_save.Click += button_save_Click;
             // 
             // FormOam
@@ -1091,5 +1110,6 @@
         private System.Windows.Forms.Label label_size;
         private Theming.CustomControls.FlatComboBox comboBox_size;
         private Theming.CustomControls.FlatComboBox comboBox_palette;
+        private System.Windows.Forms.Label label_error;
     }
 }
