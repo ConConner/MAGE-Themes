@@ -1029,6 +1029,7 @@
             // 
             // button_save
             // 
+            button_save.Enabled = false;
             button_save.Image = Properties.Resources.toolbar_save;
             button_save.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_save.Name = "button_save";

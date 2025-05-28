@@ -780,7 +780,13 @@ public partial class FormOam : Form
     }
     private void button_duplicate_Click(object sender, EventArgs e)
     {
-        oam.frames.Add(SelectedFrame);
+        // Create copy of frame
+        OAM.Frame copy = OAM.Frame.Empty;
+        copy.duration = SelectedFrame.duration;
+        copy.numParts = SelectedFrame.numParts;
+        foreach (OAM.Part part in SelectedFrame.parts) copy.parts.Add(part);
+
+        oam.frames.Add(copy);
         oam.numFrames++;
         SetFrameSelectionCombobox();
         comboBox_Frame.SelectedIndex = oam.numFrames - 1;
