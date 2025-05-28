@@ -46,6 +46,8 @@ namespace mage
                     yOffset = Math.Min(part.yPos, yOffset);
                 }
             }
+
+            public static Frame Empty => new Frame(1, new List<Part>(), 0);
         }
 
         public struct Part
@@ -73,6 +75,8 @@ namespace mage
                 tileNum = attr2 & 0x3FF;
                 palRow = attr2 >> 12;
             }
+
+            public static Part Empty => new Part(0, 0, 0);
 
             //Properties
             public Rectangle Area => new Rectangle(xPos, yPos, Dimensions.Width, Dimensions.Height);
@@ -110,6 +114,22 @@ namespace mage
                     }
                     throw new FormatException();
                 }
+            }
+
+            public ushort[] GetAttributes()
+            {
+                ushort attr0 = 0, attr1 = 0, attr2 = 0;
+                attr0 |= (ushort)((yPos + (yPos < 0 ? 256 : 0)) & 0xFF);
+                attr0 |= (ushort)(shape << 14);
+
+                attr1 |= (ushort)((xPos + (xPos < 0 ? 512 : 0)) & 0x1FF);
+                attr1 |= (ushort)((flip & 0b11) << 12);
+                attr1 |= (ushort)(size << 14);
+
+                attr2 |= (ushort)(tileNum & 0x3FF);
+                attr2 |= (ushort)(palRow << 12);
+
+                return new ushort[] { attr0, attr1, attr2 };
             }
         }
 

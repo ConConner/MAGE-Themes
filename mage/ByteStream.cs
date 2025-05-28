@@ -648,6 +648,22 @@ namespace mage
             }
         }
 
+        /// <summary>
+        /// Writes new data at the next available freespace in the ROM or EOD.
+        /// </summary>
+        /// <param name="src"></param>
+        /// <returns>The offset of the newly written data</returns>
+        public int WriteNewData(ByteStream src)
+        {
+            int offset = 0;
+            int len = src.length;
+            AllocateSpace(ref offset, len);
+            Seek(offset);
+            Write(src);
+
+            return offset;
+        }
+
         // no data management
         public void Write(ByteStream src)
         {

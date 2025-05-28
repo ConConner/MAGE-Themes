@@ -120,6 +120,8 @@ namespace mage
 
             // Enable experimental features
             seperator_flip.Visible = menuItem_flip_h.Visible = menuItem_flip_v.Visible = Program.ExperimentalFeaturesEnabled;
+            toolStrip_oamEditor.Visible = Program.ExperimentalFeaturesEnabled;
+            menuItem_oamViewer.Visible = Program.ExperimentalFeaturesEnabled;
         }
 
         #region opening/closing

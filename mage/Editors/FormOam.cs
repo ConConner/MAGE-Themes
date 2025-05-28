@@ -9,11 +9,11 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using mage.Controls;
 using mage.Utility;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 
 namespace mage;
 
@@ -50,9 +50,16 @@ public partial class FormOam : Form
     Drawable gfxSelection;
     Drawable gfxCursor;
 
+    // Data for saving
+    int originalOamOffset;
+    int originalNumOfFrames;
+
+    // Context menu related
+    Point ContextMenuOpenedAt = Point.Empty;
+
     // Moving related
-    Point PartStartLocation = Point.Empty;
-    Point MouseStartLocation = Point.Empty;
+    Point? PartStartLocation = null;
+    Point? MouseStartLocation = null;
 
     // properties
     private bool PlayingAnimation
@@ -71,6 +78,9 @@ public partial class FormOam : Form
             label_frameDuration.Enabled = !playingAnimation;
             button_addFrame.Enabled = !playingAnimation;
             button_removeFrame.Enabled = !playingAnimation;
+            button_frameDown.Enabled = !playingAnimation;
+            button_frameUp.Enabled = !playingAnimation;
+            button_duplicate.Enabled = !playingAnimation;
 
             // Stop timer if needed
             if (playingAnimation) return;
@@ -80,7 +90,6 @@ public partial class FormOam : Form
     }
     private bool playingAnimation = false;
 
-    private bool viewOrigin = true;
     private bool ViewOrigin
     {
         get => viewOrigin;
@@ -94,8 +103,8 @@ public partial class FormOam : Form
             oamView_oam.Invalidate();
         }
     }
+    private bool viewOrigin = true;
 
-    private bool viewPartOutline = false;
     private bool ViewPartOutline
     {
         get => viewPartOutline;
@@ -109,8 +118,8 @@ public partial class FormOam : Form
             oamView_oam.Invalidate();
         }
     }
+    private bool viewPartOutline = false;
 
-    private bool viewPalette = true;
     private bool ViewPalette
     {
         get => viewPalette;
@@ -122,8 +131,8 @@ public partial class FormOam : Form
             panel_palette.Visible = value;
         }
     }
+    private bool viewPalette = true;
 
-    private bool viewVram = false;
     private bool ViewVram
     {
         get => viewVram;
@@ -136,8 +145,8 @@ public partial class FormOam : Form
             DrawImage();
         }
     }
+    private bool viewVram = false;
 
-    private int selectedPartIndex = -1;
     private int SelectedPartIndex
     {
         get => selectedPartIndex;
@@ -147,12 +156,13 @@ public partial class FormOam : Form
             comboBox_part.SelectedIndex = value;
             SetPartOutlines(oam.frames[comboBox_Frame.SelectedIndex]);
 
+            button_removePart.Enabled = value != -1;
             panel_partEditing.Enabled = selectedPartIndex != -1;
             HandleChangedPart(value);
         }
     }
+    private int selectedPartIndex = -1;
 
-    private int selectedPaletteRow = 8;
     private int SelectedPaletteRow
     {
         get => selectedPaletteRow;
@@ -161,8 +171,8 @@ public partial class FormOam : Form
             selectedPaletteRow = value;
         }
     }
+    private int selectedPaletteRow = 8;
 
-    private string partErrorText;
     private string PartErrorText
     {
         get => partErrorText;
@@ -172,6 +182,7 @@ public partial class FormOam : Form
             label_error.Visible = value != string.Empty;
         }
     }
+    private string partErrorText;
 
     private int SelectedFrameIndex => comboBox_Frame.SelectedIndex;
     private OAM.Frame SelectedFrame => oam.frames[comboBox_Frame.SelectedIndex];
@@ -205,6 +216,7 @@ public partial class FormOam : Form
         checkBox_compressed.Checked = compressed;
 
         //Event based
+        textBox_duration.TextChanged += textBox_duration_TextChanged;
         textBox_tile.TextChanged += controlElements_changeMade;
         textBox_x.TextChanged += controlElements_changeMade;
         textBox_y.TextChanged += controlElements_changeMade;
@@ -223,6 +235,7 @@ public partial class FormOam : Form
 
         loading = false;
         DrawNewGFX();
+        LoadPalette(0);
         DrawPalette();
         SetOAM();
     }
@@ -235,18 +248,135 @@ public partial class FormOam : Form
         drawable.DrawPens.Add(pen);
     }
 
-    private bool CheckUnsaved()
+    private void Save()
     {
-        DialogResult result = MessageBox.Show("Do you want to save changes to Tile Table?",
-            "Unsaved Changes", MessageBoxButtons.YesNoCancel);
-        if (result == DialogResult.Cancel) return false;
-        //if (result == DialogResult.Yes) Save();
-        return true;
+        if (oam == null)
+        {
+            MessageBox.Show("No OAM data to save.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        // Get the original frame pointers to find the old frame data
+        List<int> originalFramePointers = new List<int>();
+        for (int i = 0; i < originalNumOfFrames; i++)
+        {
+            originalFramePointers.Add(ROM.Stream.ReadPtr(originalOamOffset + 8 * i));
+        }
+
+        ByteStream BuildFrameData(OAM.Frame frame)
+        {
+            ByteStream frameData = new ByteStream();
+            frameData.Write16((ushort)frame.numParts);
+            foreach (OAM.Part part in frame.parts)
+            {
+                ushort[] partData = part.GetAttributes();
+                frameData.Write16(partData[0]); // Attr0
+                frameData.Write16(partData[1]); // Attr1
+                frameData.Write16(partData[2]); // Attr2
+            }
+            return frameData;
+        }
+
+        /// STEP 1: SAVE FRAME DATA
+        // Overlapping/old frame data
+        List<int> newFramePointers = new List<int>();
+        for (int i = 0; i < originalNumOfFrames; i++)
+        {
+            OAM.Frame frame = oam.frames[i];
+            int offset = originalFramePointers[i];
+            int originalNumOfParts = ROM.Stream.Read16(offset);
+
+            //Calculate length of old data
+            int oldLength = 2 + originalNumOfParts * 6; // 2 for numParts, 6 for each part (3x16 bits)
+
+            // Build frame data up
+            ByteStream frameData = BuildFrameData(frame);
+
+            //Write data to the ROM
+            ROM.Stream.Write2(frameData, oldLength, ref offset, false);
+            newFramePointers.Add(offset);
+        }
+
+        // New frame data
+        for (int i = originalNumOfFrames; i < oam.numFrames; i++)
+        {
+            OAM.Frame frame = oam.frames[i];
+            ByteStream frameData = BuildFrameData(frame);
+            int writtenTo = ROM.Stream.WriteNewData(frameData);
+
+            newFramePointers.Add(writtenTo);
+        }
+
+        /// STEP 3: SAVE FRAME POINTERS / FRAME LIST
+        int oldPointerLength = originalNumOfFrames * 8 + 8;
+        ByteStream framePointerData = new ByteStream();
+        for (int i = 0; i < oam.numFrames; i++)
+        {
+            framePointerData.WritePtr(newFramePointers[i]);
+            framePointerData.Write32(oam.frames[i].duration);
+        }
+        framePointerData.Write32(0);
+        framePointerData.Write32(0); // 8 empty bytes to end the frame list
+        int writeOffset = originalOamOffset;
+        ROM.Stream.Write2(framePointerData, oldPointerLength, ref writeOffset, true);
+
+        // Display message with the new offset
+        if (writeOffset != originalOamOffset)
+        {
+            MessageBox.Show($"OAM data was repointed.\nNew OAM offset: {Hex.ToString(writeOffset)}", "OAM Repointed",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
+            textBox_oamOffset.Text = Hex.ToString(writeOffset);
+            SetOAM();
+        }
+
+        Status.Save();
     }
 
-    private void button_save_Click(object sender, EventArgs e)
+    private bool CheckUnsaved()
     {
-        Status.Save();
+        DialogResult result = MessageBox.Show("Do you want to save changes to the OAM?",
+            "Unsaved Changes", MessageBoxButtons.YesNoCancel);
+        if (result == DialogResult.Cancel) return false;
+        if (result == DialogResult.Yes) Save();
+        return true;
+    }
+    
+    private void KeyPressed(object sender, KeyEventArgs e)
+    {
+        switch (e.KeyCode)
+        {
+            case Keys.H:
+            case Keys.X:
+                if (SelectedPartIndex == -1) break;
+                checkBox_xFlip.Checked = !checkBox_xFlip.Checked;
+                break;
+
+            case Keys.V:
+            case Keys.Y:
+                if (SelectedPartIndex == -1) break;
+                checkBox_yFlip.Checked = !checkBox_yFlip.Checked;
+                break;
+
+            case Keys.P:
+                ViewPartOutline = !ViewPartOutline;
+                break;
+
+            case Keys.O:
+                ViewOrigin = !ViewOrigin;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void button_save_Click(object sender, EventArgs e) => Save();
+
+    private void FormOam_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (!Status.UnsavedChanges) return;
+        if (!CheckUnsaved()) e.Cancel = true;
     }
     #endregion
 
@@ -333,7 +463,11 @@ public partial class FormOam : Form
 
     private void checkBox_compressed_CheckedChanged(object sender, EventArgs e)
     {
-        if (!loading) DrawNewGFX();
+        if (!loading)
+        {
+            LoadPalette(0);
+            DrawNewGFX();
+        }
     }
 
     private void gfxView_gfx_MouseMove(object sender, TileDisplay.TileDisplayArgs e)
@@ -397,7 +531,9 @@ public partial class FormOam : Form
                 textBox_palOffset.Text = Hex.ToString(offset);
             }
 
-            palette = new Palette(romStream, offset, 1);
+            int count = !checkBox_compressed.Checked ? 8 : (gfxObject.height / 2);
+
+            palette = new Palette(romStream, offset, count);
             CreateVram();
             DrawImage();
             DrawPalette();
@@ -488,12 +624,11 @@ public partial class FormOam : Form
             int offset = Hex.ToInt(textBox_oamOffset.Text);
             oam = new OAM(offset);
 
+            originalOamOffset = offset;
+            originalNumOfFrames = oam.numFrames;
+
             //Populate frame selection
-            comboBox_Frame.Items.Clear();
-            for (int i = 0; i < oam.numFrames; i++)
-            {
-                comboBox_Frame.Items.Add(i);
-            }
+            SetFrameSelectionCombobox();
             comboBox_Frame.SelectedIndex = 0;
         }
         catch
@@ -578,17 +713,40 @@ public partial class FormOam : Form
         animationTimer.Interval = Math.Max(1, timeInMs);
     }
 
+    private void SetFrameSelectionCombobox()
+    {
+        int old = SelectedFrameIndex;
+
+        comboBox_Frame.Items.Clear();
+        for (int i = 0; i < oam.numFrames; i++) comboBox_Frame.Items.Add(i);
+        if (old >= 0 && old < comboBox_Frame.Items.Count) comboBox_Frame.SelectedIndex = old;
+        else comboBox_Frame.SelectedIndex = oam.numFrames - 1;
+    }
+
+    private void SetPartSelectionCombobox()
+    {
+        int old = SelectedPartIndex;
+
+        comboBox_part.Items.Clear();
+        for (int i = 0; i < oam.frames[comboBox_Frame.SelectedIndex].parts.Count; i++) comboBox_part.Items.Add(Hex.ToString(i));
+        if (old >= 0 && old < comboBox_part.Items.Count) comboBox_part.SelectedIndex = old;
+    }
+
     private void comboBox_Frame_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (loading) return;
         DrawFrame(comboBox_Frame.SelectedIndex);
+        loading = true;
         textBox_duration.Text = Hex.ToString(oam.frames[comboBox_Frame.SelectedIndex].duration);
+        loading = false;
         SelectedPartIndex = -1;
 
-        if (playingAnimation) return;
+        // Enable/disable move buttons
+        button_frameDown.Enabled = oam.frames.Count > 1 && SelectedFrameIndex != oam.frames.Count - 1;
+        button_frameUp.Enabled = oam.frames.Count > 1 && SelectedFrameIndex != 0;
 
-        comboBox_part.Items.Clear();
-        for (int i = 0; i < oam.frames[comboBox_Frame.SelectedIndex].parts.Count; i++) comboBox_part.Items.Add(i);
+        if (playingAnimation) return;
+        SetPartSelectionCombobox();
     }
 
     private void button_playAnimation_Click(object sender, EventArgs e)
@@ -610,6 +768,82 @@ public partial class FormOam : Form
 
     private void button_viewOutline_Click(object sender, EventArgs e) => ViewPartOutline = !button_viewOutline.Checked;
 
+
+    #region FRAME EDITING
+    private void button_addFrame_Click(object sender, EventArgs e)
+    {
+        oam.frames.Add(OAM.Frame.Empty);
+        oam.numFrames++;
+        SetFrameSelectionCombobox();
+        comboBox_Frame.SelectedIndex = oam.numFrames - 1;
+        Status.ChangeMade();
+    }
+    private void button_duplicate_Click(object sender, EventArgs e)
+    {
+        oam.frames.Add(SelectedFrame);
+        oam.numFrames++;
+        SetFrameSelectionCombobox();
+        comboBox_Frame.SelectedIndex = oam.numFrames - 1;
+        Status.ChangeMade();
+    }
+    private void button_removeFrame_Click(object sender, EventArgs e)
+    {
+        if (SelectedFrameIndex == -1) return;
+        if (oam.numFrames <= 1)
+        {
+            MessageBox.Show("Cannot remove the last frame.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+        oam.frames.RemoveAt(SelectedFrameIndex);
+        oam.numFrames--;
+        SetFrameSelectionCombobox();
+        Status.ChangeMade();
+    }
+
+    private void textBox_duration_TextChanged(object? sender, EventArgs e)
+    {
+        if (loading || SelectedFrameIndex == -1) return;
+
+        // Validate duration input
+        try
+        {
+            int duration = Hex.ToByte(textBox_duration.Text);
+            if (duration <= 0 || duration > 0xFF)
+            {
+                throw new ArgumentOutOfRangeException(nameof(duration), "Duration must be between 1 and 0xFF.");
+            }
+
+            OAM.Frame frame = SelectedFrame;
+            frame.duration = duration;
+            oam.frames[SelectedFrameIndex] = frame;
+            Status.ChangeMade();
+        }
+        catch { }
+    }
+
+    private void button_frameUp_Click(object sender, EventArgs e)
+    {
+        if (SelectedFrameIndex <= 0) return;
+        // Swap frames
+        OAM.Frame temp = oam.frames[SelectedFrameIndex];
+        oam.frames[SelectedFrameIndex] = oam.frames[SelectedFrameIndex - 1];
+        oam.frames[SelectedFrameIndex - 1] = temp;
+        // Update selection
+        comboBox_Frame.SelectedIndex--;
+        Status.ChangeMade();
+    }
+    private void button_frameDown_Click(object sender, EventArgs e)
+    {
+        if (SelectedFrameIndex >= oam.numFrames - 1) return;
+        // Swap frames
+        OAM.Frame temp = oam.frames[SelectedFrameIndex];
+        oam.frames[SelectedFrameIndex] = oam.frames[SelectedFrameIndex + 1];
+        oam.frames[SelectedFrameIndex + 1] = temp;
+        // Update selection
+        comboBox_Frame.SelectedIndex++;
+        Status.ChangeMade();
+    }
+    #endregion
 
     #region PART EDITING
     private int FindPart(OAM.Frame frame, int pixelX, int pixelY)
@@ -636,6 +870,105 @@ public partial class FormOam : Form
         );
         return part.Area.Contains(position);
     }
+
+    #region Moving Parts
+    private void MovePart(int oldIndex, int newIndex)
+    {
+        if (oldIndex < 0 || oldIndex >= SelectedFrame.parts.Count || newIndex < 0 || newIndex >= SelectedFrame.parts.Count)
+            return;
+
+        OAM.Part temp = SelectedFrame.parts[oldIndex];
+        SelectedFrame.parts.RemoveAt(oldIndex);
+        if (newIndex == SelectedFrame.parts.Count)
+            SelectedFrame.parts.Add(temp);
+        else
+            SelectedFrame.parts.Insert(newIndex, temp);
+
+        SelectedPartIndex = newIndex;
+
+        DrawFrame(SelectedFrameIndex);
+        Status.ChangeMade();
+    }
+
+    private void contextMenu_oam_Opening(object sender, CancelEventArgs e)
+    {
+        if (SelectedPartIndex == -1)
+        {
+            contextMenu_oam.Close();
+            return;
+        }
+
+        // Enable/disable context menu items based on selected part
+        int parts = SelectedFrame.parts.Count;
+        button_toFront.Enabled = SelectedPartIndex != 0;
+        button_toBack.Enabled = SelectedPartIndex != parts - 1;
+        button_layerDown.Enabled = SelectedPartIndex != parts - 1 && parts > 1;
+        button_layerUp.Enabled = SelectedPartIndex != 0 && parts > 1;
+    }
+    private void button_toFront_Click(object sender, EventArgs e)
+    {
+        if (SelectedPartIndex == -1) return;
+        MovePart(SelectedPartIndex, 0);
+    }
+    private void button_layerUp_Click(object sender, EventArgs e)
+    {
+        if (SelectedPartIndex == -1) return;
+        MovePart(SelectedPartIndex, SelectedPartIndex - 1);
+    }
+    private void button_layerDown_Click(object sender, EventArgs e)
+    {
+        if (SelectedPartIndex == -1) return;
+        MovePart(SelectedPartIndex, SelectedPartIndex + 1);
+    }
+    private void button_toBack_Click(object sender, EventArgs e)
+    {
+        if (SelectedPartIndex == -1) return;
+        MovePart(SelectedPartIndex, SelectedFrame.parts.Count - 1);
+    }
+    #endregion
+
+    #region Adding / Removing
+    private void button_addPart_Click(object sender, EventArgs e) => AddPart(0, 0);
+    private void button_addPartHere_Click(object sender, EventArgs e) => AddPart(ContextMenuOpenedAt.X - OAM.FrameOriginX, ContextMenuOpenedAt.Y - OAM.FrameOriginY);
+    private void AddPart(int x, int y)
+    {
+        if (SelectedFrame.parts.Count == 0xFF)
+        {
+            MessageBox.Show("Cannot add more parts to this frame, maximum reached (0xFF).", "Maximum Parts Reached", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        OAM.Frame newFrame = SelectedFrame;
+
+        OAM.Part p = OAM.Part.Empty;
+        p.tileNum = 0x200;
+        p.palRow = 0x8;
+        p.xPos = x;
+        p.yPos = y;
+
+        newFrame.parts.Insert(0, p);
+        newFrame.numParts++;
+
+        oam.frames[SelectedFrameIndex] = newFrame;
+        SetPartSelectionCombobox();
+        DrawFrame(SelectedFrameIndex);
+        SelectedPartIndex = 0;
+        Status.ChangeMade();
+    }
+
+    private void button_removePart_Click(object sender, EventArgs e)
+    {
+        if (SelectedPartIndex == -1) return;
+        OAM.Frame newFrame = SelectedFrame;
+        newFrame.parts.RemoveAt(SelectedPartIndex);
+        newFrame.numParts--;
+        oam.frames[SelectedFrameIndex] = newFrame;
+        SetPartSelectionCombobox();
+        DrawFrame(SelectedFrameIndex);
+        SelectedPartIndex = -1;
+        Status.ChangeMade();
+    }
+    #endregion
 
     private void ResetPartData()
     {
@@ -736,6 +1069,7 @@ public partial class FormOam : Form
             DrawFrame(SelectedFrameIndex);
             HighlightPartInGfx(part);
             PartErrorText = string.Empty;
+            Status.ChangeMade();
         }
         catch (Exception exc)
         {
@@ -756,6 +1090,8 @@ public partial class FormOam : Form
 
     private void oamView_oam_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
+        if (oam == null) return;
+
         // General Part selection code
         if (PlayingAnimation) return;
         OAM.Frame selectedFrame = oam.frames[comboBox_Frame.SelectedIndex];
@@ -779,10 +1115,14 @@ public partial class FormOam : Form
             SelectedPartIndex = -1;
             return;
         }
-        else if (hovered != -1 && SelectedPartIndex != hovered)
+        else if (hovered != -1 && SelectedPartIndex != hovered) SelectedPartIndex = hovered;
+
+        // Context Menu
+        if (e.Button == MouseButtons.Right)
         {
-            SelectedPartIndex = hovered;
-            return;
+            ContextMenuOpenedAt = e.PixelPosition;
+            if (SelectedPartIndex != -1) oamView_oam.ContextMenuStrip = contextMenu_oam;
+            else oamView_oam.ContextMenuStrip = contextMenu_oamNoSelection;
         }
 
         // SPECIFIC EDITING CODE
@@ -798,6 +1138,8 @@ public partial class FormOam : Form
 
     private void oamView_oam_TileMouseMove(object sender, TileDisplay.TileDisplayArgs e)
     {
+        if (oam == null) return;
+
         // General Part selection code
         if (PlayingAnimation) return;
         OAM.Frame selectedFrame = oam.frames[comboBox_Frame.SelectedIndex];
@@ -815,7 +1157,7 @@ public partial class FormOam : Form
         else if (hovered == SelectedPartIndex) Cursor = Cursors.SizeAll;
         else if (hovered != -1) Cursor = Cursors.Hand;
 
-        if (hovered != hoveredPartIndex && MouseStartLocation == Point.Empty)
+        if (hovered != hoveredPartIndex && MouseStartLocation == null)
         {
             hoveredPartIndex = hovered;
             SetPartOutlines(selectedFrame);
@@ -826,14 +1168,14 @@ public partial class FormOam : Form
         if (SelectedPartIndex == -1) return;
         OAM.Part part = selectedFrame.parts[SelectedPartIndex];
 
-        if (MouseStartLocation == Point.Empty || PartStartLocation == Point.Empty || e.Button != MouseButtons.Left) return;
+        if (MouseStartLocation == null || PartStartLocation == null || e.Button != MouseButtons.Left) return;
         Point diff = new Point(
-            e.PixelPosition.X - MouseStartLocation.X,
-            e.PixelPosition.Y - MouseStartLocation.Y
+            e.PixelPosition.X - MouseStartLocation.Value.X,
+            e.PixelPosition.Y - MouseStartLocation.Value.Y
         );
         Point newPartLocation = new Point(
-            Math.Clamp(PartStartLocation.X + diff.X, -256, 255),
-            Math.Clamp(PartStartLocation.Y + diff.Y, -128, 127)
+            Math.Clamp(PartStartLocation.Value.X + diff.X, -256, 255),
+            Math.Clamp(PartStartLocation.Value.Y + diff.Y, -128, 127)
         );
         textBox_x.Text = Hex.ToString(newPartLocation.X < 0 ? newPartLocation.X + 512 : newPartLocation.X);
         textBox_y.Text = Hex.ToString(newPartLocation.Y < 0 ? newPartLocation.Y + 256 : newPartLocation.Y);
@@ -841,8 +1183,9 @@ public partial class FormOam : Form
 
     private void oamView_oam_TileMouseUp(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
-        MouseStartLocation = Point.Empty;
-        PartStartLocation = Point.Empty;
+        MouseStartLocation = null;
+        PartStartLocation = null;
     }
+
     #endregion
 }

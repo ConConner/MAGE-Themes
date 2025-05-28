@@ -91,6 +91,7 @@
             menuItem_paletteEditor = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_tileTableEditor = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_animationEditor = new System.Windows.Forms.ToolStripMenuItem();
+            menuItem_oamViewer = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator25 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_spriteEditor = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_spritesetEditor = new System.Windows.Forms.ToolStripMenuItem();
@@ -257,6 +258,7 @@
             toolStrip_animation = new System.Windows.Forms.ToolStripButton();
             toolStrip_sprite = new System.Windows.Forms.ToolStripButton();
             toolStrip_spriteset = new System.Windows.Forms.ToolStripButton();
+            toolStrip_oamEditor = new System.Windows.Forms.ToolStripButton();
             toolStrip_connection = new System.Windows.Forms.ToolStripButton();
             toolStrip_minimap = new System.Windows.Forms.ToolStripButton();
             toolStrip_text = new System.Windows.Forms.ToolStripButton();
@@ -271,7 +273,6 @@
             toolStrip_patches = new System.Windows.Forms.ToolStripButton();
             comboBox_spriteset = new Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
-            menuItem_oamViewer = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -726,6 +727,13 @@
             menuItem_animationEditor.Text = "Animation Editor";
             menuItem_animationEditor.Click += menuItem_animationEditor_Click;
             // 
+            // menuItem_oamViewer
+            // 
+            menuItem_oamViewer.Name = "menuItem_oamViewer";
+            menuItem_oamViewer.Size = new System.Drawing.Size(180, 22);
+            menuItem_oamViewer.Text = "OAM Editor";
+            menuItem_oamViewer.Click += menuItem_oamViewer_Click;
+            // 
             // toolStripSeparator25
             // 
             toolStripSeparator25.Name = "toolStripSeparator25";
@@ -897,47 +905,47 @@
             // menuItem_exportTileset
             // 
             menuItem_exportTileset.Name = "menuItem_exportTileset";
-            menuItem_exportTileset.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportTileset.Size = new System.Drawing.Size(152, 22);
             menuItem_exportTileset.Text = "Tileset...";
             menuItem_exportTileset.Click += menuItem_exportTileset_Click;
             // 
             // menuItem_exportBG
             // 
             menuItem_exportBG.Name = "menuItem_exportBG";
-            menuItem_exportBG.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportBG.Size = new System.Drawing.Size(152, 22);
             menuItem_exportBG.Text = "Background...";
             menuItem_exportBG.Click += menuItem_exportBG_Click;
             // 
             // menuItem_exportRoom
             // 
             menuItem_exportRoom.Name = "menuItem_exportRoom";
-            menuItem_exportRoom.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportRoom.Size = new System.Drawing.Size(152, 22);
             menuItem_exportRoom.Text = "Room...";
             menuItem_exportRoom.Click += menuItem_exportRoom_Click;
             // 
             // toolStripSeparator7
             // 
             toolStripSeparator7.Name = "toolStripSeparator7";
-            toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator7.Size = new System.Drawing.Size(149, 6);
             // 
             // menuItem_exportTilesetImage
             // 
             menuItem_exportTilesetImage.Name = "menuItem_exportTilesetImage";
-            menuItem_exportTilesetImage.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportTilesetImage.Size = new System.Drawing.Size(152, 22);
             menuItem_exportTilesetImage.Text = "Tileset Image...";
             menuItem_exportTilesetImage.Click += menuItem_exportTilesetImage_Click;
             // 
             // menuItem_exportBG0image
             // 
             menuItem_exportBG0image.Name = "menuItem_exportBG0image";
-            menuItem_exportBG0image.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportBG0image.Size = new System.Drawing.Size(152, 22);
             menuItem_exportBG0image.Text = "BG0 Image...";
             menuItem_exportBG0image.Click += menuItem_exportBG0image_Click;
             // 
             // menuItem_exportBG3image
             // 
             menuItem_exportBG3image.Name = "menuItem_exportBG3image";
-            menuItem_exportBG3image.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportBG3image.Size = new System.Drawing.Size(152, 22);
             menuItem_exportBG3image.Text = "BG3 Image...";
             menuItem_exportBG3image.Click += menuItem_exportBG3image_Click;
             // 
@@ -945,20 +953,20 @@
             // 
             menuItem_exportRoomImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { regularToolStripMenuItem, croppedToolStripMenuItem });
             menuItem_exportRoomImage.Name = "menuItem_exportRoomImage";
-            menuItem_exportRoomImage.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportRoomImage.Size = new System.Drawing.Size(152, 22);
             menuItem_exportRoomImage.Text = "Room Image";
             // 
             // regularToolStripMenuItem
             // 
             regularToolStripMenuItem.Name = "regularToolStripMenuItem";
-            regularToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            regularToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             regularToolStripMenuItem.Text = "Regular...";
             regularToolStripMenuItem.Click += menuItem_exportRoomImage_Click;
             // 
             // croppedToolStripMenuItem
             // 
             croppedToolStripMenuItem.Name = "croppedToolStripMenuItem";
-            croppedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            croppedToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             croppedToolStripMenuItem.Text = "Cropped...";
             croppedToolStripMenuItem.Click += menuItem_exportCroppedRoomImage_Click;
             // 
@@ -1877,7 +1885,7 @@
             // toolStrip
             // 
             toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStrip_open, toolStrip_save, toolStripSeparator9, toolStrip_undo, toolStrip_redo, toolStripSeparator10, toolStrip_editBGs, toolStrip_editObjects, toolStripSeparator15, toolStrip_viewSprites, toolStrip_outlineSprites, toolStrip_outlineDoors, toolStrip_outlineScrolls, toolStrip_outlineEffect, toolStripSeparator16, toolStrip_header, toolStrip_tileset, toolStrip_graphics, toolStrip_palette, toolStrip_tileTable, toolStrip_animation, toolStrip_sprite, toolStrip_spriteset, toolStrip_connection, toolStrip_minimap, toolStrip_text, toolStrip_demoEditor, toolStrip_physics, toolStrip_weapon, toolStripSeparator11, toolStrip_options, toolStrip_test, toolStrip_tileBuilder, toolStrip_add, toolStrip_patches });
+            toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStrip_open, toolStrip_save, toolStripSeparator9, toolStrip_undo, toolStrip_redo, toolStripSeparator10, toolStrip_editBGs, toolStrip_editObjects, toolStripSeparator15, toolStrip_viewSprites, toolStrip_outlineSprites, toolStrip_outlineDoors, toolStrip_outlineScrolls, toolStrip_outlineEffect, toolStripSeparator16, toolStrip_header, toolStrip_tileset, toolStrip_graphics, toolStrip_palette, toolStrip_tileTable, toolStrip_animation, toolStrip_sprite, toolStrip_spriteset, toolStrip_oamEditor, toolStrip_connection, toolStrip_minimap, toolStrip_text, toolStrip_demoEditor, toolStrip_physics, toolStrip_weapon, toolStripSeparator11, toolStrip_options, toolStrip_test, toolStrip_tileBuilder, toolStrip_add, toolStrip_patches });
             toolStrip.Location = new System.Drawing.Point(0, 24);
             toolStrip.Name = "toolStrip";
             toolStrip.Padding = new System.Windows.Forms.Padding(4, 0, 1, 0);
@@ -2100,6 +2108,17 @@
             toolStrip_spriteset.Text = "Spriteset Editor";
             toolStrip_spriteset.Click += menuItem_spritesetEditor_Click;
             // 
+            // toolStrip_oamEditor
+            // 
+            toolStrip_oamEditor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolStrip_oamEditor.Enabled = false;
+            toolStrip_oamEditor.Image = Properties.Resources.toolbar_oam;
+            toolStrip_oamEditor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            toolStrip_oamEditor.Name = "toolStrip_oamEditor";
+            toolStrip_oamEditor.Size = new System.Drawing.Size(23, 22);
+            toolStrip_oamEditor.Text = "OAM Editor";
+            toolStrip_oamEditor.Click += menuItem_oamViewer_Click;
+            // 
             // toolStrip_connection
             // 
             toolStrip_connection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -2226,13 +2245,6 @@
             comboBox_spriteset.Size = new System.Drawing.Size(79, 23);
             comboBox_spriteset.TabIndex = 11;
             comboBox_spriteset.SelectedIndexChanged += comboBox_spriteset_SelectedIndexChanged;
-            // 
-            // menuItem_oamViewer
-            // 
-            menuItem_oamViewer.Name = "menuItem_oamViewer";
-            menuItem_oamViewer.Size = new System.Drawing.Size(180, 22);
-            menuItem_oamViewer.Text = "OAM Viewer";
-            menuItem_oamViewer.Click += menuItem_oamViewer_Click;
             // 
             // FormMain
             // 
@@ -2527,6 +2539,7 @@
         private System.Windows.Forms.ToolStripMenuItem button_experimental;
         private System.Windows.Forms.ToolStripMenuItem regularToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem croppedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStrip_oamEditor;
     }
 }
 

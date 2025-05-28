@@ -1580,6 +1580,16 @@ namespace mage.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap toolbar_oam {
+            get {
+                object obj = ResourceManager.GetObject("toolbar_oam", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap toolbar_open {
             get {
                 object obj = ResourceManager.GetObject("toolbar_open", resourceCulture);

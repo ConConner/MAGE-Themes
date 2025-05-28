@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormOam));
             groupBox_imageControl = new System.Windows.Forms.GroupBox();
             button_decreasePalette = new System.Windows.Forms.Button();
@@ -55,6 +56,9 @@
             menuStrip = new System.Windows.Forms.MenuStrip();
             menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             groupBox_oam = new System.Windows.Forms.GroupBox();
+            button_frameDown = new System.Windows.Forms.Button();
+            button_frameUp = new System.Windows.Forms.Button();
+            button_duplicate = new System.Windows.Forms.Button();
             button_removeFrame = new System.Windows.Forms.Button();
             button_addFrame = new System.Windows.Forms.Button();
             button_playAnimation = new System.Windows.Forms.Button();
@@ -101,6 +105,15 @@
             label_Status = new System.Windows.Forms.ToolStripStatusLabel();
             label_spring = new System.Windows.Forms.ToolStripStatusLabel();
             button_save = new System.Windows.Forms.ToolStripDropDownButton();
+            contextMenu_oam = new System.Windows.Forms.ContextMenuStrip(components);
+            button_toFront = new System.Windows.Forms.ToolStripMenuItem();
+            button_layerUp = new System.Windows.Forms.ToolStripMenuItem();
+            button_layerDown = new System.Windows.Forms.ToolStripMenuItem();
+            button_toBack = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            button_removePartCtx = new System.Windows.Forms.ToolStripMenuItem();
+            contextMenu_oamNoSelection = new System.Windows.Forms.ContextMenuStrip(components);
+            button_addPartHere = new System.Windows.Forms.ToolStripMenuItem();
             groupBox_imageControl.SuspendLayout();
             groupBox_image.SuspendLayout();
             panel_gfx.SuspendLayout();
@@ -125,6 +138,8 @@
             splitContainer_controls.Panel2.SuspendLayout();
             splitContainer_controls.SuspendLayout();
             statusStrip1.SuspendLayout();
+            contextMenu_oam.SuspendLayout();
+            contextMenu_oamNoSelection.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox_imageControl
@@ -429,6 +444,9 @@
             // 
             // groupBox_oam
             // 
+            groupBox_oam.Controls.Add(button_frameDown);
+            groupBox_oam.Controls.Add(button_frameUp);
+            groupBox_oam.Controls.Add(button_duplicate);
             groupBox_oam.Controls.Add(button_removeFrame);
             groupBox_oam.Controls.Add(button_addFrame);
             groupBox_oam.Controls.Add(button_playAnimation);
@@ -441,10 +459,40 @@
             groupBox_oam.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_oam.Name = "groupBox_oam";
             groupBox_oam.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_oam.Size = new System.Drawing.Size(250, 85);
+            groupBox_oam.Size = new System.Drawing.Size(250, 113);
             groupBox_oam.TabIndex = 1;
             groupBox_oam.TabStop = false;
             groupBox_oam.Text = "OAM Control";
+            // 
+            // button_frameDown
+            // 
+            button_frameDown.Image = (System.Drawing.Image)resources.GetObject("button_frameDown.Image");
+            button_frameDown.Location = new System.Drawing.Point(199, 51);
+            button_frameDown.Name = "button_frameDown";
+            button_frameDown.Size = new System.Drawing.Size(43, 23);
+            button_frameDown.TabIndex = 8;
+            button_frameDown.UseVisualStyleBackColor = true;
+            button_frameDown.Click += button_frameDown_Click;
+            // 
+            // button_frameUp
+            // 
+            button_frameUp.Image = (System.Drawing.Image)resources.GetObject("button_frameUp.Image");
+            button_frameUp.Location = new System.Drawing.Point(150, 51);
+            button_frameUp.Name = "button_frameUp";
+            button_frameUp.Size = new System.Drawing.Size(43, 23);
+            button_frameUp.TabIndex = 7;
+            button_frameUp.UseVisualStyleBackColor = true;
+            button_frameUp.Click += button_frameUp_Click;
+            // 
+            // button_duplicate
+            // 
+            button_duplicate.Location = new System.Drawing.Point(72, 51);
+            button_duplicate.Name = "button_duplicate";
+            button_duplicate.Size = new System.Drawing.Size(70, 23);
+            button_duplicate.TabIndex = 6;
+            button_duplicate.Text = "Duplicate";
+            button_duplicate.UseVisualStyleBackColor = true;
+            button_duplicate.Click += button_duplicate_Click;
             // 
             // button_removeFrame
             // 
@@ -454,6 +502,7 @@
             button_removeFrame.Size = new System.Drawing.Size(43, 23);
             button_removeFrame.TabIndex = 2;
             button_removeFrame.UseVisualStyleBackColor = true;
+            button_removeFrame.Click += button_removeFrame_Click;
             // 
             // button_addFrame
             // 
@@ -463,11 +512,12 @@
             button_addFrame.Size = new System.Drawing.Size(43, 23);
             button_addFrame.TabIndex = 1;
             button_addFrame.UseVisualStyleBackColor = true;
+            button_addFrame.Click += button_addFrame_Click;
             // 
             // button_playAnimation
             // 
             button_playAnimation.Image = Properties.Resources.toolbar_test;
-            button_playAnimation.Location = new System.Drawing.Point(150, 49);
+            button_playAnimation.Location = new System.Drawing.Point(150, 80);
             button_playAnimation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_playAnimation.Name = "button_playAnimation";
             button_playAnimation.Size = new System.Drawing.Size(92, 25);
@@ -479,7 +529,7 @@
             // 
             textBox_duration.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_duration.DisplayBorder = true;
-            textBox_duration.Location = new System.Drawing.Point(72, 51);
+            textBox_duration.Location = new System.Drawing.Point(72, 80);
             textBox_duration.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_duration.MaxLength = 32767;
             textBox_duration.Multiline = false;
@@ -497,7 +547,7 @@
             // label_frameDuration
             // 
             label_frameDuration.AutoSize = true;
-            label_frameDuration.Location = new System.Drawing.Point(8, 54);
+            label_frameDuration.Location = new System.Drawing.Point(9, 85);
             label_frameDuration.Name = "label_frameDuration";
             label_frameDuration.Size = new System.Drawing.Size(56, 15);
             label_frameDuration.TabIndex = 5;
@@ -527,11 +577,11 @@
             groupBox_part.Controls.Add(panel_partEditing);
             groupBox_part.Controls.Add(panel_partControl);
             groupBox_part.Dock = System.Windows.Forms.DockStyle.Fill;
-            groupBox_part.Location = new System.Drawing.Point(6, 202);
+            groupBox_part.Location = new System.Drawing.Point(6, 230);
             groupBox_part.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_part.Name = "groupBox_part";
             groupBox_part.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_part.Size = new System.Drawing.Size(250, 512);
+            groupBox_part.Size = new System.Drawing.Size(250, 484);
             groupBox_part.TabIndex = 2;
             groupBox_part.TabStop = false;
             groupBox_part.Text = "Part Details";
@@ -554,7 +604,7 @@
             panel_partEditing.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_partEditing.Location = new System.Drawing.Point(4, 48);
             panel_partEditing.Name = "panel_partEditing";
-            panel_partEditing.Size = new System.Drawing.Size(242, 461);
+            panel_partEditing.Size = new System.Drawing.Size(242, 433);
             panel_partEditing.TabIndex = 11;
             // 
             // label_error
@@ -752,6 +802,7 @@
             button_removePart.Size = new System.Drawing.Size(43, 23);
             button_removePart.TabIndex = 2;
             button_removePart.UseVisualStyleBackColor = true;
+            button_removePart.Click += button_removePart_Click;
             // 
             // button_addPart
             // 
@@ -761,6 +812,7 @@
             button_addPart.Size = new System.Drawing.Size(43, 23);
             button_addPart.TabIndex = 1;
             button_addPart.UseVisualStyleBackColor = true;
+            button_addPart.Click += button_addPart_Click;
             // 
             // groupBox_oamDisplay
             // 
@@ -985,6 +1037,72 @@
             button_save.Text = "Apply";
             button_save.Click += button_save_Click;
             // 
+            // contextMenu_oam
+            // 
+            contextMenu_oam.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_toFront, button_layerUp, button_layerDown, button_toBack, toolStripSeparator3, button_removePartCtx });
+            contextMenu_oam.Name = "contextMenu_oam";
+            contextMenu_oam.Size = new System.Drawing.Size(164, 120);
+            contextMenu_oam.Opening += contextMenu_oam_Opening;
+            // 
+            // button_toFront
+            // 
+            button_toFront.Image = (System.Drawing.Image)resources.GetObject("button_toFront.Image");
+            button_toFront.Name = "button_toFront";
+            button_toFront.Size = new System.Drawing.Size(163, 22);
+            button_toFront.Text = "Bring to Front";
+            button_toFront.Click += button_toFront_Click;
+            // 
+            // button_layerUp
+            // 
+            button_layerUp.Image = (System.Drawing.Image)resources.GetObject("button_layerUp.Image");
+            button_layerUp.Name = "button_layerUp";
+            button_layerUp.Size = new System.Drawing.Size(163, 22);
+            button_layerUp.Text = "Move forwards";
+            button_layerUp.Click += button_layerUp_Click;
+            // 
+            // button_layerDown
+            // 
+            button_layerDown.Image = (System.Drawing.Image)resources.GetObject("button_layerDown.Image");
+            button_layerDown.Name = "button_layerDown";
+            button_layerDown.Size = new System.Drawing.Size(163, 22);
+            button_layerDown.Text = "Move backwards";
+            button_layerDown.Click += button_layerDown_Click;
+            // 
+            // button_toBack
+            // 
+            button_toBack.Image = (System.Drawing.Image)resources.GetObject("button_toBack.Image");
+            button_toBack.Name = "button_toBack";
+            button_toBack.Size = new System.Drawing.Size(163, 22);
+            button_toBack.Text = "Send to Back";
+            button_toBack.Click += button_toBack_Click;
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new System.Drawing.Size(160, 6);
+            // 
+            // button_removePartCtx
+            // 
+            button_removePartCtx.Image = Properties.Resources.delete;
+            button_removePartCtx.Name = "button_removePartCtx";
+            button_removePartCtx.Size = new System.Drawing.Size(163, 22);
+            button_removePartCtx.Text = "Delete";
+            button_removePartCtx.Click += button_removePart_Click;
+            // 
+            // contextMenu_oamNoSelection
+            // 
+            contextMenu_oamNoSelection.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_addPartHere });
+            contextMenu_oamNoSelection.Name = "contextMenu_oamNoSelection";
+            contextMenu_oamNoSelection.Size = new System.Drawing.Size(146, 26);
+            // 
+            // button_addPartHere
+            // 
+            button_addPartHere.Image = Properties.Resources.toolbar_add;
+            button_addPartHere.Name = "button_addPartHere";
+            button_addPartHere.Size = new System.Drawing.Size(145, 22);
+            button_addPartHere.Text = "Add new Part";
+            button_addPartHere.Click += button_addPartHere_Click;
+            // 
             // FormOam
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -993,11 +1111,14 @@
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             MainMenuStrip = menuStrip;
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             MinimumSize = new System.Drawing.Size(822, 802);
             Name = "FormOam";
             Text = "OAM Viewer";
+            FormClosing += FormOam_FormClosing;
+            KeyDown += KeyPressed;
             groupBox_imageControl.ResumeLayout(false);
             groupBox_imageControl.PerformLayout();
             groupBox_image.ResumeLayout(false);
@@ -1033,6 +1154,8 @@
             splitContainer_controls.ResumeLayout(false);
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
+            contextMenu_oam.ResumeLayout(false);
+            contextMenu_oamNoSelection.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1111,5 +1234,17 @@
         private Theming.CustomControls.FlatComboBox comboBox_size;
         private Theming.CustomControls.FlatComboBox comboBox_palette;
         private System.Windows.Forms.Label label_error;
+        private System.Windows.Forms.ContextMenuStrip contextMenu_oam;
+        private System.Windows.Forms.ToolStripMenuItem button_toBack;
+        private System.Windows.Forms.ToolStripMenuItem button_toFront;
+        private System.Windows.Forms.ToolStripMenuItem button_layerDown;
+        private System.Windows.Forms.ToolStripMenuItem button_layerUp;
+        private System.Windows.Forms.ContextMenuStrip contextMenu_oamNoSelection;
+        private System.Windows.Forms.ToolStripMenuItem button_addPartHere;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem button_removePartCtx;
+        private System.Windows.Forms.Button button_frameUp;
+        private System.Windows.Forms.Button button_duplicate;
+        private System.Windows.Forms.Button button_frameDown;
     }
 }
