@@ -366,5 +366,14 @@ namespace mage
             return spriteImg;
         }
         #endregion
+
+        public static bool IsOAM(int offset)
+        {
+            for (int i = 0; i < 0xFFFF; i += 8)
+            {
+                if (ROM.Stream.Read16(offset + i + 4) == 0) return true;
+            }
+            return false;
+        }
     }
 }

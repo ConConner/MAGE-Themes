@@ -742,8 +742,11 @@ public partial class FormOam : Form
         SelectedPartIndex = -1;
 
         // Enable/disable move buttons
-        button_frameDown.Enabled = oam.frames.Count > 1 && SelectedFrameIndex != oam.frames.Count - 1;
-        button_frameUp.Enabled = oam.frames.Count > 1 && SelectedFrameIndex != 0;
+        if (!playingAnimation)
+        {
+            button_frameDown.Enabled = oam.frames.Count > 1 && SelectedFrameIndex != oam.frames.Count - 1;
+            button_frameUp.Enabled = oam.frames.Count > 1 && SelectedFrameIndex != 0;
+        }
 
         if (playingAnimation) return;
         SetPartSelectionCombobox();

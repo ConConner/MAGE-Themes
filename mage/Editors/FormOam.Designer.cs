@@ -1117,7 +1117,7 @@
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             MinimumSize = new System.Drawing.Size(822, 802);
             Name = "FormOam";
-            Text = "OAM Viewer";
+            Text = "OAM Editor";
             FormClosing += FormOam_FormClosing;
             KeyDown += KeyPressed;
             groupBox_imageControl.ResumeLayout(false);
