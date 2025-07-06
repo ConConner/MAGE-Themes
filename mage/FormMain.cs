@@ -15,6 +15,7 @@ using mage.Tools;
 using System.IO.Compression;
 using System.Numerics;
 using System.Diagnostics.Eventing.Reader;
+using System.Windows.Forms.Design.Behavior;
 using mage.Utility;
 using mage.Actions;
 using mage.Editors;
@@ -119,6 +120,8 @@ namespace mage
 
             // Enable experimental features
             seperator_flip.Visible = menuItem_flip_h.Visible = menuItem_flip_v.Visible = Program.ExperimentalFeaturesEnabled;
+            toolStrip_oamEditor.Visible = Program.ExperimentalFeaturesEnabled;
+            menuItem_oamViewer.Visible = Program.ExperimentalFeaturesEnabled;
         }
 
         #region opening/closing
@@ -649,6 +652,19 @@ namespace mage
             if (!FindOpenForm(typeof(FormAnimation), false))
             {
                 FormAnimation form = new FormAnimation(this, 0, room.tileset.animTileset.number);
+                form.Show();
+            }
+        }
+
+        private void menuItem_oamViewer_Click(object sender, EventArgs e)
+        {
+            if (!FindOpenForm(typeof(FormOam), false))
+            {
+                FormOam form;
+                int gfxOffset = room.tileset.RLEgfx.Offset;
+                int palOffset = room.tileset.palette.Offset + 0x20;
+                if (!Version.IsMF) form = new FormOam(this, 0x2C4194, 0x2C4780, 0x2C4A68);
+                else form = new FormOam(this, 0x2E926C, 0x2EAA6C, 0x2CD5C4, false);
                 form.Show();
             }
         }
@@ -2723,10 +2739,11 @@ namespace mage
             RoomObject obj = room.doorList[exitLocationDoor];
             Door d = obj as Door;
 
-            Point diff = new Point(pixelCursor.X - d.startPoint.X, pixelCursor.Y - d.startPoint.Y);
-
             // Snap to grid
-            if (ModifierKeys == Keys.Shift)
+            Point diff = new Point(pixelCursor.X - d.startPoint.X, pixelCursor.Y - d.startPoint.Y);
+            
+            // Free Movement
+            if (ModifierKeys != Keys.Shift)
             {
                 diff.X = (diff.X + Math.Sign(diff.X) * 8) / 16 * 16;
                 diff.Y = (diff.Y + Math.Sign(diff.Y) * 8) / 16 * 16;

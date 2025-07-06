@@ -8,6 +8,14 @@ namespace mage
 {
     public class OAM
     {
+        public static int XPosRange => 1 << 9;
+        public static int YPosRange => 1 << 8;
+        public static int MaxPartSize => 64;
+        public static int MaxWidth => XPosRange + MaxPartSize;
+        public static int MaxHeight => YPosRange + MaxPartSize;
+        public static int FrameOriginX => XPosRange / 2;
+        public static int FrameOriginY => YPosRange / 2;
+
         public struct Frame
         {
             public int duration;
@@ -38,17 +46,23 @@ namespace mage
                     yOffset = Math.Min(part.yPos, yOffset);
                 }
             }
+
+            public static Frame Empty => new Frame(1, new List<Part>(), 0);
         }
 
         public struct Part
         {
+            //Fields
             public int xPos, yPos;
             public int shape;
             public int flip;
             public int size;
             public int tileNum;
             public int palRow;
+            public bool Xflip => (flip & 0b1) != 0;
+            public bool Yflip => (flip & 0b10) != 0;
 
+            //Constructor
             public Part(ushort attr0, ushort attr1, ushort attr2)
             {
                 yPos = attr0 & 0xFF;
@@ -56,14 +70,16 @@ namespace mage
                 xPos = attr1 & 0x1FF;
                 if (xPos >= 256) { xPos -= 512; }
                 shape = attr0 >> 14;
-                flip = (attr1 >> 12) & 3;
+                flip = (attr1 >> 12) & 0b11;
                 size = attr1 >> 14;
                 tileNum = attr2 & 0x3FF;
                 palRow = attr2 >> 12;
             }
 
-            public bool Xflip { get { return (flip & 1) != 0; } }
-            public bool Yflip { get { return (flip & 2) != 0; } }
+            public static Part Empty => new Part(0, 0, 0);
+
+            //Properties
+            public Rectangle Area => new Rectangle(xPos, yPos, Dimensions.Width, Dimensions.Height);
 
             public Size Dimensions
             {
@@ -98,6 +114,22 @@ namespace mage
                     }
                     throw new FormatException();
                 }
+            }
+
+            public ushort[] GetAttributes()
+            {
+                ushort attr0 = 0, attr1 = 0, attr2 = 0;
+                attr0 |= (ushort)((yPos + (yPos < 0 ? 256 : 0)) & 0xFF);
+                attr0 |= (ushort)(shape << 14);
+
+                attr1 |= (ushort)((xPos + (xPos < 0 ? 512 : 0)) & 0x1FF);
+                attr1 |= (ushort)((flip & 0b11) << 12);
+                attr1 |= (ushort)(size << 14);
+
+                attr2 |= (ushort)(tileNum & 0x3FF);
+                attr2 |= (ushort)(palRow << 12);
+
+                return new ushort[] { attr0, attr1, attr2 };
             }
         }
 
@@ -141,6 +173,11 @@ namespace mage
             this.numFrames = frames.Count;
         }
 
+        #region Normal Drawing
+        /// <summary>
+        /// Returns a Bitmap where the sprite is drawn in the top left corner. Bitmap size matches that of the sprite.
+        /// </summary>
+        /// <returns></returns>
         public Bitmap Draw(byte[] gfx, Palette pal, int row, int frameNum)
         {
             int xEnd = 0;
@@ -207,6 +244,7 @@ namespace mage
             {
                 for (int x = region.X; x < xEnd; x++)  // for each tile across
                 {
+                    //              row in vram; tile;  max vram size;
                     int index = (y * 0x400 + x * 0x20) % 0x8000;
 
                     for (int r = 0; r < 8; r++)  // for each row in tile
@@ -289,7 +327,53 @@ namespace mage
 
             src.UnlockBits(srcData);
         }
+        #endregion
 
+        #region Real Drawing
 
+        /// <summary>
+        /// Creates a Bitmap where the sprite is drawn in the center/the sprites origin. 
+        /// </summary>
+        /// <returns></returns>
+        public Bitmap DrawReal(byte[] gfx, Palette pal, int row, int frameNum)
+        {
+            Bitmap spriteImg = new Bitmap(MaxWidth, MaxHeight, PixelFormat.Format16bppArgb1555);
+            Rectangle dstRect = new Rectangle(0, 0, spriteImg.Width, spriteImg.Height);
+
+            // The center/"origin" of the bitmap
+            Point originPos = new Point(XPosRange / 2, YPosRange/2);
+
+            // draw for each part
+            BitmapData spriteData = spriteImg.LockBits(dstRect, ImageLockMode.WriteOnly, spriteImg.PixelFormat);
+            Frame frame = frames[frameNum];
+
+            for (int i = frame.numParts - 1; i >= 0; i--)
+            {
+                Part part = frame.parts[i];
+
+                // get bitmap of part
+                int tileNum = (part.tileNum + row * 64) % 1024;
+                int palRow = (part.palRow + row) % 16;
+                Size s = part.Dimensions;
+                Rectangle rect = new Rectangle(tileNum % 32, tileNum / 32, s.Width / 8, s.Height / 8);
+                Bitmap gfxImg = DrawRegion(gfx, pal, palRow, rect);
+
+                // draw
+                DrawPart(gfxImg, spriteData, part.flip, part.xPos + FrameOriginX, part.yPos + FrameOriginY);
+            }
+
+            spriteImg.UnlockBits(spriteData);
+            return spriteImg;
+        }
+        #endregion
+
+        public static bool IsOAM(int offset)
+        {
+            for (int i = 0; i < 0xFFFF; i += 8)
+            {
+                if (ROM.Stream.Read16(offset + i + 4) == 0) return true;
+            }
+            return false;
+        }
     }
 }

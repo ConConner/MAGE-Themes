@@ -54,6 +54,20 @@ public partial class TileDisplay : Control
     public int GridCellHeight { get; set; } = 16;
 
     /// <summary>
+    /// This is a bad fix for the replacement of the OAM view
+    /// </summary>
+    public bool ShowOamOrigin
+    {
+        get => showOamOrigin;
+        set
+        {
+            showOamOrigin = value;
+            Invalidate();
+        }
+    }
+    private bool showOamOrigin = false;
+
+    /// <summary>
     /// Pen used for the tile grid if <see cref="ShowGrid"/> is set to true
     /// </summary>
     public Pen GridPen { get; set; } = Pens.White;
@@ -184,6 +198,12 @@ public partial class TileDisplay : Control
 
             for (int i = 0; i < TileImage.Height / GridCellHeight; i++)
                 pe.Graphics.DrawLine(GridPen, 0, (i * GridCellHeight) << Zoom, TileImage.Width << Zoom, (i * GridCellHeight) << Zoom);
+        }
+
+        if (ShowOamOrigin)
+        {
+            pe.Graphics.DrawLine(GridPen, 0, OAM.FrameOriginY << Zoom, OAM.XPosRange << Zoom, OAM.FrameOriginY << Zoom);
+            pe.Graphics.DrawLine(GridPen, OAM.FrameOriginX << Zoom, 0, OAM.FrameOriginX << Zoom, OAM.YPosRange << Zoom);
         }
 
         foreach (Drawable d in Drawables)
