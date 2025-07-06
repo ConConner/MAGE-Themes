@@ -176,6 +176,12 @@ namespace mage.Theming
                     lbl.LinkColor = theme.AccentColor;
                     lbl.VisitedLinkColor = theme.AccentColor;
                 }
+
+                if (component is TreeView)
+                {
+                    TreeView tv = component as TreeView;
+                    tv.LineColor = theme.PrimaryOutline;
+                }
             }
 
             Base?.ResumeLayout();
@@ -349,7 +355,8 @@ namespace mage.Theming
             Converters =
             {
                 new ColorJsonConverter(),
-            }
+            },
+            WriteIndented = true,
         };
 
         public static string Serialize(object obj)

@@ -22,6 +22,7 @@ using mage.Editors;
 using System.Linq.Expressions;
 using System.Diagnostics;
 using Microsoft.Win32;
+using mage.Bookmarks;
 
 namespace mage
 {
@@ -1113,6 +1114,15 @@ namespace mage
             var editor = new ThemeEditor();
             editor.ThemesChanged += PopulateThemeList;
             editor.ShowDialog();
+        }
+
+        private void menuItem_bookmarks_Click(object sender, EventArgs e)
+        {
+            if (!FindOpenForm(typeof(FormBookmarks), false))
+            {
+                FormBookmarks form = new();
+                form.Show();
+            }
         }
 
         private void button_experimental_Click(object sender, EventArgs e)
@@ -2718,7 +2728,7 @@ namespace mage
 
             // Snap to grid
             Point diff = new Point(pixelCursor.X - d.startPoint.X, pixelCursor.Y - d.startPoint.Y);
-            
+
             // Free Movement
             if (ModifierKeys != Keys.Shift)
             {

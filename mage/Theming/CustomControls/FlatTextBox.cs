@@ -65,6 +65,8 @@ partial class FlatTextBox : UserControl
 
     override public string Text { get => textBox.Text; set => textBox.Text = value; }
 
+    public string PlaceholderText { get => textBox.PlaceholderText; set => textBox.PlaceholderText = value; }
+
     public int MaxLength { get => textBox.MaxLength; set => textBox.MaxLength = value; }
 
     public bool WordWrap { get => textBox.WordWrap; set => textBox.WordWrap = value; }
