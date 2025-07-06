@@ -1,3 +1,9 @@
+TODO:
+- Write new TTE Documentation
+- Add missing Features to TTE Editor and move out of experimental
+- Write OAM Editor documentation
+- Fix OAM Repointing and move out of experimental
+
 MAGE Themes:
 - Theming support
 - Fix crashes
@@ -36,4 +42,5 @@ MAGE Themes:
 - .mgt, .mgr, .rlebg and lzbg can be imported via drag & drop
 - Tilesets can be imported via drag & drop with an Image
 - Tiletable Editor reworked
-- Cropped room image export
+- Cropped room image Export
+- Added OAM Editor
