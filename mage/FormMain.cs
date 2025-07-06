@@ -309,7 +309,7 @@ namespace mage
             SaveSettings();
         }
 
-        public bool FindOpenForm(Type t, bool close)
+        public static bool FindOpenForm(Type t, bool close)
         {
             FormCollection fc = Application.OpenForms;
             foreach (Form frm in fc)
@@ -1124,43 +1124,20 @@ namespace mage
         // help
         private void menuItem_viewHelp_Click(object sender, EventArgs e)
         {
-            string path = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-            path = Path.Combine(path, "doc.html");
-
-            if (File.Exists(path))
+            if (!FindOpenForm(typeof(HelpViewer), true))
             {
-                string url = new Uri(path).AbsoluteUri;
-                url += "#import";
-
-                var process = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = GetDefaultBrowserPath(),
-                        Arguments = url,
-                        UseShellExecute = true
-                    }
-                };
-                process.Start();
-            }
-            else
-            {
-                MessageBox.Show("Documentation file could not be found.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                HelpViewer form = new HelpViewer();
+                form.Show();
             }
         }
 
-        private string GetDefaultBrowserPath()
+        public static void showHelpItem(string path)
         {
-            var progID = (string)Registry.CurrentUser
-                .OpenSubKey("SOFTWARE\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice")
-                .GetValue("ProgID");
-
-            var command = (string)Registry.ClassesRoot
-                .OpenSubKey($"{progID}\\shell\\open\\command")
-                .GetValue(null);
-
-            return command;
+            if (!FindOpenForm(typeof(HelpViewer), true))
+            {
+                HelpViewer form = new HelpViewer(path);
+                form.Show();
+            }
         }
 
         private void menuItem_about_Click(object sender, EventArgs e)

@@ -283,7 +283,7 @@ namespace mage
                 Add.TilesetCopy(tsNum);
             }
 
-            main.FindOpenForm(typeof(FormTileset), true);
+            FormMain.FindOpenForm(typeof(FormTileset), true);
             FormTileset form = new FormTileset(main, numTilesets);
             form.Show();
         }
@@ -308,7 +308,7 @@ namespace mage
                 Add.SpritesetCopy(ssNum);
             }
 
-            main.FindOpenForm(typeof(FormSpriteset), true);
+            FormMain.FindOpenForm(typeof(FormSpriteset), true);
             FormSpriteset form = new FormSpriteset(main, numSpritesets);
             form.Show();
         }
@@ -394,7 +394,7 @@ namespace mage
                 }
             }
 
-            main.FindOpenForm(typeof(FormAnimation), true);
+            FormMain.FindOpenForm(typeof(FormAnimation), true);
             FormAnimation form = new FormAnimation(main, window, number);
             form.Show();
         }
