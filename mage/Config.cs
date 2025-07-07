@@ -27,4 +27,8 @@ public class Config
     public int OamEditorGfxZoom { get; set; } = 2;
     public int OamEditorOamZoom { get; set; } = 2;
     #endregion
+
+    #region Bookmarks
+    public int BookmarkExpandDepth { get; set; } = 1;
+    #endregion
 }

@@ -95,9 +95,12 @@ public class BookmarkJsonConverter : JsonConverter<BookmarkItem>
                     case "Name":
                         BookmarkFolder.Name = reader.GetString();
                         break;
-                    case "Items": // Or "Items"
-                        // This is the key: delegate list deserialization back to the
-                        // main serializer, which WILL use this converter for the items.
+                    case "Description":
+                        BookmarkFolder.Description = reader.GetString();
+                        break;
+                    case "Items":
+                        // delegate list deserialization back to the
+                        // main serializer, which will use this converter for the items.
                         BookmarkFolder.Items = JsonSerializer.Deserialize<List<BookmarkItem>>(ref reader, options);
                         break;
                 }
