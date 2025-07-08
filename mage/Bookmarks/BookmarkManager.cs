@@ -10,7 +10,9 @@ namespace mage.Bookmarks;
 
 public static class BookmarkManager
 {
-    public static List<BookmarkFolder> BookmarkCollections = new List<BookmarkFolder>();
+    public static List<BookmarkFolder> InternalCollections = new List<BookmarkFolder>();
+    public static List<BookmarkFolder> GlobalCollections = new List<BookmarkFolder>();
+    public static List<BookmarkFolder> ProjectCollections = new List<BookmarkFolder>();
 
     private static JsonSerializerOptions JsonOptions = new JsonSerializerOptions()
     {

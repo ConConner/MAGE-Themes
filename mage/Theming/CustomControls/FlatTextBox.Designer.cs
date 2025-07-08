@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace mage.Theming.CustomControls
 {
-    partial class FlatTextBox : UserControl
+    public partial class FlatTextBox : UserControl
     {
         private TextBox textBox;
 
@@ -26,6 +26,7 @@ namespace mage.Theming.CustomControls
             textBox.Size = new Size(96, 16);
             textBox.TabIndex = 0;
             textBox.Leave += textBox_Leave;
+            textBox.MouseUp += textBox_MouseUp;
             // 
             // FlatTextBox
             // 

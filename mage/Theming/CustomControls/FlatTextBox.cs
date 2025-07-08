@@ -5,11 +5,12 @@ using System.Runtime.Versioning;
 using System.Drawing.Drawing2D;
 using mage.Bookmarks;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace mage.Theming.CustomControls;
 
 [SupportedOSPlatform("windows")]
-partial class FlatTextBox : UserControl
+public partial class FlatTextBox : UserControl
 {
     #region Properties
 
@@ -30,7 +31,6 @@ partial class FlatTextBox : UserControl
             textBox.Multiline = value;
         }
     }
-
     private Color borderColor = Color.Black;
     public Color BorderColor
     {
@@ -42,10 +42,8 @@ partial class FlatTextBox : UserControl
         }
     }
     public bool DisplayBorder { get; set; } = true;
-
     public override Color ForeColor { get => textBox.ForeColor; set => textBox.ForeColor = value; }
     public bool ReadOnly { get => textBox.ReadOnly; set => textBox.ReadOnly = value; }
-
     public new BorderStyle BorderStyle
     {
         get => (BorderStyle)base.BorderStyle;
@@ -64,21 +62,13 @@ partial class FlatTextBox : UserControl
             base.BorderStyle = BorderStyle.None;
         }
     }
-
     override public string Text { get => textBox.Text; set => textBox.Text = value; }
-
     public string PlaceholderText { get => textBox.PlaceholderText; set => textBox.PlaceholderText = value; }
-
     public int MaxLength { get => textBox.MaxLength; set => textBox.MaxLength = value; }
-
     public bool WordWrap { get => textBox.WordWrap; set => textBox.WordWrap = value; }
-
     public int SelectionStart { get => textBox.SelectionStart; set => textBox.SelectionStart = value; }
-
     public HorizontalAlignment TextAlign { get => textBox.TextAlign; set => textBox.TextAlign = value; }
-
     public ScrollBars ScrollBars { get => textBox.ScrollBars; set => textBox.ScrollBars = value; }
-
     public override bool Focused
     {
         get
@@ -88,7 +78,17 @@ partial class FlatTextBox : UserControl
         }
     }
 
-    public bool StoreValue { get; set; } = false;
+    public bool valueBox = false;
+    public bool ValueBox
+    {
+        get => valueBox;
+        set
+        {
+            valueBox = value;
+            textBox.ContextMenuStrip = null;
+            if (valueBox) textBox.ContextMenuStrip = new ContextMenuStrip();
+        }
+    }
     #endregion
 
     #region events
@@ -105,15 +105,9 @@ partial class FlatTextBox : UserControl
     }
     #endregion
 
-    private ContextMenuStrip context;
-
     public FlatTextBox()
     {
         InitializeComponent();
-
-        textBox.TextChanged += textBoxTextChanged;
-        textBox.ContextMenuStrip = context = new ContextMenuStrip();
-        context.Opening += Context_Opening;
     }
 
     #region methods
@@ -145,62 +139,26 @@ partial class FlatTextBox : UserControl
 
     private void textBox_Leave(object sender, EventArgs e)
     {
-        if (!StoreValue || Text == "") return;
+        if (!ValueBox || Text == "") return;
         int value = Hex.ToInt(Text);
 
         //TODO: Check here if value is a bookmark
         Config.AddRecentOffset(Program.Config, Text, value);
     }
 
+
+
     //Conversions
     public static implicit operator TextBox(FlatTextBox b) => b.textBox;
 
-    //Context Menu
-    private void Context_Opening(object? sender, System.ComponentModel.CancelEventArgs e)
+    #region Context Menu
+    private void textBox_MouseUp(object sender, MouseEventArgs e)
     {
-        context.Items.Clear();
-        foreach (KeyValuePair<string, int> kvp in Program.Config.RecentOffsets)
-        {
-            ToolStripButton button = new();
-            button.Text = kvp.Key;
-            button.Tag = kvp.Value.ToString();
-            button.Click += RecentOffsetButtonPressed;
-
-            context.Items.Add(button);
-        }
-        if (context.Items.Count >= 1) context.Items.Add(new ToolStripSeparator());
-
-        ToolStripButton bookmarkButton = new();
-        bookmarkButton.Text = "Choose Bookmark...";
-        bookmarkButton.Click += BookmarkButton_Click;
-
-        context.Items.Add(bookmarkButton);
+        if (e.Button != MouseButtons.Right || !ValueBox) return;
+        RecentOffsets.ContextTextBox = this;
+        RecentOffsets.Context.Show(this, new Point(0, this.Height));
     }
 
-    private void BookmarkButton_Click(object? sender, EventArgs e)
-    {
-        FormBookmarks dialog = new FormBookmarks(true);
-        if (dialog.ShowDialog() != DialogResult.OK) return;
-
-        TreeNode result = dialog.ResultValue;
-        Bookmark bookmark = result.Tag as Bookmark;
-
-        Text = Hex.ToString(bookmark.Value);
-        Config.AddRecentOffset(Program.Config, result.FullPath, bookmark.Value);
-    }
-
-    private void RecentOffsetButtonPressed(object? sender, EventArgs e)
-    {
-        if (sender == null) return;
-        ToolStripButton button = sender as ToolStripButton;
-        if (button == null) return;
-
-        int value = 0;
-        if (int.TryParse(button.Tag as string, out value))
-        {
-            Text = Hex.ToString(value);
-        }
-    }
-
+    #endregion
     #endregion
 }

@@ -14,7 +14,13 @@ namespace mage;
 /// </summary>
 public class Config
 {
-    #region global
+    #region Bookmarking
+    public enum BookmarkCollection
+    {
+        Internal,
+        Global,
+        Project
+    }
     public static void AddRecentOffset(Config config, string key, int value)
     {
         if (config.RecentOffsets.Any(item => item.Value == value))
@@ -28,8 +34,12 @@ public class Config
         config.RecentOffsets.Insert(0, new(key, value));
         if (config.RecentOffsets.Count > config.MaxRecentOffsets) config.RecentOffsets.RemoveAt(config.MaxRecentOffsets - 1);
     }
+
     public List<KeyValuePair<string, int>> RecentOffsets { get; set; } = new();
     public int MaxRecentOffsets { get; set; } = 10;
+    public int BookmarkExpandDepth { get; set; } = 1;
+    public BookmarkCollection BookmarkLastUsedCollection { get; set; } = BookmarkCollection.Internal;
+    public int BookmarkLastUsedCollectionIndex { get; set; } = -1;
     #endregion
 
     #region Tile Table Editor
@@ -44,9 +54,5 @@ public class Config
     public bool OamEditorViewVram { get; set; } = false;
     public int OamEditorGfxZoom { get; set; } = 2;
     public int OamEditorOamZoom { get; set; } = 2;
-    #endregion
-
-    #region Bookmarks
-    public int BookmarkExpandDepth { get; set; } = 1;
     #endregion
 }

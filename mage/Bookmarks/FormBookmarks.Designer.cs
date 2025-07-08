@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node0");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Node0");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBookmarks));
             tree_bookmarks = new System.Windows.Forms.TreeView();
             imageList_treeIcons = new System.Windows.Forms.ImageList(components);
@@ -95,9 +95,9 @@
             tree_bookmarks.ImageList = imageList_treeIcons;
             tree_bookmarks.Location = new System.Drawing.Point(3, 42);
             tree_bookmarks.Name = "tree_bookmarks";
-            treeNode1.Name = "Node0";
-            treeNode1.Text = "Node0";
-            tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode1 });
+            treeNode2.Name = "Node0";
+            treeNode2.Text = "Node0";
+            tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode2 });
             tree_bookmarks.SelectedImageIndex = 0;
             tree_bookmarks.Size = new System.Drawing.Size(371, 380);
             tree_bookmarks.TabIndex = 0;
@@ -225,6 +225,7 @@
             textBox_search.Size = new System.Drawing.Size(371, 23);
             textBox_search.TabIndex = 1;
             textBox_search.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_search.ValueBox = false;
             textBox_search.WordWrap = true;
             // 
             // panel_collections
@@ -268,6 +269,7 @@
             listbox_projectCollections.Name = "listbox_projectCollections";
             listbox_projectCollections.Size = new System.Drawing.Size(155, 143);
             listbox_projectCollections.TabIndex = 1;
+            listbox_projectCollections.SelectedIndexChanged += listbox_projectCollections_SelectedIndexChanged;
             // 
             // panel_globalCollections
             // 
@@ -310,6 +312,7 @@
             listbox_internalCollections.Name = "listbox_internalCollections";
             listbox_internalCollections.Size = new System.Drawing.Size(155, 69);
             listbox_internalCollections.TabIndex = 1;
+            listbox_internalCollections.SelectedIndexChanged += listbox_internalCollections_SelectedIndexChanged;
             // 
             // group_details
             // 
@@ -344,6 +347,7 @@
             textBox_description.Size = new System.Drawing.Size(182, 294);
             textBox_description.TabIndex = 5;
             textBox_description.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_description.ValueBox = false;
             textBox_description.WordWrap = true;
             // 
             // label_description
@@ -372,6 +376,7 @@
             textBox_value.Size = new System.Drawing.Size(182, 23);
             textBox_value.TabIndex = 3;
             textBox_value.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_value.ValueBox = false;
             textBox_value.WordWrap = true;
             // 
             // label_value
@@ -400,6 +405,7 @@
             textBox_name.Size = new System.Drawing.Size(182, 23);
             textBox_name.TabIndex = 1;
             textBox_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_name.ValueBox = false;
             textBox_name.WordWrap = true;
             // 
             // label_name

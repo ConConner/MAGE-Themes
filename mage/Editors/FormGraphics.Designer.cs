@@ -196,7 +196,7 @@
             textBox_imageOffset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_imageOffset.SelectionStart = 0;
             textBox_imageOffset.Size = new System.Drawing.Size(70, 23);
-            textBox_imageOffset.StoreValue = true;
+            textBox_imageOffset.ValueBox = true;
             textBox_imageOffset.TabIndex = 0;
             textBox_imageOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_imageOffset.WordWrap = true;
@@ -262,7 +262,7 @@
             textBox_palOffset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_palOffset.SelectionStart = 0;
             textBox_palOffset.Size = new System.Drawing.Size(70, 23);
-            textBox_palOffset.StoreValue = false;
+            textBox_palOffset.ValueBox = false;
             textBox_palOffset.TabIndex = 0;
             textBox_palOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_palOffset.WordWrap = true;
