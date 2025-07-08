@@ -14,6 +14,24 @@ namespace mage;
 /// </summary>
 public class Config
 {
+    #region global
+    public static void AddRecentOffset(Config config, string key, int value)
+    {
+        if (config.RecentOffsets.Any(item => item.Value == value))
+        {
+            var kvp = config.RecentOffsets.Find(item => item.Value == value);
+            config.RecentOffsets.Remove(kvp);
+            config.RecentOffsets.Insert(0, kvp);
+            return;
+        }
+
+        config.RecentOffsets.Insert(0, new(key, value));
+        if (config.RecentOffsets.Count > config.MaxRecentOffsets) config.RecentOffsets.RemoveAt(config.MaxRecentOffsets - 1);
+    }
+    public List<KeyValuePair<string, int>> RecentOffsets { get; set; } = new();
+    public int MaxRecentOffsets { get; set; } = 10;
+    #endregion
+
     #region Tile Table Editor
     public bool TileTableEditorShowPalettePreview { get; set; } = false;
     public bool TileTableEditorCopyPalette { get; set; } = true;

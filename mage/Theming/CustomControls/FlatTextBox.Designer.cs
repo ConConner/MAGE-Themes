@@ -25,6 +25,7 @@ namespace mage.Theming.CustomControls
             textBox.Name = "textBox";
             textBox.Size = new Size(96, 16);
             textBox.TabIndex = 0;
+            textBox.Leave += textBox_Leave;
             // 
             // FlatTextBox
             // 

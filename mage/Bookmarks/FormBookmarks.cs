@@ -20,7 +20,7 @@ public partial class FormBookmarks : Form
     private bool init = false;
 
     private List<BookmarkFolder> Collections = BookmarkManager.BookmarkCollections;
-    public Bookmark DialogResult = null;
+    public TreeNode ResultValue = null;
     private bool isDialog = false;
     Subject<string> searchSubject;
 
@@ -299,13 +299,15 @@ public partial class FormBookmarks : Form
     {
         Text = "Select Bookmark";
         statusStrip1.Visible = false;
+        newToolStripMenuItem.Visible = false;
     }
     private void tree_bookmarks_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
     {
         if (!isDialog || tree_bookmarks.SelectedNode == null) return;
         if (tree_bookmarks.SelectedNode.Tag is not Bookmark) return;
 
-        DialogResult = tree_bookmarks.SelectedNode.Tag as Bookmark;
+        ResultValue = tree_bookmarks.SelectedNode;
+        DialogResult = DialogResult.OK;
         Close();
     }
     #endregion
@@ -364,7 +366,4 @@ public partial class FormBookmarks : Form
 
     }
     #endregion
-
-
-    
 }

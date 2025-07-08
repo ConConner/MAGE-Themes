@@ -191,10 +191,12 @@
             textBox_imageOffset.Name = "textBox_imageOffset";
             textBox_imageOffset.OnTextChanged = null;
             textBox_imageOffset.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_imageOffset.PlaceholderText = "";
             textBox_imageOffset.ReadOnly = false;
             textBox_imageOffset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_imageOffset.SelectionStart = 0;
             textBox_imageOffset.Size = new System.Drawing.Size(70, 23);
+            textBox_imageOffset.StoreValue = true;
             textBox_imageOffset.TabIndex = 0;
             textBox_imageOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_imageOffset.WordWrap = true;
@@ -255,10 +257,12 @@
             textBox_palOffset.Name = "textBox_palOffset";
             textBox_palOffset.OnTextChanged = null;
             textBox_palOffset.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_palOffset.PlaceholderText = "";
             textBox_palOffset.ReadOnly = false;
             textBox_palOffset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_palOffset.SelectionStart = 0;
             textBox_palOffset.Size = new System.Drawing.Size(70, 23);
+            textBox_palOffset.StoreValue = false;
             textBox_palOffset.TabIndex = 0;
             textBox_palOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_palOffset.WordWrap = true;
@@ -463,7 +467,7 @@
             // 
             importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_gfxImportRaw, menuItem_gfxImportImg });
             importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            importToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             importToolStripMenuItem.Text = "Import";
             // 
             // menuItem_gfxImportRaw
@@ -484,25 +488,25 @@
             // 
             menuItem_gfxExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_gfxExportRaw, toolStripSeparator1, menuItem_gfxExportImg, menuItem_pixelFormat });
             menuItem_gfxExport.Name = "menuItem_gfxExport";
-            menuItem_gfxExport.Size = new System.Drawing.Size(180, 22);
+            menuItem_gfxExport.Size = new System.Drawing.Size(110, 22);
             menuItem_gfxExport.Text = "Export";
             // 
             // menuItem_gfxExportRaw
             // 
             menuItem_gfxExportRaw.Name = "menuItem_gfxExportRaw";
-            menuItem_gfxExportRaw.Size = new System.Drawing.Size(180, 22);
+            menuItem_gfxExportRaw.Size = new System.Drawing.Size(140, 22);
             menuItem_gfxExportRaw.Text = "Raw...";
             menuItem_gfxExportRaw.Click += menuItem_gfxExportRaw_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(137, 6);
             // 
             // menuItem_gfxExportImg
             // 
             menuItem_gfxExportImg.Name = "menuItem_gfxExportImg";
-            menuItem_gfxExportImg.Size = new System.Drawing.Size(180, 22);
+            menuItem_gfxExportImg.Size = new System.Drawing.Size(140, 22);
             menuItem_gfxExportImg.Text = "Image...";
             menuItem_gfxExportImg.Click += menuItem_gfxExportImg_Click;
             // 
@@ -510,14 +514,14 @@
             // 
             menuItem_pixelFormat.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_4bitIndexed, menuItem_24bitRGB, menuItem_32bitARGB });
             menuItem_pixelFormat.Name = "menuItem_pixelFormat";
-            menuItem_pixelFormat.Size = new System.Drawing.Size(180, 22);
+            menuItem_pixelFormat.Size = new System.Drawing.Size(140, 22);
             menuItem_pixelFormat.Text = "Pixel Format";
             // 
             // menuItem_4bitIndexed
             // 
             menuItem_4bitIndexed.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             menuItem_4bitIndexed.Name = "menuItem_4bitIndexed";
-            menuItem_4bitIndexed.Size = new System.Drawing.Size(180, 22);
+            menuItem_4bitIndexed.Size = new System.Drawing.Size(144, 22);
             menuItem_4bitIndexed.Text = "4-bit Indexed";
             menuItem_4bitIndexed.Click += menuItem_pixelFormat_Click;
             // 
@@ -527,7 +531,7 @@
             menuItem_24bitRGB.CheckState = System.Windows.Forms.CheckState.Checked;
             menuItem_24bitRGB.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             menuItem_24bitRGB.Name = "menuItem_24bitRGB";
-            menuItem_24bitRGB.Size = new System.Drawing.Size(180, 22);
+            menuItem_24bitRGB.Size = new System.Drawing.Size(144, 22);
             menuItem_24bitRGB.Text = "24-bit RGB";
             menuItem_24bitRGB.Click += menuItem_pixelFormat_Click;
             // 
@@ -535,7 +539,7 @@
             // 
             menuItem_32bitARGB.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             menuItem_32bitARGB.Name = "menuItem_32bitARGB";
-            menuItem_32bitARGB.Size = new System.Drawing.Size(180, 22);
+            menuItem_32bitARGB.Size = new System.Drawing.Size(144, 22);
             menuItem_32bitARGB.Text = "32-bit ARGB";
             menuItem_32bitARGB.Click += menuItem_pixelFormat_Click;
             // 

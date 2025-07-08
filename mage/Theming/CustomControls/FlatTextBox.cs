@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.Versioning;
 using System.Drawing.Drawing2D;
+using mage.Bookmarks;
+using System.Collections.Generic;
 
 namespace mage.Theming.CustomControls;
 
@@ -85,6 +87,8 @@ partial class FlatTextBox : UserControl
             return false;
         }
     }
+
+    public bool StoreValue { get; set; } = false;
     #endregion
 
     #region events
@@ -101,10 +105,15 @@ partial class FlatTextBox : UserControl
     }
     #endregion
 
+    private ContextMenuStrip context;
+
     public FlatTextBox()
     {
         InitializeComponent();
+
         textBox.TextChanged += textBoxTextChanged;
+        textBox.ContextMenuStrip = context = new ContextMenuStrip();
+        context.Opening += Context_Opening;
     }
 
     #region methods
@@ -134,7 +143,64 @@ partial class FlatTextBox : UserControl
         textBox.Focus();
     }
 
+    private void textBox_Leave(object sender, EventArgs e)
+    {
+        if (!StoreValue || Text == "") return;
+        int value = Hex.ToInt(Text);
+
+        //TODO: Check here if value is a bookmark
+        Config.AddRecentOffset(Program.Config, Text, value);
+    }
+
     //Conversions
     public static implicit operator TextBox(FlatTextBox b) => b.textBox;
+
+    //Context Menu
+    private void Context_Opening(object? sender, System.ComponentModel.CancelEventArgs e)
+    {
+        context.Items.Clear();
+        foreach (KeyValuePair<string, int> kvp in Program.Config.RecentOffsets)
+        {
+            ToolStripButton button = new();
+            button.Text = kvp.Key;
+            button.Tag = kvp.Value.ToString();
+            button.Click += RecentOffsetButtonPressed;
+
+            context.Items.Add(button);
+        }
+        if (context.Items.Count >= 1) context.Items.Add(new ToolStripSeparator());
+
+        ToolStripButton bookmarkButton = new();
+        bookmarkButton.Text = "Choose Bookmark...";
+        bookmarkButton.Click += BookmarkButton_Click;
+
+        context.Items.Add(bookmarkButton);
+    }
+
+    private void BookmarkButton_Click(object? sender, EventArgs e)
+    {
+        FormBookmarks dialog = new FormBookmarks(true);
+        if (dialog.ShowDialog() != DialogResult.OK) return;
+
+        TreeNode result = dialog.ResultValue;
+        Bookmark bookmark = result.Tag as Bookmark;
+
+        Text = Hex.ToString(bookmark.Value);
+        Config.AddRecentOffset(Program.Config, result.FullPath, bookmark.Value);
+    }
+
+    private void RecentOffsetButtonPressed(object? sender, EventArgs e)
+    {
+        if (sender == null) return;
+        ToolStripButton button = sender as ToolStripButton;
+        if (button == null) return;
+
+        int value = 0;
+        if (int.TryParse(button.Tag as string, out value))
+        {
+            Text = Hex.ToString(value);
+        }
+    }
+
     #endregion
 }
