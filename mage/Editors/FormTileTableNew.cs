@@ -97,6 +97,14 @@ namespace mage.Editors
         private Room? openedInRoom;
         private Status Status;
 
+        // Tooltip
+        Point TableTileNumPosition;
+        Timer TableTimer;
+        TileTableTooltip TileTip = new TileTableTooltip()
+        {
+            AutoPopDelay = 0
+        };
+
         // Current loaded TileTable related Data
         private Tab selectedTab
         {
@@ -168,6 +176,11 @@ namespace mage.Editors
             tableView.GridPen = GridPen;
             updateTableZoom(0);
 
+            // Tooltip
+            TableTimer = new();
+            TableTimer.Interval = 700;
+            TableTimer.Tick += TableTimer_Tick;
+            
             // Status
             Status = new Status(statusLabel_changes, button_apply);
 
@@ -210,16 +223,9 @@ namespace mage.Editors
                     {
                         return y * 32 + x;
                     }
-                    break;
             }
             return -1;
         }
-
-        /// <summary>
-        /// Gets the index for a single tile from the tile x and y position on a metatile canvas.
-        /// </summary>
-        /// <param name="canvasWidth">Width of the metatile canvas. Width in metatiles</param>
-        private int GetIndexFromLocation(Point location, int canvasWidth) => GetIndexFromLocation(location.X, location.Y);
 
         private void SelectTilesFromGFX()
         {
@@ -1218,6 +1224,7 @@ namespace mage.Editors
                 TableSelectionVisible = true;
                 TableSelection.Rectangle = new Rectangle(e.TilePixelPosition.X, e.TilePixelPosition.Y, e.TileSize, e.TileSize);
                 TableSelectionPivot = TableSelection.Location;
+
                 return;
             }
         }
@@ -1226,6 +1233,14 @@ namespace mage.Editors
         {
             if (e.TilePixelPosition == TableCursor.Rectangle.Location || tableView.TileImage == null) return;
             if (e.X < 0 || e.Y < 0 || e.X >= tableView.Width || e.Y >= tableView.Height) return;
+
+            ResetToolTips();
+            if (tableView.TileImage != null)
+            {
+                TileTip.TileGFX = tableView.TileImage;
+                TileTip.TileVal = tileTable[GetIndexFromLocation(e.TileIndexPosition.X, e.TileIndexPosition.Y)];
+                TileTip.PositionOnImage = e.TilePixelPosition;
+            }
 
             TableCursor.Rectangle = new Rectangle(e.TilePixelPosition.X, e.TilePixelPosition.Y, selectedTilesSize.Width * e.TileSize, selectedTilesSize.Height * e.TileSize);
 
@@ -1273,6 +1288,23 @@ namespace mage.Editors
         }
         #endregion
 
+
+        #region ToolTips
+        private void ResetToolTips()
+        {
+            TableTimer.Start();
+            TileTip.RemoveAll();
+        }
+
+        private void TableTimer_Tick(object? sender, EventArgs e)
+        {
+            TableTimer.Stop();
+            Point clientMousePos = tableView.PointToClient(Cursor.Position);
+            if (!tableView.ClientRectangle.Contains(clientMousePos)) return;
+
+            TileTip.Show("Dummy", tableView, clientMousePos);
+        }
+        #endregion
 
         #region Import/Export
         private void statusButton_import_Click(object sender, EventArgs e)

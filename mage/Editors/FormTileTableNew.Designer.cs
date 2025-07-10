@@ -425,7 +425,7 @@
             tabPage_background.Controls.Add(label_size);
             tabPage_background.Location = new System.Drawing.Point(4, 25);
             tabPage_background.Name = "tabPage_background";
-            tabPage_background.Size = new System.Drawing.Size(527, 70);
+            tabPage_background.Size = new System.Drawing.Size(192, 71);
             tabPage_background.TabIndex = 1;
             tabPage_background.Text = "Background";
             // 
@@ -529,7 +529,7 @@
             tabPage_offset.Controls.Add(label_tileTable);
             tabPage_offset.Location = new System.Drawing.Point(4, 25);
             tabPage_offset.Name = "tabPage_offset";
-            tabPage_offset.Size = new System.Drawing.Size(527, 70);
+            tabPage_offset.Size = new System.Drawing.Size(192, 71);
             tabPage_offset.TabIndex = 2;
             tabPage_offset.Text = "Offset";
             // 
