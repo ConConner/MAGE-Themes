@@ -125,7 +125,7 @@
             panel_gfxView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_gfxView.Location = new System.Drawing.Point(3, 44);
             panel_gfxView.Name = "panel_gfxView";
-            panel_gfxView.Size = new System.Drawing.Size(529, 580);
+            panel_gfxView.Size = new System.Drawing.Size(529, 417);
             panel_gfxView.TabIndex = 0;
             // 
             // gfxView
@@ -172,7 +172,7 @@
             panel_Main.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             panel_Main.Panel2MinSize = 262;
             panel_Main.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            panel_Main.Size = new System.Drawing.Size(1075, 802);
+            panel_Main.Size = new System.Drawing.Size(837, 639);
             panel_Main.SplitterDistance = 544;
             panel_Main.TabIndex = 1;
             // 
@@ -196,7 +196,7 @@
             panel_gfxAndPal.Panel2.Controls.Add(group_gfx);
             panel_gfxAndPal.Panel2.Padding = new System.Windows.Forms.Padding(6, 3, 3, 3);
             panel_gfxAndPal.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            panel_gfxAndPal.Size = new System.Drawing.Size(544, 697);
+            panel_gfxAndPal.Size = new System.Drawing.Size(544, 534);
             panel_gfxAndPal.SplitterDistance = 60;
             panel_gfxAndPal.TabIndex = 1;
             // 
@@ -289,7 +289,7 @@
             group_gfx.Dock = System.Windows.Forms.DockStyle.Fill;
             group_gfx.Location = new System.Drawing.Point(6, 3);
             group_gfx.Name = "group_gfx";
-            group_gfx.Size = new System.Drawing.Size(535, 627);
+            group_gfx.Size = new System.Drawing.Size(535, 464);
             group_gfx.TabIndex = 0;
             group_gfx.TabStop = false;
             group_gfx.Text = "Graphics";
@@ -664,7 +664,7 @@
             group_table.Dock = System.Windows.Forms.DockStyle.Fill;
             group_table.Location = new System.Drawing.Point(3, 3);
             group_table.Name = "group_table";
-            group_table.Size = new System.Drawing.Size(518, 796);
+            group_table.Size = new System.Drawing.Size(280, 633);
             group_table.TabIndex = 0;
             group_table.TabStop = false;
             group_table.Text = "Tile Table";
@@ -676,8 +676,9 @@
             panel_tableView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_tableView.Location = new System.Drawing.Point(3, 44);
             panel_tableView.Name = "panel_tableView";
-            panel_tableView.Size = new System.Drawing.Size(512, 749);
+            panel_tableView.Size = new System.Drawing.Size(274, 586);
             panel_tableView.TabIndex = 1;
+            panel_tableView.MouseLeave += panel_tableView_MouseLeave;
             // 
             // tableView
             // 
@@ -709,7 +710,7 @@
             toolStrip_table.Location = new System.Drawing.Point(3, 19);
             toolStrip_table.Name = "toolStrip_table";
             toolStrip_table.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_table.Size = new System.Drawing.Size(512, 25);
+            toolStrip_table.Size = new System.Drawing.Size(274, 25);
             toolStrip_table.TabIndex = 0;
             toolStrip_table.Text = "toolStrip1";
             // 
@@ -827,9 +828,9 @@
             // statusStrip_main
             // 
             statusStrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_tile, statusLabel_changes, spring, statusButton_import, statusButton_export, button_apply });
-            statusStrip_main.Location = new System.Drawing.Point(0, 802);
+            statusStrip_main.Location = new System.Drawing.Point(0, 639);
             statusStrip_main.Name = "statusStrip_main";
-            statusStrip_main.Size = new System.Drawing.Size(1075, 22);
+            statusStrip_main.Size = new System.Drawing.Size(837, 22);
             statusStrip_main.TabIndex = 2;
             statusStrip_main.Text = "statusStrip1";
             // 
@@ -852,7 +853,7 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(818, 17);
+            spring.Size = new System.Drawing.Size(580, 17);
             spring.Spring = true;
             // 
             // statusButton_import
@@ -891,12 +892,12 @@
             // FormTileTableNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(1075, 824);
+            ClientSize = new System.Drawing.Size(837, 661);
             Controls.Add(panel_Main);
             Controls.Add(statusStrip_main);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
-            MinimumSize = new System.Drawing.Size(610, 863);
+            MinimumSize = new System.Drawing.Size(610, 700);
             Name = "FormTileTableNew";
             Text = "Tile Table Editor";
             FormClosing += FormTileTableNew_FormClosing;

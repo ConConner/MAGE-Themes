@@ -321,5 +321,17 @@ namespace mage.Properties {
                 this["config"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool legacyEditors {
+            get {
+                return ((bool)(this["legacyEditors"]));
+            }
+            set {
+                this["legacyEditors"] = value;
+            }
+        }
     }
 }

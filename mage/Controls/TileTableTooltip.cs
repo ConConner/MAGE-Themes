@@ -92,7 +92,7 @@ public class TileTableTooltip : ToolTip
             g.DrawImage(
                 TileGFX, 
                 new Rectangle(drawLocation.X + vArrow.Width + 1, drawLocation.Y + hArrow.Height + 1, previewSize, previewSize), 
-                new Rectangle(PositionOnImage, new Size(8, 8)), GraphicsUnit.Pixel
+                new Rectangle(PositionOnImage.X, PositionOnImage.Y, 7, 7), GraphicsUnit.Pixel
             );
         }
     }

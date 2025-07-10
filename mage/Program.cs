@@ -47,7 +47,17 @@ namespace mage
                 experimentalFeaturesEnabled = value;
                 if (Settings.Default.experimentalFeatures == value) return;
                 MessageBox.Show("You may need to restart the program for all changes to take effect.", "Restart required", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } 
+            }
+        }
+        private static bool legacyEditor = false;
+        public static bool LegacyEditors
+        {
+            get => legacyEditor;
+            set
+            {
+                legacyEditor = value;
+                if (Settings.Default.legacyEditors == value) return;
+            }
         }
         public static Config Config { get; set; }
     }

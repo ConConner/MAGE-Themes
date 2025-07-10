@@ -180,7 +180,7 @@ namespace mage.Editors
             TableTimer = new();
             TableTimer.Interval = 700;
             TableTimer.Tick += TableTimer_Tick;
-            
+
             // Status
             Status = new Status(statusLabel_changes, button_apply);
 
@@ -1235,6 +1235,7 @@ namespace mage.Editors
             if (e.X < 0 || e.Y < 0 || e.X >= tableView.Width || e.Y >= tableView.Height) return;
 
             ResetToolTips();
+
             if (tableView.TileImage != null)
             {
                 TileTip.TileGFX = tableView.TileImage;
@@ -1292,15 +1293,19 @@ namespace mage.Editors
         #region ToolTips
         private void ResetToolTips()
         {
-            TableTimer.Start();
+            TableTimer.Stop();
             TileTip.RemoveAll();
+            TableTimer.Start();
         }
+
+        private void panel_tableView_MouseLeave(object sender, EventArgs e) => ResetToolTips();
 
         private void TableTimer_Tick(object? sender, EventArgs e)
         {
             TableTimer.Stop();
+            if (tableView == null || tableView.IsDisposed) return;
             Point clientMousePos = tableView.PointToClient(Cursor.Position);
-            if (!tableView.ClientRectangle.Contains(clientMousePos)) return;
+            if (!tableView.ClientRectangle.Contains(clientMousePos) || Control.MouseButtons != MouseButtons.None) return;
 
             TileTip.Show("Dummy", tableView, clientMousePos);
         }
@@ -1348,5 +1353,7 @@ namespace mage.Editors
         }
         #endregion
         #endregion
+
+        
     }
 }

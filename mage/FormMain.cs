@@ -194,6 +194,8 @@ namespace mage
             menuItem_tooltips.Checked = Settings.Default.tooltips;
             button_experimental.Checked = Settings.Default.experimentalFeatures;
             Program.ExperimentalFeaturesEnabled = Settings.Default.experimentalFeatures;
+            button_legacy.Checked = Settings.Default.legacyEditors;
+            Program.LegacyEditors = Settings.Default.legacyEditors;
 
             zoom = Settings.Default.zoom;
             if (zoom == 0) { menuItem_zoom100.Checked = true; }
@@ -247,6 +249,7 @@ namespace mage
             Settings.Default.tooltips = menuItem_tooltips.Checked;
             Settings.Default.zoom = zoom;
             Settings.Default.experimentalFeatures = Program.ExperimentalFeaturesEnabled;
+            Settings.Default.legacyEditors = Program.LegacyEditors;
 
             //Config
             Settings.Default.config = JsonSerializer.Serialize(Program.Config);
@@ -631,19 +634,19 @@ namespace mage
 
         private void menuItem_tileTableEditor_Click(object sender, EventArgs e)
         {
-            if (Program.ExperimentalFeaturesEnabled)
+            if (Program.LegacyEditors)
             {
-                if (!FindOpenForm(typeof(FormTileTableNew), false))
+                if (!FindOpenForm(typeof(FormTileTable), false))
                 {
-                    FormTileTableNew form = new FormTileTableNew(room);
+                    FormTileTable form = new FormTileTable(this, room.tileset.number);
                     form.Show();
                 }
                 return;
             }
 
-            if (!FindOpenForm(typeof(FormTileTable), false))
+            if (!FindOpenForm(typeof(FormTileTableNew), false))
             {
-                FormTileTable form = new FormTileTable(this, room.tileset.number);
+                FormTileTableNew form = new FormTileTableNew(room);
                 form.Show();
             }
         }
@@ -1129,6 +1132,12 @@ namespace mage
         {
             Program.ExperimentalFeaturesEnabled = !Program.ExperimentalFeaturesEnabled;
             button_experimental.Checked = Program.ExperimentalFeaturesEnabled;
+        }
+
+        private void button_legacy_Click(object sender, EventArgs e)
+        {
+            Program.LegacyEditors = !Program.LegacyEditors;
+            button_legacy.Checked = Program.LegacyEditors;
         }
 
         // help
