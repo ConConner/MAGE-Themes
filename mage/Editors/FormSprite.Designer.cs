@@ -272,6 +272,7 @@
             textBox_healthXP.Name = "textBox_healthXP";
             textBox_healthXP.OnTextChanged = null;
             textBox_healthXP.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_healthXP.PlaceholderText = "";
             textBox_healthXP.ReadOnly = false;
             textBox_healthXP.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_healthXP.SelectionStart = 0;
@@ -279,6 +280,7 @@
             textBox_healthXP.TabIndex = 10;
             textBox_healthXP.Tag = "textBox_healthX";
             textBox_healthXP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_healthXP.ValueBox = false;
             textBox_healthXP.WordWrap = true;
             // 
             // textBox_powerBombP
@@ -292,6 +294,7 @@
             textBox_powerBombP.Name = "textBox_powerBombP";
             textBox_powerBombP.OnTextChanged = null;
             textBox_powerBombP.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_powerBombP.PlaceholderText = "";
             textBox_powerBombP.ReadOnly = false;
             textBox_powerBombP.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_powerBombP.SelectionStart = 0;
@@ -299,6 +302,7 @@
             textBox_powerBombP.TabIndex = 18;
             textBox_powerBombP.Tag = "textBox_powerBomb";
             textBox_powerBombP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_powerBombP.ValueBox = false;
             textBox_powerBombP.WordWrap = true;
             // 
             // textBox_missileXP
@@ -312,6 +316,7 @@
             textBox_missileXP.Name = "textBox_missileXP";
             textBox_missileXP.OnTextChanged = null;
             textBox_missileXP.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_missileXP.PlaceholderText = "";
             textBox_missileXP.ReadOnly = false;
             textBox_missileXP.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_missileXP.SelectionStart = 0;
@@ -319,6 +324,7 @@
             textBox_missileXP.TabIndex = 11;
             textBox_missileXP.Tag = "textBox_missileX";
             textBox_missileXP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_missileXP.ValueBox = false;
             textBox_missileXP.WordWrap = true;
             // 
             // textBox_superMissileP
@@ -332,6 +338,7 @@
             textBox_superMissileP.Name = "textBox_superMissileP";
             textBox_superMissileP.OnTextChanged = null;
             textBox_superMissileP.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_superMissileP.PlaceholderText = "";
             textBox_superMissileP.ReadOnly = false;
             textBox_superMissileP.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_superMissileP.SelectionStart = 0;
@@ -339,6 +346,7 @@
             textBox_superMissileP.TabIndex = 17;
             textBox_superMissileP.Tag = "textBox_superMissile";
             textBox_superMissileP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_superMissileP.ValueBox = false;
             textBox_superMissileP.WordWrap = true;
             // 
             // textBox_redXP
@@ -352,6 +360,7 @@
             textBox_redXP.Name = "textBox_redXP";
             textBox_redXP.OnTextChanged = null;
             textBox_redXP.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_redXP.PlaceholderText = "";
             textBox_redXP.ReadOnly = false;
             textBox_redXP.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_redXP.SelectionStart = 0;
@@ -359,6 +368,7 @@
             textBox_redXP.TabIndex = 12;
             textBox_redXP.Tag = "textBox_redX";
             textBox_redXP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_redXP.ValueBox = false;
             textBox_redXP.WordWrap = true;
             // 
             // textBox_missileP
@@ -372,6 +382,7 @@
             textBox_missileP.Name = "textBox_missileP";
             textBox_missileP.OnTextChanged = null;
             textBox_missileP.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_missileP.PlaceholderText = "";
             textBox_missileP.ReadOnly = false;
             textBox_missileP.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_missileP.SelectionStart = 0;
@@ -379,6 +390,7 @@
             textBox_missileP.TabIndex = 16;
             textBox_missileP.Tag = "textBox_missile";
             textBox_missileP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_missileP.ValueBox = false;
             textBox_missileP.WordWrap = true;
             // 
             // textBox_noDropP
@@ -392,6 +404,7 @@
             textBox_noDropP.Name = "textBox_noDropP";
             textBox_noDropP.OnTextChanged = null;
             textBox_noDropP.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_noDropP.PlaceholderText = "";
             textBox_noDropP.ReadOnly = false;
             textBox_noDropP.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_noDropP.SelectionStart = 0;
@@ -399,6 +412,7 @@
             textBox_noDropP.TabIndex = 13;
             textBox_noDropP.Tag = "textBox_noDrop";
             textBox_noDropP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_noDropP.ValueBox = false;
             textBox_noDropP.WordWrap = true;
             // 
             // textBox_largeHealthP
@@ -412,6 +426,7 @@
             textBox_largeHealthP.Name = "textBox_largeHealthP";
             textBox_largeHealthP.OnTextChanged = null;
             textBox_largeHealthP.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_largeHealthP.PlaceholderText = "";
             textBox_largeHealthP.ReadOnly = false;
             textBox_largeHealthP.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_largeHealthP.SelectionStart = 0;
@@ -419,6 +434,7 @@
             textBox_largeHealthP.TabIndex = 15;
             textBox_largeHealthP.Tag = "textBox_largeHealth";
             textBox_largeHealthP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_largeHealthP.ValueBox = false;
             textBox_largeHealthP.WordWrap = true;
             // 
             // textBox_smallHealthP
@@ -432,6 +448,7 @@
             textBox_smallHealthP.Name = "textBox_smallHealthP";
             textBox_smallHealthP.OnTextChanged = null;
             textBox_smallHealthP.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_smallHealthP.PlaceholderText = "";
             textBox_smallHealthP.ReadOnly = false;
             textBox_smallHealthP.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_smallHealthP.SelectionStart = 0;
@@ -439,6 +456,7 @@
             textBox_smallHealthP.TabIndex = 14;
             textBox_smallHealthP.Tag = "textBox_smallHealth";
             textBox_smallHealthP.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_smallHealthP.ValueBox = false;
             textBox_smallHealthP.WordWrap = true;
             // 
             // label_totalPercent
@@ -532,6 +550,7 @@
             textBox_powerBomb.Name = "textBox_powerBomb";
             textBox_powerBomb.OnTextChanged = null;
             textBox_powerBomb.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_powerBomb.PlaceholderText = "";
             textBox_powerBomb.ReadOnly = false;
             textBox_powerBomb.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_powerBomb.SelectionStart = 0;
@@ -539,6 +558,7 @@
             textBox_powerBomb.TabIndex = 8;
             textBox_powerBomb.Tag = "textBox_powerBombP";
             textBox_powerBomb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_powerBomb.ValueBox = false;
             textBox_powerBomb.WordWrap = true;
             textBox_powerBomb.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -553,6 +573,7 @@
             textBox_superMissile.Name = "textBox_superMissile";
             textBox_superMissile.OnTextChanged = null;
             textBox_superMissile.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_superMissile.PlaceholderText = "";
             textBox_superMissile.ReadOnly = false;
             textBox_superMissile.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_superMissile.SelectionStart = 0;
@@ -560,6 +581,7 @@
             textBox_superMissile.TabIndex = 7;
             textBox_superMissile.Tag = "textBox_superMissileP";
             textBox_superMissile.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_superMissile.ValueBox = false;
             textBox_superMissile.WordWrap = true;
             textBox_superMissile.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -574,6 +596,7 @@
             textBox_missile.Name = "textBox_missile";
             textBox_missile.OnTextChanged = null;
             textBox_missile.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_missile.PlaceholderText = "";
             textBox_missile.ReadOnly = false;
             textBox_missile.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_missile.SelectionStart = 0;
@@ -581,6 +604,7 @@
             textBox_missile.TabIndex = 6;
             textBox_missile.Tag = "textBox_missileP";
             textBox_missile.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_missile.ValueBox = false;
             textBox_missile.WordWrap = true;
             textBox_missile.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -595,6 +619,7 @@
             textBox_largeHealth.Name = "textBox_largeHealth";
             textBox_largeHealth.OnTextChanged = null;
             textBox_largeHealth.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_largeHealth.PlaceholderText = "";
             textBox_largeHealth.ReadOnly = false;
             textBox_largeHealth.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_largeHealth.SelectionStart = 0;
@@ -602,6 +627,7 @@
             textBox_largeHealth.TabIndex = 5;
             textBox_largeHealth.Tag = "textBox_largeHealthP";
             textBox_largeHealth.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_largeHealth.ValueBox = false;
             textBox_largeHealth.WordWrap = true;
             textBox_largeHealth.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -616,6 +642,7 @@
             textBox_smallHealth.Name = "textBox_smallHealth";
             textBox_smallHealth.OnTextChanged = null;
             textBox_smallHealth.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_smallHealth.PlaceholderText = "";
             textBox_smallHealth.ReadOnly = false;
             textBox_smallHealth.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_smallHealth.SelectionStart = 0;
@@ -623,6 +650,7 @@
             textBox_smallHealth.TabIndex = 4;
             textBox_smallHealth.Tag = "textBox_smallHealthP";
             textBox_smallHealth.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_smallHealth.ValueBox = false;
             textBox_smallHealth.WordWrap = true;
             textBox_smallHealth.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -637,6 +665,7 @@
             textBox_noDrop.Name = "textBox_noDrop";
             textBox_noDrop.OnTextChanged = null;
             textBox_noDrop.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_noDrop.PlaceholderText = "";
             textBox_noDrop.ReadOnly = false;
             textBox_noDrop.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_noDrop.SelectionStart = 0;
@@ -644,6 +673,7 @@
             textBox_noDrop.TabIndex = 3;
             textBox_noDrop.Tag = "textBox_noDropP";
             textBox_noDrop.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_noDrop.ValueBox = false;
             textBox_noDrop.WordWrap = true;
             textBox_noDrop.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -679,6 +709,7 @@
             textBox_redX.Name = "textBox_redX";
             textBox_redX.OnTextChanged = null;
             textBox_redX.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_redX.PlaceholderText = "";
             textBox_redX.ReadOnly = false;
             textBox_redX.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_redX.SelectionStart = 0;
@@ -686,6 +717,7 @@
             textBox_redX.TabIndex = 2;
             textBox_redX.Tag = "textBox_redXP";
             textBox_redX.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_redX.ValueBox = false;
             textBox_redX.WordWrap = true;
             textBox_redX.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -710,6 +742,7 @@
             textBox_missileX.Name = "textBox_missileX";
             textBox_missileX.OnTextChanged = null;
             textBox_missileX.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_missileX.PlaceholderText = "";
             textBox_missileX.ReadOnly = false;
             textBox_missileX.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_missileX.SelectionStart = 0;
@@ -717,6 +750,7 @@
             textBox_missileX.TabIndex = 1;
             textBox_missileX.Tag = "textBox_missileX";
             textBox_missileX.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_missileX.ValueBox = false;
             textBox_missileX.WordWrap = true;
             textBox_missileX.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -741,6 +775,7 @@
             textBox_healthX.Name = "textBox_healthX";
             textBox_healthX.OnTextChanged = null;
             textBox_healthX.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_healthX.PlaceholderText = "";
             textBox_healthX.ReadOnly = false;
             textBox_healthX.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_healthX.SelectionStart = 0;
@@ -748,6 +783,7 @@
             textBox_healthX.TabIndex = 0;
             textBox_healthX.Tag = "textBox_healthXP";
             textBox_healthX.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_healthX.ValueBox = false;
             textBox_healthX.WordWrap = true;
             textBox_healthX.TextChanged += textBox_dropProb_TextChanged;
             // 
@@ -811,12 +847,14 @@
             textBox_damage.Name = "textBox_damage";
             textBox_damage.OnTextChanged = null;
             textBox_damage.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_damage.PlaceholderText = "";
             textBox_damage.ReadOnly = false;
             textBox_damage.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_damage.SelectionStart = 0;
             textBox_damage.Size = new System.Drawing.Size(49, 23);
             textBox_damage.TabIndex = 1;
             textBox_damage.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_damage.ValueBox = false;
             textBox_damage.WordWrap = true;
             textBox_damage.TextChanged += SpriteValueChanged;
             // 
@@ -831,12 +869,14 @@
             textBox_health.Name = "textBox_health";
             textBox_health.OnTextChanged = null;
             textBox_health.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_health.PlaceholderText = "";
             textBox_health.ReadOnly = false;
             textBox_health.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_health.SelectionStart = 0;
             textBox_health.Size = new System.Drawing.Size(49, 23);
             textBox_health.TabIndex = 0;
             textBox_health.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_health.ValueBox = false;
             textBox_health.WordWrap = true;
             textBox_health.TextChanged += SpriteValueChanged;
             // 
@@ -969,12 +1009,14 @@
             textBox_gfxOffsetVal.Name = "textBox_gfxOffsetVal";
             textBox_gfxOffsetVal.OnTextChanged = null;
             textBox_gfxOffsetVal.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_gfxOffsetVal.PlaceholderText = "";
             textBox_gfxOffsetVal.ReadOnly = false;
             textBox_gfxOffsetVal.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_gfxOffsetVal.SelectionStart = 0;
             textBox_gfxOffsetVal.Size = new System.Drawing.Size(61, 23);
             textBox_gfxOffsetVal.TabIndex = 0;
             textBox_gfxOffsetVal.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_gfxOffsetVal.ValueBox = true;
             textBox_gfxOffsetVal.WordWrap = true;
             textBox_gfxOffsetVal.TextChanged += SpriteValueChanged;
             // 
@@ -1020,12 +1062,14 @@
             textBox_palOffsetVal.Name = "textBox_palOffsetVal";
             textBox_palOffsetVal.OnTextChanged = null;
             textBox_palOffsetVal.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_palOffsetVal.PlaceholderText = "";
             textBox_palOffsetVal.ReadOnly = false;
             textBox_palOffsetVal.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_palOffsetVal.SelectionStart = 0;
             textBox_palOffsetVal.Size = new System.Drawing.Size(61, 23);
             textBox_palOffsetVal.TabIndex = 2;
             textBox_palOffsetVal.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_palOffsetVal.ValueBox = true;
             textBox_palOffsetVal.WordWrap = true;
             textBox_palOffsetVal.TextChanged += SpriteValueChanged;
             // 
@@ -1091,6 +1135,7 @@
             textBox_AIoffset.Name = "textBox_AIoffset";
             textBox_AIoffset.OnTextChanged = null;
             textBox_AIoffset.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_AIoffset.PlaceholderText = "";
             textBox_AIoffset.ReadOnly = true;
             textBox_AIoffset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_AIoffset.SelectionStart = 0;
@@ -1098,6 +1143,7 @@
             textBox_AIoffset.TabIndex = 0;
             textBox_AIoffset.TabStop = false;
             textBox_AIoffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_AIoffset.ValueBox = false;
             textBox_AIoffset.WordWrap = true;
             // 
             // statusStrip

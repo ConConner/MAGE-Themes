@@ -196,16 +196,22 @@
             // textBox_offset
             // 
             textBox_offset.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            textBox_offset.DisplayBorder = true;
             textBox_offset.Location = new System.Drawing.Point(7, 22);
             textBox_offset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_offset.MaxLength = 32767;
             textBox_offset.Multiline = false;
             textBox_offset.Name = "textBox_offset";
+            textBox_offset.OnTextChanged = null;
             textBox_offset.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_offset.PlaceholderText = "";
             textBox_offset.ReadOnly = false;
             textBox_offset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_offset.SelectionStart = 0;
             textBox_offset.Size = new System.Drawing.Size(93, 23);
             textBox_offset.TabIndex = 0;
+            textBox_offset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_offset.ValueBox = true;
             textBox_offset.WordWrap = true;
             // 
             // comboBox_sprite
@@ -393,15 +399,21 @@
             // textBox_html_color
             // 
             textBox_html_color.BorderColor = System.Drawing.Color.Black;
+            textBox_html_color.DisplayBorder = true;
             textBox_html_color.Location = new System.Drawing.Point(57, 122);
+            textBox_html_color.MaxLength = 32767;
             textBox_html_color.Multiline = false;
             textBox_html_color.Name = "textBox_html_color";
+            textBox_html_color.OnTextChanged = null;
             textBox_html_color.Padding = new System.Windows.Forms.Padding(4, 3, 4, 2);
+            textBox_html_color.PlaceholderText = "";
             textBox_html_color.ReadOnly = false;
             textBox_html_color.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_html_color.SelectionStart = 0;
             textBox_html_color.Size = new System.Drawing.Size(206, 23);
             textBox_html_color.TabIndex = 24;
+            textBox_html_color.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_html_color.ValueBox = false;
             textBox_html_color.WordWrap = true;
             // 
             // groupBox_shortcuts

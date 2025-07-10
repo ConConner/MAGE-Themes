@@ -137,6 +137,7 @@
             gfxView.Location = new System.Drawing.Point(0, 6);
             gfxView.Name = "gfxView";
             gfxView.ShowGrid = false;
+            gfxView.ShowOamOrigin = false;
             gfxView.Size = new System.Drawing.Size(0, 0);
             gfxView.TabIndex = 0;
             gfxView.TabStop = false;
@@ -250,6 +251,7 @@
             paletteView.Location = new System.Drawing.Point(8, 51);
             paletteView.Name = "paletteView";
             paletteView.ShowGrid = false;
+            paletteView.ShowOamOrigin = false;
             paletteView.Size = new System.Drawing.Size(0, 0);
             paletteView.TabIndex = 2;
             paletteView.TabStop = false;
@@ -423,7 +425,7 @@
             tabPage_background.Controls.Add(label_size);
             tabPage_background.Location = new System.Drawing.Point(4, 25);
             tabPage_background.Name = "tabPage_background";
-            tabPage_background.Size = new System.Drawing.Size(192, 71);
+            tabPage_background.Size = new System.Drawing.Size(527, 70);
             tabPage_background.TabIndex = 1;
             tabPage_background.Text = "Background";
             // 
@@ -573,12 +575,14 @@
             textBox_pal.Name = "textBox_pal";
             textBox_pal.OnTextChanged = null;
             textBox_pal.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_pal.PlaceholderText = "";
             textBox_pal.ReadOnly = false;
             textBox_pal.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_pal.SelectionStart = 0;
             textBox_pal.Size = new System.Drawing.Size(81, 23);
             textBox_pal.TabIndex = 16;
             textBox_pal.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_pal.ValueBox = true;
             textBox_pal.WordWrap = true;
             // 
             // textBox_gfx
@@ -592,12 +596,14 @@
             textBox_gfx.Name = "textBox_gfx";
             textBox_gfx.OnTextChanged = null;
             textBox_gfx.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_gfx.PlaceholderText = "";
             textBox_gfx.ReadOnly = false;
             textBox_gfx.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_gfx.SelectionStart = 0;
             textBox_gfx.Size = new System.Drawing.Size(68, 23);
             textBox_gfx.TabIndex = 15;
             textBox_gfx.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_gfx.ValueBox = true;
             textBox_gfx.WordWrap = true;
             // 
             // textBox_ttb
@@ -611,12 +617,14 @@
             textBox_ttb.Name = "textBox_ttb";
             textBox_ttb.OnTextChanged = null;
             textBox_ttb.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_ttb.PlaceholderText = "";
             textBox_ttb.ReadOnly = false;
             textBox_ttb.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_ttb.SelectionStart = 0;
             textBox_ttb.Size = new System.Drawing.Size(68, 23);
             textBox_ttb.TabIndex = 14;
             textBox_ttb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_ttb.ValueBox = true;
             textBox_ttb.WordWrap = true;
             // 
             // label_palette
@@ -680,6 +688,7 @@
             tableView.Location = new System.Drawing.Point(0, 6);
             tableView.Name = "tableView";
             tableView.ShowGrid = false;
+            tableView.ShowOamOrigin = false;
             tableView.Size = new System.Drawing.Size(0, 0);
             tableView.TabIndex = 0;
             tableView.TabStop = false;

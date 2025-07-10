@@ -228,12 +228,14 @@
             textBox_imageOffset.Name = "textBox_imageOffset";
             textBox_imageOffset.OnTextChanged = null;
             textBox_imageOffset.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_imageOffset.PlaceholderText = "";
             textBox_imageOffset.ReadOnly = false;
             textBox_imageOffset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_imageOffset.SelectionStart = 0;
             textBox_imageOffset.Size = new System.Drawing.Size(70, 23);
             textBox_imageOffset.TabIndex = 0;
             textBox_imageOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_imageOffset.ValueBox = true;
             textBox_imageOffset.WordWrap = true;
             // 
             // label_imageOffset
@@ -267,12 +269,14 @@
             textBox_palOffset.Name = "textBox_palOffset";
             textBox_palOffset.OnTextChanged = null;
             textBox_palOffset.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_palOffset.PlaceholderText = "";
             textBox_palOffset.ReadOnly = false;
             textBox_palOffset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_palOffset.SelectionStart = 0;
             textBox_palOffset.Size = new System.Drawing.Size(70, 23);
             textBox_palOffset.TabIndex = 2;
             textBox_palOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_palOffset.ValueBox = true;
             textBox_palOffset.WordWrap = true;
             // 
             // textBox_oamOffset
@@ -286,12 +290,14 @@
             textBox_oamOffset.Name = "textBox_oamOffset";
             textBox_oamOffset.OnTextChanged = null;
             textBox_oamOffset.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_oamOffset.PlaceholderText = "";
             textBox_oamOffset.ReadOnly = false;
             textBox_oamOffset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_oamOffset.SelectionStart = 0;
             textBox_oamOffset.Size = new System.Drawing.Size(70, 23);
             textBox_oamOffset.TabIndex = 3;
             textBox_oamOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_oamOffset.ValueBox = true;
             textBox_oamOffset.WordWrap = true;
             // 
             // groupBox_image
@@ -536,12 +542,14 @@
             textBox_duration.Name = "textBox_duration";
             textBox_duration.OnTextChanged = null;
             textBox_duration.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_duration.PlaceholderText = "";
             textBox_duration.ReadOnly = false;
             textBox_duration.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_duration.SelectionStart = 0;
             textBox_duration.Size = new System.Drawing.Size(70, 23);
             textBox_duration.TabIndex = 3;
             textBox_duration.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_duration.ValueBox = false;
             textBox_duration.WordWrap = true;
             // 
             // label_frameDuration
@@ -659,12 +667,14 @@
             textBox_tile.Name = "textBox_tile";
             textBox_tile.OnTextChanged = null;
             textBox_tile.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_tile.PlaceholderText = "";
             textBox_tile.ReadOnly = false;
             textBox_tile.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_tile.SelectionStart = 0;
             textBox_tile.Size = new System.Drawing.Size(70, 23);
             textBox_tile.TabIndex = 12;
             textBox_tile.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_tile.ValueBox = false;
             textBox_tile.WordWrap = true;
             // 
             // label_palette
@@ -718,12 +728,14 @@
             textBox_y.Name = "textBox_y";
             textBox_y.OnTextChanged = null;
             textBox_y.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_y.PlaceholderText = "";
             textBox_y.ReadOnly = false;
             textBox_y.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_y.SelectionStart = 0;
             textBox_y.Size = new System.Drawing.Size(70, 23);
             textBox_y.TabIndex = 4;
             textBox_y.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_y.ValueBox = false;
             textBox_y.WordWrap = true;
             // 
             // textBox_x
@@ -737,12 +749,14 @@
             textBox_x.Name = "textBox_x";
             textBox_x.OnTextChanged = null;
             textBox_x.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_x.PlaceholderText = "";
             textBox_x.ReadOnly = false;
             textBox_x.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_x.SelectionStart = 0;
             textBox_x.Size = new System.Drawing.Size(70, 23);
             textBox_x.TabIndex = 2;
             textBox_x.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_x.ValueBox = false;
             textBox_x.WordWrap = true;
             // 
             // label_y

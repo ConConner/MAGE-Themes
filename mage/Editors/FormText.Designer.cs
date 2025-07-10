@@ -223,17 +223,23 @@
             // textBox_offsetVal
             // 
             textBox_offsetVal.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            textBox_offsetVal.DisplayBorder = false;
             textBox_offsetVal.Location = new System.Drawing.Point(57, 115);
             textBox_offsetVal.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_offsetVal.MaxLength = 32767;
             textBox_offsetVal.Multiline = false;
             textBox_offsetVal.Name = "textBox_offsetVal";
+            textBox_offsetVal.OnTextChanged = null;
             textBox_offsetVal.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_offsetVal.PlaceholderText = "";
             textBox_offsetVal.ReadOnly = true;
             textBox_offsetVal.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_offsetVal.SelectionStart = 0;
             textBox_offsetVal.Size = new System.Drawing.Size(64, 23);
             textBox_offsetVal.TabIndex = 7;
             textBox_offsetVal.TabStop = false;
+            textBox_offsetVal.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_offsetVal.ValueBox = false;
             textBox_offsetVal.WordWrap = true;
             // 
             // label_charPos
@@ -346,18 +352,24 @@
             // 
             textBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBox.BorderColor = System.Drawing.Color.Black;
+            textBox.DisplayBorder = true;
             textBox.Font = new System.Drawing.Font("Courier New", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             textBox.Location = new System.Drawing.Point(13, 3);
             textBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox.MaxLength = 32767;
             textBox.Multiline = true;
             textBox.Name = "textBox";
+            textBox.OnTextChanged = null;
             textBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 2);
+            textBox.PlaceholderText = "";
             textBox.ReadOnly = false;
             textBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             textBox.SelectionStart = 0;
             textBox.Size = new System.Drawing.Size(729, 284);
             textBox.TabIndex = 0;
             textBox.TabStop = false;
+            textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox.ValueBox = false;
             textBox.WordWrap = true;
             textBox.TextChanged += textBox_TextChanged;
             textBox.KeyUp += textBox_KeyUp;

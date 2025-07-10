@@ -462,7 +462,7 @@
             tabPage_background.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage_background.Name = "tabPage_background";
             tabPage_background.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage_background.Size = new System.Drawing.Size(192, 71);
+            tabPage_background.Size = new System.Drawing.Size(235, 86);
             tabPage_background.TabIndex = 0;
             tabPage_background.Text = "Background";
             // 
@@ -525,7 +525,7 @@
             tabPage_offset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage_offset.Name = "tabPage_offset";
             tabPage_offset.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage_offset.Size = new System.Drawing.Size(192, 71);
+            tabPage_offset.Size = new System.Drawing.Size(235, 86);
             tabPage_offset.TabIndex = 2;
             tabPage_offset.Text = "Offset";
             // 
@@ -571,12 +571,14 @@
             textBox_pal.Name = "textBox_pal";
             textBox_pal.OnTextChanged = null;
             textBox_pal.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_pal.PlaceholderText = "";
             textBox_pal.ReadOnly = false;
             textBox_pal.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_pal.SelectionStart = 0;
             textBox_pal.Size = new System.Drawing.Size(68, 23);
             textBox_pal.TabIndex = 5;
             textBox_pal.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_pal.ValueBox = true;
             textBox_pal.WordWrap = true;
             // 
             // textBox_gfx
@@ -590,12 +592,14 @@
             textBox_gfx.Name = "textBox_gfx";
             textBox_gfx.OnTextChanged = null;
             textBox_gfx.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_gfx.PlaceholderText = "";
             textBox_gfx.ReadOnly = false;
             textBox_gfx.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_gfx.SelectionStart = 0;
             textBox_gfx.Size = new System.Drawing.Size(68, 23);
             textBox_gfx.TabIndex = 4;
             textBox_gfx.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_gfx.ValueBox = true;
             textBox_gfx.WordWrap = true;
             // 
             // textBox_ttb
@@ -609,12 +613,14 @@
             textBox_ttb.Name = "textBox_ttb";
             textBox_ttb.OnTextChanged = null;
             textBox_ttb.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_ttb.PlaceholderText = "";
             textBox_ttb.ReadOnly = false;
             textBox_ttb.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_ttb.SelectionStart = 0;
             textBox_ttb.Size = new System.Drawing.Size(68, 23);
             textBox_ttb.TabIndex = 3;
             textBox_ttb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_ttb.ValueBox = true;
             textBox_ttb.WordWrap = true;
             // 
             // label_palette
