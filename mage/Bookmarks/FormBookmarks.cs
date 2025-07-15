@@ -353,8 +353,8 @@ public partial class FormBookmarks : Form
             return;
         }
 
-        if (LastCollectionUsed.Box.SelectedIndex == -1 || LastCollectionUsed.Box.SelectedIndex >= CurrentCollections.Count) return;
-        BookmarkFolder collection = CurrentCollections[LastCollectionUsed.Box.SelectedIndex];
+        if (LastCollectionUsed.SelectedIndex == -1 || LastCollectionUsed.SelectedIndex >= CurrentCollections.Count) return;
+        BookmarkFolder collection = CurrentSelectedCollection;
         if (collection == null) return;
 
         PopulateTreeViewFromCollection(collection);
@@ -400,14 +400,18 @@ public partial class FormBookmarks : Form
     #region Drag & Drop
     private void tree_bookmarks_ItemDrag(object sender, ItemDragEventArgs e)
     {
-        DoDragDrop(e.Item, DragDropEffects.Move);
+        DragDropEffects effect = DragDropEffects.All;
+        if (!AllowedToEdit) effect = DragDropEffects.None;
+        DoDragDrop(e.Item, effect);
     }
     private void tree_bookmarks_DragEnter(object sender, DragEventArgs e)
     {
-        e.Effect = DragDropEffects.Move;
+        e.Effect = DragDropEffects.All;
+        if (!AllowedToEdit) e.Effect = DragDropEffects.None;
     }
     private void tree_bookmarks_DragDrop(object sender, DragEventArgs e)
     {
+        if (!AllowedToEdit) return;
         TreeView tv = sender as TreeView;
 
         Point targetPoint = tv.PointToClient(new Point(e.X, e.Y));
@@ -566,7 +570,4 @@ public partial class FormBookmarks : Form
         if (int.TryParse(item.Tag as string, out depth)) ExpandDepth = depth;
     }
     #endregion
-
-
-    
 }
