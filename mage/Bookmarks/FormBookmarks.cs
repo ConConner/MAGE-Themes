@@ -29,14 +29,14 @@ public partial class FormBookmarks : Form
     // Dialog Values
     public TreeNode ResultValue = null;
     private bool isDialog = false;
-    
+
     private List<BookmarkFolder> CurrentCollections = BookmarkManager.InternalCollections;
     Subject<string> searchSubject;
     TreeNode SelectedTreeNode;
     BookmarkItem SelectedItem;
 
     // Last used Collection
-    CollectionBox lastCollectionUsed = new() { Box = null, SelectedIndex = -1 }; 
+    CollectionBox lastCollectionUsed = new() { Box = null, SelectedIndex = -1 };
     CollectionBox LastCollectionUsed
     {
         get => lastCollectionUsed;
@@ -81,6 +81,8 @@ public partial class FormBookmarks : Form
             }
         }
     }
+    BookmarkFolder CurrentSelectedCollection => CurrentCollections[LastCollectionUsed.SelectedIndex];
+    bool AllowedToEdit => LastCollectionUsed.Box != listbox_internalCollections;
 
     //Config
     int expandDepth = 1;
@@ -311,7 +313,7 @@ public partial class FormBookmarks : Form
         init = true;
 
         group_details.Visible = true;
-        group_details.Enabled = (LastCollectionUsed.Box != listbox_internalCollections);
+        group_details.Enabled = AllowedToEdit;
 
         textBox_value.Visible = false;
         label_value.Visible = false;
@@ -395,6 +397,104 @@ public partial class FormBookmarks : Form
     }
     #endregion
 
+    #region Drag & Drop
+    private void tree_bookmarks_ItemDrag(object sender, ItemDragEventArgs e)
+    {
+        DoDragDrop(e.Item, DragDropEffects.Move);
+    }
+    private void tree_bookmarks_DragEnter(object sender, DragEventArgs e)
+    {
+        e.Effect = DragDropEffects.Move;
+    }
+    private void tree_bookmarks_DragDrop(object sender, DragEventArgs e)
+    {
+        TreeView tv = sender as TreeView;
+
+        Point targetPoint = tv.PointToClient(new Point(e.X, e.Y));
+        TreeNode targetNode = tv.GetNodeAt(targetPoint);
+        TreeNode draggedNode = e.Data.GetData(typeof(TreeNode)) as TreeNode;
+
+        dropNode(draggedNode, targetNode);
+
+        tv.SelectedNode = draggedNode;
+    }
+
+    private void dropNode(TreeNode draggedNode, TreeNode targetNode)
+    {
+        if (draggedNode == null) return;
+        if (targetNode == null) //Dropped on treeview root
+        {
+            moveBookmark(draggedNode, CurrentSelectedCollection);
+            return;
+        }
+        if (draggedNode.Equals(targetNode)) return;
+        
+        // Check if target node is folder or bookmark
+        BookmarkItem targetNodeItem = targetNode.Tag as BookmarkItem;
+        if (targetNodeItem == null) return;
+
+        if (targetNodeItem is Bookmark)
+        {
+            // Stop dropping here and try it on the parent
+            dropNode(draggedNode, targetNode.Parent);
+            return;
+        }
+
+        // targetNodeItem IS Folder
+        if (canDropOnNode(draggedNode, targetNode)) moveBookmark(draggedNode, targetNode);
+    }
+
+    private void moveBookmark(TreeNode nodeToMove, TreeNode newParentNode)
+    {
+        if (nodeToMove.Tag is not BookmarkItem) throw new ArgumentException($"Node {nodeToMove} does not contain a valid BookmarkItem");
+        if (newParentNode.Tag is not BookmarkFolder && newParentNode != null) throw new ArgumentException($"The newParentNode needs to contain a valid BookmarkFolder");
+        
+        TreeNode oldParentNode = nodeToMove.Parent;
+        BookmarkItem itemToMove = nodeToMove.Tag as BookmarkItem;
+        BookmarkFolder newParentFolder = newParentNode.Tag as BookmarkFolder;
+        BookmarkFolder? oldParentFolder = null;
+        if (oldParentNode != null) oldParentFolder = oldParentNode.Tag as BookmarkFolder;
+
+        nodeToMove.Remove();
+        newParentNode.Nodes.Add(nodeToMove);
+        nodeToMove.Expand();
+
+        newParentFolder.Items.Add(itemToMove);
+        if (oldParentFolder != null) oldParentFolder.Items.Remove(itemToMove);
+        else CurrentSelectedCollection.Items.Remove(itemToMove);
+    }
+    private void moveBookmark(TreeNode nodeToMove, BookmarkFolder newParenFolder)
+    {
+        if (nodeToMove.Tag is not BookmarkItem) throw new ArgumentException($"Node {nodeToMove} does not contain a valid BookmarkItem");
+
+        TreeNode oldParentNode = nodeToMove.Parent;
+        BookmarkItem itemToMove = nodeToMove.Tag as BookmarkItem;
+        BookmarkFolder? oldParentFolder = null;
+        if (oldParentNode != null) oldParentFolder = oldParentNode.Tag as BookmarkFolder;
+
+        nodeToMove.Remove();
+        tree_bookmarks.Nodes.Add(nodeToMove);
+        nodeToMove.Expand();
+
+        newParenFolder.Items.Add(itemToMove);
+        if (oldParentFolder != null) oldParentFolder.Items.Remove(itemToMove);
+        else CurrentSelectedCollection.Items.Remove(itemToMove);
+    }
+
+    private bool canDropOnNode(TreeNode node, TreeNode target)
+    {
+        TreeNode parent = target;
+        bool canDrop = true;
+        while (canDrop && parent != null)
+        {
+            canDrop = !Object.ReferenceEquals(node, parent);
+            parent = parent.Parent;
+        }
+
+        return canDrop;
+    }
+    #endregion
+
     #region Dialog
     private void HandleDialog()
     {
@@ -466,4 +566,7 @@ public partial class FormBookmarks : Form
         if (int.TryParse(item.Tag as string, out depth)) ExpandDepth = depth;
     }
     #endregion
+
+
+    
 }

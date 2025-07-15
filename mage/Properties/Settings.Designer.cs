@@ -333,5 +333,17 @@ namespace mage.Properties {
                 this["legacyEditors"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string globalBookmarks {
+            get {
+                return ((string)(this["globalBookmarks"]));
+            }
+            set {
+                this["globalBookmarks"] = value;
+            }
+        }
     }
 }

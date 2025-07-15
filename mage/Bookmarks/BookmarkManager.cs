@@ -31,4 +31,16 @@ public static class BookmarkManager
     {
         return JsonSerializer.Deserialize<BookmarkFolder>(json, JsonOptions);
     }
+
+    public static string SerializeCollections(List<BookmarkFolder> collections)
+    {
+        List<BookmarkItem> castList = collections.Cast<BookmarkItem>().ToList();
+        return JsonSerializer.Serialize(castList, JsonOptions);
+    }
+
+    public static List<BookmarkFolder> DeserializeCollections(string json)
+    {
+        List<BookmarkItem> result = JsonSerializer.Deserialize<List<BookmarkItem>>(json, JsonOptions);
+        return result.Cast<BookmarkFolder>().ToList();
+    }
 }

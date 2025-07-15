@@ -233,6 +233,10 @@ namespace mage
             //Loading Sound path
             Sound.SoundPacksPath = Settings.Default.soundPackPath;
             Sound.SoundPackName = Settings.Default.soundPackName;
+
+            // Bookmarks
+            try { BookmarkManager.GlobalCollections = BookmarkManager.DeserializeCollections(Settings.Default.globalBookmarks); }
+            catch { BookmarkManager.GlobalCollections = new(); }
         }
 
         private void SaveSettings()
@@ -273,6 +277,9 @@ namespace mage
             //Sound
             Settings.Default.soundPackPath = Sound.SoundPacksPath;
             Settings.Default.soundPackName = Sound.SoundPackName;
+
+            //Bookmarks
+            Settings.Default.globalBookmarks = BookmarkManager.SerializeCollections(BookmarkManager.GlobalCollections);
 
             Settings.Default.Save();
         }

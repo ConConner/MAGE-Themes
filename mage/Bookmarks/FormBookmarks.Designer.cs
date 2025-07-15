@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Node0");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node0");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBookmarks));
             tree_bookmarks = new System.Windows.Forms.TreeView();
             imageList_treeIcons = new System.Windows.Forms.ImageList(components);
@@ -87,6 +87,7 @@
             // 
             // tree_bookmarks
             // 
+            tree_bookmarks.AllowDrop = true;
             tree_bookmarks.BorderStyle = System.Windows.Forms.BorderStyle.None;
             tree_bookmarks.Dock = System.Windows.Forms.DockStyle.Fill;
             tree_bookmarks.HideSelection = false;
@@ -95,15 +96,18 @@
             tree_bookmarks.ImageList = imageList_treeIcons;
             tree_bookmarks.Location = new System.Drawing.Point(3, 42);
             tree_bookmarks.Name = "tree_bookmarks";
-            treeNode2.Name = "Node0";
-            treeNode2.Text = "Node0";
-            tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode2 });
+            treeNode1.Name = "Node0";
+            treeNode1.Text = "Node0";
+            tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode1 });
             tree_bookmarks.SelectedImageIndex = 0;
             tree_bookmarks.Size = new System.Drawing.Size(371, 380);
             tree_bookmarks.TabIndex = 0;
+            tree_bookmarks.ItemDrag += tree_bookmarks_ItemDrag;
             tree_bookmarks.AfterSelect += tree_bookmarks_AfterSelect;
             tree_bookmarks.NodeMouseClick += tree_bookmarks_NodeMouseClick;
             tree_bookmarks.NodeMouseDoubleClick += tree_bookmarks_NodeMouseDoubleClick;
+            tree_bookmarks.DragDrop += tree_bookmarks_DragDrop;
+            tree_bookmarks.DragEnter += tree_bookmarks_DragEnter;
             // 
             // imageList_treeIcons
             // 
@@ -332,6 +336,7 @@
             // 
             // textBox_description
             // 
+            textBox_description.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBox_description.BorderColor = System.Drawing.Color.Black;
             textBox_description.DisplayBorder = true;
             textBox_description.Location = new System.Drawing.Point(6, 125);
