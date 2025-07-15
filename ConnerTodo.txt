@@ -1,7 +1,7 @@
 TODO:
 - Write new TTE Documentation
-- Add missing Features to TTE Editor and move out of experimental
 - Write OAM Editor documentation
+- Write Bookmark documentation / Recent Offset Documentation
 - Fix OAM Repointing and move out of experimental
 
 MAGE Themes:
@@ -44,3 +44,5 @@ MAGE Themes:
 - Tiletable Editor reworked
 - Cropped room image Export
 - Added OAM Editor
+- Added Bookmarking System
+- Recent values on Offset/Pointer inputs

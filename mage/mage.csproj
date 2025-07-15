@@ -28,6 +28,9 @@
     <StartupObject></StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\Bookmarks\ZM_U_OAM_Bookmarks.mbc" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Dialogs\BackgroundPropertyDialog.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -130,6 +133,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Bookmarks\ZM_U_OAM_Bookmarks.mbc" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FuzzySharp" Version="2.0.2" />

@@ -25,6 +25,7 @@ namespace mage.Theming.CustomControls
             textBox.Name = "textBox";
             textBox.Size = new Size(96, 16);
             textBox.TabIndex = 0;
+            textBox.TextChanged += textBoxTextChanged;
             textBox.Leave += textBox_Leave;
             textBox.MouseUp += textBox_MouseUp;
             // 

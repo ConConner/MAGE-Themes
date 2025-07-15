@@ -23,6 +23,9 @@ using System.Linq.Expressions;
 using System.Diagnostics;
 using Microsoft.Win32;
 using mage.Bookmarks;
+using System.Security.Cryptography.X509Certificates;
+using System.Reflection;
+using System.Text;
 
 namespace mage
 {
@@ -111,6 +114,7 @@ namespace mage
             DisplayRecentFiles();
             InitializeSettings();
             PopulateThemeList(null, null);
+            LoadInternalBookmarks();
             ShowSplash();
 
             roomView.Scrolled += roomView_Scrolled;
@@ -226,7 +230,7 @@ namespace mage
             }
             if (TestRoomSettings == null) TestRoomSettings = new();
 
-            //Louding Sound path
+            //Loading Sound path
             Sound.SoundPacksPath = Settings.Default.soundPackPath;
             Sound.SoundPackName = Settings.Default.soundPackName;
         }
@@ -271,6 +275,27 @@ namespace mage
             Settings.Default.soundPackName = Sound.SoundPackName;
 
             Settings.Default.Save();
+        }
+
+        private void LoadInternalBookmarks()
+        {
+            if (Version.IsMF) return;
+
+            string json = LoadAssemblyResourceAsString("mage.Resources.Bookmarks.ZM_U_OAM_Bookmarks.mbc");
+            BookmarkManager.InternalCollections = new() { BookmarkManager.Deserialize(json) };
+        }
+
+        private string LoadAssemblyResourceAsString(string resourceName)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                if (stream == null) throw new FileNotFoundException($"Resource {resourceName} not found");
+                using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
         }
 
         private void CheckIfThemesExist()

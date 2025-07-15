@@ -17,30 +17,68 @@ namespace mage.Bookmarks;
 
 public partial class FormBookmarks : Form
 {
+    // Struct for keeping track of last selected values
+    private struct CollectionBox
+    {
+        public ListBox Box;
+        public int SelectedIndex;
+    }
+
     private bool init = false;
 
-    private List<BookmarkFolder> CurrentCollections = BookmarkManager.InternalCollections;
+    // Dialog Values
     public TreeNode ResultValue = null;
     private bool isDialog = false;
+    
+    private List<BookmarkFolder> CurrentCollections = BookmarkManager.InternalCollections;
     Subject<string> searchSubject;
-
     TreeNode SelectedTreeNode;
     BookmarkItem SelectedItem;
-    ListBox BoxWithSelectedItem;
-    int selectedIndex = -1;
-    int SelectedIndex
+
+    // Last used Collection
+    CollectionBox lastCollectionUsed = new() { Box = null, SelectedIndex = -1 }; 
+    CollectionBox LastCollectionUsed
     {
-        get => selectedIndex;
+        get => lastCollectionUsed;
         set
         {
-            if (BoxWithSelectedItem == null) return;
+            var old = lastCollectionUsed;
+            lastCollectionUsed = value;
 
-            BookmarkFolder collection = CurrentCollections[value];
-            DisplayBookmarkDetails(collection);
+            if (value.Box != old.Box)
+            {
+                if (value.Box == listbox_internalCollections)
+                {
+                    Program.Config.BookmarkLastUsedCollection = Config.BookmarkCollection.Internal;
+                    CurrentCollections = BookmarkManager.InternalCollections;
+                }
+                if (value.Box == listbox_globalCollections)
+                {
+                    Program.Config.BookmarkLastUsedCollection = Config.BookmarkCollection.Global;
+                    CurrentCollections = BookmarkManager.GlobalCollections;
+                }
+                if (value.Box == listbox_projectCollections)
+                {
+                    Program.Config.BookmarkLastUsedCollection = Config.BookmarkCollection.Project;
+                    CurrentCollections = BookmarkManager.ProjectCollections;
+                }
+            }
 
-            if (value == selectedIndex) return;
-            PopulateTreeViewFromCollection(collection);
-            selectedIndex = value;
+            if (value.SelectedIndex != -1 && value.SelectedIndex < value.Box.Items.Count)
+            {
+                BookmarkFolder collection = CurrentCollections[value.SelectedIndex];
+                DisplayBookmarkDetails(collection);
+
+                if (value.Box == old.Box && value.SelectedIndex == old.SelectedIndex) return;
+
+                Program.Config.BookmarkLastUsedCollectionIndex = value.SelectedIndex;
+
+                if ((value.SelectedIndex != old.SelectedIndex) || (value.Box != old.Box))
+                {
+                    value.Box.SelectedIndex = value.SelectedIndex;
+                    PopulateTreeViewFromCollection(collection);
+                }
+            }
         }
     }
 
@@ -101,9 +139,6 @@ public partial class FormBookmarks : Form
         textBox_description.TextChanged += TextBox_description_TextChanged;
         textBox_value.TextChanged += TextBox_value_TextChanged;
 
-        // Load Config
-        ExpandDepth = Program.Config.BookmarkExpandDepth;
-
         group_details.Visible = false;
 
         this.isDialog = isDialog;
@@ -111,8 +146,23 @@ public partial class FormBookmarks : Form
 
         tree_bookmarks.Nodes.Clear();
         LoadColletions();
+
+        // Load Config
+        ExpandDepth = Program.Config.BookmarkExpandDepth;
+        LastCollectionUsed = new()
+        {
+            Box = FromBoxEnumToObject(Program.Config.BookmarkLastUsedCollection),
+            SelectedIndex = Program.Config.BookmarkLastUsedCollectionIndex
+        };
     }
 
+    private ListBox FromBoxEnumToObject(Config.BookmarkCollection collection)
+    {
+        if (collection == Config.BookmarkCollection.Internal) return listbox_internalCollections;
+        if (collection == Config.BookmarkCollection.Global) return listbox_globalCollections;
+        if (collection == Config.BookmarkCollection.Project) return listbox_projectCollections;
+        return null;
+    }
 
     private void LoadColletions()
     {
@@ -148,7 +198,14 @@ public partial class FormBookmarks : Form
         if (listbox_internalCollections.SelectedIndex == -1) return;
 
         CurrentCollections = BookmarkManager.InternalCollections;
-        BoxWithSelectedItem = listbox_internalCollections;
+        LastCollectionUsed = new()
+        {
+            Box = listbox_internalCollections,
+            SelectedIndex = listbox_internalCollections.SelectedIndex
+        };
+
+        listbox_globalCollections.SelectedIndex = -1;
+        listbox_projectCollections.SelectedIndex = -1;
 
         selectedCollection();
     }
@@ -157,7 +214,14 @@ public partial class FormBookmarks : Form
         if (listbox_globalCollections.SelectedIndex == -1) return;
 
         CurrentCollections = BookmarkManager.GlobalCollections;
-        BoxWithSelectedItem = listbox_globalCollections;
+        LastCollectionUsed = new()
+        {
+            Box = listbox_globalCollections,
+            SelectedIndex = listbox_globalCollections.SelectedIndex
+        };
+
+        listbox_internalCollections.SelectedIndex = -1;
+        listbox_projectCollections.SelectedIndex = -1;
 
         selectedCollection();
     }
@@ -166,7 +230,14 @@ public partial class FormBookmarks : Form
         if (listbox_projectCollections.SelectedIndex == -1) return;
 
         CurrentCollections = BookmarkManager.ProjectCollections;
-        BoxWithSelectedItem = listbox_projectCollections;
+        LastCollectionUsed = new()
+        {
+            Box = listbox_projectCollections,
+            SelectedIndex = listbox_projectCollections.SelectedIndex
+        };
+
+        listbox_internalCollections.SelectedIndex = -1;
+        listbox_globalCollections.SelectedIndex = -1;
 
         selectedCollection();
     }
@@ -175,8 +246,7 @@ public partial class FormBookmarks : Form
         SelectedTreeNode = null;
         tree_bookmarks.SelectedNode = null;
 
-        SelectedItem = CurrentCollections[BoxWithSelectedItem.SelectedIndex];
-        SelectedIndex = BoxWithSelectedItem.SelectedIndex;
+        SelectedItem = CurrentCollections[LastCollectionUsed.Box.SelectedIndex];
     }
 
 
@@ -232,7 +302,6 @@ public partial class FormBookmarks : Form
         listbox_globalCollections.SelectedItem = null;
         SelectedTreeNode = e.Node;
         SelectedItem = e.Node.Tag as BookmarkItem;
-        BoxWithSelectedItem = null;
 
         DisplayBookmarkDetails(tree_bookmarks.SelectedNode.Tag as BookmarkItem);
     }
@@ -242,6 +311,8 @@ public partial class FormBookmarks : Form
         init = true;
 
         group_details.Visible = true;
+        group_details.Enabled = (LastCollectionUsed.Box != listbox_internalCollections);
+
         textBox_value.Visible = false;
         label_value.Visible = false;
         textBox_value.Text = String.Empty;
@@ -274,14 +345,14 @@ public partial class FormBookmarks : Form
 
     private void doSearch(string searchString)
     {
-        if (listbox_globalCollections.InvokeRequired)
+        if (LastCollectionUsed.Box.InvokeRequired)
         {
-            listbox_globalCollections.Invoke(new System.Action(() => doSearch(searchString)));
+            LastCollectionUsed.Box.Invoke(new System.Action(() => doSearch(searchString)));
             return;
         }
 
-        if (BoxWithSelectedItem.SelectedIndex == -1 || BoxWithSelectedItem.SelectedIndex >= CurrentCollections.Count) return;
-        BookmarkFolder collection = CurrentCollections[BoxWithSelectedItem.SelectedIndex];
+        if (LastCollectionUsed.Box.SelectedIndex == -1 || LastCollectionUsed.Box.SelectedIndex >= CurrentCollections.Count) return;
+        BookmarkFolder collection = CurrentCollections[LastCollectionUsed.Box.SelectedIndex];
         if (collection == null) return;
 
         PopulateTreeViewFromCollection(collection);
@@ -302,16 +373,16 @@ public partial class FormBookmarks : Form
             SelectedTreeNode.Text = SelectedItem.Name;
             tree_bookmarks.EndUpdate();
         }
-        if (BoxWithSelectedItem != null && BoxWithSelectedItem.SelectedIndex != -1)
+        if (LastCollectionUsed.Box != null && LastCollectionUsed.Box.SelectedIndex != -1)
         {
-            BoxWithSelectedItem.Items[BoxWithSelectedItem.SelectedIndex] = SelectedItem.Name;
+            LastCollectionUsed.Box.Items[LastCollectionUsed.Box.SelectedIndex] = SelectedItem.Name;
         }
     }
 
     private void TextBox_value_TextChanged(object? sender, EventArgs e)
     {
         if (init) return;
-        if (BoxWithSelectedItem != null) return;
+        if (LastCollectionUsed.Box != null) return;
         if (SelectedTreeNode == null && SelectedItem == null) return;
         (SelectedItem as Bookmark).Value = Hex.ToInt(textBox_value.Text);
     }
@@ -350,12 +421,12 @@ public partial class FormBookmarks : Form
             MessageBox.Show("No bookmark collection selected", "Select Collection", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             return;
         }
-        BookmarkFolder collection = CurrentCollections[BoxWithSelectedItem.SelectedIndex];
+        BookmarkFolder collection = CurrentCollections[LastCollectionUsed.Box.SelectedIndex];
 
         SaveFileDialog dialog = new SaveFileDialog();
         dialog.Filter = "MAGE Bookmark Collection (*.mbc)|*.mbc";
         dialog.FileName = collection.Name;
-        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (dialog.ShowDialog() == DialogResult.OK)
         {
             //convert key pair to json object
             string data = BookmarkManager.Serialize(collection);
@@ -367,14 +438,14 @@ public partial class FormBookmarks : Form
     {
         OpenFileDialog dialog = new OpenFileDialog();
         dialog.Filter = "MAGE Bookmark Collection (*.mbc)|*.mbc";
-        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (dialog.ShowDialog() == DialogResult.OK)
         {
             if (!File.Exists(dialog.FileName)) return;
             string json = File.ReadAllText(dialog.FileName);
             try
             {
                 BookmarkFolder collection = BookmarkManager.Deserialize(json);
-                AddCollection(collection, listbox_internalCollections, BookmarkManager.InternalCollections);
+                AddCollection(collection, listbox_globalCollections, BookmarkManager.GlobalCollections);
             }
             catch (Exception ex)
             {
@@ -393,9 +464,6 @@ public partial class FormBookmarks : Form
         ToolStripMenuItem item = sender as ToolStripMenuItem;
         int depth = -1;
         if (int.TryParse(item.Tag as string, out depth)) ExpandDepth = depth;
-
     }
     #endregion
-
-    
 }
