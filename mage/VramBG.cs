@@ -25,8 +25,6 @@ namespace mage
 
             GetBGtiles();
             GetBGpalette();
-            GetTanks();
-            //InitializeAnimation();
 
             if (draw) { DrawTileset(); }
         }
@@ -71,31 +69,11 @@ namespace mage
             }
         }
 
-        private void GetTanks()
-        {
-            int destIndex;
-            if (Version.IsMF)
-            {
-                numTanks = 3;
-                destIndex = 0xA00;
-            }
-            else
-            {
-                numTanks = 4;
-                destIndex = 0x820;
-            }
-            animTanks = new AnimGFX[numTanks];
-            for (int i = 0; i < numTanks; i++)
-            {
-                animTanks[i] = new AnimGFX(ROM.Stream, i);
-                Array.Copy(animTanks[i].gfx.data, 0, BGtiles, destIndex + i * 0x80, 0x80);
-            }
-        }
-
         public unsafe void DrawTileset()
         {
             ushort[] tileTable = tileset.tileTable;
             int tilesetHeight = tileTable.Length / 64;
+            image?.Dispose();
             image = new Bitmap(256, tilesetHeight * 16, PixelFormat.Format16bppArgb1555);
 
             // lock bitmap

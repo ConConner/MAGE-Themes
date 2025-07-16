@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mage.Theming;
+using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -9,17 +10,15 @@ namespace mage
         public FormAbout()
         {
             InitializeComponent();
+
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
         }
 
-        private void linkLabel_forum_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabel_clicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(linkLabel_forum.Text);
+            LinkLabel lbl = sender as LinkLabel;
+            Process.Start(new ProcessStartInfo(lbl.Text) { UseShellExecute = true });
         }
-
-        private void linkLabel_silk_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(linkLabel_silk.Text);
-        }
-
     }
 }

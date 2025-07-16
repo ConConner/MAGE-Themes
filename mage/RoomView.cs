@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace mage
 {
-    public partial class RoomView : Control
+    public partial class RoomView : ScrollableControl
     {
         // properties
         public bool HasSelection
@@ -29,7 +29,7 @@ namespace mage
         // fields
         public Rectangle redRect;
         public Rectangle selRect;
-        private Pen rp, wp, bp;
+        private Pen rp, wp, bp, mp;
         private int zoom;
 
         private FormMain main;
@@ -46,6 +46,8 @@ namespace mage
             rp = new Pen(Color.Red);
             wp = new Pen(Color.White);
             bp = new Pen(Color.Black);
+            mp = new Pen(Color.FromArgb(0xFF, 0x00, 0x84));
+
             wp.DashPattern = bp.DashPattern = new float[] { 2, 3 };
             bp.DashOffset = 2;
         }
@@ -117,7 +119,7 @@ namespace mage
             {
                 for (int x = 0; x < dstWidth; x++)
                 {
-                    *dstPtr++ = 0;
+                    *dstPtr++ = main.Bg3Color;
                 }
                 dstPtr += imgWidth - dstWidth;
             }
@@ -149,7 +151,7 @@ namespace mage
                 }
                 if (main.OutlineDoors)
                 {
-                    room.doorList.Draw(g, rect);
+                    room.doorList.Draw(g, rect, true);
                 }
                 if (main.OutlineScrolls)
                 {
@@ -167,6 +169,10 @@ namespace mage
                 {
                     room.backgrounds.clipTypes.DrawValues(g, rect);
                 }
+                if (main.OutlineEffect)
+                {
+                    DrawEffectPosition(g, room.header.effectY);
+                }
                 if (main.OutlineScreens)
                 {
                     DrawScreenOutlines(g, rect);
@@ -178,6 +184,21 @@ namespace mage
             rect.Width <<= zoom;
             rect.Height <<= zoom;
             Invalidate(rect);
+        }
+
+        private void DrawEffectPosition(Graphics g, byte effectY)
+        {
+            Point p1 = new Point(0, effectY * 16);
+            Point p2 = new Point(room.Width * 16, effectY * 16);
+            g.DrawLine(mp, p1, p2);
+
+            //Draw rectangle
+            g.FillRectangle(mp.Brush, new Rectangle(p1.X + 4, p1.Y + 14, 8, 2));
+            g.FillRectangle(mp.Brush, new Rectangle(p2.X - 16 + 4, p2.Y + 14, 8, 2));
+
+            //Draw numbers
+            Draw.DrawNumber(g, p1, effectY);
+            Draw.DrawNumber(g, new Point(p2.X - 16, p2.Y), effectY);
         }
 
         private void DrawScreenOutlines(Graphics g, Rectangle rect)
@@ -222,6 +243,12 @@ namespace mage
             base.OnPaintBackground(pevent);
         }
 
+        public event EventHandler<MouseEventArgs> Scrolled;
 
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            Scrolled.Invoke(this, e);
+            base.OnMouseWheel(e);
+        }
     }
 }

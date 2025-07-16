@@ -1,7 +1,9 @@
-﻿using System;
+﻿using mage.Theming;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace mage
@@ -15,6 +17,7 @@ namespace mage
         private byte red, green, blue;
         private Point pos;
         private bool noUpdate;
+        private bool noTextUpdate;
         private Pen wp, bp;
 
         private Palette palette;
@@ -30,6 +33,10 @@ namespace mage
         {
             InitializeComponent();
 
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
+            ThemeSwitcher.ThemeChanged += ThemeSwitcherChangedTheme;
+
             this.main = main;
             Initialize();
 
@@ -43,10 +50,21 @@ namespace mage
             }
         }
 
+        private void ThemeSwitcherChangedTheme(object sender, EventArgs e)
+        {
+            if (!groupBox_color.Enabled) return;
+            DrawColorBar();
+        }
+
         // constructor (offset)
         public FormPalette(FormMain main, int offset, int rows)
         {
             InitializeComponent();
+
+
+
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
 
             this.main = main;
 
@@ -58,6 +76,8 @@ namespace mage
 
         private void Initialize()
         {
+            textBox_html_color.TextChanged += htmlColorChanged;
+
             status = new Status(statusLabel_changes, button_apply);
             romStream = ROM.Stream;
             pos = new Point(-1, -1);
@@ -107,7 +127,7 @@ namespace mage
 
             // TODO: reuse code
             int addVal = (spriteID - 0x10) * 4;
-            
+
             // get gfx rows
             int numGfxRows;
             if (Version.IsMF)
@@ -237,6 +257,10 @@ namespace mage
 
             // PC
             label_24bitVal.Text = (red * 8) + ", " + (green * 8) + ", " + (blue * 8);
+
+            if (noTextUpdate) return;
+            //HTML
+            textBox_html_color.Text = ColorOperations.ToHexString(currColor);
         }
 
         private void DrawChosenColor()
@@ -294,21 +318,24 @@ namespace mage
         private unsafe void DrawLine(BitmapData imgData, int color)
         {
             int* imgPtr = (int*)imgData.Scan0 + color * 4;
+            int borderColor = ThemeSwitcher.ProjectTheme.TextColor.ToArgb();
+            int backgroundColor = ThemeSwitcher.ProjectTheme.SecondaryOutline.ToArgb();
 
-            for (int y = 0; y < 10; y++)
+            for (int y = 0; y < 20; y++)
             {
-                int val = 0x111111 * (y + 6);
+                int val;
+
                 for (int x = 0; x < 4; x++)
                 {
-                    *imgPtr++ = val;
-                }
-                imgPtr += 124;
-            }
-            for (int y = 0; y < 10; y++)
-            {
-                int val = 0x111111 * (15 - y);
-                for (int x = 0; x < 4; x++)
-                {
+                    if (y == 0 || y == 19)
+                    {
+                        val = borderColor;
+                    }
+                    else
+                    {
+                        val = backgroundColor;
+                        if (x == 0 || x == 3) val = borderColor;
+                    }
                     *imgPtr++ = val;
                 }
                 imgPtr += 124;
@@ -388,6 +415,28 @@ namespace mage
         {
             blue = (byte)numericUpDown_blue.Value;
             if (!noUpdate) { ColorChanged(); }
+        }
+
+        public void htmlColorChanged(object sender, EventArgs e)
+        {
+            //Do a Regex check if value is actually a hex number
+            string text = textBox_html_color.Text;
+            text = Regex.Match(text, @"[0-9a-fA-F]+").Value;
+            if (text.Length != 6) return; //if 6 numbers are not given
+            text = text.Insert(0, "#");
+            Color c = ColorTranslator.FromHtml(text);
+
+            noUpdate = true;
+
+            numericUpDown_red.Value = red = (byte)(c.R / 8);
+            numericUpDown_green.Value = green = (byte)(c.G / 8);
+            numericUpDown_blue.Value = blue = (byte)(c.B / 8);
+
+            noUpdate = false;
+
+            noTextUpdate = true;
+            ColorChanged();
+            noTextUpdate = false;
         }
 
         private void CheckUpdateColor(MouseEventArgs e, NumericUpDown nud)

@@ -1,11 +1,21 @@
-﻿using System;
+﻿using mage.Theming;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace mage
 {
     public partial class FormEditDoor : Form
     {
+        private struct AdjacentDoor
+        {
+            public Door Door { get; set; }
+            public Room Room { get; set; }
+            public int RoomDoorNumber { get; set; }
+        }
+
         // fields
         private int doorNum;
         private string[] areaNames;
@@ -14,12 +24,19 @@ namespace mage
         private ByteStream romStream;
         private Room room;
         private Status status;
+        private bool onEdge => doorPosition != DoorPosition.None;
+        private DoorPosition doorPosition => room.doorList[doorNum].EdgePosition();
         private bool loading;
+        AdjacentDoor adjacentDoor;
+        bool foundAdjacent = false;
 
         // constructor
         public FormEditDoor(FormMain main, int doorNum)
         {
             InitializeComponent();
+
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
 
             this.main = main;
             this.romStream = ROM.Stream;
@@ -28,6 +45,7 @@ namespace mage
             this.room = main.Room;
 
             Initialize();
+            if (onEdge) CheckForAutoConnect();
         }
 
         private void Initialize()
@@ -64,6 +82,73 @@ namespace mage
             DisplayInfo(door);
 
             loading = false;
+        }
+
+        private void CheckForAutoConnect()
+        {
+            Door srcDoor = room.doorList[doorNum];
+
+            //Check if a door exists, thats on the opposite edge of a screen, next to this screen
+            Point srcScreen = srcDoor.ScreenCoordinatesFixed(room);
+            int srcScreenX = room.header.mapX + srcScreen.X; //The screen coordinates of the current screen
+            int srcScreenY = room.header.mapY + srcScreen.Y; //
+
+            //Setting the direction in which to check
+            int xOffset = doorPosition == DoorPosition.Left ? -1 : doorPosition == DoorPosition.Right ? 1 : 0;
+            int yOffset = doorPosition == DoorPosition.Top ? -1 : doorPosition == DoorPosition.Down ? 1 : 0;
+
+            //Screen coordinates where to check for doors
+            int goalScreenX = srcScreenX + xOffset;
+            int goalScreenY = srcScreenY + yOffset;
+
+            //Get list of rooms that include the goal screen
+            List<Room> rooms = new();
+            for (byte room = 0; room < Version.RoomsPerArea[srcDoor.areaID]; room++)
+            {
+                try
+                {
+                    Room r = new Room(srcDoor.areaID, room);
+                    if (r.Contains(goalScreenX, goalScreenY)) rooms.Add(r);
+                }
+                catch {}
+            }
+
+            //Check each room if they contain a door on the goal screen
+            foreach (Room room in rooms)
+            {
+                //Get relative screen coordinate in the room
+                int checkScreenX = goalScreenX - room.header.mapX;
+                int checkScreenY = goalScreenY - room.header.mapY;
+                
+                //Loop through every door from that room
+                for (int i = 0; i < room.doorList.NumOfDoors; i++)
+                {
+                    Door d = room.doorList[i];
+
+                    //Check if door exists on goal Screen
+                    Point doorCoord = d.ScreenCoordinatesFixed(room);
+                    if (doorCoord.X != checkScreenX || doorCoord.Y != checkScreenY) continue;
+
+                    DoorPosition opposite = DoorPosition.None;
+                    if (doorPosition == DoorPosition.Left) opposite = DoorPosition.Right;
+                    if (doorPosition == DoorPosition.Right) opposite = DoorPosition.Left;
+                    if (doorPosition == DoorPosition.Top) opposite = DoorPosition.Down;
+                    if (doorPosition == DoorPosition.Down) opposite = DoorPosition.Top;
+
+                    if (d.EdgePosition() == opposite)
+                    {
+                        lbl_door_found.Text = "Adjacent Door found:";
+                        adjacentDoor = new AdjacentDoor()
+                        {
+                            Door = d,
+                            Room = room,
+                            RoomDoorNumber = i
+                        };
+                        grp_setup.Enabled = true;
+                        foundAdjacent = true;
+                    }
+                }
+            }
         }
 
         private void DisplayInfo(Door src)
@@ -308,6 +393,88 @@ namespace mage
             Close();
         }
 
+        private void checkBox_autoConnect_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBox_autoConnect.Checked) return;
+            ValueChanged(sender, e);
+        }
 
+        private void button_preset_x_Click(object sender, EventArgs e)
+        {
+            var Dialog = new FormEditDoorPresets(true);
+            Dialog.ShowDialog();
+            if (Dialog.DialogResult != DialogResult.OK) return;
+            textBox_xExitDistance.Text = Hex.ToString(Dialog.Result);
+        }
+
+        private void button_preset_y_Click(object sender, EventArgs e)
+        {
+            var Dialog = new FormEditDoorPresets(false);
+            Dialog.ShowDialog();
+            if (Dialog.DialogResult != DialogResult.OK) return;
+            textBox_yExitDistance.Text = Hex.ToString(Dialog.Result);
+        }
+
+        private void btn_setup_Click(object sender, EventArgs e)
+        {
+            //Apply changes to the door first
+            checkBox_autoConnect.Checked = false;
+            button_apply_Click(sender, e);
+
+            Door srcDoor = room.doorList[doorNum].Copy() as Door;
+            Door dstDoor = adjacentDoor.Door;
+
+            //Create link between them
+            srcDoor.dstDoor = dstDoor.doorNum;
+            dstDoor.dstDoor = srcDoor.doorNum;
+
+            //Setting same type
+            dstDoor.type = srcDoor.type;
+
+            //Set exit distance
+            byte currentExitDistance = srcDoor.xExitDistance = Hex.ToByte(textBox_xExitDistance.Text);
+            dstDoor.xExitDistance =  (byte)(0xFF - currentExitDistance + 1);
+            currentExitDistance = dstDoor.yExitDistance = Hex.ToByte(textBox_yExitDistance.Text);
+            dstDoor.yExitDistance = (byte)(0xFF - currentExitDistance + 1);
+
+            EditRoomObject src = new EditRoomObject(srcDoor, doorNum, false);
+            main.PerformAction(src);
+            EditRoomObject dst = new EditRoomObject(dstDoor, adjacentDoor.RoomDoorNumber, false);
+            dst.Do(adjacentDoor.Room);
+            status.Save();
+            UpdateInfoText(srcDoor, dstDoor);
+        }
+
+        private void btn_auto_link_Click(object sender, EventArgs e)
+        {
+            //Apply changes to the door first
+            checkBox_autoConnect.Checked = false;
+            button_apply_Click(sender, e);
+
+            Door srcDoor = room.doorList[doorNum].Copy() as Door;
+            Door dstDoor = adjacentDoor.Door;
+
+            //Create link between them
+            srcDoor.dstDoor = dstDoor.doorNum;
+            dstDoor.dstDoor = srcDoor.doorNum;
+
+            EditRoomObject src = new EditRoomObject(srcDoor, doorNum, false);
+            main.PerformAction(src);
+            EditRoomObject dst = new EditRoomObject(dstDoor, adjacentDoor.RoomDoorNumber, false);
+            dst.Do(adjacentDoor.Room);
+            status.Save();
+            UpdateInfoText(srcDoor, dstDoor);
+        }
+
+        private void UpdateInfoText(Door src, Door dst)
+        {
+            label_dstArea.Text = areaNames[dst.areaID];
+            label_dstRoom.Text = Hex.ToString(dst.srcRoom);
+            label_dstDoor.Text = Hex.ToString(src.dstDoor);
+
+            label_srcArea.Text = areaNames[src.areaID];
+            label_srcRoom.Text = Hex.ToString(src.srcRoom);
+            label_srcDoor.Text = Hex.ToString(src.doorNum);
+        }
     }
 }

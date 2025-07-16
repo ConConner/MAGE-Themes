@@ -1,4 +1,6 @@
-﻿using System;
+﻿using mage.Theming;
+using mage.Utility;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -28,10 +30,15 @@ namespace mage
         private ByteStream romStream;
         private Status status;
 
+        private int oldTabIndex;
+
         // constructor
         public FormTileTable(FormMain main, int tsNum)
         {
             InitializeComponent();
+
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
 
             this.main = main;
             this.romStream = ROM.Stream;
@@ -85,10 +92,23 @@ namespace mage
             buttons_vflip = new Button[] { button_vflipTL, button_vflipTR, button_vflipBL, button_vflipBR };
 
             comboBox_tileset.SelectedIndex = tsNum;
+
+            // Enable experimental flipping
+            button_flip_h.Visible = button_flip_v.Visible = Program.ExperimentalFeaturesEnabled;
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Prevent changing tabs if unsaved changes
+            if (oldTabIndex == tabControl.SelectedIndex) return;
+            if (status.UnsavedChanges)
+                if (MessageBox.Show("Unsaved Changes. Do you want to continue?", "Unsaved Changes", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                {
+                    tabControl.SelectedIndex = oldTabIndex;
+                    return;
+                }
+
+            oldTabIndex = tabControl.SelectedIndex;
             Reset();
             status.LoadNew();
         }
@@ -307,7 +327,7 @@ namespace mage
             comboBox_size.Enabled = true;
             comboBox_size.SelectedIndex = size;
             SetBackgroundSize();
-            
+
             ResetTile();
             blank = false;
         }
@@ -822,7 +842,7 @@ namespace mage
         private void gfxView_tile_MouseDown(object sender, MouseEventArgs e)
         {
             if (tileNums == null) { return; }
-            if (gfxSelection.X == -1) { return;}
+            if (gfxSelection.X == -1) { return; }
 
             // get corner
             int corner = 0;
@@ -863,8 +883,9 @@ namespace mage
                 dataToWrite.Write8(2);
                 dataToWrite.Write8((byte)(numOfTiles / 64));
 
-                foreach (ushort tile in tileTable)
+                for (int i = 0; i < numOfTiles; i++)
                 {
+                    ushort tile = tileTable[i];
                     dataToWrite.Write16(tile);
                 }
 
@@ -984,6 +1005,16 @@ namespace mage
             }
         }
 
+        private void button_flip_h_Click(object sender, EventArgs e)
+        {
+            Flip.FlipTiletable(tileTable, numOfTiles, true, false, 0x50 * 4);
+            Save();
+        }
 
+        private void button_flip_v_Click(object sender, EventArgs e)
+        {
+            Flip.FlipTiletable(tileTable, numOfTiles, false, true, 0x50 * 4);
+            Save();
+        }
     }
 }

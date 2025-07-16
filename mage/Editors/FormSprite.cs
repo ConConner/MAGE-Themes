@@ -1,4 +1,7 @@
-﻿using System;
+﻿using mage.Theming;
+using mage.Theming.CustomControls;
+using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -18,11 +21,26 @@ namespace mage
         private ByteStream romStream;
         private Status status;
         private bool loading;
+        private bool updatingValues;
 
         // constructor
         public FormSprite(FormMain main, byte spriteID)
         {
             InitializeComponent();
+
+            //Adding events because fucking designer wont show them for fucks sake
+            textBox_healthXP.TextChanged += textBox_dropPercent_TextChanged;
+            textBox_missileXP.TextChanged += textBox_dropPercent_TextChanged;
+            textBox_redXP.TextChanged += textBox_dropPercent_TextChanged;
+            textBox_noDropP.TextChanged += textBox_dropPercent_TextChanged;
+            textBox_smallHealthP.TextChanged += textBox_dropPercent_TextChanged;
+            textBox_largeHealthP.TextChanged += textBox_dropPercent_TextChanged;
+            textBox_missileP.TextChanged += textBox_dropPercent_TextChanged;
+            textBox_superMissileP.TextChanged += textBox_dropPercent_TextChanged;
+            textBox_powerBombP.TextChanged += textBox_dropPercent_TextChanged;
+
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
 
             this.main = main;
             this.sprite1ID = spriteID;
@@ -87,7 +105,7 @@ namespace mage
                 comboBox_sprite.SelectedIndex = spriteID;
             }
         }
-        
+
         private void comboBox_sprite_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadSprite((byte)comboBox_sprite.SelectedIndex);
@@ -149,6 +167,10 @@ namespace mage
             textBox_healthX.Enabled = enable;
             textBox_missileX.Enabled = enable;
             textBox_redX.Enabled = enable;
+
+            textBox_healthXP.Enabled = enable;
+            textBox_missileXP.Enabled = enable;
+            textBox_redXP.Enabled = enable;
         }
 
         private void EnableZMdrops(bool enable)
@@ -159,11 +181,19 @@ namespace mage
             textBox_missile.Enabled = enable;
             textBox_superMissile.Enabled = enable;
             textBox_powerBomb.Enabled = enable;
+
+            textBox_noDropP.Enabled = enable;
+            textBox_smallHealthP.Enabled = enable;
+            textBox_largeHealthP.Enabled = enable;
+            textBox_missileP.Enabled = enable;
+            textBox_superMissileP.Enabled = enable;
+            textBox_powerBombP.Enabled = enable;
         }
 
         private void ClearDropsText()
         {
             label_totalProb.Text = "–";
+            label_totalPercent.Text = "-";
             textBox_healthX.Text = "";
             textBox_missileX.Text = "";
             textBox_redX.Text = "";
@@ -268,7 +298,7 @@ namespace mage
             {
                 foreach (Control ctrl in controls)
                 {
-                    if (ctrl is TextBox && ctrl.Enabled)
+                    if (ctrl is FlatTextBox && ctrl.Enabled)
                     {
                         total += Hex.ToUshort(ctrl.Text);
                     }
@@ -277,18 +307,18 @@ namespace mage
             catch
             {
                 label_totalProb.Text = "–";
-                label_totalProb.ForeColor = Color.DarkRed;
+                label_totalProb.ForeColor = ThemeSwitcher.ProjectTheme.AccentColor;
                 return;
             }
 
             label_totalProb.Text = Hex.ToString(total);
             if (total == 0x400 || total == 0)
             {
-                label_totalProb.ForeColor = Color.Black;
+                label_totalProb.ForeColor = ThemeSwitcher.ProjectTheme.TextColor;
             }
             else
             {
-                label_totalProb.ForeColor = Color.DarkRed;
+                label_totalProb.ForeColor = ThemeSwitcher.ProjectTheme.AccentColor;
                 if (total < 0x400)
                 {
                     label_totalProb.Text += " (too low)";
@@ -300,10 +330,79 @@ namespace mage
             }
         }
 
+        private void UpdatePercentageTotal()
+        {
+            if (Version.IsMF && comboBox_type.SelectedIndex == 1) { return; }
+
+            var controls = panel_percentage.Controls;
+            double total = 0;
+            
+            try
+            {
+                foreach (Control ctrl in controls)
+                {
+                    if (ctrl is FlatTextBox && ctrl.Enabled) total += Math.Round(Convert.ToDouble(ctrl.Text), 1);
+                }
+            }
+            catch
+            {
+                label_totalPercent.Text = "-";
+                label_totalPercent.ForeColor = ThemeSwitcher.ProjectTheme.AccentColor;
+                return;
+            }
+
+            label_totalPercent.Text = $"{Convert.ToString(total)}%";
+            if (total == 100 || total == 0) label_totalPercent.ForeColor = ThemeSwitcher.ProjectTheme.TextColor;
+            else
+            {
+                label_totalPercent.ForeColor = ThemeSwitcher.ProjectTheme.AccentColor;
+            }
+        }
+
         private void textBox_dropProb_TextChanged(object sender, EventArgs e)
         {
             UpdateDropTotal();
             if (!loading) { status.ChangeMade(); }
+
+            if (updatingValues) return;
+            updatingValues = true;
+            try
+            {
+                //update percentage text field
+                FlatTextBox b = sender as FlatTextBox;
+                FlatTextBox percentageBox = (FlatTextBox)panel_percentage.Controls.Find(b.Name + "P", true)[0];
+
+                double percentage = Math.Round((double)Hex.ToInt(b.Text) / 0x400 * 100, 1);
+                percentageBox.Text = Convert.ToString(percentage);
+            }
+            catch
+            {
+
+            }
+            updatingValues = false;
+        }
+
+        private void textBox_dropPercent_TextChanged(object sender, EventArgs e)
+        {
+            UpdatePercentageTotal();
+            if (!loading) status.ChangeMade();
+
+            if (updatingValues) return;
+            updatingValues = true;
+            try
+            {
+                //update prob text field
+                FlatTextBox b = sender as FlatTextBox;
+                FlatTextBox probBox = (FlatTextBox)groupBox_dropProbability.Controls.Find(b.Name.Remove(b.Name.Length - 1), true)[0];
+
+                int value = (int)Math.Round(0x400 * (Math.Round(Convert.ToDouble(b.Text), 1) / 100), 0);
+                probBox.Text = Hex.ToString(value);
+            }
+            catch
+            {
+
+            }
+            updatingValues = false;
         }
 
         private void SpriteValueChanged(object sender, EventArgs e)
@@ -392,7 +491,7 @@ namespace mage
             }
             catch (Exception ex)
             {
-                MessageBox.Show("One of the values entered was not valid.\n\n" + ex.Message, 
+                MessageBox.Show("One of the values entered was not valid.\n\n" + ex.Message,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

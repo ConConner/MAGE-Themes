@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mage.Theming;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -23,6 +24,10 @@ namespace mage
         public FormGraphics(FormMain main, int gfxOffset, int width, int height, int palOffset)
         {
             InitializeComponent();
+
+            //Theming
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
 
             this.main = main;
             this.romStream = ROM.Stream;
@@ -231,7 +236,7 @@ namespace mage
             openImg.Filter = "Bitmaps (*.png, *.bmp, *.gif, *.jpeg, *.jpg, *.tif, *.tiff)|*.png;*.bmp;*.gif;*.jpeg;*.jpg;*.tif;*.tiff";
             if (openImg.ShowDialog() == DialogResult.OK)
             {
-                Bitmap inputImg = new Bitmap(openImg.FileName);
+                Bitmap inputImg = Draw.BitmapFromFile(openImg.FileName);
 
                 try
                 {

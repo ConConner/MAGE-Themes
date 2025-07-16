@@ -1,4 +1,8 @@
-﻿using System;
+﻿using mage.Dialogs;
+using mage.Theming;
+using mage.Tools;
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace mage
@@ -18,6 +22,10 @@ namespace mage
         public FormHeader(FormMain main)
         {
             InitializeComponent();
+
+            //Theming
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
 
             this.main = main;
             this.romStream = ROM.Stream;
@@ -132,7 +140,7 @@ namespace mage
             textBox_effectYpos.Text = Hex.ToString(effectY);
             textBox_music.Text = Hex.ToString(music);
 
-            textBox_offsetVal.Text = Hex.ToString(offset);
+            lbl_offset.Text = $"Offset: {Hex.ToString(offset)}";
 
             loading = false;
             status.LoadNew();
@@ -179,7 +187,7 @@ namespace mage
                 byte effect = Hex.ToByte(textBox_effect.Text);
                 byte effectY = Hex.ToByte(textBox_effectYpos.Text);
                 ushort music = Hex.ToUshort(textBox_music.Text);
-     
+
                 int offset = romStream.ReadPtr(Version.AreaHeaderOffset + a * 4) + (r * 0x3C);
 
                 // write all values
@@ -233,6 +241,60 @@ namespace mage
             Close();
         }
 
+        private void btn_open_map_Click(object sender, EventArgs e)
+        {
+            Room r = new Room(comboBox_area.SelectedIndex, comboBox_room.SelectedIndex);
 
+            FormMinimapDialog dialog = new FormMinimapDialog(r.AreaID, new Size(r.WidthInScreens, r.HeightInScreens));
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+
+            Point p = dialog.SelectedPoint;
+            textBox_mapX.Text = Hex.ToString(p.X);
+            textBox_mapY.Text = Hex.ToString(p.Y);
+        }
+
+        #region PRESETS
+        private void btn_bg3_presets_Click(object sender, EventArgs e)
+        {
+            BG3ScrollDialog d = new BG3ScrollDialog();
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_BG3scroll.Text = Hex.ToString(d.Value);
+        }
+
+        private void btn_bg0_prop_Click(object sender, EventArgs e)
+        {
+            BackgroundPropertyDialog d = new BackgroundPropertyDialog();
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_BG0prop.Text = Hex.ToString(d.Value);
+        }
+
+        private void btn_bg1_prop_Click(object sender, EventArgs e)
+        {
+            BackgroundPropertyDialog d = new BackgroundPropertyDialog();
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_BG1prop.Text = Hex.ToString(d.Value);
+        }
+
+        private void btn_bg2_prop_Click(object sender, EventArgs e)
+        {
+            BackgroundPropertyDialog d = new BackgroundPropertyDialog();
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_BG2prop.Text = Hex.ToString(d.Value);
+        }
+
+        private void btn_bg3_prop_Click(object sender, EventArgs e)
+        {
+            BackgroundPropertyDialog d = new BackgroundPropertyDialog();
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_BG3prop.Text = Hex.ToString(d.Value);
+        }
+
+        private void btn_tileset_preset_Click(object sender, EventArgs e)
+        {
+            TilesetDialog d = new TilesetDialog();
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_tileset.Text = Hex.ToString(d.SelectedTileset);
+        }
+        #endregion
     }
 }

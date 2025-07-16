@@ -1,6 +1,10 @@
-﻿using System;
+﻿using mage.Theming;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
 
 namespace mage
@@ -28,6 +32,9 @@ namespace mage
         public FormMinimap(FormMain main)
         {
             InitializeComponent();
+
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
 
             this.main = main;
             this.romStream = ROM.Stream;
@@ -155,6 +162,8 @@ namespace mage
 
         private void LoadMinimap()
         {
+            //button_generate.Enabled = comboBox_area.SelectedIndex <= 6;
+
             byte areaID = (byte)comboBox_area.SelectedIndex;
             try
             {
@@ -239,6 +248,7 @@ namespace mage
                 g.DrawImage(square, mPos.X * 8, mPos.Y * 8);
             }
 
+            Sound.PlaySound("map.wav");
             status.ChangeMade();
         }
 
@@ -279,6 +289,13 @@ namespace mage
             if (x < 0 || x >= 32 || y < 0 || y >= 32) { return; }
 
             mPos = new Point(x, y);
+
+            if (e.Button == MouseButtons.Left && selSquare != -1)
+            {
+                SetNewSquare();
+                Rectangle r = new Rectangle(mPos.X * 16, mPos.Y * 16, 16, 16);
+                gfxView_map.Invalidate(r);
+            }
 
             // draw red rectangle
             Rectangle rect = gfxView_map.redRect;
@@ -426,6 +443,10 @@ namespace mage
             }
         }
 
+        //These fields will be used for map room cycling if multiple rooms overlap
+        int lastIndex = 0;
+        List<byte> lastList = new();
+
         private void FormMinimap_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.G) { return; }
@@ -437,21 +458,84 @@ namespace mage
             byte x = (byte)mPos.X;
             byte y = (byte)mPos.Y;
 
-            int offset = romStream.ReadPtr(Version.AreaHeaderOffset + area * 4);
             int numOfRooms = Version.RoomsPerArea[area];
+
+            //Loop throug all rooms and get list of rooms that match
+            List<byte> matchingRooms = new();
             for (byte r = 0; r < numOfRooms; r++)
             {
-                byte roomX = romStream.Read8(offset + 0x35);
-                byte roomY = romStream.Read8(offset + 0x36);
-                if (roomX == x && roomY == y)
-                {
-                    main.JumpToRoom(area, r);
-                    return;
-                }
-                offset += 0x3C;
+                //Get Data from the room
+                Room room = null;
+                try { room = new Room(area, r); }
+                catch { continue; }
+
+                if (room.Contains(x, y)) matchingRooms.Add(r);
             }
+
+            if (matchingRooms.Count == 1) main.JumpToRoom(area, matchingRooms[0]);
+
+            if (matchingRooms.Count > 1)
+            {
+                //Set data up for cycling
+                if (!lastList.SequenceEqual(matchingRooms))
+                {
+                    lastIndex = 0;
+                    lastList = matchingRooms;
+                }
+                else
+                {
+                    lastIndex++;
+                    if (lastIndex >= matchingRooms.Count) lastIndex = 0;
+                    lastList = matchingRooms;
+                }
+                main.JumpToRoom(area, matchingRooms[lastIndex]);
+            }
+
+            return;
         }
 
+        private void button_generate_Click(object sender, EventArgs e)
+        {
+            comboBox_type.SelectedIndex = 1;
 
+            //clearing old map
+            for (int i = 0; i < 32; i++)
+            {
+                for (int j = 0; j < 32; j++)
+                {
+                    selSquare = 0x140;
+                    mPos = new Point(i, j);
+                    SetNewSquare();
+                }
+            }
+
+            selSquare = 0x87;
+
+            //Loop through each room and room header in the current selected area
+            byte area = (byte)comboBox_area.SelectedIndex;
+            for (int i = 0; i < Version.RoomsPerArea[(byte)comboBox_area.SelectedIndex]; i++)
+            {
+                //Create Room Object, read map coordinates
+                Room rm = new Room(area, i);
+                int width = rm.Width / 0xF;
+                int height = rm.Height / 0xA;
+
+                int offset = romStream.ReadPtr(Version.AreaHeaderOffset + area * 4) + (i * 0x3C);
+                byte mapX = romStream.Read8(offset + 0x35);
+                byte mapY = romStream.Read8(offset + 0x36);
+
+                //place map tile
+                for (int j = 0; j < width; j++)
+                {
+                    for (int k = 0; k < height; k++)
+                    {
+                        mPos = new Point(mapX + j, mapY + k);
+                        SetNewSquare();
+                    }
+                }
+            }
+
+            gfxView_map.Invalidate();
+        }
     }
 }

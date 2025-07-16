@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mage.Theming;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +19,9 @@ namespace mage
         public FormAdd(FormMain main, int tab)
         {
             InitializeComponent();
+
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
 
             this.main = main;
             this.romStream = ROM.Stream;
@@ -161,9 +165,16 @@ namespace mage
             int ptr = Header.GetBgPointer(room.AreaID, room.RoomID, comboBox_bg.SelectedIndex);
 
             romStream.WritePtr(ptr, offset);
+
+            if (rle)
+            {
+                Layer layer = (Layer)comboBox_bg.SelectedIndex;
+                ROM.RemoveBG(room.AreaID, room.RoomID, layer);
+            }
+
             main.ReloadRoom(true);
         }
-        
+
         // room sprites
         private void AddRoomSprites()
         {
@@ -205,7 +216,7 @@ namespace mage
             int numOfRooms = Version.RoomsPerArea[area];
             AdjustNumOfItems(comboBox_roomCopyRoom, numOfRooms);
         }
-        
+
         private void AddRoom()
         {
             byte area = (byte)comboBox_roomArea.SelectedIndex;
@@ -218,12 +229,18 @@ namespace mage
 
             if (radioButton_roomBlank.Checked)
             {
-                byte width, height;                
+                byte width, height;
+                bool inScreens = chb_screens.Checked;
                 try
                 {
                     // get width and height
                     width = Hex.ToByte(textBox_roomWidth.Text);
                     height = Hex.ToByte(textBox_roomHeight.Text);
+                    if (inScreens)
+                    {
+                        width = (byte)(width * 15 + 4);
+                        height = (byte)(height * 10 + 4);
+                    }
                     // check if valid
                     Room.CheckValidSize(width, height);
                 }
@@ -241,10 +258,10 @@ namespace mage
                 byte copyRoom = (byte)comboBox_roomCopyRoom.SelectedIndex;
                 Add.RoomCopy(area, copyArea, copyRoom);
             }
-            
+
             main.LoadAddedRoom(area);
             main.Focus();
-        }        
+        }
 
         // tileset
         private void AddTileset()
@@ -266,7 +283,7 @@ namespace mage
                 Add.TilesetCopy(tsNum);
             }
 
-            main.FindOpenForm(typeof(FormTileset), true);
+            FormMain.FindOpenForm(typeof(FormTileset), true);
             FormTileset form = new FormTileset(main, numTilesets);
             form.Show();
         }
@@ -291,7 +308,7 @@ namespace mage
                 Add.SpritesetCopy(ssNum);
             }
 
-            main.FindOpenForm(typeof(FormSpriteset), true);
+            FormMain.FindOpenForm(typeof(FormSpriteset), true);
             FormSpriteset form = new FormSpriteset(main, numSpritesets);
             form.Show();
         }
@@ -377,7 +394,7 @@ namespace mage
                 }
             }
 
-            main.FindOpenForm(typeof(FormAnimation), true);
+            FormMain.FindOpenForm(typeof(FormAnimation), true);
             FormAnimation form = new FormAnimation(main, window, number);
             form.Show();
         }
@@ -403,7 +420,7 @@ namespace mage
 
             comboBox.SelectedIndex = 0;
         }
-        
+
         private void radioButton_option_CheckedChanged(object sender, EventArgs e)
         {
             button_add.Enabled = true;
@@ -450,7 +467,5 @@ namespace mage
         {
             Close();
         }
-
-
     }
 }

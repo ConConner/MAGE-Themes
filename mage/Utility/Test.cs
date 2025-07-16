@@ -1,4 +1,5 @@
-﻿using mage.Properties;
+﻿using mage.Data;
+using mage.Properties;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -7,7 +8,7 @@ namespace mage
 {
     public static class Test
     {
-        public static void Room(FormMain main, bool debug, int xPos, int yPos)
+        public static void Room(FormMain main, bool debug, int xPos, int yPos, sRam ram = null)
         {
             ByteStream bs = ROM.Stream;
             Room room = main.Room;
@@ -98,6 +99,10 @@ namespace mage
                 bs.Write16(sramAddr + 0x32, yScreen);
                 bs.Write16(sramAddr + 0x34, xScreen);
                 bs.Write16(sramAddr + 0x36, yScreen);
+
+                //Setting samus equipment
+                ram?.WriteToRom();
+
                 if (ROM.useMotherShipHatches)
                 {
                     bs.Write8(sramAddr + 0x3D, 1);
@@ -108,10 +113,20 @@ namespace mage
             try
             {
                 string path = Path.GetTempPath();
+                string testSymbolPath = Path.Combine(path, "test.sym");
+                string romName = Path.GetFileNameWithoutExtension(main.filename);
+                romName = Path.Combine(Path.GetDirectoryName(main.filename), romName);
+
                 path = Path.Combine(path, "test.gba");
                 room.SaveObjects();
                 ROM.SaveROM(path, false);
-                RunEmulator(path);
+
+                //Copy a symbol file if it exists
+                string romSymbolPath = romName + ".sym";
+                if (File.Exists(romSymbolPath)) File.Copy(romSymbolPath, testSymbolPath, true);
+
+                Sound.PlaySound("test.wav");
+                RunEmulator($"\"{path}\"");
             }
             catch (Exception e)
             {
@@ -177,20 +192,15 @@ namespace mage
             }
             if (error != null)
             {
-                emuPath = SetEmulatorPath(error);
+                emuPath = AskForNewPath(error);
                 if (emuPath == null)
                     return;
             }
             System.Diagnostics.Process.Start(emuPath, romPath);
         }
 
-        private static string SetEmulatorPath(string msg)
+        public static string SetEmulatorPath()
         {
-            var result = MessageBox.Show(msg, "",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-            if (result != DialogResult.Yes)
-                return null;
-            
             // get emulator path
             var ofd = new OpenFileDialog();
             ofd.Filter = "GBA emulator (*.exe)|*.exe|All files (*.*)|*.*";
@@ -201,6 +211,16 @@ namespace mage
             Settings.Default.emulatorPath = emuPath;
             Settings.Default.Save();
             return emuPath;
+        }
+
+        private static string AskForNewPath(string msg)
+        {
+            var result = MessageBox.Show(msg, "",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            if (result != DialogResult.Yes)
+                return null;
+
+            return SetEmulatorPath();
         }
 
     }

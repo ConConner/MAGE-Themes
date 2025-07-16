@@ -1,0 +1,48 @@
+TODO:
+- Write new TTE Documentation
+- Write OAM Editor documentation
+- Write Bookmark documentation / Recent Offset Documentation
+- Fix OAM Repointing and move out of experimental
+
+MAGE Themes:
+- Theming support
+- Fix crashes
+- Drag to draw on Minimap Editor
+- Enable apply on "Auto connect" in Edit Door
+- Edit Sprites/Scrolls/Doors with double click
+- Added 'Go through Door' to right-click menu
+- Doors display their ID and connected ID
+- Exit distance of Doors can be edited in the room editor
+- Input screens directly in Room Options
+- Input screens directly in Add Room
+- Screen number gets displayed as hex
+- Added [MUSIC_STOP] Label for Fusion -> [\xBXXX]
+- Input hex color in palette editor
+- Door Exit Distance Presets
+- Added clipdata shortcuts button to main view
+- Added Zoom button to the status bar of the main view
+- Zoom with Ctrl + Mouse Wheel in main view
+- Added Zoom to Text Editor
+- Clear Sprites, Scrolls and Doors in Room Options
+- Drop Probability can be input as Percentage
+- Significantly improved Test Room feature for Zero Mission
+- Room map coordinates can be seleted directly from a map
+- Jump To Room (G) on minimap works on every screen of a room.
+  Not only top left corner.
+- Bulk Room export (per Area)
+- Area Image export
+- Automatically connect doors if they are on adjacent screens
+- Edit Effect Y Position inside the room editor
+- Copy symbol file of current ROM into the test ROM Folder
+- The Color behind BG3 can be adjusted
+- Add optional Soundpack support to add sounds to the MAGE UI
+- Presets for Background Property in Header Editor
+- Presets for BG3 Scroll in Header Editor
+- Tileset preview selection in Header Editor
+- .mgt, .mgr, .rlebg and lzbg can be imported via drag & drop
+- Tilesets can be imported via drag & drop with an Image
+- Tiletable Editor reworked
+- Cropped room image Export
+- Added OAM Editor
+- Added Bookmarking System
+- Recent values on Offset/Pointer inputs

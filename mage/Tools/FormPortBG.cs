@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mage.Theming;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,9 +17,12 @@ namespace mage
         private Room room;
         private int action;
 
-        public FormPortBG(FormMain main, int action)
+        public FormPortBG(FormMain main, int action, string file = "")
         {
             InitializeComponent();
+
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
 
             this.main = main;
             this.room = main.Room;
@@ -27,21 +31,23 @@ namespace mage
             // open file if importing
             if (action < 2)
             {
-                string filter = "All files (*.*)|*.*";
-                if (action == 0) { filter = "RLE compressed backgrounds (*.rlebg)|*.rlebg|" + filter; }
-                else if (action == 1) { filter = "LZ77 compressed backgrounds (*.lzbg)|*.lzbg|" + filter; }
+                if (file == String.Empty)
+                {
+                    string filter = "All files (*.*)|*.*";
+                    if (action == 0) { filter = "RLE compressed backgrounds (*.rlebg)|*.rlebg|" + filter; }
+                    else if (action == 1) { filter = "LZ77 compressed backgrounds (*.lzbg)|*.lzbg|" + filter; }
 
-                OpenFileDialog openFile = new OpenFileDialog();
-                openFile.Filter = filter;
-                if (openFile.ShowDialog() == DialogResult.OK)
-                {
-                    data = File.ReadAllBytes(openFile.FileName);
+
+                    OpenFileDialog openFile = new OpenFileDialog();
+                    openFile.Filter = filter;
+                    if (openFile.ShowDialog() != DialogResult.OK)
+                    {
+                        Close();
+                        return;
+                    }
+                    file = openFile.FileName;
                 }
-                else
-                {
-                    Close();
-                    return;
-                }
+                data = File.ReadAllBytes(file);
             }
 
             // set up form
