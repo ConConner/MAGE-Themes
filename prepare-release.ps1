@@ -1,10 +1,10 @@
-# Stop script on first error
-$ErrorActionPreference = 'Stop'
-
 # Define the version parameter passed from the command line
 param (
   [string]$Version
 )
+
+# Stop script on first error
+$ErrorActionPreference = 'Stop'
 
 if (-not $Version) {
   Write-Error "Version parameter is missing."
