@@ -1184,11 +1184,12 @@ namespace mage
 
         public static void showHelpItem(string path)
         {
-            if (!FindOpenForm(typeof(HelpViewer), true))
-            {
-                HelpViewer form = new HelpViewer(path);
-                form.Show();
-            }
+            return;
+            //if (!FindOpenForm(typeof(HelpViewer), true))
+            //{
+            //    HelpViewer form = new HelpViewer(path);
+            //    form.Show();
+            //}
         }
 
         private void menuItem_about_Click(object sender, EventArgs e)

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HelpViewer));
-            webview = new Microsoft.Web.WebView2.WinForms.WebView2();
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             navigateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             mAGEHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,23 +36,10 @@
             group_help = new System.Windows.Forms.GroupBox();
             panel_help = new System.Windows.Forms.Panel();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
-            ((System.ComponentModel.ISupportInitialize)webview).BeginInit();
             menuStrip1.SuspendLayout();
             group_help.SuspendLayout();
             panel_help.SuspendLayout();
             SuspendLayout();
-            // 
-            // webview
-            // 
-            webview.AllowExternalDrop = true;
-            webview.CreationProperties = null;
-            webview.DefaultBackgroundColor = System.Drawing.Color.White;
-            webview.Dock = System.Windows.Forms.DockStyle.Fill;
-            webview.Location = new System.Drawing.Point(3, 19);
-            webview.Name = "webview";
-            webview.Size = new System.Drawing.Size(605, 556);
-            webview.TabIndex = 0;
-            webview.ZoomFactor = 1D;
             // 
             // menuStrip1
             // 
@@ -76,18 +62,15 @@
             mAGEHelpToolStripMenuItem.Name = "mAGEHelpToolStripMenuItem";
             mAGEHelpToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             mAGEHelpToolStripMenuItem.Text = "MAGE Help";
-            mAGEHelpToolStripMenuItem.Click += mAGEHelpToolStripMenuItem_Click;
             // 
             // technicalInformationToolStripMenuItem
             // 
             technicalInformationToolStripMenuItem.Name = "technicalInformationToolStripMenuItem";
             technicalInformationToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             technicalInformationToolStripMenuItem.Text = "Technical Information";
-            technicalInformationToolStripMenuItem.Click += technicalInformationToolStripMenuItem_Click;
             // 
             // group_help
             // 
-            group_help.Controls.Add(webview);
             group_help.Dock = System.Windows.Forms.DockStyle.Fill;
             group_help.Location = new System.Drawing.Point(6, 3);
             group_help.Name = "group_help";
@@ -124,7 +107,6 @@
             MainMenuStrip = menuStrip1;
             Name = "HelpViewer";
             Text = "MAGE Themes Help";
-            ((System.ComponentModel.ISupportInitialize)webview).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             group_help.ResumeLayout(false);
@@ -135,7 +117,6 @@
 
         #endregion
 
-        private Microsoft.Web.WebView2.WinForms.WebView2 webview;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem navigateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mAGEHelpToolStripMenuItem;
