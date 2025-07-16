@@ -70,6 +70,7 @@
             Layer2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layer3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layer4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            context_treeview = new System.Windows.Forms.ContextMenuStrip(components);
             group_globalCollections.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel_main.SuspendLayout();
@@ -510,6 +511,11 @@
             layer4ToolStripMenuItem.Text = "Layer 3";
             layer4ToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
             // 
+            // context_treeview
+            // 
+            context_treeview.Name = "context_treeview";
+            context_treeview.Size = new System.Drawing.Size(181, 26);
+            // 
             // FormBookmarks
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -583,5 +589,6 @@
         private System.Windows.Forms.ToolStripMenuItem Layer2ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem layer3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem layer4ToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip context_treeview;
     }
 }

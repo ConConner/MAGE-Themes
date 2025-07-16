@@ -1,0 +1,32 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "powershell -Command \"(Get-Content -path mage/mage.csproj) -replace '(<Version>)(.*)(<\\/Version>)', '$1${nextRelease.version}$3' | Set-Content -path mage/mage.csproj\" && dotnet publish mage -r win-x64 -c release -o build --sc false && powershell -Command \"Copy-Item -Path Docs/doc.html -Destination build/doc.html\" && powershell -Command \"Copy-Item -Path Docs/technical.html -Destination build/technical.html\" && powershell -Command \"Compress-Archive -Path build/* -DestinationPath MAGEThemes-v${nextRelease.version}.zip\""
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "MAGEThemes-v*.zip",
+            "label": "MAGEThemes v${nextRelease.version} (x64)"
+          }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["CHANGELOG.md", "package.json", "mage/mage.csproj"],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ]
+  ]
+}
