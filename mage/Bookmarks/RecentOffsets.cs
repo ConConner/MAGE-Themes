@@ -40,13 +40,13 @@ public static class RecentOffsets
 
             ctx.Items.Add(button);
         }
-        if (ctx.Items.Count >= 1) ctx.Items.Add(new ToolStripSeparator());
+        //if (ctx.Items.Count >= 1) ctx.Items.Add(new ToolStripSeparator());
 
-        ToolStripMenuItem bookmarkButton = new();
-        bookmarkButton.Text = "Choose Bookmark...";
-        bookmarkButton.Click += BookmarkButton_Click;
+        //ToolStripMenuItem bookmarkButton = new();
+        //bookmarkButton.Text = "Choose Bookmark...";
+        //bookmarkButton.Click += BookmarkButton_Click;
 
-        ctx.Items.Add(bookmarkButton);
+        //ctx.Items.Add(bookmarkButton);
     }
 
     private static void RecentOffsetButtonPressed(object? sender, EventArgs e)

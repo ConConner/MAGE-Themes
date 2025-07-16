@@ -179,6 +179,7 @@
             menuItem_bookmarks = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator33 = new System.Windows.Forms.ToolStripSeparator();
             button_experimental = new System.Windows.Forms.ToolStripMenuItem();
+            button_legacy = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip_help = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_viewHelp = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_about = new System.Windows.Forms.ToolStripMenuItem();
@@ -275,7 +276,6 @@
             toolStrip_patches = new System.Windows.Forms.ToolStripButton();
             comboBox_spriteset = new Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
-            button_legacy = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -1328,6 +1328,7 @@
             menuItem_bookmarks.Name = "menuItem_bookmarks";
             menuItem_bookmarks.Size = new System.Drawing.Size(193, 22);
             menuItem_bookmarks.Text = "Bookmarks";
+            menuItem_bookmarks.Visible = false;
             menuItem_bookmarks.Click += menuItem_bookmarks_Click;
             // 
             // toolStripSeparator33
@@ -1341,6 +1342,13 @@
             button_experimental.Size = new System.Drawing.Size(193, 22);
             button_experimental.Text = "Experimental Features";
             button_experimental.Click += button_experimental_Click;
+            // 
+            // button_legacy
+            // 
+            button_legacy.Name = "button_legacy";
+            button_legacy.Size = new System.Drawing.Size(193, 22);
+            button_legacy.Text = "Use Legacy Editors";
+            button_legacy.Click += button_legacy_Click;
             // 
             // menuStrip_help
             // 
@@ -2260,13 +2268,6 @@
             comboBox_spriteset.Size = new System.Drawing.Size(79, 23);
             comboBox_spriteset.TabIndex = 11;
             comboBox_spriteset.SelectedIndexChanged += comboBox_spriteset_SelectedIndexChanged;
-            // 
-            // button_legacy
-            // 
-            button_legacy.Name = "button_legacy";
-            button_legacy.Size = new System.Drawing.Size(193, 22);
-            button_legacy.Text = "Use Legacy Editors";
-            button_legacy.Click += button_legacy_Click;
             // 
             // FormMain
             // 
