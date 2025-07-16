@@ -1,5 +1,9 @@
 {
   "branches": ["main"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ConConner/MAGE-Themes.git"
+  },
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
