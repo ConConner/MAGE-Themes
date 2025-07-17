@@ -1553,7 +1553,7 @@
             // 
             contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { contextItem_addSprite, contextItem_editSprite, contextItem_removeSprite, toolStripSeparator6, contextItem_addDoor, contextItem_editDoor, contextItem_removeDoor, contextItem_goThroughDoor, toolStripSeparator12, contextItem_addScroll, contextItem_editScroll, contextItem_removeScroll, toolStripSeparator30, contextItem_setEffectPos, contextItem_removeEffectPos, toolStripSeparator14, contextItem_testRoom });
             contextMenu.Name = "contextMenu";
-            contextMenu.Size = new System.Drawing.Size(197, 314);
+            contextMenu.Size = new System.Drawing.Size(197, 336);
             contextMenu.Opening += contextMenu_Opening;
             // 
             // contextItem_addSprite

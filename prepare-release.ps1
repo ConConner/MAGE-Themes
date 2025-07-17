@@ -29,8 +29,8 @@ dotnet publish mage -r win-x64 -c release -o $publishDir --sc false
 
 # Copy documentation files
 Write-Host "Copying documentation..."
-Copy-Item -Path Docs/doc.html -Destination $publishDir/doc.html
-Copy-Item -Path Docs/technical.html -Destination $publishDir/technical.html
+Copy-Item -Path mage/Docs/doc.html -Destination $publishDir/doc.html
+Copy-Item -Path mage/Docs/technical.html -Destination $publishDir/technical.html
 
 # Create the release archive
 $archiveName = "MAGEThemes-v${Version}.zip"

@@ -116,7 +116,7 @@ namespace mage
             PopulateThemeList(null, null);
             LoadInternalBookmarks();
             ShowSplash();
-
+            
             roomView.Scrolled += roomView_Scrolled;
 
             ThemeSwitcher.ChangeTheme(Controls, this);
@@ -128,6 +128,7 @@ namespace mage
             toolStrip_oamEditor.Visible = Program.ExperimentalFeaturesEnabled;
             menuItem_oamViewer.Visible = Program.ExperimentalFeaturesEnabled;
         }
+
 
         #region opening/closing
 

@@ -1,8 +1,10 @@
 ﻿using mage.Theming.CustomControls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Reflection;
 using System.Runtime.Versioning;
 using System.Text;
 using System.Text.Json;
@@ -94,7 +96,7 @@ namespace mage.Theming
         /// Changes the properties of all Controls in <paramref name="container"/> to reflect the current theme
         /// selected in the <see cref="ThemeSwitcher.ProjectTheme"/>. Changes the background color of <paramref name="Base"/> if given.
         /// </summary>
-        public static void ChangeTheme(Control.ControlCollection container, Control Base = null)
+        public static void ChangeTheme(Control.ControlCollection container, Form Base = null)
         {
             Base?.SuspendLayout();
 
@@ -106,81 +108,95 @@ namespace mage.Theming
 
                 Base.BackColor = theme.BackgroundColor;
                 Base.ForeColor = theme.TextColor;
+
+                var f = Base.GetType()
+                    .GetField("components", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (f?.GetValue(Base) is IContainer c)
+                {
+                    foreach (IComponent comp in c.Components)
+                        if (comp is ContextMenuStrip cms)
+                            cms.Renderer = new ContextMenuCustomRenderer();
+                }
             }
 
-            foreach (Control component in container)
+            foreach (Control control in container)
             {
                 //excludes
-                if (component is TileView ||
-                    component is RoomView ||
-                    component.Tag?.ToString() == "unthemed")
+                if (control is TileView ||
+                    control is RoomView ||
+                    control.Tag?.ToString() == "unthemed")
                     continue;
 
                 //base change
-                component.BackColor = theme.BackgroundColor;
-                component.ForeColor = theme.TextColor;
-                component.Invalidate();
-                if (component.Tag?.ToString() == "accent") component.BackColor = theme.AccentColor;
+                control.BackColor = theme.BackgroundColor;
+                control.ForeColor = theme.TextColor;
+                control.Invalidate();
+                if (control.Tag?.ToString() == "accent") control.BackColor = theme.AccentColor;
 
-                if (component.HasChildren)
+                if (control.HasChildren)
                 {
-                    ChangeTheme(component.Controls);
+                    ChangeTheme(control.Controls);
                 }
 
                 //Special handeling for special controls
-                if (component is FlatComboBox)
+                if (control is FlatComboBox)
                 {
-                    FlatComboBox box = component as FlatComboBox;
+                    FlatComboBox box = control as FlatComboBox;
                     box.BorderColor = theme.PrimaryOutline;
                     box.ButtonColor = theme.BackgroundColor;
                 }
 
-                if (component is ToolStrip)
+                if (control is ToolStrip)
                 {
-                    ToolStrip strip = component as ToolStrip;
+                    ToolStrip strip = control as ToolStrip;
                     strip.Renderer = new MenuStripCustomRenderer(theme);
                 }
 
-                if (component is Button)
+                if (control is Button)
                 {
-                    Button btn = component as Button;
+                    Button btn = control as Button;
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderColor = theme.PrimaryOutline;
                     btn.FlatAppearance.MouseOverBackColor = theme.AccentColor;
                     btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(0x7F, theme.AccentColor);
                 }
 
-                if (component is FlatTextBox)
+                if (control is FlatTextBox)
                 {
-                    FlatTextBox box = component as FlatTextBox;
+                    FlatTextBox box = control as FlatTextBox;
                     box.BorderColor = theme.PrimaryOutline;
                 }
 
-                if (component is FlatNumericUpDown)
+                if (control is FlatNumericUpDown)
                 {
-                    FlatNumericUpDown num = component as FlatNumericUpDown;
+                    FlatNumericUpDown num = control as FlatNumericUpDown;
                     num.BorderStyle = BorderStyle.FixedSingle;
                     num.BorderColor = theme.PrimaryOutline;
                     num.ButtonHighlightColor = theme.AccentColor;
                 }
 
-                if (component is FlatTabControl)
+                if (control is FlatTabControl)
                 {
-                    FlatTabControl tab = component as FlatTabControl;
+                    FlatTabControl tab = control as FlatTabControl;
                     tab.BorderColor = theme.SecondaryOutline;
                 }
 
-                if (component is LinkLabel)
+                if (control is LinkLabel)
                 {
-                    LinkLabel lbl = component as LinkLabel;
+                    LinkLabel lbl = control as LinkLabel;
                     lbl.LinkColor = theme.AccentColor;
                     lbl.VisitedLinkColor = theme.AccentColor;
                 }
 
-                if (component is TreeView)
+                if (control is TreeView)
                 {
-                    TreeView tv = component as TreeView;
+                    TreeView tv = control as TreeView;
                     tv.LineColor = theme.PrimaryOutline;
+                }
+
+                if (control is ContextMenuStrip ctx)
+                {
+                    ctx.Renderer = new ContextMenuCustomRenderer();
                 }
             }
 
@@ -192,23 +208,23 @@ namespace mage.Theming
         /// </summary>
         public static void InjectPaintOverrides(Control.ControlCollection container)
         {
-            foreach (Control component in container)
+            foreach (Control control in container)
             {
                 //recursively inject the overrides in every child control
-                if (component.Controls.Count > 0) InjectPaintOverrides(component.Controls);
+                if (control.Controls.Count > 0) InjectPaintOverrides(control.Controls);
 
                 //Special handeling for special controls
-                if (component is GroupBox) component.Paint += DrawGroupBox;
-                if (component is CheckBox) component.Paint += DrawCheckBox;
-                if (component is FlatTextBox)
+                if (control is GroupBox) control.Paint += DrawGroupBox;
+                if (control is CheckBox) control.Paint += DrawCheckBox;
+                if (control is FlatTextBox)
                 {
-                    FlatTextBox box = component as FlatTextBox;
+                    FlatTextBox box = control as FlatTextBox;
                     box.Enter += FocusTextBox;
                     box.Leave += FocusTextBox;
                 }
-                if (component is Button) component.Paint += DrawButton;
-                if (component is Label) component.Paint += DrawLabel;
-                if (component is RadioButton) component.Paint += DrawRadioButton;
+                if (control is Button) control.Paint += DrawButton;
+                if (control is Label) control.Paint += DrawLabel;
+                if (control is RadioButton) control.Paint += DrawRadioButton;
             }
         }
 
