@@ -293,7 +293,7 @@ namespace mage
             BookmarkManager.InternalCollections = new() { BookmarkManager.Deserialize(json) };
         }
 
-        private string LoadAssemblyResourceAsString(string resourceName)
+        public static string LoadAssemblyResourceAsString(string resourceName)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
