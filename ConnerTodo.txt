@@ -3,6 +3,7 @@ TODO:
 - Write OAM Editor documentation
 - Write Bookmark documentation / Recent Offset Documentation
 - Fix OAM Repointing and move out of experimental
+- Fix help theming with light mode colors
 
 MAGE Themes:
 - Theming support

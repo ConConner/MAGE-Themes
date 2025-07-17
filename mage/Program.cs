@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
 
@@ -20,6 +21,9 @@ namespace mage
             Application.SetCompatibleTextRenderingDefault(false);
             Application.SetDefaultFont(new Font(new FontFamily("Microsoft Sans Serif"), 8f));
 
+            Program.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            MigrateSettings();
+
             // check for opening rom directly
             string[] args = Environment.GetCommandLineArgs();
             FormMain form = new FormMain();
@@ -35,8 +39,15 @@ namespace mage
             Application.Run(form);
         }
 
-        public static string Version { get { return "1.4.0"; } }
-        public static string ShortVersion { get { return "1.4"; } }
+        public static string Version { get; private set; }
+        public static string ShortVersion
+        {
+            get
+            {
+                string[] parts = Version.Split('.');
+                return $"{parts[0]}.{parts[1]}";
+            }
+        }
 
         private static bool experimentalFeaturesEnabled = false;
         public static bool ExperimentalFeaturesEnabled 
@@ -60,5 +71,14 @@ namespace mage
             }
         }
         public static Config Config { get; set; }
+
+        private static void MigrateSettings()
+        {
+            if (!Properties.Settings.Default.UpgradeRequired) return;
+
+            Properties.Settings.Default.Upgrade();
+            Properties.Settings.Default.UpgradeRequired = false;
+            Properties.Settings.Default.Save();
+        }
     }
 }

@@ -4,88 +4,117 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace mage.Tools;
 
 public partial class HelpViewer : Form
 {
-    //private static string MageAssemblyPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-    //public static string MageDocPath = Path.Combine(MageAssemblyPath, "doc.html");
-    //public static string MageTechnicalPath = Path.Combine(MageAssemblyPath, "technical.html");
+    private static class DocFiles
+    {
+        public static string HelpDoc => "doc.html";
+        public static string TechnicalDoc => "technical.html";
+    }
 
-    //private string initialPath = "";
+	WebBrowser Browser;
 
-    //public HelpViewer(string path) : this()
-    //{
-    //    initialPath = path;
-    //}
-
-    public HelpViewer()
+    public HelpViewer(string heading = "")
     {
         InitializeComponent();
 
         ThemeSwitcher.ChangeTheme(Controls, this);
         ThemeSwitcher.InjectPaintOverrides(Controls);
 
-        //// Initialize WebView2
-        //webview.EnsureCoreWebView2Async();
-        //webview.CoreWebView2InitializationCompleted += Webview_CoreWebView2InitializationCompleted;
-        //webview.NavigationCompleted += Webview_NavigationCompleted;
+        Browser = new WebBrowser()
+        {
+            Dock = DockStyle.Fill,
+        };
+		LoadPage(DocFiles.HelpDoc);
+
+        group_help.Controls.Add(Browser);
     }
 
-    //private void Webview_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
-    //{
-    //    if (e.IsSuccess)
-    //    {
-    //        webview.CoreWebView2.Settings.IsStatusBarEnabled = false;
-    //        webview.CoreWebView2.Settings.AreDevToolsEnabled = false;
-    //        webview.CoreWebView2.Settings.IsZoomControlEnabled = false;
-    //        OpenFileOrURL(initialPath != "" ? initialPath : MageDocPath);
-    //    }
-    //    else
-    //    {
-    //        MessageBox.Show("Failed to initialize WebView2: " + e.InitializationException.Message);
-    //    }
-    //}
-    //
-    //private async void Webview_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
-    //{
-    //    if (!e.IsSuccess) return;
-    //}
+	private void LoadPage(string page)
+	{
+		string html = LoadHtml(page)
+			.Replace("</head>", GetCustomCSS(ThemeSwitcher.ProjectTheme) + "</head>");
+		Browser.DocumentText = html;
+    }
 
+    private static string LoadHtml(string file)
+    {
+        return FormMain.LoadAssemblyResourceAsString($"mage.Docs.{file}")!;
+    }
 
-    //public bool Navigate(string path)
-    //{
-    //    if (webview == null || webview.CoreWebView2 == null) return false;
-    //    webview.CoreWebView2.Navigate(path);
-    //    return true;
-    //}
+    private string GetCustomCSS(ColorTheme theme)
+    {
+        Color background2 = ColorOperations.ShiftLightness(theme.BackgroundColor, -0.02f);
 
-    //public bool OpenFileOrURL(string path)
-    //{
-    //    if (webview == null || webview.CoreWebView2 == null) return false;
-    //
-    //    // Check if the path is a URL or a local file
-    //    bool isFile = (Uri.IsWellFormedUriString(path, UriKind.Absolute) && File.Exists(path));
-    //    path = "file:///" + path;
-    //
-    //    webview.CoreWebView2.Navigate(path);
-    //    return true;
-    //}
+        Color accent2color = ColorOperations.ShiftHue(theme.AccentColor, 30f);
+        Color accent2colorDark = ControlPaint.Dark(accent2color, 0.40f);
 
-    //private void mAGEHelpToolStripMenuItem_Click(object sender, EventArgs e)
-    //{
-    //    OpenFileOrURL(MageDocPath);
-    //}
+        return $@"
+		<style>
+			body {{
+				color: {theme.TextColor.ToHexString()};
+				background-color: {theme.BackgroundColor.ToHexString()};
+				display:block;
+				border:0;
+				margin:16px;
+				padding:0px;
+				font-family:verdana, sans-serif;
+			}}
+			.content {{
+				background-color:{background2.ToHexString()};
+				padding:10px;
+				padding-top:16px;
+				width:94%;
+				margin-left:auto;
+				margin-right:auto;
+			}}
+			a {{
+				color: {theme.AccentColor.ToHexString()}
+			}}
 
-    //private void technicalInformationToolStripMenuItem_Click(object sender, EventArgs e)
-    //{
-    //    OpenFileOrURL(MageTechnicalPath);
-    //}
+			h2 {{
+				background-color:{ControlPaint.Dark(theme.AccentColor, 0.40f).ToHexString()};
+				border-top:3px solid {theme.AccentColor.ToHexString()};
+				margin-top:40px;
+				padding:8px;
+		
+			}}
+			h3 {{
+				background-color:{accent2colorDark.ToHexString()};
+				border-top:1px solid {accent2color.ToHexString()};
+				margin-top:40px;
+				margin-left:0px;
+				padding:4px;
+			}}
+
+			table, th, td {{
+				background-color: {theme.BackgroundColor.ToHexString()};
+				border:1px solid {ControlPaint.Dark(theme.TextColor, 0.10f).ToHexString()};
+				padding:0.2em;
+			}}
+
+			th {{
+				background-color:{ControlPaint.Dark(theme.BackgroundColor, 0.10f).ToHexString()};
+				padding-left:1em;
+				padding-right:1em;
+			}}
+		</style>";
+    }
+
+	private void mAGEHelpToolStripMenuItem_Click(object sender, EventArgs e) => LoadPage(DocFiles.HelpDoc);
+
+	private void technicalInformationToolStripMenuItem_Click(object sender, EventArgs e) => LoadPage(DocFiles.TechnicalDoc);
 }

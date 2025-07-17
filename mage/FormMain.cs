@@ -116,7 +116,7 @@ namespace mage
             PopulateThemeList(null, null);
             LoadInternalBookmarks();
             ShowSplash();
-
+            
             roomView.Scrolled += roomView_Scrolled;
 
             ThemeSwitcher.ChangeTheme(Controls, this);
@@ -128,6 +128,7 @@ namespace mage
             toolStrip_oamEditor.Visible = Program.ExperimentalFeaturesEnabled;
             menuItem_oamViewer.Visible = Program.ExperimentalFeaturesEnabled;
         }
+
 
         #region opening/closing
 
@@ -292,7 +293,7 @@ namespace mage
             BookmarkManager.InternalCollections = new() { BookmarkManager.Deserialize(json) };
         }
 
-        private string LoadAssemblyResourceAsString(string resourceName)
+        public static string LoadAssemblyResourceAsString(string resourceName)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
@@ -1475,10 +1476,15 @@ namespace mage
             groupBox_editBG.Enabled = val;
             groupBox_tileset.Enabled = val;
             groupBox_room.Enabled = val;
-            statusStrip.Enabled = val;
             menuItem_defaultView.Enabled = val;
             menuItem_numberBase.Enabled = val;
             menuItem_tooltips.Enabled = val;
+
+            // handle each status strip item seperately
+            statusLabel_clip.Enabled = val;
+            statusLabel_coor.Enabled = val;
+            statusStrip_zoom.Enabled = val;
+            lbl_spring.Enabled = val;
         }
 
         private void FormMain_DragEnter(object sender, DragEventArgs e)

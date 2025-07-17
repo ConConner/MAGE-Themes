@@ -37,7 +37,6 @@
             panel_help = new System.Windows.Forms.Panel();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             menuStrip1.SuspendLayout();
-            group_help.SuspendLayout();
             panel_help.SuspendLayout();
             SuspendLayout();
             // 
@@ -46,7 +45,7 @@
             menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { navigateToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new System.Drawing.Size(623, 24);
+            menuStrip1.Size = new System.Drawing.Size(639, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -54,27 +53,29 @@
             // 
             navigateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { mAGEHelpToolStripMenuItem, technicalInformationToolStripMenuItem });
             navigateToolStripMenuItem.Name = "navigateToolStripMenuItem";
-            navigateToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
-            navigateToolStripMenuItem.Text = "Navigate";
+            navigateToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            navigateToolStripMenuItem.Text = "Docs";
             // 
             // mAGEHelpToolStripMenuItem
             // 
             mAGEHelpToolStripMenuItem.Name = "mAGEHelpToolStripMenuItem";
             mAGEHelpToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             mAGEHelpToolStripMenuItem.Text = "MAGE Help";
+            mAGEHelpToolStripMenuItem.Click += mAGEHelpToolStripMenuItem_Click;
             // 
             // technicalInformationToolStripMenuItem
             // 
             technicalInformationToolStripMenuItem.Name = "technicalInformationToolStripMenuItem";
             technicalInformationToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             technicalInformationToolStripMenuItem.Text = "Technical Information";
+            technicalInformationToolStripMenuItem.Click += technicalInformationToolStripMenuItem_Click;
             // 
             // group_help
             // 
             group_help.Dock = System.Windows.Forms.DockStyle.Fill;
             group_help.Location = new System.Drawing.Point(6, 3);
             group_help.Name = "group_help";
-            group_help.Size = new System.Drawing.Size(611, 578);
+            group_help.Size = new System.Drawing.Size(627, 579);
             group_help.TabIndex = 2;
             group_help.TabStop = false;
             // 
@@ -85,31 +86,31 @@
             panel_help.Location = new System.Drawing.Point(0, 24);
             panel_help.Name = "panel_help";
             panel_help.Padding = new System.Windows.Forms.Padding(6, 3, 6, 3);
-            panel_help.Size = new System.Drawing.Size(623, 584);
+            panel_help.Size = new System.Drawing.Size(639, 585);
             panel_help.TabIndex = 3;
             // 
             // statusStrip1
             // 
-            statusStrip1.Location = new System.Drawing.Point(0, 608);
+            statusStrip1.Location = new System.Drawing.Point(0, 609);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(623, 22);
+            statusStrip1.Size = new System.Drawing.Size(639, 22);
             statusStrip1.TabIndex = 4;
             statusStrip1.Text = "statusStrip1";
             // 
             // HelpViewer
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(623, 630);
+            ClientSize = new System.Drawing.Size(639, 631);
             Controls.Add(panel_help);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
+            MinimumSize = new System.Drawing.Size(655, 670);
             Name = "HelpViewer";
             Text = "MAGE Themes Help";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            group_help.ResumeLayout(false);
             panel_help.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();

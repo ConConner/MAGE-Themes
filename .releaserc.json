@@ -20,7 +20,7 @@
         "assets": [
           {
             "path": "MAGEThemes-v*.zip",
-            "label": "MAGEThemes v${nextRelease.version} (x64)"
+            "label": "MAGE Themes v${nextRelease.version} (x64)"
           }
         ]
       }
