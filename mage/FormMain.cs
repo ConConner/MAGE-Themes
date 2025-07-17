@@ -1476,10 +1476,15 @@ namespace mage
             groupBox_editBG.Enabled = val;
             groupBox_tileset.Enabled = val;
             groupBox_room.Enabled = val;
-            statusStrip.Enabled = val;
             menuItem_defaultView.Enabled = val;
             menuItem_numberBase.Enabled = val;
             menuItem_tooltips.Enabled = val;
+
+            // handle each status strip item seperately
+            statusLabel_clip.Enabled = val;
+            statusLabel_coor.Enabled = val;
+            statusStrip_zoom.Enabled = val;
+            lbl_spring.Enabled = val;
         }
 
         private void FormMain_DragEnter(object sender, DragEventArgs e)

@@ -1553,7 +1553,7 @@
             // 
             contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { contextItem_addSprite, contextItem_editSprite, contextItem_removeSprite, toolStripSeparator6, contextItem_addDoor, contextItem_editDoor, contextItem_removeDoor, contextItem_goThroughDoor, toolStripSeparator12, contextItem_addScroll, contextItem_editScroll, contextItem_removeScroll, toolStripSeparator30, contextItem_setEffectPos, contextItem_removeEffectPos, toolStripSeparator14, contextItem_testRoom });
             contextMenu.Name = "contextMenu";
-            contextMenu.Size = new System.Drawing.Size(197, 336);
+            contextMenu.Size = new System.Drawing.Size(197, 314);
             contextMenu.Opening += contextMenu_Opening;
             // 
             // contextItem_addSprite
@@ -1798,7 +1798,6 @@
             // 
             // statusStrip
             // 
-            statusStrip.Enabled = false;
             statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_coor, statusLabel_sel, statusLabel_clip, lbl_spring, statusStrip_theme, statusStrip_zoom });
             statusStrip.Location = new System.Drawing.Point(0, 549);
             statusStrip.Name = "statusStrip";
@@ -1813,6 +1812,7 @@
             statusLabel_coor.AutoSize = false;
             statusLabel_coor.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             statusLabel_coor.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            statusLabel_coor.Enabled = false;
             statusLabel_coor.Name = "statusLabel_coor";
             statusLabel_coor.Size = new System.Drawing.Size(70, 19);
             statusLabel_coor.Text = "(0, 0)";
@@ -1824,6 +1824,7 @@
             statusLabel_sel.AutoSize = false;
             statusLabel_sel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             statusLabel_sel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            statusLabel_sel.Enabled = false;
             statusLabel_sel.Name = "statusLabel_sel";
             statusLabel_sel.Size = new System.Drawing.Size(70, 19);
             statusLabel_sel.Text = "0 x 0";
@@ -1841,7 +1842,7 @@
             // lbl_spring
             // 
             lbl_spring.Name = "lbl_spring";
-            lbl_spring.Size = new System.Drawing.Size(554, 19);
+            lbl_spring.Size = new System.Drawing.Size(523, 19);
             lbl_spring.Spring = true;
             // 
             // statusStrip_theme
@@ -1859,6 +1860,7 @@
             statusStrip_zoom.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             statusStrip_zoom.AutoToolTip = false;
             statusStrip_zoom.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStrip_zoom800, toolStrip_zoom400, toolStrip_zoom200, toolStrip_zoom100 });
+            statusStrip_zoom.Enabled = false;
             statusStrip_zoom.Image = Properties.Resources.toolbar_zoom;
             statusStrip_zoom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             statusStrip_zoom.Name = "statusStrip_zoom";
@@ -1869,28 +1871,28 @@
             // toolStrip_zoom800
             // 
             toolStrip_zoom800.Name = "toolStrip_zoom800";
-            toolStrip_zoom800.Size = new System.Drawing.Size(102, 22);
+            toolStrip_zoom800.Size = new System.Drawing.Size(180, 22);
             toolStrip_zoom800.Text = "800%";
             toolStrip_zoom800.Click += menuItem_zoom800_Click;
             // 
             // toolStrip_zoom400
             // 
             toolStrip_zoom400.Name = "toolStrip_zoom400";
-            toolStrip_zoom400.Size = new System.Drawing.Size(102, 22);
+            toolStrip_zoom400.Size = new System.Drawing.Size(180, 22);
             toolStrip_zoom400.Text = "400%";
             toolStrip_zoom400.Click += menuItem_zoom400_Click;
             // 
             // toolStrip_zoom200
             // 
             toolStrip_zoom200.Name = "toolStrip_zoom200";
-            toolStrip_zoom200.Size = new System.Drawing.Size(102, 22);
+            toolStrip_zoom200.Size = new System.Drawing.Size(180, 22);
             toolStrip_zoom200.Text = "200%";
             toolStrip_zoom200.Click += menuItem_zoom200_Click;
             // 
             // toolStrip_zoom100
             // 
             toolStrip_zoom100.Name = "toolStrip_zoom100";
-            toolStrip_zoom100.Size = new System.Drawing.Size(102, 22);
+            toolStrip_zoom100.Size = new System.Drawing.Size(180, 22);
             toolStrip_zoom100.Text = "100%";
             toolStrip_zoom100.Click += menuItem_zoom100_Click;
             // 
