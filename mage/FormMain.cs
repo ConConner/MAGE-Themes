@@ -26,6 +26,7 @@ using mage.Bookmarks;
 using System.Security.Cryptography.X509Certificates;
 using System.Reflection;
 using System.Text;
+using mage.Updates;
 
 namespace mage
 {
@@ -116,12 +117,14 @@ namespace mage
             PopulateThemeList(null, null);
             LoadInternalBookmarks();
             ShowSplash();
-            
+
             roomView.Scrolled += roomView_Scrolled;
 
             ThemeSwitcher.ChangeTheme(Controls, this);
             ThemeSwitcher.InjectPaintOverrides(Controls);
             ThemeSwitcher.ThemeChanged += SwitchedTheme;
+
+            _ = new UpdateChecker().CheckAsync();
 
             // Enable experimental features
             seperator_flip.Visible = menuItem_flip_h.Visible = menuItem_flip_v.Visible = Program.ExperimentalFeaturesEnabled;
@@ -1183,16 +1186,6 @@ namespace mage
             }
         }
 
-        public static void showHelpItem(string path)
-        {
-            return;
-            //if (!FindOpenForm(typeof(HelpViewer), true))
-            //{
-            //    HelpViewer form = new HelpViewer(path);
-            //    form.Show();
-            //}
-        }
-
         private void menuItem_about_Click(object sender, EventArgs e)
         {
             if (!FindOpenForm(typeof(FormAbout), false))
@@ -1200,6 +1193,11 @@ namespace mage
                 FormAbout form = new FormAbout();
                 form.Show();
             }
+        }
+
+        private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _ = new UpdateChecker().CheckAsync(true);
         }
 
         // methods
@@ -2997,5 +2995,7 @@ namespace mage
 
         private void flipRoomVToolStripMenuItem_Click(object sender, EventArgs e)
             => PerformAction(new FlipRoom(room, false, true));
+
+        
     }
 }

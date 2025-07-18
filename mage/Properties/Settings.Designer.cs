@@ -357,5 +357,16 @@ namespace mage.Properties {
                 this["UpgradeRequired"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection updateCheckIgnoreVersions {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["updateCheckIgnoreVersions"]));
+            }
+            set {
+                this["updateCheckIgnoreVersions"] = value;
+            }
+        }
     }
 }

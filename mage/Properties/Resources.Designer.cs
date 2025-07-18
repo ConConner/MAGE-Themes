@@ -261,12 +261,12 @@ namespace mage.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Icon mage {
+        public static System.Drawing.Bitmap magePNG {
             get {
-                object obj = ResourceManager.GetObject("mage", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
+                object obj = ResourceManager.GetObject("magePNG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

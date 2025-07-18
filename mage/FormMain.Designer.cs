@@ -276,6 +276,8 @@
             toolStrip_patches = new System.Windows.Forms.ToolStripButton();
             comboBox_spriteset = new Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
+            toolStripSeparator34 = new System.Windows.Forms.ToolStripSeparator();
+            checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -1352,7 +1354,7 @@
             // 
             // menuStrip_help
             // 
-            menuStrip_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_viewHelp, menuItem_about });
+            menuStrip_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_viewHelp, menuItem_about, toolStripSeparator34, checkForUpdatesToolStripMenuItem });
             menuStrip_help.Name = "menuStrip_help";
             menuStrip_help.Size = new System.Drawing.Size(44, 20);
             menuStrip_help.Text = "Help";
@@ -1360,14 +1362,14 @@
             // menuItem_viewHelp
             // 
             menuItem_viewHelp.Name = "menuItem_viewHelp";
-            menuItem_viewHelp.Size = new System.Drawing.Size(143, 22);
+            menuItem_viewHelp.Size = new System.Drawing.Size(180, 22);
             menuItem_viewHelp.Text = "View Help";
             menuItem_viewHelp.Click += menuItem_viewHelp_Click;
             // 
             // menuItem_about
             // 
             menuItem_about.Name = "menuItem_about";
-            menuItem_about.Size = new System.Drawing.Size(143, 22);
+            menuItem_about.Size = new System.Drawing.Size(180, 22);
             menuItem_about.Text = "About MAGE";
             menuItem_about.Click += menuItem_about_Click;
             // 
@@ -1842,7 +1844,7 @@
             // lbl_spring
             // 
             lbl_spring.Name = "lbl_spring";
-            lbl_spring.Size = new System.Drawing.Size(523, 19);
+            lbl_spring.Size = new System.Drawing.Size(554, 19);
             lbl_spring.Spring = true;
             // 
             // statusStrip_theme
@@ -1871,28 +1873,28 @@
             // toolStrip_zoom800
             // 
             toolStrip_zoom800.Name = "toolStrip_zoom800";
-            toolStrip_zoom800.Size = new System.Drawing.Size(180, 22);
+            toolStrip_zoom800.Size = new System.Drawing.Size(102, 22);
             toolStrip_zoom800.Text = "800%";
             toolStrip_zoom800.Click += menuItem_zoom800_Click;
             // 
             // toolStrip_zoom400
             // 
             toolStrip_zoom400.Name = "toolStrip_zoom400";
-            toolStrip_zoom400.Size = new System.Drawing.Size(180, 22);
+            toolStrip_zoom400.Size = new System.Drawing.Size(102, 22);
             toolStrip_zoom400.Text = "400%";
             toolStrip_zoom400.Click += menuItem_zoom400_Click;
             // 
             // toolStrip_zoom200
             // 
             toolStrip_zoom200.Name = "toolStrip_zoom200";
-            toolStrip_zoom200.Size = new System.Drawing.Size(180, 22);
+            toolStrip_zoom200.Size = new System.Drawing.Size(102, 22);
             toolStrip_zoom200.Text = "200%";
             toolStrip_zoom200.Click += menuItem_zoom200_Click;
             // 
             // toolStrip_zoom100
             // 
             toolStrip_zoom100.Name = "toolStrip_zoom100";
-            toolStrip_zoom100.Size = new System.Drawing.Size(180, 22);
+            toolStrip_zoom100.Size = new System.Drawing.Size(102, 22);
             toolStrip_zoom100.Text = "100%";
             toolStrip_zoom100.Click += menuItem_zoom100_Click;
             // 
@@ -2271,6 +2273,18 @@
             comboBox_spriteset.TabIndex = 11;
             comboBox_spriteset.SelectedIndexChanged += comboBox_spriteset_SelectedIndexChanged;
             // 
+            // toolStripSeparator34
+            // 
+            toolStripSeparator34.Name = "toolStripSeparator34";
+            toolStripSeparator34.Size = new System.Drawing.Size(177, 6);
+            // 
+            // checkForUpdatesToolStripMenuItem
+            // 
+            checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
+            checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            checkForUpdatesToolStripMenuItem.Text = "Check for Updates...";
+            checkForUpdatesToolStripMenuItem.Click += checkForUpdatesToolStripMenuItem_Click;
+            // 
             // FormMain
             // 
             AllowDrop = true;
@@ -2569,6 +2583,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator32;
         private System.Windows.Forms.ToolStripMenuItem menuItem_bookmarks;
         private System.Windows.Forms.ToolStripMenuItem button_legacy;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator34;
+        private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
     }
 }
 
