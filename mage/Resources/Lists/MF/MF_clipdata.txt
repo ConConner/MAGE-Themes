@@ -1,5 +1,5 @@
-00 Air
-01 Block (pass through bottom)
+00    Air
+01  _ Semi-solid platform
 02
 03
 04
@@ -7,117 +7,117 @@
 06
 07
 08
-09 Prevents climbing into from ladder
+09  @ Stop ladder ceiling
 0A
 0B
 0C
 0D
 0E
 0F
-10 Solid block
-11 / steep floor slope
-12 \ steep floor slope
-13 / lower slight floor slope
-14 / upper slight floor slope
-15 \ upper slight floor slope
-16 \ lower slight floor slope
-17 Stop enemy block (air)
-18 Ceiling ladder
-19 Right wall ladder
-1A Left wall ladder
-1B Water
-1C Wet ground
-1D Dusty ground
-1E Unused (solid)
-1F Unused (air)
-20 Door transition block
-21 \ steep ceiling slope (air)
-22 / steep ceiling slope (air)
-23 \ upper slight ceiling slope (air)
-24 \ lower slight ceiling slope (air)
-25 / lower slight ceiling slope (air)
-26 / upper slight ceiling slope (air)
-27 Vertical up transition block
-28 Vertical down transition block
-29 Elevator up block
-2A Elevator down block
-2B Unused (air)
-2C Bubbly ground
-2D Very dusty ground
-2E Unused (air)
-2F Unused (air)
-30 White door slot 1
-31 White door slot 2
-32 White door slot 3
-33 White door slot 4
-34 White door slot 5
-35 White door slot 6
-36 Blue door slot 1
-37 Blue door slot 2
-38 Blue door slot 3
-39 Blue door slot 4
-3A Blue door slot 5
-3B Blue door slot 6
-3C Red door slot 1
-3D Red door slot 2
-3E Red door slot 3
-3F Gray door
-40 Green door slot 1
-41 Green door slot 2
-42 Green door slot 3
-43 Green door slot 4
-44 Green door slot 5
-45 Green door slot 6
-46 Yellow door slot 1
-47 Yellow door slot 2
-48 Yellow door slot 3
-49 Yellow door slot 4
-4A Yellow door slot 5
-4B Yellow door slot 6
-4C Red door slot 4
-4D Red door slot 5
-4E Red door slot 6
-4F Unused (air)
-50 Top-left shot block (never reform)
-51 Top-right shot block (never reform)
-52 Shot block (never reform)
-53 Shot block (reform)
-54 Missile block (never reform)
-55 Bomb block (never reform)
-56 Bomb block (reform)
-57 Power bomb block (never reform)
-58 Speed boost block (no reform)
-59 Screw attack block (no reform)
-5A Crumble block
-5B Shot block (no reform)
-5C Top-left shot block (no reform)
-5D Top-right shot block (no reform)
-5E Missile block (no reform)
-5F Unused (air)
-60 Bottom-left shot block (never reform)
-61 Bottom-right shot block (never reform)
-62 Missile tank
-63 Energy tank
-64 Hidden missile tank
-65 Hidden energy tank
-66 Underwater missile tank
-67 Underwater energy tank
-68 Power bomb tank
-69 Hidden power bomb tank
-6A Underwater power bomb tank
-6B Speed boost block (reform)
-6C Bottom-left shot block (no reform)
-6D Bottom-right shot block (no reform)
-6E Unused (air)
-6F Unused (air)
-70 Vertical bomb chain 1
-71 Vertical bomb chain 2
-72 Vertical bomb chain 3
-73 Vertical bomb chain 4
-74 Horizontal bomb chain 1
-75 Horizontal bomb chain 2
-76 Horizontal bomb chain 3
-77 Horizontal bomb chain 4
+10 @ Solid block
+11 / Steep floor slope
+12 \ Steep floor slope
+13 / Lower slight floor slope
+14 / Upper slight floor slope
+15 \ Upper slight floor slope
+16 \ Lower slight floor slope
+17   Stop enemy block (air)
+18 @ Ceiling ladder
+19 ] Right wall ladder
+1A [ Left wall ladder
+1B   Water
+1C _ Wet ground
+1D _ Dusty ground
+1E @ Unused (solid)
+1F   Unused (air)
+20   Door transition block
+21 \ Steep ceiling slope (DOESN'T WORK)
+22 / Steep ceiling slope (DOESN'T WORK)
+23 \ Upper slight ceiling slope (DOESN'T WORK)
+24 \ Lower slight ceiling slope (DOESN'T WORK)
+25 / Lower slight ceiling slope (DOESN'T WORK)
+26 / Upper slight ceiling slope (DOESN'T WORK)
+27 ^ Vertical up transition block
+28 V Vertical down transition block
+29 _ Elevator up block
+2A _ Elevator down block
+2B   Unused (air)
+2C _ Bubbly ground
+2D _ Very dusty ground
+2E   Unused (air)
+2F   Unused (air)
+30 ) White  hatch slot 1__
+31 ) White  hatch slot 2 |
+32 ) White  hatch slot 3 |
+33 ) White  hatch slot 4 |
+34 ) White  hatch slot 5 |
+35 ) White  hatch slot 6 |
+36 ) Blue   hatch slot 1__
+37 ) Blue   hatch slot 2 |
+38 ) Blue   hatch slot 3 |
+39 ) Blue   hatch slot 4 |
+3A ) Blue   hatch slot 5 |
+3B ) Blue   hatch slot 6 |
+3C ) Red    hatch slot 1__
+3D ) Red    hatch slot 2 |
+3E ) Red    hatch slot 3 |
+3F ) Locked hatch
+40 ) Green  hatch slot 1__
+41 ) Green  hatch slot 2 |
+42 ) Green  hatch slot 3 |
+43 ) Green  hatch slot 4 |
+44 ) Green  hatch slot 5 |
+45 ) Green  hatch slot 6 |
+46 ) Yellow hatch slot 1__
+47 ) Yellow hatch slot 2 |
+48 ) Yellow hatch slot 3 |
+49 ) Yellow hatch slot 4 |
+4A ) Yellow hatch slot 5 |
+4B ) Yellow hatch slot 6 |
+4C ) Red    hatch slot 4__
+4D ) Red    hatch slot 5 |
+4E ) Red    hatch slot 6 |
+4F   Unused (air)
+50 p Top-left shot block (never reform)
+51 q Top-right shot block (never reform)
+52 # Shot block (never reform)
+53 # Shot block (reform)
+54 # Missile block (never reform)
+55 # Bomb block (never reform)
+56 # Bomb block (reform)
+57 # Power bomb block (never reform)
+58 # Speed boost block (no reform)
+59 # Screw attack block (no reform)
+5A # Crumble block
+5B # Shot block (no reform)
+5C p Top-left shot block (no reform)
+5D q Top-right shot block (no reform)
+5E # Missile block (no reform)
+5F   Unused (air)
+60 b Bottom-left shot block (never reform)
+61 d Bottom-right shot block (never reform)
+62 ! Missile tank
+63 ! Energy tank
+64 ? Hidden missile tank
+65 ? Hidden energy tank
+66 ! Underwater missile tank
+67 ! Underwater energy tank
+68 ! Power bomb tank
+69 ? Hidden power bomb tank
+6A ! Underwater power bomb tank
+6B # Speed boost block (reform)
+6C b Bottom-left shot block (no reform)
+6D d Bottom-right shot block (no reform)
+6E   Unused (air)
+6F   Unused (air)
+70 | Vertical bomb chain 1
+71 | Vertical bomb chain 2
+72 | Vertical bomb chain 3
+73 | Vertical bomb chain 4
+74 - Horizontal bomb chain 1
+75 - Horizontal bomb chain 2
+76 - Horizontal bomb chain 3
+77 - Horizontal bomb chain 4
 78
 79
 7A
