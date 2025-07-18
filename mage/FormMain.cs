@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -26,6 +26,7 @@ using mage.Bookmarks;
 using System.Security.Cryptography.X509Certificates;
 using System.Reflection;
 using System.Text;
+using System.Linq; // added for font stuff - alexman25
 
 namespace mage
 {
@@ -1409,7 +1410,24 @@ namespace mage
             splash.Dispose();
             groupBox_location.Enabled = true;
         }
-
+		
+		// Look for Input Mono to use in clipdata list; default to Consolas if absent - alexman25
+		public Font MonoFont(float size)
+		{
+			InstalledFontCollection installedFonts = new InstalledFontCollection();
+			bool Check4Input = installedFonts.Families.Any(f =>
+				f.Name.Equals("Input", StringComparison.OrdinalIgnoreCase));
+			if (Check4Input)
+			{
+				// We in biz gang
+				return new Font("Input", size, FontStyle.Regular);
+			}
+			else
+			{
+				// Consolas if no Input
+				return new Font("Consolas", size, FontStyle.Regular);
+			}
+		}
         private void InitializePart2()
         {
             // room view
@@ -1430,12 +1448,14 @@ namespace mage
             }
 
             // load clipdata list
+			comboBox_clipdata.Font = MonoFont(8f);		// Monospaced typeface looks better for this list - alexman25
+			comboBox_clipdata.DropDownWidth = 300;		// It's a bit wider, though, so widen the list to compensate
             string[] clipdata = Version.Clipdata;
             char[] sep = new char[] { ' ' };
             comboBox_clipdata.Items.Clear();
             for (int i = 0; i < clipdata.Length; i++)
             {
-                string line = Hex.ToString(i) + " - ";
+                string line = Hex.ToString(i) + " ";	// Removed to accommodate newer readability measures + wider typeface - alexman25
                 string[] sides = clipdata[i].Split(sep, 2);
                 if (sides.Length > 1) { line += sides[1]; }
                 comboBox_clipdata.Items.Add(line);
