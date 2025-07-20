@@ -1,58 +1,58 @@
-00 Air
-01 Block (pass through bottom)
-02 Non-power grip
+00    Air
+01  _ Semi-solid platform
+02  @ Non-power grip
 03
 04
 05
 06
-07 Enemy only block
+07  @ Stop player block
 08
-09 Stop enemy block (solid)
+09  @ Stop enemy block (solid)
 0A
 0B
 0C
 0D
 0E
 0F
-10 Solid block
-11 / steep floor slope
-12 \ steep floor slope
-13 / lower slight floor slope
-14 / upper slight floor slope
-15 \ upper slight floor slope
-16 \ lower slight floor slope
-17 Stop enemy block (air)
-18 Space pirate zoneline
-19 Space pirate wall jump point
-1A Unused (solid)
-1B Water
-1C Wet ground
-1D Dusty ground
-1E Unused (solid)
-1F Unused (air)
-20 Door transition block
-21 \ steep ceiling slope (air)
-22 / steep ceiling slope (air)
-23 \ upper slight ceiling slope (air)
-24 \ lower slight ceiling slope (air)
-25 / lower slight ceiling slope (air)
-26 / upper slight ceiling slope (air)
-27 Vertical up transition block
-28 Vertical down transition block
-29 Elevator up block
-2A Elevator down block
-2B Unused (air)
-2C Bubbly ground
-2D Very dusty ground
-2E Unused (air)
-2F Unused (air)
-30 Gray door
+10 @ Solid block
+11 / Steep floor slope
+12 \ Steep floor slope
+13 / Lower slight floor slope
+14 / Upper slight floor slope
+15 \ Upper slight floor slope
+16 \ Lower slight floor slope
+17   Stop enemy block (air)
+18 @ Space pirate zoneline
+19 @ Space pirate wall jump point
+1A @ Unused (solid)
+1B   Water
+1C _ Wet ground
+1D _ Dusty ground
+1E @ Unused (solid)
+1F   Unused (air)
+20   Door transition block
+21 \ Steep ceiling slope (DOESN'T WORK)
+22 / Steep ceiling slope (DOESN'T WORK)
+23 \ Upper slight ceiling slope (DOESN'T WORK)
+24 \ Lower slight ceiling slope (DOESN'T WORK)
+25 / Lower slight ceiling slope (DOESN'T WORK)
+26 / Upper slight ceiling slope (DOESN'T WORK)
+27 ^ Vertical up transition block
+28 V Vertical down transition block
+29 _ Elevator up block
+2A _ Elevator down block
+2B   Unused (air)
+2C _ Bubbly ground
+2D _ Very dusty ground
+2E   Unused (air)
+2F   Unused (air)
+30 ) Locked hatch
 31
 32
 33
 34
 35
-36 Regular door
+36 ) Regular hatch
 37
 38
 39
@@ -62,70 +62,70 @@
 3D
 3E
 3F
-40 Missile door
+40 ) Missile hatch
 41
 42
 43
 44
 45
-46 Super missile door
+46 ) Super missile hatch
 47
 48
 49
 4A
 4B
-4C Power bomb door
+4C ) Power bomb hatch
 4D
 4E
 4F
-50 Top-left shot block (never reform)
-51 Top-right shot block (never reform)
-52 Shot block (never reform)
-53 Top-left shot block (no reform)
-54 Top-right shot block (no reform)
-55 Shot block (no reform)
-56 Crumble block
-57 Bomb block (never reform)
-58 Missile block (never reform)
-59 Super missile block (never reform)
-5A Speed boost block (no reform)
-5B Power bomb block (never reform)
-5C Energy tank
-5D Missile tank
-5E Super missile tank
-5F Power bomb tank
-60 Bottom-left shot block (never reform)
-61 Bottom-right shot block (never reform)
-62 Shot block (reform)
-63 Bottom-left shot block (no reform)
-64 Bottom-right shot block (no reform)
-65 Unused (air)
-66 Slow crumble block
-67 Bomb block (reform)
-68 Missile block (no reform)
-69 Super missile block (no reform)
-6A Speed boost block (reform)
-6B Screw attack block (no reform)
-6C Hidden energy tank
-6D Hidden missile tank
-6E Hidden super missile tank
-6F Hidden power bomb tank
-70 Vertical bomb chain 1
-71 Vertical bomb chain 2
-72 Vertical bomb chain 3
-73 Vertical bomb chain 4
-74 Horizontal bomb chain 1
-75 Horizontal bomb chain 2
-76 Horizontal bomb chain 3
-77 Horizontal bomb chain 4
+50 p Top-left 2*2 shot block (never reform)
+51 q Top-right 2*2 shot block (never reform)
+52 # Shot block (never reform)
+53 p Top-left 2*2 shot block (no reform)
+54 q Top-right 2*2 shot block (no reform)
+55 # Shot block (no reform)
+56 # Crumble block
+57 # Bomb block (never reform)
+58 # Missile block (never reform)
+59 # Super missile block (never reform)
+5A # Speed boost block (no reform)
+5B # Power bomb block (never reform)
+5C ! Energy tank
+5D ! Missile tank
+5E ! Super missile tank
+5F ! Power bomb tank
+60 b Bottom-left 2*2 shot block (never reform)
+61 d Bottom-right 2*2 shot block (never reform)
+62 # Shot block (reform)
+63 b Bottom-left 2*2 shot block (no reform)
+64 d Bottom-right 2*2 shot block (no reform)
+65   Unused (air)
+66 # Slow crumble block
+67 # Bomb block (reform)
+68 # Missile block (no reform)
+69 # Super missile block (no reform)
+6A # Speed boost block (reform)
+6B # Screw attack block (no reform)
+6C ? Hidden energy tank
+6D ? Hidden missile tank
+6E ? Hidden super missile tank
+6F ? Hidden power bomb tank
+70 | Vertical bomb chain 1
+71 | Vertical bomb chain 2
+72 | Vertical bomb chain 3
+73 | Vertical bomb chain 4
+74 - Horizontal bomb chain 1
+75 - Horizontal bomb chain 2
+76 - Horizontal bomb chain 3
+77 - Horizontal bomb chain 4
 78
 79
 7A
 7B
-7C Underwater energy tank
-7D Underwater missile tank
-7E Underwater super missile tank
-7F Underwater power bomb tank
+7C ! Underwater energy tank
+7D ! Underwater missile tank
+7E ! Underwater super missile tank
+7F ! Underwater power bomb tank
 80 BG0 trigger opaque
 81 BG0 trigger transparent lvl 1
 82 BG0 trigger transparent lvl 2
@@ -158,9 +158,9 @@
 9D
 9E
 9F
-A0 Weak lava
-A1 Strong lava
-A2 Acid
+A0 * Acid
+A1 * Lava
+A2 * Brain acid
 A3
 A4
 A5
