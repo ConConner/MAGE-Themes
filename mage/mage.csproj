@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <Version>1.1.0</Version>
+    <Version>1.0.1</Version>
     <OutputType>WinExe</OutputType>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Docs\doc.html" />
+    <None Remove="Docs\legacy.html" />
     <None Remove="Docs\technical.html" />
     <None Remove="Resources\Bookmarks\ZM_U_OAM_Bookmarks.mbc" />
   </ItemGroup>
@@ -148,6 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Docs\doc.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Docs\legacy.html" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">

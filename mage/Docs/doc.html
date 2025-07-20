@@ -329,10 +329,16 @@
 			The tile table editor is used to edit images that require a tile table in addition to the normal graphics and palette. This type of image is made up of 8x8 tiles. A tile table contains a list of these tiles and their attributes, including the tile number, palette row, and whether it is flipped horizontally or vertically. You can edit tilesets, LZ77 compressed backgrounds, and other images used by the game if you know where their data is stored.
 		</p>
 		<p>
-			After selecting an image, you can click on the 16x16 region you want to edit, which will appear in the square at the top. The buttons around this square are used to change the palette row and flip for each tile. Left-clicking one of the corner buttons will use the next palette row for that tile, while right-clicking will use the previous row. Clicking the other buttons will flip the tile horizontally or vertically. To change the graphics used for a tile, first click on the tile you want to use from the bottom-left, then click on the corner you want to change. If "Copy palette #" is selected, then that tile's palette will be changed to the currently selected one. If "Preserve existing data" is selected, then if the data is pointed to from elsewhere, it will not be overwritten, and the new data will be written somewhere else.
+			After selecting an image, you can select a region of tiles in the Graphics display on the left by left-clicking and dragging on it. You can directly paste your selection in the tile table by left-clicking the desired location in the tile table display on the right. You can copy tiles directly from the tile table by right-clicking and dragging on the tile table display. Paste these copied tiles again by left-clicking on the tile table display. You can zoom in and out of the graphics display and tile table display by clicking on the magnifying glass icons in the respective toolbar. You can toggle a 16x16 pixel grid in the tile table display by clicking the grid icon in the toolbar.
 		</p>
 		<p>
-			You can also import and export tile tables. Keep in mind that graphics and palettes are separate from tile tables. If you're trying to copy an image, you'll need all three pieces of data.
+			You can transform a selection in the tile table display by clicking one of the buttons in the toolbar. Click the mirrored triangle buttons to flip the selection horizontally or vertically. Click the palette icons to increase or decrease the palette index. Click the "Set" button to directly choose a palette index from a palette dialog. You can also directly paste tiles from the graphics display with an assigned palette if you select the "Copy Palette" checkbox. Choosing "Preview" in the palette display will show the entire available palette and allows you to select the preview palette by clicking on a row. Hover over any tile in the tile table display for a short while to see a tooltip showing the current tile ID, palette as well as the horizontal and vertical flip.
+		</p>
+		<p>
+			A tile table may be referenced multiple times in the ROM. Therefore, when you save a tile table and it is referenced more than once in the ROM, you will be asked, if you want to change all references. By selecting no, a copy of the current tile table will be created and only the currently selected reference to it will be updated.
+		</p>
+		<p>
+			You can import and export tile tables. Keep in mind that graphics and palettes are separate from tile tables. If you're trying to copy an image, you'll need all three pieces of data.
 		</p>
 
 		<span class="smallLink">(<a href="#top">top</a>)</span>

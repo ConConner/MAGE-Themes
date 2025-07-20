@@ -23,9 +23,10 @@ public partial class HelpViewer : Form
     {
         public static string HelpDoc => "doc.html";
         public static string TechnicalDoc => "technical.html";
+        public static string LegacyDoc => "legacy.html";
     }
 
-	WebBrowser Browser;
+    WebBrowser Browser;
 
     public HelpViewer(string heading = "")
     {
@@ -38,16 +39,16 @@ public partial class HelpViewer : Form
         {
             Dock = DockStyle.Fill,
         };
-		LoadPage(DocFiles.HelpDoc);
+        LoadPage(DocFiles.HelpDoc);
 
         group_help.Controls.Add(Browser);
     }
 
-	private void LoadPage(string page)
-	{
-		string html = LoadHtml(page)
-			.Replace("</head>", GetCustomCSS(ThemeSwitcher.ProjectTheme) + "</head>");
-		Browser.DocumentText = html;
+    private void LoadPage(string page)
+    {
+        string html = LoadHtml(page)
+            .Replace("</head>", GetCustomCSS(ThemeSwitcher.ProjectTheme) + "</head>");
+        Browser.DocumentText = html;
     }
 
     private static string LoadHtml(string file)
@@ -114,7 +115,9 @@ public partial class HelpViewer : Form
 		</style>";
     }
 
-	private void mAGEHelpToolStripMenuItem_Click(object sender, EventArgs e) => LoadPage(DocFiles.HelpDoc);
+    private void mAGEHelpToolStripMenuItem_Click(object sender, EventArgs e) => LoadPage(DocFiles.HelpDoc);
 
-	private void technicalInformationToolStripMenuItem_Click(object sender, EventArgs e) => LoadPage(DocFiles.TechnicalDoc);
+    private void technicalInformationToolStripMenuItem_Click(object sender, EventArgs e) => LoadPage(DocFiles.TechnicalDoc);
+
+    private void legacyEditorsToolStripMenuItem_Click(object sender, EventArgs e) => LoadPage(DocFiles.LegacyDoc);
 }

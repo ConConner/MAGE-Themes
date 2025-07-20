@@ -36,6 +36,7 @@
             group_help = new System.Windows.Forms.GroupBox();
             panel_help = new System.Windows.Forms.Panel();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
+            legacyEditorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             panel_help.SuspendLayout();
             SuspendLayout();
@@ -51,7 +52,7 @@
             // 
             // navigateToolStripMenuItem
             // 
-            navigateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { mAGEHelpToolStripMenuItem, technicalInformationToolStripMenuItem });
+            navigateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { mAGEHelpToolStripMenuItem, technicalInformationToolStripMenuItem, legacyEditorsToolStripMenuItem });
             navigateToolStripMenuItem.Name = "navigateToolStripMenuItem";
             navigateToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             navigateToolStripMenuItem.Text = "Docs";
@@ -97,6 +98,13 @@
             statusStrip1.TabIndex = 4;
             statusStrip1.Text = "statusStrip1";
             // 
+            // legacyEditorsToolStripMenuItem
+            // 
+            legacyEditorsToolStripMenuItem.Name = "legacyEditorsToolStripMenuItem";
+            legacyEditorsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            legacyEditorsToolStripMenuItem.Text = "Legacy Editors";
+            legacyEditorsToolStripMenuItem.Click += legacyEditorsToolStripMenuItem_Click;
+            // 
             // HelpViewer
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -125,5 +133,6 @@
         private System.Windows.Forms.GroupBox group_help;
         private System.Windows.Forms.Panel panel_help;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripMenuItem legacyEditorsToolStripMenuItem;
     }
 }

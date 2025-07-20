@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>MAGE Themes Legacy Editors</title>
+	<meta charset="UTF-8">
+	<style>
+		body {
+			color: #f0f0f0;
+			background-color: #202020;
+			display: block;
+			border: 0;
+			margin: 16px;
+			padding: 0px;
+			font-family: verdana, sans-serif;
+		}
+
+		.content {
+			background-color: #181818;
+			padding: 10px;
+			padding-top: 16px;
+			width: 94%;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		a {
+			color: #A0A0F0
+		}
+
+		h1 {
+			font-size: 36px;
+		}
+
+		h2 {
+			background-color: #102030;
+			border-top: 3px solid #306090;
+			margin-top: 40px;
+			padding: 8px;
+		}
+
+		h3 {
+			background-color: #201030;
+			border-top: 1px solid #603090;
+			margin-top: 40px;
+			margin-left: 0px;
+			padding: 4px;
+		}
+
+		span.smallLink {
+			font-size: 75%;
+		}
+
+		ul {
+			margin-bottom: 30px;
+		}
+
+		li.toc1 {
+			font-size: 85%;
+			list-style-type: none;
+		}
+
+		li.toc2 {
+			font-size: 85%;
+			list-style-type: none;
+			text-indent: 20px;
+		}
+
+		table {
+			border-collapse: collapse;
+		}
+
+		table, th, td {
+			background-color: #202020;
+			border: 1px solid #c0c0c0;
+			padding: 0.2em;
+		}
+
+		td {
+			padding-right: 1em;
+		}
+
+		th {
+			background-color: #181818;
+			padding-left: 1em;
+			padding-right: 1em;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="content">
+		<h1>MAGE Themes Legacy Editors</h1>
+
+		<h2>Table of Contents</h2>
+		<ul>
+			<li class="toc1"><a href="#introduction">Introduction</a></li>
+            <li class="toc1"><a href="#tile-table-editor">Tile Table Editor</a></li>
+		</ul>
+
+
+		<h2 id="introduction">Introduction</h2>
+
+		<p>
+		    MAGE Themes introduces redesigned editors to improve usability, but the originals remain available for users who prefer them. Enable “Options > Use Legacy Editors” to open the legacy version of any editor that has been replaced. The documentation that follows describes the legacy editors exactly as they existed before replacement.
+		</p>
+		<span class="smallLink">(<a href="#top">top</a>)</span>
+
+        <h2 id="tile-table-editor">Tile Table Editor</h2>
+		<p>
+			The tile table editor is used to edit images that require a tile table in addition to the normal graphics and palette. This type of image is made up of 8x8 tiles. A tile table contains a list of these tiles and their attributes, including the tile number, palette row, and whether it is flipped horizontally or vertically. You can edit tilesets, LZ77 compressed backgrounds, and other images used by the game if you know where their data is stored.
+		</p>
+		<p>
+			After selecting an image, you can click on the 16x16 region you want to edit, which will appear in the square at the top. The buttons around this square are used to change the palette row and flip for each tile. Left-clicking one of the corner buttons will use the next palette row for that tile, while right-clicking will use the previous row. Clicking the other buttons will flip the tile horizontally or vertically. To change the graphics used for a tile, first click on the tile you want to use from the bottom-left, then click on the corner you want to change. If "Copy palette #" is selected, then that tile's palette will be changed to the currently selected one. If "Preserve existing data" is selected, then if the data is pointed to from elsewhere, it will not be overwritten, and the new data will be written somewhere else.
+		</p>
+		<p>
+			You can also import and export tile tables. Keep in mind that graphics and palettes are separate from tile tables. If you're trying to copy an image, you'll need all three pieces of data.
+		</p>
+
+		<span class="smallLink">(<a href="#top">top</a>)</span>
+
+	</div>
+</body>
+
+</html> 
