@@ -27,7 +27,9 @@ namespace mage.Updates
             this.VersionTag = version_tag;
             this.DownloadURL = version_url;
 
-            textBox_description.Text = $"Version {version_tag} of MAGE Themes is now available to download.\r\n\r\nDo you want to download the newest version?";
+            textBox_description.Text = $"Version {version_tag} of MAGE Themes is now available to download. " +
+                $"\r\nView the release page to find a list of all new changes and bug fixes." +
+                $"\r\n\r\nDo you want to download the newest version?";
 
             button_skip.Visible = !hideSkip;
         }
