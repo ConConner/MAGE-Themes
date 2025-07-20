@@ -56,14 +56,14 @@
             label_version.Location = new System.Drawing.Point(14, 40);
             label_version.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_version.Name = "label_version";
-            label_version.Size = new System.Drawing.Size(280, 91);
+            label_version.Size = new System.Drawing.Size(280, 78);
             label_version.TabIndex = 5;
-            label_version.Text = "Version 1.4.0\r\n2023-01-22\r\n\r\nCreated by biospark\r\nModified by ConConner";
+            label_version.Text = "Version X.X.X\r\n\r\nCreated by biospark\r\nand ConConner";
             label_version.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label_bugs
             // 
-            label_bugs.Location = new System.Drawing.Point(15, 131);
+            label_bugs.Location = new System.Drawing.Point(13, 118);
             label_bugs.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_bugs.Name = "label_bugs";
             label_bugs.Size = new System.Drawing.Size(280, 15);
@@ -73,19 +73,19 @@
             // 
             // linkLabel_forum
             // 
-            linkLabel_forum.Location = new System.Drawing.Point(15, 146);
+            linkLabel_forum.Location = new System.Drawing.Point(15, 133);
             linkLabel_forum.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             linkLabel_forum.Name = "linkLabel_forum";
             linkLabel_forum.Size = new System.Drawing.Size(280, 45);
             linkLabel_forum.TabIndex = 7;
             linkLabel_forum.TabStop = true;
-            linkLabel_forum.Text = "http://forum.metroidconstruction.com/index.php/topic,3969.0.html";
+            linkLabel_forum.Text = "https://github.com/ConConner/MAGE-Themes/issues";
             linkLabel_forum.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             linkLabel_forum.LinkClicked += linkLabel_clicked;
             // 
             // label_silk
             // 
-            label_silk.Location = new System.Drawing.Point(15, 241);
+            label_silk.Location = new System.Drawing.Point(15, 228);
             label_silk.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_silk.Name = "label_silk";
             label_silk.Size = new System.Drawing.Size(280, 15);
@@ -95,10 +95,10 @@
             // 
             // linkLabel_silk
             // 
-            linkLabel_silk.Location = new System.Drawing.Point(15, 256);
+            linkLabel_silk.Location = new System.Drawing.Point(14, 243);
             linkLabel_silk.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             linkLabel_silk.Name = "linkLabel_silk";
-            linkLabel_silk.Size = new System.Drawing.Size(280, 15);
+            linkLabel_silk.Size = new System.Drawing.Size(280, 35);
             linkLabel_silk.TabIndex = 9;
             linkLabel_silk.TabStop = true;
             linkLabel_silk.Text = "http://www.famfamfam.com/lab/icons/silk/";
@@ -107,7 +107,7 @@
             // 
             // label_font
             // 
-            label_font.Location = new System.Drawing.Point(15, 291);
+            label_font.Location = new System.Drawing.Point(15, 278);
             label_font.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_font.Name = "label_font";
             label_font.Size = new System.Drawing.Size(280, 15);
@@ -117,19 +117,19 @@
             // 
             // linkLabel_repo
             // 
-            linkLabel_repo.Location = new System.Drawing.Point(14, 206);
+            linkLabel_repo.Location = new System.Drawing.Point(14, 193);
             linkLabel_repo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             linkLabel_repo.Name = "linkLabel_repo";
             linkLabel_repo.Size = new System.Drawing.Size(280, 35);
             linkLabel_repo.TabIndex = 13;
             linkLabel_repo.TabStop = true;
-            linkLabel_repo.Text = "https://github.com/biosp4rk/mage-old";
+            linkLabel_repo.Text = "https://github.com/ConConner/MAGE-Themes";
             linkLabel_repo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             linkLabel_repo.LinkClicked += linkLabel_clicked;
             // 
             // label_repo
             // 
-            label_repo.Location = new System.Drawing.Point(14, 191);
+            label_repo.Location = new System.Drawing.Point(13, 178);
             label_repo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_repo.Name = "label_repo";
             label_repo.Size = new System.Drawing.Size(280, 15);
@@ -141,7 +141,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(308, 321);
+            ClientSize = new System.Drawing.Size(308, 307);
             Controls.Add(linkLabel_repo);
             Controls.Add(label_repo);
             Controls.Add(label_font);
