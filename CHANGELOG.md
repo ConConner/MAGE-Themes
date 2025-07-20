@@ -1,3 +1,13 @@
+# [1.2.0](https://github.com/ConConner/MAGE-Themes/compare/v1.1.0...v1.2.0) (2025-07-20)
+
+
+### Features
+
+* add legacy documentation for old editors ([1f6ca93](https://github.com/ConConner/MAGE-Themes/commit/1f6ca931795bf025a38ed549b1ef7b5a9f4f055e))
+* added documentation for the new tile table editor ([5112d25](https://github.com/ConConner/MAGE-Themes/commit/5112d2514bc5d83f072ed990315eb4432d7865b5))
+* adjusted clipdata naming and font spacing (alexman25) ([dcb1ab4](https://github.com/ConConner/MAGE-Themes/commit/dcb1ab4603fb226811c5711307c868dbd990dfb9))
+* automatic update check ([9f60048](https://github.com/ConConner/MAGE-Themes/commit/9f60048eb72d771b6998a643a5f959eeb0fa26c1))
+
 # [1.1.0](https://github.com/ConConner/MAGE-Themes/compare/v1.0.1...v1.1.0) (2025-07-17)
 
 
