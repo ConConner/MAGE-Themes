@@ -194,10 +194,10 @@
             button_clipdata_shortcuts = new System.Windows.Forms.Button();
             comboBox_clipdata = new Theming.CustomControls.FlatComboBox();
             label_clipdata = new System.Windows.Forms.Label();
-            panel_tileset = new System.Windows.Forms.Panel();
+            panel_tileset = new mage.Controls.ExtendedPanel();
             tileView = new TileView();
             groupBox_room = new System.Windows.Forms.GroupBox();
-            panel_room = new System.Windows.Forms.Panel();
+            panel_room = new mage.Controls.ExtendedPanel();
             roomView = new RoomView();
             contextMenu = new System.Windows.Forms.ContextMenuStrip(components);
             contextItem_addSprite = new System.Windows.Forms.ToolStripMenuItem();

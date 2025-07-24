@@ -45,10 +45,10 @@
             label_selSquare = new System.Windows.Forms.Label();
             groupBox_map = new System.Windows.Forms.GroupBox();
             groupBox_selection = new System.Windows.Forms.GroupBox();
-            panel_black = new System.Windows.Forms.Panel();
+            panel_black = new mage.Controls.ExtendedPanel();
             gfxView_sel = new GfxView();
             button_editGFX = new System.Windows.Forms.Button();
-            panel_squares = new System.Windows.Forms.Panel();
+            panel_squares = new mage.Controls.ExtendedPanel();
             gfxView_squares = new GfxView();
             groupBox_tiles = new System.Windows.Forms.GroupBox();
             button_bgColor = new System.Windows.Forms.Button();

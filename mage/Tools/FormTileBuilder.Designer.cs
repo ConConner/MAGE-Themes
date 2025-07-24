@@ -38,14 +38,14 @@
             this.comboBox_R = new mage.Theming.CustomControls.FlatComboBox();
             this.comboBox_B = new mage.Theming.CustomControls.FlatComboBox();
             this.comboBox_center = new mage.Theming.CustomControls.FlatComboBox();
-            this.panel_black = new System.Windows.Forms.Panel();
+            this.panel_black = new mage.Controls.ExtendedPanel();
             this.comboBox_palette = new mage.Theming.CustomControls.FlatComboBox();
             this.label_palette = new System.Windows.Forms.Label();
             this.button_apply = new System.Windows.Forms.Button();
             this.button_close = new System.Windows.Forms.Button();
             this.numericUpDown_tile = new mage.Theming.CustomControls.FlatNumericUpDown();
             this.label_tile = new System.Windows.Forms.Label();
-            this.panel_black2 = new System.Windows.Forms.Panel();
+            this.panel_black2 = new mage.Controls.ExtendedPanel();
             this.gfxView_tile = new mage.GfxView();
             this.gfxView_curr = new mage.GfxView();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_tile)).BeginInit();

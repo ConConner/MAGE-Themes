@@ -39,7 +39,7 @@
             label_text = new System.Windows.Forms.Label();
             comboBox_text = new Theming.CustomControls.FlatComboBox();
             label_offset = new System.Windows.Forms.Label();
-            panel_gfx = new System.Windows.Forms.Panel();
+            panel_gfx = new mage.Controls.ExtendedPanel();
             groupBox_options = new System.Windows.Forms.GroupBox();
             textBox_offsetVal = new Theming.CustomControls.FlatTextBox();
             label_charPos = new System.Windows.Forms.Label();

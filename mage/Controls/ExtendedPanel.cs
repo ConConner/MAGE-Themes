@@ -11,11 +11,16 @@ public class ExtendedPanel : Panel
 {
     protected override void OnMouseWheel(MouseEventArgs e)
     {
-        if ((ModifierKeys & (Keys.Shift | Keys.Control)) != 0)
+        if ((ModifierKeys & Keys.Control) != 0) return;
+        if ((ModifierKeys & Keys.Shift) != 0)
         {
             int step = SystemInformation.MouseWheelScrollDelta;
             int newPos = HorizontalScroll.Value - Math.Sign(e.Delta) * step;
-            HorizontalScroll.Value = Math.Max(0, Math.Min(HorizontalScroll.Maximum, newPos));
+            newPos = Math.Max(HorizontalScroll.Minimum,
+                              Math.Min(HorizontalScroll.Maximum - HorizontalScroll.LargeChange + 1, newPos));
+
+            HorizontalScroll.Value = newPos;
+            PerformLayout();          // force update
             ((HandledMouseEventArgs)e).Handled = true;
             return;
         }

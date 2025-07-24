@@ -34,7 +34,7 @@
             mAGEHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             technicalInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             group_help = new System.Windows.Forms.GroupBox();
-            panel_help = new System.Windows.Forms.Panel();
+            panel_help = new mage.Controls.ExtendedPanel();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             legacyEditorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();

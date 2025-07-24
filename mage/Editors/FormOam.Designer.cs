@@ -42,7 +42,7 @@
             textBox_palOffset = new Theming.CustomControls.FlatTextBox();
             textBox_oamOffset = new Theming.CustomControls.FlatTextBox();
             groupBox_image = new System.Windows.Forms.GroupBox();
-            panel_gfx = new System.Windows.Forms.Panel();
+            panel_gfx = new mage.Controls.ExtendedPanel();
             gfxView_gfx = new Controls.TileDisplay();
             statusStrip_gfx = new System.Windows.Forms.StatusStrip();
             statusLabel_coor = new System.Windows.Forms.ToolStripStatusLabel();
@@ -67,7 +67,7 @@
             comboBox_Frame = new Theming.CustomControls.FlatComboBox();
             label_OAMFrame = new System.Windows.Forms.Label();
             groupBox_part = new System.Windows.Forms.GroupBox();
-            panel_partEditing = new System.Windows.Forms.Panel();
+            panel_partEditing = new mage.Controls.ExtendedPanel();
             label_error = new System.Windows.Forms.Label();
             comboBox_size = new Theming.CustomControls.FlatComboBox();
             comboBox_palette = new Theming.CustomControls.FlatComboBox();
@@ -81,13 +81,13 @@
             textBox_x = new Theming.CustomControls.FlatTextBox();
             label_y = new System.Windows.Forms.Label();
             label_x = new System.Windows.Forms.Label();
-            panel_partControl = new System.Windows.Forms.Panel();
+            panel_partControl = new mage.Controls.ExtendedPanel();
             comboBox_part = new Theming.CustomControls.FlatComboBox();
             label_part = new System.Windows.Forms.Label();
             button_removePart = new System.Windows.Forms.Button();
             button_addPart = new System.Windows.Forms.Button();
             groupBox_oamDisplay = new System.Windows.Forms.GroupBox();
-            panel_oam = new System.Windows.Forms.Panel();
+            panel_oam = new mage.Controls.ExtendedPanel();
             oamView_oam = new Controls.TileDisplay();
             toolStrip2 = new System.Windows.Forms.ToolStrip();
             button_viewOrigin = new System.Windows.Forms.ToolStripButton();
@@ -97,7 +97,7 @@
             button_oamZoomOut = new System.Windows.Forms.ToolStripButton();
             label_oamZoom = new System.Windows.Forms.ToolStripLabel();
             splitContainer_views = new System.Windows.Forms.SplitContainer();
-            panel_palette = new System.Windows.Forms.Panel();
+            panel_palette = new mage.Controls.ExtendedPanel();
             groupBox_palette = new System.Windows.Forms.GroupBox();
             paletteView = new Controls.TileDisplay();
             splitContainer_controls = new System.Windows.Forms.SplitContainer();

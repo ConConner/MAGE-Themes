@@ -67,7 +67,7 @@
             this.label_offset = new System.Windows.Forms.Label();
             this.textBox_spritesetOffsetVal = new mage.Theming.CustomControls.FlatTextBox();
             this.groupBox_preview = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1 = new mage.Controls.ExtendedPanel();
             this.pictureBox_preview = new System.Windows.Forms.PictureBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel_changes = new System.Windows.Forms.ToolStripStatusLabel();

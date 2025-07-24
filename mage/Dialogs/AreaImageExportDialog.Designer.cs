@@ -33,7 +33,7 @@
             listbox_excludedRooms = new System.Windows.Forms.ListBox();
             label_excluded = new System.Windows.Forms.Label();
             button_save = new System.Windows.Forms.Button();
-            panel1 = new System.Windows.Forms.Panel();
+            panel1 = new mage.Controls.ExtendedPanel();
             panel1.SuspendLayout();
             SuspendLayout();
             // 

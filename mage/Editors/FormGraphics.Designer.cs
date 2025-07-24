@@ -39,7 +39,7 @@
             textBox_imageOffset = new Theming.CustomControls.FlatTextBox();
             label_imageOffset = new System.Windows.Forms.Label();
             groupBox_image = new System.Windows.Forms.GroupBox();
-            panel_gfx = new System.Windows.Forms.Panel();
+            panel_gfx = new mage.Controls.ExtendedPanel();
             gfxView_gfx = new GfxView();
             textBox_palOffset = new Theming.CustomControls.FlatTextBox();
             label_paletteOffset = new System.Windows.Forms.Label();
