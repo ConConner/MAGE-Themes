@@ -1,4 +1,4 @@
-﻿using mage.Properties;
+using mage.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,12 +14,13 @@ namespace mage
         private static ByteStream romStream;
 
         // project related
-        private enum ProjectState { None, New, Exists }
-        private static ProjectState project;
+        public enum ProjectState { None, New, Exists }		// Publicized these for a check in FormMain.cs
+        public static ProjectState project;					// Publicized these for a check in FormMain.cs
         private static string VersionCreated { get; set; }
         private static DateTime DateCreated { get; set; }
         private static string VersionModified { get; set; }
         private static DateTime DateModified { get; set; }
+		public static string[] CustomAreaNames { get; set; }	// Custom Area Names from project file, if one exists
 
         public static void LoadProject(string filename)
         {
@@ -110,6 +111,10 @@ namespace mage
             sw.WriteLine("NumOfAnimGfx=" + Convert.ToString(NumOfAnimGfx, 16).ToUpper());
             sw.WriteLine("NumOfAnimPalettes=" + Convert.ToString(NumOfAnimPalettes, 16).ToUpper());
             sw.WriteLine("NumOfSpritesets=" + Convert.ToString(NumOfSpritesets, 16).ToUpper());
+			sw.WriteLine();
+			
+			sw.WriteLine("[Editor Specific]");		// This is where custom area name definition gets stored in project file
+			sw.WriteLine("CustomAreaNames=" + string.Join(",", AreaNames));
 
             sw.Close();
             project = ProjectState.Exists;
