@@ -1,3 +1,17 @@
+# [1.3.0](https://github.com/ConConner/MAGE-Themes/compare/v1.2.0...v1.3.0) (2025-07-24)
+
+
+### Bug Fixes
+
+* adjust about page ([acc8fe6](https://github.com/ConConner/MAGE-Themes/commit/acc8fe63863594321e8bd5d0c987273c592d3663))
+* data would sometimes not be four byte aligned ([7e954e3](https://github.com/ConConner/MAGE-Themes/commit/7e954e3e4ae00392e7c3eaa30424dc9233e0852b))
+
+
+### Features
+
+* added settings to area image export ([e771003](https://github.com/ConConner/MAGE-Themes/commit/e77100380c9307909849459d3f080123273abcdc))
+* use shift+scroll to scroll horizontally ([6a4a112](https://github.com/ConConner/MAGE-Themes/commit/6a4a112d85c354c4a902e2c3caf02a3b99cb6a94))
+
 # [1.2.0](https://github.com/ConConner/MAGE-Themes/compare/v1.1.0...v1.2.0) (2025-07-20)
 
 
