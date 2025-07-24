@@ -134,7 +134,6 @@ namespace mage
             menuItem_oamViewer.Visible = Program.ExperimentalFeaturesEnabled;
         }
 
-
         #region opening/closing
 
         private void DisplayRecentFiles()
