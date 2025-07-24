@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTileTableNew));
-            panel_gfxView = new System.Windows.Forms.Panel();
+            panel_gfxView = new mage.Controls.ExtendedPanel();
             gfxView = new Controls.TileDisplay();
             panel_Main = new System.Windows.Forms.SplitContainer();
             panel_gfxAndPal = new System.Windows.Forms.SplitContainer();
@@ -44,7 +44,7 @@
             button_gfxZoomIn = new System.Windows.Forms.ToolStripButton();
             button_gfxZoomOut = new System.Windows.Forms.ToolStripButton();
             label_gfxZoom = new System.Windows.Forms.ToolStripLabel();
-            panel_select = new System.Windows.Forms.Panel();
+            panel_select = new mage.Controls.ExtendedPanel();
             tab_select = new Theming.CustomControls.FlatTabControl();
             tabPage_tileset = new System.Windows.Forms.TabPage();
             label_height = new System.Windows.Forms.Label();
@@ -71,7 +71,7 @@
             label_graphics = new System.Windows.Forms.Label();
             label_tileTable = new System.Windows.Forms.Label();
             group_table = new System.Windows.Forms.GroupBox();
-            panel_tableView = new System.Windows.Forms.Panel();
+            panel_tableView = new mage.Controls.ExtendedPanel();
             tableView = new Controls.TileDisplay();
             toolStrip_table = new System.Windows.Forms.ToolStrip();
             button_flipH = new System.Windows.Forms.ToolStripButton();

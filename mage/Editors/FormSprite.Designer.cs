@@ -38,7 +38,7 @@
             checkBox_speedScrew = new System.Windows.Forms.CheckBox();
             checkBox_frozen = new System.Windows.Forms.CheckBox();
             groupBox_dropProbability = new System.Windows.Forms.GroupBox();
-            panel_percentage = new System.Windows.Forms.Panel();
+            panel_percentage = new mage.Controls.ExtendedPanel();
             textBox_healthXP = new Theming.CustomControls.FlatTextBox();
             textBox_powerBombP = new Theming.CustomControls.FlatTextBox();
             textBox_missileXP = new Theming.CustomControls.FlatTextBox();
@@ -85,7 +85,7 @@
             comboBox_type = new Theming.CustomControls.FlatComboBox();
             pictureBox_preview = new System.Windows.Forms.PictureBox();
             groupBox_preview = new System.Windows.Forms.GroupBox();
-            panel_preview = new System.Windows.Forms.Panel();
+            panel_preview = new mage.Controls.ExtendedPanel();
             textBox_gfxOffsetVal = new Theming.CustomControls.FlatTextBox();
             label_gfxOffset = new System.Windows.Forms.Label();
             button_editGFX = new System.Windows.Forms.Button();

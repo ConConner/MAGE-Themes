@@ -40,7 +40,7 @@
             this.comboBox_slot = new mage.Theming.CustomControls.FlatComboBox();
             this.label_slot = new System.Windows.Forms.Label();
             this.groupBox_preview = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1 = new mage.Controls.ExtendedPanel();
             this.pictureBox_preview = new System.Windows.Forms.PictureBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel_changes = new System.Windows.Forms.ToolStripStatusLabel();

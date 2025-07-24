@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormClipboard));
             this.pictureBox_clipboard = new System.Windows.Forms.PictureBox();
-            this.panel_clipboard = new System.Windows.Forms.Panel();
+            this.panel_clipboard = new mage.Controls.ExtendedPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_clipboard)).BeginInit();
             this.panel_clipboard.SuspendLayout();
             this.SuspendLayout();

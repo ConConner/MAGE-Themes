@@ -37,9 +37,9 @@
             label_size = new System.Windows.Forms.Label();
             comboBox_room = new Theming.CustomControls.FlatComboBox();
             comboBox_area = new Theming.CustomControls.FlatComboBox();
-            panel_result = new System.Windows.Forms.Panel();
+            panel_result = new mage.Controls.ExtendedPanel();
             gfxView_result = new GfxView();
-            panel_gfx = new System.Windows.Forms.Panel();
+            panel_gfx = new mage.Controls.ExtendedPanel();
             gfxView_gfx = new GfxView();
             button_hflipTL = new System.Windows.Forms.Button();
             button_hflipTR = new System.Windows.Forms.Button();
@@ -81,7 +81,7 @@
             label_tileBL = new System.Windows.Forms.Label();
             label_tileTR = new System.Windows.Forms.Label();
             label_tileBR = new System.Windows.Forms.Label();
-            panel_text = new System.Windows.Forms.Panel();
+            panel_text = new mage.Controls.ExtendedPanel();
             statusStrip = new System.Windows.Forms.StatusStrip();
             statusLabel_tile = new System.Windows.Forms.ToolStripStatusLabel();
             statusLabel_changes = new System.Windows.Forms.ToolStripStatusLabel();

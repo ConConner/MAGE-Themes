@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RoomViewSettings));
             lbl_color = new System.Windows.Forms.Label();
-            pnl_color = new System.Windows.Forms.Panel();
+            pnl_color = new mage.Controls.ExtendedPanel();
             SuspendLayout();
             // 
             // lbl_color

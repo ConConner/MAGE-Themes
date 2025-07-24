@@ -13,6 +13,8 @@ namespace mage
 
             ThemeSwitcher.ChangeTheme(Controls, this);
             ThemeSwitcher.InjectPaintOverrides(Controls);
+
+            label_version.Text = $"Version \"Themes {Program.Version}\"\r\n\r\nCreated by biospark\r\nand ConConner";
         }
 
         private void linkLabel_clicked(object sender, LinkLabelLinkClickedEventArgs e)
