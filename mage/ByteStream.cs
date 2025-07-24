@@ -364,7 +364,8 @@ namespace mage
                 }
             }
 
-            // should always be 4 byte aligned
+            // is always be 4 byte aligned
+            if (endOfData % 4 != 0) endOfData += 4 - endOfData % 4;
             return endOfData;
         }
 
