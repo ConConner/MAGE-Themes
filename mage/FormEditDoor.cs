@@ -1,4 +1,4 @@
-﻿using mage.Theming;
+using mage.Theming;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -153,7 +153,15 @@ namespace mage
 
         private void DisplayInfo(Door src)
         {
-            areaNames = Version.AreaNames;
+            // get area names and rooms per area
+			if (Version.CustomAreaNames != null && Version.project != Version.ProjectState.None) // Check if there's anything written to CustomAreaNAmes and also if there's a project file loaded
+			{
+				areaNames = Version.CustomAreaNames; // If so, load custom area names
+			}
+			else
+			{
+            areaNames = Version.AreaNames;  // If not, load regular area names
+			}
             label_srcArea.Text = areaNames[src.areaID];
             label_srcRoom.Text = Hex.ToString(src.srcRoom);
             label_srcDoor.Text = Hex.ToString(src.doorNum);
