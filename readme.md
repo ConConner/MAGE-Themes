@@ -45,6 +45,8 @@ dotnet publish -r win-x64 -c release
 - [MAGE](https://github.com/biosp4rk/mage-old) - The original source code of MAGE 1.4
 - [Metroid - Zero Mission Decomp](https://github.com/metroidret/mzm) - A decompilation of Metroid Zero Mission
 - [Metroid - Fusion Decomp](https://github.com/metroidret/mf) - A decompilation of Metroid Fusion
+- [MZMR](https://github.com/biosp4rk/mzmr) - The Metroid Zero Mission Randomizer
+- [MARS](https://github.com/MetroidAdvRandomizerSystem) - A Metroid Fusion Randomizer
 
 #
 
