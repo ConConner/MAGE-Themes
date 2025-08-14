@@ -1060,8 +1060,9 @@
             // button_importOam
             // 
             button_importOam.Name = "button_importOam";
-            button_importOam.Size = new System.Drawing.Size(102, 22);
+            button_importOam.Size = new System.Drawing.Size(180, 22);
             button_importOam.Text = "OAM";
+            button_importOam.Click += button_importOam_Click;
             // 
             // button_export
             // 

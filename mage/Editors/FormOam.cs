@@ -15,6 +15,7 @@ using mage.Utility;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Text.Json;
+using System.Runtime.InteropServices;
 
 namespace mage;
 
@@ -1259,7 +1260,7 @@ public partial class FormOam : Form
 
         File.WriteAllText(saveOAM.FileName, oam.Serialize());
     }
-    
+
     private void button_exportAssembly_Click(object sender, EventArgs e)
     {
         SaveFileDialog saveASM = new SaveFileDialog();
@@ -1273,5 +1274,25 @@ public partial class FormOam : Form
 
         File.WriteAllText(saveASM.FileName, oam.ToASM());
     }
-    #endregion    
+    
+    void button_importOam_Click(object sender, EventArgs e)
+    {
+        OpenFileDialog openOAM = new OpenFileDialog();
+        openOAM.Filter = "MAGE OAM files (*.mgo)|*.mgo";
+        if (openOAM.ShowDialog() != DialogResult.OK) return;
+        if (oam == null)
+        {
+            MessageBox.Show("No OAM loaded. Please load the OAM that you want to replace.", "OAM Required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        string json = File.ReadAllText(openOAM.FileName);
+        OAM? imported = OAM.Deserialize(json);
+        if (imported == null) return;
+
+        oam = imported;
+        Save();
+        SetOAM();
+    }
+    #endregion
 }

@@ -176,7 +176,7 @@ namespace mage
         private ByteStream romStream;
 
         [JsonConstructor]
-        private OAM() {}
+        public OAM() {}
 
         public OAM(int offset)
         {
