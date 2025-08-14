@@ -1078,7 +1078,7 @@
             // 
             button_exportAnimation.Name = "button_exportAnimation";
             button_exportAnimation.Size = new System.Drawing.Size(180, 22);
-            button_exportAnimation.Text = "Animation (.gif)...";
+            button_exportAnimation.Text = "Animation...";
             button_exportAnimation.Click += button_exportAnimation_Click;
             // 
             // button_exportAssembly
