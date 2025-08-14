@@ -277,7 +277,16 @@ public partial class FormOam : Form
             return frameData;
         }
 
-        
+        /// STEP 0: Mark unused frame lists as freespace
+        for (int i = oam.numFrames; i < originalNumOfFrames; i++)
+        {
+            int unusedFramePtr = originalFramePointers[i];
+            int unusedNumOfParts = ROM.Stream.Read16(unusedFramePtr);
+            int unusedLength = 2 + unusedNumOfParts * 6;
+
+            ROM.Stream.MarkFreeSpace(unusedFramePtr, unusedLength, 0);
+        }
+        if (oam.numFrames < originalNumOfFrames) originalNumOfFrames = oam.numFrames;
 
         /// STEP 1: SAVE FRAME DATA
         // Overlapping/old frame data
