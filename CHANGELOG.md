@@ -1,3 +1,18 @@
+# [1.4.0](https://github.com/ConConner/MAGE-Themes/compare/v1.3.0...v1.4.0) (2025-08-14)
+
+
+### Bug Fixes
+
+* oam editor no longer crashes after playing an animation and selecting a part ([5294e31](https://github.com/ConConner/MAGE-Themes/commit/5294e3123235af4c4a7d80a93e6ddbdbc3fba498))
+* oam editor no longer crashes after removing a frame and saving ([fd9fc31](https://github.com/ConConner/MAGE-Themes/commit/fd9fc314317b21065992427455c70ae62f277ee2))
+
+
+### Features
+
+* export and import OAM from and to MAGE ([f85b9d1](https://github.com/ConConner/MAGE-Themes/commit/f85b9d1852784987cf47949bfcac2d0e8911968b))
+* export OAM as animated .gif ([27b19d1](https://github.com/ConConner/MAGE-Themes/commit/27b19d152fdb42a195a37ed12596b4e2d8ce7361))
+* export OAM as assembly ([27fcca7](https://github.com/ConConner/MAGE-Themes/commit/27fcca70fa01c1ec232ff8d712be4d487c0d4aac))
+
 # [1.3.0](https://github.com/ConConner/MAGE-Themes/compare/v1.2.0...v1.3.0) (2025-07-24)
 
 
