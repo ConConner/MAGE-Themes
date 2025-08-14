@@ -402,7 +402,7 @@ namespace mage
             else { return end; }
         }
 
-        private void MarkFreeSpace(int addr, int prevLen, int newLen)
+        public void MarkFreeSpace(int addr, int prevLen, int newLen)
         {
             // find end of data
             int endOfData = FindEndOfData();

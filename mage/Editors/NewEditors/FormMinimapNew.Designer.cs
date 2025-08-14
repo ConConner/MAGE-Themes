@@ -39,12 +39,18 @@
             statusStrip_export = new System.Windows.Forms.ToolStripDropDownButton();
             statusStrip_exportRaw = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip_exportImage = new System.Windows.Forms.ToolStripMenuItem();
+            button_apply = new System.Windows.Forms.ToolStripDropDownButton();
+            group_selection = new System.Windows.Forms.GroupBox();
+            splitContainer1 = new System.Windows.Forms.SplitContainer();
             statusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.SuspendLayout();
             SuspendLayout();
             // 
             // statusStrip
             // 
-            statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_coor, statusLabel_tile, statusLabel_changes, statusStrip_spring, statusStrip_import, statusStrip_export });
+            statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_coor, statusLabel_tile, statusLabel_changes, statusStrip_spring, statusStrip_import, statusStrip_export, button_apply });
             statusStrip.Location = new System.Drawing.Point(0, 426);
             statusStrip.Name = "statusStrip";
             statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
@@ -81,7 +87,7 @@
             // statusStrip_spring
             // 
             statusStrip_spring.Name = "statusStrip_spring";
-            statusStrip_spring.Size = new System.Drawing.Size(521, 19);
+            statusStrip_spring.Size = new System.Drawing.Size(463, 19);
             statusStrip_spring.Spring = true;
             // 
             // statusStrip_import
@@ -118,16 +124,54 @@
             statusStrip_exportImage.Size = new System.Drawing.Size(180, 22);
             statusStrip_exportImage.Text = "Image...";
             // 
+            // button_apply
+            // 
+            button_apply.Enabled = false;
+            button_apply.Image = Properties.Resources.toolbar_save;
+            button_apply.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_apply.Name = "button_apply";
+            button_apply.ShowDropDownArrow = false;
+            button_apply.Size = new System.Drawing.Size(58, 22);
+            button_apply.Text = "Apply";
+            // 
+            // group_selection
+            // 
+            group_selection.Dock = System.Windows.Forms.DockStyle.Top;
+            group_selection.Location = new System.Drawing.Point(6, 3);
+            group_selection.Name = "group_selection";
+            group_selection.Size = new System.Drawing.Size(231, 100);
+            group_selection.TabIndex = 13;
+            group_selection.TabStop = false;
+            group_selection.Text = "Selection";
+            // 
+            // splitContainer1
+            // 
+            splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainer1.Location = new System.Drawing.Point(0, 0);
+            splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(group_selection);
+            splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(6, 3, 3, 3);
+            splitContainer1.Size = new System.Drawing.Size(800, 426);
+            splitContainer1.SplitterDistance = 240;
+            splitContainer1.TabIndex = 14;
+            // 
             // FormMinimapNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(splitContainer1);
             Controls.Add(statusStrip);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Name = "FormMinimapNew";
             Text = "Map Editor";
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
+            splitContainer1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -144,5 +188,8 @@
         private System.Windows.Forms.ToolStripDropDownButton statusStrip_export;
         private System.Windows.Forms.ToolStripMenuItem statusStrip_exportRaw;
         private System.Windows.Forms.ToolStripMenuItem statusStrip_exportImage;
+        private System.Windows.Forms.ToolStripDropDownButton button_apply;
+        private System.Windows.Forms.GroupBox group_selection;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }

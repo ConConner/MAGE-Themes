@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -32,5 +33,16 @@ public static class Extensions
     {
         SendMessage(control.Handle, WM_SETREDRAW, true, 0);
         control.Refresh();
+    }
+
+    public static Bitmap Crop(this Bitmap source, Rectangle area)
+    {
+        Bitmap cropped = new Bitmap(area.Width, area.Height);
+        using (Graphics g = Graphics.FromImage(cropped))
+        {
+            g.DrawImage(source, new Rectangle(0, 0, cropped.Width, cropped.Height), 
+                area, GraphicsUnit.Pixel);
+        }
+        return cropped;
     }
 }
