@@ -277,6 +277,8 @@ public partial class FormOam : Form
             return frameData;
         }
 
+        
+
         /// STEP 1: SAVE FRAME DATA
         // Overlapping/old frame data
         List<int> newFramePointers = new List<int>();
@@ -748,7 +750,7 @@ public partial class FormOam : Form
             button_frameUp.Enabled = oam.frames.Count > 1 && SelectedFrameIndex != 0;
         }
 
-        if (playingAnimation) return;
+        //if (playingAnimation) return;
         SetPartSelectionCombobox();
     }
 
