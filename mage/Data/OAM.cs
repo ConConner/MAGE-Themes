@@ -133,6 +133,26 @@ namespace mage
             }
         }
 
+        /// <summary>
+        /// A <see cref="Rectangle"/> that encapsulates all of the frames
+        /// </summary>
+        public Rectangle Bounds
+        {
+            get
+            {
+                Rectangle oamBounds = new();
+                foreach (Frame frame in frames)
+                {
+                    foreach (Part part in frame.parts)
+                    {
+                        Rectangle partBounds = new Rectangle(part.xPos, part.yPos, part.Dimensions.Width, part.Dimensions.Height);
+                        oamBounds = Rectangle.Union(partBounds, oamBounds);
+                    }
+                }
+                return oamBounds;
+            }
+        }
+
         // data
         public int numFrames;
         public List<Frame> frames;

@@ -336,7 +336,7 @@ public partial class FormOam : Form
         {
             MessageBox.Show($"OAM data was repointed.\nNew OAM offset: {Hex.ToString(writeOffset)}", "OAM Repointed",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
+
             textBox_oamOffset.Text = Hex.ToString(writeOffset);
             SetOAM();
         }
@@ -352,7 +352,7 @@ public partial class FormOam : Form
         if (result == DialogResult.Yes) Save();
         return true;
     }
-    
+
     private void KeyPressed(object sender, KeyEventArgs e)
     {
         switch (e.KeyCode)
@@ -1207,5 +1207,42 @@ public partial class FormOam : Form
         PartStartLocation = null;
     }
 
+    #endregion
+
+    #region Export / Import
+    private void button_exportAnimation_Click(object sender, EventArgs e)
+    {
+        SaveFileDialog saveAnimation = new SaveFileDialog();
+        saveAnimation.Filter = "GIF files (*.gif)|*.gif";
+        if (saveAnimation.ShowDialog() != DialogResult.OK) return;
+        if (oam == null)
+        {
+            MessageBox.Show("No OAM loaded", "OAM Required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+        if (vram == null)
+        {
+            MessageBox.Show("No VRAM loaded", "VRAM Required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        Rectangle oamBounds = oam.Bounds;
+        oamBounds.X += OAM.FrameOriginX;
+        oamBounds.Y += OAM.FrameOriginY;
+
+        using (GifWriter writer = new GifWriter(saveAnimation.FileName, 500, 0))
+        {
+            for (int i = 0; i < oam.numFrames; i++)
+            {
+                OAM.Frame frame = oam.frames[i];
+
+                Bitmap frameImage = oam.DrawReal(vram.objTiles, vram.palette, 0, i);
+                frameImage = frameImage.Crop(oamBounds);
+
+                int frameDurationInMs = (int)(16.67f * frame.duration);
+                writer.WriteFrame(frameImage, frameDurationInMs);
+            }
+        }
+    }
     #endregion
 }
