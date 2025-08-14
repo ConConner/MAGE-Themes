@@ -23,6 +23,11 @@ namespace mage
             return Convert.ToString(value, radix).ToUpper();
         }
 
+        public static string ToPrefixedString(int value)
+        {
+            return $"0x{Convert.ToString(value, 16).ToUpper()}";
+        }
+
         public static byte ToByte(string text)
         {
             return Convert.ToByte(text, radix);

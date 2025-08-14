@@ -99,8 +99,8 @@ namespace mage
 
             OAM oam = new OAM(offset);
             previewImg = oam.Draw(vramObj.objTiles, vramObj.palette, gfxRow, 0);
-            xOffset = oam.frames[0].xOffset;
-            yOffset = oam.frames[0].yOffset;
+            xOffset = oam.Frames[0].xOffset;
+            yOffset = oam.Frames[0].yOffset;
 
             Point p;
             if (primary && Version.SpritePositions.TryGetValue(pSpriteID, out p))

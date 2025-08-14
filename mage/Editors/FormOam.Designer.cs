@@ -104,6 +104,12 @@
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             label_Status = new System.Windows.Forms.ToolStripStatusLabel();
             label_spring = new System.Windows.Forms.ToolStripStatusLabel();
+            button_import = new System.Windows.Forms.ToolStripDropDownButton();
+            button_importOam = new System.Windows.Forms.ToolStripMenuItem();
+            button_export = new System.Windows.Forms.ToolStripDropDownButton();
+            button_exportAnimation = new System.Windows.Forms.ToolStripMenuItem();
+            button_exportAssembly = new System.Windows.Forms.ToolStripMenuItem();
+            button_exportOam = new System.Windows.Forms.ToolStripMenuItem();
             button_save = new System.Windows.Forms.ToolStripDropDownButton();
             contextMenu_oam = new System.Windows.Forms.ContextMenuStrip(components);
             button_toFront = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,11 +120,6 @@
             button_removePartCtx = new System.Windows.Forms.ToolStripMenuItem();
             contextMenu_oamNoSelection = new System.Windows.Forms.ContextMenuStrip(components);
             button_addPartHere = new System.Windows.Forms.ToolStripMenuItem();
-            button_export = new System.Windows.Forms.ToolStripDropDownButton();
-            button_import = new System.Windows.Forms.ToolStripDropDownButton();
-            button_exportOam = new System.Windows.Forms.ToolStripMenuItem();
-            button_exportAnimation = new System.Windows.Forms.ToolStripMenuItem();
-            button_importOam = new System.Windows.Forms.ToolStripMenuItem();
             groupBox_imageControl.SuspendLayout();
             groupBox_image.SuspendLayout();
             panel_gfx.SuspendLayout();
@@ -1046,6 +1047,53 @@
             label_spring.Size = new System.Drawing.Size(871, 17);
             label_spring.Spring = true;
             // 
+            // button_import
+            // 
+            button_import.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            button_import.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_importOam });
+            button_import.Image = (System.Drawing.Image)resources.GetObject("button_import.Image");
+            button_import.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_import.Name = "button_import";
+            button_import.Size = new System.Drawing.Size(56, 20);
+            button_import.Text = "Import";
+            // 
+            // button_importOam
+            // 
+            button_importOam.Name = "button_importOam";
+            button_importOam.Size = new System.Drawing.Size(102, 22);
+            button_importOam.Text = "OAM";
+            // 
+            // button_export
+            // 
+            button_export.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            button_export.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_exportAnimation, button_exportAssembly, button_exportOam });
+            button_export.Image = (System.Drawing.Image)resources.GetObject("button_export.Image");
+            button_export.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_export.Name = "button_export";
+            button_export.Size = new System.Drawing.Size(54, 20);
+            button_export.Text = "Export";
+            // 
+            // button_exportAnimation
+            // 
+            button_exportAnimation.Name = "button_exportAnimation";
+            button_exportAnimation.Size = new System.Drawing.Size(180, 22);
+            button_exportAnimation.Text = "Animation (.gif)...";
+            button_exportAnimation.Click += button_exportAnimation_Click;
+            // 
+            // button_exportAssembly
+            // 
+            button_exportAssembly.Name = "button_exportAssembly";
+            button_exportAssembly.Size = new System.Drawing.Size(180, 22);
+            button_exportAssembly.Text = "Assembly...";
+            button_exportAssembly.Click += button_exportAssembly_Click;
+            // 
+            // button_exportOam
+            // 
+            button_exportOam.Name = "button_exportOam";
+            button_exportOam.Size = new System.Drawing.Size(180, 22);
+            button_exportOam.Text = "OAM...";
+            button_exportOam.Click += button_exportOam_Click;
+            // 
             // button_save
             // 
             button_save.Enabled = false;
@@ -1122,45 +1170,6 @@
             button_addPartHere.Size = new System.Drawing.Size(145, 22);
             button_addPartHere.Text = "Add new Part";
             button_addPartHere.Click += button_addPartHere_Click;
-            // 
-            // button_export
-            // 
-            button_export.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            button_export.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_exportOam, button_exportAnimation });
-            button_export.Image = (System.Drawing.Image)resources.GetObject("button_export.Image");
-            button_export.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_export.Name = "button_export";
-            button_export.Size = new System.Drawing.Size(54, 20);
-            button_export.Text = "Export";
-            // 
-            // button_import
-            // 
-            button_import.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            button_import.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_importOam });
-            button_import.Image = (System.Drawing.Image)resources.GetObject("button_import.Image");
-            button_import.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_import.Name = "button_import";
-            button_import.Size = new System.Drawing.Size(56, 20);
-            button_import.Text = "Import";
-            // 
-            // button_exportOam
-            // 
-            button_exportOam.Name = "button_exportOam";
-            button_exportOam.Size = new System.Drawing.Size(167, 22);
-            button_exportOam.Text = "OAM";
-            // 
-            // button_exportAnimation
-            // 
-            button_exportAnimation.Name = "button_exportAnimation";
-            button_exportAnimation.Size = new System.Drawing.Size(180, 22);
-            button_exportAnimation.Text = "Animation (.gif)...";
-            button_exportAnimation.Click += button_exportAnimation_Click;
-            // 
-            // button_importOam
-            // 
-            button_importOam.Name = "button_importOam";
-            button_importOam.Size = new System.Drawing.Size(180, 22);
-            button_importOam.Text = "OAM";
             // 
             // FormOam
             // 
@@ -1310,5 +1319,6 @@
         private System.Windows.Forms.ToolStripMenuItem button_exportOam;
         private System.Windows.Forms.ToolStripMenuItem button_exportAnimation;
         private System.Windows.Forms.ToolStripMenuItem button_importOam;
+        private System.Windows.Forms.ToolStripMenuItem button_exportAssembly;
     }
 }

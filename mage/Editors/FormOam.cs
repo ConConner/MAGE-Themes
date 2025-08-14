@@ -14,6 +14,7 @@ using mage.Controls;
 using mage.Utility;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Text.Json;
 
 namespace mage;
 
@@ -154,7 +155,7 @@ public partial class FormOam : Form
         {
             selectedPartIndex = value;
             comboBox_part.SelectedIndex = value;
-            SetPartOutlines(oam.frames[comboBox_Frame.SelectedIndex]);
+            SetPartOutlines(oam.Frames[comboBox_Frame.SelectedIndex]);
 
             button_removePart.Enabled = value != -1;
             panel_partEditing.Enabled = selectedPartIndex != -1;
@@ -185,7 +186,7 @@ public partial class FormOam : Form
     private string partErrorText;
 
     private int SelectedFrameIndex => comboBox_Frame.SelectedIndex;
-    private OAM.Frame SelectedFrame => oam.frames[comboBox_Frame.SelectedIndex];
+    private OAM.Frame SelectedFrame => oam.Frames[comboBox_Frame.SelectedIndex];
 
 
     // constructor
@@ -278,7 +279,7 @@ public partial class FormOam : Form
         }
 
         /// STEP 0: Mark unused frame lists as freespace
-        for (int i = oam.numFrames; i < originalNumOfFrames; i++)
+        for (int i = oam.NumFrames; i < originalNumOfFrames; i++)
         {
             int unusedFramePtr = originalFramePointers[i];
             int unusedNumOfParts = ROM.Stream.Read16(unusedFramePtr);
@@ -286,14 +287,14 @@ public partial class FormOam : Form
 
             ROM.Stream.MarkFreeSpace(unusedFramePtr, unusedLength, 0);
         }
-        if (oam.numFrames < originalNumOfFrames) originalNumOfFrames = oam.numFrames;
+        if (oam.NumFrames < originalNumOfFrames) originalNumOfFrames = oam.NumFrames;
 
         /// STEP 1: SAVE FRAME DATA
         // Overlapping/old frame data
         List<int> newFramePointers = new List<int>();
         for (int i = 0; i < originalNumOfFrames; i++)
         {
-            OAM.Frame frame = oam.frames[i];
+            OAM.Frame frame = oam.Frames[i];
             int offset = originalFramePointers[i];
             int originalNumOfParts = ROM.Stream.Read16(offset);
 
@@ -309,9 +310,9 @@ public partial class FormOam : Form
         }
 
         // New frame data
-        for (int i = originalNumOfFrames; i < oam.numFrames; i++)
+        for (int i = originalNumOfFrames; i < oam.NumFrames; i++)
         {
-            OAM.Frame frame = oam.frames[i];
+            OAM.Frame frame = oam.Frames[i];
             ByteStream frameData = BuildFrameData(frame);
             int writtenTo = ROM.Stream.WriteNewData(frameData);
 
@@ -321,10 +322,10 @@ public partial class FormOam : Form
         /// STEP 3: SAVE FRAME POINTERS / FRAME LIST
         int oldPointerLength = originalNumOfFrames * 8 + 8;
         ByteStream framePointerData = new ByteStream();
-        for (int i = 0; i < oam.numFrames; i++)
+        for (int i = 0; i < oam.NumFrames; i++)
         {
             framePointerData.WritePtr(newFramePointers[i]);
-            framePointerData.Write32(oam.frames[i].duration);
+            framePointerData.Write32(oam.Frames[i].duration);
         }
         framePointerData.Write32(0);
         framePointerData.Write32(0); // 8 empty bytes to end the frame list
@@ -636,7 +637,7 @@ public partial class FormOam : Form
             oam = new OAM(offset);
 
             originalOamOffset = offset;
-            originalNumOfFrames = oam.numFrames;
+            originalNumOfFrames = oam.NumFrames;
 
             //Populate frame selection
             SetFrameSelectionCombobox();
@@ -719,7 +720,7 @@ public partial class FormOam : Form
 
     private void SetTimerInterval(int frame)
     {
-        OAM.Frame f = oam.frames[frame];
+        OAM.Frame f = oam.Frames[frame];
         int timeInMs = (int)(16.67f * f.duration);
         animationTimer.Interval = Math.Max(1, timeInMs);
     }
@@ -729,9 +730,9 @@ public partial class FormOam : Form
         int old = SelectedFrameIndex;
 
         comboBox_Frame.Items.Clear();
-        for (int i = 0; i < oam.numFrames; i++) comboBox_Frame.Items.Add(i);
+        for (int i = 0; i < oam.NumFrames; i++) comboBox_Frame.Items.Add(i);
         if (old >= 0 && old < comboBox_Frame.Items.Count) comboBox_Frame.SelectedIndex = old;
-        else comboBox_Frame.SelectedIndex = oam.numFrames - 1;
+        else comboBox_Frame.SelectedIndex = oam.NumFrames - 1;
     }
 
     private void SetPartSelectionCombobox()
@@ -739,7 +740,7 @@ public partial class FormOam : Form
         int old = SelectedPartIndex;
 
         comboBox_part.Items.Clear();
-        for (int i = 0; i < oam.frames[comboBox_Frame.SelectedIndex].parts.Count; i++) comboBox_part.Items.Add(Hex.ToString(i));
+        for (int i = 0; i < oam.Frames[comboBox_Frame.SelectedIndex].parts.Count; i++) comboBox_part.Items.Add(Hex.ToString(i));
         if (old >= 0 && old < comboBox_part.Items.Count) comboBox_part.SelectedIndex = old;
     }
 
@@ -748,15 +749,15 @@ public partial class FormOam : Form
         if (loading) return;
         DrawFrame(comboBox_Frame.SelectedIndex);
         loading = true;
-        textBox_duration.Text = Hex.ToString(oam.frames[comboBox_Frame.SelectedIndex].duration);
+        textBox_duration.Text = Hex.ToString(oam.Frames[comboBox_Frame.SelectedIndex].duration);
         loading = false;
         SelectedPartIndex = -1;
 
         // Enable/disable move buttons
         if (!playingAnimation)
         {
-            button_frameDown.Enabled = oam.frames.Count > 1 && SelectedFrameIndex != oam.frames.Count - 1;
-            button_frameUp.Enabled = oam.frames.Count > 1 && SelectedFrameIndex != 0;
+            button_frameDown.Enabled = oam.Frames.Count > 1 && SelectedFrameIndex != oam.Frames.Count - 1;
+            button_frameUp.Enabled = oam.Frames.Count > 1 && SelectedFrameIndex != 0;
         }
 
         //if (playingAnimation) return;
@@ -774,7 +775,7 @@ public partial class FormOam : Form
 
     private void AnimationTimer_Tick(object? sender, EventArgs e)
     {
-        comboBox_Frame.SelectedIndex = (comboBox_Frame.SelectedIndex + 1) % oam.numFrames;
+        comboBox_Frame.SelectedIndex = (comboBox_Frame.SelectedIndex + 1) % oam.NumFrames;
         SetTimerInterval(comboBox_Frame.SelectedIndex);
     }
 
@@ -786,10 +787,10 @@ public partial class FormOam : Form
     #region FRAME EDITING
     private void button_addFrame_Click(object sender, EventArgs e)
     {
-        oam.frames.Add(OAM.Frame.Empty);
-        oam.numFrames++;
+        oam.Frames.Add(OAM.Frame.Empty);
+        oam.NumFrames++;
         SetFrameSelectionCombobox();
-        comboBox_Frame.SelectedIndex = oam.numFrames - 1;
+        comboBox_Frame.SelectedIndex = oam.NumFrames - 1;
         Status.ChangeMade();
     }
     private void button_duplicate_Click(object sender, EventArgs e)
@@ -800,22 +801,22 @@ public partial class FormOam : Form
         copy.numParts = SelectedFrame.numParts;
         foreach (OAM.Part part in SelectedFrame.parts) copy.parts.Add(part);
 
-        oam.frames.Add(copy);
-        oam.numFrames++;
+        oam.Frames.Add(copy);
+        oam.NumFrames++;
         SetFrameSelectionCombobox();
-        comboBox_Frame.SelectedIndex = oam.numFrames - 1;
+        comboBox_Frame.SelectedIndex = oam.NumFrames - 1;
         Status.ChangeMade();
     }
     private void button_removeFrame_Click(object sender, EventArgs e)
     {
         if (SelectedFrameIndex == -1) return;
-        if (oam.numFrames <= 1)
+        if (oam.NumFrames <= 1)
         {
             MessageBox.Show("Cannot remove the last frame.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
-        oam.frames.RemoveAt(SelectedFrameIndex);
-        oam.numFrames--;
+        oam.Frames.RemoveAt(SelectedFrameIndex);
+        oam.NumFrames--;
         SetFrameSelectionCombobox();
         Status.ChangeMade();
     }
@@ -835,7 +836,7 @@ public partial class FormOam : Form
 
             OAM.Frame frame = SelectedFrame;
             frame.duration = duration;
-            oam.frames[SelectedFrameIndex] = frame;
+            oam.Frames[SelectedFrameIndex] = frame;
             Status.ChangeMade();
         }
         catch { }
@@ -845,20 +846,20 @@ public partial class FormOam : Form
     {
         if (SelectedFrameIndex <= 0) return;
         // Swap frames
-        OAM.Frame temp = oam.frames[SelectedFrameIndex];
-        oam.frames[SelectedFrameIndex] = oam.frames[SelectedFrameIndex - 1];
-        oam.frames[SelectedFrameIndex - 1] = temp;
+        OAM.Frame temp = oam.Frames[SelectedFrameIndex];
+        oam.Frames[SelectedFrameIndex] = oam.Frames[SelectedFrameIndex - 1];
+        oam.Frames[SelectedFrameIndex - 1] = temp;
         // Update selection
         comboBox_Frame.SelectedIndex--;
         Status.ChangeMade();
     }
     private void button_frameDown_Click(object sender, EventArgs e)
     {
-        if (SelectedFrameIndex >= oam.numFrames - 1) return;
+        if (SelectedFrameIndex >= oam.NumFrames - 1) return;
         // Swap frames
-        OAM.Frame temp = oam.frames[SelectedFrameIndex];
-        oam.frames[SelectedFrameIndex] = oam.frames[SelectedFrameIndex + 1];
-        oam.frames[SelectedFrameIndex + 1] = temp;
+        OAM.Frame temp = oam.Frames[SelectedFrameIndex];
+        oam.Frames[SelectedFrameIndex] = oam.Frames[SelectedFrameIndex + 1];
+        oam.Frames[SelectedFrameIndex + 1] = temp;
         // Update selection
         comboBox_Frame.SelectedIndex++;
         Status.ChangeMade();
@@ -969,7 +970,7 @@ public partial class FormOam : Form
         newFrame.parts.Insert(0, p);
         newFrame.numParts++;
 
-        oam.frames[SelectedFrameIndex] = newFrame;
+        oam.Frames[SelectedFrameIndex] = newFrame;
         SetPartSelectionCombobox();
         DrawFrame(SelectedFrameIndex);
         SelectedPartIndex = 0;
@@ -982,7 +983,7 @@ public partial class FormOam : Form
         OAM.Frame newFrame = SelectedFrame;
         newFrame.parts.RemoveAt(SelectedPartIndex);
         newFrame.numParts--;
-        oam.frames[SelectedFrameIndex] = newFrame;
+        oam.Frames[SelectedFrameIndex] = newFrame;
         SetPartSelectionCombobox();
         DrawFrame(SelectedFrameIndex);
         SelectedPartIndex = -1;
@@ -1114,7 +1115,7 @@ public partial class FormOam : Form
 
         // General Part selection code
         if (PlayingAnimation) return;
-        OAM.Frame selectedFrame = oam.frames[comboBox_Frame.SelectedIndex];
+        OAM.Frame selectedFrame = oam.Frames[comboBox_Frame.SelectedIndex];
         int hovered = FindPart(selectedFrame, e.PixelPosition.X, e.PixelPosition.Y);
 
         // Check if hovered part overlaps with selected
@@ -1162,7 +1163,7 @@ public partial class FormOam : Form
 
         // General Part selection code
         if (PlayingAnimation) return;
-        OAM.Frame selectedFrame = oam.frames[comboBox_Frame.SelectedIndex];
+        OAM.Frame selectedFrame = oam.Frames[comboBox_Frame.SelectedIndex];
         int hovered = FindPart(selectedFrame, e.PixelPosition.X, e.PixelPosition.Y);
 
         // Check if hovered part overlaps with selected
@@ -1232,9 +1233,9 @@ public partial class FormOam : Form
 
         using (GifWriter writer = new GifWriter(saveAnimation.FileName, 500, 0))
         {
-            for (int i = 0; i < oam.numFrames; i++)
+            for (int i = 0; i < oam.NumFrames; i++)
             {
-                OAM.Frame frame = oam.frames[i];
+                OAM.Frame frame = oam.Frames[i];
 
                 Bitmap frameImage = oam.DrawReal(vram.objTiles, vram.palette, 0, i);
                 frameImage = frameImage.Crop(oamBounds);
@@ -1244,5 +1245,33 @@ public partial class FormOam : Form
             }
         }
     }
-    #endregion
+
+    private void button_exportOam_Click(object sender, EventArgs e)
+    {
+        SaveFileDialog saveOAM = new SaveFileDialog();
+        saveOAM.Filter = "MAGE OAM files (*.mgo)|*.mgo";
+        if (saveOAM.ShowDialog() != DialogResult.OK) return;
+        if (oam == null)
+        {
+            MessageBox.Show("No OAM loaded", "OAM Required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        File.WriteAllText(saveOAM.FileName, oam.Serialize());
+    }
+    
+    private void button_exportAssembly_Click(object sender, EventArgs e)
+    {
+        SaveFileDialog saveASM = new SaveFileDialog();
+        saveASM.Filter = "Assembly files (*.asm)|*.asm";
+        if (saveASM.ShowDialog() != DialogResult.OK) return;
+        if (oam == null)
+        {
+            MessageBox.Show("No OAM loaded", "OAM Required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        File.WriteAllText(saveASM.FileName, oam.ToASM());
+    }
+    #endregion    
 }
