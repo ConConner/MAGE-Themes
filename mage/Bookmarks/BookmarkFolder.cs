@@ -11,5 +11,24 @@ public class BookmarkFolder : BookmarkItem
 {
     [JsonConstructor]
     public BookmarkFolder() { }
-    public List<BookmarkItem> Items { get; set; } = new List<BookmarkItem>();
+
+    private List<BookmarkItem> items = new();
+    public List<BookmarkItem> Items
+    {
+        get => items;
+        set
+        {
+            items = value;
+            foreach (BookmarkItem item in items)
+            {
+                item.Parent = this;
+            }
+        }
+    }
+
+    public void AddItem(BookmarkItem item)
+    {
+        Items.Add(item);
+        item.Parent = this;
+    }
 }

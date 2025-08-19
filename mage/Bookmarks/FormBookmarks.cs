@@ -284,7 +284,7 @@ public partial class FormBookmarks : Form
         if (item is BookmarkFolder)
         {
             BookmarkFolder folder = item as BookmarkFolder;
-            foreach (BookmarkItem bmi in folder!.Items) 
+            foreach (BookmarkItem bmi in folder!.Items)
                 AddNodesFromFolderRecursive(bmi, itemNode.Nodes, pathName, nestedLevel + 1);
 
             if (doSearch && (itemNode.Nodes.Count < 1)) return;
@@ -334,7 +334,8 @@ public partial class FormBookmarks : Form
         textBox_value.Text = String.Empty;
 
         textBox_name.Text = item.Name;
-        textBox_description.Text = item.Description;
+        //textBox_description.Text = item.Description;
+        textBox_description.Text = item.Path;
 
         if (!isBookmark)
         {
@@ -475,7 +476,7 @@ public partial class FormBookmarks : Form
         newParentNode.Nodes.Add(nodeToMove);
         nodeToMove.Expand();
 
-        newParentFolder.Items.Add(itemToMove);
+        newParentFolder.AddItem(itemToMove);
         if (oldParentFolder != null) oldParentFolder.Items.Remove(itemToMove);
         else CurrentSelectedCollection.Items.Remove(itemToMove);
     }
@@ -492,7 +493,7 @@ public partial class FormBookmarks : Form
         tree_bookmarks.Nodes.Add(nodeToMove);
         nodeToMove.Expand();
 
-        newParenFolder.Items.Add(itemToMove);
+        newParenFolder.AddItem(itemToMove);
         if (oldParentFolder != null) oldParentFolder.Items.Remove(itemToMove);
         else CurrentSelectedCollection.Items.Remove(itemToMove);
     }
@@ -581,22 +582,84 @@ public partial class FormBookmarks : Form
         int depth = -1;
         if (int.TryParse(item.Tag as string, out depth)) ExpandDepth = depth;
     }
+
+    private void button_expand_Click(object sender, EventArgs e)
+    {
+        tree_bookmarks.BeginUpdate();
+        tree_bookmarks.ExpandAll();
+        tree_bookmarks.EndUpdate();
+    }
+
+    private void button_collapse_Click(object sender, EventArgs e) => tree_bookmarks.CollapseAll();
     #endregion
 
     #region adding/removing
+    private void AddNewBookmarkItem(BookmarkItem item, TreeNode node)
+    {
+        // Find a parent to add the bookmark to
+        BookmarkItem currentNodeItem = null;
+        TreeNode parentNode = null;
+        BookmarkFolder parentFolder = null;
+
+        if (node != null) currentNodeItem = node.Tag as BookmarkItem;
+        if (currentNodeItem != null && currentNodeItem is BookmarkFolder)
+        {
+            parentNode = node;
+            parentFolder = currentNodeItem as BookmarkFolder;
+        }
+        else
+        {
+            if (node != null) parentNode = node.Parent;
+            parentFolder = CurrentSelectedCollection;
+            if (parentNode != null) parentFolder = parentNode.Tag as BookmarkFolder;
+        }
+
+        // Add bookmark to Collection and TreeView
+        TreeNode newItemNode = CreateBookmarkItemNode(item);
+        if (parentNode == null) tree_bookmarks.Nodes.Add(newItemNode);
+        else
+        {
+            parentNode.Nodes.Add(newItemNode);
+            parentNode.Expand();
+        }
+
+        parentFolder.AddItem(item);
+        tree_bookmarks.SelectedNode = newItemNode;
+    }
+
     private void button_createBookmark_Click(object sender, EventArgs e)
     {
-
+        Bookmark newBookmark = new() { Name = "New Bookmark" };
+        AddNewBookmarkItem(newBookmark, ContextMenuTreeNode);
     }
 
     private void button_createFolder_Click(object sender, EventArgs e)
     {
-
+        BookmarkFolder newFolder = new() { Name = "New Folder" };
+        AddNewBookmarkItem(newFolder, ContextMenuTreeNode);
     }
 
     private void button_delete_Click(object sender, EventArgs e)
     {
+        if (ContextMenuTreeNode == null) return;
+        TreeNode node = ContextMenuTreeNode;
+        BookmarkItem item = node.Tag as BookmarkItem;
 
+        // Extra confirmation required when deleting a folder with content
+        if (
+            item is BookmarkFolder folder
+            && folder.Items.Count > 0
+            && MessageBox.Show($"Are you sure you want to delete the folder?\nAll contained bookmarks will be deleted.", "Delete Folder?", MessageBoxButtons.YesNo)
+            != DialogResult.Yes
+        ) return;
+
+        // Find Parent of Bookmark Item from the treeview
+        TreeNode nodeParent = node.Parent;
+        BookmarkFolder parentFolder = CurrentSelectedCollection;
+        if (nodeParent != null) parentFolder = nodeParent.Tag as BookmarkFolder;
+
+        parentFolder.Items.Remove(item);
+        ContextMenuTreeNode.Remove();
     }
     #endregion
 }

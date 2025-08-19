@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node0");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Node0");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBookmarks));
             tree_bookmarks = new System.Windows.Forms.TreeView();
             context_treeview = new System.Windows.Forms.ContextMenuStrip(components);
@@ -75,6 +75,8 @@
             Layer2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layer3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layer4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            button_expand = new System.Windows.Forms.ToolStripMenuItem();
+            button_collapse = new System.Windows.Forms.ToolStripMenuItem();
             context_treeview.SuspendLayout();
             group_globalCollections.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -103,9 +105,9 @@
             tree_bookmarks.ImageList = imageList_treeIcons;
             tree_bookmarks.Location = new System.Drawing.Point(3, 42);
             tree_bookmarks.Name = "tree_bookmarks";
-            treeNode1.Name = "Node0";
-            treeNode1.Text = "Node0";
-            tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode1 });
+            treeNode2.Name = "Node0";
+            treeNode2.Text = "Node0";
+            tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode2 });
             tree_bookmarks.SelectedImageIndex = 0;
             tree_bookmarks.Size = new System.Drawing.Size(371, 380);
             tree_bookmarks.TabIndex = 0;
@@ -121,13 +123,13 @@
             // 
             context_treeview.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_createBookmark, button_createFolder, separator_delete, button_delete });
             context_treeview.Name = "context_treeview";
-            context_treeview.Size = new System.Drawing.Size(181, 98);
+            context_treeview.Size = new System.Drawing.Size(166, 76);
             // 
             // button_createBookmark
             // 
             button_createBookmark.Image = Properties.Resources.page_white_add;
             button_createBookmark.Name = "button_createBookmark";
-            button_createBookmark.Size = new System.Drawing.Size(180, 22);
+            button_createBookmark.Size = new System.Drawing.Size(165, 22);
             button_createBookmark.Text = "Create Bookmark";
             button_createBookmark.Click += button_createBookmark_Click;
             // 
@@ -135,20 +137,20 @@
             // 
             button_createFolder.Image = Properties.Resources.folder_add;
             button_createFolder.Name = "button_createFolder";
-            button_createFolder.Size = new System.Drawing.Size(180, 22);
+            button_createFolder.Size = new System.Drawing.Size(165, 22);
             button_createFolder.Text = "Create Folder";
             button_createFolder.Click += button_createFolder_Click;
             // 
             // separator_delete
             // 
             separator_delete.Name = "separator_delete";
-            separator_delete.Size = new System.Drawing.Size(177, 6);
+            separator_delete.Size = new System.Drawing.Size(162, 6);
             // 
             // button_delete
             // 
             button_delete.Image = Properties.Resources.delete;
             button_delete.Name = "button_delete";
-            button_delete.Size = new System.Drawing.Size(180, 22);
+            button_delete.Size = new System.Drawing.Size(165, 22);
             button_delete.Text = "Delete";
             button_delete.Click += button_delete_Click;
             // 
@@ -166,9 +168,9 @@
             listbox_globalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
             listbox_globalCollections.FormattingEnabled = true;
             listbox_globalCollections.ItemHeight = 15;
-            listbox_globalCollections.Location = new System.Drawing.Point(3, 19);
+            listbox_globalCollections.Location = new System.Drawing.Point(6, 22);
             listbox_globalCollections.Name = "listbox_globalCollections";
-            listbox_globalCollections.Size = new System.Drawing.Size(155, 138);
+            listbox_globalCollections.Size = new System.Drawing.Size(152, 135);
             listbox_globalCollections.TabIndex = 1;
             listbox_globalCollections.SelectedIndexChanged += listbox_globalCollections_SelectedIndexChanged;
             // 
@@ -178,6 +180,7 @@
             group_globalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
             group_globalCollections.Location = new System.Drawing.Point(0, 3);
             group_globalCollections.Name = "group_globalCollections";
+            group_globalCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
             group_globalCollections.Size = new System.Drawing.Size(161, 160);
             group_globalCollections.TabIndex = 2;
             group_globalCollections.TabStop = false;
@@ -290,9 +293,9 @@
             // 
             panel_projectCollections.Controls.Add(group_projectCollections);
             panel_projectCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel_projectCollections.Location = new System.Drawing.Point(0, 260);
+            panel_projectCollections.Location = new System.Drawing.Point(0, 257);
             panel_projectCollections.Name = "panel_projectCollections";
-            panel_projectCollections.Size = new System.Drawing.Size(161, 165);
+            panel_projectCollections.Size = new System.Drawing.Size(161, 168);
             panel_projectCollections.TabIndex = 2;
             // 
             // group_projectCollections
@@ -301,7 +304,8 @@
             group_projectCollections.Dock = System.Windows.Forms.DockStyle.Fill;
             group_projectCollections.Location = new System.Drawing.Point(0, 0);
             group_projectCollections.Name = "group_projectCollections";
-            group_projectCollections.Size = new System.Drawing.Size(161, 165);
+            group_projectCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
+            group_projectCollections.Size = new System.Drawing.Size(161, 168);
             group_projectCollections.TabIndex = 3;
             group_projectCollections.TabStop = false;
             group_projectCollections.Text = "Project Collections";
@@ -312,9 +316,9 @@
             listbox_projectCollections.Dock = System.Windows.Forms.DockStyle.Fill;
             listbox_projectCollections.FormattingEnabled = true;
             listbox_projectCollections.ItemHeight = 15;
-            listbox_projectCollections.Location = new System.Drawing.Point(3, 19);
+            listbox_projectCollections.Location = new System.Drawing.Point(6, 22);
             listbox_projectCollections.Name = "listbox_projectCollections";
-            listbox_projectCollections.Size = new System.Drawing.Size(155, 143);
+            listbox_projectCollections.Size = new System.Drawing.Size(152, 143);
             listbox_projectCollections.TabIndex = 1;
             listbox_projectCollections.SelectedIndexChanged += listbox_projectCollections_SelectedIndexChanged;
             // 
@@ -322,7 +326,7 @@
             // 
             panel_globalCollections.Controls.Add(group_globalCollections);
             panel_globalCollections.Dock = System.Windows.Forms.DockStyle.Top;
-            panel_globalCollections.Location = new System.Drawing.Point(0, 94);
+            panel_globalCollections.Location = new System.Drawing.Point(0, 91);
             panel_globalCollections.Name = "panel_globalCollections";
             panel_globalCollections.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
             panel_globalCollections.Size = new System.Drawing.Size(161, 166);
@@ -335,7 +339,7 @@
             panel_internalCollections.Location = new System.Drawing.Point(0, 0);
             panel_internalCollections.Name = "panel_internalCollections";
             panel_internalCollections.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
-            panel_internalCollections.Size = new System.Drawing.Size(161, 94);
+            panel_internalCollections.Size = new System.Drawing.Size(161, 91);
             panel_internalCollections.TabIndex = 0;
             // 
             // group_internalCollections
@@ -344,7 +348,8 @@
             group_internalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
             group_internalCollections.Location = new System.Drawing.Point(0, 0);
             group_internalCollections.Name = "group_internalCollections";
-            group_internalCollections.Size = new System.Drawing.Size(161, 91);
+            group_internalCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
+            group_internalCollections.Size = new System.Drawing.Size(161, 88);
             group_internalCollections.TabIndex = 4;
             group_internalCollections.TabStop = false;
             group_internalCollections.Text = "Internal Collections";
@@ -355,9 +360,9 @@
             listbox_internalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
             listbox_internalCollections.FormattingEnabled = true;
             listbox_internalCollections.ItemHeight = 15;
-            listbox_internalCollections.Location = new System.Drawing.Point(3, 19);
+            listbox_internalCollections.Location = new System.Drawing.Point(6, 22);
             listbox_internalCollections.Name = "listbox_internalCollections";
-            listbox_internalCollections.Size = new System.Drawing.Size(155, 69);
+            listbox_internalCollections.Size = new System.Drawing.Size(152, 63);
             listbox_internalCollections.TabIndex = 1;
             listbox_internalCollections.SelectedIndexChanged += listbox_internalCollections_SelectedIndexChanged;
             // 
@@ -495,7 +500,7 @@
             // 
             // viewToolStripMenuItem
             // 
-            viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { automaticallyExpandNodesToolStripMenuItem });
+            viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_expand, button_collapse, automaticallyExpandNodesToolStripMenuItem });
             viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             viewToolStripMenuItem.Text = "View";
@@ -504,13 +509,13 @@
             // 
             automaticallyExpandNodesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { allLayersToolStripMenuItem, toolStripSeparator1, Layer1ToolStripMenuItem, Layer2ToolStripMenuItem, layer3ToolStripMenuItem, layer4ToolStripMenuItem });
             automaticallyExpandNodesToolStripMenuItem.Name = "automaticallyExpandNodesToolStripMenuItem";
-            automaticallyExpandNodesToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            automaticallyExpandNodesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             automaticallyExpandNodesToolStripMenuItem.Text = "Auto expand Nodes";
             // 
             // allLayersToolStripMenuItem
             // 
             allLayersToolStripMenuItem.Name = "allLayersToolStripMenuItem";
-            allLayersToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            allLayersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             allLayersToolStripMenuItem.Tag = "-1";
             allLayersToolStripMenuItem.Text = "All Layers";
             allLayersToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
@@ -518,13 +523,13 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             toolStripSeparator1.Click += allLayersToolStripMenuItem_Click;
             // 
             // Layer1ToolStripMenuItem
             // 
             Layer1ToolStripMenuItem.Name = "Layer1ToolStripMenuItem";
-            Layer1ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            Layer1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             Layer1ToolStripMenuItem.Tag = "0";
             Layer1ToolStripMenuItem.Text = "None";
             Layer1ToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
@@ -532,7 +537,7 @@
             // Layer2ToolStripMenuItem
             // 
             Layer2ToolStripMenuItem.Name = "Layer2ToolStripMenuItem";
-            Layer2ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            Layer2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             Layer2ToolStripMenuItem.Tag = "1";
             Layer2ToolStripMenuItem.Text = "Layer 1";
             Layer2ToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
@@ -540,7 +545,7 @@
             // layer3ToolStripMenuItem
             // 
             layer3ToolStripMenuItem.Name = "layer3ToolStripMenuItem";
-            layer3ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            layer3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             layer3ToolStripMenuItem.Tag = "2";
             layer3ToolStripMenuItem.Text = "Layer 2";
             layer3ToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
@@ -548,10 +553,24 @@
             // layer4ToolStripMenuItem
             // 
             layer4ToolStripMenuItem.Name = "layer4ToolStripMenuItem";
-            layer4ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            layer4ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             layer4ToolStripMenuItem.Tag = "3";
             layer4ToolStripMenuItem.Text = "Layer 3";
             layer4ToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
+            // 
+            // button_expand
+            // 
+            button_expand.Name = "button_expand";
+            button_expand.Size = new System.Drawing.Size(180, 22);
+            button_expand.Text = "Expand All";
+            button_expand.Click += button_expand_Click;
+            // 
+            // button_collapse
+            // 
+            button_collapse.Name = "button_collapse";
+            button_collapse.Size = new System.Drawing.Size(180, 22);
+            button_collapse.Text = "Collapse All";
+            button_collapse.Click += button_collapse_Click;
             // 
             // FormBookmarks
             // 
@@ -632,5 +651,7 @@
         private Controls.ExtendedPanel panel_globalCollections;
         private System.Windows.Forms.ToolStripSeparator separator_delete;
         private System.Windows.Forms.ToolStripMenuItem button_delete;
+        private System.Windows.Forms.ToolStripMenuItem button_expand;
+        private System.Windows.Forms.ToolStripMenuItem button_collapse;
     }
 }
