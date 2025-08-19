@@ -1,4 +1,5 @@
-﻿using mage.Theming.CustomControls;
+﻿using mage.Theming;
+using mage.Theming.CustomControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,10 @@ namespace mage.Bookmarks;
 
 public static class RecentOffsets
 {
-    public static ContextMenuStrip Context { get; } = new ContextMenuStrip();
+    public static ContextMenuStrip Context { get; } = new ContextMenuStrip() 
+    {
+        Renderer = new ContextMenuCustomRenderer(),
+    };
     public static FlatTextBox? ContextTextBox { get; set; } = null;
 
     static RecentOffsets()

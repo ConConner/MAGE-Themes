@@ -32,6 +32,11 @@
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node0");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBookmarks));
             tree_bookmarks = new System.Windows.Forms.TreeView();
+            context_treeview = new System.Windows.Forms.ContextMenuStrip(components);
+            button_createBookmark = new System.Windows.Forms.ToolStripMenuItem();
+            button_createFolder = new System.Windows.Forms.ToolStripMenuItem();
+            separator_delete = new System.Windows.Forms.ToolStripSeparator();
+            button_delete = new System.Windows.Forms.ToolStripMenuItem();
             imageList_treeIcons = new System.Windows.Forms.ImageList(components);
             listbox_globalCollections = new System.Windows.Forms.ListBox();
             group_globalCollections = new System.Windows.Forms.GroupBox();
@@ -39,16 +44,16 @@
             spring = new System.Windows.Forms.ToolStripStatusLabel();
             button_import = new System.Windows.Forms.ToolStripDropDownButton();
             button_export = new System.Windows.Forms.ToolStripDropDownButton();
-            panel_main = new mage.Controls.ExtendedPanel();
-            panel_bookmarks = new mage.Controls.ExtendedPanel();
+            panel_main = new Controls.ExtendedPanel();
+            panel_bookmarks = new Controls.ExtendedPanel();
             group_bookmarks = new System.Windows.Forms.GroupBox();
             textBox_search = new Theming.CustomControls.FlatTextBox();
-            panel_collections = new mage.Controls.ExtendedPanel();
-            panel_projectCollections = new mage.Controls.ExtendedPanel();
+            panel_collections = new Controls.ExtendedPanel();
+            panel_projectCollections = new Controls.ExtendedPanel();
             group_projectCollections = new System.Windows.Forms.GroupBox();
             listbox_projectCollections = new System.Windows.Forms.ListBox();
-            panel_globalCollections = new mage.Controls.ExtendedPanel();
-            panel_internalCollections = new mage.Controls.ExtendedPanel();
+            panel_globalCollections = new Controls.ExtendedPanel();
+            panel_internalCollections = new Controls.ExtendedPanel();
             group_internalCollections = new System.Windows.Forms.GroupBox();
             listbox_internalCollections = new System.Windows.Forms.ListBox();
             group_details = new System.Windows.Forms.GroupBox();
@@ -70,7 +75,7 @@
             Layer2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layer3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layer4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            context_treeview = new System.Windows.Forms.ContextMenuStrip(components);
+            context_treeview.SuspendLayout();
             group_globalCollections.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel_main.SuspendLayout();
@@ -90,6 +95,7 @@
             // 
             tree_bookmarks.AllowDrop = true;
             tree_bookmarks.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            tree_bookmarks.ContextMenuStrip = context_treeview;
             tree_bookmarks.Dock = System.Windows.Forms.DockStyle.Fill;
             tree_bookmarks.HideSelection = false;
             tree_bookmarks.HotTracking = true;
@@ -109,6 +115,42 @@
             tree_bookmarks.NodeMouseDoubleClick += tree_bookmarks_NodeMouseDoubleClick;
             tree_bookmarks.DragDrop += tree_bookmarks_DragDrop;
             tree_bookmarks.DragEnter += tree_bookmarks_DragEnter;
+            tree_bookmarks.MouseDown += tree_bookmarks_MouseClick;
+            // 
+            // context_treeview
+            // 
+            context_treeview.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_createBookmark, button_createFolder, separator_delete, button_delete });
+            context_treeview.Name = "context_treeview";
+            context_treeview.Size = new System.Drawing.Size(181, 98);
+            // 
+            // button_createBookmark
+            // 
+            button_createBookmark.Image = Properties.Resources.page_white_add;
+            button_createBookmark.Name = "button_createBookmark";
+            button_createBookmark.Size = new System.Drawing.Size(180, 22);
+            button_createBookmark.Text = "Create Bookmark";
+            button_createBookmark.Click += button_createBookmark_Click;
+            // 
+            // button_createFolder
+            // 
+            button_createFolder.Image = Properties.Resources.folder_add;
+            button_createFolder.Name = "button_createFolder";
+            button_createFolder.Size = new System.Drawing.Size(180, 22);
+            button_createFolder.Text = "Create Folder";
+            button_createFolder.Click += button_createFolder_Click;
+            // 
+            // separator_delete
+            // 
+            separator_delete.Name = "separator_delete";
+            separator_delete.Size = new System.Drawing.Size(177, 6);
+            // 
+            // button_delete
+            // 
+            button_delete.Image = Properties.Resources.delete;
+            button_delete.Name = "button_delete";
+            button_delete.Size = new System.Drawing.Size(180, 22);
+            button_delete.Text = "Delete";
+            button_delete.Click += button_delete_Click;
             // 
             // imageList_treeIcons
             // 
@@ -511,11 +553,6 @@
             layer4ToolStripMenuItem.Text = "Layer 3";
             layer4ToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
             // 
-            // context_treeview
-            // 
-            context_treeview.Name = "context_treeview";
-            context_treeview.Size = new System.Drawing.Size(181, 26);
-            // 
             // FormBookmarks
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -528,6 +565,7 @@
             MainMenuStrip = menuStrip1;
             Name = "FormBookmarks";
             Text = "Bookmarks";
+            context_treeview.ResumeLayout(false);
             group_globalCollections.ResumeLayout(false);
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
@@ -554,10 +592,8 @@
         private System.Windows.Forms.ListBox listbox_globalCollections;
         private System.Windows.Forms.GroupBox group_globalCollections;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Panel panel_main;
         private System.Windows.Forms.GroupBox group_bookmarks;
         private System.Windows.Forms.ImageList imageList_treeIcons;
-        private System.Windows.Forms.Panel panel_bookmarks;
         private System.Windows.Forms.GroupBox group_details;
         private Theming.CustomControls.FlatTextBox textBox_value;
         private System.Windows.Forms.Label label_value;
@@ -569,10 +605,6 @@
         private System.Windows.Forms.ToolStripDropDownButton button_import;
         private System.Windows.Forms.ToolStripDropDownButton button_export;
         private Theming.CustomControls.FlatTextBox textBox_search;
-        private System.Windows.Forms.Panel panel_collections;
-        private System.Windows.Forms.Panel panel_internalCollections;
-        private System.Windows.Forms.Panel panel_projectCollections;
-        private System.Windows.Forms.Panel panel_globalCollections;
         private System.Windows.Forms.GroupBox group_projectCollections;
         private System.Windows.Forms.ListBox listbox_projectCollections;
         private System.Windows.Forms.GroupBox group_internalCollections;
@@ -590,5 +622,15 @@
         private System.Windows.Forms.ToolStripMenuItem layer3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem layer4ToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip context_treeview;
+        private System.Windows.Forms.ToolStripMenuItem button_createBookmark;
+        private System.Windows.Forms.ToolStripMenuItem button_createFolder;
+        private Controls.ExtendedPanel panel_main;
+        private Controls.ExtendedPanel panel_bookmarks;
+        private Controls.ExtendedPanel panel_collections;
+        private Controls.ExtendedPanel panel_internalCollections;
+        private Controls.ExtendedPanel panel_projectCollections;
+        private Controls.ExtendedPanel panel_globalCollections;
+        private System.Windows.Forms.ToolStripSeparator separator_delete;
+        private System.Windows.Forms.ToolStripMenuItem button_delete;
     }
 }

@@ -163,6 +163,16 @@ namespace mage.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap folder_add {
+            get {
+                object obj = ResourceManager.GetObject("folder_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap help {
             get {
                 object obj = ResourceManager.GetObject("help", resourceCulture);
@@ -344,8 +354,8 @@ namespace mage.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 00 Air
-        ///01 Block (pass through bottom)
+        ///   Looks up a localized string similar to 00    Air
+        ///01  _ Semi-solid platform
         ///02
         ///03
         ///04
@@ -353,31 +363,30 @@ namespace mage.Properties {
         ///06
         ///07
         ///08
-        ///09 Prevents climbing into from ladder
+        ///09  @ Stop ladder ceiling
         ///0A
         ///0B
         ///0C
         ///0D
         ///0E
         ///0F
-        ///10 Solid block
-        ///11 / steep floor slope
-        ///12 \ steep floor slope
-        ///13 / lower slight floor slope
-        ///14 / upper slight floor slope
-        ///15 \ upper slight floor slope
-        ///16 \ lower slight floor slope
-        ///17 Stop enemy block (air)
-        ///18 Ceiling ladder
-        ///19 Right wall ladder
-        ///1A Left wall ladder
-        ///1B Water
-        ///1C Wet ground
-        ///1D Dusty ground
-        ///1E Unused (solid)
-        ///1F Unused (air)
-        ///20 Door transition block
-        /// [rest of string was truncated]&quot;;.
+        ///10 @ Solid block
+        ///11 / Steep floor slope
+        ///12 \ Steep floor slope
+        ///13 / Lower slight floor slope
+        ///14 / Upper slight floor slope
+        ///15 \ Upper slight floor slope
+        ///16 \ Lower slight floor slope
+        ///17   Stop enemy block (air)
+        ///18 @ Ceiling ladder
+        ///19 ] Right wall ladder
+        ///1A [ Left wall ladder
+        ///1B   Water
+        ///1C _ Wet ground
+        ///1D _ Dusty ground
+        ///1E @ Unused (solid)
+        ///1F   Unused (air)
+        ///20   Door transition [rest of string was truncated]&quot;;.
         /// </summary>
         public static string MF_clipdata {
             get {
@@ -975,6 +984,16 @@ namespace mage.Properties {
             get {
                 object obj = ResourceManager.GetObject("MZM", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap page_white_add {
+            get {
+                object obj = ResourceManager.GetObject("page_white_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -1881,38 +1900,37 @@ namespace mage.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 00 Air
-        ///01 Block (pass through bottom)
-        ///02 Non-power grip
+        ///   Looks up a localized string similar to 00    Air
+        ///01  _ Semi-solid platform
+        ///02  @ Non-power grip
         ///03
         ///04
         ///05
         ///06
-        ///07 Enemy only block
+        ///07  @ Stop player block
         ///08
-        ///09 Stop enemy block (solid)
+        ///09  @ Stop enemy block (solid)
         ///0A
         ///0B
         ///0C
         ///0D
         ///0E
         ///0F
-        ///10 Solid block
-        ///11 / steep floor slope
-        ///12 \ steep floor slope
-        ///13 / lower slight floor slope
-        ///14 / upper slight floor slope
-        ///15 \ upper slight floor slope
-        ///16 \ lower slight floor slope
-        ///17 Stop enemy block (air)
-        ///18 Space pirate zoneline
-        ///19 Space pirate wall jump point
-        ///1A Unused (solid)
-        ///1B Water
-        ///1C Wet ground
-        ///1D Dusty ground
-        ///1E Unused (solid)
-        ///1F Un [rest of string was truncated]&quot;;.
+        ///10 @ Solid block
+        ///11 / Steep floor slope
+        ///12 \ Steep floor slope
+        ///13 / Lower slight floor slope
+        ///14 / Upper slight floor slope
+        ///15 \ Upper slight floor slope
+        ///16 \ Lower slight floor slope
+        ///17   Stop enemy block (air)
+        ///18 @ Space pirate zoneline
+        ///19 @ Space pirate wall jump point
+        ///1A @ Unused (solid)
+        ///1B   Water
+        ///1C _ Wet ground
+        ///1D _ Dusty ground
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         public static string ZM_clipdata {
             get {

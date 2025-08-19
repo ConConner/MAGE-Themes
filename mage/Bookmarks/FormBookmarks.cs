@@ -33,6 +33,7 @@ public partial class FormBookmarks : Form
     private List<BookmarkFolder> CurrentCollections = BookmarkManager.InternalCollections;
     Subject<string> searchSubject;
     TreeNode SelectedTreeNode;
+    TreeNode ContextMenuTreeNode;
     BookmarkItem SelectedItem;
 
     // Last used Collection
@@ -262,33 +263,34 @@ public partial class FormBookmarks : Form
         tree_bookmarks.EndUpdate();
     }
 
+    private TreeNode CreateBookmarkItemNode(BookmarkItem bookmarkItem)
+    {
+        int nodeImageIndex = bookmarkItem is BookmarkFolder ? 0 : 1;
+
+        TreeNode itemNode = new(bookmarkItem.Name, nodeImageIndex, nodeImageIndex);
+        itemNode.Tag = bookmarkItem;
+
+        return itemNode;
+    }
+
     private void AddNodesFromFolderRecursive(BookmarkItem item, TreeNodeCollection rootNode, string pathName, int nestedLevel = 0)
     {
         string searchString = textBox_search.Text;
         bool doSearch = searchString != "";
-        TreeNode itemNode = null;
+        TreeNode itemNode = CreateBookmarkItemNode(item);
 
         pathName += item.Name;
 
         if (item is BookmarkFolder)
         {
             BookmarkFolder folder = item as BookmarkFolder;
-            itemNode = new(folder.Name, 0, 0);
-            itemNode.Tag = folder;
-
-            foreach (BookmarkItem bmi in folder.Items) AddNodesFromFolderRecursive(bmi, itemNode.Nodes, pathName, nestedLevel + 1);
+            foreach (BookmarkItem bmi in folder!.Items) 
+                AddNodesFromFolderRecursive(bmi, itemNode.Nodes, pathName, nestedLevel + 1);
 
             if (doSearch && (itemNode.Nodes.Count < 1)) return;
         }
 
-        if (item is Bookmark)
-        {
-            Bookmark bm = item as Bookmark;
-            itemNode = new(bm.Name, 1, 1);
-            itemNode.Tag = bm;
-
-            if (doSearch && !satisfiesSearch(pathName, searchString)) return;
-        }
+        if (item is Bookmark && doSearch && !satisfiesSearch(pathName, searchString)) return;
 
         rootNode.Add(itemNode);
         if (nestedLevel < expandDepth || expandDepth == -1) itemNode.Expand();
@@ -297,6 +299,17 @@ public partial class FormBookmarks : Form
     private void tree_bookmarks_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
     {
         tree_bookmarks.SelectedNode = e.Node;
+    }
+
+    private void tree_bookmarks_MouseClick(object sender, MouseEventArgs e)
+    {
+        var hit = tree_bookmarks.HitTest(e.Location);
+
+        if (e.Button == MouseButtons.Right)
+        {
+            ContextMenuTreeNode = hit.Node;
+            context_treeview.Items["button_delete"].Enabled = hit.Node != null;
+        }
     }
 
     private void tree_bookmarks_AfterSelect(object sender, TreeViewEventArgs e)
@@ -311,24 +324,23 @@ public partial class FormBookmarks : Form
     private void DisplayBookmarkDetails(BookmarkItem item)
     {
         init = true;
+        bool isBookmark = item is Bookmark;
 
         group_details.Visible = true;
         group_details.Enabled = AllowedToEdit;
 
-        textBox_value.Visible = false;
-        label_value.Visible = false;
+        textBox_value.Visible = isBookmark;
+        label_value.Visible = isBookmark;
         textBox_value.Text = String.Empty;
 
         textBox_name.Text = item.Name;
         textBox_description.Text = item.Description;
 
-        if (item is not Bookmark)
+        if (!isBookmark)
         {
             init = false;
             return;
         }
-        textBox_value.Visible = true;
-        label_value.Visible = true;
         textBox_value.Text = Hex.ToString((item as Bookmark).Value);
 
         init = false;
@@ -432,7 +444,7 @@ public partial class FormBookmarks : Form
             return;
         }
         if (draggedNode.Equals(targetNode)) return;
-        
+
         // Check if target node is folder or bookmark
         BookmarkItem targetNodeItem = targetNode.Tag as BookmarkItem;
         if (targetNodeItem == null) return;
@@ -452,7 +464,7 @@ public partial class FormBookmarks : Form
     {
         if (nodeToMove.Tag is not BookmarkItem) throw new ArgumentException($"Node {nodeToMove} does not contain a valid BookmarkItem");
         if (newParentNode.Tag is not BookmarkFolder && newParentNode != null) throw new ArgumentException($"The newParentNode needs to contain a valid BookmarkFolder");
-        
+
         TreeNode oldParentNode = nodeToMove.Parent;
         BookmarkItem itemToMove = nodeToMove.Tag as BookmarkItem;
         BookmarkFolder newParentFolder = newParentNode.Tag as BookmarkFolder;
@@ -520,7 +532,7 @@ public partial class FormBookmarks : Form
     #region export/import
     private void button_export_Click(object sender, EventArgs e)
     {
-        if (listbox_globalCollections.SelectedIndex == -1)
+        if (LastCollectionUsed.SelectedIndex == -1)
         {
             MessageBox.Show("No bookmark collection selected", "Select Collection", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             return;
@@ -568,6 +580,23 @@ public partial class FormBookmarks : Form
         ToolStripMenuItem item = sender as ToolStripMenuItem;
         int depth = -1;
         if (int.TryParse(item.Tag as string, out depth)) ExpandDepth = depth;
+    }
+    #endregion
+
+    #region adding/removing
+    private void button_createBookmark_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void button_createFolder_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void button_delete_Click(object sender, EventArgs e)
+    {
+
     }
     #endregion
 }
