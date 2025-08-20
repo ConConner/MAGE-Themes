@@ -17,14 +17,21 @@ public static class BookmarkManager
     private static JsonSerializerOptions JsonOptions = new JsonSerializerOptions()
     {
         Converters = { new BookmarkJsonConverter() },
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        AllowTrailingCommas = true,
+    };
+    private static JsonSerializerOptions JsonOptionsIndented = new JsonSerializerOptions()
+    {
+        Converters = { new BookmarkJsonConverter() },
         WriteIndented = true,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         AllowTrailingCommas = true,
     };
 
-    public static string Serialize(BookmarkFolder collection)
+    public static string Serialize(BookmarkFolder collection, bool writeIndented = true)
     {
-        return JsonSerializer.Serialize(collection, JsonOptions);
+        JsonSerializerOptions options = writeIndented ? JsonOptionsIndented : JsonOptions;
+        return JsonSerializer.Serialize(collection, options);
     }
 
     public static BookmarkFolder Deserialize(string json)
@@ -32,10 +39,11 @@ public static class BookmarkManager
         return JsonSerializer.Deserialize<BookmarkFolder>(json, JsonOptions);
     }
 
-    public static string SerializeCollections(List<BookmarkFolder> collections)
+    public static string SerializeCollections(List<BookmarkFolder> collections, bool writeIndented = true)
     {
+        JsonSerializerOptions options = writeIndented ? JsonOptionsIndented : JsonOptions;
         List<BookmarkItem> castList = collections.Cast<BookmarkItem>().ToList();
-        return JsonSerializer.Serialize(castList, JsonOptions);
+        return JsonSerializer.Serialize(castList, options);
     }
 
     public static List<BookmarkFolder> DeserializeCollections(string json)

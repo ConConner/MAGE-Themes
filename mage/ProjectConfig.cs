@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+
+namespace mage;
+
+public class ProjectConfig
+{
+    // Add Fields here
+    public string TestValue { get; set; }
+
+    // Default values need to be added here
+    public static ProjectConfig DefaultConfig { get; } = new ProjectConfig()
+    {
+        TestValue = "This is a Test",
+    };
+
+
+
+    // Constructor and Serializer Options
+    [JsonConstructor]
+    public ProjectConfig() { }
+
+    private static readonly JsonSerializerOptions jsonOptions = new()
+    {
+        WriteIndented = false,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    };
+
+    public static string Serialize(ProjectConfig config)
+    {
+        return JsonSerializer.Serialize(config, jsonOptions);
+    }
+    public static ProjectConfig Deserialize(string json)
+    {
+        return JsonSerializer.Deserialize<ProjectConfig>(json, jsonOptions);
+    }
+
+    // Function to check if the initial default config was ever changed
+    private static readonly string _defaultJson = JsonSerializer.Serialize(DefaultConfig, jsonOptions);
+    public static bool IsDefault(ProjectConfig config)
+    { 
+        string configJson = JsonSerializer.Serialize(config, jsonOptions);
+        return configJson.Equals(_defaultJson);
+    }
+}

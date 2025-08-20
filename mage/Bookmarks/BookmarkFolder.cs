@@ -31,4 +31,18 @@ public class BookmarkFolder : BookmarkItem
         Items.Add(item);
         item.Parent = this;
     }
+
+    public override BookmarkItem CreateDeepCopy()
+    {
+        BookmarkFolder copiedFolder = new BookmarkFolder()
+        {
+            Name = this.Name,
+            Description = this.Description
+        };
+
+        // Create deep copies of items
+        foreach (BookmarkItem item in Items) copiedFolder.AddItem(item.CreateDeepCopy());
+
+        return copiedFolder;
+    }
 }

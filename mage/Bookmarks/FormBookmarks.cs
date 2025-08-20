@@ -335,7 +335,7 @@ public partial class FormBookmarks : Form
 
         textBox_name.Text = item.Name;
         //textBox_description.Text = item.Description;
-        textBox_description.Text = item.Path;
+        textBox_description.Text = Version.ProjectConfig.TestValue;
 
         if (!isBookmark)
         {

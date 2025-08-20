@@ -447,6 +447,7 @@ namespace mage
             // save backup
             byte[] copy = ROM.BackupData();
             ROM.SaveROM(backup, false);
+            if (!ProjectConfig.IsDefault(Version.ProjectConfig)) Version.UpdateProject();
             Version.SaveProject(backup);
             ROM.RestoreData(copy);
         }
@@ -1268,6 +1269,7 @@ namespace mage
 
             // save all edited lists and compress backgrounds
             ROM.SaveROM(filename, true);
+            if (!ProjectConfig.IsDefault(Version.ProjectConfig)) Version.UpdateProject();
             bool newProject = Version.SaveProject(filename);
             if (newProject)
             {

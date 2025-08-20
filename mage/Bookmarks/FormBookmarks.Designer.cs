@@ -68,6 +68,8 @@
             glToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             projectBookmarkCollectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            button_expand = new System.Windows.Forms.ToolStripMenuItem();
+            button_collapse = new System.Windows.Forms.ToolStripMenuItem();
             automaticallyExpandNodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             allLayersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -75,8 +77,7 @@
             Layer2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layer3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layer4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            button_expand = new System.Windows.Forms.ToolStripMenuItem();
-            button_collapse = new System.Windows.Forms.ToolStripMenuItem();
+            context_listBox = new System.Windows.Forms.ContextMenuStrip(components);
             context_treeview.SuspendLayout();
             group_globalCollections.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -505,17 +506,31 @@
             viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             viewToolStripMenuItem.Text = "View";
             // 
+            // button_expand
+            // 
+            button_expand.Name = "button_expand";
+            button_expand.Size = new System.Drawing.Size(179, 22);
+            button_expand.Text = "Expand All";
+            button_expand.Click += button_expand_Click;
+            // 
+            // button_collapse
+            // 
+            button_collapse.Name = "button_collapse";
+            button_collapse.Size = new System.Drawing.Size(179, 22);
+            button_collapse.Text = "Collapse All";
+            button_collapse.Click += button_collapse_Click;
+            // 
             // automaticallyExpandNodesToolStripMenuItem
             // 
             automaticallyExpandNodesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { allLayersToolStripMenuItem, toolStripSeparator1, Layer1ToolStripMenuItem, Layer2ToolStripMenuItem, layer3ToolStripMenuItem, layer4ToolStripMenuItem });
             automaticallyExpandNodesToolStripMenuItem.Name = "automaticallyExpandNodesToolStripMenuItem";
-            automaticallyExpandNodesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            automaticallyExpandNodesToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             automaticallyExpandNodesToolStripMenuItem.Text = "Auto expand Nodes";
             // 
             // allLayersToolStripMenuItem
             // 
             allLayersToolStripMenuItem.Name = "allLayersToolStripMenuItem";
-            allLayersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            allLayersToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             allLayersToolStripMenuItem.Tag = "-1";
             allLayersToolStripMenuItem.Text = "All Layers";
             allLayersToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
@@ -523,13 +538,13 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
             toolStripSeparator1.Click += allLayersToolStripMenuItem_Click;
             // 
             // Layer1ToolStripMenuItem
             // 
             Layer1ToolStripMenuItem.Name = "Layer1ToolStripMenuItem";
-            Layer1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            Layer1ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             Layer1ToolStripMenuItem.Tag = "0";
             Layer1ToolStripMenuItem.Text = "None";
             Layer1ToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
@@ -537,7 +552,7 @@
             // Layer2ToolStripMenuItem
             // 
             Layer2ToolStripMenuItem.Name = "Layer2ToolStripMenuItem";
-            Layer2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            Layer2ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             Layer2ToolStripMenuItem.Tag = "1";
             Layer2ToolStripMenuItem.Text = "Layer 1";
             Layer2ToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
@@ -545,7 +560,7 @@
             // layer3ToolStripMenuItem
             // 
             layer3ToolStripMenuItem.Name = "layer3ToolStripMenuItem";
-            layer3ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            layer3ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             layer3ToolStripMenuItem.Tag = "2";
             layer3ToolStripMenuItem.Text = "Layer 2";
             layer3ToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
@@ -553,24 +568,15 @@
             // layer4ToolStripMenuItem
             // 
             layer4ToolStripMenuItem.Name = "layer4ToolStripMenuItem";
-            layer4ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            layer4ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             layer4ToolStripMenuItem.Tag = "3";
             layer4ToolStripMenuItem.Text = "Layer 3";
             layer4ToolStripMenuItem.Click += allLayersToolStripMenuItem_Click;
             // 
-            // button_expand
+            // context_listBox
             // 
-            button_expand.Name = "button_expand";
-            button_expand.Size = new System.Drawing.Size(180, 22);
-            button_expand.Text = "Expand All";
-            button_expand.Click += button_expand_Click;
-            // 
-            // button_collapse
-            // 
-            button_collapse.Name = "button_collapse";
-            button_collapse.Size = new System.Drawing.Size(180, 22);
-            button_collapse.Text = "Collapse All";
-            button_collapse.Click += button_collapse_Click;
+            context_listBox.Name = "context_listBox";
+            context_listBox.Size = new System.Drawing.Size(181, 26);
             // 
             // FormBookmarks
             // 
@@ -653,5 +659,6 @@
         private System.Windows.Forms.ToolStripMenuItem button_delete;
         private System.Windows.Forms.ToolStripMenuItem button_expand;
         private System.Windows.Forms.ToolStripMenuItem button_collapse;
+        private System.Windows.Forms.ContextMenuStrip context_listBox;
     }
 }

@@ -12,4 +12,14 @@ public class Bookmark : BookmarkItem
     [JsonConstructor]
     public Bookmark() { }
     public int Value { get; set; }
+
+    public override Bookmark CreateDeepCopy()
+    {
+        return new Bookmark()
+        {
+            Name = this.Name,
+            Description = this.Description,
+            Value = this.Value
+        };
+    }
 }
