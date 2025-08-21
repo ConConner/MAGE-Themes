@@ -1327,6 +1327,7 @@
             // 
             // menuItem_bookmarks
             // 
+            menuItem_bookmarks.Enabled = false;
             menuItem_bookmarks.Name = "menuItem_bookmarks";
             menuItem_bookmarks.Size = new System.Drawing.Size(193, 22);
             menuItem_bookmarks.Text = "Bookmarks";
@@ -1336,7 +1337,6 @@
             // 
             toolStripSeparator33.Name = "toolStripSeparator33";
             toolStripSeparator33.Size = new System.Drawing.Size(190, 6);
-            toolStripSeparator33.Visible = false;
             // 
             // button_experimental
             // 

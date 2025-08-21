@@ -11,12 +11,10 @@ namespace mage;
 public class ProjectConfig
 {
     // Add Fields here
-    public string TestValue { get; set; }
 
     // Default values need to be added here
     public static ProjectConfig DefaultConfig { get; } = new ProjectConfig()
     {
-        TestValue = "This is a Test",
     };
 
 

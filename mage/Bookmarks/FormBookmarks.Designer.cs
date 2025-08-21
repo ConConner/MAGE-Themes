@@ -29,13 +29,16 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Node0");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node0");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBookmarks));
             tree_bookmarks = new System.Windows.Forms.TreeView();
             context_treeview = new System.Windows.Forms.ContextMenuStrip(components);
             button_createBookmark = new System.Windows.Forms.ToolStripMenuItem();
             button_createFolder = new System.Windows.Forms.ToolStripMenuItem();
             separator_delete = new System.Windows.Forms.ToolStripSeparator();
+            button_createCopy = new System.Windows.Forms.ToolStripMenuItem();
+            button_exportFolder = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             button_delete = new System.Windows.Forms.ToolStripMenuItem();
             imageList_treeIcons = new System.Windows.Forms.ImageList(components);
             listbox_globalCollections = new System.Windows.Forms.ListBox();
@@ -106,9 +109,9 @@
             tree_bookmarks.ImageList = imageList_treeIcons;
             tree_bookmarks.Location = new System.Drawing.Point(3, 42);
             tree_bookmarks.Name = "tree_bookmarks";
-            treeNode2.Name = "Node0";
-            treeNode2.Text = "Node0";
-            tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode2 });
+            treeNode1.Name = "Node0";
+            treeNode1.Text = "Node0";
+            tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode1 });
             tree_bookmarks.SelectedImageIndex = 0;
             tree_bookmarks.Size = new System.Drawing.Size(371, 380);
             tree_bookmarks.TabIndex = 0;
@@ -122,15 +125,15 @@
             // 
             // context_treeview
             // 
-            context_treeview.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_createBookmark, button_createFolder, separator_delete, button_delete });
+            context_treeview.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_createBookmark, button_createFolder, separator_delete, button_createCopy, button_exportFolder, toolStripSeparator2, button_delete });
             context_treeview.Name = "context_treeview";
-            context_treeview.Size = new System.Drawing.Size(166, 76);
+            context_treeview.Size = new System.Drawing.Size(216, 126);
             // 
             // button_createBookmark
             // 
             button_createBookmark.Image = Properties.Resources.page_white_add;
             button_createBookmark.Name = "button_createBookmark";
-            button_createBookmark.Size = new System.Drawing.Size(165, 22);
+            button_createBookmark.Size = new System.Drawing.Size(215, 22);
             button_createBookmark.Text = "Create Bookmark";
             button_createBookmark.Click += button_createBookmark_Click;
             // 
@@ -138,20 +141,41 @@
             // 
             button_createFolder.Image = Properties.Resources.folder_add;
             button_createFolder.Name = "button_createFolder";
-            button_createFolder.Size = new System.Drawing.Size(165, 22);
+            button_createFolder.Size = new System.Drawing.Size(215, 22);
             button_createFolder.Text = "Create Folder";
             button_createFolder.Click += button_createFolder_Click;
             // 
             // separator_delete
             // 
             separator_delete.Name = "separator_delete";
-            separator_delete.Size = new System.Drawing.Size(162, 6);
+            separator_delete.Size = new System.Drawing.Size(212, 6);
+            // 
+            // button_createCopy
+            // 
+            button_createCopy.Image = Properties.Resources.page_copy;
+            button_createCopy.Name = "button_createCopy";
+            button_createCopy.Size = new System.Drawing.Size(215, 22);
+            button_createCopy.Text = "Create Copy";
+            button_createCopy.Click += button_createCopy_Click;
+            // 
+            // button_exportFolder
+            // 
+            button_exportFolder.Image = Properties.Resources.toolbar_undo;
+            button_exportFolder.Name = "button_exportFolder";
+            button_exportFolder.Size = new System.Drawing.Size(215, 22);
+            button_exportFolder.Text = "Export Folder as Collection";
+            button_exportFolder.Click += button_exportFolder_Click;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
             // 
             // button_delete
             // 
             button_delete.Image = Properties.Resources.delete;
             button_delete.Name = "button_delete";
-            button_delete.Size = new System.Drawing.Size(165, 22);
+            button_delete.Size = new System.Drawing.Size(215, 22);
             button_delete.Text = "Delete";
             button_delete.Click += button_delete_Click;
             // 
@@ -576,7 +600,7 @@
             // context_listBox
             // 
             context_listBox.Name = "context_listBox";
-            context_listBox.Size = new System.Drawing.Size(181, 26);
+            context_listBox.Size = new System.Drawing.Size(61, 4);
             // 
             // FormBookmarks
             // 
@@ -614,7 +638,6 @@
         #endregion
 
         private System.Windows.Forms.TreeView tree_bookmarks;
-        private System.Windows.Forms.ListBox listbox_globalCollections;
         private System.Windows.Forms.GroupBox group_globalCollections;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.GroupBox group_bookmarks;
@@ -631,9 +654,7 @@
         private System.Windows.Forms.ToolStripDropDownButton button_export;
         private Theming.CustomControls.FlatTextBox textBox_search;
         private System.Windows.Forms.GroupBox group_projectCollections;
-        private System.Windows.Forms.ListBox listbox_projectCollections;
         private System.Windows.Forms.GroupBox group_internalCollections;
-        private System.Windows.Forms.ListBox listbox_internalCollections;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem glToolStripMenuItem;
@@ -660,5 +681,11 @@
         private System.Windows.Forms.ToolStripMenuItem button_expand;
         private System.Windows.Forms.ToolStripMenuItem button_collapse;
         private System.Windows.Forms.ContextMenuStrip context_listBox;
+        private System.Windows.Forms.ToolStripMenuItem button_exportFolder;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem button_createCopy;
+        public System.Windows.Forms.ListBox listbox_globalCollections;
+        public System.Windows.Forms.ListBox listbox_projectCollections;
+        public System.Windows.Forms.ListBox listbox_internalCollections;
     }
 }

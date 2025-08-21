@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,7 +19,7 @@ namespace mage.Bookmarks;
 public partial class FormBookmarks : Form
 {
     // Struct for keeping track of last selected values
-    private struct CollectionBox
+    public struct CollectionBox
     {
         public ListBox Box;
         public int SelectedIndex;
@@ -38,7 +39,7 @@ public partial class FormBookmarks : Form
 
     // Last used Collection
     CollectionBox lastCollectionUsed = new() { Box = null, SelectedIndex = -1 };
-    CollectionBox LastCollectionUsed
+    public CollectionBox LastCollectionUsed
     {
         get => lastCollectionUsed;
         set
@@ -308,7 +309,11 @@ public partial class FormBookmarks : Form
         if (e.Button == MouseButtons.Right)
         {
             ContextMenuTreeNode = hit.Node;
-            context_treeview.Items["button_delete"].Enabled = hit.Node != null;
+            button_createFolder.Enabled = AllowedToEdit;
+            button_createBookmark.Enabled = AllowedToEdit;
+            button_createCopy.Enabled = hit.Node != null;
+            button_exportFolder.Enabled = hit.Node != null && hit.Node.Tag is BookmarkFolder;
+            button_delete.Enabled = hit.Node != null && AllowedToEdit;
         }
     }
 
@@ -334,8 +339,7 @@ public partial class FormBookmarks : Form
         textBox_value.Text = String.Empty;
 
         textBox_name.Text = item.Name;
-        //textBox_description.Text = item.Description;
-        textBox_description.Text = Version.ProjectConfig.TestValue;
+        textBox_description.Text = item.Description;
 
         if (!isBookmark)
         {
@@ -571,6 +575,20 @@ public partial class FormBookmarks : Form
         }
     }
 
+    private void button_exportFolder_Click(object sender, EventArgs e)
+    {
+        if (ContextMenuTreeNode.Tag is not BookmarkFolder folder) return;
+
+        SaveFileDialog dialog = new SaveFileDialog();
+        dialog.Filter = "MAGE Bookmark Collection (*.mbc)|*.mbc";
+        dialog.FileName = folder.Name;
+        if (dialog.ShowDialog() == DialogResult.OK)
+        {
+            //convert key pair to json object
+            string data = BookmarkManager.Serialize(folder);
+            File.WriteAllText(dialog.FileName, data);
+        }
+    }
     #endregion
 
 
@@ -590,7 +608,12 @@ public partial class FormBookmarks : Form
         tree_bookmarks.EndUpdate();
     }
 
-    private void button_collapse_Click(object sender, EventArgs e) => tree_bookmarks.CollapseAll();
+    private void button_collapse_Click(object sender, EventArgs e)
+    {
+        tree_bookmarks.BeginUpdate();
+        tree_bookmarks.CollapseAll();
+        tree_bookmarks.EndUpdate();
+    }
     #endregion
 
     #region adding/removing
@@ -660,6 +683,52 @@ public partial class FormBookmarks : Form
 
         parentFolder.Items.Remove(item);
         ContextMenuTreeNode.Remove();
+    }
+
+    private void button_createCopy_Click(object sender, EventArgs e)
+    {
+        Config.BookmarkCollection lastUsed = Config.BookmarkCollection.Internal;
+
+        BookmarkItem itemToCopy = ContextMenuTreeNode.Tag as BookmarkItem;
+        BookmarkCopyDialog bcd = new(itemToCopy, this);
+        if (bcd.ShowDialog() != DialogResult.OK) return;
+        var copyResult = bcd.CopyDialogResult;
+
+        // Copy Item
+        int newSelectedIndex = -1;
+        BookmarkPath itemPath = itemToCopy.CreateBookmarkPath();
+        BookmarkFolder collectionToCopyTo = copyResult.SelectedCollection;
+
+        // Check if collection already exists
+        int indexOfExisting = copyResult.GoalListBox.Items.IndexOf(itemPath.Root.Name);
+        if (copyResult.CreateNewCollection && indexOfExisting == -1) // Case where collection doesnt exist but should be created
+        {
+            collectionToCopyTo = new BookmarkFolder()
+            {
+                Name = itemPath.Root.Name,
+                Description = itemPath.Root.Description,
+            };
+            copyResult.GoalListBox.Items.Add(collectionToCopyTo.Name);
+            copyResult.GoalCollections.Add(collectionToCopyTo);
+            newSelectedIndex = copyResult.GoalListBox.Items.Count - 1;
+        }
+        else if (copyResult.CreateNewCollection && indexOfExisting != -1) // Case where collection already exists and should be created
+        {
+            collectionToCopyTo = copyResult.GoalCollections[indexOfExisting];
+            newSelectedIndex = indexOfExisting;
+        }
+        else // Case where an existing collection is being used
+        {
+            newSelectedIndex = copyResult.GoalListBox.Items.IndexOf(copyResult.SelectedCollection.Name);
+        }
+        collectionToCopyTo.AddItemWithPath(itemPath, copyResult.IncludePath, false);
+
+        // Select newly copied item
+        LastCollectionUsed = new()
+        {
+            Box = copyResult.GoalListBox,
+            SelectedIndex = newSelectedIndex
+        };
     }
     #endregion
 }
