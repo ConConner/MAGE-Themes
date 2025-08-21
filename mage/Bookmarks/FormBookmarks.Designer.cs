@@ -49,6 +49,8 @@
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             spring = new System.Windows.Forms.ToolStripStatusLabel();
             button_import = new System.Windows.Forms.ToolStripDropDownButton();
+            button_importGlobal = new System.Windows.Forms.ToolStripMenuItem();
+            button_importProject = new System.Windows.Forms.ToolStripMenuItem();
             button_export = new System.Windows.Forms.ToolStripDropDownButton();
             panel_main = new Controls.ExtendedPanel();
             panel_bookmarks = new Controls.ExtendedPanel();
@@ -196,7 +198,7 @@
             // 
             listbox_globalCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_globalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            listbox_globalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            listbox_globalCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             listbox_globalCollections.FormattingEnabled = true;
             listbox_globalCollections.ItemHeight = 15;
             listbox_globalCollections.Location = new System.Drawing.Point(6, 22);
@@ -269,13 +271,27 @@
             // button_import
             // 
             button_import.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            button_import.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_importGlobal, button_importProject });
             button_import.Image = (System.Drawing.Image)resources.GetObject("button_import.Image");
             button_import.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_import.Name = "button_import";
             button_import.ShowDropDownArrow = false;
             button_import.Size = new System.Drawing.Size(47, 20);
             button_import.Text = "Import";
-            button_import.Click += button_import_Click;
+            // 
+            // button_importGlobal
+            // 
+            button_importGlobal.Name = "button_importGlobal";
+            button_importGlobal.Size = new System.Drawing.Size(180, 22);
+            button_importGlobal.Text = "Global Collection...";
+            button_importGlobal.Click += button_importGlobal_Click;
+            // 
+            // button_importProject
+            // 
+            button_importProject.Name = "button_importProject";
+            button_importProject.Size = new System.Drawing.Size(180, 22);
+            button_importProject.Text = "Project Collection...";
+            button_importProject.Click += button_importProject_Click;
             // 
             // button_export
             // 
@@ -381,7 +397,7 @@
             // 
             listbox_projectCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_projectCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            listbox_projectCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            listbox_projectCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             listbox_projectCollections.FormattingEnabled = true;
             listbox_projectCollections.ItemHeight = 15;
             listbox_projectCollections.Location = new System.Drawing.Point(6, 22);
@@ -459,7 +475,7 @@
             // 
             listbox_internalCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_internalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            listbox_internalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            listbox_internalCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             listbox_internalCollections.FormattingEnabled = true;
             listbox_internalCollections.ItemHeight = 15;
             listbox_internalCollections.Location = new System.Drawing.Point(6, 22);
@@ -591,14 +607,14 @@
             // button_expand
             // 
             button_expand.Name = "button_expand";
-            button_expand.Size = new System.Drawing.Size(180, 22);
+            button_expand.Size = new System.Drawing.Size(179, 22);
             button_expand.Text = "Expand All";
             button_expand.Click += button_expand_Click;
             // 
             // button_collapse
             // 
             button_collapse.Name = "button_collapse";
-            button_collapse.Size = new System.Drawing.Size(180, 22);
+            button_collapse.Size = new System.Drawing.Size(179, 22);
             button_collapse.Text = "Collapse All";
             button_collapse.Click += button_collapse_Click;
             // 
@@ -606,7 +622,7 @@
             // 
             automaticallyExpandNodesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { allLayersToolStripMenuItem, toolStripSeparator1, Layer1ToolStripMenuItem, Layer2ToolStripMenuItem, layer3ToolStripMenuItem, layer4ToolStripMenuItem });
             automaticallyExpandNodesToolStripMenuItem.Name = "automaticallyExpandNodesToolStripMenuItem";
-            automaticallyExpandNodesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            automaticallyExpandNodesToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             automaticallyExpandNodesToolStripMenuItem.Text = "Auto expand Nodes";
             // 
             // allLayersToolStripMenuItem
@@ -751,5 +767,7 @@
         private System.Windows.Forms.Panel panel_projectCollectionControls;
         private System.Windows.Forms.Button button_projectRemove;
         private System.Windows.Forms.Button button_projectAdd;
+        private System.Windows.Forms.ToolStripMenuItem button_importProject;
+        private System.Windows.Forms.ToolStripMenuItem button_importGlobal;
     }
 }

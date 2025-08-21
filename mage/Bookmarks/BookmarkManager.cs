@@ -70,14 +70,41 @@ public static class BookmarkManager
     public static bool RepointedDataCreateBookmark(int oldOffset, int newOffset)
     {
         var match = FindBookmarkCollectionWithOffset(oldOffset);
+        // No bookmark found, create new one
         if (match == null)
         {
-            // TODO:
-            // No Bookmark with this value exists, create new one?
+            if (
+                MessageBox.Show(
+                    $"No matching Bookmark found.\n\nA new Bookmark will be created automatically in your project collections.",
+                    "Bookmark found", MessageBoxButtons.OKCancel, MessageBoxIcon.Information
+                )
+                != DialogResult.OK
+            ) return false;
+
+            int collectionIndex = FindCollectionInList(ProjectCollections, "Repointed");
+            if (collectionIndex == -1)
+            {
+                ProjectCollections.Add(new()
+                {
+                    Name = "Repointed",
+                    Description = "Created Automatically\n\r\n\rContains offsets to resources that got repointed by MAGE"
+                });
+                collectionIndex = ProjectCollections.Count - 1;
+            }
+            Bookmark newBookmark = new()
+            {
+                Name = $"From: {Hex.ToString(oldOffset)}",
+                Description = $"Repointed data from {Hex.ToString(oldOffset)}",
+                Value = newOffset
+            };
+
+            ProjectCollections[collectionIndex].AddItem(newBookmark);
+
             FormBookmarks.UpdateBookmarkEditor();
             return true;
         }
-        if (match.Value.collection == Config.BookmarkCollection.Internal || match.Value.collection == Config.BookmarkCollection.Global) // Bookmark found but not in project
+        // Bookmark found but not in project
+        if (match.Value.collection == Config.BookmarkCollection.Internal || match.Value.collection == Config.BookmarkCollection.Global)
         {
             string collectionString = match.Value.collection == Config.BookmarkCollection.Internal ? "an internal" : "a global";
             if (
@@ -109,7 +136,8 @@ public static class BookmarkManager
             FormBookmarks.UpdateBookmarkEditor();
             return true;
         }
-        else // Bookmark found in project. Updating
+        // Bookmark found in project. Updating
+        else
         {
             if (
                 MessageBox.Show(

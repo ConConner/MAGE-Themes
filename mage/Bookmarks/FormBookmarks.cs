@@ -169,6 +169,7 @@ public partial class FormBookmarks : Form, Editor
     public void UpdateEditor()
     {
         LoadColletions();
+        if (LastCollectionUsed.SelectedIndex == -1) return;
         PopulateTreeViewFromCollection(CurrentCollections[LastCollectionUsed.SelectedIndex]);
     }
 
@@ -590,7 +591,7 @@ public partial class FormBookmarks : Form, Editor
         }
     }
 
-    private void button_import_Click(object sender, EventArgs e)
+    private void ImportCollection(ListBox goalBox, List<BookmarkFolder> goalCollection)
     {
         OpenFileDialog dialog = new OpenFileDialog();
         dialog.Filter = "MAGE Bookmark Collection (*.mbc)|*.mbc";
@@ -601,7 +602,7 @@ public partial class FormBookmarks : Form, Editor
             try
             {
                 BookmarkFolder collection = BookmarkManager.Deserialize(json);
-                AddCollection(collection, listbox_globalCollections, BookmarkManager.GlobalCollections);
+                AddCollection(collection, goalBox, goalCollection);
             }
             catch (Exception ex)
             {
@@ -623,6 +624,16 @@ public partial class FormBookmarks : Form, Editor
             string data = BookmarkManager.Serialize(folder);
             File.WriteAllText(dialog.FileName, data);
         }
+    }
+
+    private void button_importGlobal_Click(object sender, EventArgs e)
+    {
+        ImportCollection(listbox_globalCollections, BookmarkManager.GlobalCollections);
+    }
+
+    private void button_importProject_Click(object sender, EventArgs e)
+    {
+        ImportCollection(listbox_projectCollections, BookmarkManager.ProjectCollections);
     }
     #endregion
 
@@ -770,16 +781,14 @@ public partial class FormBookmarks : Form, Editor
     {
         BookmarkFolder newCollection = new BookmarkFolder();
         newCollection.Name = "New Collection";
-        BookmarkManager.GlobalCollections.Add(newCollection);
-        listbox_globalCollections.Items.Add(newCollection.Name);
+        AddCollection(newCollection, listbox_globalCollections, BookmarkManager.GlobalCollections);
     }
 
     private void button_projectAdd_Click(object sender, EventArgs e)
     {
         BookmarkFolder newCollection = new BookmarkFolder();
         newCollection.Name = "New Collection";
-        BookmarkManager.ProjectCollections.Add(newCollection);
-        listbox_projectCollections.Items.Add(newCollection.Name);
+        AddCollection(newCollection, listbox_projectCollections, BookmarkManager.ProjectCollections);
     }
 
     private void button_globalRemove_Click(object sender, EventArgs e)
