@@ -12,7 +12,7 @@ namespace mage.Bookmarks;
 
 public static class RecentOffsets
 {
-    public static ContextMenuStrip Context { get; } = new ContextMenuStrip() 
+    public static ContextMenuStrip Context { get; } = new ContextMenuStrip()
     {
         Renderer = new ContextMenuCustomRenderer(),
     };
@@ -44,13 +44,13 @@ public static class RecentOffsets
 
             ctx.Items.Add(button);
         }
-        //if (ctx.Items.Count >= 1) ctx.Items.Add(new ToolStripSeparator());
+        if (ctx.Items.Count >= 1) ctx.Items.Add(new ToolStripSeparator());
 
-        //ToolStripMenuItem bookmarkButton = new();
-        //bookmarkButton.Text = "Choose Bookmark...";
-        //bookmarkButton.Click += BookmarkButton_Click;
+        ToolStripMenuItem bookmarkButton = new();
+        bookmarkButton.Text = "Choose Bookmark...";
+        bookmarkButton.Click += BookmarkButton_Click;
 
-        //ctx.Items.Add(bookmarkButton);
+        ctx.Items.Add(bookmarkButton);
     }
 
     private static void RecentOffsetButtonPressed(object? sender, EventArgs e)
@@ -75,6 +75,6 @@ public static class RecentOffsets
         Bookmark bookmark = result.Tag as Bookmark;
 
         ContextTextBox!.Text = Hex.ToString(bookmark.Value);
-        Config.AddRecentOffset(Program.Config, result.FullPath, bookmark.Value);
+        Config.AddRecentOffset(Program.Config, bookmark.PathString, bookmark.Value);
     }
 }

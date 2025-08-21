@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace mage.Bookmarks;
 
-public partial class FormBookmarks : Form
+public partial class FormBookmarks : Form, Editor
 {
     // Struct for keeping track of last selected values
     public struct CollectionBox
@@ -81,10 +81,16 @@ public partial class FormBookmarks : Form
                     PopulateTreeViewFromCollection(collection);
                 }
             }
+            else if (value.SelectedIndex == -1)
+            {
+                tree_bookmarks.Nodes.Clear();
+                Program.Config.BookmarkLastUsedCollectionIndex = value.SelectedIndex;
+                DisplayBookmarkDetails(null);
+            }
         }
     }
     BookmarkFolder CurrentSelectedCollection => CurrentCollections[LastCollectionUsed.SelectedIndex];
-    bool AllowedToEdit => LastCollectionUsed.Box != listbox_internalCollections;
+    bool AllowedToEdit => LastCollectionUsed.Box != listbox_internalCollections && !isDialog;
 
     //Config
     int expandDepth = 1;
@@ -158,6 +164,21 @@ public partial class FormBookmarks : Form
             Box = FromBoxEnumToObject(Program.Config.BookmarkLastUsedCollection),
             SelectedIndex = Program.Config.BookmarkLastUsedCollectionIndex
         };
+    }
+
+    public void UpdateEditor()
+    {
+        LoadColletions();
+        PopulateTreeViewFromCollection(CurrentCollections[LastCollectionUsed.SelectedIndex]);
+    }
+
+    public static void UpdateBookmarkEditor()
+    {
+        foreach (Form f in Application.OpenForms)
+        {
+            if (f is not FormBookmarks editor) continue;
+            editor.UpdateEditor();
+        }
     }
 
     private ListBox FromBoxEnumToObject(Config.BookmarkCollection collection)
@@ -311,7 +332,7 @@ public partial class FormBookmarks : Form
             ContextMenuTreeNode = hit.Node;
             button_createFolder.Enabled = AllowedToEdit;
             button_createBookmark.Enabled = AllowedToEdit;
-            button_createCopy.Enabled = hit.Node != null;
+            button_createCopy.Enabled = hit.Node != null && !isDialog;
             button_exportFolder.Enabled = hit.Node != null && hit.Node.Tag is BookmarkFolder;
             button_delete.Enabled = hit.Node != null && AllowedToEdit;
         }
@@ -328,6 +349,17 @@ public partial class FormBookmarks : Form
 
     private void DisplayBookmarkDetails(BookmarkItem item)
     {
+        if (item == null)
+        {
+            init = true;
+            group_details.Enabled = false;
+            textBox_name.Text = String.Empty;
+            textBox_description.Text = String.Empty;
+            textBox_value.Text = String.Empty;
+            init = false;
+            return;
+        }
+
         init = true;
         bool isBookmark = item is Bookmark;
 
@@ -521,7 +553,10 @@ public partial class FormBookmarks : Form
     {
         Text = "Select Bookmark";
         statusStrip1.Visible = false;
-        newToolStripMenuItem.Visible = false;
+        button_addGlobal.Visible = false;
+        button_projectAdd.Visible = false;
+        button_globalRemove.Visible = false;
+        button_projectRemove.Visible = false;
     }
     private void tree_bookmarks_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
     {
@@ -728,6 +763,50 @@ public partial class FormBookmarks : Form
         {
             Box = copyResult.GoalListBox,
             SelectedIndex = newSelectedIndex
+        };
+    }
+
+    private void button_addGlobal_Click(object sender, EventArgs e)
+    {
+        BookmarkFolder newCollection = new BookmarkFolder();
+        newCollection.Name = "New Collection";
+        BookmarkManager.GlobalCollections.Add(newCollection);
+        listbox_globalCollections.Items.Add(newCollection.Name);
+    }
+
+    private void button_projectAdd_Click(object sender, EventArgs e)
+    {
+        BookmarkFolder newCollection = new BookmarkFolder();
+        newCollection.Name = "New Collection";
+        BookmarkManager.ProjectCollections.Add(newCollection);
+        listbox_projectCollections.Items.Add(newCollection.Name);
+    }
+
+    private void button_globalRemove_Click(object sender, EventArgs e)
+    {
+        if (listbox_globalCollections.SelectedIndex == -1) return;
+        if (MessageBox.Show("Are you sure you want to delete this collection and all Bookmarks inside?",
+            "Delete Collection", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+        BookmarkManager.GlobalCollections.RemoveAt(listbox_globalCollections.SelectedIndex);
+        listbox_globalCollections.Items.RemoveAt(listbox_globalCollections.SelectedIndex);
+        LastCollectionUsed = new()
+        {
+            Box = LastCollectionUsed.Box,
+            SelectedIndex = -1
+        };
+    }
+
+    private void button_projectRemove_Click(object sender, EventArgs e)
+    {
+        if (listbox_projectCollections.SelectedIndex == -1) return;
+        if (MessageBox.Show("Are you sure you want to delete this collection and all Bookmarks inside?",
+            "Delete Collection", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+        BookmarkManager.ProjectCollections.RemoveAt(listbox_projectCollections.SelectedIndex);
+        listbox_projectCollections.Items.RemoveAt(listbox_projectCollections.SelectedIndex);
+        LastCollectionUsed = new()
+        {
+            Box = LastCollectionUsed.Box,
+            SelectedIndex = -1
         };
     }
     #endregion

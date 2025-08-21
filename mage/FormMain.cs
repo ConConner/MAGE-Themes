@@ -447,7 +447,7 @@ namespace mage
             // save backup
             byte[] copy = ROM.BackupData();
             ROM.SaveROM(backup, false);
-            if (!ProjectConfig.IsDefault(Version.ProjectConfig)) Version.UpdateProject();
+            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0) Version.UpdateProject();
             Version.SaveProject(backup);
             ROM.RestoreData(copy);
         }
@@ -1269,7 +1269,7 @@ namespace mage
 
             // save all edited lists and compress backgrounds
             ROM.SaveROM(filename, true);
-            if (!ProjectConfig.IsDefault(Version.ProjectConfig)) Version.UpdateProject();
+            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0) Version.UpdateProject();
             bool newProject = Version.SaveProject(filename);
             if (newProject)
             {
@@ -1347,24 +1347,24 @@ namespace mage
             splash.Dispose();
             groupBox_location.Enabled = true;
         }
-		
-		// Look for Input Mono to use in clipdata list; default to Consolas if absent - alexman25
-		public Font MonoFont(float size)
-		{
-			InstalledFontCollection installedFonts = new InstalledFontCollection();
-			bool Check4Input = installedFonts.Families.Any(f =>
-				f.Name.Equals("Input", StringComparison.OrdinalIgnoreCase));
-			if (Check4Input)
-			{
-				// We in biz gang
-				return new Font("Input", size, FontStyle.Regular);
-			}
-			else
-			{
-				// Consolas if no Input
-				return new Font("Consolas", size, FontStyle.Regular);
-			}
-		}
+
+        // Look for Input Mono to use in clipdata list; default to Consolas if absent - alexman25
+        public Font MonoFont(float size)
+        {
+            InstalledFontCollection installedFonts = new InstalledFontCollection();
+            bool Check4Input = installedFonts.Families.Any(f =>
+                f.Name.Equals("Input", StringComparison.OrdinalIgnoreCase));
+            if (Check4Input)
+            {
+                // We in biz gang
+                return new Font("Input", size, FontStyle.Regular);
+            }
+            else
+            {
+                // Consolas if no Input
+                return new Font("Consolas", size, FontStyle.Regular);
+            }
+        }
         private void InitializePart2()
         {
             // room view
@@ -1385,8 +1385,8 @@ namespace mage
             }
 
             // load clipdata list
-			comboBox_clipdata.Font = MonoFont(8f);		// Monospaced typeface looks better for this list - alexman25
-			comboBox_clipdata.DropDownWidth = 300;		// It's a bit wider, though, so widen the list to compensate
+            comboBox_clipdata.Font = MonoFont(8f);      // Monospaced typeface looks better for this list - alexman25
+            comboBox_clipdata.DropDownWidth = 300;		// It's a bit wider, though, so widen the list to compensate
             string[] clipdata = Version.Clipdata;
             char[] sep = new char[] { ' ' };
             comboBox_clipdata.Items.Clear();
@@ -1436,6 +1436,7 @@ namespace mage
             menuItem_defaultView.Enabled = val;
             menuItem_numberBase.Enabled = val;
             menuItem_tooltips.Enabled = val;
+            menuItem_bookmarks.Enabled = val;
 
             // handle each status strip item seperately
             statusLabel_clip.Enabled = val;
@@ -2955,6 +2956,6 @@ namespace mage
         private void flipRoomVToolStripMenuItem_Click(object sender, EventArgs e)
             => PerformAction(new FlipRoom(room, false, true));
 
-        
+
     }
 }

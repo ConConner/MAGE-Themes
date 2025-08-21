@@ -43,6 +43,9 @@
             imageList_treeIcons = new System.Windows.Forms.ImageList(components);
             listbox_globalCollections = new System.Windows.Forms.ListBox();
             group_globalCollections = new System.Windows.Forms.GroupBox();
+            panel_globalCollectionControls = new System.Windows.Forms.Panel();
+            button_globalRemove = new System.Windows.Forms.Button();
+            button_addGlobal = new System.Windows.Forms.Button();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             spring = new System.Windows.Forms.ToolStripStatusLabel();
             button_import = new System.Windows.Forms.ToolStripDropDownButton();
@@ -55,6 +58,9 @@
             panel_projectCollections = new Controls.ExtendedPanel();
             group_projectCollections = new System.Windows.Forms.GroupBox();
             listbox_projectCollections = new System.Windows.Forms.ListBox();
+            panel_projectCollectionControls = new System.Windows.Forms.Panel();
+            button_projectRemove = new System.Windows.Forms.Button();
+            button_projectAdd = new System.Windows.Forms.Button();
             panel_globalCollections = new Controls.ExtendedPanel();
             panel_internalCollections = new Controls.ExtendedPanel();
             group_internalCollections = new System.Windows.Forms.GroupBox();
@@ -67,9 +73,6 @@
             textBox_name = new Theming.CustomControls.FlatTextBox();
             label_name = new System.Windows.Forms.Label();
             menuStrip1 = new System.Windows.Forms.MenuStrip();
-            newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            glToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            projectBookmarkCollectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             button_expand = new System.Windows.Forms.ToolStripMenuItem();
             button_collapse = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +86,7 @@
             context_listBox = new System.Windows.Forms.ContextMenuStrip(components);
             context_treeview.SuspendLayout();
             group_globalCollections.SuspendLayout();
+            panel_globalCollectionControls.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel_main.SuspendLayout();
             panel_bookmarks.SuspendLayout();
@@ -90,6 +94,7 @@
             panel_collections.SuspendLayout();
             panel_projectCollections.SuspendLayout();
             group_projectCollections.SuspendLayout();
+            panel_projectCollectionControls.SuspendLayout();
             panel_globalCollections.SuspendLayout();
             panel_internalCollections.SuspendLayout();
             group_internalCollections.SuspendLayout();
@@ -113,7 +118,7 @@
             treeNode1.Text = "Node0";
             tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode1 });
             tree_bookmarks.SelectedImageIndex = 0;
-            tree_bookmarks.Size = new System.Drawing.Size(371, 380);
+            tree_bookmarks.Size = new System.Drawing.Size(249, 378);
             tree_bookmarks.TabIndex = 0;
             tree_bookmarks.ItemDrag += tree_bookmarks_ItemDrag;
             tree_bookmarks.AfterSelect += tree_bookmarks_AfterSelect;
@@ -191,18 +196,21 @@
             // 
             listbox_globalCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_globalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
+            listbox_globalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             listbox_globalCollections.FormattingEnabled = true;
             listbox_globalCollections.ItemHeight = 15;
             listbox_globalCollections.Location = new System.Drawing.Point(6, 22);
             listbox_globalCollections.Name = "listbox_globalCollections";
-            listbox_globalCollections.Size = new System.Drawing.Size(152, 135);
+            listbox_globalCollections.Size = new System.Drawing.Size(152, 112);
             listbox_globalCollections.TabIndex = 1;
             listbox_globalCollections.SelectedIndexChanged += listbox_globalCollections_SelectedIndexChanged;
             // 
             // group_globalCollections
             // 
             group_globalCollections.Controls.Add(listbox_globalCollections);
+            group_globalCollections.Controls.Add(panel_globalCollectionControls);
             group_globalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
+            group_globalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             group_globalCollections.Location = new System.Drawing.Point(0, 3);
             group_globalCollections.Name = "group_globalCollections";
             group_globalCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
@@ -211,19 +219,51 @@
             group_globalCollections.TabStop = false;
             group_globalCollections.Text = "Global Collections";
             // 
+            // panel_globalCollectionControls
+            // 
+            panel_globalCollectionControls.Controls.Add(button_globalRemove);
+            panel_globalCollectionControls.Controls.Add(button_addGlobal);
+            panel_globalCollectionControls.Dock = System.Windows.Forms.DockStyle.Bottom;
+            panel_globalCollectionControls.Location = new System.Drawing.Point(6, 134);
+            panel_globalCollectionControls.Name = "panel_globalCollectionControls";
+            panel_globalCollectionControls.Size = new System.Drawing.Size(152, 23);
+            panel_globalCollectionControls.TabIndex = 2;
+            // 
+            // button_globalRemove
+            // 
+            button_globalRemove.Image = Properties.Resources.delete;
+            button_globalRemove.Location = new System.Drawing.Point(25, 0);
+            button_globalRemove.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            button_globalRemove.Name = "button_globalRemove";
+            button_globalRemove.Size = new System.Drawing.Size(23, 23);
+            button_globalRemove.TabIndex = 4;
+            button_globalRemove.UseVisualStyleBackColor = true;
+            button_globalRemove.Click += button_globalRemove_Click;
+            // 
+            // button_addGlobal
+            // 
+            button_addGlobal.Image = Properties.Resources.toolbar_add;
+            button_addGlobal.Location = new System.Drawing.Point(0, 0);
+            button_addGlobal.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            button_addGlobal.Name = "button_addGlobal";
+            button_addGlobal.Size = new System.Drawing.Size(23, 23);
+            button_addGlobal.TabIndex = 3;
+            button_addGlobal.UseVisualStyleBackColor = true;
+            button_addGlobal.Click += button_addGlobal_Click;
+            // 
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { spring, button_import, button_export });
-            statusStrip1.Location = new System.Drawing.Point(0, 461);
+            statusStrip1.Location = new System.Drawing.Point(0, 459);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(756, 22);
+            statusStrip1.Size = new System.Drawing.Size(634, 22);
             statusStrip1.TabIndex = 3;
             statusStrip1.Text = "statusStrip1";
             // 
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(649, 17);
+            spring.Size = new System.Drawing.Size(527, 17);
             spring.Spring = true;
             // 
             // button_import
@@ -257,7 +297,7 @@
             panel_main.Location = new System.Drawing.Point(0, 24);
             panel_main.Name = "panel_main";
             panel_main.Padding = new System.Windows.Forms.Padding(6);
-            panel_main.Size = new System.Drawing.Size(756, 437);
+            panel_main.Size = new System.Drawing.Size(634, 435);
             panel_main.TabIndex = 4;
             // 
             // panel_bookmarks
@@ -267,7 +307,7 @@
             panel_bookmarks.Location = new System.Drawing.Point(167, 6);
             panel_bookmarks.Name = "panel_bookmarks";
             panel_bookmarks.Padding = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            panel_bookmarks.Size = new System.Drawing.Size(389, 425);
+            panel_bookmarks.Size = new System.Drawing.Size(267, 423);
             panel_bookmarks.TabIndex = 5;
             // 
             // group_bookmarks
@@ -277,7 +317,7 @@
             group_bookmarks.Dock = System.Windows.Forms.DockStyle.Fill;
             group_bookmarks.Location = new System.Drawing.Point(6, 0);
             group_bookmarks.Name = "group_bookmarks";
-            group_bookmarks.Size = new System.Drawing.Size(377, 425);
+            group_bookmarks.Size = new System.Drawing.Size(255, 423);
             group_bookmarks.TabIndex = 3;
             group_bookmarks.TabStop = false;
             group_bookmarks.Text = "Bookmarks";
@@ -297,7 +337,7 @@
             textBox_search.ReadOnly = false;
             textBox_search.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_search.SelectionStart = 0;
-            textBox_search.Size = new System.Drawing.Size(371, 23);
+            textBox_search.Size = new System.Drawing.Size(249, 23);
             textBox_search.TabIndex = 1;
             textBox_search.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_search.ValueBox = false;
@@ -311,7 +351,7 @@
             panel_collections.Dock = System.Windows.Forms.DockStyle.Left;
             panel_collections.Location = new System.Drawing.Point(6, 6);
             panel_collections.Name = "panel_collections";
-            panel_collections.Size = new System.Drawing.Size(161, 425);
+            panel_collections.Size = new System.Drawing.Size(161, 423);
             panel_collections.TabIndex = 6;
             // 
             // panel_projectCollections
@@ -320,17 +360,19 @@
             panel_projectCollections.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_projectCollections.Location = new System.Drawing.Point(0, 257);
             panel_projectCollections.Name = "panel_projectCollections";
-            panel_projectCollections.Size = new System.Drawing.Size(161, 168);
+            panel_projectCollections.Size = new System.Drawing.Size(161, 166);
             panel_projectCollections.TabIndex = 2;
             // 
             // group_projectCollections
             // 
             group_projectCollections.Controls.Add(listbox_projectCollections);
+            group_projectCollections.Controls.Add(panel_projectCollectionControls);
             group_projectCollections.Dock = System.Windows.Forms.DockStyle.Fill;
+            group_projectCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             group_projectCollections.Location = new System.Drawing.Point(0, 0);
             group_projectCollections.Name = "group_projectCollections";
             group_projectCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
-            group_projectCollections.Size = new System.Drawing.Size(161, 168);
+            group_projectCollections.Size = new System.Drawing.Size(161, 166);
             group_projectCollections.TabIndex = 3;
             group_projectCollections.TabStop = false;
             group_projectCollections.Text = "Project Collections";
@@ -339,13 +381,46 @@
             // 
             listbox_projectCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_projectCollections.Dock = System.Windows.Forms.DockStyle.Fill;
+            listbox_projectCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             listbox_projectCollections.FormattingEnabled = true;
             listbox_projectCollections.ItemHeight = 15;
             listbox_projectCollections.Location = new System.Drawing.Point(6, 22);
             listbox_projectCollections.Name = "listbox_projectCollections";
-            listbox_projectCollections.Size = new System.Drawing.Size(152, 143);
+            listbox_projectCollections.Size = new System.Drawing.Size(152, 118);
             listbox_projectCollections.TabIndex = 1;
             listbox_projectCollections.SelectedIndexChanged += listbox_projectCollections_SelectedIndexChanged;
+            // 
+            // panel_projectCollectionControls
+            // 
+            panel_projectCollectionControls.Controls.Add(button_projectRemove);
+            panel_projectCollectionControls.Controls.Add(button_projectAdd);
+            panel_projectCollectionControls.Dock = System.Windows.Forms.DockStyle.Bottom;
+            panel_projectCollectionControls.Location = new System.Drawing.Point(6, 140);
+            panel_projectCollectionControls.Name = "panel_projectCollectionControls";
+            panel_projectCollectionControls.Size = new System.Drawing.Size(152, 23);
+            panel_projectCollectionControls.TabIndex = 3;
+            // 
+            // button_projectRemove
+            // 
+            button_projectRemove.Image = Properties.Resources.delete;
+            button_projectRemove.Location = new System.Drawing.Point(25, 0);
+            button_projectRemove.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            button_projectRemove.Name = "button_projectRemove";
+            button_projectRemove.Size = new System.Drawing.Size(23, 23);
+            button_projectRemove.TabIndex = 4;
+            button_projectRemove.UseVisualStyleBackColor = true;
+            button_projectRemove.Click += button_projectRemove_Click;
+            // 
+            // button_projectAdd
+            // 
+            button_projectAdd.Image = Properties.Resources.toolbar_add;
+            button_projectAdd.Location = new System.Drawing.Point(0, 0);
+            button_projectAdd.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            button_projectAdd.Name = "button_projectAdd";
+            button_projectAdd.Size = new System.Drawing.Size(23, 23);
+            button_projectAdd.TabIndex = 3;
+            button_projectAdd.UseVisualStyleBackColor = true;
+            button_projectAdd.Click += button_projectAdd_Click;
             // 
             // panel_globalCollections
             // 
@@ -371,6 +446,7 @@
             // 
             group_internalCollections.Controls.Add(listbox_internalCollections);
             group_internalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
+            group_internalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             group_internalCollections.Location = new System.Drawing.Point(0, 0);
             group_internalCollections.Name = "group_internalCollections";
             group_internalCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
@@ -383,6 +459,7 @@
             // 
             listbox_internalCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_internalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
+            listbox_internalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             listbox_internalCollections.FormattingEnabled = true;
             listbox_internalCollections.ItemHeight = 15;
             listbox_internalCollections.Location = new System.Drawing.Point(6, 22);
@@ -400,9 +477,9 @@
             group_details.Controls.Add(textBox_name);
             group_details.Controls.Add(label_name);
             group_details.Dock = System.Windows.Forms.DockStyle.Right;
-            group_details.Location = new System.Drawing.Point(556, 6);
+            group_details.Location = new System.Drawing.Point(434, 6);
             group_details.Name = "group_details";
-            group_details.Size = new System.Drawing.Size(194, 425);
+            group_details.Size = new System.Drawing.Size(194, 423);
             group_details.TabIndex = 4;
             group_details.TabStop = false;
             group_details.Text = "Details";
@@ -422,7 +499,7 @@
             textBox_description.ReadOnly = false;
             textBox_description.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_description.SelectionStart = 0;
-            textBox_description.Size = new System.Drawing.Size(182, 294);
+            textBox_description.Size = new System.Drawing.Size(182, 292);
             textBox_description.TabIndex = 5;
             textBox_description.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_description.ValueBox = false;
@@ -497,31 +574,12 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { newToolStripMenuItem, viewToolStripMenuItem });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { viewToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new System.Drawing.Size(756, 24);
+            menuStrip1.Size = new System.Drawing.Size(634, 24);
             menuStrip1.TabIndex = 5;
             menuStrip1.Text = "menuStrip1";
-            // 
-            // newToolStripMenuItem
-            // 
-            newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { glToolStripMenuItem, projectBookmarkCollectionToolStripMenuItem });
-            newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
-            newToolStripMenuItem.Text = "New";
-            // 
-            // glToolStripMenuItem
-            // 
-            glToolStripMenuItem.Name = "glToolStripMenuItem";
-            glToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
-            glToolStripMenuItem.Text = "Global Bookmark Collection";
-            // 
-            // projectBookmarkCollectionToolStripMenuItem
-            // 
-            projectBookmarkCollectionToolStripMenuItem.Name = "projectBookmarkCollectionToolStripMenuItem";
-            projectBookmarkCollectionToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
-            projectBookmarkCollectionToolStripMenuItem.Text = "Project Bookmark Collection";
             // 
             // viewToolStripMenuItem
             // 
@@ -533,14 +591,14 @@
             // button_expand
             // 
             button_expand.Name = "button_expand";
-            button_expand.Size = new System.Drawing.Size(179, 22);
+            button_expand.Size = new System.Drawing.Size(180, 22);
             button_expand.Text = "Expand All";
             button_expand.Click += button_expand_Click;
             // 
             // button_collapse
             // 
             button_collapse.Name = "button_collapse";
-            button_collapse.Size = new System.Drawing.Size(179, 22);
+            button_collapse.Size = new System.Drawing.Size(180, 22);
             button_collapse.Text = "Collapse All";
             button_collapse.Click += button_collapse_Click;
             // 
@@ -548,7 +606,7 @@
             // 
             automaticallyExpandNodesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { allLayersToolStripMenuItem, toolStripSeparator1, Layer1ToolStripMenuItem, Layer2ToolStripMenuItem, layer3ToolStripMenuItem, layer4ToolStripMenuItem });
             automaticallyExpandNodesToolStripMenuItem.Name = "automaticallyExpandNodesToolStripMenuItem";
-            automaticallyExpandNodesToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            automaticallyExpandNodesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             automaticallyExpandNodesToolStripMenuItem.Text = "Auto expand Nodes";
             // 
             // allLayersToolStripMenuItem
@@ -606,16 +664,18 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(756, 483);
+            ClientSize = new System.Drawing.Size(634, 481);
             Controls.Add(panel_main);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
+            MinimumSize = new System.Drawing.Size(650, 520);
             Name = "FormBookmarks";
             Text = "Bookmarks";
             context_treeview.ResumeLayout(false);
             group_globalCollections.ResumeLayout(false);
+            panel_globalCollectionControls.ResumeLayout(false);
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             panel_main.ResumeLayout(false);
@@ -624,6 +684,7 @@
             panel_collections.ResumeLayout(false);
             panel_projectCollections.ResumeLayout(false);
             group_projectCollections.ResumeLayout(false);
+            panel_projectCollectionControls.ResumeLayout(false);
             panel_globalCollections.ResumeLayout(false);
             panel_internalCollections.ResumeLayout(false);
             group_internalCollections.ResumeLayout(false);
@@ -656,9 +717,6 @@
         private System.Windows.Forms.GroupBox group_projectCollections;
         private System.Windows.Forms.GroupBox group_internalCollections;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem glToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem projectBookmarkCollectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem automaticallyExpandNodesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem allLayersToolStripMenuItem;
@@ -687,5 +745,11 @@
         public System.Windows.Forms.ListBox listbox_globalCollections;
         public System.Windows.Forms.ListBox listbox_projectCollections;
         public System.Windows.Forms.ListBox listbox_internalCollections;
+        private System.Windows.Forms.Panel panel_globalCollectionControls;
+        private System.Windows.Forms.Button button_globalRemove;
+        private System.Windows.Forms.Button button_addGlobal;
+        private System.Windows.Forms.Panel panel_projectCollectionControls;
+        private System.Windows.Forms.Button button_projectRemove;
+        private System.Windows.Forms.Button button_projectAdd;
     }
 }

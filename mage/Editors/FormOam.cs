@@ -16,6 +16,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Text.Json;
 using System.Runtime.InteropServices;
+using mage.Bookmarks;
 
 namespace mage;
 
@@ -336,8 +337,18 @@ public partial class FormOam : Form
         // Display message with the new offset
         if (writeOffset != originalOamOffset)
         {
-            MessageBox.Show($"OAM data was repointed.\nNew OAM offset: {Hex.ToString(writeOffset)}", "OAM Repointed",
+            if (
+                MessageBox.Show(
+                    "OAM data needs to be repointed.\n\nDo you want to save the new location as a Bookmark?",
+                    "Repointing required", MessageBoxButtons.YesNo, MessageBoxIcon.Information
+                )
+                != DialogResult.Yes
+                || !BookmarkManager.RepointedDataCreateBookmark(originalOamOffset, writeOffset)
+            )
+            {
+                MessageBox.Show($"OAM data was repointed.\nNew OAM offset: {Hex.ToString(writeOffset)}", "OAM Repointed",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
             textBox_oamOffset.Text = Hex.ToString(writeOffset);
             SetOAM();
@@ -1274,7 +1285,7 @@ public partial class FormOam : Form
 
         File.WriteAllText(saveASM.FileName, oam.ToASM());
     }
-    
+
     void button_importOam_Click(object sender, EventArgs e)
     {
         OpenFileDialog openOAM = new OpenFileDialog();
