@@ -120,7 +120,7 @@
             treeNode1.Text = "Node0";
             tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode1 });
             tree_bookmarks.SelectedImageIndex = 0;
-            tree_bookmarks.Size = new System.Drawing.Size(249, 378);
+            tree_bookmarks.Size = new System.Drawing.Size(327, 378);
             tree_bookmarks.TabIndex = 0;
             tree_bookmarks.ItemDrag += tree_bookmarks_ItemDrag;
             tree_bookmarks.AfterSelect += tree_bookmarks_AfterSelect;
@@ -258,14 +258,14 @@
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { spring, button_import, button_export });
             statusStrip1.Location = new System.Drawing.Point(0, 459);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(634, 22);
+            statusStrip1.Size = new System.Drawing.Size(712, 22);
             statusStrip1.TabIndex = 3;
             statusStrip1.Text = "statusStrip1";
             // 
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(527, 17);
+            spring.Size = new System.Drawing.Size(605, 17);
             spring.Spring = true;
             // 
             // button_import
@@ -282,14 +282,14 @@
             // button_importGlobal
             // 
             button_importGlobal.Name = "button_importGlobal";
-            button_importGlobal.Size = new System.Drawing.Size(180, 22);
+            button_importGlobal.Size = new System.Drawing.Size(177, 22);
             button_importGlobal.Text = "Global Collection...";
             button_importGlobal.Click += button_importGlobal_Click;
             // 
             // button_importProject
             // 
             button_importProject.Name = "button_importProject";
-            button_importProject.Size = new System.Drawing.Size(180, 22);
+            button_importProject.Size = new System.Drawing.Size(177, 22);
             button_importProject.Text = "Project Collection...";
             button_importProject.Click += button_importProject_Click;
             // 
@@ -313,7 +313,7 @@
             panel_main.Location = new System.Drawing.Point(0, 24);
             panel_main.Name = "panel_main";
             panel_main.Padding = new System.Windows.Forms.Padding(6);
-            panel_main.Size = new System.Drawing.Size(634, 435);
+            panel_main.Size = new System.Drawing.Size(712, 435);
             panel_main.TabIndex = 4;
             // 
             // panel_bookmarks
@@ -323,7 +323,7 @@
             panel_bookmarks.Location = new System.Drawing.Point(167, 6);
             panel_bookmarks.Name = "panel_bookmarks";
             panel_bookmarks.Padding = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            panel_bookmarks.Size = new System.Drawing.Size(267, 423);
+            panel_bookmarks.Size = new System.Drawing.Size(345, 423);
             panel_bookmarks.TabIndex = 5;
             // 
             // group_bookmarks
@@ -333,7 +333,7 @@
             group_bookmarks.Dock = System.Windows.Forms.DockStyle.Fill;
             group_bookmarks.Location = new System.Drawing.Point(6, 0);
             group_bookmarks.Name = "group_bookmarks";
-            group_bookmarks.Size = new System.Drawing.Size(255, 423);
+            group_bookmarks.Size = new System.Drawing.Size(333, 423);
             group_bookmarks.TabIndex = 3;
             group_bookmarks.TabStop = false;
             group_bookmarks.Text = "Bookmarks";
@@ -353,7 +353,7 @@
             textBox_search.ReadOnly = false;
             textBox_search.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_search.SelectionStart = 0;
-            textBox_search.Size = new System.Drawing.Size(249, 23);
+            textBox_search.Size = new System.Drawing.Size(327, 23);
             textBox_search.TabIndex = 1;
             textBox_search.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_search.ValueBox = false;
@@ -493,7 +493,7 @@
             group_details.Controls.Add(textBox_name);
             group_details.Controls.Add(label_name);
             group_details.Dock = System.Windows.Forms.DockStyle.Right;
-            group_details.Location = new System.Drawing.Point(434, 6);
+            group_details.Location = new System.Drawing.Point(512, 6);
             group_details.Name = "group_details";
             group_details.Size = new System.Drawing.Size(194, 423);
             group_details.TabIndex = 4;
@@ -593,7 +593,7 @@
             menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { viewToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new System.Drawing.Size(634, 24);
+            menuStrip1.Size = new System.Drawing.Size(712, 24);
             menuStrip1.TabIndex = 5;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -680,7 +680,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(634, 481);
+            ClientSize = new System.Drawing.Size(712, 481);
             Controls.Add(panel_main);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);

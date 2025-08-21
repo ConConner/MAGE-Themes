@@ -87,7 +87,7 @@ public static class BookmarkManager
                 ProjectCollections.Add(new()
                 {
                     Name = "Repointed",
-                    Description = "Created Automatically\n\r\n\rContains offsets to resources that got repointed by MAGE"
+                    Description = "[Created Automatically]\n\r\n\rContains offsets to resources that got repointed by MAGE."
                 });
                 collectionIndex = ProjectCollections.Count - 1;
             }

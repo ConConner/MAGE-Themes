@@ -346,7 +346,7 @@ public partial class FormOam : Form
                 || !BookmarkManager.RepointedDataCreateBookmark(originalOamOffset, writeOffset)
             )
             {
-                MessageBox.Show($"OAM data was repointed.\nNew OAM offset: {Hex.ToString(writeOffset)}", "OAM Repointed",
+                MessageBox.Show($"OAM data was repointed to: {Hex.ToString(writeOffset)}", "Repointed OAM",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
