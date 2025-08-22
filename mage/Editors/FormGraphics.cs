@@ -1,4 +1,5 @@
-﻿using mage.Theming;
+﻿using mage.Bookmarks;
+using mage.Theming;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -82,7 +83,7 @@ namespace mage
                 }
                 catch
                 {
-                    MessageBox.Show("There are no compressed graphics at the given offset.", 
+                    MessageBox.Show("There are no compressed graphics at the given offset.",
                         "Compressed graphics error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -212,6 +213,15 @@ namespace mage
 
             if (prevOffset != gfxObject.Offset)
             {
+                if (
+                    MessageBox.Show(
+                        "Graphics need to be repointed.\n\nDo you want to save the new location as a Bookmark?",
+                        "Repointing required", MessageBoxButtons.YesNo, MessageBoxIcon.Information
+                    )
+                    == DialogResult.Yes
+                    && BookmarkManager.RepointedDataCreateBookmark(prevOffset, gfxObject.Offset)
+                ) return;
+
                 string message = "Graphics were repointed to " + Hex.ToString(gfxObject.Offset);
                 MessageBox.Show(message, "Repointed Graphics", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

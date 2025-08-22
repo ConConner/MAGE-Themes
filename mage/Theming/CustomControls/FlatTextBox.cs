@@ -122,14 +122,35 @@ public partial class FlatTextBox : UserControl
         border.Width--; border.Height--;
         Pen p = new Pen(BorderColor);
         e.Graphics.DrawRectangle(p, border);
+        p.Dispose();
     }
 
-    protected override void OnSizeChanged(EventArgs e)
+    protected override void OnResize(EventArgs e)
     {
-        base.OnSizeChanged(e);
+        base.OnResize(e);
 
-        if (Multiline) return;
-        else Height = 23;
+        int x = DisplayBorder ? 3 : 0;
+        int y = 4;
+        if (Multiline)
+        {
+            textBox.SetBounds(x, y,
+                              ClientSize.Width - 2 * x,
+                              ClientSize.Height - 2 * y);
+        }
+        else
+        {
+            Height = 23;
+            textBox.SetBounds(x, y,
+                              ClientSize.Width - 2 * x,
+                              textBox.PreferredHeight);
+        }
+
+        if (Parent != null)
+        {
+            Rectangle r = Bounds;
+            r.Inflate(2, 2);
+            Parent.Invalidate(r, true);
+        }
     }
 
     private void FlatTextBox_MouseDown(object sender, MouseEventArgs e)

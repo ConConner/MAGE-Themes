@@ -80,13 +80,16 @@
     <Setting Name="legacyEditors" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="globalBookmarks" Type="System.String" Scope="User">
+    <Setting Name="ZMglobalBookmarks" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="UpgradeRequired" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="updateCheckIgnoreVersions" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MFglobalBookmarks" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

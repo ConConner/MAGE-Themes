@@ -1,0 +1,78 @@
+TODO:
+- Write OAM Editor documentation
+- Write Bookmark documentation / Recent Offset Documentation
+
+- move OAM out of experimental
+- Fix help theming with light mode colors
+
+IDEAS:
+- Data-driven clipdata lists
+
+- More built-in patches/hex tweaks
+
+- Counter-patches for built-in patches
+
+- Expanded physics editor
+
+- In-app .proj file editor (or just a button to open and/or refresh it automatically)
+
+- Links to external resources in help tab (The wiki, MAGconst, Captain Glitch and Conner's MAGE tutorials)
+- Make new MAGE YouTube tutorials to fill in gaps
+
+? Fix test room button switching area to Tourian if the area list is selected (if can get unicode to work I could just put a zero width space before its name :smiling_imp:) (You can fix this yourself with custom area names)
+
+- Store/load clipboard contents from files for easy prefabs
+
+- Make standalone programs for new editors; adapted to outdated .net versions (Low priority; I think most people can find another way around it)
+
+- Make a full options window so that it's not all stuffed into a dropdown menu
+
+- Make "HTML" box get auto-selected and fully highlighted in palette editor after clicking a palette color, for easier copy-pasting
+
+- Raname "Kraid" area to "Karid" if system date is April 01 (Easter eggs are fun but probably not worth the potential performance impact)
+
+- Integrated hex editor (Also low priority)
+
+- More tile brushes for level editor (fill tool, rectangle tool, randomized tile)
+
+- Button to print a .txt map of ROM contents (where MAGE has repointed everything, or declared freespace, etc.)
+
+- Color doors red in the room if not overlapping door transition clipdata
+
+- Button to auto-update the top five tile rows in every tileset to match current CRE gfx and tilemap
+
+- Data-driven area names
+
+- User-defined minimap autotiling
+
+- Ability to add entries to text lists
+
+- Improved minimap tile builder (ideally it should be able to create any vanilla tile)
+
+- Font support for themes (that's a whole lot of busywork for something no one gives a shit about :XD:)
+
+- The minimap editor erroneously mirrors and flips unexplored tiles in "downloaded" and "start" view modes as if they were explored
+
+- Better error handling for project files
+
+- ARMIPS integration; soft-patching for test files, and an additional "export" file option to create a fully patched output ROM (Definitely unnecessary; just something to do when there's nothing else left to do if MAGE 2 isn't out yet)
+
+- Decimal mode support for door ID overlays
+
+- Reduced error-handling option (sometimes things break in ways that aren't harmful, but MAGE stops you from using the related editor so you can't really fix it easily)
+
+- User-defined tileset autotiling
+
+- In-editor list of important graphics offsets; updates on repoint (stored to .proj?) ((actually, looks like Conner might already be working on something better?))
+
+- Red outline instead of green for sprites placed in positions where they won't spawn properly (this would be annoying to implement because it'd be too difficult to read that behavior from ROM, but hard-coding it will create ambiguity with ASM patches). Maybe make it user-defined? 
+
+- Integrated credits editor
+
+- Better support for randomized ROMs (useless; I probably won't actually do this)
+
+- Region support (somewhat big ask, but not useless; I might try this)
+
+- Editor translation (:grimacing: It might be less total work to just learn English)
+
+- Discord rich presence integration (but why? but why not?)

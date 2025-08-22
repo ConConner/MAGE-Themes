@@ -106,6 +106,10 @@ namespace mage
         }
         private bool ctxtMenuOpen = false;
 
+        // Temporary Bookmarks
+        private List<BookmarkFolder> ZMGlobalBookmarks { get; set; }
+        private List<BookmarkFolder> MFGlobalBookmarks { get; set; }
+
         #endregion
 
         public FormMain()
@@ -117,7 +121,6 @@ namespace mage
             DisplayRecentFiles();
             InitializeSettings();
             PopulateThemeList(null, null);
-            LoadInternalBookmarks();
             ShowSplash();
 
             roomView.Scrolled += roomView_Scrolled;
@@ -240,8 +243,10 @@ namespace mage
             Sound.SoundPackName = Settings.Default.soundPackName;
 
             // Bookmarks
-            try { BookmarkManager.GlobalCollections = BookmarkManager.DeserializeCollections(Settings.Default.globalBookmarks); }
-            catch { BookmarkManager.GlobalCollections = new(); }
+            try { ZMGlobalBookmarks = BookmarkManager.DeserializeCollections(Settings.Default.ZMglobalBookmarks); }
+            catch { ZMGlobalBookmarks = new(); }
+            try { MFGlobalBookmarks = BookmarkManager.DeserializeCollections(Settings.Default.MFglobalBookmarks); }
+            catch { MFGlobalBookmarks = new(); }
         }
 
         private void SaveSettings()
@@ -284,17 +289,29 @@ namespace mage
             Settings.Default.soundPackName = Sound.SoundPackName;
 
             //Bookmarks
-            Settings.Default.globalBookmarks = BookmarkManager.SerializeCollections(BookmarkManager.GlobalCollections);
+            Settings.Default.ZMglobalBookmarks = BookmarkManager.SerializeCollections(ZMGlobalBookmarks);
+            Settings.Default.MFglobalBookmarks = BookmarkManager.SerializeCollections(MFGlobalBookmarks);
 
             Settings.Default.Save();
         }
 
         private void LoadInternalBookmarks()
         {
-            if (Version.IsMF) return;
+            if (Version.IsMF)
+            {
+                BookmarkManager.InternalCollections = new();
+                return;
+            }
 
-            string json = LoadAssemblyResourceAsString("mage.Resources.Bookmarks.ZM_U_OAM_Bookmarks.mbc");
-            BookmarkManager.InternalCollections = new() { BookmarkManager.Deserialize(json) };
+            string gfx = LoadAssemblyResourceAsString("mage.Resources.Bookmarks.ZM.ZM_U_GFX_Bookmarks.mbc");
+            string pal = LoadAssemblyResourceAsString("mage.Resources.Bookmarks.ZM.ZM_U_PAL_Bookmarks.mbc");
+            string oam = LoadAssemblyResourceAsString("mage.Resources.Bookmarks.ZM.ZM_U_OAM_Bookmarks.mbc");
+            BookmarkManager.InternalCollections = new()
+            {
+                BookmarkManager.Deserialize(gfx),
+                BookmarkManager.Deserialize(pal),
+                BookmarkManager.Deserialize(oam)
+            };
         }
 
         public static string LoadAssemblyResourceAsString(string resourceName)
@@ -447,6 +464,7 @@ namespace mage
             // save backup
             byte[] copy = ROM.BackupData();
             ROM.SaveROM(backup, false);
+            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0) Version.UpdateProject();
             Version.SaveProject(backup);
             ROM.RestoreData(copy);
         }
@@ -702,10 +720,10 @@ namespace mage
             if (!FindOpenForm(typeof(FormOam), false))
             {
                 FormOam form;
-                int gfxOffset = room.tileset.RLEgfx.Offset;
-                int palOffset = room.tileset.palette.Offset + 0x20;
-                if (!Version.IsMF) form = new FormOam(this, 0x2C4194, 0x2C4780, 0x2C4A68);
-                else form = new FormOam(this, 0x2E926C, 0x2EAA6C, 0x2CD5C4, false);
+                int OamOffset = 0;
+                Version.TryGetPrimarySpriteOAM(0x12, out OamOffset); // Funnily enough the first enemy in Fusion and Zm are both sprite ID 12
+                if (!Version.IsMF) form = new FormOam(this, 0x2C4194, 0x2C4780, OamOffset);
+                else form = new FormOam(this, 0x2E926C, 0x2EAA6C, OamOffset, false);
                 form.Show();
             }
         }
@@ -1268,11 +1286,12 @@ namespace mage
 
             // save all edited lists and compress backgrounds
             ROM.SaveROM(filename, true);
+            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0) Version.UpdateProject();
             bool newProject = Version.SaveProject(filename);
             if (newProject)
             {
                 string message = "Project saved to " + Path.ChangeExtension(filename, ".proj");
-                message += "\n\nDo not modify or erase this file. It is necessary for tracking added data.";
+                message += "\n\nDo not modify or erase this file. It is necessary for tracking added data. MAGE may no longer work if it is missing.";
                 MessageBox.Show(message, "New Project", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
@@ -1327,6 +1346,10 @@ namespace mage
             comboBox_area.Items.Clear();
             comboBox_area.Items.AddRange(areaNames);
 
+            // load internal bookmarks
+            LoadInternalBookmarks();
+            BookmarkManager.GlobalCollections = Version.IsMF ? MFGlobalBookmarks : ZMGlobalBookmarks;
+
             // show file name
             this.Text = Path.GetFileName(filename) + " - MAGE";
 
@@ -1345,24 +1368,24 @@ namespace mage
             splash.Dispose();
             groupBox_location.Enabled = true;
         }
-		
-		// Look for Input Mono to use in clipdata list; default to Consolas if absent - alexman25
-		public Font MonoFont(float size)
-		{
-			InstalledFontCollection installedFonts = new InstalledFontCollection();
-			bool Check4Input = installedFonts.Families.Any(f =>
-				f.Name.Equals("Input", StringComparison.OrdinalIgnoreCase));
-			if (Check4Input)
-			{
-				// We in biz gang
-				return new Font("Input", size, FontStyle.Regular);
-			}
-			else
-			{
-				// Consolas if no Input
-				return new Font("Consolas", size, FontStyle.Regular);
-			}
-		}
+
+        // Look for Input Mono to use in clipdata list; default to Consolas if absent - alexman25
+        public Font MonoFont(float size)
+        {
+            InstalledFontCollection installedFonts = new InstalledFontCollection();
+            bool Check4Input = installedFonts.Families.Any(f =>
+                f.Name.Equals("Input", StringComparison.OrdinalIgnoreCase));
+            if (Check4Input)
+            {
+                // We in biz gang
+                return new Font("Input", size, FontStyle.Regular);
+            }
+            else
+            {
+                // Consolas if no Input
+                return new Font("Consolas", size, FontStyle.Regular);
+            }
+        }
         private void InitializePart2()
         {
             // room view
@@ -1383,8 +1406,8 @@ namespace mage
             }
 
             // load clipdata list
-			comboBox_clipdata.Font = MonoFont(8f);		// Monospaced typeface looks better for this list - alexman25
-			comboBox_clipdata.DropDownWidth = 300;		// It's a bit wider, though, so widen the list to compensate
+            comboBox_clipdata.Font = MonoFont(8f);      // Monospaced typeface looks better for this list - alexman25
+            comboBox_clipdata.DropDownWidth = 300;		// It's a bit wider, though, so widen the list to compensate
             string[] clipdata = Version.Clipdata;
             char[] sep = new char[] { ' ' };
             comboBox_clipdata.Items.Clear();
@@ -1434,6 +1457,7 @@ namespace mage
             menuItem_defaultView.Enabled = val;
             menuItem_numberBase.Enabled = val;
             menuItem_tooltips.Enabled = val;
+            menuItem_bookmarks.Enabled = val;
 
             // handle each status strip item seperately
             statusLabel_clip.Enabled = val;
@@ -2953,6 +2977,6 @@ namespace mage
         private void flipRoomVToolStripMenuItem_Click(object sender, EventArgs e)
             => PerformAction(new FlipRoom(room, false, true));
 
-        
+
     }
 }

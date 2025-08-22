@@ -1,10 +1,3 @@
-TODO:
-- Write OAM Editor documentation
-- Write Bookmark documentation / Recent Offset Documentation
-
-- Fix OAM Repointing and move out of experimental
-- Fix help theming with light mode colors
-
 MAGE Themes:
 - Theming support
 - Fix crashes
@@ -23,6 +16,7 @@ MAGE Themes:
 - Added clipdata shortcuts button to main view
 - Added Zoom button to the status bar of the main view
 - Zoom with Ctrl + Mouse Wheel in main view
+- Scroll horizontally in editors with Shift + Scroll
 - Added Zoom to Text Editor
 - Clear Sprites, Scrolls and Doors in Room Options
 - Drop Probability can be input as Percentage

@@ -1,4 +1,5 @@
-﻿using mage.Properties;
+﻿using mage.Bookmarks;
+using mage.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -49,7 +50,7 @@ namespace mage
                 // get constants
                 while ((line = sr.ReadLine()) != null)
                 {
-                    string[] items = line.Split('=');
+                    string[] items = line.Split("=", 2);
                     if (items.Length < 2) { continue; }
                     Parse(items[0], items[1]);
                 }
@@ -58,6 +59,7 @@ namespace mage
             }
             catch { return; }
 
+            if (ProjectBookmarks != null) BookmarkManager.ProjectCollections = ProjectBookmarks;
             project = ProjectState.Exists;
         }
 
@@ -96,8 +98,8 @@ namespace mage
             sw.WriteLine("DateModified=" + DateModified.ToString("s"));
             sw.WriteLine();
 
-            // project data
-            sw.WriteLine("[Project]");
+            // Game data
+            sw.WriteLine("[Game Data]");
             string line = "RoomsPerArea=";
             foreach (int n in RoomsPerArea)
             {
@@ -110,6 +112,12 @@ namespace mage
             sw.WriteLine("NumOfAnimGfx=" + Convert.ToString(NumOfAnimGfx, 16).ToUpper());
             sw.WriteLine("NumOfAnimPalettes=" + Convert.ToString(NumOfAnimPalettes, 16).ToUpper());
             sw.WriteLine("NumOfSpritesets=" + Convert.ToString(NumOfSpritesets, 16).ToUpper());
+            sw.WriteLine();
+
+            // extended project data
+            sw.WriteLine("[Project]");
+            sw.WriteLine("ProjectBookmarks=" + BookmarkManager.SerializeCollections(BookmarkManager.ProjectCollections, false));
+            sw.WriteLine("ProjectConfig=" + ProjectConfig.Serialize(Version.ProjectConfig));
 
             sw.Close();
             project = ProjectState.Exists;
@@ -130,6 +138,8 @@ namespace mage
         public static byte NumOfMinimaps { get; private set; }
         public static byte NumOfDemos { get; private set; }
         public static int MetroidOffset { get; private set; }
+        public static List<BookmarkFolder> ProjectBookmarks { get; private set; }
+        public static ProjectConfig ProjectConfig { get; private set; } = ProjectConfig.DefaultConfig;
 
         public static string[] Clipdata
         {
@@ -525,7 +535,73 @@ namespace mage
                 DateTime dt = DateTime.Parse(value);
                 info.SetValue(null, dt, null);
             }
+            else if (info.PropertyType == typeof(List<BookmarkFolder>))
+            {
+                List<BookmarkFolder> bf = BookmarkManager.DeserializeCollections(value);
+                info.SetValue(null, bf, null);
+            }
+            else if (info.PropertyType == typeof(ProjectConfig))
+            {
+                ProjectConfig cf = ProjectConfig.Deserialize(value);
+                info.SetValue(null, cf, null);
+            }
         }
 
+        public static bool TryGetPrimarySpriteOAM(byte key, out int value)
+        {
+            if (ProjectConfig.PrimarySpriteOAMRepoints.TryGetValue(key, out value))
+            {
+                if (value == 0) return false;
+                return true;
+            }
+            else return PSpriteOAM.TryGetValue(key, out value);
+        }
+        public static bool TryGetSecondarySpriteOAM(byte key, out int value)
+        {
+            if (ProjectConfig.SecondarySpriteOAMRepoints.TryGetValue(key, out value))
+            {
+                if (value == 0) return false;
+                return true;
+            }
+            else return SSpriteOAM.TryGetValue(key, out value);
+        }
+
+        public static void RepointedOAM(int oldOffset, int newOffset)
+        {
+            bool repointedInProject;
+
+            repointedInProject = false;
+            foreach (var kvp in ProjectConfig.PrimarySpriteOAMRepoints)
+            {
+                if (kvp.Value == oldOffset)
+                {
+                    ProjectConfig.PrimarySpriteOAMRepoints[kvp.Key] = newOffset;
+                    repointedInProject = true;
+                }
+            }
+            if (!repointedInProject) foreach (var kvp in PSpriteOAM)
+                {
+                    if (kvp.Value == oldOffset) ProjectConfig.PrimarySpriteOAMRepoints[kvp.Key] = newOffset;
+                }
+
+            foreach (var kvp in ProjectConfig.SecondarySpriteOAMRepoints)
+            {
+                if (kvp.Value == oldOffset)
+                {
+                    ProjectConfig.SecondarySpriteOAMRepoints[kvp.Key] = newOffset;
+                    repointedInProject = true;
+                }
+            }
+            if (!repointedInProject) foreach (var kvp in SSpriteOAM)
+                {
+                    if (kvp.Value == oldOffset) ProjectConfig.SecondarySpriteOAMRepoints[kvp.Key] = newOffset;
+                }
+        }
+
+        public static void MarkOAMInvalid(byte spriteID, bool isSecondary)
+        {
+            if (isSecondary) ProjectConfig.SecondarySpriteOAMRepoints[spriteID] = 0;
+            else ProjectConfig.PrimarySpriteOAMRepoints[spriteID] = 0;
+        }
     }
 }

@@ -194,10 +194,10 @@
             button_clipdata_shortcuts = new System.Windows.Forms.Button();
             comboBox_clipdata = new Theming.CustomControls.FlatComboBox();
             label_clipdata = new System.Windows.Forms.Label();
-            panel_tileset = new mage.Controls.ExtendedPanel();
+            panel_tileset = new Controls.ExtendedPanel();
             tileView = new TileView();
             groupBox_room = new System.Windows.Forms.GroupBox();
-            panel_room = new mage.Controls.ExtendedPanel();
+            panel_room = new Controls.ExtendedPanel();
             roomView = new RoomView();
             contextMenu = new System.Windows.Forms.ContextMenuStrip(components);
             contextItem_addSprite = new System.Windows.Forms.ToolStripMenuItem();
@@ -1327,17 +1327,16 @@
             // 
             // menuItem_bookmarks
             // 
+            menuItem_bookmarks.Enabled = false;
             menuItem_bookmarks.Name = "menuItem_bookmarks";
             menuItem_bookmarks.Size = new System.Drawing.Size(193, 22);
             menuItem_bookmarks.Text = "Bookmarks";
-            menuItem_bookmarks.Visible = false;
             menuItem_bookmarks.Click += menuItem_bookmarks_Click;
             // 
             // toolStripSeparator33
             // 
             toolStripSeparator33.Name = "toolStripSeparator33";
             toolStripSeparator33.Size = new System.Drawing.Size(190, 6);
-            toolStripSeparator33.Visible = false;
             // 
             // button_experimental
             // 
@@ -2356,9 +2355,7 @@
         private System.Windows.Forms.CheckBox checkBox_editBG2;
         private System.Windows.Forms.CheckBox checkBox_editBG1;
         private System.Windows.Forms.CheckBox checkBox_editBG0;
-        private System.Windows.Forms.Panel panel_tileset;
         private System.Windows.Forms.Label label_clipdata;
-        private System.Windows.Forms.Panel panel_room;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel_coor;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel_clip;
@@ -2586,6 +2583,8 @@
         private System.Windows.Forms.ToolStripMenuItem button_legacy;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator34;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
+        private Controls.ExtendedPanel panel_tileset;
+        private Controls.ExtendedPanel panel_room;
     }
 }
 

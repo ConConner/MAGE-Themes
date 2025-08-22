@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Windows.Forms;
 
 namespace mage
 {
@@ -88,16 +89,32 @@ namespace mage
             int offset = 0;
             if (primary)
             {
-                if (!Version.PSpriteOAM.TryGetValue(pSpriteID, out offset)) { return; }
+                if (!Version.TryGetPrimarySpriteOAM(pSpriteID, out offset)) { return; }
             }
             else
             {
-                if (!Version.SSpriteOAM.TryGetValue(sSpriteID, out offset)) { return; }
+                if (!Version.TryGetSecondarySpriteOAM(sSpriteID, out offset)) { return; }
             }
 
             gfxRow &= 7;
 
-            OAM oam = new OAM(offset);
+            // If OAM crashes, mark OAM as invalid
+            OAM oam;
+            //try
+            //{
+            oam = new OAM(offset);
+            /*}
+            catch
+            {
+                if (
+                    MessageBox.Show(
+                    $"OAM for Sprite {Hex.ToString(pSpriteID)} could not be loaded.\n\nDo you want to disable the preview for this Sprite?",
+                    "OAM Invalid", MessageBoxButtons.YesNo, MessageBoxIcon.Error)
+                    == DialogResult.Yes
+                ) Version.MarkOAMInvalid(primary ? pSpriteID : sSpriteID, !primary);
+                return;
+            }*/
+
             previewImg = oam.Draw(vramObj.objTiles, vramObj.palette, gfxRow, 0);
             xOffset = oam.Frames[0].xOffset;
             yOffset = oam.Frames[0].yOffset;

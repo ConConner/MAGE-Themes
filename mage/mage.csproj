@@ -33,6 +33,9 @@
     <None Remove="Docs\doc.html" />
     <None Remove="Docs\legacy.html" />
     <None Remove="Docs\technical.html" />
+    <None Remove="Resources\Bookmarks\ZM\ZM_U_GFX_Bookmarks.mbc" />
+    <None Remove="Resources\Bookmarks\ZM\ZM_U_OAM_Bookmarks.mbc" />
+    <None Remove="Resources\Bookmarks\ZM\ZM_U_PAL_Bookmarks.mbc" />
     <None Remove="Resources\Bookmarks\ZM_U_OAM_Bookmarks.mbc" />
   </ItemGroup>
   <ItemGroup>
@@ -141,7 +144,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Docs\technical.html" />
-    <EmbeddedResource Include="Resources\Bookmarks\ZM_U_OAM_Bookmarks.mbc" />
+    <EmbeddedResource Include="Resources\Bookmarks\ZM\ZM_U_GFX_Bookmarks.mbc" />
+    <EmbeddedResource Include="Resources\Bookmarks\ZM\ZM_U_OAM_Bookmarks.mbc" />
+    <EmbeddedResource Include="Resources\Bookmarks\ZM\ZM_U_PAL_Bookmarks.mbc" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FuzzySharp" Version="2.0.2" />

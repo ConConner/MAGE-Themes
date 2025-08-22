@@ -1,10 +1,12 @@
-﻿using mage.Theming;
+﻿using mage.Bookmarks;
+using mage.Theming;
 using mage.Utility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace mage
 {
@@ -941,8 +943,18 @@ namespace mage
 
                 if (prevOffset != ttbOffset)
                 {
-                    string message = "Tile table was repointed to " + Hex.ToString(ttbOffset);
-                    MessageBox.Show(message, "Repointed Tile Table", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (
+                        MessageBox.Show(
+                            "Tile table needs to be repointed.\n\nDo you want to save the new location as a Bookmark?",
+                            "Repointing required", MessageBoxButtons.YesNo, MessageBoxIcon.Information
+                        )
+                        != DialogResult.Yes
+                        || !BookmarkManager.RepointedDataCreateBookmark(prevOffset, ttbOffset)
+                    )
+                    {
+                        string message = "Tile table was repointed to " + Hex.ToString(ttbOffset);
+                        MessageBox.Show(message, "Repointed Tile Table", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
 

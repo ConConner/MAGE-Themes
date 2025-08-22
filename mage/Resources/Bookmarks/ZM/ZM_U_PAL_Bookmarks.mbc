@@ -1,0 +1,954 @@
+{
+  "Name": "PAL Data",
+  "Description": "Palette Addresses extracted from the Zero Mission ROM",
+  "Items": [
+    {
+      "Name": "UnusedSpritesPal",
+      "Value": 2828424
+    },
+    {
+      "Name": "MorphBallPal",
+      "Value": 2829128
+    },
+    {
+      "Name": "PowerGripPal",
+      "Value": 2830428
+    },
+    {
+      "Name": "ChargeBeamPal",
+      "Value": 2831868
+    },
+    {
+      "Name": "ChozoStatueFlashingPaletteRows",
+      "Value": 2833348
+    },
+    {
+      "Name": "ChozoStatueLongBeamPal",
+      "Value": 2838692
+    },
+    {
+      "Name": "ChozoStatueIceBeamPal",
+      "Value": 2846788
+    },
+    {
+      "Name": "ChozoStatueWaveBeamPal",
+      "Value": 2852288
+    },
+    {
+      "Name": "ChozoStatueBombsPal",
+      "Value": 2857804
+    },
+    {
+      "Name": "ChozoStatueSpeedboosterPal",
+      "Value": 2863332
+    },
+    {
+      "Name": "ChozoStatueHighJumpPal",
+      "Value": 2868980
+    },
+    {
+      "Name": "ChozoStatueScrewAttackPal",
+      "Value": 2874652
+    },
+    {
+      "Name": "ChozoStatueVariaPal",
+      "Value": 2880204
+    },
+    {
+      "Name": "UnknownItemChozoStatueFlashingPaletteRows",
+      "Value": 2880816
+    },
+    {
+      "Name": "ChozoStatueSpaceJumpPal",
+      "Value": 2886232
+    },
+    {
+      "Name": "ChozoStatueGravitySuitPal",
+      "Value": 2894628
+    },
+    {
+      "Name": "ChozoStatuePlasmaBeamPal",
+      "Value": 2900212
+    },
+    {
+      "Name": "ZoomerPal",
+      "Value": 2901888
+    },
+    {
+      "Name": "ZeelaPal",
+      "Value": 2905288
+    },
+    {
+      "Name": "KraidPal",
+      "Value": 2919892
+    },
+    {
+      "Name": "ItemBannerPal",
+      "Value": 2929968
+    },
+    {
+      "Name": "RipperBrownPal",
+      "Value": 2932128
+    },
+    {
+      "Name": "RipperPurplePal",
+      "Value": 2932724
+    },
+    {
+      "Name": "Ripper2Pal",
+      "Value": 2933744
+    },
+    {
+      "Name": "ZebPinkPal",
+      "Value": 2934584
+    },
+    {
+      "Name": "ZebBluePal",
+      "Value": 2935264
+    },
+    {
+      "Name": "SkreeGreenPal",
+      "Value": 2936492
+    },
+    {
+      "Name": "SkreeBluePal",
+      "Value": 2937580
+    },
+    {
+      "Name": "ReoGreenWingsPal",
+      "Value": 2939772
+    },
+    {
+      "Name": "ReoPurpleWingsPal",
+      "Value": 2940912
+    },
+    {
+      "Name": "ZiplinePal",
+      "Value": 2943012
+    },
+    {
+      "Name": "SovaPal",
+      "Value": 2947060
+    },
+    {
+      "Name": "MultiviolaPal",
+      "Value": 2949396
+    },
+    {
+      "Name": "GerutaRedPal",
+      "Value": 2952172
+    },
+    {
+      "Name": "GerutaGreenPal",
+      "Value": 2953436
+    },
+    {
+      "Name": "SqueeptPal",
+      "Value": 2955680
+    },
+    {
+      "Name": "MapStationPal",
+      "Value": 2959040
+    },
+    {
+      "Name": "SavePlatformPal",
+      "Value": 2966196
+    },
+    {
+      "Name": "DragonPal",
+      "Value": 2972116
+    },
+    {
+      "Name": "DeoremPal",
+      "Value": 2979000
+    },
+    {
+      "Name": "DessgeegaPal",
+      "Value": 2981684
+    },
+    {
+      "Name": "WaverPal",
+      "Value": 2984008
+    },
+    {
+      "Name": "HivePal",
+      "Value": 2991652
+    },
+    {
+      "Name": "ImagoLarvaPaletteRows",
+      "Value": 2994760
+    },
+    {
+      "Name": "ImagoLarvaPal",
+      "Value": 2999544
+    },
+    {
+      "Name": "MorphBallLauncherPal",
+      "Value": 3005660
+    },
+    {
+      "Name": "ImagoCocoonPal",
+      "Value": 3014832
+    },
+    {
+      "Name": "ElevatorPadPal",
+      "Value": 3018600
+    },
+    {
+      "Name": "SpacePiratePal",
+      "Value": 3022128
+    },
+    {
+      "Name": "ZiplineGeneratorPal",
+      "Value": 3038024
+    },
+    {
+      "Name": "GametBluePal",
+      "Value": 3040168
+    },
+    {
+      "Name": "GametRedPal",
+      "Value": 3040872
+    },
+    {
+      "Name": "SecurityGatePal",
+      "Value": 3041592
+    },
+    {
+      "Name": "ZebboGreenPal",
+      "Value": 3042872
+    },
+    {
+      "Name": "ZebboYellowPal",
+      "Value": 3043400
+    },
+    {
+      "Name": "WorkerRobotPal",
+      "Value": 3045064
+    },
+    {
+      "Name": "ParasitePal",
+      "Value": 3047720
+    },
+    {
+      "Name": "PistonPal",
+      "Value": 3049660
+    },
+    {
+      "Name": "RidleyPal",
+      "Value": 3063420
+    },
+    {
+      "Name": "MetroidPal",
+      "Value": 3070184
+    },
+    {
+      "Name": "RinkaOrangePal",
+      "Value": 3072256
+    },
+    {
+      "Name": "RinkaGreenPal",
+      "Value": 3073256
+    },
+    {
+      "Name": "PolypPal",
+      "Value": 3074868
+    },
+    {
+      "Name": "ViolaBluePal",
+      "Value": 3076692
+    },
+    {
+      "Name": "ViolaOrangePal",
+      "Value": 3077944
+    },
+    {
+      "Name": "SecurityLaserPal",
+      "Value": 3079224
+    },
+    {
+      "Name": "HoltzPal",
+      "Value": 3084980
+    },
+    {
+      "Name": "GekitaiMachinePal",
+      "Value": 3087324
+    },
+    {
+      "Name": "RuinsTestPal",
+      "Value": 3098204
+    },
+    {
+      "Name": "RuinsTestPal_SymbolShot_Frame1",
+      "Value": 3098460
+    },
+    {
+      "Name": "RuinsTestPal_SymbolShot_Frame2",
+      "Value": 3098476
+    },
+    {
+      "Name": "RuinsTestPal_SymbolShot_Frame3",
+      "Value": 3098492
+    },
+    {
+      "Name": "RuinsTestPal_SymbolShot_Frame4",
+      "Value": 3098508
+    },
+    {
+      "Name": "RuinsTestPal_SymbolShot_Frame5",
+      "Value": 3098524
+    },
+    {
+      "Name": "RuinsTestPal_SymbolShot_Frame6",
+      "Value": 3098540
+    },
+    {
+      "Name": "MellaPal",
+      "Value": 3106488
+    },
+    {
+      "Name": "AtomicPal",
+      "Value": 3110112
+    },
+    {
+      "Name": "AreaBannerPal",
+      "Value": 3112340
+    },
+    {
+      "Name": "AreaBannerLocationTextPal",
+      "Value": 3112372
+    },
+    {
+      "Name": "MotherBrainPal",
+      "Value": 3121472
+    },
+    {
+      "Name": "AcidWormPal",
+      "Value": 3128268
+    },
+    {
+      "Name": "SidehopperPal",
+      "Value": 3131692
+    },
+    {
+      "Name": "GeronNorfairPal",
+      "Value": 3133672
+    },
+    {
+      "Name": "GeegaPal",
+      "Value": 3135356
+    },
+    {
+      "Name": "GeegaWhitePal",
+      "Value": 3136000
+    },
+    {
+      "Name": "RinkaZebetiteAndCannonPal",
+      "Value": 3138096
+    },
+    {
+      "Name": "ImagoLarvaRightSidePal",
+      "Value": 3143012
+    },
+    {
+      "Name": "TangleVinePal",
+      "Value": 3149572
+    },
+    {
+      "Name": "ImagoPal",
+      "Value": 3158540
+    },
+    {
+      "Name": "CrocomirePal",
+      "Value": 3170012
+    },
+    {
+      "Name": "SearchlightEyePal",
+      "Value": 3175340
+    },
+    {
+      "Name": "GeronPal",
+      "Value": 3178904
+    },
+    {
+      "Name": "GunshipPal",
+      "Value": 3188188
+    },
+    {
+      "Name": "GunshipFlashingPal",
+      "Value": 3188284
+    },
+    {
+      "Name": "GlassTubePal",
+      "Value": 3193376
+    },
+    {
+      "Name": "SavePlatformChozodiaPal",
+      "Value": 3202836
+    },
+    {
+      "Name": "BaristutePal",
+      "Value": 3210928
+    },
+    {
+      "Name": "ElevatorStatuesPal",
+      "Value": 3217188
+    },
+    {
+      "Name": "RisingChozoPillarPal",
+      "Value": 3225108
+    },
+    {
+      "Name": "SkulteraPal",
+      "Value": 3227840
+    },
+    {
+      "Name": "BossStatuesPal",
+      "Value": 3237972
+    },
+    {
+      "Name": "SearchlightPal",
+      "Value": 3242216
+    },
+    {
+      "Name": "GadoraPal",
+      "Value": 3244884
+    },
+    {
+      "Name": "SteamPal",
+      "Value": 3247064
+    },
+    {
+      "Name": "PlasmaBeamBlockPal",
+      "Value": 3250228
+    },
+    {
+      "Name": "GravityBlockPal",
+      "Value": 3251472
+    },
+    {
+      "Name": "SpaceJumpBlockPal",
+      "Value": 3252692
+    },
+    {
+      "Name": "EscapeShipPal",
+      "Value": 3257496
+    },
+    {
+      "Name": "EscapeShipFlashingPal",
+      "Value": 3257624
+    },
+    {
+      "Name": "FakePowerBombPal",
+      "Value": 3262252
+    },
+    {
+      "Name": "FallingChozoPillarPal",
+      "Value": 3263232
+    },
+    {
+      "Name": "MechaRidleyPal",
+      "Value": 3291560
+    },
+    {
+      "Name": "MechaRidley_8323aaa_Pal",
+      "Value": 3291818
+    },
+    {
+      "Name": "MechaRidleyGreenGlowPal",
+      "Value": 3291842
+    },
+    {
+      "Name": "MechaRidley_8323b42_Pal",
+      "Value": 3291970
+    },
+    {
+      "Name": "MechaRidley_8323b4a_Pal",
+      "Value": 3291978
+    },
+    {
+      "Name": "MechaRidley_8323b62_Pal",
+      "Value": 3292002
+    },
+    {
+      "Name": "MechaRidleyFadingPal",
+      "Value": 3292008
+    },
+    {
+      "Name": "EscapeGateAndTimerPal",
+      "Value": 3303820
+    },
+    {
+      "Name": "EscapeGateFlashingPal",
+      "Value": 3303852
+    },
+    {
+      "Name": "BeamPal",
+      "Value": 3305704
+    },
+    {
+      "Name": "CommonSpritesPal",
+      "Value": 3324424
+    },
+    {
+      "Name": "KraidRisingCloseUpPal",
+      "Value": 3588088
+    },
+    {
+      "Name": "KraidRisingParticlesPal",
+      "Value": 3588280
+    },
+    {
+      "Name": "KraidRisingRisingPal",
+      "Value": 3588344
+    },
+    {
+      "Name": "StoryTextCutscenePal",
+      "Value": 3626808
+    },
+    {
+      "Name": "MotherBrainCloseUpPal",
+      "Value": 3629188
+    },
+    {
+      "Name": "MotherBrainCloseUpBackgroundPal",
+      "Value": 3629380
+    },
+    {
+      "Name": "MotherBrainCloseUpEyePal",
+      "Value": 3629860
+    },
+    {
+      "Name": "MotherBrainCloseUpBigEyePal",
+      "Value": 3629924
+    },
+    {
+      "Name": "MotherBrainCloseUpTankViewPal",
+      "Value": 3698272
+    },
+    {
+      "Name": "RidleyInSpaceRedAlertPaletteRows",
+      "Value": 3698596
+    },
+    {
+      "Name": "RidleyInSpaceShipsPal",
+      "Value": 3791024
+    },
+    {
+      "Name": "RidleyInSpace_39d910_Pal",
+      "Value": 3791120
+    },
+    {
+      "Name": "RidleyInSpaceRedAlertPal",
+      "Value": 3791312
+    },
+    {
+      "Name": "RidleyInSpaceShipInteriorPal",
+      "Value": 3791504
+    },
+    {
+      "Name": "RidleyInSpace_39dc70_Pal",
+      "Value": 3791984
+    },
+    {
+      "Name": "RidleyInSpaceSpaceBackgroundPal",
+      "Value": 3792080
+    },
+    {
+      "Name": "Cutscene_3a09d4_Pal",
+      "Value": 3803604
+    },
+    {
+      "Name": "CutsceneZebesPal",
+      "Value": 3803892
+    },
+    {
+      "Name": "CutsceneMotherShipPal",
+      "Value": 3804308
+    },
+    {
+      "Name": "RidleyLandingRidleyAndRocksPal",
+      "Value": 3804468
+    },
+    {
+      "Name": "RidleyLandingSkyBackgroundPal",
+      "Value": 3804532
+    },
+    {
+      "Name": "RidleySpawnBackgroundPal",
+      "Value": 3890900
+    },
+    {
+      "Name": "RidleySpawnRidleyScreamingPal",
+      "Value": 3891316
+    },
+    {
+      "Name": "GettingFullyPoweredSuitRingPaletteRows",
+      "Value": 3957772
+    },
+    {
+      "Name": "GettingFullyPoweredSuitPal",
+      "Value": 3958432
+    },
+    {
+      "Name": "GettingFullyPoweredSuitRingPal",
+      "Value": 3990412
+    },
+    {
+      "Name": "BeforeCharlieChozoWallSidesPal",
+      "Value": 3990708
+    },
+    {
+      "Name": "BeforeCharlieChozoWallPal",
+      "Value": 3991028
+    },
+    {
+      "Name": "StatueOpeningPal",
+      "Value": 4117756
+    },
+    {
+      "Name": "EnterTourianBackgroundPal",
+      "Value": 4129808
+    },
+    {
+      "Name": "EnterTourianMetroidPal",
+      "Value": 4130128
+    },
+    {
+      "Name": "TankIconsPal",
+      "Value": 4182096
+    },
+    {
+      "Name": "MinimapAnimatedPalette",
+      "Value": 4182768
+    },
+    {
+      "Name": "MinimapAnimatedPaletteOffsets",
+      "Value": 4250884
+    },
+    {
+      "Name": "StatusScreenUnknownItemsWhiteFlashingPal",
+      "Value": 4250896
+    },
+    {
+      "Name": "StatusScreenUnknownItemsNamesFlashingPal",
+      "Value": 4251088
+    },
+    {
+      "Name": "MinimapTilesPal",
+      "Value": 4264800
+    },
+    {
+      "Name": "EraseSramMenuObjectsPal",
+      "Value": 4265256
+    },
+    {
+      "Name": "EraseSramMenuBackgroundPal",
+      "Value": 4265480
+    },
+    {
+      "Name": "TitleScreenPal",
+      "Value": 4484456
+    },
+    {
+      "Name": "TitleScreenPromptPal",
+      "Value": 4484936
+    },
+    {
+      "Name": "GameOverMenuPal",
+      "Value": 4518172
+    },
+    {
+      "Name": "FileSelectPal",
+      "Value": 4540440
+    },
+    {
+      "Name": "FileSelectIconsPal",
+      "Value": 4540728
+    },
+    {
+      "Name": "IntroTextAndShipPal",
+      "Value": 4585748
+    },
+    {
+      "Name": "IntroPal_45f9d4",
+      "Value": 4585940
+    },
+    {
+      "Name": "IntroViewOfZebesPal",
+      "Value": 4586132
+    },
+    {
+      "Name": "IntroMotherBrainPal",
+      "Value": 4586452
+    },
+    {
+      "Name": "TourianEscapeExplodingPal",
+      "Value": 4690944
+    },
+    {
+      "Name": "MotherShipBlowingUpExplosionsPal",
+      "Value": 4691232
+    },
+    {
+      "Name": "TourianEscapeShipCrashingBackgroundAndShipPal",
+      "Value": 4694112
+    },
+    {
+      "Name": "TourianEscapeRainPal",
+      "Value": 4697126
+    },
+    {
+      "Name": "FusionGallery_Palette_0",
+      "Value": 4980452
+    },
+    {
+      "Name": "FusionGallery_Palette_1",
+      "Value": 4980964
+    },
+    {
+      "Name": "FusionGallery_Palette_2",
+      "Value": 4981476
+    },
+    {
+      "Name": "FusionGallery_Palette_3",
+      "Value": 4981988
+    },
+    {
+      "Name": "FusionGallery_Palette_4",
+      "Value": 4982500
+    },
+    {
+      "Name": "FusionGallery_Palette_11",
+      "Value": 4983012
+    },
+    {
+      "Name": "FusionGallery_Palette_12",
+      "Value": 4983524
+    },
+    {
+      "Name": "FusionGallery_Palette_5",
+      "Value": 4984036
+    },
+    {
+      "Name": "FusionGallery_Palette_6",
+      "Value": 4984548
+    },
+    {
+      "Name": "FusionGallery_Palette_7",
+      "Value": 4985060
+    },
+    {
+      "Name": "FusionGallery_Palette_8",
+      "Value": 4985572
+    },
+    {
+      "Name": "FusionGallery_Palette_9",
+      "Value": 4986084
+    },
+    {
+      "Name": "FusionGallery_Palette_10",
+      "Value": 4986596
+    },
+    {
+      "Name": "EndingImageTextPal",
+      "Value": 5544772
+    },
+    {
+      "Name": "CreditsCharactersPal",
+      "Value": 5547732
+    },
+    {
+      "Name": "CreditsChozoWallPal",
+      "Value": 5547828
+    },
+    {
+      "Name": "EndingImage_Palette_0",
+      "Value": 5548308
+    },
+    {
+      "Name": "EndingImage_Palette_1",
+      "Value": 5548820
+    },
+    {
+      "Name": "EndingImage_Palette_2",
+      "Value": 5549332
+    },
+    {
+      "Name": "EndingImage_Palette_3",
+      "Value": 5549844
+    },
+    {
+      "Name": "EndingImage_Palette_4",
+      "Value": 5550356
+    },
+    {
+      "Name": "EndingImage_Palette_5",
+      "Value": 5550868
+    },
+    {
+      "Name": "EndingImage_Palette_6",
+      "Value": 5551380
+    },
+    {
+      "Name": "EndingImage_Palette_7",
+      "Value": 5551892
+    },
+    {
+      "Name": "EndingPosingPal",
+      "Value": 5552404
+    },
+    {
+      "Name": "EndingPosingPal_White1",
+      "Value": 5552820
+    },
+    {
+      "Name": "EndingPosingPal_White2",
+      "Value": 5552980
+    },
+    {
+      "Name": "EndingPosingPal_White3",
+      "Value": 5553140
+    },
+    {
+      "Name": "EndingPosingPal_White4",
+      "Value": 5553300
+    },
+    {
+      "Name": "UnlockedOptionsPal",
+      "Value": 5553460
+    },
+    {
+      "Name": "EndingImageNewRecordPalettes",
+      "Value": 5563108
+    },
+    {
+      "Name": "ChozodiaEscapeShipHeatingUpPal",
+      "Value": 6067768
+    },
+    {
+      "Name": "ChozodiaEscapeGroundHeatingUpPal",
+      "Value": 6068024
+    },
+    {
+      "Name": "ChozodiaEscapeShipExplodingPal",
+      "Value": 6068280
+    },
+    {
+      "Name": "ChozodiaEscapeMissionAccomplishedPal",
+      "Value": 6068568
+    },
+    {
+      "Name": "ChozodiaEscapeHeatingUpPalOffsets",
+      "Value": 6070460
+    },
+    {
+      "Name": "AnimatedPal_7",
+      "Value": 6158816
+    },
+    {
+      "Name": "AnimatedPal_16",
+      "Value": 6158944
+    },
+    {
+      "Name": "AnimatedPal_0",
+      "Value": 6159200
+    },
+    {
+      "Name": "AnimatedPal_5",
+      "Value": 6159776
+    },
+    {
+      "Name": "CommonTilesPal",
+      "Value": 6159904
+    },
+    {
+      "Name": "DoorTransitionPal",
+      "Value": 6159936
+    },
+    {
+      "Name": "CommonTilesMotherShipPal",
+      "Value": 6160416
+    },
+    {
+      "Name": "DoorTransitionMotherShipPal",
+      "Value": 6160448
+    },
+    {
+      "Name": "HatchFlashingMotherShipPal",
+      "Value": 6160928
+    },
+    {
+      "Name": "HatchFlashingPal",
+      "Value": 6161440
+    },
+    {
+      "Name": "AnimatedPal_2",
+      "Value": 6469816
+    },
+    {
+      "Name": "AnimatedPal_3",
+      "Value": 6471096
+    },
+    {
+      "Name": "AnimatedPal_13",
+      "Value": 7054868
+    },
+    {
+      "Name": "AnimatedPal_9",
+      "Value": 7515576
+    },
+    {
+      "Name": "AnimatedPal_8",
+      "Value": 7515832
+    },
+    {
+      "Name": "AnimatedPal_6",
+      "Value": 7516536
+    },
+    {
+      "Name": "AnimatedPal_17",
+      "Value": 7517240
+    },
+    {
+      "Name": "AnimatedPal_10",
+      "Value": 7518392
+    },
+    {
+      "Name": "AnimatedPal_11",
+      "Value": 7519096
+    },
+    {
+      "Name": "AnimatedPal_12",
+      "Value": 7519800
+    },
+    {
+      "Name": "AnimatedPal_4",
+      "Value": 7522296
+    },
+    {
+      "Name": "AnimatedPal_14",
+      "Value": 7523448
+    },
+    {
+      "Name": "AnimatedPal_15",
+      "Value": 7524472
+    },
+    {
+      "Name": "TitleScreenSkyDecorationsPaletteRows",
+      "Value": 7736020
+    },
+    {
+      "Name": "TitleScreenTitlePaletteRows",
+      "Value": 7736026
+    },
+    {
+      "Name": "TitleScreenPromptPaletteRows",
+      "Value": 7736040
+    },
+    {
+      "Name": "GameOverTextPaletteMaxTimers",
+      "Value": 7736076
+    }
+  ]
+}
