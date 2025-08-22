@@ -106,6 +106,10 @@ namespace mage
         }
         private bool ctxtMenuOpen = false;
 
+        // Temporary Bookmarks
+        private List<BookmarkFolder> ZMGlobalBookmarks { get; set; }
+        private List<BookmarkFolder> MFGlobalBookmarks { get; set; }
+
         #endregion
 
         public FormMain()
@@ -117,7 +121,6 @@ namespace mage
             DisplayRecentFiles();
             InitializeSettings();
             PopulateThemeList(null, null);
-            LoadInternalBookmarks();
             ShowSplash();
 
             roomView.Scrolled += roomView_Scrolled;
@@ -240,8 +243,10 @@ namespace mage
             Sound.SoundPackName = Settings.Default.soundPackName;
 
             // Bookmarks
-            try { BookmarkManager.GlobalCollections = BookmarkManager.DeserializeCollections(Settings.Default.globalBookmarks); }
-            catch { BookmarkManager.GlobalCollections = new(); }
+            try { ZMGlobalBookmarks = BookmarkManager.DeserializeCollections(Settings.Default.ZMglobalBookmarks); }
+            catch { ZMGlobalBookmarks = new(); }
+            try { MFGlobalBookmarks = BookmarkManager.DeserializeCollections(Settings.Default.MFglobalBookmarks); }
+            catch { MFGlobalBookmarks = new(); }
         }
 
         private void SaveSettings()
@@ -284,17 +289,29 @@ namespace mage
             Settings.Default.soundPackName = Sound.SoundPackName;
 
             //Bookmarks
-            Settings.Default.globalBookmarks = BookmarkManager.SerializeCollections(BookmarkManager.GlobalCollections);
+            Settings.Default.ZMglobalBookmarks = BookmarkManager.SerializeCollections(ZMGlobalBookmarks);
+            Settings.Default.MFglobalBookmarks = BookmarkManager.SerializeCollections(MFGlobalBookmarks);
 
             Settings.Default.Save();
         }
 
         private void LoadInternalBookmarks()
         {
-            if (Version.IsMF) return;
+            if (Version.IsMF)
+            {
+                BookmarkManager.InternalCollections = new();
+                return;
+            }
 
-            string json = LoadAssemblyResourceAsString("mage.Resources.Bookmarks.ZM.ZM_U_OAM_Bookmarks.mbc");
-            BookmarkManager.InternalCollections = new() { BookmarkManager.Deserialize(json) };
+            string gfx = LoadAssemblyResourceAsString("mage.Resources.Bookmarks.ZM.ZM_U_GFX_Bookmarks.mbc");
+            string pal = LoadAssemblyResourceAsString("mage.Resources.Bookmarks.ZM.ZM_U_PAL_Bookmarks.mbc");
+            string oam = LoadAssemblyResourceAsString("mage.Resources.Bookmarks.ZM.ZM_U_OAM_Bookmarks.mbc");
+            BookmarkManager.InternalCollections = new()
+            {
+                BookmarkManager.Deserialize(gfx),
+                BookmarkManager.Deserialize(pal),
+                BookmarkManager.Deserialize(oam)
+            };
         }
 
         public static string LoadAssemblyResourceAsString(string resourceName)
@@ -1328,6 +1345,10 @@ namespace mage
             roomsPerArea = Version.RoomsPerArea;
             comboBox_area.Items.Clear();
             comboBox_area.Items.AddRange(areaNames);
+
+            // load internal bookmarks
+            LoadInternalBookmarks();
+            BookmarkManager.GlobalCollections = Version.IsMF ? MFGlobalBookmarks : ZMGlobalBookmarks;
 
             // show file name
             this.Text = Path.GetFileName(filename) + " - MAGE";

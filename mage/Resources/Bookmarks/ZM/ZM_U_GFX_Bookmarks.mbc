@@ -1,0 +1,1490 @@
+{
+  "Name": "GFX Data",
+  "Description": "Graphics Addresses extracted from the Zero Mission ROM",
+  "Items": [
+    {
+      "Name": "UnusedSprites",
+      "Value": 2828400
+    },
+    {
+      "Name": "MorphBall",
+      "Value": 2828456
+    },
+    {
+      "Name": "PowerGrip",
+      "Value": 2829312
+    },
+    {
+      "Name": "ChargeBeam",
+      "Value": 2830896
+    },
+    {
+      "Name": "ChozoStatueLongBeam",
+      "Value": 2833352
+    },
+    {
+      "Name": "ChozoStatueIceBeam",
+      "Value": 2841448
+    },
+    {
+      "Name": "ChozoStatueWaveBeam",
+      "Value": 2846948
+    },
+    {
+      "Name": "ChozoStatueBombs",
+      "Value": 2852448
+    },
+    {
+      "Name": "ChozoStatueSpeedbooster",
+      "Value": 2857964
+    },
+    {
+      "Name": "ChozoStatueHighJump",
+      "Value": 2863492
+    },
+    {
+      "Name": "ChozoStatueScrewAttack",
+      "Value": 2869140
+    },
+    {
+      "Name": "ChozoStatueVaria",
+      "Value": 2874812
+    },
+    {
+      "Name": "ChozoStatueSpaceJump",
+      "Value": 2880820
+    },
+    {
+      "Name": "ChozoStatueGravitySuit",
+      "Value": 2889200
+    },
+    {
+      "Name": "ChozoStatuePlasmaBeam",
+      "Value": 2894788
+    },
+    {
+      "Name": "Zoomer",
+      "Value": 2900372
+    },
+    {
+      "Name": "Zeela",
+      "Value": 2902976
+    },
+    {
+      "Name": "Kraid",
+      "Value": 2908992
+    },
+    {
+      "Name": "ItemBanner",
+      "Value": 2929412
+    },
+    {
+      "Name": "RipperBrown",
+      "Value": 2931564
+    },
+    {
+      "Name": "RipperPurple",
+      "Value": 2932160
+    },
+    {
+      "Name": "Ripper2",
+      "Value": 2932896
+    },
+    {
+      "Name": "ZebPink",
+      "Value": 2933936
+    },
+    {
+      "Name": "ZebBlue",
+      "Value": 2934616
+    },
+    {
+      "Name": "SkreeGreen",
+      "Value": 2935436
+    },
+    {
+      "Name": "SkreeBlue",
+      "Value": 2936524
+    },
+    {
+      "Name": "ReoGreenWings",
+      "Value": 2938664
+    },
+    {
+      "Name": "ReoPurpleWings",
+      "Value": 2939804
+    },
+    {
+      "Name": "Zipline",
+      "Value": 2941956
+    },
+    {
+      "Name": "Sova",
+      "Value": 2943656
+    },
+    {
+      "Name": "Multiviola",
+      "Value": 2948512
+    },
+    {
+      "Name": "GerutaRed",
+      "Value": 2950888
+    },
+    {
+      "Name": "GerutaGreen",
+      "Value": 2952204
+    },
+    {
+      "Name": "Squeept",
+      "Value": 2954628
+    },
+    {
+      "Name": "MapStation",
+      "Value": 2956320
+    },
+    {
+      "Name": "SavePlatform",
+      "Value": 2963784
+    },
+    {
+      "Name": "Dragon",
+      "Value": 2970068
+    },
+    {
+      "Name": "Deorem",
+      "Value": 2972724
+    },
+    {
+      "Name": "Dessgeega",
+      "Value": 2980604
+    },
+    {
+      "Name": "Waver",
+      "Value": 2982852
+    },
+    {
+      "Name": "Hive",
+      "Value": 2984456
+    },
+    {
+      "Name": "ImagoLarva",
+      "Value": 2994764
+    },
+    {
+      "Name": "MorphBallLauncher",
+      "Value": 3004448
+    },
+    {
+      "Name": "ImagoCocoon",
+      "Value": 3007800
+    },
+    {
+      "Name": "ElevatorPad",
+      "Value": 3018056
+    },
+    {
+      "Name": "SpacePirate",
+      "Value": 3018888
+    },
+    {
+      "Name": "ZiplineGenerator",
+      "Value": 3033528
+    },
+    {
+      "Name": "GametBlue",
+      "Value": 3039496
+    },
+    {
+      "Name": "GametRed",
+      "Value": 3040200
+    },
+    {
+      "Name": "SecurityGate",
+      "Value": 3041104
+    },
+    {
+      "Name": "ZebboGreen",
+      "Value": 3042376
+    },
+    {
+      "Name": "ZebboYellow",
+      "Value": 3042904
+    },
+    {
+      "Name": "WorkerRobot",
+      "Value": 3043560
+    },
+    {
+      "Name": "Parasite",
+      "Value": 3046484
+    },
+    {
+      "Name": "Piston",
+      "Value": 3048944
+    },
+    {
+      "Name": "Ridley",
+      "Value": 3054576
+    },
+    {
+      "Name": "Metroid",
+      "Value": 3067012
+    },
+    {
+      "Name": "RinkaOrange",
+      "Value": 3071288
+    },
+    {
+      "Name": "RinkaGreen",
+      "Value": 3072288
+    },
+    {
+      "Name": "Polyp",
+      "Value": 3073904
+    },
+    {
+      "Name": "ViolaBlue",
+      "Value": 3075484
+    },
+    {
+      "Name": "ViolaOrange",
+      "Value": 3076724
+    },
+    {
+      "Name": "SecurityLaser",
+      "Value": 3078808
+    },
+    {
+      "Name": "Holtz",
+      "Value": 3084180
+    },
+    {
+      "Name": "GekitaiMachine",
+      "Value": 3085868
+    },
+    {
+      "Name": "RuinsTest",
+      "Value": 3087840
+    },
+    {
+      "Name": "Mella",
+      "Value": 3105840
+    },
+    {
+      "Name": "Atomic",
+      "Value": 3107104
+    },
+    {
+      "Name": "AreaBanner",
+      "Value": 3112080
+    },
+    {
+      "Name": "MotherBrain",
+      "Value": 3113988
+    },
+    {
+      "Name": "AcidWorm",
+      "Value": 3124268
+    },
+    {
+      "Name": "Sidehopper",
+      "Value": 3130480
+    },
+    {
+      "Name": "GeronNorfair",
+      "Value": 3132592
+    },
+    {
+      "Name": "Geega",
+      "Value": 3134744
+    },
+    {
+      "Name": "GeegaWhite",
+      "Value": 3135388
+    },
+    {
+      "Name": "RinkaZebetiteAndCannon",
+      "Value": 3136192
+    },
+    {
+      "Name": "ImagoLarvaRightSide",
+      "Value": 3140644
+    },
+    {
+      "Name": "TangleVine",
+      "Value": 3144380
+    },
+    {
+      "Name": "Imago",
+      "Value": 3152528
+    },
+    {
+      "Name": "Crocomire",
+      "Value": 3162196
+    },
+    {
+      "Name": "SearchlightEye",
+      "Value": 3174632
+    },
+    {
+      "Name": "Geron",
+      "Value": 3176060
+    },
+    {
+      "Name": "Gunship",
+      "Value": 3184080
+    },
+    {
+      "Name": "GlassTube",
+      "Value": 3191320
+    },
+    {
+      "Name": "SavePlatformChozodia",
+      "Value": 3200628
+    },
+    {
+      "Name": "Baristute",
+      "Value": 3208544
+    },
+    {
+      "Name": "ElevatorStatues",
+      "Value": 3212700
+    },
+    {
+      "Name": "RisingChozoPillar",
+      "Value": 3222424
+    },
+    {
+      "Name": "Skultera",
+      "Value": 3226700
+    },
+    {
+      "Name": "BossStatues",
+      "Value": 3228420
+    },
+    {
+      "Name": "Searchlight",
+      "Value": 3241528
+    },
+    {
+      "Name": "Gadora",
+      "Value": 3242544
+    },
+    {
+      "Name": "Steam",
+      "Value": 3246284
+    },
+    {
+      "Name": "PlasmaBeamBlock",
+      "Value": 3249004
+    },
+    {
+      "Name": "GravityBlock",
+      "Value": 3250260
+    },
+    {
+      "Name": "SpaceJumpBlock",
+      "Value": 3251504
+    },
+    {
+      "Name": "EscapeShip",
+      "Value": 3253820
+    },
+    {
+      "Name": "FakePowerBomb",
+      "Value": 3261792
+    },
+    {
+      "Name": "FallingChozoPillar",
+      "Value": 3262356
+    },
+    {
+      "Name": "MechaRidley",
+      "Value": 3276020
+    },
+    {
+      "Name": "MechaRidleyWeapons",
+      "Value": 3286120
+    },
+    {
+      "Name": "MechaRidleyDestroyed",
+      "Value": 3290216
+    },
+    {
+      "Name": "EscapeGateAndTimer",
+      "Value": 3301772
+    },
+    {
+      "Name": "NormalBeam_Top",
+      "Value": 3305896
+    },
+    {
+      "Name": "NormalBeam_Bottom",
+      "Value": 3306408
+    },
+    {
+      "Name": "NormalBeam_Charged_Top",
+      "Value": 3306920
+    },
+    {
+      "Name": "NormalBeam_Charged_Bottom",
+      "Value": 3307432
+    },
+    {
+      "Name": "LongBeam_Top",
+      "Value": 3308432
+    },
+    {
+      "Name": "LongBeam_Bottom",
+      "Value": 3308944
+    },
+    {
+      "Name": "LongBeam_Charged_Top",
+      "Value": 3309456
+    },
+    {
+      "Name": "LongBeam_Charged_Bottom",
+      "Value": 3309968
+    },
+    {
+      "Name": "IceBeam_Top",
+      "Value": 3310848
+    },
+    {
+      "Name": "IceBeam_Bottom",
+      "Value": 3311360
+    },
+    {
+      "Name": "IceBeam_Charged_Top",
+      "Value": 3311872
+    },
+    {
+      "Name": "IceBeam_Charged_Bottom",
+      "Value": 3312384
+    },
+    {
+      "Name": "WaveBeam_Top",
+      "Value": 3313460
+    },
+    {
+      "Name": "WaveBeam_Bottom",
+      "Value": 3313972
+    },
+    {
+      "Name": "WaveBeam_Charged_Top",
+      "Value": 3314484
+    },
+    {
+      "Name": "WaveBeam_Charged_Bottom",
+      "Value": 3314996
+    },
+    {
+      "Name": "PlasmaBeam_Top",
+      "Value": 3317460
+    },
+    {
+      "Name": "PlasmaBeam_Bottom",
+      "Value": 3317972
+    },
+    {
+      "Name": "PlasmaBeam_Charged_Top",
+      "Value": 3318484
+    },
+    {
+      "Name": "PlasmaBeam_Charged_Bottom",
+      "Value": 3318996
+    },
+    {
+      "Name": "Pistol_Top",
+      "Value": 3321976
+    },
+    {
+      "Name": "Pistol_Bottom",
+      "Value": 3322488
+    },
+    {
+      "Name": "Pistol_Charged_Top",
+      "Value": 3323000
+    },
+    {
+      "Name": "Pistol_Charged_Bottom",
+      "Value": 3323512
+    },
+    {
+      "Name": "CommonSprites",
+      "Value": 3324616
+    },
+    {
+      "Name": "MissileDigits",
+      "Value": 3338952
+    },
+    {
+      "Name": "PowerBombDigits",
+      "Value": 3341256
+    },
+    {
+      "Name": "MissileHUD_Inactive",
+      "Value": 3343560
+    },
+    {
+      "Name": "MissileHUD_Selected",
+      "Value": 3343624
+    },
+    {
+      "Name": "MissileHUD_Active",
+      "Value": 3343688
+    },
+    {
+      "Name": "MissileHUD_Refill1",
+      "Value": 3343752
+    },
+    {
+      "Name": "MissileHUD_Refill2",
+      "Value": 3343816
+    },
+    {
+      "Name": "MissileHUD_Refill3",
+      "Value": 3343880
+    },
+    {
+      "Name": "SuperMissileHUD_Inactive",
+      "Value": 3343944
+    },
+    {
+      "Name": "SuperMissileHUD_Selected",
+      "Value": 3344008
+    },
+    {
+      "Name": "SuperMissileHUD_Active",
+      "Value": 3344072
+    },
+    {
+      "Name": "SuperMissileHUD_Refill1",
+      "Value": 3344136
+    },
+    {
+      "Name": "SuperMissileHUD_Refill2",
+      "Value": 3344200
+    },
+    {
+      "Name": "SuperMissileHUD_Refill3",
+      "Value": 3344264
+    },
+    {
+      "Name": "PowerBombHUD_Inactive",
+      "Value": 3344328
+    },
+    {
+      "Name": "PowerBombHUD_Selected",
+      "Value": 3344392
+    },
+    {
+      "Name": "PowerBombHUD_Active",
+      "Value": 3344456
+    },
+    {
+      "Name": "PowerBombHUD_Refill1",
+      "Value": 3344520
+    },
+    {
+      "Name": "PowerBombHUD_Refill2",
+      "Value": 3344584
+    },
+    {
+      "Name": "PowerBombHUD_Refill3",
+      "Value": 3344648
+    },
+    {
+      "Name": "EnergyDigitsTens",
+      "Value": 3344712
+    },
+    {
+      "Name": "EnergyDigitsOnes",
+      "Value": 3345032
+    },
+    {
+      "Name": "EnergyDigitsRefill1",
+      "Value": 3345352
+    },
+    {
+      "Name": "EnergyDigitsRefill2",
+      "Value": 3345992
+    },
+    {
+      "Name": "EnergyDigitsRefill3",
+      "Value": 3346632
+    },
+    {
+      "Name": "EnergyTanks_Zero",
+      "Value": 3347272
+    },
+    {
+      "Name": "EnergyTanks_One",
+      "Value": 3347432
+    },
+    {
+      "Name": "EnergyTanks_Two",
+      "Value": 3347752
+    },
+    {
+      "Name": "EnergyTanks_Three",
+      "Value": 3348232
+    },
+    {
+      "Name": "EnergyTanks_Four",
+      "Value": 3348872
+    },
+    {
+      "Name": "EnergyTanks_Five",
+      "Value": 3349672
+    },
+    {
+      "Name": "EnergyTanks_Six",
+      "Value": 3350632
+    },
+    {
+      "Name": "EnergyTanks_Seven",
+      "Value": 3351752
+    },
+    {
+      "Name": "EnergyTanks_Eight",
+      "Value": 3353032
+    },
+    {
+      "Name": "EnergyTanks_Nine",
+      "Value": 3354472
+    },
+    {
+      "Name": "EnergyTanks_Ten",
+      "Value": 3356072
+    },
+    {
+      "Name": "EnergyTanks_Eleven",
+      "Value": 3357832
+    },
+    {
+      "Name": "EnergyTanks_Twelve",
+      "Value": 3359752
+    },
+    {
+      "Name": "EnergyTanksRefill_One",
+      "Value": 3361832
+    },
+    {
+      "Name": "EnergyTanksRefill_Two",
+      "Value": 3362312
+    },
+    {
+      "Name": "EnergyTanksRefill_Three",
+      "Value": 3362792
+    },
+    {
+      "Name": "EnergyTanksRefill_Four",
+      "Value": 3363272
+    },
+    {
+      "Name": "EnergyTanksRefill_Five",
+      "Value": 3363752
+    },
+    {
+      "Name": "EnergyTanksRefill_Six",
+      "Value": 3364232
+    },
+    {
+      "Name": "EnergyTanksRefill_Seven",
+      "Value": 3364712
+    },
+    {
+      "Name": "EnergyTanksRefill_Eight",
+      "Value": 3365192
+    },
+    {
+      "Name": "EnergyTanksRefill_Nine",
+      "Value": 3365672
+    },
+    {
+      "Name": "EnergyTanksRefill_Ten",
+      "Value": 3366152
+    },
+    {
+      "Name": "EnergyTanksRefill_Eleven",
+      "Value": 3366632
+    },
+    {
+      "Name": "EnergyTanksRefill_Twelve",
+      "Value": 3367112
+    },
+    {
+      "Name": "SuitlessHUDChargeBar",
+      "Value": 3367592
+    },
+    {
+      "Name": "EscapeTimerDigits",
+      "Value": 3397524
+    },
+    {
+      "Name": "KraidRisingKraidCloseUp",
+      "Value": 3588568
+    },
+    {
+      "Name": "KraidRisingOam",
+      "Value": 3600916
+    },
+    {
+      "Name": "KraidRisingKraidRising",
+      "Value": 3603928
+    },
+    {
+      "Name": "KraidRisingCaveBackround",
+      "Value": 3610364
+    },
+    {
+      "Name": "StoryTextCutscene_Unused",
+      "Value": 3624228
+    },
+    {
+      "Name": "MotherBrainCloseUpMotherBrain",
+      "Value": 3629988
+    },
+    {
+      "Name": "MotherBrainCloseUpBackground",
+      "Value": 3640876
+    },
+    {
+      "Name": "MotherBrainCloseUpEye",
+      "Value": 3662560
+    },
+    {
+      "Name": "MotherBrainCloseUpBigEye",
+      "Value": 3667096
+    },
+    {
+      "Name": "MotherBrainCloseUpTankView",
+      "Value": 3681024
+    },
+    {
+      "Name": "RidleyInSpaceShips",
+      "Value": 3698824
+    },
+    {
+      "Name": "RidleyInSpaceRidleySitting",
+      "Value": 3705084
+    },
+    {
+      "Name": "RidleyInSpaceShipInterior",
+      "Value": 3720476
+    },
+    {
+      "Name": "RidleyInSpaceRidleySuspicious",
+      "Value": 3738040
+    },
+    {
+      "Name": "RidleyInSpaceShipInterior2",
+      "Value": 3745884
+    },
+    {
+      "Name": "RidleyInSpaceMotherShipLeaving",
+      "Value": 3762824
+    },
+    {
+      "Name": "RidleyInSpaceSpaceBackground",
+      "Value": 3768812
+    },
+    {
+      "Name": "RidleyLandingZebesBackground",
+      "Value": 3804692
+    },
+    {
+      "Name": "RidleyLandingMotherShip_1",
+      "Value": 3817360
+    },
+    {
+      "Name": "RidleyLandingMotherShip_2",
+      "Value": 3817512
+    },
+    {
+      "Name": "RidleyLandingMotherShip_3",
+      "Value": 3817748
+    },
+    {
+      "Name": "RidleyLandingMotherShip_4",
+      "Value": 3818008
+    },
+    {
+      "Name": "RidleyLandingMotherShip_5",
+      "Value": 3818360
+    },
+    {
+      "Name": "RidleyLandingMotherShip_6",
+      "Value": 3818720
+    },
+    {
+      "Name": "RidleyLandingMotherShip_7",
+      "Value": 3819108
+    },
+    {
+      "Name": "RidleyLandingMotherShip_8",
+      "Value": 3819408
+    },
+    {
+      "Name": "RidleyLandingMotherShip_9",
+      "Value": 3819568
+    },
+    {
+      "Name": "CutsceneZebesMotherShipBackground",
+      "Value": 3819640
+    },
+    {
+      "Name": "CutsceneZebesGround",
+      "Value": 3839908
+    },
+    {
+      "Name": "CutsceneZebesRockyBackground",
+      "Value": 3841816
+    },
+    {
+      "Name": "CutsceneMotherShipEscapeShipParticles",
+      "Value": 3847872
+    },
+    {
+      "Name": "RidleyLandingRidleyAndRockShadow",
+      "Value": 3859692
+    },
+    {
+      "Name": "RidleyLandingRidleyFlyingBackground",
+      "Value": 3870844
+    },
+    {
+      "Name": "RidleySpawnBackground",
+      "Value": 3891348
+    },
+    {
+      "Name": "RidleySpawnScreaming",
+      "Value": 3924184
+    },
+    {
+      "Name": "GettingFullyPoweredSuitRingSparkles",
+      "Value": 3969472
+    },
+    {
+      "Name": "GettingFullyPoweredSuitBackground",
+      "Value": 3973604
+    },
+    {
+      "Name": "BeforeCharlieLeftSideOfChozoWall",
+      "Value": 3991796
+    },
+    {
+      "Name": "BeforeCharlieRightSideOfChozoWall",
+      "Value": 4007992
+    },
+    {
+      "Name": "BeforeCharlieChozoWallBackground",
+      "Value": 4023940
+    },
+    {
+      "Name": "StatueOpeningRoom",
+      "Value": 4118012
+    },
+    {
+      "Name": "EnterTourianBackground",
+      "Value": 4130320
+    },
+    {
+      "Name": "EnterTourianForeground",
+      "Value": 4142760
+    },
+    {
+      "Name": "EnterTourianDeadSpacePirate_1",
+      "Value": 4152692
+    },
+    {
+      "Name": "EnterTourianDeadSpacePirate_2",
+      "Value": 4152912
+    },
+    {
+      "Name": "EnterTourianDeadSpacePirate_3",
+      "Value": 4153220
+    },
+    {
+      "Name": "PauseScreenHud",
+      "Value": 4190136
+    },
+    {
+      "Name": "MinimapLetters",
+      "Value": 4195752
+    },
+    {
+      "Name": "MenuNamesJapanese",
+      "Value": 4195992
+    },
+    {
+      "Name": "EquipmentNamesJapanese",
+      "Value": 4196360
+    },
+    {
+      "Name": "TankIcons",
+      "Value": 4197896
+    },
+    {
+      "Name": "MapScreenAreaNamesEnglish",
+      "Value": 4205040
+    },
+    {
+      "Name": "MapScreenUnknownItemsNamesJapanese",
+      "Value": 4205904
+    },
+    {
+      "Name": "MapScreenChozoStatueAreaNamesEnglish",
+      "Value": 4206164
+    },
+    {
+      "Name": "ChozoHintBackground",
+      "Value": 4206772
+    },
+    {
+      "Name": "EquipmentNamesHiragana",
+      "Value": 4232964
+    },
+    {
+      "Name": "EquipmentNamesEnglish",
+      "Value": 4234608
+    },
+    {
+      "Name": "EquipmentNamesGerman",
+      "Value": 4236128
+    },
+    {
+      "Name": "EquipmentNamesFrench",
+      "Value": 4237648
+    },
+    {
+      "Name": "EquipmentNamesItalian",
+      "Value": 4239168
+    },
+    {
+      "Name": "EquipmentNamesSpanish",
+      "Value": 4240688
+    },
+    {
+      "Name": "MapScreenAreaNamesHiragana",
+      "Value": 4242208
+    },
+    {
+      "Name": "MenuNamesHiragana",
+      "Value": 4243000
+    },
+    {
+      "Name": "MenuNamesEnglish",
+      "Value": 4243452
+    },
+    {
+      "Name": "MenuNamesGerman",
+      "Value": 4243820
+    },
+    {
+      "Name": "MenuNamesFrench",
+      "Value": 4244208
+    },
+    {
+      "Name": "MenuNamesItalian",
+      "Value": 4244572
+    },
+    {
+      "Name": "MenuNamesSpanish",
+      "Value": 4244940
+    },
+    {
+      "Name": "MapScreenUnknownItemsNamesHiragana",
+      "Value": 4245324
+    },
+    {
+      "Name": "MapScreenUnknownItemsNamesEnglish",
+      "Value": 4245628
+    },
+    {
+      "Name": "MapScreenUnknownItemsNamesGerman",
+      "Value": 4245888
+    },
+    {
+      "Name": "MapScreenUnknownItemsNamesFrench",
+      "Value": 4246160
+    },
+    {
+      "Name": "MapScreenUnknownItemsNamesItalian",
+      "Value": 4246432
+    },
+    {
+      "Name": "MapScreenUnknownItemsNamesSpanish",
+      "Value": 4246700
+    },
+    {
+      "Name": "MapScreenChozoStatueAreaNamesHiragana",
+      "Value": 4246976
+    },
+    {
+      "Name": "MinimapTiles",
+      "Value": 4251844
+    },
+    {
+      "Name": "MinimapTilesAreaNamesEnglish",
+      "Value": 4264132
+    },
+    {
+      "Name": "MinimapTilesAreaNamesHiragana",
+      "Value": 4264448
+    },
+    {
+      "Name": "EraseSramMenuObjects",
+      "Value": 4266852
+    },
+    {
+      "Name": "EraseSramMenuFirstBox",
+      "Value": 4268760
+    },
+    {
+      "Name": "EraseSramMenuConfirmJapanse",
+      "Value": 4269232
+    },
+    {
+      "Name": "EraseSramMenuConfirmEnglish",
+      "Value": 4270212
+    },
+    {
+      "Name": "EraseSramMenuConfirmFrench",
+      "Value": 4270976
+    },
+    {
+      "Name": "EraseSramMenuConfirmGerman",
+      "Value": 4271812
+    },
+    {
+      "Name": "EraseSramMenuConfirmItalian",
+      "Value": 4272700
+    },
+    {
+      "Name": "EraseSramMenuConfirmSpanish",
+      "Value": 4273504
+    },
+    {
+      "Name": "EraseSramMenuQuestionJapanese",
+      "Value": 4274320
+    },
+    {
+      "Name": "EraseSramMenuQuestionEnglish",
+      "Value": 4275300
+    },
+    {
+      "Name": "EraseSramMenuQuestionFrench",
+      "Value": 4276040
+    },
+    {
+      "Name": "EraseSramMenuQuestionGerman",
+      "Value": 4276788
+    },
+    {
+      "Name": "EraseSramMenuQuestionItalian",
+      "Value": 4277608
+    },
+    {
+      "Name": "EraseSramMenuQuestionSpanish",
+      "Value": 4278492
+    },
+    {
+      "Name": "Characters",
+      "Value": 4281440
+    },
+    {
+      "Name": "TitleScreenTitle",
+      "Value": 4485344
+    },
+    {
+      "Name": "TitleScreenSparkles",
+      "Value": 4489724
+    },
+    {
+      "Name": "TitleScreenSpaceBackground",
+      "Value": 4490748
+    },
+    {
+      "Name": "TitleScreenSpaceBackgroundDecoration",
+      "Value": 4503560
+    },
+    {
+      "Name": "TitleScreenSpaceAndGroundBackground",
+      "Value": 4506748
+    },
+    {
+      "Name": "GameOverTextAndBackground",
+      "Value": 4518332
+    },
+    {
+      "Name": "GameOverTextPromptEnglish",
+      "Value": 4529284
+    },
+    {
+      "Name": "GameOverTextPromptHiragana",
+      "Value": 4530616
+    },
+    {
+      "Name": "GameOverTextPromptGerman",
+      "Value": 4532328
+    },
+    {
+      "Name": "GameOverTextPromptFrench",
+      "Value": 4533680
+    },
+    {
+      "Name": "GameOverTextPromptItalian",
+      "Value": 4535028
+    },
+    {
+      "Name": "GameOverTextPromptSpanish",
+      "Value": 4536380
+    },
+    {
+      "Name": "FileSelectChozoBackground",
+      "Value": 4546416
+    },
+    {
+      "Name": "FileSelectCharacters",
+      "Value": 4558356
+    },
+    {
+      "Name": "FileSelectTextEnglish",
+      "Value": 4564480
+    },
+    {
+      "Name": "FileSelectTextGerman",
+      "Value": 4565860
+    },
+    {
+      "Name": "FileSelectTextFrench",
+      "Value": 4567240
+    },
+    {
+      "Name": "FileSelectTextItalian",
+      "Value": 4568620
+    },
+    {
+      "Name": "FileSelectTextSpanish",
+      "Value": 4570000
+    },
+    {
+      "Name": "FileSelectIcons",
+      "Value": 4571380
+    },
+    {
+      "Name": "IntroTextAndShipFlyingIn",
+      "Value": 4586932
+    },
+    {
+      "Name": "IntroSpaceBackground",
+      "Value": 4592172
+    },
+    {
+      "Name": "IntroViewOfZebes",
+      "Value": 4632972
+    },
+    {
+      "Name": "IntroMotherBrain",
+      "Value": 4647224
+    },
+    {
+      "Name": "IntroFuzz",
+      "Value": 4669548
+    },
+    {
+      "Name": "TourianEscapeRain",
+      "Value": 4697048
+    },
+    {
+      "Name": "TourianEscapeDebris",
+      "Value": 4705660
+    },
+    {
+      "Name": "MotherShipExplodingFlash",
+      "Value": 4706324
+    },
+    {
+      "Name": "MotherShipBlowingUpExplosions",
+      "Value": 4718920
+    },
+    {
+      "Name": "TourianEscapeZebes",
+      "Value": 4759932
+    },
+    {
+      "Name": "TourianEscapeZebesExplodingShipAndExplosions",
+      "Value": 4776008
+    },
+    {
+      "Name": "TourianEscapeShipsAndProjectiles",
+      "Value": 4858976
+    },
+    {
+      "Name": "TourianEscapeShipCrashingBackgroundAndShip",
+      "Value": 4881332
+    },
+    {
+      "Name": "TourianEscapeShipCrashingForeground",
+      "Value": 4894336
+    },
+    {
+      "Name": "TourianEscapeShipGoingToCrash",
+      "Value": 4904300
+    },
+    {
+      "Name": "TourianEscapeShipCrashingExplosion",
+      "Value": 4909176
+    },
+    {
+      "Name": "FusionGallery_Top_0",
+      "Value": 4987368
+    },
+    {
+      "Name": "FusionGallery_Bottom_0",
+      "Value": 5009880
+    },
+    {
+      "Name": "FusionGallery_Top_1",
+      "Value": 5022644
+    },
+    {
+      "Name": "FusionGallery_Bottom_1",
+      "Value": 5046244
+    },
+    {
+      "Name": "FusionGallery_Top_2",
+      "Value": 5058188
+    },
+    {
+      "Name": "FusionGallery_Bottom_2",
+      "Value": 5081112
+    },
+    {
+      "Name": "FusionGallery_Top_3",
+      "Value": 5094284
+    },
+    {
+      "Name": "FusionGallery_Bottom_3",
+      "Value": 5119740
+    },
+    {
+      "Name": "FusionGallery_Top_4",
+      "Value": 5135012
+    },
+    {
+      "Name": "FusionGallery_Bottom_4",
+      "Value": 5162416
+    },
+    {
+      "Name": "FusionGallery_Top_11",
+      "Value": 5194820
+    },
+    {
+      "Name": "FusionGallery_Bottom_11",
+      "Value": 5218564
+    },
+    {
+      "Name": "FusionGallery_Top_12",
+      "Value": 5234284
+    },
+    {
+      "Name": "FusionGallery_Bottom_12",
+      "Value": 5256700
+    },
+    {
+      "Name": "FusionGallery_Top_5",
+      "Value": 5271028
+    },
+    {
+      "Name": "FusionGallery_Bottom_5",
+      "Value": 5297560
+    },
+    {
+      "Name": "FusionGallery_Top_6",
+      "Value": 5310668
+    },
+    {
+      "Name": "FusionGallery_Bottom_6",
+      "Value": 5337684
+    },
+    {
+      "Name": "FusionGallery_Top_7",
+      "Value": 5351360
+    },
+    {
+      "Name": "FusionGallery_Bottom_7",
+      "Value": 5379268
+    },
+    {
+      "Name": "FusionGallery_Top_8",
+      "Value": 5396756
+    },
+    {
+      "Name": "FusionGallery_Bottom_8",
+      "Value": 5422424
+    },
+    {
+      "Name": "FusionGallery_Top_9",
+      "Value": 5438100
+    },
+    {
+      "Name": "FusionGallery_Bottom_9",
+      "Value": 5465772
+    },
+    {
+      "Name": "FusionGallery_Top_10",
+      "Value": 5483212
+    },
+    {
+      "Name": "FusionGallery_Bottom_10",
+      "Value": 5506268
+    },
+    {
+      "Name": "CreditsCharacters",
+      "Value": 5563120
+    },
+    {
+      "Name": "EndingImage_Top_0",
+      "Value": 5565580
+    },
+    {
+      "Name": "EndingImage_Bottom_0",
+      "Value": 5592632
+    },
+    {
+      "Name": "EndingImage_Top_1",
+      "Value": 5608324
+    },
+    {
+      "Name": "EndingImage_Bottom_1",
+      "Value": 5632944
+    },
+    {
+      "Name": "EndingImage_Top_2",
+      "Value": 5648608
+    },
+    {
+      "Name": "EndingImage_Bottom_2",
+      "Value": 5675952
+    },
+    {
+      "Name": "EndingImage_Top_3",
+      "Value": 5690972
+    },
+    {
+      "Name": "EndingImage_Bottom_3",
+      "Value": 5714436
+    },
+    {
+      "Name": "EndingImage_Top_4",
+      "Value": 5727900
+    },
+    {
+      "Name": "EndingImage_Bottom_4",
+      "Value": 5753808
+    },
+    {
+      "Name": "EndingImage_Top_5",
+      "Value": 5768232
+    },
+    {
+      "Name": "EndingImage_Bottom_5",
+      "Value": 5790860
+    },
+    {
+      "Name": "EndingImage_Top_6",
+      "Value": 5808764
+    },
+    {
+      "Name": "EndingImage_Bottom_6",
+      "Value": 5834064
+    },
+    {
+      "Name": "EndingImage_Top_7",
+      "Value": 5848100
+    },
+    {
+      "Name": "EndingImage_Bottom_7",
+      "Value": 5877680
+    },
+    {
+      "Name": "EndingImageText",
+      "Value": 5895592
+    },
+    {
+      "Name": "EndingImageTextJap",
+      "Value": 5898804
+    },
+    {
+      "Name": "EndingImageNumbers_Upper",
+      "Value": 5900848
+    },
+    {
+      "Name": "EndingImageNumbers_Lower",
+      "Value": 5901488
+    },
+    {
+      "Name": "EndingImageNumbersMisc",
+      "Value": 5902128
+    },
+    {
+      "Name": "EndingLight",
+      "Value": 5916400
+    },
+    {
+      "Name": "CreditsChozoWallBackground",
+      "Value": 5974688
+    },
+    {
+      "Name": "CreditsChozoWallBottom",
+      "Value": 6007732
+    },
+    {
+      "Name": "CreditsChozoWallBottomZoomed",
+      "Value": 6024596
+    },
+    {
+      "Name": "CreditsChozoDrawing",
+      "Value": 6046708
+    },
+    {
+      "Name": "ChozodiaEscapeCraterBackground",
+      "Value": 6070552
+    },
+    {
+      "Name": "ChozodiaEscapeBlueShipVeryClose",
+      "Value": 6093132
+    },
+    {
+      "Name": "ChozodiaEscapeZebesAndSky",
+      "Value": 6098152
+    },
+    {
+      "Name": "ChozodiaEscapeMissionAccomplishedLetters",
+      "Value": 6130388
+    },
+    {
+      "Name": "CommonTiles",
+      "Value": 6132748
+    },
+    {
+      "Name": "CommonTilesMothership",
+      "Value": 6136844
+    },
+    {
+      "Name": "AnimatedTiles",
+      "Value": 7665844
+    },
+    {
+      "Name": "AnimatedTank",
+      "Value": 7678644
+    },
+    {
+      "Name": "AnimatedLiquids",
+      "Value": 7680692
+    }
+  ]
+}

@@ -12,7 +12,7 @@ namespace mage.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.12.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -337,12 +337,12 @@ namespace mage.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string globalBookmarks {
+        public string ZMglobalBookmarks {
             get {
-                return ((string)(this["globalBookmarks"]));
+                return ((string)(this["ZMglobalBookmarks"]));
             }
             set {
-                this["globalBookmarks"] = value;
+                this["ZMglobalBookmarks"] = value;
             }
         }
         
@@ -366,6 +366,18 @@ namespace mage.Properties {
             }
             set {
                 this["updateCheckIgnoreVersions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MFglobalBookmarks {
+            get {
+                return ((string)(this["MFglobalBookmarks"]));
+            }
+            set {
+                this["MFglobalBookmarks"] = value;
             }
         }
     }
