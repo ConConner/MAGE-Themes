@@ -1,11 +1,3 @@
-TODO:
-- Write OAM Editor documentation
-- Write Bookmark documentation / Recent Offset Documentation
-
-- fix OAM repointing breaking enemy previews
-- move OAM out of experimental
-- Fix help theming with light mode colors
-
 MAGE Themes:
 - Theming support
 - Fix crashes
