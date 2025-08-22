@@ -350,6 +350,7 @@ public partial class FormOam : Form
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
+            Version.RepointedOAM(originalOamOffset, writeOffset);
             textBox_oamOffset.Text = Hex.ToString(writeOffset);
             SetOAM();
         }

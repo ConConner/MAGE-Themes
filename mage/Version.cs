@@ -547,5 +547,61 @@ namespace mage
             }
         }
 
+        public static bool TryGetPrimarySpriteOAM(byte key, out int value)
+        {
+            if (ProjectConfig.PrimarySpriteOAMRepoints.TryGetValue(key, out value))
+            {
+                if (value == 0) return false;
+                return true;
+            }
+            else return PSpriteOAM.TryGetValue(key, out value);
+        }
+        public static bool TryGetSecondarySpriteOAM(byte key, out int value)
+        {
+            if (ProjectConfig.SecondarySpriteOAMRepoints.TryGetValue(key, out value))
+            {
+                if (value == 0) return false;
+                return true;
+            }
+            else return SSpriteOAM.TryGetValue(key, out value);
+        }
+
+        public static void RepointedOAM(int oldOffset, int newOffset)
+        {
+            bool repointedInProject;
+
+            repointedInProject = false;
+            foreach (var kvp in ProjectConfig.PrimarySpriteOAMRepoints)
+            {
+                if (kvp.Value == oldOffset)
+                {
+                    ProjectConfig.PrimarySpriteOAMRepoints[kvp.Key] = newOffset;
+                    repointedInProject = true;
+                }
+            }
+            if (!repointedInProject) foreach (var kvp in PSpriteOAM)
+                {
+                    if (kvp.Value == oldOffset) ProjectConfig.PrimarySpriteOAMRepoints[kvp.Key] = newOffset;
+                }
+
+            foreach (var kvp in ProjectConfig.SecondarySpriteOAMRepoints)
+            {
+                if (kvp.Value == oldOffset)
+                {
+                    ProjectConfig.SecondarySpriteOAMRepoints[kvp.Key] = newOffset;
+                    repointedInProject = true;
+                }
+            }
+            if (!repointedInProject) foreach (var kvp in SSpriteOAM)
+                {
+                    if (kvp.Value == oldOffset) ProjectConfig.SecondarySpriteOAMRepoints[kvp.Key] = newOffset;
+                }
+        }
+
+        public static void MarkOAMInvalid(byte spriteID, bool isSecondary)
+        {
+            if (isSecondary) ProjectConfig.SecondarySpriteOAMRepoints[spriteID] = 0;
+            else ProjectConfig.PrimarySpriteOAMRepoints[spriteID] = 0;
+        }
     }
 }

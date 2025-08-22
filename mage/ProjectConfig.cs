@@ -11,6 +11,9 @@ namespace mage;
 public class ProjectConfig
 {
     // Add Fields here
+    public Dictionary<byte, int> PrimarySpriteOAMRepoints { get; set; } = new();
+    public Dictionary<byte, int> SecondarySpriteOAMRepoints { get; set; } = new();
+
 
     // Default values need to be added here
     public static ProjectConfig DefaultConfig { get; } = new ProjectConfig()
@@ -41,7 +44,7 @@ public class ProjectConfig
     // Function to check if the initial default config was ever changed
     private static readonly string _defaultJson = JsonSerializer.Serialize(DefaultConfig, jsonOptions);
     public static bool IsDefault(ProjectConfig config)
-    { 
+    {
         string configJson = JsonSerializer.Serialize(config, jsonOptions);
         return configJson.Equals(_defaultJson);
     }
