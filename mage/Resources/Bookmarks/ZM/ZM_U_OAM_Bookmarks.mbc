@@ -1,0 +1,5483 @@
+{
+    "Description": "OAM Addresses extracted from the Zero Mission ROM",
+    "Items": [
+        {
+            "Items": [
+                {
+                    "Name": "SmallEnergy",
+                    "Value": 2828072
+                },
+                {
+                    "Name": "LargeEnergy",
+                    "Value": 2828112
+                },
+                {
+                    "Name": "Missile",
+                    "Value": 2828152
+                },
+                {
+                    "Name": "SuperMissile",
+                    "Value": 2828176
+                },
+                {
+                    "Name": "PowerBomb",
+                    "Value": 2828200
+                },
+                {
+                    "Name": "MultipleLargeEnergySlot1",
+                    "Value": 2828224
+                },
+                {
+                    "Name": "MultipleLargeEnergySlot3",
+                    "Value": 2828264
+                },
+                {
+                    "Name": "MultipleLargeEnergySlot2",
+                    "Value": 2828304
+                }
+            ],
+            "Name": "EnemyDrop"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2828360
+                },
+                {
+                    "Name": "Unused",
+                    "Value": 2828384
+                }
+            ],
+            "Name": "UnusedSprites"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2829224
+                }
+            ],
+            "Name": "MorphBall"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2829264
+                }
+            ],
+            "Name": "MorphBallOutside"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2830604
+                }
+            ],
+            "Name": "PowerGrip"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2830644
+                }
+            ],
+            "Name": "PowerGripGlow"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Visible",
+                    "Value": 2832632
+                },
+                {
+                    "Name": "Spawning",
+                    "Value": 2832672
+                }
+            ],
+            "Name": "ChargeBeam"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2832776
+                }
+            ],
+            "Name": "ChargeBeamGlow"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "LegStanding",
+                    "Value": 2840368
+                },
+                {
+                    "Name": "LegSitting",
+                    "Value": 2840384
+                },
+                {
+                    "Name": "LegSeated",
+                    "Value": 2840464
+                },
+                {
+                    "Name": "EyeOpened",
+                    "Value": 2840496
+                },
+                {
+                    "Name": "EyeClosing",
+                    "Value": 2840512
+                },
+                {
+                    "Name": "EyeOpening",
+                    "Value": 2840536
+                },
+                {
+                    "Name": "EyeClosed",
+                    "Value": 2840560
+                },
+                {
+                    "Name": "ArmIdle",
+                    "Value": 2840576
+                },
+                {
+                    "Name": "ArmGlow",
+                    "Value": 2840592
+                },
+                {
+                    "Name": "ArmSamusGrabbed",
+                    "Value": 2840664
+                },
+                {
+                    "Name": "GlowIdle",
+                    "Value": 2841120
+                }
+            ],
+            "Name": "ChozoStatuePart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2840480
+                }
+            ],
+            "Name": "ChozoStatue"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "NormalClosed",
+                    "Value": 2840680
+                },
+                {
+                    "Name": "NormalRevealing",
+                    "Value": 2840720
+                },
+                {
+                    "Name": "NormalRevealed",
+                    "Value": 2840752
+                },
+                {
+                    "Name": "UnknownClosed",
+                    "Value": 2888432
+                },
+                {
+                    "Name": "UnknownRevealing",
+                    "Value": 2888472
+                },
+                {
+                    "Name": "UnknownRevealed",
+                    "Value": 2888504
+                }
+            ],
+            "Name": "ChozoBall"
+        },
+        {
+            "Name": "ChozoStatueRefill",
+            "Value": 2840792
+        },
+        {
+            "Items": [
+                {
+                    "Name": "LegStanding",
+                    "Value": 2888120
+                },
+                {
+                    "Name": "LegSitting",
+                    "Value": 2888136
+                },
+                {
+                    "Name": "LegSeated",
+                    "Value": 2888216
+                },
+                {
+                    "Name": "EyeOpened",
+                    "Value": 2888248
+                },
+                {
+                    "Name": "EyeClosing",
+                    "Value": 2888264
+                },
+                {
+                    "Name": "EyeOpening",
+                    "Value": 2888288
+                },
+                {
+                    "Name": "EyeClosed",
+                    "Value": 2888312
+                },
+                {
+                    "Name": "ArmIdle",
+                    "Value": 2888328
+                },
+                {
+                    "Name": "ArmGlow",
+                    "Value": 2888344
+                },
+                {
+                    "Name": "ArmSamusGrabbed",
+                    "Value": 2888416
+                },
+                {
+                    "Name": "GlowIdle",
+                    "Value": 2888872
+                }
+            ],
+            "Name": "UnknownItemChozoStatuePart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2888232
+                }
+            ],
+            "Name": "UnknownItemChozoStatue"
+        },
+        {
+            "Name": "UnknownItemChozoStatueRefill",
+            "Value": 2888544
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Falling",
+                    "Value": 2902592
+                },
+                {
+                    "Name": "OnGround",
+                    "Value": 2902632
+                },
+                {
+                    "Name": "TurningEdgeLeft",
+                    "Value": 2902672
+                },
+                {
+                    "Name": "TurningEdgeRight",
+                    "Value": 2902704
+                },
+                {
+                    "Name": "OnWall",
+                    "Value": 2902736
+                },
+                {
+                    "Name": "TurningCornerRight",
+                    "Value": 2902776
+                },
+                {
+                    "Name": "TurningCornerLeft",
+                    "Value": 2902808
+                },
+                {
+                    "Name": "WalkingOnLeftSlope",
+                    "Value": 2902840
+                },
+                {
+                    "Name": "WalkingOnRightSlope",
+                    "Value": 2902880
+                }
+            ],
+            "Name": "Zoomer"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "OnGround",
+                    "Value": 2906232
+                },
+                {
+                    "Name": "TurningEdgeLeft",
+                    "Value": 2906272
+                },
+                {
+                    "Name": "TurningEdgeRight",
+                    "Value": 2906304
+                },
+                {
+                    "Name": "OnWall",
+                    "Value": 2906336
+                },
+                {
+                    "Name": "TurningCornerRight",
+                    "Value": 2906376
+                },
+                {
+                    "Name": "TurningCornerLeft",
+                    "Value": 2906408
+                },
+                {
+                    "Name": "WalkingOnSlope",
+                    "Value": 2906440
+                },
+                {
+                    "Name": "FallingOnGround",
+                    "Value": 2906480
+                },
+                {
+                    "Name": "FallingOnWall",
+                    "Value": 2906552
+                }
+            ],
+            "Name": "Zeela"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2906624
+                },
+                {
+                    "Name": "Spinning_Unused",
+                    "Value": 2906640
+                },
+                {
+                    "Name": "Exploding",
+                    "Value": 2906680
+                }
+            ],
+            "Name": "ZeelaEyes"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "MouthClosed",
+                    "Value": 2927380
+                },
+                {
+                    "Name": "MouthClosedBlink",
+                    "Value": 2927428
+                },
+                {
+                    "Name": "OpeningMouth",
+                    "Value": 2927516
+                },
+                {
+                    "Name": "MouthOpened",
+                    "Value": 2927588
+                },
+                {
+                    "Name": "Rising",
+                    "Value": 2927644
+                },
+                {
+                    "Name": "ClosingMouth",
+                    "Value": 2927668
+                },
+                {
+                    "Name": "2cb29c",
+                    "Value": 2929308
+                },
+                {
+                    "Name": "2cb2ac",
+                    "Value": 2929324
+                }
+            ],
+            "Name": "Kraid"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "2cac5c",
+                    "Value": 2927708
+                },
+                {
+                    "Name": "LeftArmIdle",
+                    "Value": 2927724
+                },
+                {
+                    "Name": "LeftArmDying",
+                    "Value": 2927812
+                },
+                {
+                    "Name": "LeftArmThrowingNails",
+                    "Value": 2927900
+                },
+                {
+                    "Name": "2cadc4",
+                    "Value": 2928068
+                },
+                {
+                    "Name": "RightArmIdle",
+                    "Value": 2928084
+                },
+                {
+                    "Name": "RightArmAttacking",
+                    "Value": 2928172
+                },
+                {
+                    "Name": "RightArmDying",
+                    "Value": 2928276
+                },
+                {
+                    "Name": "LeftFeetRising",
+                    "Value": 2928380
+                },
+                {
+                    "Name": "LeftFeetIdle1",
+                    "Value": 2928396
+                },
+                {
+                    "Name": "LeftFeetMovingRight",
+                    "Value": 2928436
+                },
+                {
+                    "Name": "LeftFeetIdle2",
+                    "Value": 2928500
+                },
+                {
+                    "Name": "LeftFeetMovedRight",
+                    "Value": 2928540
+                },
+                {
+                    "Name": "LeftFeetMovingLeft",
+                    "Value": 2928612
+                },
+                {
+                    "Name": "LeftFeetMovedLeft",
+                    "Value": 2928676
+                },
+                {
+                    "Name": "RightFeetRising",
+                    "Value": 2928716
+                },
+                {
+                    "Name": "RightFeetIdle1",
+                    "Value": 2928732
+                },
+                {
+                    "Name": "RightFeetMovedRight",
+                    "Value": 2928772
+                },
+                {
+                    "Name": "RightFeetIdle2",
+                    "Value": 2928844
+                },
+                {
+                    "Name": "RightFeetMovingRight",
+                    "Value": 2928884
+                },
+                {
+                    "Name": "RightFeetMovedLeft",
+                    "Value": 2928948
+                },
+                {
+                    "Name": "RightFeetMovingLeft",
+                    "Value": 2928988
+                },
+                {
+                    "Name": "TopHoleLeft",
+                    "Value": 2929052
+                },
+                {
+                    "Name": "TopHoleRight",
+                    "Value": 2929092
+                },
+                {
+                    "Name": "MiddleHoleLeft",
+                    "Value": 2929132
+                },
+                {
+                    "Name": "MiddleHoleRight",
+                    "Value": 2929172
+                },
+                {
+                    "Name": "BottomHoleLeft",
+                    "Value": 2929212
+                },
+                {
+                    "Name": "BottomHoleRight",
+                    "Value": 2929252
+                }
+            ],
+            "Name": "KraidPart"
+        },
+        {
+            "Name": "KraidNail",
+            "Value": 2929292
+        },
+        {
+            "Name": "KraidSpike",
+            "Value": 2929340
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2931172
+                }
+            ],
+            "Name": "SaveYesNoCursor"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "TwoLinesSpawn",
+                    "Value": 2931212
+                },
+                {
+                    "Name": "TwoLinesRemoving",
+                    "Value": 2931300
+                },
+                {
+                    "Name": "TwoLinesStatic",
+                    "Value": 2931388
+                },
+                {
+                    "Name": "OneLineSpawn",
+                    "Value": 2931404
+                },
+                {
+                    "Name": "OneLineRemoving",
+                    "Value": 2931476
+                },
+                {
+                    "Name": "OneLineStatic",
+                    "Value": 2931548
+                }
+            ],
+            "Name": "ItemBanner"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 2932808
+                },
+                {
+                    "Name": "TurningAround",
+                    "Value": 2932848
+                },
+                {
+                    "Name": "TurningAroundPart2",
+                    "Value": 2932872
+                }
+            ],
+            "Name": "Ripper"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 2933848
+                },
+                {
+                    "Name": "TurningAround",
+                    "Value": 2933888
+                },
+                {
+                    "Name": "TurningAroundPart2",
+                    "Value": 2933912
+                }
+            ],
+            "Name": "Ripper2"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2935340
+                },
+                {
+                    "Name": "Moving",
+                    "Value": 2935380
+                }
+            ],
+            "Name": "Zeb"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2937972
+                },
+                {
+                    "Name": "Spinning",
+                    "Value": 2938012
+                },
+                {
+                    "Name": "GoingDown",
+                    "Value": 2938060
+                },
+                {
+                    "Name": "Crashing",
+                    "Value": 2938100
+                },
+                {
+                    "Name": "CrashingUnused",
+                    "Value": 2938140
+                },
+                {
+                    "Name": "CrashingUnused2",
+                    "Value": 2938180
+                },
+                {
+                    "Name": "CrashingUnused3",
+                    "Value": 2938228
+                },
+                {
+                    "Name": "CrashingUnused4",
+                    "Value": 2938268
+                }
+            ],
+            "Name": "Skree"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "GoingDown",
+                    "Value": 2938308
+                },
+                {
+                    "Name": "GoingUp",
+                    "Value": 2938340
+                }
+            ],
+            "Name": "SkreeExplosion"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Unused1",
+                    "Value": 2941420
+                },
+                {
+                    "Name": "Idle",
+                    "Value": 2941460
+                },
+                {
+                    "Name": "Idle_Unused",
+                    "Value": 2941500
+                },
+                {
+                    "Name": "Moving",
+                    "Value": 2941572
+                },
+                {
+                    "Name": "Unused2",
+                    "Value": 2941676
+                },
+                {
+                    "Name": "Unused3",
+                    "Value": 2941844
+                },
+                {
+                    "Name": "Moving_Unused",
+                    "Value": 2941916
+                }
+            ],
+            "Name": "Reo"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "OffIdle",
+                    "Value": 2943256
+                },
+                {
+                    "Name": "OffGrabbingSamus",
+                    "Value": 2943272
+                },
+                {
+                    "Name": "OffSamusGrabbed",
+                    "Value": 2943304
+                },
+                {
+                    "Name": "OffReleasingSamus",
+                    "Value": 2943320
+                },
+                {
+                    "Name": "OnIdle",
+                    "Value": 2943352
+                },
+                {
+                    "Name": "OnGrabbingSamus",
+                    "Value": 2943408
+                },
+                {
+                    "Name": "OnSamusGrabbed",
+                    "Value": 2943440
+                },
+                {
+                    "Name": "OnReleasingSamus",
+                    "Value": 2943496
+                }
+            ],
+            "Name": "Zipline"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "OffIdle",
+                    "Value": 2943528
+                },
+                {
+                    "Name": "OnIdle",
+                    "Value": 2943544
+                },
+                {
+                    "Name": "Active",
+                    "Value": 2943600
+                }
+            ],
+            "Name": "ZiplineButton"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "OnGround",
+                    "Value": 2947992
+                },
+                {
+                    "Name": "WalkingOnLeftSlope",
+                    "Value": 2948048
+                },
+                {
+                    "Name": "WalkingOnRightSlope",
+                    "Value": 2948104
+                },
+                {
+                    "Name": "WalkingOnLeft",
+                    "Value": 2948160
+                },
+                {
+                    "Name": "WalkingOnRight",
+                    "Value": 2948216
+                },
+                {
+                    "Name": "WalkingOnCeiling",
+                    "Value": 2948272
+                },
+                {
+                    "Name": "TurningCornerRight",
+                    "Value": 2948328
+                },
+                {
+                    "Name": "TurningEdgeRight",
+                    "Value": 2948360
+                },
+                {
+                    "Name": "TurningEdgeLeft",
+                    "Value": 2948392
+                },
+                {
+                    "Name": "TurningCornerLeft",
+                    "Value": 2948424
+                },
+                {
+                    "Name": "Falling",
+                    "Value": 2948456
+                }
+            ],
+            "Name": "Sova"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 2950432
+                }
+            ],
+            "Name": "Multiviola"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2954240
+                },
+                {
+                    "Name": "Warning",
+                    "Value": 2954264
+                },
+                {
+                    "Name": "Launching",
+                    "Value": 2954296
+                },
+                {
+                    "Name": "GoingDown",
+                    "Value": 2954336
+                },
+                {
+                    "Name": "Bouncing",
+                    "Value": 2954376
+                },
+                {
+                    "Name": "GoingUp",
+                    "Value": 2954400
+                },
+                {
+                    "Name": "BouncingOnCeiling",
+                    "Value": 2954440
+                }
+            ],
+            "Name": "Geruta"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "TurningAround",
+                    "Value": 2956136
+                },
+                {
+                    "Name": "TurningAround_Unused",
+                    "Value": 2956184
+                },
+                {
+                    "Name": "GoingDown",
+                    "Value": 2956232
+                },
+                {
+                    "Name": "GoingUp",
+                    "Value": 2956256
+                }
+            ],
+            "Name": "Squeept"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2963192
+                },
+                {
+                    "Name": "GrabbingSamus",
+                    "Value": 2963208
+                },
+                {
+                    "Name": "Downloading",
+                    "Value": 2963288
+                },
+                {
+                    "Name": "Retracting",
+                    "Value": 2963320
+                },
+                {
+                    "Name": "Inactive",
+                    "Value": 2963336
+                }
+            ],
+            "Name": "MapStation"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "BackScreenIdle",
+                    "Value": 2963504
+                },
+                {
+                    "Name": "BackScreenDownloading",
+                    "Value": 2963544
+                },
+                {
+                    "Name": "BackScreenDownloaded",
+                    "Value": 2963584
+                },
+                {
+                    "Name": "FrontScreenIdle",
+                    "Value": 2963624
+                },
+                {
+                    "Name": "FrontScreenDownloading",
+                    "Value": 2963680
+                },
+                {
+                    "Name": "FrontScreenDownloaded",
+                    "Value": 2963736
+                }
+            ],
+            "Name": "MapStationPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2968828
+                },
+                {
+                    "Name": "Opening",
+                    "Value": 2968884
+                },
+                {
+                    "Name": "Opened",
+                    "Value": 2968916
+                },
+                {
+                    "Name": "Saving",
+                    "Value": 2968972
+                },
+                {
+                    "Name": "OpenedOff",
+                    "Value": 2969028
+                },
+                {
+                    "Name": "Closing",
+                    "Value": 2969044
+                },
+                {
+                    "Name": "IdleOff",
+                    "Value": 2969076
+                }
+            ],
+            "Name": "SavePlatform"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "TopIdle",
+                    "Value": 2969092
+                },
+                {
+                    "Name": "TopExtending",
+                    "Value": 2969108
+                },
+                {
+                    "Name": "TopExtended",
+                    "Value": 2969156
+                },
+                {
+                    "Name": "TopRetracting",
+                    "Value": 2969172
+                },
+                {
+                    "Name": "TubeSpawning",
+                    "Value": 2969220
+                },
+                {
+                    "Name": "TubeShadow",
+                    "Value": 2969532
+                },
+                {
+                    "Name": "TubeIdle",
+                    "Value": 2969636
+                },
+                {
+                    "Name": "Tube_Unused",
+                    "Value": 2969660
+                },
+                {
+                    "Name": "TubeDespawning",
+                    "Value": 2969700
+                },
+                {
+                    "Name": "Ray",
+                    "Value": 2969836
+                }
+            ],
+            "Name": "SavePlatformPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2972376
+                },
+                {
+                    "Name": "Warning",
+                    "Value": 2972408
+                },
+                {
+                    "Name": "Spitting",
+                    "Value": 2972432
+                },
+                {
+                    "Name": "TurningAround",
+                    "Value": 2972456
+                },
+                {
+                    "Name": "TurningAroundPart2",
+                    "Value": 2972480
+                }
+            ],
+            "Name": "Dragon"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 2972504
+                },
+                {
+                    "Name": "Exploding",
+                    "Value": 2972536
+                }
+            ],
+            "Name": "DragonFireball"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Middle",
+                    "Value": 2979988
+                },
+                {
+                    "Name": "Junction",
+                    "Value": 2980028
+                },
+                {
+                    "Name": "Tail",
+                    "Value": 2980068
+                }
+            ],
+            "Name": "DeoremSegment"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2980108
+                }
+            ],
+            "Name": "DeoremThorn"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2980124
+                },
+                {
+                    "Name": "Pulsing",
+                    "Value": 2980140
+                }
+            ],
+            "Name": "DeoremEye"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "ClosedSlow",
+                    "Value": 2980188
+                },
+                {
+                    "Name": "Opening",
+                    "Value": 2980228
+                },
+                {
+                    "Name": "OpenedSlow",
+                    "Value": 2980268
+                },
+                {
+                    "Name": "Closing",
+                    "Value": 2980308
+                },
+                {
+                    "Name": "Warning",
+                    "Value": 2980348
+                },
+                {
+                    "Name": "GoingDown",
+                    "Value": 2980420
+                },
+                {
+                    "Name": "OpenedFast",
+                    "Value": 2980444
+                },
+                {
+                    "Name": "ClosedFast",
+                    "Value": 2980484
+                },
+                {
+                    "Name": "Dying",
+                    "Value": 2980524
+                }
+            ],
+            "Name": "Deorem"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2982620
+                },
+                {
+                    "Name": "Screaming",
+                    "Value": 2982660
+                },
+                {
+                    "Name": "JumpWarning",
+                    "Value": 2982756
+                },
+                {
+                    "Name": "Jumping",
+                    "Value": 2982788
+                },
+                {
+                    "Name": "Landing",
+                    "Value": 2982812
+                }
+            ],
+            "Name": "Dessgeega"
+        },
+        {
+            "Name": "Waver",
+            "Value": 2984108
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2992268
+                },
+                {
+                    "Name": "SamusDetected",
+                    "Value": 2992316
+                }
+            ],
+            "Name": "Mellow"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2992364
+                },
+                {
+                    "Name": "Phase2",
+                    "Value": 2992548
+                },
+                {
+                    "Name": "Phase3",
+                    "Value": 2992644
+                },
+                {
+                    "Name": "Dying",
+                    "Value": 2992748
+                }
+            ],
+            "Name": "Hive"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 2992516
+                }
+            ],
+            "Name": "HiveRoots"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "ShellAttacking",
+                    "Value": 3003432
+                },
+                {
+                    "Name": "ShellIdle",
+                    "Value": 3003528
+                },
+                {
+                    "Name": "ShellRetreating",
+                    "Value": 3003568
+                },
+                {
+                    "Name": "ShellDying",
+                    "Value": 3003664
+                },
+                {
+                    "Name": "ClawsAttacking",
+                    "Value": 3003736
+                },
+                {
+                    "Name": "ClawsIdle",
+                    "Value": 3003776
+                },
+                {
+                    "Name": "ClawsRetreating",
+                    "Value": 3003816
+                },
+                {
+                    "Name": "ClawsTakingDamage",
+                    "Value": 3003856
+                },
+                {
+                    "Name": "LeftDotAppearing",
+                    "Value": 3003888
+                },
+                {
+                    "Name": "MiddleDotAppearing",
+                    "Value": 3003920
+                },
+                {
+                    "Name": "RightDotAppearing",
+                    "Value": 3003952
+                },
+                {
+                    "Name": "LeftDotVisible",
+                    "Value": 3003984
+                },
+                {
+                    "Name": "MiddleDotVisible",
+                    "Value": 3004000
+                },
+                {
+                    "Name": "RightDotVisible",
+                    "Value": 3004016
+                },
+                {
+                    "Name": "LeftDotDisappearing",
+                    "Value": 3004032
+                },
+                {
+                    "Name": "MiddleDotDisappearing",
+                    "Value": 3004064
+                },
+                {
+                    "Name": "RightDotDisappearing",
+                    "Value": 3004096
+                },
+                {
+                    "Name": "ShellWarning",
+                    "Value": 3004128
+                },
+                {
+                    "Name": "ClawsWarningFirstPart",
+                    "Value": 3004280
+                },
+                {
+                    "Name": "ClawsWarningSecondPart",
+                    "Value": 3004304
+                },
+                {
+                    "Name": "ShellTakingDamage",
+                    "Value": 3004408
+                }
+            ],
+            "Name": "ImagoLarvaPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3004208
+                },
+                {
+                    "Name": "Warning",
+                    "Value": 3004328
+                }
+            ],
+            "Name": "ImagoLarva"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3006712
+                },
+                {
+                    "Name": "Launching",
+                    "Value": 3006752
+                }
+            ],
+            "Name": "MorphBallLauncher"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Back",
+                    "Value": 3006824
+                },
+                {
+                    "Name": "Energy",
+                    "Value": 3006840
+                }
+            ],
+            "Name": "MorphBallLauncherPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "CeilingVineMotionless",
+                    "Value": 3017136
+                },
+                {
+                    "Name": "CeilingVineMoving",
+                    "Value": 3017176
+                },
+                {
+                    "Name": "CeilingVineBroken",
+                    "Value": 3017256
+                },
+                {
+                    "Name": "DecorativeVinesLeft",
+                    "Value": 3017272
+                },
+                {
+                    "Name": "DecorativeVinesRight",
+                    "Value": 3017320
+                },
+                {
+                    "Name": "Idle",
+                    "Value": 3017608
+                },
+                {
+                    "Name": "2e0bb0",
+                    "Value": 3017648
+                },
+                {
+                    "Name": "Static",
+                    "Value": 3017664
+                }
+            ],
+            "Name": "ImagoCocoon"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "LeftMiddle",
+                    "Value": 3017368
+                },
+                {
+                    "Name": "RightMiddle",
+                    "Value": 3017408
+                },
+                {
+                    "Name": "LeftRight",
+                    "Value": 3017448
+                },
+                {
+                    "Name": "RightRight",
+                    "Value": 3017488
+                },
+                {
+                    "Name": "LeftLeft",
+                    "Value": 3017528
+                },
+                {
+                    "Name": "RightLeft",
+                    "Value": 3017568
+                }
+            ],
+            "Name": "ImagoCocoonVine"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Spawning",
+                    "Value": 3017680
+                }
+            ],
+            "Name": "ImagoCocoonSpore"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 3017824
+                },
+                {
+                    "Name": "TurningAround",
+                    "Value": 3017904
+                }
+            ],
+            "Name": "WingedRipper"
+        },
+        {
+            "Name": "DefeatedImagoCocoon",
+            "Value": 3017984
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 3018688
+                },
+                {
+                    "Name": "Idle",
+                    "Value": 3018728
+                }
+            ],
+            "Name": "ElevatorPad"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Crouched",
+                    "Value": 3031800
+                },
+                {
+                    "Name": "Walking",
+                    "Value": 3031840
+                },
+                {
+                    "Name": "ChargingLaserForward",
+                    "Value": 3031912
+                },
+                {
+                    "Name": "TurningAroundFirstPart",
+                    "Value": 3032008
+                },
+                {
+                    "Name": "TurningAroundSecondPart",
+                    "Value": 3032048
+                },
+                {
+                    "Name": "StandingMotionless_Unused",
+                    "Value": 3032088
+                },
+                {
+                    "Name": "ShootingForward",
+                    "Value": 3032104
+                },
+                {
+                    "Name": "Jumping",
+                    "Value": 3032144
+                },
+                {
+                    "Name": "ChargingLaserDiagonallyDown",
+                    "Value": 3032208
+                },
+                {
+                    "Name": "Falling",
+                    "Value": 3032272
+                },
+                {
+                    "Name": "Landing",
+                    "Value": 3032288
+                },
+                {
+                    "Name": "ShootingDiagonallyDown",
+                    "Value": 3032328
+                },
+                {
+                    "Name": "LookingUpwards_Unused",
+                    "Value": 3032368
+                },
+                {
+                    "Name": "ChargingLaserDiagonallyUp",
+                    "Value": 3032408
+                },
+                {
+                    "Name": "ShootingDiagonallyUp",
+                    "Value": 3032472
+                },
+                {
+                    "Name": "ClimbingUp",
+                    "Value": 3032512
+                },
+                {
+                    "Name": "ClimbingDown",
+                    "Value": 3032584
+                },
+                {
+                    "Name": "StartingToCrawl",
+                    "Value": 3032656
+                },
+                {
+                    "Name": "Crawling",
+                    "Value": 3032704
+                },
+                {
+                    "Name": "StandingUp",
+                    "Value": 3032776
+                },
+                {
+                    "Name": "TurningAroundWhileCrawlingFirstPart",
+                    "Value": 3032824
+                },
+                {
+                    "Name": "TurningAroundWhileCrawlingSecondPart",
+                    "Value": 3032872
+                },
+                {
+                    "Name": "CrawlingStopped",
+                    "Value": 3032920
+                },
+                {
+                    "Name": "TurningToAimWhileClimbing",
+                    "Value": 3032960
+                },
+                {
+                    "Name": "AimingWhileClimbing",
+                    "Value": 3032992
+                },
+                {
+                    "Name": "ClimbingChargingLaserForward",
+                    "Value": 3033032
+                },
+                {
+                    "Name": "ClimbingShootingForward",
+                    "Value": 3033056
+                },
+                {
+                    "Name": "ClimbingRetractingAim",
+                    "Value": 3033096
+                },
+                {
+                    "Name": "LaunchingFromWall",
+                    "Value": 3033136
+                },
+                {
+                    "Name": "JumpingFromWall",
+                    "Value": 3033168
+                },
+                {
+                    "Name": "Standing",
+                    "Value": 3033232
+                },
+                {
+                    "Name": "StandingAlerted",
+                    "Value": 3033272
+                },
+                {
+                    "Name": "OnWallIdle_Unused",
+                    "Value": 3033312
+                },
+                {
+                    "Name": "LookingAtCamera_Unused",
+                    "Value": 3033416
+                }
+            ],
+            "Name": "SpacePirate"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Forward",
+                    "Value": 3031976
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3033200
+                },
+                {
+                    "Name": "Exploding",
+                    "Value": 3033352
+                }
+            ],
+            "Name": "SpacePirateLaser"
+        },
+        {
+            "Name": "SpacePirateCarryingPowerBomb",
+            "Value": 3033456
+        },
+        {
+            "Items": [
+                {
+                    "Name": "ConductorDeactivated",
+                    "Value": 3039016
+                },
+                {
+                    "Name": "ConductorActivating",
+                    "Value": 3039048
+                },
+                {
+                    "Name": "ConductorActivated",
+                    "Value": 3039160
+                },
+                {
+                    "Name": "MorphSymbolActivating",
+                    "Value": 3039272
+                },
+                {
+                    "Name": "MorphSymbolActivated",
+                    "Value": 3039328
+                },
+                {
+                    "Name": "ElectricityActivating",
+                    "Value": 3039400
+                }
+            ],
+            "Name": "ZiplineGeneratorPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Deactivated",
+                    "Value": 3039032
+                },
+                {
+                    "Name": "Activating",
+                    "Value": 3039104
+                },
+                {
+                    "Name": "Activated",
+                    "Value": 3039216
+                }
+            ],
+            "Name": "ZiplineGenerator"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3041024
+                },
+                {
+                    "Name": "Moving",
+                    "Value": 3041064
+                }
+            ],
+            "Name": "Gamet"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Opened",
+                    "Value": 3042040
+                },
+                {
+                    "Name": "Closing",
+                    "Value": 3042056
+                },
+                {
+                    "Name": "Closed",
+                    "Value": 3042200
+                }
+            ],
+            "Name": "SecurityGate"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Opened",
+                    "Value": 3042232
+                }
+            ],
+            "Name": "SceurityGate"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3043480
+                },
+                {
+                    "Name": "Moving",
+                    "Value": 3043520
+                }
+            ],
+            "Name": "Zebbo"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Walking",
+                    "Value": 3046116
+                },
+                {
+                    "Name": "WalkingBackwards",
+                    "Value": 3046188
+                },
+                {
+                    "Name": "Standing",
+                    "Value": 3046260
+                },
+                {
+                    "Name": "BackToSleep",
+                    "Value": 3046276
+                },
+                {
+                    "Name": "Sleeping",
+                    "Value": 3046348
+                },
+                {
+                    "Name": "GoingToSleep",
+                    "Value": 3046364
+                },
+                {
+                    "Name": "TurningAround",
+                    "Value": 3046388
+                },
+                {
+                    "Name": "WakingUp",
+                    "Value": 3046412
+                }
+            ],
+            "Name": "WorkerRobot"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3048216
+                },
+                {
+                    "Name": "LandingAfterFalling",
+                    "Value": 3048272
+                },
+                {
+                    "Name": "Landing",
+                    "Value": 3048312
+                },
+                {
+                    "Name": "Tumbling",
+                    "Value": 3048344
+                },
+                {
+                    "Name": "TurningBackOnFeet",
+                    "Value": 3048384
+                },
+                {
+                    "Name": "TurningAround",
+                    "Value": 3048448
+                },
+                {
+                    "Name": "JumpingUp_Unused",
+                    "Value": 3048464
+                },
+                {
+                    "Name": "JumpingDown_Unused",
+                    "Value": 3048520
+                },
+                {
+                    "Name": "JumpingUp",
+                    "Value": 3048576
+                },
+                {
+                    "Name": "Attached_Unused",
+                    "Value": 3048600
+                },
+                {
+                    "Name": "Attached",
+                    "Value": 3048672
+                },
+                {
+                    "Name": "Expulsed",
+                    "Value": 3048744
+                },
+                {
+                    "Name": "Dying_Unused",
+                    "Value": 3048816
+                },
+                {
+                    "Name": "Dying",
+                    "Value": 3048856
+                }
+            ],
+            "Name": "Parasite"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3050720
+                },
+                {
+                    "Name": "Opening",
+                    "Value": 3050760
+                },
+                {
+                    "Name": "Opened",
+                    "Value": 3050832
+                }
+            ],
+            "Name": "Piston"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3065560
+                },
+                {
+                    "Name": "SpittingFireballs",
+                    "Value": 3065616
+                },
+                {
+                    "Name": "TurningAroundFirstPart",
+                    "Value": 3065656
+                },
+                {
+                    "Name": "TurningAroundSecondPart",
+                    "Value": 3065680
+                },
+                {
+                    "Name": "Square",
+                    "Value": 3066672
+                }
+            ],
+            "Name": "Ridley"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "HeadIdle",
+                    "Value": 3065704
+                },
+                {
+                    "Name": "OpeningMouth",
+                    "Value": 3065728
+                },
+                {
+                    "Name": "MouthOpened",
+                    "Value": 3065744
+                },
+                {
+                    "Name": "HeadDying",
+                    "Value": 3065768
+                },
+                {
+                    "Name": "HeadTurningAround",
+                    "Value": 3065808
+                },
+                {
+                    "Name": "ClawIdle",
+                    "Value": 3065824
+                },
+                {
+                    "Name": "ClawSpittingFireballs",
+                    "Value": 3065880
+                },
+                {
+                    "Name": "ClawTurningAroundFirstPart",
+                    "Value": 3065920
+                },
+                {
+                    "Name": "ClawTurningAroundSecondPart",
+                    "Value": 3065944
+                },
+                {
+                    "Name": "ClawCarryingSamus",
+                    "Value": 3065968
+                },
+                {
+                    "Name": "ClawLiftingSamus",
+                    "Value": 3065984
+                },
+                {
+                    "Name": "ClawSamusLifted",
+                    "Value": 3066032
+                },
+                {
+                    "Name": "ClawReleasingSamus",
+                    "Value": 3066048
+                },
+                {
+                    "Name": "LeftWingIdle",
+                    "Value": 3066096
+                },
+                {
+                    "Name": "RightWingIdle",
+                    "Value": 3066184
+                },
+                {
+                    "Name": "LeftWing_Unused",
+                    "Value": 3066272
+                },
+                {
+                    "Name": "RightWing_Unused",
+                    "Value": 3066360
+                },
+                {
+                    "Name": "LeftWingSpittingFireballs",
+                    "Value": 3066448
+                },
+                {
+                    "Name": "RightWingSpittingFireballs",
+                    "Value": 3066504
+                }
+            ],
+            "Name": "RidleyPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Part",
+                    "Value": 3066560
+                },
+                {
+                    "Name": "TipPointingDown",
+                    "Value": 3066576
+                },
+                {
+                    "Name": "TipPointingUp",
+                    "Value": 3066592
+                },
+                {
+                    "Name": "TipPointingDiagonallyDownRight",
+                    "Value": 3066608
+                },
+                {
+                    "Name": "TipPointingDiagonallyUpRight",
+                    "Value": 3066624
+                },
+                {
+                    "Name": "TipPointingDiagonallyDownLeft",
+                    "Value": 3066640
+                },
+                {
+                    "Name": "TipPointingDiagonallyUpLeft",
+                    "Value": 3066656
+                }
+            ],
+            "Name": "RidleyTail"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Small",
+                    "Value": 3066688
+                },
+                {
+                    "Name": "Big",
+                    "Value": 3066704
+                }
+            ],
+            "Name": "RidleyFireball"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3070984
+                }
+            ],
+            "Name": "MetroidShell"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 3071008
+                },
+                {
+                    "Name": "SamusGrabbed",
+                    "Value": 3071144
+                },
+                {
+                    "Name": "Spanwing",
+                    "Value": 3071264
+                }
+            ],
+            "Name": "Metroid"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Spawning",
+                    "Value": 3073384
+                },
+                {
+                    "Name": "Moving",
+                    "Value": 3073512
+                }
+            ],
+            "Name": "RinkaOrange"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Spawning",
+                    "Value": 3073648
+                },
+                {
+                    "Name": "Moving",
+                    "Value": 3073776
+                }
+            ],
+            "Name": "RinkaGreen"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3075212
+                },
+                {
+                    "Name": "Warning",
+                    "Value": 3075252
+                },
+                {
+                    "Name": "Spitting",
+                    "Value": 3075292
+                },
+                {
+                    "Name": "AfterSpitting",
+                    "Value": 3075308
+                },
+                {
+                    "Name": "Retracting",
+                    "Value": 3075340
+                }
+            ],
+            "Name": "Polyp"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Right",
+                    "Value": 3075364
+                },
+                {
+                    "Name": "Left",
+                    "Value": 3075404
+                },
+                {
+                    "Name": "Exploding",
+                    "Value": 3075444
+                }
+            ],
+            "Name": "PolypProjectile"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 3078264
+                },
+                {
+                    "Name": "MovingOffsetUp",
+                    "Value": 3078400
+                },
+                {
+                    "Name": "MovingOffsetRight",
+                    "Value": 3078536
+                },
+                {
+                    "Name": "MovingOffsetDown",
+                    "Value": 3078672
+                }
+            ],
+            "Name": "Viola"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "VerticalSmall",
+                    "Value": 3082448
+                },
+                {
+                    "Name": "VerticalMedium",
+                    "Value": 3082536
+                },
+                {
+                    "Name": "VerticalLarge",
+                    "Value": 3082624
+                },
+                {
+                    "Name": "VerticalVeryLarge",
+                    "Value": 3082712
+                },
+                {
+                    "Name": "HorizontalSmall",
+                    "Value": 3082800
+                },
+                {
+                    "Name": "HorizontalMedium",
+                    "Value": 3082888
+                },
+                {
+                    "Name": "HorizontalLarge",
+                    "Value": 3082976
+                },
+                {
+                    "Name": "HorizontalVeryLarge",
+                    "Value": 3083064
+                },
+                {
+                    "Name": "VerticalSmallDisappearing",
+                    "Value": 3083152
+                },
+                {
+                    "Name": "VerticalMediumDisappearing",
+                    "Value": 3083208
+                },
+                {
+                    "Name": "VerticalLargeDisappearing",
+                    "Value": 3083264
+                },
+                {
+                    "Name": "VerticalVeryLargeDisappearing",
+                    "Value": 3083320
+                },
+                {
+                    "Name": "HorizontalSmallDisappearing",
+                    "Value": 3083376
+                },
+                {
+                    "Name": "HorizontalMediumDisappearing",
+                    "Value": 3083432
+                },
+                {
+                    "Name": "HorizontalLargeDisappearing",
+                    "Value": 3083488
+                },
+                {
+                    "Name": "HorizontalVeryLargeDisappearing",
+                    "Value": 3083544
+                },
+                {
+                    "Name": "VerticalSmallDisappearing_Unused",
+                    "Value": 3083600
+                },
+                {
+                    "Name": "VerticalMediumDisappearing_Unused",
+                    "Value": 3083656
+                },
+                {
+                    "Name": "VerticalLargeDisappearing_Unused",
+                    "Value": 3083712
+                },
+                {
+                    "Name": "VerticalVeryLargeDisappearing_Unused",
+                    "Value": 3083768
+                },
+                {
+                    "Name": "HorizontalSmallDisappearing_Unused",
+                    "Value": 3083824
+                },
+                {
+                    "Name": "HorizontalMediumDisappearing_Unused",
+                    "Value": 3083880
+                },
+                {
+                    "Name": "HorizontalLargeDisappearing_Unused",
+                    "Value": 3083936
+                },
+                {
+                    "Name": "HorizontalVeryLargeDisappearing_Unused",
+                    "Value": 3083992
+                }
+            ],
+            "Name": "SecurityLaser"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3085548
+                },
+                {
+                    "Name": "Warning",
+                    "Value": 3085588
+                },
+                {
+                    "Name": "GoingDown",
+                    "Value": 3085668
+                },
+                {
+                    "Name": "IdleAware",
+                    "Value": 3085692
+                },
+                {
+                    "Name": "GoingUp",
+                    "Value": 3085724
+                },
+                {
+                    "Name": "BonkingOnCeiling",
+                    "Value": 3085788
+                }
+            ],
+            "Name": "Holtz"
+        },
+        {
+            "Name": "RuinsTestSamusReflection",
+            "Value": 3103956
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Spawning",
+                    "Value": 3103972
+                },
+                {
+                    "Name": "ShootingGroundLightning",
+                    "Value": 3105500
+                }
+            ],
+            "Name": "RuinsTestGhostOutline"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "NotMoving",
+                    "Value": 3104044
+                },
+                {
+                    "Name": "Moving",
+                    "Value": 3104060
+                },
+                {
+                    "Name": "SymbolPlaced",
+                    "Value": 3104116
+                },
+                {
+                    "Name": "SymbolShot",
+                    "Value": 3104740
+                },
+                {
+                    "Name": "SymbolPlacing",
+                    "Value": 3104756
+                }
+            ],
+            "Name": "RuinsTestGhost"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "FourSymbols",
+                    "Value": 3104132
+                },
+                {
+                    "Name": "Merging",
+                    "Value": 3104244
+                },
+                {
+                    "Name": "Disappearing",
+                    "Value": 3104268
+                }
+            ],
+            "Name": "RuinsTestSymbol"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "TurningIntoReflection",
+                    "Value": 3104324
+                },
+                {
+                    "Name": "Symbol",
+                    "Value": 3104452
+                },
+                {
+                    "Name": "Despawn",
+                    "Value": 3104868
+                },
+                {
+                    "Name": "Unused",
+                    "Value": 3104916
+                },
+                {
+                    "Name": "Spawning",
+                    "Value": 3104988
+                }
+            ],
+            "Name": "RuinsTest"
+        },
+        {
+            "Name": "RuinsTestReflectionCover",
+            "Value": 3104428
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Spawning",
+                    "Value": 3104492
+                },
+                {
+                    "Name": "Spawned",
+                    "Value": 3104572
+                },
+                {
+                    "Name": "Despawning",
+                    "Value": 3104628
+                },
+                {
+                    "Name": "TurningIntoSymbol",
+                    "Value": 3104668
+                }
+            ],
+            "Name": "RuinsTestShootableSymbol"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "InAir",
+                    "Value": 3105060
+                },
+                {
+                    "Name": "GoingOnGround",
+                    "Value": 3105156
+                },
+                {
+                    "Name": "OnGroundHorizontal",
+                    "Value": 3105228
+                },
+                {
+                    "Name": "OnGroundVertical",
+                    "Value": 3105364
+                }
+            ],
+            "Name": "RuinsTestLightning"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3106668
+                }
+            ],
+            "Name": "Mella"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 3106740
+                }
+            ],
+            "Name": "Mello"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3111320
+                }
+            ],
+            "Name": "Atomic"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "MovingVertical",
+                    "Value": 3111424
+                },
+                {
+                    "Name": "MovingVertical_Unused",
+                    "Value": 3111528
+                },
+                {
+                    "Name": "MovingDiagonal",
+                    "Value": 3111568
+                },
+                {
+                    "Name": "MovingDiagonal_Unused",
+                    "Value": 3111672
+                },
+                {
+                    "Name": "MovingHorizontal",
+                    "Value": 3111712
+                },
+                {
+                    "Name": "MovingHorizontal_Unused",
+                    "Value": 3111816
+                },
+                {
+                    "Name": "ExplodingNonDiagonal",
+                    "Value": 3111856
+                },
+                {
+                    "Name": "ExplodingDiagonal",
+                    "Value": 3111920
+                },
+                {
+                    "Name": "Charging",
+                    "Value": 3111984
+                }
+            ],
+            "Name": "AtomicElectricity"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "StaticMiddle",
+                    "Value": 3113492
+                },
+                {
+                    "Name": "SpawnMiddle",
+                    "Value": 3113508
+                },
+                {
+                    "Name": "RemovingMiddle",
+                    "Value": 3113580
+                },
+                {
+                    "Name": "StaticBottom",
+                    "Value": 3113652
+                },
+                {
+                    "Name": "SpawnBottom",
+                    "Value": 3113668
+                },
+                {
+                    "Name": "RemovingBottom",
+                    "Value": 3113732
+                }
+            ],
+            "Name": "AreaBanner"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3123276
+                },
+                {
+                    "Name": "ChargingBeam",
+                    "Value": 3123372
+                }
+            ],
+            "Name": "MotherBrain"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "EyeClosed",
+                    "Value": 3123412
+                },
+                {
+                    "Name": "2fa934",
+                    "Value": 3123508
+                },
+                {
+                    "Name": "EyeOpening",
+                    "Value": 3123548
+                },
+                {
+                    "Name": "2fa984",
+                    "Value": 3123588
+                },
+                {
+                    "Name": "EyeDying",
+                    "Value": 3123652
+                },
+                {
+                    "Name": "Bottom",
+                    "Value": 3123692
+                },
+                {
+                    "Name": "BeamSpawning",
+                    "Value": 3123748
+                },
+                {
+                    "Name": "EyeClosing",
+                    "Value": 3123956
+                }
+            ],
+            "Name": "MotherBrainPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 3123788
+                }
+            ],
+            "Name": "MotherBrainBeam"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Breaking",
+                    "Value": 3123812
+                }
+            ],
+            "Name": "MotherBrainGlassBreaking"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3129616
+                },
+                {
+                    "Name": "Moving",
+                    "Value": 3129656
+                },
+                {
+                    "Name": "Spitting",
+                    "Value": 3129680
+                },
+                {
+                    "Name": "MouthClosed",
+                    "Value": 3129800
+                },
+                {
+                    "Name": "Warning",
+                    "Value": 3130136
+                },
+                {
+                    "Name": "SpawnOnTop",
+                    "Value": 3130248
+                }
+            ],
+            "Name": "AcidWorm"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "AroundMouth",
+                    "Value": 3129840
+                },
+                {
+                    "Name": "WeakPoint",
+                    "Value": 3129856
+                },
+                {
+                    "Name": "Unused",
+                    "Value": 3129928
+                },
+                {
+                    "Name": "BelowWeakPoint",
+                    "Value": 3129968
+                },
+                {
+                    "Name": "AboveSegments",
+                    "Value": 3129984
+                },
+                {
+                    "Name": "Segment",
+                    "Value": 3130000
+                },
+                {
+                    "Name": "Unused2",
+                    "Value": 3130016
+                }
+            ],
+            "Name": "AcidWormPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 3130056
+                },
+                {
+                    "Name": "Exploding",
+                    "Value": 3130088
+                }
+            ],
+            "Name": "AcidWormSpit"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3132344
+                },
+                {
+                    "Name": "ShakingHead",
+                    "Value": 3132384
+                },
+                {
+                    "Name": "JumpWarning",
+                    "Value": 3132456
+                },
+                {
+                    "Name": "Jumping",
+                    "Value": 3132504
+                },
+                {
+                    "Name": "Landing",
+                    "Value": 3132536
+                }
+            ],
+            "Name": "Sidehopper"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3134656
+                }
+            ],
+            "Name": "GeronNorfair"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3136080
+                },
+                {
+                    "Name": "Moving",
+                    "Value": 3136120
+                }
+            ],
+            "Name": "Geega"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Spawning",
+                    "Value": 3139788
+                },
+                {
+                    "Name": "Moving",
+                    "Value": 3139916
+                }
+            ],
+            "Name": "RinkaMotherBrain"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Phase1",
+                    "Value": 3139956
+                },
+                {
+                    "Name": "Phase2",
+                    "Value": 3140012
+                },
+                {
+                    "Name": "Phase4",
+                    "Value": 3140068
+                },
+                {
+                    "Name": "Phase6",
+                    "Value": 3140124
+                }
+            ],
+            "Name": "Zebetite"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "AimingLeft",
+                    "Value": 3140180
+                },
+                {
+                    "Name": "ShootingLeft",
+                    "Value": 3140196
+                },
+                {
+                    "Name": "LeftToDownLeftTransition",
+                    "Value": 3140228
+                },
+                {
+                    "Name": "AimingDownLeft",
+                    "Value": 3140244
+                },
+                {
+                    "Name": "ShootingDownLeft",
+                    "Value": 3140260
+                },
+                {
+                    "Name": "DownLeftToDownTransition",
+                    "Value": 3140292
+                },
+                {
+                    "Name": "AimingDown",
+                    "Value": 3140308
+                },
+                {
+                    "Name": "ShootingDown",
+                    "Value": 3140324
+                },
+                {
+                    "Name": "DownToDownRightTransition",
+                    "Value": 3140356
+                },
+                {
+                    "Name": "AimingDownRight",
+                    "Value": 3140372
+                },
+                {
+                    "Name": "ShootingDownRight",
+                    "Value": 3140388
+                },
+                {
+                    "Name": "DownRightToRightTransition",
+                    "Value": 3140420
+                },
+                {
+                    "Name": "AimingRight",
+                    "Value": 3140436
+                },
+                {
+                    "Name": "ShootingRight",
+                    "Value": 3140452
+                }
+            ],
+            "Name": "Cannon"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Left",
+                    "Value": 3140484
+                },
+                {
+                    "Name": "DownLeft",
+                    "Value": 3140508
+                },
+                {
+                    "Name": "Down",
+                    "Value": 3140532
+                },
+                {
+                    "Name": "DownRight",
+                    "Value": 3140556
+                },
+                {
+                    "Name": "Right",
+                    "Value": 3140580
+                }
+            ],
+            "Name": "CannonBullet"
+        },
+        {
+            "Name": "MotherBrainBlock",
+            "Value": 3140604
+        },
+        {
+            "Name": "ImagoLarvaRightSide",
+            "Value": 3143988
+        },
+        {
+            "Items": [
+                {
+                    "Name": "OnGround",
+                    "Value": 3151340
+                },
+                {
+                    "Name": "OnCeiling",
+                    "Value": 3151516
+                }
+            ],
+            "Name": "TangleVineTall"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "OnGround",
+                    "Value": 3151380
+                },
+                {
+                    "Name": "OnCeiling",
+                    "Value": 3151556
+                }
+            ],
+            "Name": "TangleVineMedium"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "OnGround",
+                    "Value": 3151420
+                },
+                {
+                    "Name": "OnCeiling",
+                    "Value": 3151596
+                }
+            ],
+            "Name": "TangleVineShort"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "OnGround",
+                    "Value": 3151460
+                },
+                {
+                    "Name": "OnCeiling",
+                    "Value": 3151636
+                }
+            ],
+            "Name": "TangleVineCurved"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Grip",
+                    "Value": 3151676
+                },
+                {
+                    "Name": "Geruta",
+                    "Value": 3151900
+                }
+            ],
+            "Name": "TangleVineGerutaPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Root",
+                    "Value": 3151748
+                },
+                {
+                    "Name": "Full",
+                    "Value": 3151820
+                }
+            ],
+            "Name": "TangleVineGeruta"
+        },
+        {
+            "Name": "TangleVineRedGeruta",
+            "Value": 3151860
+        },
+        {
+            "Name": "TangleVineLarvaRight",
+            "Value": 3151972
+        },
+        {
+            "Name": "TangleVineLarvaLeft",
+            "Value": 3152012
+        },
+        {
+            "Items": [
+                {
+                    "Name": "BodyIdle",
+                    "Value": 3160708
+                },
+                {
+                    "Name": "BodyGrowling",
+                    "Value": 3160772
+                },
+                {
+                    "Name": "LeftWingIdle",
+                    "Value": 3160924
+                },
+                {
+                    "Name": "LeftWingShootingNeedles",
+                    "Value": 3160988
+                },
+                {
+                    "Name": "LeftWingDying",
+                    "Value": 3161036
+                },
+                {
+                    "Name": "RightWingIdle",
+                    "Value": 3161092
+                },
+                {
+                    "Name": "RightWingShootingNeedles",
+                    "Value": 3161156
+                },
+                {
+                    "Name": "RightWingDying",
+                    "Value": 3161204
+                },
+                {
+                    "Name": "Core",
+                    "Value": 3161244
+                }
+            ],
+            "Name": "ImagoPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "BrokenStinger",
+                    "Value": 3160900
+                },
+                {
+                    "Name": "Flying",
+                    "Value": 3161316
+                },
+                {
+                    "Name": "ShootingNeedles",
+                    "Value": 3161388
+                },
+                {
+                    "Name": "RechargingNeedles",
+                    "Value": 3161476
+                }
+            ],
+            "Name": "Imago"
+        },
+        {
+            "Name": "ImagoDamagedStinger",
+            "Value": 3161508
+        },
+        {
+            "Name": "ImagoNeedle",
+            "Value": 3161524
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Breaking",
+                    "Value": 3161612
+                },
+                {
+                    "Name": "Standing",
+                    "Value": 3161692
+                }
+            ],
+            "Name": "ImagoEgg"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "BodyIdle",
+                    "Value": 3173184
+                },
+                {
+                    "Name": "BodyAngry",
+                    "Value": 3173224
+                },
+                {
+                    "Name": "RightArmIdle",
+                    "Value": 3173400
+                },
+                {
+                    "Name": "LeftArmIdle",
+                    "Value": 3173440
+                },
+                {
+                    "Name": "LeftArmScreaming",
+                    "Value": 3173480
+                },
+                {
+                    "Name": "RightArmWalkingForward",
+                    "Value": 3173504
+                },
+                {
+                    "Name": "LeftArmWalkingForward",
+                    "Value": 3173648
+                },
+                {
+                    "Name": "RightArmWalkingBackwards",
+                    "Value": 3173792
+                },
+                {
+                    "Name": "LeftArmWalkingBackwards",
+                    "Value": 3173936
+                },
+                {
+                    "Name": "RightArmDying",
+                    "Value": 3174080
+                },
+                {
+                    "Name": "LeftArmDying",
+                    "Value": 3174104
+                },
+                {
+                    "Name": "LegsIdle",
+                    "Value": 3174128
+                },
+                {
+                    "Name": "LegsWalkingForward",
+                    "Value": 3174152
+                },
+                {
+                    "Name": "LegsWalkingBackwards",
+                    "Value": 3174216
+                },
+                {
+                    "Name": "LegsDying",
+                    "Value": 3174288
+                },
+                {
+                    "Name": "Tongue",
+                    "Value": 3174344
+                },
+                {
+                    "Name": "TongueDying",
+                    "Value": 3174384
+                },
+                {
+                    "Name": "307028",
+                    "Value": 3174440
+                },
+                {
+                    "Name": "307058",
+                    "Value": 3174488
+                },
+                {
+                    "Name": "307088",
+                    "Value": 3174536
+                },
+                {
+                    "Name": "3070b8",
+                    "Value": 3174584
+                }
+            ],
+            "Name": "CrocomirePart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3173264
+                },
+                {
+                    "Name": "Screaming",
+                    "Value": 3173304
+                },
+                {
+                    "Name": "Dying",
+                    "Value": 3173376
+                }
+            ],
+            "Name": "Crocomire"
+        },
+        {
+            "Name": "CrocomireProjectile",
+            "Value": 3174424
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3175796
+                },
+                {
+                    "Name": "Shooting",
+                    "Value": 3176028
+                }
+            ],
+            "Name": "SearchlightEye"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3175900
+                },
+                {
+                    "Name": "Unused",
+                    "Value": 3175940
+                }
+            ],
+            "Name": "SearchlightEyeBeam"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 3175956
+                }
+            ],
+            "Name": "SearchlightEyeProjectile"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3183072
+                },
+                {
+                    "Name": "Destroyed",
+                    "Value": 3183160
+                },
+                {
+                    "Name": "GettingDestroyed",
+                    "Value": 3183176
+                },
+                {
+                    "Name": "Shaking",
+                    "Value": 3183432
+                }
+            ],
+            "Name": "Geron"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3190672
+                },
+                {
+                    "Name": "Refilling",
+                    "Value": 3190728
+                },
+                {
+                    "Name": "Flying",
+                    "Value": 3191200
+                }
+            ],
+            "Name": "Gunship"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "EntranceFrontClosed",
+                    "Value": 3190784
+                },
+                {
+                    "Name": "EntranceFrontOpening",
+                    "Value": 3190800
+                },
+                {
+                    "Name": "EntranceFrontOpened",
+                    "Value": 3190840
+                },
+                {
+                    "Name": "EntranceFrontClosing",
+                    "Value": 3190896
+                },
+                {
+                    "Name": "EntranceBackClosed",
+                    "Value": 3190944
+                },
+                {
+                    "Name": "EntranceBackOpening",
+                    "Value": 3190960
+                },
+                {
+                    "Name": "EntranceBackOpened",
+                    "Value": 3191032
+                },
+                {
+                    "Name": "EntranceBackClosing",
+                    "Value": 3191088
+                },
+                {
+                    "Name": "Platform",
+                    "Value": 3191160
+                },
+                {
+                    "Name": "FlamesHorizontal",
+                    "Value": 3191256
+                },
+                {
+                    "Name": "FlamesVertical",
+                    "Value": 3191288
+                }
+            ],
+            "Name": "GunshipPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Intact",
+                    "Value": 3200348
+                },
+                {
+                    "Name": "Cracking",
+                    "Value": 3200364
+                },
+                {
+                    "Name": "Breaking",
+                    "Value": 3200460
+                },
+                {
+                    "Name": "Broken",
+                    "Value": 3200612
+                }
+            ],
+            "Name": "GlassTube"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3207308
+                },
+                {
+                    "Name": "Opening",
+                    "Value": 3207364
+                },
+                {
+                    "Name": "Opened",
+                    "Value": 3207420
+                },
+                {
+                    "Name": "Saving",
+                    "Value": 3207476
+                },
+                {
+                    "Name": "IdleOff",
+                    "Value": 3207532
+                },
+                {
+                    "Name": "Closing",
+                    "Value": 3207548
+                },
+                {
+                    "Name": "OpenedOff",
+                    "Value": 3207604
+                }
+            ],
+            "Name": "SavePlatformChozodia"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "TopIdle",
+                    "Value": 3207620
+                },
+                {
+                    "Name": "TopExtending",
+                    "Value": 3207636
+                },
+                {
+                    "Name": "TopExtended",
+                    "Value": 3207684
+                },
+                {
+                    "Name": "TopRetracting",
+                    "Value": 3207700
+                },
+                {
+                    "Name": "TubeSpawning",
+                    "Value": 3207748
+                },
+                {
+                    "Name": "TubeShadow",
+                    "Value": 3208060
+                },
+                {
+                    "Name": "TubeIdle",
+                    "Value": 3208164
+                },
+                {
+                    "Name": "Tube_Unused",
+                    "Value": 3208188
+                },
+                {
+                    "Name": "TubeDespawning",
+                    "Value": 3208228
+                },
+                {
+                    "Name": "Ray",
+                    "Value": 3208364
+                },
+                {
+                    "Name": "RefillLight",
+                    "Value": 3208436
+                }
+            ],
+            "Name": "SavePlatformChozodiaPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3212348
+                },
+                {
+                    "Name": "Warning",
+                    "Value": 3212388
+                },
+                {
+                    "Name": "Jumping",
+                    "Value": 3212420
+                },
+                {
+                    "Name": "Landing",
+                    "Value": 3212444
+                },
+                {
+                    "Name": "WalkingSlow",
+                    "Value": 3212476
+                },
+                {
+                    "Name": "WalkingFast",
+                    "Value": 3212532
+                },
+                {
+                    "Name": "WalkingVeryFast",
+                    "Value": 3212588
+                },
+                {
+                    "Name": "WalkingExtremelyFast",
+                    "Value": 3212644
+                }
+            ],
+            "Name": "Baristute"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3221800
+                },
+                {
+                    "Name": "Falling",
+                    "Value": 3221816
+                },
+                {
+                    "Name": "Fallen",
+                    "Value": 3222016
+                }
+            ],
+            "Name": "KraidElevatorStatue"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Kraid",
+                    "Value": 3221920
+                },
+                {
+                    "Name": "Ridley",
+                    "Value": 3222152
+                },
+                {
+                    "Name": "Dust",
+                    "Value": 3222264
+                }
+            ],
+            "Name": "ElevatorStatueDebris"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3222032
+                },
+                {
+                    "Name": "Falling",
+                    "Value": 3222048
+                },
+                {
+                    "Name": "Fallen",
+                    "Value": 3222248
+                }
+            ],
+            "Name": "RidleyElevatorStatue"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Slot0Spawning",
+                    "Value": 3226188
+                },
+                {
+                    "Name": "Slot0Spawned",
+                    "Value": 3226412
+                },
+                {
+                    "Name": "Spawning",
+                    "Value": 3226428
+                },
+                {
+                    "Name": "Spawned",
+                    "Value": 3226652
+                }
+            ],
+            "Name": "RisingChozoPillarPlatform"
+        },
+        {
+            "Name": "RisingChozoPillarPlatformShadow",
+            "Value": 3226668
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3228268
+                },
+                {
+                    "Name": "TurningAround",
+                    "Value": 3228308
+                },
+                {
+                    "Name": "ChasingSamus",
+                    "Value": 3228380
+                }
+            ],
+            "Name": "Skultera"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3240456
+                },
+                {
+                    "Name": "Activating",
+                    "Value": 3240472
+                },
+                {
+                    "Name": "Activated",
+                    "Value": 3240576
+                },
+                {
+                    "Name": "Opening",
+                    "Value": 3240632
+                },
+                {
+                    "Name": "Opened",
+                    "Value": 3240976
+                }
+            ],
+            "Name": "KraidStatue"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3240992
+                },
+                {
+                    "Name": "Activating",
+                    "Value": 3241008
+                },
+                {
+                    "Name": "Activated",
+                    "Value": 3241112
+                },
+                {
+                    "Name": "Opening",
+                    "Value": 3241168
+                },
+                {
+                    "Name": "Opened",
+                    "Value": 3241512
+                }
+            ],
+            "Name": "RidleyStatue"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 3242448
+                },
+                {
+                    "Name": "Unused",
+                    "Value": 3242504
+                }
+            ],
+            "Name": "Searchlight"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "EyeClosed",
+                    "Value": 3245860
+                },
+                {
+                    "Name": "Warning",
+                    "Value": 3245900
+                },
+                {
+                    "Name": "OpeningEye",
+                    "Value": 3245956
+                },
+                {
+                    "Name": "EyeMoving",
+                    "Value": 3246052
+                },
+                {
+                    "Name": "ClosingEye",
+                    "Value": 3246108
+                },
+                {
+                    "Name": "Death",
+                    "Value": 3246148
+                },
+                {
+                    "Name": "EyeOpened",
+                    "Value": 3246188
+                },
+                {
+                    "Name": "BeforeClosing",
+                    "Value": 3246244
+                }
+            ],
+            "Name": "Gadora"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Moving",
+                    "Value": 3246012
+                }
+            ],
+            "Name": "GadoraBeam"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "HorizontalLarge",
+                    "Value": 3248476
+                },
+                {
+                    "Name": "VerticalLarge",
+                    "Value": 3248572
+                },
+                {
+                    "Name": "HorizontalSmall",
+                    "Value": 3248668
+                },
+                {
+                    "Name": "VerticalSmall",
+                    "Value": 3248748
+                }
+            ],
+            "Name": "Steam"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Large",
+                    "Value": 3248828
+                },
+                {
+                    "Name": "Small",
+                    "Value": 3248924
+                }
+            ],
+            "Name": "SteamDiagonal"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3253392
+                },
+                {
+                    "Name": "Activated",
+                    "Value": 3253408
+                },
+                {
+                    "Name": "Exploding",
+                    "Value": 3253464
+                }
+            ],
+            "Name": "UnknownItemBlock"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3253552
+                }
+            ],
+            "Name": "UnknownItemBlockLight"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3261296
+                },
+                {
+                    "Name": "Opening",
+                    "Value": 3261312
+                },
+                {
+                    "Name": "Closing",
+                    "Value": 3261384
+                },
+                {
+                    "Name": "Flying",
+                    "Value": 3261456
+                }
+            ],
+            "Name": "EscapeShip"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Top",
+                    "Value": 3261496
+                },
+                {
+                    "Name": "Flames",
+                    "Value": 3261536
+                },
+                {
+                    "Name": "Tail",
+                    "Value": 3261568
+                },
+                {
+                    "Name": "TailMoving",
+                    "Value": 3261584
+                }
+            ],
+            "Name": "EscapeShipPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3262316
+                }
+            ],
+            "Name": "FakePowerBomb"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Falling",
+                    "Value": 3263316
+                }
+            ],
+            "Name": "FallingChozoPillar"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Tail",
+                    "Value": 3298932
+                },
+                {
+                    "Name": "Ring",
+                    "Value": 3298948
+                },
+                {
+                    "Name": "Cover",
+                    "Value": 3298964
+                },
+                {
+                    "Name": "Torso",
+                    "Value": 3298980
+                },
+                {
+                    "Name": "HeadIdle",
+                    "Value": 3299036
+                },
+                {
+                    "Name": "HeadOpeningMouth",
+                    "Value": 3299052
+                },
+                {
+                    "Name": "HeadSpittingFireballs",
+                    "Value": 3299084
+                },
+                {
+                    "Name": "HeadClosingMouth",
+                    "Value": 3299116
+                },
+                {
+                    "Name": "EyeIdle",
+                    "Value": 3299148
+                },
+                {
+                    "Name": "EyeGlowing",
+                    "Value": 3299204
+                },
+                {
+                    "Name": "EyeShootingLaserForward",
+                    "Value": 3299244
+                },
+                {
+                    "Name": "EyeShootingLaserSlightlyDown",
+                    "Value": 3299308
+                },
+                {
+                    "Name": "EyeShootingLaserDown",
+                    "Value": 3299372
+                },
+                {
+                    "Name": "EyeShootingLaserSlightlyUp",
+                    "Value": 3299436
+                },
+                {
+                    "Name": "EyeShootingLaserUp",
+                    "Value": 3299500
+                },
+                {
+                    "Name": "EyeInactive",
+                    "Value": 3299564
+                },
+                {
+                    "Name": "LeftArmCrawlingForward",
+                    "Value": 3299588
+                },
+                {
+                    "Name": "RightArmCrawlingForward",
+                    "Value": 3299684
+                },
+                {
+                    "Name": "LeftArmHoldingUp",
+                    "Value": 3299780
+                },
+                {
+                    "Name": "RightArmHoldingUp",
+                    "Value": 3299828
+                },
+                {
+                    "Name": "LeftArmHeldUp",
+                    "Value": 3299876
+                },
+                {
+                    "Name": "RightArmHeldUp",
+                    "Value": 3299892
+                },
+                {
+                    "Name": "LeftArmLayingDown",
+                    "Value": 3299908
+                },
+                {
+                    "Name": "RightArmLayingDown",
+                    "Value": 3299948
+                },
+                {
+                    "Name": "LeftArmTrembling",
+                    "Value": 3299988
+                },
+                {
+                    "Name": "RightArmTrembling",
+                    "Value": 3300044
+                },
+                {
+                    "Name": "LeftArmIdle",
+                    "Value": 3300100
+                },
+                {
+                    "Name": "RightArmIdle",
+                    "Value": 3300116
+                },
+                {
+                    "Name": "LeftArmSwinging",
+                    "Value": 3300132
+                },
+                {
+                    "Name": "NeckLow",
+                    "Value": 3300204
+                },
+                {
+                    "Name": "NeckMiddle",
+                    "Value": 3300220
+                },
+                {
+                    "Name": "NeckHigh",
+                    "Value": 3300236
+                },
+                {
+                    "Name": "NeckRotateLow",
+                    "Value": 3300252
+                },
+                {
+                    "Name": "NeckRotateMiddle",
+                    "Value": 3300332
+                },
+                {
+                    "Name": "NeckRotateHigh",
+                    "Value": 3300412
+                },
+                {
+                    "Name": "NeckLowToMiddle",
+                    "Value": 3300492
+                },
+                {
+                    "Name": "NeckMiddleToHigh",
+                    "Value": 3300516
+                },
+                {
+                    "Name": "NeckHighToMiddle",
+                    "Value": 3300540
+                },
+                {
+                    "Name": "NeckMiddleToLow",
+                    "Value": 3300564
+                },
+                {
+                    "Name": "NeckLowToHigh",
+                    "Value": 3300588
+                },
+                {
+                    "Name": "NeckHighToLow",
+                    "Value": 3300628
+                },
+                {
+                    "Name": "NeckLow_2",
+                    "Value": 3300668
+                },
+                {
+                    "Name": "NeckMiddle_2",
+                    "Value": 3300684
+                },
+                {
+                    "Name": "NeckHigh_2",
+                    "Value": 3300700
+                },
+                {
+                    "Name": "MissileLauncherClosed",
+                    "Value": 3300716
+                },
+                {
+                    "Name": "MissileLauncherOpening",
+                    "Value": 3300732
+                },
+                {
+                    "Name": "MissileLauncherOpened",
+                    "Value": 3300804
+                },
+                {
+                    "Name": "MissileLauncherClosing",
+                    "Value": 3300828
+                },
+                {
+                    "Name": "LeftArmDying",
+                    "Value": 3301116
+                },
+                {
+                    "Name": "RightArmDying",
+                    "Value": 3301204
+                },
+                {
+                    "Name": "NeckDying",
+                    "Value": 3301292
+                },
+                {
+                    "Name": "LeftArmCrawlingBackwards",
+                    "Value": 3301380
+                },
+                {
+                    "Name": "RightArmCrawlingBackwards",
+                    "Value": 3301476
+                },
+                {
+                    "Name": "LeftArmSwingingAtGround",
+                    "Value": 3301572
+                },
+                {
+                    "Name": "LeftArmSwingingAtCloseGround",
+                    "Value": 3301660
+                },
+                {
+                    "Name": "EyeDying",
+                    "Value": 3301748
+                }
+            ],
+            "Name": "MechaRidleyPart"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Idle",
+                    "Value": 3298996
+                }
+            ],
+            "Name": "MechaRidley"
+        },
+        {
+            "Name": "MechaRidleyMissile",
+            "Value": 3300900
+        },
+        {
+            "Name": "MechaRidleyFireball",
+            "Value": 3300916
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Forward",
+                    "Value": 3300956
+                },
+                {
+                    "Name": "SlightlyDown",
+                    "Value": 3300988
+                },
+                {
+                    "Name": "Down",
+                    "Value": 3301020
+                },
+                {
+                    "Name": "SlightlyUp",
+                    "Value": 3301052
+                },
+                {
+                    "Name": "Up",
+                    "Value": 3301084
+                }
+            ],
+            "Name": "MechaRidleyLaser"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Closed",
+                    "Value": 3304440
+                },
+                {
+                    "Name": "Opening",
+                    "Value": 3304456
+                },
+                {
+                    "Name": "Opened",
+                    "Value": 3304600
+                }
+            ],
+            "Name": "EscapeGate"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Slow",
+                    "Value": 3304768
+                },
+                {
+                    "Name": "Fast",
+                    "Value": 3304808
+                }
+            ],
+            "Name": "Bomb"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Slow",
+                    "Value": 3304848
+                },
+                {
+                    "Name": "Fast",
+                    "Value": 3304880
+                }
+            ],
+            "Name": "PowerBomb"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3305280
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3305304
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3305328
+                },
+                {
+                    "Name": "Tumbling",
+                    "Value": 3305424
+                }
+            ],
+            "Name": "Missile"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3305352
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3305376
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3305400
+                },
+                {
+                    "Name": "Tumbling",
+                    "Value": 3305496
+                }
+            ],
+            "Name": "SuperMissile"
+        },
+        {
+            "Name": "ParticleMissileTrail",
+            "Value": 3305568
+        },
+        {
+            "Name": "ParticleSuperMissileTrail",
+            "Value": 3305632
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3308176
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3308200
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3308224
+                },
+                {
+                    "Name": "Horizontal_Unused",
+                    "Value": 3308248
+                },
+                {
+                    "Name": "Diagonal_Unused",
+                    "Value": 3308272
+                },
+                {
+                    "Name": "Vertical_Unused",
+                    "Value": 3308296
+                }
+            ],
+            "Name": "NormalBeam"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3308320
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3308344
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3308368
+                },
+                {
+                    "Name": "Horizontal_Unused",
+                    "Value": 3308392
+                }
+            ],
+            "Name": "ChargedNormalBeam"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3310664
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3310688
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3310712
+                }
+            ],
+            "Name": "LongBeam"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3310736
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3310760
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3310784
+                }
+            ],
+            "Name": "ChargedLongBeam"
+        },
+        {
+            "Name": "ParticleChargedLongBeamTrail",
+            "Value": 3310808
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3313196
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3313220
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3313244
+                },
+                {
+                    "Name": "Horizontal_Unused",
+                    "Value": 3313268
+                },
+                {
+                    "Name": "Diagonal_Unused",
+                    "Value": 3313292
+                },
+                {
+                    "Name": "Vertical_Unused",
+                    "Value": 3313316
+                }
+            ],
+            "Name": "IceBeam"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3313340
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3313364
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3313388
+                }
+            ],
+            "Name": "ChargedIceBeam"
+        },
+        {
+            "Name": "ParticleChargedIceBeamTrail",
+            "Value": 3313412
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3316844
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3316908
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3316972
+                },
+                {
+                    "Name": "Horizontal_Unused",
+                    "Value": 3317036
+                },
+                {
+                    "Name": "Diagonal_Unused",
+                    "Value": 3317100
+                },
+                {
+                    "Name": "Vertical_Unused",
+                    "Value": 3317164
+                }
+            ],
+            "Name": "WaveBeam"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3317228
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3317292
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3317356
+                }
+            ],
+            "Name": "ChargedWaveBeam"
+        },
+        {
+            "Name": "ParticleChargedWaveBeamTrail",
+            "Value": 3317420
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal_NoWave",
+                    "Value": 3321120
+                },
+                {
+                    "Name": "Diagonal_NoWave",
+                    "Value": 3321144
+                },
+                {
+                    "Name": "Vertical_NoWave",
+                    "Value": 3321168
+                },
+                {
+                    "Name": "Horizontal_NoWave_Unused",
+                    "Value": 3321192
+                },
+                {
+                    "Name": "Diagonal_NoWave_Unused",
+                    "Value": 3321216
+                },
+                {
+                    "Name": "Vertical_NoWave_Unused",
+                    "Value": 3321240
+                },
+                {
+                    "Name": "Horizontal_Wave",
+                    "Value": 3321336
+                },
+                {
+                    "Name": "Diagonal_Wave",
+                    "Value": 3321400
+                },
+                {
+                    "Name": "Vertical_Wave",
+                    "Value": 3321464
+                },
+                {
+                    "Name": "Horizontal_Wave_Unused",
+                    "Value": 3321528
+                },
+                {
+                    "Name": "Diagonal_Wave_Unused",
+                    "Value": 3321576
+                },
+                {
+                    "Name": "Vertical_Wave_Unused",
+                    "Value": 3321624
+                }
+            ],
+            "Name": "PlasmaBeam"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal_NoWave",
+                    "Value": 3321264
+                },
+                {
+                    "Name": "Diagonal_NoWave",
+                    "Value": 3321288
+                },
+                {
+                    "Name": "Vertical_NoWave",
+                    "Value": 3321312
+                },
+                {
+                    "Name": "Horizontal_Wave",
+                    "Value": 3321672
+                },
+                {
+                    "Name": "Diagonal_Wave",
+                    "Value": 3321736
+                },
+                {
+                    "Name": "Vertical_Wave",
+                    "Value": 3321800
+                }
+            ],
+            "Name": "ChargedPlasmaBeam"
+        },
+        {
+            "Name": "ParticleChargedPlasmaBeamTrail",
+            "Value": 3321864
+        },
+        {
+            "Name": "ParticleChargedFullBeamTrail",
+            "Value": 3321904
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3324208
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3324232
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3324256
+                }
+            ],
+            "Name": "Pistol"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Horizontal",
+                    "Value": 3324280
+                },
+                {
+                    "Name": "Diagonal",
+                    "Value": 3324304
+                },
+                {
+                    "Name": "Vertical",
+                    "Value": 3324328
+                }
+            ],
+            "Name": "ChargedPistol"
+        },
+        {
+            "Name": "ParticleChargedPistolTrail",
+            "Value": 3324352
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Unused",
+                    "Value": 3324392
+                }
+            ],
+            "Name": "ParticleEscape"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Unused",
+                    "Value": 3324408
+                }
+            ],
+            "Name": "ParticleSamusReflection"
+        },
+        {
+            "Name": "ParticleShootingBeamHorizontal",
+            "Value": 3382500
+        },
+        {
+            "Name": "ParticleShootingBeamDiagonallyUp",
+            "Value": 3382540
+        },
+        {
+            "Name": "ParticleShootingBeamDiagonallyDown",
+            "Value": 3382580
+        },
+        {
+            "Name": "ParticleShootingBeamUp",
+            "Value": 3382620
+        },
+        {
+            "Name": "ParticleShootingBeamDown",
+            "Value": 3382660
+        },
+        {
+            "Name": "ParticleBomb",
+            "Value": 3382700
+        },
+        {
+            "Name": "ParticleBeamTrailing",
+            "Value": 3382756
+        },
+        {
+            "Name": "ParticleChargingBeamBegin",
+            "Value": 3382804
+        },
+        {
+            "Name": "ParticleChargingBeamCharged",
+            "Value": 3382988
+        },
+        {
+            "Name": "ParticleHittingSomethingWithNormalBeam",
+            "Value": 3388556
+        },
+        {
+            "Name": "ParticleHittingSomethingWithLongBeam",
+            "Value": 3388596
+        },
+        {
+            "Name": "ParticleHittingSomethingWithIceBeam",
+            "Value": 3388636
+        },
+        {
+            "Name": "ParticleHittingSomethingWithWaveBeam",
+            "Value": 3388684
+        },
+        {
+            "Name": "ParticleHittingSomethingWithPlasmaBeam",
+            "Value": 3388740
+        },
+        {
+            "Name": "ParticleHittingSomethingInvincible",
+            "Value": 3388804
+        },
+        {
+            "Name": "ParticleHittingSomethingWithMissile",
+            "Value": 3388852
+        },
+        {
+            "Name": "ParticleHittingSomethingWithSuperMissile",
+            "Value": 3388916
+        },
+        {
+            "Name": "ParticleSpriteExplosionHuge",
+            "Value": 3388980
+        },
+        {
+            "Name": "ParticleSmallDust",
+            "Value": 3389092
+        },
+        {
+            "Name": "ParticleMediumDust",
+            "Value": 3389148
+        },
+        {
+            "Name": "ParticleTwoMediumDust",
+            "Value": 3389228
+        },
+        {
+            "Name": "ParticleSpriteExplosionSmall",
+            "Value": 3389316
+        },
+        {
+            "Name": "ParticleSpriteExplosionMedium",
+            "Value": 3389412
+        },
+        {
+            "Name": "ParticleSpriteExplosionBig",
+            "Value": 3389556
+        },
+        {
+            "Name": "ParticleSpriteExplosionSingleThenBig",
+            "Value": 3389700
+        },
+        {
+            "Name": "ParticleScrewAttackDestroyed",
+            "Value": 3389836
+        },
+        {
+            "Name": "ParticleShinesparkDestroyed",
+            "Value": 3389908
+        },
+        {
+            "Name": "ParticleSudoScrewDestroyed",
+            "Value": 3389996
+        },
+        {
+            "Name": "ParticleSpeedboosterDestroyed",
+            "Value": 3390068
+        },
+        {
+            "Name": "ParticleFreezingSpriteWithIce",
+            "Value": 3390140
+        },
+        {
+            "Name": "ParticleFreezingSpritewithChargedIceBeam",
+            "Value": 3390276
+        },
+        {
+            "Name": "ParticleMainBossDeath",
+            "Value": 3390404
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Spawning",
+                    "Value": 3390548
+                },
+                {
+                    "Name": "Falling",
+                    "Value": 3390612
+                },
+                {
+                    "Name": "Splashing",
+                    "Value": 3390628
+                }
+            ],
+            "Name": "WaterDrop"
+        },
+        {
+            "Name": "SpriteDebris",
+            "Value": 3390676
+        },
+        {
+            "Items": [
+                {
+                    "Name": "RunningOnDustyGround",
+                    "Value": 3393400
+                },
+                {
+                    "Name": "LandingOnDustyGround",
+                    "Value": 3393448
+                },
+                {
+                    "Name": "TakingDamageInLava",
+                    "Value": 3393512
+                },
+                {
+                    "Name": "TakingDamageInAcid",
+                    "Value": 3393584
+                },
+                {
+                    "Name": "RunningOnWetGround",
+                    "Value": 3393656
+                },
+                {
+                    "Name": "LandingOnWetGround",
+                    "Value": 3393704
+                },
+                {
+                    "Name": "GoingOutOfWater",
+                    "Value": 3393752
+                },
+                {
+                    "Name": "RunningIntoWater",
+                    "Value": 3393832
+                },
+                {
+                    "Name": "GoingOutOfLava",
+                    "Value": 3393888
+                },
+                {
+                    "Name": "RunningIntoLava",
+                    "Value": 3393968
+                },
+                {
+                    "Name": "GoingOutOfAcid",
+                    "Value": 3394024
+                },
+                {
+                    "Name": "RunningIntoAcid",
+                    "Value": 3394112
+                },
+                {
+                    "Name": "LandingOnBubblyGround",
+                    "Value": 3394168
+                },
+                {
+                    "Name": "BreathingBubbles",
+                    "Value": 3394224
+                },
+                {
+                    "Name": "RunningOnVeryDustyGround",
+                    "Value": 3394288
+                },
+                {
+                    "Name": "LandingOnVeryDustyGround",
+                    "Value": 3394384
+                }
+            ],
+            "Name": "EnvEffect"
+        },
+        {
+            "Name": "ParticleSpriteSplashWaterBig",
+            "Value": 3396876
+        },
+        {
+            "Name": "ParticleSpriteSplashWaterHuge",
+            "Value": 3396956
+        },
+        {
+            "Name": "ParticleSpriteSplashWaterSmall",
+            "Value": 3397036
+        },
+        {
+            "Name": "ParticleSpriteSplashLavaBig",
+            "Value": 3397092
+        },
+        {
+            "Name": "ParticleSpriteSplashLavaHuge",
+            "Value": 3397172
+        },
+        {
+            "Name": "ParticleSpriteSplashLavaSmall",
+            "Value": 3397252
+        },
+        {
+            "Name": "ParticleSpriteSplashAcidBig",
+            "Value": 3397308
+        },
+        {
+            "Name": "ParticleSpriteSplashAcidHuge",
+            "Value": 3397388
+        },
+        {
+            "Name": "ParticleSpriteSplashAcidSmall",
+            "Value": 3397468
+        },
+        {
+            "Name": "ParticleEscape",
+            "Value": 3399624
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Samus",
+                    "Value": 3587944
+                },
+                {
+                    "Name": "Debris",
+                    "Value": 3587968
+                },
+                {
+                    "Name": "SmallPuff",
+                    "Value": 3588008
+                },
+                {
+                    "Name": "BigPuff",
+                    "Value": 3588048
+                }
+            ],
+            "Name": "KraidRising"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "375d10",
+                    "Value": 3628304
+                },
+                {
+                    "Name": "HugeShipExplosion",
+                    "Value": 4705252
+                }
+            ],
+            "Name": "TourianEscape"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "EyeOpening",
+                    "Value": 3628616
+                },
+                {
+                    "Name": "Bubble",
+                    "Value": 3628704
+                },
+                {
+                    "Name": "EyeOpened",
+                    "Value": 3629124
+                },
+                {
+                    "Name": "ElevatorAnimation",
+                    "Value": 3629156
+                }
+            ],
+            "Name": "MotherBrainCloseUp"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "LeftBlueShip",
+                    "Value": 3698608
+                },
+                {
+                    "Name": "RightBlueShip",
+                    "Value": 3698624
+                },
+                {
+                    "Name": "MotherShip",
+                    "Value": 3698640
+                },
+                {
+                    "Name": "MotherShipLeavingBack",
+                    "Value": 3698656
+                },
+                {
+                    "Name": "MotherShipLeavingFront",
+                    "Value": 3698672
+                },
+                {
+                    "Name": "ViewOfShipParticle",
+                    "Value": 3698688
+                },
+                {
+                    "Name": "387010",
+                    "Value": 3698704
+                },
+                {
+                    "Name": "ViewOfShipParticleSecond",
+                    "Value": 3698720
+                },
+                {
+                    "Name": "39d7e8",
+                    "Value": 3790824
+                },
+                {
+                    "Name": "ShipLeavingParticle",
+                    "Value": 3790944
+                },
+                {
+                    "Name": "ShipLeavingParticleSecond",
+                    "Value": 3790984
+                }
+            ],
+            "Name": "RidleyInSpace"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "ShipBottomPart",
+                    "Value": 3802480
+                },
+                {
+                    "Name": "ShipMiddlePart",
+                    "Value": 3802496
+                },
+                {
+                    "Name": "ShipTopPart",
+                    "Value": 3802512
+                },
+                {
+                    "Name": "Ridley",
+                    "Value": 3802528
+                },
+                {
+                    "Name": "ShipInSpace",
+                    "Value": 3802652
+                },
+                {
+                    "Name": "SmokeParticles",
+                    "Value": 3803364
+                },
+                {
+                    "Name": "Rocks",
+                    "Value": 3803564
+                }
+            ],
+            "Name": "RidleyLanding"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "RidleyFlyingReflection",
+                    "Value": 3890456
+                },
+                {
+                    "Name": "RidleyFlying",
+                    "Value": 3890472
+                },
+                {
+                    "Name": "RidleyScreaming",
+                    "Value": 3890488
+                },
+                {
+                    "Name": "Samus",
+                    "Value": 3890616
+                },
+                {
+                    "Name": "RidleyFlyingAndScreaming_Unused",
+                    "Value": 3890684
+                }
+            ],
+            "Name": "RidleySpawn"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "FocusingEye",
+                    "Value": 3935676
+                },
+                {
+                    "Name": "OpeningEye",
+                    "Value": 3935708
+                }
+            ],
+            "Name": "MechaSeesSamus"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "SparkleGoingUp",
+                    "Value": 3958168
+                },
+                {
+                    "Name": "SparkleAroundRing1",
+                    "Value": 3958224
+                },
+                {
+                    "Name": "RingBottom",
+                    "Value": 3958312
+                },
+                {
+                    "Name": "RingTop",
+                    "Value": 3958336
+                },
+                {
+                    "Name": "SparkleAroundRing2",
+                    "Value": 3958360
+                }
+            ],
+            "Name": "GettingFullyPoweredSuit"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "SpacePirate",
+                    "Value": 4129696
+                },
+                {
+                    "Name": "Empty",
+                    "Value": 4129800
+                }
+            ],
+            "Name": "EnterTourian"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Controls",
+                    "Value": 4158764
+                }
+            ],
+            "Name": "SamusInBlueShip"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Suit",
+                    "Value": 4186052
+                },
+                {
+                    "Name": "Suitless",
+                    "Value": 4188164
+                }
+            ],
+            "Name": "SamusIcon"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "RightCursor",
+                    "Value": 4186124
+                },
+                {
+                    "Name": "DownCursor",
+                    "Value": 4186164
+                },
+                {
+                    "Name": "DownloadLineTrail",
+                    "Value": 4186508
+                },
+                {
+                    "Name": "DownloadLine",
+                    "Value": 4186548
+                },
+                {
+                    "Name": "EnergyTanks",
+                    "Value": 4186756
+                },
+                {
+                    "Name": "MissileTanks",
+                    "Value": 4186772
+                },
+                {
+                    "Name": "SuperMissileTanks",
+                    "Value": 4186788
+                },
+                {
+                    "Name": "PowerBombTanks",
+                    "Value": 4186804
+                },
+                {
+                    "Name": "EnergyHeader",
+                    "Value": 4186860
+                },
+                {
+                    "Name": "BeamHeader",
+                    "Value": 4186876
+                },
+                {
+                    "Name": "MissileHeader",
+                    "Value": 4186892
+                },
+                {
+                    "Name": "BombHeader",
+                    "Value": 4186908
+                },
+                {
+                    "Name": "SuitHeader",
+                    "Value": 4186924
+                },
+                {
+                    "Name": "MiscHeader",
+                    "Value": 4186940
+                },
+                {
+                    "Name": "SamusPowerSuitWireframe",
+                    "Value": 4186956
+                },
+                {
+                    "Name": "SamusFullSuitWireframe",
+                    "Value": 4186972
+                },
+                {
+                    "Name": "BeamLinker",
+                    "Value": 4186988
+                },
+                {
+                    "Name": "MissileLinker",
+                    "Value": 4187076
+                },
+                {
+                    "Name": "BombLinker",
+                    "Value": 4187124
+                },
+                {
+                    "Name": "SuitLinker",
+                    "Value": 4187204
+                },
+                {
+                    "Name": "MiscLinker",
+                    "Value": 4187284
+                },
+                {
+                    "Name": "ItemCursorIdle",
+                    "Value": 4187356
+                },
+                {
+                    "Name": "InGameTimer",
+                    "Value": 4187444
+                },
+                {
+                    "Name": "ItemCursorFocusing",
+                    "Value": 4187892
+                },
+                {
+                    "Name": "TextMarkerDown",
+                    "Value": 4187940
+                },
+                {
+                    "Name": "TextMarkerUp",
+                    "Value": 4187964
+                },
+                {
+                    "Name": "GunHeader",
+                    "Value": 4188148
+                },
+                {
+                    "Name": "SamusSuitlessWireframe",
+                    "Value": 4188716
+                },
+                {
+                    "Name": "PlasmaBeamUnknown",
+                    "Value": 4188732
+                },
+                {
+                    "Name": "SpaceJumpUnknown",
+                    "Value": 4188748
+                },
+                {
+                    "Name": "GravityUnknown",
+                    "Value": 4188764
+                },
+                {
+                    "Name": "PlasmaBeamKnown",
+                    "Value": 4188780
+                },
+                {
+                    "Name": "SpaceJumpKnown",
+                    "Value": 4188796
+                },
+                {
+                    "Name": "GravityKnown",
+                    "Value": 4188812
+                },
+                {
+                    "Name": "DebugCursor",
+                    "Value": 4188944
+                },
+                {
+                    "Name": "DebugSelector",
+                    "Value": 4188968
+                },
+                {
+                    "Name": "DebugSamusHeadAndArrows",
+                    "Value": 4189008
+                }
+            ],
+            "Name": "Misc"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Up",
+                    "Value": 4186204
+                },
+                {
+                    "Name": "Down",
+                    "Value": 4186244
+                },
+                {
+                    "Name": "Left",
+                    "Value": 4186284
+                },
+                {
+                    "Name": "Right",
+                    "Value": 4186324
+                },
+                {
+                    "Name": "Unused",
+                    "Value": 4186364
+                }
+            ],
+            "Name": "BorderArrow"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "UpArrow",
+                    "Value": 4186380
+                },
+                {
+                    "Name": "DownArrow",
+                    "Value": 4186444
+                },
+                {
+                    "Name": "Target",
+                    "Value": 4186820
+                },
+                {
+                    "Name": "GreenFlameSpawning",
+                    "Value": 4188252
+                },
+                {
+                    "Name": "GreenFlame",
+                    "Value": 4188308
+                },
+                {
+                    "Name": "GreenFlameMoving",
+                    "Value": 4188348
+                },
+                {
+                    "Name": "PurpleFlameSpawning",
+                    "Value": 4188484
+                },
+                {
+                    "Name": "PurpleFlame",
+                    "Value": 4188540
+                },
+                {
+                    "Name": "PurpleFlameMoving",
+                    "Value": 4188580
+                }
+            ],
+            "Name": "Target"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Brinstar",
+                    "Value": 4186564
+                },
+                {
+                    "Name": "Kraid",
+                    "Value": 4186580
+                },
+                {
+                    "Name": "Norfair",
+                    "Value": 4186596
+                },
+                {
+                    "Name": "Ridley",
+                    "Value": 4186612
+                },
+                {
+                    "Name": "Tourian",
+                    "Value": 4186628
+                },
+                {
+                    "Name": "Crateria",
+                    "Value": 4186644
+                },
+                {
+                    "Name": "Chozodia",
+                    "Value": 4186660
+                },
+                {
+                    "Name": "AreaNameSpawning",
+                    "Value": 4186676
+                },
+                {
+                    "Name": "SelectOn",
+                    "Value": 4187412
+                },
+                {
+                    "Name": "SelectOff",
+                    "Value": 4187428
+                },
+                {
+                    "Name": "RPromptPressed",
+                    "Value": 4187460
+                },
+                {
+                    "Name": "LPromptPressed",
+                    "Value": 4187476
+                },
+                {
+                    "Name": "CrateriaOutline",
+                    "Value": 4187492
+                },
+                {
+                    "Name": "BrinstarOutline",
+                    "Value": 4187508
+                },
+                {
+                    "Name": "KraidOutline",
+                    "Value": 4187524
+                },
+                {
+                    "Name": "NorfairOutline",
+                    "Value": 4187540
+                },
+                {
+                    "Name": "RidleyOutline",
+                    "Value": 4187556
+                },
+                {
+                    "Name": "TourianOutline",
+                    "Value": 4187572
+                },
+                {
+                    "Name": "ChozodiaOutline",
+                    "Value": 4187588
+                },
+                {
+                    "Name": "ChozoHintCrateria",
+                    "Value": 4188020
+                },
+                {
+                    "Name": "ChozoHintBrinstar",
+                    "Value": 4188036
+                },
+                {
+                    "Name": "ChozoHintNorfair",
+                    "Value": 4188052
+                },
+                {
+                    "Name": "ChozoHintRidley",
+                    "Value": 4188068
+                },
+                {
+                    "Name": "ChozoHintTourian",
+                    "Value": 4188084
+                },
+                {
+                    "Name": "ChozoHintChozodia",
+                    "Value": 4188100
+                },
+                {
+                    "Name": "ChozoHintKraid",
+                    "Value": 4188116
+                }
+            ],
+            "Name": "Overlay"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "OutlinedCrateria",
+                    "Value": 4187604
+                },
+                {
+                    "Name": "NameCrateria",
+                    "Value": 4187620
+                },
+                {
+                    "Name": "OutlinedBrinstar",
+                    "Value": 4187636
+                },
+                {
+                    "Name": "NameBrinstar",
+                    "Value": 4187652
+                },
+                {
+                    "Name": "OutlinedKraid",
+                    "Value": 4187668
+                },
+                {
+                    "Name": "NameKraid",
+                    "Value": 4187684
+                },
+                {
+                    "Name": "OutlinedNorfair",
+                    "Value": 4187700
+                },
+                {
+                    "Name": "NameNorfair",
+                    "Value": 4187716
+                },
+                {
+                    "Name": "OutlinedRidley",
+                    "Value": 4187732
+                },
+                {
+                    "Name": "NameRidley",
+                    "Value": 4187748
+                },
+                {
+                    "Name": "OutlinedTourian",
+                    "Value": 4187764
+                },
+                {
+                    "Name": "NameTourian",
+                    "Value": 4187780
+                },
+                {
+                    "Name": "OutlinedChozodia",
+                    "Value": 4187796
+                },
+                {
+                    "Name": "NameChozodia",
+                    "Value": 4187812
+                },
+                {
+                    "Name": "Target",
+                    "Value": 4187828
+                }
+            ],
+            "Name": "WorldMap"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Kraid",
+                    "Value": 4187988
+                },
+                {
+                    "Name": "Ridley",
+                    "Value": 4188004
+                },
+                {
+                    "Name": "Crossmark",
+                    "Value": 4188132
+                },
+                {
+                    "Name": "Ship",
+                    "Value": 4188236
+                }
+            ],
+            "Name": "BossIcon"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "CursorIdle",
+                    "Value": 4266700
+                },
+                {
+                    "Name": "CursorSelecting",
+                    "Value": 4266732
+                },
+                {
+                    "Name": "QuestionWindowNoSelected",
+                    "Value": 4266788
+                },
+                {
+                    "Name": "QuestionWindowYesSelected",
+                    "Value": 4266804
+                },
+                {
+                    "Name": "ConfirmWindowNoSelected",
+                    "Value": 4266820
+                },
+                {
+                    "Name": "ConfirmWindowYesSelected",
+                    "Value": 4266836
+                }
+            ],
+            "Name": "EraseSram"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "Comet",
+                    "Value": 4485208
+                },
+                {
+                    "Name": "CometFlying",
+                    "Value": 4485240
+                },
+                {
+                    "Name": "SparkleIdle",
+                    "Value": 4485256
+                },
+                {
+                    "Name": "SparkleDisappearing",
+                    "Value": 4485296
+                }
+            ],
+            "Name": "TitleScreen"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "SamusHeadTurningOn",
+                    "Value": 4544404
+                },
+                {
+                    "Name": "SamusHeadOff",
+                    "Value": 4544444
+                },
+                {
+                    "Name": "SamusHeadTurning",
+                    "Value": 4544460
+                },
+                {
+                    "Name": "FileAMarkerSelectedRed",
+                    "Value": 4544548
+                },
+                {
+                    "Name": "FileBMarkerSelectedRed",
+                    "Value": 4544564
+                },
+                {
+                    "Name": "FileCMarkerSelectedRed",
+                    "Value": 4544580
+                },
+                {
+                    "Name": "FileAMarkerIdle",
+                    "Value": 4544596
+                },
+                {
+                    "Name": "FileBMarkerIdle",
+                    "Value": 4544612
+                },
+                {
+                    "Name": "FileCMarkerIdle",
+                    "Value": 4544628
+                },
+                {
+                    "Name": "FileAMarkerSelectedGreen",
+                    "Value": 4544644
+                },
+                {
+                    "Name": "FileBMarkerSelectedGreen",
+                    "Value": 4544660
+                },
+                {
+                    "Name": "FileCMarkerSelectedGreen",
+                    "Value": 4544676
+                },
+                {
+                    "Name": "CursorSelected",
+                    "Value": 4544692
+                },
+                {
+                    "Name": "Cursor",
+                    "Value": 4544708
+                },
+                {
+                    "Name": "CopyArrowOneDownActive",
+                    "Value": 4544772
+                },
+                {
+                    "Name": "CopyArrowOneDownInactive",
+                    "Value": 4544812
+                },
+                {
+                    "Name": "CopyArrowTwoDownActive",
+                    "Value": 4544828
+                },
+                {
+                    "Name": "CopyArrowTwoDownInactive",
+                    "Value": 4544868
+                },
+                {
+                    "Name": "CopyArrowOneUpActive",
+                    "Value": 4544884
+                },
+                {
+                    "Name": "CopyArrowOneUpInactive",
+                    "Value": 4544924
+                },
+                {
+                    "Name": "CopyArrowTwoUpActive",
+                    "Value": 4544940
+                },
+                {
+                    "Name": "CopyArrowTwoUpInactive",
+                    "Value": 4544980
+                },
+                {
+                    "Name": "MetroidLogo",
+                    "Value": 4544996
+                },
+                {
+                    "Name": "SamusHeadSuitlessIdle",
+                    "Value": 4545012
+                },
+                {
+                    "Name": "SamusHeadSuitlessTurning",
+                    "Value": 4545052
+                },
+                {
+                    "Name": "SamusHeadSuitlessTurningOn",
+                    "Value": 4545212
+                },
+                {
+                    "Name": "SmallPanel",
+                    "Value": 4546200
+                },
+                {
+                    "Name": "LargePanel",
+                    "Value": 4546248
+                },
+                {
+                    "Name": "MediumPanel",
+                    "Value": 4546312
+                }
+            ],
+            "Name": "FileSelect"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "GbaIdle",
+                    "Value": 4544740
+                },
+                {
+                    "Name": "SpeakersIdle",
+                    "Value": 4544756
+                },
+                {
+                    "Name": "LeftArrowIdle",
+                    "Value": 4545116
+                },
+                {
+                    "Name": "LeftArrowMoving",
+                    "Value": 4545140
+                },
+                {
+                    "Name": "RightArrowIdle",
+                    "Value": 4545156
+                },
+                {
+                    "Name": "RightArrowMoving",
+                    "Value": 4545180
+                },
+                {
+                    "Name": "SoundTestId",
+                    "Value": 4545196
+                },
+                {
+                    "Name": "GbaActive",
+                    "Value": 4545260
+                },
+                {
+                    "Name": "SpeakersActive",
+                    "Value": 4545308
+                },
+                {
+                    "Name": "GbaLinking",
+                    "Value": 4545356
+                },
+                {
+                    "Name": "455cac",
+                    "Value": 4545708
+                },
+                {
+                    "Name": "SmallPanel",
+                    "Value": 4546376
+                }
+            ],
+            "Name": "Options"
+        },
+        {
+            "Items": [
+                {
+                    "Name": "ShipSmokeExplosion",
+                    "Value": 4704500
+                },
+                {
+                    "Name": "ShipSmokeSmallExplosion",
+                    "Value": 4704564
+                },
+                {
+                    "Name": "ShipSmokeSmallWideExplosion",
+                    "Value": 4704620
+                },
+                {
+                    "Name": "ShipSmokeWideExplosion",
+                    "Value": 4704700
+                },
+                {
+                    "Name": "SmallExplosion",
+                    "Value": 4704788
+                },
+                {
+                    "Name": "MediumExplosion",
+                    "Value": 4704884
+                },
+                {
+                    "Name": "MediumExplosion2",
+                    "Value": 4705028
+                },
+                {
+                    "Name": "HugeExplosion",
+                    "Value": 4705148
+                },
+                {
+                    "Name": "47cc64",
+                    "Value": 4705380
+                },
+                {
+                    "Name": "47ccbc",
+                    "Value": 4705468
+                },
+                {
+                    "Name": "MotherShipDecaying",
+                    "Value": 4705588
+                },
+                {
+                    "Name": "MotherShipDoorOpening",
+                    "Value": 6070004
+                }
+            ],
+            "Name": "ChozodiaEscape"
+        }
+    ],
+    "Name": "OAM Data"
+}

@@ -19,7 +19,7 @@ filtered_list = [
     ]
 
 # Reorganize Data
-oam_bookmarks = {"Name": "OAM Data", "Description": "OAM Animations for all kinds of sprites", "Items": []}
+oam_bookmarks = {"Name": "OAM Data", "Description": "OAM Addresses extracted from the Zero Mission ROM", "Items": []}
 object_folders = {}
 for entry in filtered_list:
     name_parts = entry["name"].split("_")
@@ -43,11 +43,8 @@ for entry in filtered_list:
             {"Name": animation_name, "Value": animation_address}
         )
 
-collection = {"Name": "ZM ROM Data", "Description": "Addresses extracted from the Zero Mission ROM Data maps", "Items": []}
-collection["Items"].append(oam_bookmarks)
-
 # output data
-if (collection):
+if (oam_bookmarks):
     outputpath = args.output or (args.filepath + "Bookmarks.json")
     with open(outputpath, "w") as file:
-        file.write(json.dumps(collection, indent=4, sort_keys=True))
+        file.write(json.dumps(oam_bookmarks, indent=4, sort_keys=True))

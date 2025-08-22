@@ -293,7 +293,7 @@ namespace mage
         {
             if (Version.IsMF) return;
 
-            string json = LoadAssemblyResourceAsString("mage.Resources.Bookmarks.ZM_U_OAM_Bookmarks.mbc");
+            string json = LoadAssemblyResourceAsString("mage.Resources.Bookmarks.ZM.ZM_U_OAM_Bookmarks.mbc");
             BookmarkManager.InternalCollections = new() { BookmarkManager.Deserialize(json) };
         }
 

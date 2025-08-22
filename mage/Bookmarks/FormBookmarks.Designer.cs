@@ -52,27 +52,27 @@
             button_importGlobal = new System.Windows.Forms.ToolStripMenuItem();
             button_importProject = new System.Windows.Forms.ToolStripMenuItem();
             button_export = new System.Windows.Forms.ToolStripDropDownButton();
-            panel_main = new Controls.ExtendedPanel();
-            panel_bookmarks = new Controls.ExtendedPanel();
+            panel_main = new mage.Controls.ExtendedPanel();
+            panel_bookmarks = new mage.Controls.ExtendedPanel();
             group_bookmarks = new System.Windows.Forms.GroupBox();
-            textBox_search = new Theming.CustomControls.FlatTextBox();
-            panel_collections = new Controls.ExtendedPanel();
-            panel_projectCollections = new Controls.ExtendedPanel();
+            textBox_search = new mage.Theming.CustomControls.FlatTextBox();
+            panel_collections = new mage.Controls.ExtendedPanel();
+            panel_projectCollections = new mage.Controls.ExtendedPanel();
             group_projectCollections = new System.Windows.Forms.GroupBox();
             listbox_projectCollections = new System.Windows.Forms.ListBox();
             panel_projectCollectionControls = new System.Windows.Forms.Panel();
             button_projectRemove = new System.Windows.Forms.Button();
             button_projectAdd = new System.Windows.Forms.Button();
-            panel_globalCollections = new Controls.ExtendedPanel();
-            panel_internalCollections = new Controls.ExtendedPanel();
+            panel_globalCollections = new mage.Controls.ExtendedPanel();
+            panel_internalCollections = new mage.Controls.ExtendedPanel();
             group_internalCollections = new System.Windows.Forms.GroupBox();
             listbox_internalCollections = new System.Windows.Forms.ListBox();
             group_details = new System.Windows.Forms.GroupBox();
-            textBox_description = new Theming.CustomControls.FlatTextBox();
+            textBox_description = new mage.Theming.CustomControls.FlatTextBox();
             label_description = new System.Windows.Forms.Label();
-            textBox_value = new Theming.CustomControls.FlatTextBox();
+            textBox_value = new mage.Theming.CustomControls.FlatTextBox();
             label_value = new System.Windows.Forms.Label();
-            textBox_name = new Theming.CustomControls.FlatTextBox();
+            textBox_name = new mage.Theming.CustomControls.FlatTextBox();
             label_name = new System.Windows.Forms.Label();
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,6 +86,7 @@
             layer3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layer4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             context_listBox = new System.Windows.Forms.ContextMenuStrip(components);
+            panel_treeView = new System.Windows.Forms.Panel();
             context_treeview.SuspendLayout();
             group_globalCollections.SuspendLayout();
             panel_globalCollectionControls.SuspendLayout();
@@ -102,6 +103,7 @@
             group_internalCollections.SuspendLayout();
             group_details.SuspendLayout();
             menuStrip1.SuspendLayout();
+            panel_treeView.SuspendLayout();
             SuspendLayout();
             // 
             // tree_bookmarks
@@ -114,13 +116,13 @@
             tree_bookmarks.HotTracking = true;
             tree_bookmarks.ImageIndex = 0;
             tree_bookmarks.ImageList = imageList_treeIcons;
-            tree_bookmarks.Location = new System.Drawing.Point(3, 42);
+            tree_bookmarks.Location = new System.Drawing.Point(0, 3);
             tree_bookmarks.Name = "tree_bookmarks";
             treeNode1.Name = "Node0";
             treeNode1.Text = "Node0";
             tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode1 });
             tree_bookmarks.SelectedImageIndex = 0;
-            tree_bookmarks.Size = new System.Drawing.Size(327, 378);
+            tree_bookmarks.Size = new System.Drawing.Size(342, 375);
             tree_bookmarks.TabIndex = 0;
             tree_bookmarks.ItemDrag += tree_bookmarks_ItemDrag;
             tree_bookmarks.AfterSelect += tree_bookmarks_AfterSelect;
@@ -258,14 +260,14 @@
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { spring, button_import, button_export });
             statusStrip1.Location = new System.Drawing.Point(0, 459);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(712, 22);
+            statusStrip1.Size = new System.Drawing.Size(727, 22);
             statusStrip1.TabIndex = 3;
             statusStrip1.Text = "statusStrip1";
             // 
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(605, 17);
+            spring.Size = new System.Drawing.Size(620, 17);
             spring.Spring = true;
             // 
             // button_import
@@ -313,7 +315,7 @@
             panel_main.Location = new System.Drawing.Point(0, 24);
             panel_main.Name = "panel_main";
             panel_main.Padding = new System.Windows.Forms.Padding(6);
-            panel_main.Size = new System.Drawing.Size(712, 435);
+            panel_main.Size = new System.Drawing.Size(727, 435);
             panel_main.TabIndex = 4;
             // 
             // panel_bookmarks
@@ -323,17 +325,17 @@
             panel_bookmarks.Location = new System.Drawing.Point(167, 6);
             panel_bookmarks.Name = "panel_bookmarks";
             panel_bookmarks.Padding = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            panel_bookmarks.Size = new System.Drawing.Size(345, 423);
+            panel_bookmarks.Size = new System.Drawing.Size(360, 423);
             panel_bookmarks.TabIndex = 5;
             // 
             // group_bookmarks
             // 
-            group_bookmarks.Controls.Add(tree_bookmarks);
+            group_bookmarks.Controls.Add(panel_treeView);
             group_bookmarks.Controls.Add(textBox_search);
             group_bookmarks.Dock = System.Windows.Forms.DockStyle.Fill;
             group_bookmarks.Location = new System.Drawing.Point(6, 0);
             group_bookmarks.Name = "group_bookmarks";
-            group_bookmarks.Size = new System.Drawing.Size(333, 423);
+            group_bookmarks.Size = new System.Drawing.Size(348, 423);
             group_bookmarks.TabIndex = 3;
             group_bookmarks.TabStop = false;
             group_bookmarks.Text = "Bookmarks";
@@ -353,7 +355,7 @@
             textBox_search.ReadOnly = false;
             textBox_search.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_search.SelectionStart = 0;
-            textBox_search.Size = new System.Drawing.Size(327, 23);
+            textBox_search.Size = new System.Drawing.Size(342, 23);
             textBox_search.TabIndex = 1;
             textBox_search.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_search.ValueBox = false;
@@ -493,7 +495,7 @@
             group_details.Controls.Add(textBox_name);
             group_details.Controls.Add(label_name);
             group_details.Dock = System.Windows.Forms.DockStyle.Right;
-            group_details.Location = new System.Drawing.Point(512, 6);
+            group_details.Location = new System.Drawing.Point(527, 6);
             group_details.Name = "group_details";
             group_details.Size = new System.Drawing.Size(194, 423);
             group_details.TabIndex = 4;
@@ -593,7 +595,7 @@
             menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { viewToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new System.Drawing.Size(712, 24);
+            menuStrip1.Size = new System.Drawing.Size(727, 24);
             menuStrip1.TabIndex = 5;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -676,11 +678,21 @@
             context_listBox.Name = "context_listBox";
             context_listBox.Size = new System.Drawing.Size(61, 4);
             // 
+            // panel_treeView
+            // 
+            panel_treeView.Controls.Add(tree_bookmarks);
+            panel_treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel_treeView.Location = new System.Drawing.Point(3, 42);
+            panel_treeView.Name = "panel_treeView";
+            panel_treeView.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            panel_treeView.Size = new System.Drawing.Size(342, 378);
+            panel_treeView.TabIndex = 2;
+            // 
             // FormBookmarks
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(712, 481);
+            ClientSize = new System.Drawing.Size(727, 481);
             Controls.Add(panel_main);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
@@ -708,6 +720,7 @@
             group_details.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            panel_treeView.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -769,5 +782,6 @@
         private System.Windows.Forms.Button button_projectAdd;
         private System.Windows.Forms.ToolStripMenuItem button_importProject;
         private System.Windows.Forms.ToolStripMenuItem button_importGlobal;
+        private System.Windows.Forms.Panel panel_treeView;
     }
 }

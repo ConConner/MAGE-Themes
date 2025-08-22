@@ -130,13 +130,20 @@ public partial class FlatTextBox : UserControl
         base.OnResize(e);
 
         int x = DisplayBorder ? 3 : 0;
-        int y = (ClientSize.Height - textBox.PreferredHeight) / 2;
-
-        textBox.SetBounds(x, y,
-                          ClientSize.Width - 2 * x,
-                          textBox.PreferredHeight);
-
-        if (!Multiline) Height = 23;
+        int y = 4;
+        if (Multiline)
+        {
+            textBox.SetBounds(x, y,
+                              ClientSize.Width - 2 * x,
+                              ClientSize.Height - 2 * y);
+        }
+        else
+        {
+            Height = 23;
+            textBox.SetBounds(x, y,
+                              ClientSize.Width - 2 * x,
+                              textBox.PreferredHeight);
+        }
 
         if (Parent != null)
         {
