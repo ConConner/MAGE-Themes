@@ -703,10 +703,10 @@ namespace mage
             if (!FindOpenForm(typeof(FormOam), false))
             {
                 FormOam form;
-                int gfxOffset = room.tileset.RLEgfx.Offset;
-                int palOffset = room.tileset.palette.Offset + 0x20;
-                if (!Version.IsMF) form = new FormOam(this, 0x2C4194, 0x2C4780, 0x2C4A68);
-                else form = new FormOam(this, 0x2E926C, 0x2EAA6C, 0x2CD5C4, false);
+                int OamOffset = 0;
+                Version.TryGetPrimarySpriteOAM(0x12, out OamOffset); // Funnily enough the first enemy in Fusion and Zm are both sprite ID 12
+                if (!Version.IsMF) form = new FormOam(this, 0x2C4194, 0x2C4780, OamOffset);
+                else form = new FormOam(this, 0x2E926C, 0x2EAA6C, OamOffset, false);
                 form.Show();
             }
         }
