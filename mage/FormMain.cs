@@ -1274,7 +1274,7 @@ namespace mage
             if (newProject)
             {
                 string message = "Project saved to " + Path.ChangeExtension(filename, ".proj");
-                message += "\n\nDo not modify or erase this file. It is necessary for tracking added data.";
+                message += "\n\nDo not modify or erase this file. It is necessary for tracking added data. MAGE may no longer work if it is missing.";
                 MessageBox.Show(message, "New Project", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
