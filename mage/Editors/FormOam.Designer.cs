@@ -36,14 +36,14 @@
             checkBox_compressed = new System.Windows.Forms.CheckBox();
             button_imageGo = new System.Windows.Forms.Button();
             label_paletteOffset = new System.Windows.Forms.Label();
-            textBox_imageOffset = new Theming.CustomControls.FlatTextBox();
+            textBox_imageOffset = new mage.Theming.CustomControls.FlatTextBox();
             label_imageOffset = new System.Windows.Forms.Label();
             label_OAMOffset = new System.Windows.Forms.Label();
-            textBox_palOffset = new Theming.CustomControls.FlatTextBox();
-            textBox_oamOffset = new Theming.CustomControls.FlatTextBox();
+            textBox_palOffset = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_oamOffset = new mage.Theming.CustomControls.FlatTextBox();
             groupBox_image = new System.Windows.Forms.GroupBox();
-            panel_gfx = new Controls.ExtendedPanel();
-            gfxView_gfx = new Controls.TileDisplay();
+            panel_gfx = new mage.Controls.ExtendedPanel();
+            gfxView_gfx = new mage.Controls.TileDisplay();
             statusStrip_gfx = new System.Windows.Forms.StatusStrip();
             statusLabel_coor = new System.Windows.Forms.ToolStripStatusLabel();
             toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -53,8 +53,6 @@
             button_gfxZoomIn = new System.Windows.Forms.ToolStripButton();
             button_gfxZoomOut = new System.Windows.Forms.ToolStripButton();
             label_gfxZoom = new System.Windows.Forms.ToolStripLabel();
-            menuStrip = new System.Windows.Forms.MenuStrip();
-            menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             groupBox_oam = new System.Windows.Forms.GroupBox();
             button_frameDown = new System.Windows.Forms.Button();
             button_frameUp = new System.Windows.Forms.Button();
@@ -62,33 +60,33 @@
             button_removeFrame = new System.Windows.Forms.Button();
             button_addFrame = new System.Windows.Forms.Button();
             button_playAnimation = new System.Windows.Forms.Button();
-            textBox_duration = new Theming.CustomControls.FlatTextBox();
+            textBox_duration = new mage.Theming.CustomControls.FlatTextBox();
             label_frameDuration = new System.Windows.Forms.Label();
-            comboBox_Frame = new Theming.CustomControls.FlatComboBox();
+            comboBox_Frame = new mage.Theming.CustomControls.FlatComboBox();
             label_OAMFrame = new System.Windows.Forms.Label();
             groupBox_part = new System.Windows.Forms.GroupBox();
-            panel_partEditing = new Controls.ExtendedPanel();
+            panel_partEditing = new mage.Controls.ExtendedPanel();
             label_error = new System.Windows.Forms.Label();
-            comboBox_size = new Theming.CustomControls.FlatComboBox();
-            comboBox_palette = new Theming.CustomControls.FlatComboBox();
+            comboBox_size = new mage.Theming.CustomControls.FlatComboBox();
+            comboBox_palette = new mage.Theming.CustomControls.FlatComboBox();
             label_size = new System.Windows.Forms.Label();
-            textBox_tile = new Theming.CustomControls.FlatTextBox();
+            textBox_tile = new mage.Theming.CustomControls.FlatTextBox();
             label_palette = new System.Windows.Forms.Label();
             label_tile = new System.Windows.Forms.Label();
             checkBox_yFlip = new System.Windows.Forms.CheckBox();
             checkBox_xFlip = new System.Windows.Forms.CheckBox();
-            textBox_y = new Theming.CustomControls.FlatTextBox();
-            textBox_x = new Theming.CustomControls.FlatTextBox();
+            textBox_y = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_x = new mage.Theming.CustomControls.FlatTextBox();
             label_y = new System.Windows.Forms.Label();
             label_x = new System.Windows.Forms.Label();
-            panel_partControl = new Controls.ExtendedPanel();
-            comboBox_part = new Theming.CustomControls.FlatComboBox();
+            panel_partControl = new mage.Controls.ExtendedPanel();
+            comboBox_part = new mage.Theming.CustomControls.FlatComboBox();
             label_part = new System.Windows.Forms.Label();
             button_removePart = new System.Windows.Forms.Button();
             button_addPart = new System.Windows.Forms.Button();
             groupBox_oamDisplay = new System.Windows.Forms.GroupBox();
-            panel_oam = new Controls.ExtendedPanel();
-            oamView_oam = new Controls.TileDisplay();
+            panel_oam = new mage.Controls.ExtendedPanel();
+            oamView_oam = new mage.Controls.TileDisplay();
             toolStrip2 = new System.Windows.Forms.ToolStrip();
             button_viewOrigin = new System.Windows.Forms.ToolStripButton();
             button_viewOutline = new System.Windows.Forms.ToolStripButton();
@@ -97,9 +95,9 @@
             button_oamZoomOut = new System.Windows.Forms.ToolStripButton();
             label_oamZoom = new System.Windows.Forms.ToolStripLabel();
             splitContainer_views = new System.Windows.Forms.SplitContainer();
-            panel_palette = new Controls.ExtendedPanel();
+            panel_palette = new mage.Controls.ExtendedPanel();
             groupBox_palette = new System.Windows.Forms.GroupBox();
-            paletteView = new Controls.TileDisplay();
+            paletteView = new mage.Controls.TileDisplay();
             splitContainer_controls = new System.Windows.Forms.SplitContainer();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             label_Status = new System.Windows.Forms.ToolStripStatusLabel();
@@ -125,7 +123,6 @@
             panel_gfx.SuspendLayout();
             statusStrip_gfx.SuspendLayout();
             toolStrip1.SuspendLayout();
-            menuStrip.SuspendLayout();
             groupBox_oam.SuspendLayout();
             groupBox_part.SuspendLayout();
             panel_partEditing.SuspendLayout();
@@ -437,23 +434,6 @@
             label_gfxZoom.Size = new System.Drawing.Size(35, 22);
             label_gfxZoom.Text = "100%";
             // 
-            // menuStrip
-            // 
-            menuStrip.ImageScalingSize = new System.Drawing.Size(40, 40);
-            menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { menuToolStripMenuItem });
-            menuStrip.Location = new System.Drawing.Point(0, 0);
-            menuStrip.Name = "menuStrip";
-            menuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            menuStrip.Size = new System.Drawing.Size(1097, 24);
-            menuStrip.TabIndex = 0;
-            // 
-            // menuToolStripMenuItem
-            // 
-            menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
-            menuToolStripMenuItem.Text = "Menu";
-            // 
             // groupBox_oam
             // 
             groupBox_oam.Controls.Add(button_frameDown);
@@ -595,7 +575,7 @@
             groupBox_part.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_part.Name = "groupBox_part";
             groupBox_part.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_part.Size = new System.Drawing.Size(250, 484);
+            groupBox_part.Size = new System.Drawing.Size(250, 508);
             groupBox_part.TabIndex = 2;
             groupBox_part.TabStop = false;
             groupBox_part.Text = "Part Details";
@@ -618,7 +598,7 @@
             panel_partEditing.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_partEditing.Location = new System.Drawing.Point(4, 48);
             panel_partEditing.Name = "panel_partEditing";
-            panel_partEditing.Size = new System.Drawing.Size(242, 433);
+            panel_partEditing.Size = new System.Drawing.Size(242, 457);
             panel_partEditing.TabIndex = 11;
             // 
             // label_error
@@ -843,7 +823,7 @@
             groupBox_oamDisplay.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_oamDisplay.Name = "groupBox_oamDisplay";
             groupBox_oamDisplay.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_oamDisplay.Size = new System.Drawing.Size(828, 397);
+            groupBox_oamDisplay.Size = new System.Drawing.Size(828, 421);
             groupBox_oamDisplay.TabIndex = 4;
             groupBox_oamDisplay.TabStop = false;
             groupBox_oamDisplay.Text = "OAM Frame";
@@ -856,7 +836,7 @@
             panel_oam.Location = new System.Drawing.Point(4, 44);
             panel_oam.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_oam.Name = "panel_oam";
-            panel_oam.Size = new System.Drawing.Size(820, 350);
+            panel_oam.Size = new System.Drawing.Size(820, 374);
             panel_oam.TabIndex = 0;
             // 
             // oamView_oam
@@ -961,7 +941,7 @@
             // 
             splitContainer_views.Panel2.Controls.Add(groupBox_oamDisplay);
             splitContainer_views.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 6);
-            splitContainer_views.Size = new System.Drawing.Size(834, 717);
+            splitContainer_views.Size = new System.Drawing.Size(834, 741);
             splitContainer_views.SplitterDistance = 307;
             splitContainer_views.TabIndex = 6;
             // 
@@ -1009,7 +989,7 @@
             splitContainer_controls.Dock = System.Windows.Forms.DockStyle.Fill;
             splitContainer_controls.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             splitContainer_controls.IsSplitterFixed = true;
-            splitContainer_controls.Location = new System.Drawing.Point(0, 24);
+            splitContainer_controls.Location = new System.Drawing.Point(0, 0);
             splitContainer_controls.Name = "splitContainer_controls";
             // 
             // splitContainer_controls.Panel1
@@ -1022,7 +1002,7 @@
             // splitContainer_controls.Panel2
             // 
             splitContainer_controls.Panel2.Controls.Add(splitContainer_views);
-            splitContainer_controls.Size = new System.Drawing.Size(1097, 717);
+            splitContainer_controls.Size = new System.Drawing.Size(1097, 741);
             splitContainer_controls.SplitterDistance = 259;
             splitContainer_controls.TabIndex = 7;
             // 
@@ -1044,7 +1024,7 @@
             // label_spring
             // 
             label_spring.Name = "label_spring";
-            label_spring.Size = new System.Drawing.Size(871, 17);
+            label_spring.Size = new System.Drawing.Size(902, 17);
             label_spring.Spring = true;
             // 
             // button_import
@@ -1060,7 +1040,7 @@
             // button_importOam
             // 
             button_importOam.Name = "button_importOam";
-            button_importOam.Size = new System.Drawing.Size(180, 22);
+            button_importOam.Size = new System.Drawing.Size(111, 22);
             button_importOam.Text = "OAM...";
             button_importOam.Click += button_importOam_Click;
             // 
@@ -1077,21 +1057,21 @@
             // button_exportAnimation
             // 
             button_exportAnimation.Name = "button_exportAnimation";
-            button_exportAnimation.Size = new System.Drawing.Size(180, 22);
+            button_exportAnimation.Size = new System.Drawing.Size(139, 22);
             button_exportAnimation.Text = "Animation...";
             button_exportAnimation.Click += button_exportAnimation_Click;
             // 
             // button_exportAssembly
             // 
             button_exportAssembly.Name = "button_exportAssembly";
-            button_exportAssembly.Size = new System.Drawing.Size(180, 22);
+            button_exportAssembly.Size = new System.Drawing.Size(139, 22);
             button_exportAssembly.Text = "Assembly...";
             button_exportAssembly.Click += button_exportAssembly_Click;
             // 
             // button_exportOam
             // 
             button_exportOam.Name = "button_exportOam";
-            button_exportOam.Size = new System.Drawing.Size(180, 22);
+            button_exportOam.Size = new System.Drawing.Size(139, 22);
             button_exportOam.Text = "OAM...";
             button_exportOam.Click += button_exportOam_Click;
             // 
@@ -1178,10 +1158,8 @@
             ClientSize = new System.Drawing.Size(1097, 763);
             Controls.Add(splitContainer_controls);
             Controls.Add(statusStrip1);
-            Controls.Add(menuStrip);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
-            MainMenuStrip = menuStrip;
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             MinimumSize = new System.Drawing.Size(822, 802);
             Name = "FormOam";
@@ -1197,8 +1175,6 @@
             statusStrip_gfx.PerformLayout();
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
-            menuStrip.ResumeLayout(false);
-            menuStrip.PerformLayout();
             groupBox_oam.ResumeLayout(false);
             groupBox_oam.PerformLayout();
             groupBox_part.ResumeLayout(false);
@@ -1241,7 +1217,6 @@
         private System.Windows.Forms.StatusStrip statusStrip_gfx;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel_coor;
         private System.Windows.Forms.CheckBox checkBox_compressed;
-        private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.GroupBox groupBox_oam;
         private mage.Theming.CustomControls.FlatComboBox comboBox_Frame;
         private System.Windows.Forms.Label label_OAMFrame;
@@ -1257,7 +1232,6 @@
         private Controls.TileDisplay oamView_oam;
         private System.Windows.Forms.Button button_removeFrame;
         private System.Windows.Forms.Button button_addFrame;
-        private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer_controls;
         private System.Windows.Forms.GroupBox groupBox_palette;
         private System.Windows.Forms.ToolStrip toolStrip1;
