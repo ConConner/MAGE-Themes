@@ -19,11 +19,11 @@ namespace mage.Theming.CustomControls
             // 
             // textBox
             // 
-            textBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            textBox.Anchor = AnchorStyles.None;
             textBox.BorderStyle = BorderStyle.None;
-            textBox.Location = new Point(3, 4);
+            textBox.Location = Point.Empty;
             textBox.Name = "textBox";
-            textBox.Size = new Size(96, 16);
+            textBox.Size = Size.Empty;
             textBox.TabIndex = 0;
             textBox.TextChanged += textBoxTextChanged;
             textBox.Leave += textBox_Leave;
