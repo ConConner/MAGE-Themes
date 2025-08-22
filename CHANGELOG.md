@@ -1,3 +1,20 @@
+# [1.5.0](https://github.com/ConConner/MAGE-Themes/compare/v1.4.0...v1.5.0) (2025-08-22)
+
+
+### Bug Fixes
+
+* oam editor now properly opens default OAM even if repointed ([e515853](https://github.com/ConConner/MAGE-Themes/commit/e515853c6b90193355e6e264cecc195b32730161))
+* oam editor: removed unused menu bar ([6fb166c](https://github.com/ConConner/MAGE-Themes/commit/6fb166c55531843acb6c78b38df261f2eaa97cc5))
+* OAM repointing now saves repointed sprites in the project file ([8deb2fa](https://github.com/ConConner/MAGE-Themes/commit/8deb2fa553d211b37cbc35bfb95b2203290349f1))
+* outlines of text boxes behave correctly ([d70f8a6](https://github.com/ConConner/MAGE-Themes/commit/d70f8a66f0bb818a33ba521f7c5d383931c997e4))
+* weapon editor: controls visually overlapping ([37fadda](https://github.com/ConConner/MAGE-Themes/commit/37fadda4a817f5739c695bb2c6c58654efb1a6b9))
+
+
+### Features
+
+* bookmarking feature, create bookmarks to store offsets ([f06a91a](https://github.com/ConConner/MAGE-Themes/commit/f06a91abbc2e5ccd5d24dd3176da934091767779))
+* repointed resources get saved in bookmarks ([842f108](https://github.com/ConConner/MAGE-Themes/commit/842f108fcbff3372802eccaf176fdc03d7dcaeba))
+
 # [1.4.0](https://github.com/ConConner/MAGE-Themes/compare/v1.3.0...v1.4.0) (2025-08-14)
 
 
