@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/ConConner/MAGE-Themes/compare/v1.5.0...v1.5.1) (2025-08-23)
+
+
+### Bug Fixes
+
+* bookmarks do not get dropped off at the desired location ([6fc9b67](https://github.com/ConConner/MAGE-Themes/commit/6fc9b6786ee14dfa3df6183480c88da0d356027a))
+
 # [1.5.0](https://github.com/ConConner/MAGE-Themes/compare/v1.4.0...v1.5.0) (2025-08-22)
 
 
