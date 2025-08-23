@@ -473,12 +473,12 @@ public partial class FormBookmarks : Form, Editor
         tv.SelectedNode = draggedNode;
     }
 
-    private void dropNode(TreeNode draggedNode, TreeNode targetNode)
+    private void dropNode(TreeNode draggedNode, TreeNode targetNode, int insertionIndex = -1)
     {
         if (draggedNode == null) return;
         if (targetNode == null) //Dropped on treeview root
         {
-            moveBookmark(draggedNode, CurrentSelectedCollection);
+            moveBookmark(draggedNode, CurrentSelectedCollection, insertionIndex);
             return;
         }
         if (draggedNode.Equals(targetNode)) return;
@@ -490,15 +490,15 @@ public partial class FormBookmarks : Form, Editor
         if (targetNodeItem is Bookmark)
         {
             // Stop dropping here and try it on the parent
-            dropNode(draggedNode, targetNode.Parent);
+            dropNode(draggedNode, targetNode.Parent, targetNode.Index + 1);
             return;
         }
 
         // targetNodeItem IS Folder
-        if (canDropOnNode(draggedNode, targetNode)) moveBookmark(draggedNode, targetNode);
+        if (canDropOnNode(draggedNode, targetNode)) moveBookmark(draggedNode, targetNode, insertionIndex);
     }
 
-    private void moveBookmark(TreeNode nodeToMove, TreeNode newParentNode)
+    private void moveBookmark(TreeNode nodeToMove, TreeNode newParentNode, int index = -1)
     {
         if (nodeToMove.Tag is not BookmarkItem) throw new ArgumentException($"Node {nodeToMove} does not contain a valid BookmarkItem");
         if (newParentNode.Tag is not BookmarkFolder && newParentNode != null) throw new ArgumentException($"The newParentNode needs to contain a valid BookmarkFolder");
@@ -509,15 +509,26 @@ public partial class FormBookmarks : Form, Editor
         BookmarkFolder? oldParentFolder = null;
         if (oldParentNode != null) oldParentFolder = oldParentNode.Tag as BookmarkFolder;
 
+        // Append or insert item
+        tree_bookmarks.BeginUpdate();
+        TreeNode insertNode = nodeToMove.Clone() as TreeNode;
+        if (index != -1)
+        {
+            newParentNode.Nodes.Insert(index, insertNode);
+            newParentFolder.InsertItem(index, itemToMove);
+        }
+        else
+        {
+            newParentNode.Nodes.Add(insertNode);
+            newParentFolder.AddItem(itemToMove);
+        }
         nodeToMove.Remove();
-        newParentNode.Nodes.Add(nodeToMove);
-        nodeToMove.Expand();
-
-        newParentFolder.AddItem(itemToMove);
+        insertNode.Expand();
         if (oldParentFolder != null) oldParentFolder.Items.Remove(itemToMove);
         else CurrentSelectedCollection.Items.Remove(itemToMove);
+        tree_bookmarks.EndUpdate();
     }
-    private void moveBookmark(TreeNode nodeToMove, BookmarkFolder newParenFolder)
+    private void moveBookmark(TreeNode nodeToMove, BookmarkFolder newParenFolder, int index = -1)
     {
         if (nodeToMove.Tag is not BookmarkItem) throw new ArgumentException($"Node {nodeToMove} does not contain a valid BookmarkItem");
 
@@ -526,13 +537,24 @@ public partial class FormBookmarks : Form, Editor
         BookmarkFolder? oldParentFolder = null;
         if (oldParentNode != null) oldParentFolder = oldParentNode.Tag as BookmarkFolder;
 
+        // Append or insert item
+        tree_bookmarks.BeginUpdate();
+        TreeNode insertNode = nodeToMove.Clone() as TreeNode;
+        if (index != -1)
+        {
+            tree_bookmarks.Nodes.Insert(index, insertNode);
+            newParenFolder.InsertItem(index, itemToMove);
+        }
+        else
+        {
+            tree_bookmarks.Nodes.Add(insertNode);
+            newParenFolder.AddItem(itemToMove);
+        }
         nodeToMove.Remove();
-        tree_bookmarks.Nodes.Add(nodeToMove);
-        nodeToMove.Expand();
-
-        newParenFolder.AddItem(itemToMove);
+        insertNode.Expand();
         if (oldParentFolder != null) oldParentFolder.Items.Remove(itemToMove);
         else CurrentSelectedCollection.Items.Remove(itemToMove);
+        tree_bookmarks.EndUpdate();
     }
 
     private bool canDropOnNode(TreeNode node, TreeNode target)

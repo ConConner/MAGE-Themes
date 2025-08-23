@@ -44,6 +44,12 @@ public class BookmarkFolder : BookmarkItem
         item.Parent = this;
     }
 
+    public void InsertItem(int index, BookmarkItem item)
+    {
+        Items.Insert(index, item);
+        item.Parent = this;
+    }
+
     public bool Contains(BookmarkItem item)
     {
         foreach (BookmarkItem bi in Items)
