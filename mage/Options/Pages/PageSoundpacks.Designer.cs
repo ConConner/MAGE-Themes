@@ -43,10 +43,11 @@
             // 
             grp_info.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             grp_info.Controls.Add(txb_info);
-            grp_info.Location = new System.Drawing.Point(167, 35);
+            grp_info.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            grp_info.Location = new System.Drawing.Point(167, 58);
             grp_info.Name = "grp_info";
             grp_info.Padding = new System.Windows.Forms.Padding(6, 6, 6, 3);
-            grp_info.Size = new System.Drawing.Size(267, 254);
+            grp_info.Size = new System.Drawing.Size(267, 231);
             grp_info.TabIndex = 6;
             grp_info.TabStop = false;
             grp_info.Text = "Pack Info";
@@ -66,7 +67,7 @@
             txb_info.ReadOnly = true;
             txb_info.ScrollBars = System.Windows.Forms.ScrollBars.None;
             txb_info.SelectionStart = 0;
-            txb_info.Size = new System.Drawing.Size(255, 229);
+            txb_info.Size = new System.Drawing.Size(255, 206);
             txb_info.TabIndex = 0;
             txb_info.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             txb_info.ValueBox = false;
@@ -76,12 +77,12 @@
             // 
             lst_packs.BorderStyle = System.Windows.Forms.BorderStyle.None;
             lst_packs.Dock = System.Windows.Forms.DockStyle.Fill;
-            lst_packs.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            lst_packs.Font = new System.Drawing.Font("Segoe UI Semilight", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             lst_packs.FormattingEnabled = true;
-            lst_packs.ItemHeight = 21;
+            lst_packs.ItemHeight = 15;
             lst_packs.Location = new System.Drawing.Point(6, 22);
             lst_packs.Name = "lst_packs";
-            lst_packs.Size = new System.Drawing.Size(146, 229);
+            lst_packs.Size = new System.Drawing.Size(146, 206);
             lst_packs.TabIndex = 5;
             lst_packs.SelectedIndexChanged += lst_packs_SelectedIndexChanged;
             // 
@@ -105,7 +106,7 @@
             textBox_path.DisplayBorder = false;
             textBox_path.Location = new System.Drawing.Point(167, 6);
             textBox_path.MaxLength = 32767;
-            textBox_path.Multiline = false;
+            textBox_path.Multiline = true;
             textBox_path.Name = "textBox_path";
             textBox_path.OnTextChanged = null;
             textBox_path.Padding = new System.Windows.Forms.Padding(3, 3, 1, 2);
@@ -113,7 +114,7 @@
             textBox_path.ReadOnly = true;
             textBox_path.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_path.SelectionStart = 0;
-            textBox_path.Size = new System.Drawing.Size(267, 23);
+            textBox_path.Size = new System.Drawing.Size(267, 46);
             textBox_path.TabIndex = 7;
             textBox_path.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_path.ValueBox = false;
@@ -123,10 +124,11 @@
             // 
             group_soundpacks.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             group_soundpacks.Controls.Add(lst_packs);
-            group_soundpacks.Location = new System.Drawing.Point(6, 35);
+            group_soundpacks.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            group_soundpacks.Location = new System.Drawing.Point(6, 58);
             group_soundpacks.Name = "group_soundpacks";
             group_soundpacks.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
-            group_soundpacks.Size = new System.Drawing.Size(155, 254);
+            group_soundpacks.Size = new System.Drawing.Size(155, 231);
             group_soundpacks.TabIndex = 8;
             group_soundpacks.TabStop = false;
             group_soundpacks.Text = "Soundpacks";

@@ -1084,11 +1084,6 @@ namespace mage
             UpdateRoomNumbers();
         }
 
-        private void btn_soundpacks_Click(object sender, EventArgs e)
-        {
-            new FormSoundPack().Show();
-        }
-
         private void menuItem_tooltips_Click(object sender, EventArgs e)
         {
             menuItem_tooltips.Checked = !menuItem_tooltips.Checked;
