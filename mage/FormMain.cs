@@ -28,7 +28,8 @@ using System.Reflection;
 using System.Text;
 using mage.Updates;
 using System.Linq;
-using mage.Dialogs; // added for font stuff - alexman25
+using mage.Dialogs;
+using mage.Options; // added for font stuff - alexman25
 
 namespace mage
 {
@@ -36,6 +37,7 @@ namespace mage
     {
 
         #region properties
+        public static FormMain Instance { get; private set; }
 
         public Room Room
         {
@@ -115,6 +117,7 @@ namespace mage
         public FormMain()
         {
             InitializeComponent();
+            Instance = this;
 
             InitFont(Properties.Resources.zm_digits);
 
@@ -1106,9 +1109,8 @@ namespace mage
 
         private void themeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var editor = new ThemeEditor();
-            editor.ThemesChanged += PopulateThemeList;
-            editor.ShowDialog();
+            FormOption f = new("Appearance");
+            f.ShowDialog();
         }
 
         private void menuItem_bookmarks_Click(object sender, EventArgs e)
@@ -2977,6 +2979,9 @@ namespace mage
         private void flipRoomVToolStripMenuItem_Click(object sender, EventArgs e)
             => PerformAction(new FlipRoom(room, false, true));
 
-
+        private void programSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormOption("Appearance").ShowDialog();
+        }
     }
 }

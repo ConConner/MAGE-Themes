@@ -1,4 +1,5 @@
 ﻿using FuzzySharp;
+using mage.Options;
 using mage.Theming;
 using System;
 using System.Collections.Generic;

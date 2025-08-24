@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using mage.Bookmarks;
 using System.Collections.Generic;
 using System.DirectoryServices.ActiveDirectory;
+using mage.Options;
 
 namespace mage.Theming.CustomControls;
 

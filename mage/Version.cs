@@ -1,4 +1,5 @@
 ﻿using mage.Bookmarks;
+using mage.Options;
 using mage.Properties;
 using System;
 using System.Collections.Generic;

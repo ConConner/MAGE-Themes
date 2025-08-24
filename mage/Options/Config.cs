@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace mage;
+namespace mage.Options;
 
 /// <summary>
 /// Application wide Config file
