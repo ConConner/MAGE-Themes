@@ -150,6 +150,7 @@
             menuItem_flip_v = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip_options = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_options = new System.Windows.Forms.ToolStripMenuItem();
+            menuItem_projectSettings = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator31 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_defaultView = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_defaultBG0 = new System.Windows.Forms.ToolStripMenuItem();
@@ -166,10 +167,8 @@
             menuItem_defaultDoors = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_defaultScrolls = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_defaultScreens = new System.Windows.Forms.ToolStripMenuItem();
-            toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_tooltips = new System.Windows.Forms.ToolStripMenuItem();
-            changeEmulatorPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            toolStripSeparator32 = new System.Windows.Forms.ToolStripSeparator();
+            toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_bookmarks = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator33 = new System.Windows.Forms.ToolStripSeparator();
             button_experimental = new System.Windows.Forms.ToolStripMenuItem();
@@ -272,7 +271,6 @@
             toolStrip_patches = new System.Windows.Forms.ToolStripButton();
             comboBox_spriteset = new mage.Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
-            menuItem_projectSettings = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -1145,7 +1143,7 @@
             // 
             // menuStrip_options
             // 
-            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_options, menuItem_projectSettings, toolStripSeparator31, menuItem_defaultView, toolStripSeparator21, menuItem_tooltips, changeEmulatorPathToolStripMenuItem, toolStripSeparator32, menuItem_bookmarks, toolStripSeparator33, button_experimental, button_legacy });
+            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_options, menuItem_projectSettings, toolStripSeparator31, menuItem_defaultView, menuItem_tooltips, toolStripSeparator21, menuItem_bookmarks, toolStripSeparator33, button_experimental, button_legacy });
             menuStrip_options.Name = "menuStrip_options";
             menuStrip_options.Size = new System.Drawing.Size(61, 20);
             menuStrip_options.Text = "Options";
@@ -1154,21 +1152,29 @@
             // 
             menuItem_options.Image = Properties.Resources.cog;
             menuItem_options.Name = "menuItem_options";
-            menuItem_options.Size = new System.Drawing.Size(193, 22);
+            menuItem_options.Size = new System.Drawing.Size(190, 22);
             menuItem_options.Text = "Preferences...";
             menuItem_options.Click += programSettingsToolStripMenuItem_Click;
+            // 
+            // menuItem_projectSettings
+            // 
+            menuItem_projectSettings.Image = Properties.Resources.script_gear;
+            menuItem_projectSettings.Name = "menuItem_projectSettings";
+            menuItem_projectSettings.Size = new System.Drawing.Size(190, 22);
+            menuItem_projectSettings.Text = "Project Settings...";
+            menuItem_projectSettings.Click += menuItem_projectSettings_Click;
             // 
             // toolStripSeparator31
             // 
             toolStripSeparator31.Name = "toolStripSeparator31";
-            toolStripSeparator31.Size = new System.Drawing.Size(190, 6);
+            toolStripSeparator31.Size = new System.Drawing.Size(187, 6);
             // 
             // menuItem_defaultView
             // 
             menuItem_defaultView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_defaultBG0, menuItem_defaultBG1, menuItem_defaultBG2, menuItem_defaultBG3, menuItem_defaultClipdata, toolStripSeparator13, menuItem_defaultSprites, menuItem_defaultSpriteOutlines, menuItem_defaultDoors, menuItem_defaultScrolls, menuItem_defaultScreens });
             menuItem_defaultView.Enabled = false;
             menuItem_defaultView.Name = "menuItem_defaultView";
-            menuItem_defaultView.Size = new System.Drawing.Size(193, 22);
+            menuItem_defaultView.Size = new System.Drawing.Size(190, 22);
             menuItem_defaultView.Text = "Default View";
             // 
             // menuItem_defaultBG0
@@ -1176,7 +1182,7 @@
             menuItem_defaultBG0.Checked = true;
             menuItem_defaultBG0.CheckState = System.Windows.Forms.CheckState.Checked;
             menuItem_defaultBG0.Name = "menuItem_defaultBG0";
-            menuItem_defaultBG0.Size = new System.Drawing.Size(156, 22);
+            menuItem_defaultBG0.Size = new System.Drawing.Size(180, 22);
             menuItem_defaultBG0.Text = "BG 0";
             menuItem_defaultBG0.Click += menuItem_defaultView_Click;
             // 
@@ -1185,7 +1191,7 @@
             menuItem_defaultBG1.Checked = true;
             menuItem_defaultBG1.CheckState = System.Windows.Forms.CheckState.Checked;
             menuItem_defaultBG1.Name = "menuItem_defaultBG1";
-            menuItem_defaultBG1.Size = new System.Drawing.Size(156, 22);
+            menuItem_defaultBG1.Size = new System.Drawing.Size(180, 22);
             menuItem_defaultBG1.Text = "BG 1";
             menuItem_defaultBG1.Click += menuItem_defaultView_Click;
             // 
@@ -1194,7 +1200,7 @@
             menuItem_defaultBG2.Checked = true;
             menuItem_defaultBG2.CheckState = System.Windows.Forms.CheckState.Checked;
             menuItem_defaultBG2.Name = "menuItem_defaultBG2";
-            menuItem_defaultBG2.Size = new System.Drawing.Size(156, 22);
+            menuItem_defaultBG2.Size = new System.Drawing.Size(180, 22);
             menuItem_defaultBG2.Text = "BG 2";
             menuItem_defaultBG2.Click += menuItem_defaultView_Click;
             // 
@@ -1203,7 +1209,7 @@
             menuItem_defaultBG3.Checked = true;
             menuItem_defaultBG3.CheckState = System.Windows.Forms.CheckState.Checked;
             menuItem_defaultBG3.Name = "menuItem_defaultBG3";
-            menuItem_defaultBG3.Size = new System.Drawing.Size(156, 22);
+            menuItem_defaultBG3.Size = new System.Drawing.Size(180, 22);
             menuItem_defaultBG3.Text = "BG 3";
             menuItem_defaultBG3.Click += menuItem_defaultView_Click;
             // 
@@ -1211,7 +1217,7 @@
             // 
             menuItem_defaultClipdata.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_defaultClipCollision, menuItem_defaultClipBreakable, menuItem_defaultClipValues });
             menuItem_defaultClipdata.Name = "menuItem_defaultClipdata";
-            menuItem_defaultClipdata.Size = new System.Drawing.Size(156, 22);
+            menuItem_defaultClipdata.Size = new System.Drawing.Size(180, 22);
             menuItem_defaultClipdata.Text = "Clipdata";
             // 
             // menuItem_defaultClipCollision
@@ -1238,14 +1244,14 @@
             // toolStripSeparator13
             // 
             toolStripSeparator13.Name = "toolStripSeparator13";
-            toolStripSeparator13.Size = new System.Drawing.Size(153, 6);
+            toolStripSeparator13.Size = new System.Drawing.Size(177, 6);
             // 
             // menuItem_defaultSprites
             // 
             menuItem_defaultSprites.Checked = true;
             menuItem_defaultSprites.CheckState = System.Windows.Forms.CheckState.Checked;
             menuItem_defaultSprites.Name = "menuItem_defaultSprites";
-            menuItem_defaultSprites.Size = new System.Drawing.Size(156, 22);
+            menuItem_defaultSprites.Size = new System.Drawing.Size(180, 22);
             menuItem_defaultSprites.Text = "Sprites";
             menuItem_defaultSprites.Click += menuItem_defaultView_Click;
             // 
@@ -1254,7 +1260,7 @@
             menuItem_defaultSpriteOutlines.Checked = true;
             menuItem_defaultSpriteOutlines.CheckState = System.Windows.Forms.CheckState.Checked;
             menuItem_defaultSpriteOutlines.Name = "menuItem_defaultSpriteOutlines";
-            menuItem_defaultSpriteOutlines.Size = new System.Drawing.Size(156, 22);
+            menuItem_defaultSpriteOutlines.Size = new System.Drawing.Size(180, 22);
             menuItem_defaultSpriteOutlines.Text = "Sprite Outlines";
             menuItem_defaultSpriteOutlines.Click += menuItem_defaultView_Click;
             // 
@@ -1263,73 +1269,61 @@
             menuItem_defaultDoors.Checked = true;
             menuItem_defaultDoors.CheckState = System.Windows.Forms.CheckState.Checked;
             menuItem_defaultDoors.Name = "menuItem_defaultDoors";
-            menuItem_defaultDoors.Size = new System.Drawing.Size(156, 22);
+            menuItem_defaultDoors.Size = new System.Drawing.Size(180, 22);
             menuItem_defaultDoors.Text = "Doors";
             menuItem_defaultDoors.Click += menuItem_defaultView_Click;
             // 
             // menuItem_defaultScrolls
             // 
             menuItem_defaultScrolls.Name = "menuItem_defaultScrolls";
-            menuItem_defaultScrolls.Size = new System.Drawing.Size(156, 22);
+            menuItem_defaultScrolls.Size = new System.Drawing.Size(180, 22);
             menuItem_defaultScrolls.Text = "Scrolls";
             menuItem_defaultScrolls.Click += menuItem_defaultView_Click;
             // 
             // menuItem_defaultScreens
             // 
             menuItem_defaultScreens.Name = "menuItem_defaultScreens";
-            menuItem_defaultScreens.Size = new System.Drawing.Size(156, 22);
+            menuItem_defaultScreens.Size = new System.Drawing.Size(180, 22);
             menuItem_defaultScreens.Text = "Screen Outlines";
             menuItem_defaultScreens.Click += menuItem_defaultView_Click;
-            // 
-            // toolStripSeparator21
-            // 
-            toolStripSeparator21.Name = "toolStripSeparator21";
-            toolStripSeparator21.Size = new System.Drawing.Size(190, 6);
             // 
             // menuItem_tooltips
             // 
             menuItem_tooltips.Enabled = false;
             menuItem_tooltips.Name = "menuItem_tooltips";
-            menuItem_tooltips.Size = new System.Drawing.Size(193, 22);
+            menuItem_tooltips.Size = new System.Drawing.Size(190, 22);
             menuItem_tooltips.Text = "Disable Tooltips";
             menuItem_tooltips.Click += menuItem_tooltips_Click;
             // 
-            // changeEmulatorPathToolStripMenuItem
+            // toolStripSeparator21
             // 
-            changeEmulatorPathToolStripMenuItem.Name = "changeEmulatorPathToolStripMenuItem";
-            changeEmulatorPathToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            changeEmulatorPathToolStripMenuItem.Text = "Change Emulator Path";
-            changeEmulatorPathToolStripMenuItem.Click += changeEmulatorPathToolStripMenuItem_Click;
-            // 
-            // toolStripSeparator32
-            // 
-            toolStripSeparator32.Name = "toolStripSeparator32";
-            toolStripSeparator32.Size = new System.Drawing.Size(190, 6);
+            toolStripSeparator21.Name = "toolStripSeparator21";
+            toolStripSeparator21.Size = new System.Drawing.Size(187, 6);
             // 
             // menuItem_bookmarks
             // 
             menuItem_bookmarks.Enabled = false;
             menuItem_bookmarks.Name = "menuItem_bookmarks";
-            menuItem_bookmarks.Size = new System.Drawing.Size(193, 22);
+            menuItem_bookmarks.Size = new System.Drawing.Size(190, 22);
             menuItem_bookmarks.Text = "Bookmarks";
             menuItem_bookmarks.Click += menuItem_bookmarks_Click;
             // 
             // toolStripSeparator33
             // 
             toolStripSeparator33.Name = "toolStripSeparator33";
-            toolStripSeparator33.Size = new System.Drawing.Size(190, 6);
+            toolStripSeparator33.Size = new System.Drawing.Size(187, 6);
             // 
             // button_experimental
             // 
             button_experimental.Name = "button_experimental";
-            button_experimental.Size = new System.Drawing.Size(193, 22);
+            button_experimental.Size = new System.Drawing.Size(190, 22);
             button_experimental.Text = "Experimental Features";
             button_experimental.Click += button_experimental_Click;
             // 
             // button_legacy
             // 
             button_legacy.Name = "button_legacy";
-            button_legacy.Size = new System.Drawing.Size(193, 22);
+            button_legacy.Size = new System.Drawing.Size(190, 22);
             button_legacy.Text = "Use Legacy Editors";
             button_legacy.Click += button_legacy_Click;
             // 
@@ -2266,14 +2260,6 @@
             comboBox_spriteset.TabIndex = 11;
             comboBox_spriteset.SelectedIndexChanged += comboBox_spriteset_SelectedIndexChanged;
             // 
-            // menuItem_projectSettings
-            // 
-            menuItem_projectSettings.Image = Properties.Resources.script_gear;
-            menuItem_projectSettings.Name = "menuItem_projectSettings";
-            menuItem_projectSettings.Size = new System.Drawing.Size(193, 22);
-            menuItem_projectSettings.Text = "Project Settings...";
-            menuItem_projectSettings.Click += menuItem_projectSettings_Click;
-            // 
             // FormMain
             // 
             AllowDrop = true;
@@ -2517,7 +2503,6 @@
         private Theming.CustomControls.FlatComboBox comboBox_spriteset;
         private System.Windows.Forms.Button button_clipdata_shortcuts;
         private System.Windows.Forms.ToolTip ToolTip;
-        private System.Windows.Forms.ToolStripMenuItem changeEmulatorPathToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bulkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem button_exportAllRooms;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator29;
@@ -2546,7 +2531,6 @@
         private System.Windows.Forms.ToolStripMenuItem regularToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem croppedToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStrip_oamEditor;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator32;
         private System.Windows.Forms.ToolStripMenuItem menuItem_bookmarks;
         private System.Windows.Forms.ToolStripMenuItem button_legacy;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator34;

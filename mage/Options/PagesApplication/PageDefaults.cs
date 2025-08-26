@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace mage.Options.Pages;
 
-public partial class PageDefaults : UserControl
+public partial class PageDefaults : UserControl, IReloadablePage
 {
     FormMain Parent;
     bool init = false;
@@ -26,6 +26,11 @@ public partial class PageDefaults : UserControl
 
         // This page uses a very stupid workaround to set these values because Biospark made bad decisions
         Parent = FormMain.Instance;
+        LoadPage();
+    }
+
+    public void LoadPage()
+    {
         LoadValues();
     }
 

@@ -191,6 +191,20 @@ namespace mage
             DisplayRecentFiles();
         }
 
+        private void MigrateSettings()
+        {
+            if (Settings.Default.emulatorPath != string.Empty)
+            {
+                string path = Settings.Default.emulatorPath;
+                if (Program.Config.EmulatorPaths.Count == 0)
+                {
+                    Program.Config.EmulatorPaths.Add(path);
+                    Program.Config.SelectedEmulatorPath = path;
+                }
+                Settings.Default.emulatorPath = string.Empty;
+            }
+        }
+
         private void InitializeSettings()
         {
             menuItem_defaultBG0.Checked = Settings.Default.viewBG0;
@@ -250,6 +264,8 @@ namespace mage
             catch { ZMGlobalBookmarks = new(); }
             try { MFGlobalBookmarks = BookmarkManager.DeserializeCollections(Settings.Default.MFglobalBookmarks); }
             catch { MFGlobalBookmarks = new(); }
+
+            MigrateSettings();
         }
 
         private void SaveSettings()
@@ -1088,8 +1104,6 @@ namespace mage
                 tileTimer.Tick += tileTimer_Tick;
             }
         }
-
-        private void changeEmulatorPathToolStripMenuItem_Click(object sender, EventArgs e) => Test.SetEmulatorPath();
 
         private void themeToolStripMenuItem_Click(object sender, EventArgs e)
         {

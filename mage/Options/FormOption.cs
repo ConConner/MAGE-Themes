@@ -28,8 +28,8 @@ public partial class FormOption : Form
 
             if (value == -1) return;
             OptionsPage currentPage = Pages[value];
-            PanelContent.Controls.Clear();
 
+            PanelContent.Controls.Clear();
             PanelContent.Controls.Add(currentPage.Page);
             PanelContent.Controls.Add(panel_requiresRom);
             currentPage.Page.Dock = DockStyle.Fill;
@@ -39,6 +39,8 @@ public partial class FormOption : Form
             bool enabled = !currentPage.RequiresROM || ROM.Stream != null;
             currentPage.Page.Enabled = enabled;
             panel_requiresRom.Visible = !enabled;
+
+            if (currentPage.Page is IReloadablePage reloadablePage) reloadablePage.LoadPage();
 
             if (listBox_pages.SelectedIndex != value) listBox_pages.SelectedIndex = value;
         }
