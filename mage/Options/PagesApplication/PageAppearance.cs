@@ -16,19 +16,15 @@ using System.Windows.Forms;
 namespace mage.Options.Pages;
 
 [ToolboxItem(false)]
-public partial class PageAppearance : UserControl
+public partial class PageAppearance : UserControl, IReloadablePage
 {
     bool init = false;
     ColorTheme selectedTheme;
-    public event EventHandler ThemesChanged;
     private FormMain parent = FormMain.Instance;
 
     public PageAppearance()
     {
         InitializeComponent();
-
-        ThemeSwitcher.ChangeTheme(Controls);
-        ThemeSwitcher.InjectPaintOverrides(Controls);
 
         flatTextBox_accent.TextChanged += ColorValueChanged;
         flatTextBox_background.TextChanged += ColorValueChanged;
@@ -36,7 +32,15 @@ public partial class PageAppearance : UserControl
         flatTextBox_secondary.TextChanged += ColorValueChanged;
         flatTextBox_primary.TextChanged += ColorValueChanged;
 
+        LoadPage();
+    }
+
+    public void LoadPage()
+    {
         loadAllThemes();
+
+        ThemeSwitcher.ChangeTheme(Controls);
+        ThemeSwitcher.InjectPaintOverrides(Controls);
 
         pnl_color.BackColor = GBAtoRGB(parent.Bg3Color);
     }
@@ -156,7 +160,7 @@ public partial class PageAppearance : UserControl
             ThemeSwitcher.Themes.Add(newName, selectedTheme);
             ThemeSwitcher.Themes.Remove(currentName);
             comboBox_theme.Items[comboBox_theme.SelectedIndex] = newName;
-            ThemesChanged?.Invoke(this, null);
+            parent.PopulateThemeList(null, null);
         }
     }
 
@@ -167,6 +171,7 @@ public partial class PageAppearance : UserControl
         int lastIndex = comboBox_theme.SelectedIndex;
         comboBox_theme.Items.RemoveAt(comboBox_theme.SelectedIndex);
         comboBox_theme.SelectedIndex = lastIndex != 0 ? lastIndex - 1 : 0;
+        parent.PopulateThemeList(null, null);
     }
 
     private void btn_add_Click(object sender, EventArgs e)
@@ -185,7 +190,7 @@ public partial class PageAppearance : UserControl
 
         comboBox_theme.Items.Add(name);
         comboBox_theme.SelectedIndex = comboBox_theme.Items.IndexOf(name);
-        ThemesChanged?.Invoke(this, null);
+        parent.PopulateThemeList(null, null);
     }
 
     private void menuItem_export_Click(object sender, EventArgs e)
@@ -302,7 +307,7 @@ public partial class PageAppearance : UserControl
         ThemeSwitcher.Themes.Add(name, pair.Value);
         comboBox_theme.Items.Add(name);
         comboBox_theme.SelectedIndex = comboBox_theme.Items.IndexOf(name);
-        ThemesChanged?.Invoke(this, null);
+        parent.PopulateThemeList(null, null);
     }
 
     private void flatTextBox_name_TextChanged(object sender, EventArgs e)

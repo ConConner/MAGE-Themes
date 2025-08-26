@@ -124,6 +124,7 @@ namespace mage
             DisplayRecentFiles();
             InitializeSettings();
             PopulateThemeList(null, null);
+            PopulateEmulatorList();
             ShowSplash();
 
             roomView.Scrolled += roomView_Scrolled;
@@ -419,7 +420,34 @@ namespace mage
             Marshal.FreeCoTaskMem(data);
         }
 
-        private void PopulateThemeList(object sender, EventArgs e)
+        public void PopulateEmulatorList()
+        {
+            statusStrip_emulator.DropDown.Items.Clear();
+            statusStrip_emulator.Visible = Program.Config.EmulatorPaths.Count > 1;
+            if (Program.Config.SelectedEmulatorPath == "") statusStrip_emulator.Text = "No Emulator Selected";
+            else statusStrip_emulator.Text = Path.GetFileNameWithoutExtension(Program.Config.SelectedEmulatorPath);
+
+            foreach (string path in Program.Config.EmulatorPaths)
+            {
+                string name = Path.GetFileNameWithoutExtension(path);
+                ToolStripMenuItem i = new();
+                i.Text = name;
+                i.Click += (o, e) =>
+                {
+                    Program.Config.SelectedEmulatorPath = path;
+                    statusStrip_emulator.Text = name;
+                };
+                statusStrip_emulator.DropDown.Items.Add(i);
+            }
+
+            statusStrip_emulator.DropDown.Items.Add(new ToolStripSeparator());
+
+            ToolStripMenuItem editEmulatorPath = new() { Text = "Edit Emulators" };
+            editEmulatorPath.Click += (o, e) => new FormOption("Preferences", PageLists.ApplicationOptionPages, "Tools").ShowDialog();
+            statusStrip_emulator.DropDown.Items.Add(editEmulatorPath);
+        }
+
+        public void PopulateThemeList(object sender, EventArgs e)
         {
             statusStrip_theme.DropDown.Items.Clear();
             statusStrip_theme.Text = ThemeSwitcher.ProjectThemeName;
@@ -1107,7 +1135,7 @@ namespace mage
 
         private void themeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormOption("Preferences", PageLists.ApplicationOptionPages).ShowDialog();
+            new FormOption("Preferences", PageLists.ApplicationOptionPages, "Appearance").ShowDialog();
         }
 
         private void menuItem_bookmarks_Click(object sender, EventArgs e)
@@ -2977,7 +3005,7 @@ namespace mage
 
         private void programSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormOption("Preferences", PageLists.ApplicationOptionPages).ShowDialog();
+            new FormOption("Preferences", PageLists.ApplicationOptionPages, "Appearance").ShowDialog();
         }
 
         private void menuItem_projectSettings_Click(object sender, EventArgs e)

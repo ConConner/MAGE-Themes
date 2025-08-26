@@ -29,10 +29,12 @@ public partial class PageRom : UserControl, IReloadablePage
             {
                 Program.Config.SelectedEmulatorPath = string.Empty;
                 SetCurrentEmulatorLabel("---");
+                Parent.PopulateEmulatorList();
                 return;
             }
             else Program.Config.SelectedEmulatorPath = Program.Config.EmulatorPaths[value];
             SetCurrentEmulatorLabel(Program.Config.SelectedEmulatorPath);
+            Parent.PopulateEmulatorList();
         }
     }
 
@@ -40,10 +42,7 @@ public partial class PageRom : UserControl, IReloadablePage
     public PageRom()
     {
         InitializeComponent();
-
-        ThemeSwitcher.ChangeTheme(Controls);
-        ThemeSwitcher.InjectPaintOverrides(Controls);
-
+        Parent = FormMain.Instance;
         LoadPage();
     }
     public void LoadPage()
@@ -51,11 +50,11 @@ public partial class PageRom : UserControl, IReloadablePage
         listBox_emulators.Items.Clear();
         foreach (string emulator in Program.Config.EmulatorPaths)
         {
-            listBox_emulators.Items.Add(Path.GetFileName(emulator));
+            listBox_emulators.Items.Add(Path.GetFileNameWithoutExtension(emulator));
         }
         if (Program.Config.SelectedEmulatorPath != string.Empty)
         {
-            int index = listBox_emulators.Items.IndexOf(Path.GetFileName(Program.Config.SelectedEmulatorPath));
+            int index = listBox_emulators.Items.IndexOf(Path.GetFileNameWithoutExtension(Program.Config.SelectedEmulatorPath));
             listBox_emulators.SelectedIndex = index;
         }
         else SetCurrentEmulatorLabel("---");
@@ -71,7 +70,7 @@ public partial class PageRom : UserControl, IReloadablePage
         var ofd = new OpenFileDialog();
         ofd.Filter = "GBA emulator (*.exe)|*.exe|All files (*.*)|*.*";
         if (ofd.ShowDialog() != DialogResult.OK) return;
-        string name = Path.GetFileName(ofd.FileName);
+        string name = Path.GetFileNameWithoutExtension(ofd.FileName);
 
         if (Program.Config.EmulatorPaths.Contains(name))
         {
@@ -82,6 +81,7 @@ public partial class PageRom : UserControl, IReloadablePage
         listBox_emulators.Items.Add(name);
         Program.Config.EmulatorPaths.Add(ofd.FileName);
         SelectedIndex = listBox_emulators.Items.Count - 1;
+        Parent.PopulateEmulatorList();
     }
 
     private void listBox_emulators_SelectedIndexChanged(object sender, EventArgs e) => SelectedIndex = listBox_emulators.SelectedIndex;
@@ -91,6 +91,7 @@ public partial class PageRom : UserControl, IReloadablePage
         Program.Config.EmulatorPaths.RemoveAt(SelectedIndex);
         listBox_emulators.Items.RemoveAt(SelectedIndex);
         SelectedIndex = -1;
+        Parent.PopulateEmulatorList();
     }
 
 }

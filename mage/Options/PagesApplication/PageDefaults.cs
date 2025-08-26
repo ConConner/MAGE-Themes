@@ -21,9 +21,6 @@ public partial class PageDefaults : UserControl, IReloadablePage
     {
         InitializeComponent();
 
-        ThemeSwitcher.ChangeTheme(Controls);
-        ThemeSwitcher.InjectPaintOverrides(Controls);
-
         // This page uses a very stupid workaround to set these values because Biospark made bad decisions
         Parent = FormMain.Instance;
         LoadPage();

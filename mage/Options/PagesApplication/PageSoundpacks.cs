@@ -19,9 +19,6 @@ public partial class PageSoundpacks : UserControl
     {
         InitializeComponent();
 
-        ThemeSwitcher.ChangeTheme(Controls);
-        ThemeSwitcher.InjectPaintOverrides(Controls);
-
         LoadPackNames();
     }
 

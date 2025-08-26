@@ -1,5 +1,6 @@
 ﻿using mage.Options.Pages;
 using mage.Theming;
+using mage.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,6 +36,11 @@ public partial class FormOption : Form
             currentPage.Page.Dock = DockStyle.Fill;
             panel_requiresRom.Dock = DockStyle.Top;
             currentPage.Page.BringToFront();
+
+            currentPage.Page.SuspendDrawing();
+            ThemeSwitcher.ChangeTheme(currentPage.Page.Controls);
+            ThemeSwitcher.InjectPaintOverrides(currentPage.Page.Controls);
+            currentPage.Page.ResumeDrawing();
 
             bool enabled = !currentPage.RequiresROM || ROM.Stream != null;
             currentPage.Page.Enabled = enabled;
