@@ -14,19 +14,7 @@ namespace mage.Options;
 
 public partial class FormOption : Form
 {
-    private struct OptionsPage
-    {
-        public string Name;
-        public UserControl Page;
-        public bool RequiresROM;
-    }
-
-    private List<OptionsPage> Pages = new List<OptionsPage>()
-    {
-        new() { Name = "Appearance", Page = new PageAppearance(), RequiresROM = false },
-        new() { Name = "Soundpacks", Page = new PageSoundpacks(), RequiresROM = false },
-        new() { Name = "Default View", Page = new PageDefaults(), RequiresROM = true },
-    };
+    private List<OptionsPage> Pages;
 
     SplitterPanel PanelContent => panel_main.Panel2;
     private int selectedPage = -1;
@@ -58,12 +46,15 @@ public partial class FormOption : Form
 
     private int GetPageIndex(string pagename) => Pages.FindIndex(p => p.Name == pagename);
 
-    public FormOption(string pageName = "")
+    public FormOption(string optionTitle, List<OptionsPage> pages, string pageName = "")
     {
         InitializeComponent();
 
         ThemeSwitcher.ChangeTheme(Controls, this);
         ThemeSwitcher.InjectPaintOverrides(Controls);
+
+        Pages = pages;
+        Text = optionTitle;
 
         // Populate List
         foreach (OptionsPage page in Pages)

@@ -14,6 +14,9 @@ namespace mage.Options;
 /// </summary>
 public class Config
 {
+    #region Options
+    #endregion
+
     #region Bookmarking
     public enum BookmarkCollection
     {

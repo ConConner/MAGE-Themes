@@ -1093,8 +1093,7 @@ namespace mage
 
         private void themeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormOption f = new("Appearance");
-            f.ShowDialog();
+            new FormOption("Preferences", PageLists.ApplicationOptionPages).ShowDialog();
         }
 
         private void menuItem_bookmarks_Click(object sender, EventArgs e)
@@ -2964,7 +2963,7 @@ namespace mage
 
         private void programSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormOption("Appearance").ShowDialog();
+            new FormOption("Preferences", PageLists.ApplicationOptionPages, "Appearance").ShowDialog();
         }
     }
 }
