@@ -2963,7 +2963,12 @@ namespace mage
 
         private void programSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new FormOption("Preferences", PageLists.ApplicationOptionPages, "Appearance").ShowDialog();
+            new FormOption("Preferences", PageLists.ApplicationOptionPages).ShowDialog();
+        }
+
+        private void menuItem_projectSettings_Click(object sender, EventArgs e)
+        {
+            new FormOption("Project Settings", PageLists.ProjectOptionsPages).ShowDialog();
         }
     }
 }

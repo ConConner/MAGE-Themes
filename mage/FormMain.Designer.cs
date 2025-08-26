@@ -149,7 +149,7 @@
             menuItem_flip_h = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_flip_v = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip_options = new System.Windows.Forms.ToolStripMenuItem();
-            programSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            menuItem_options = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator31 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_defaultView = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_defaultBG0 = new System.Windows.Forms.ToolStripMenuItem();
@@ -272,6 +272,7 @@
             toolStrip_patches = new System.Windows.Forms.ToolStripButton();
             comboBox_spriteset = new mage.Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
+            menuItem_projectSettings = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -361,14 +362,14 @@
             // menuItem_clearRecentFiles
             // 
             menuItem_clearRecentFiles.Name = "menuItem_clearRecentFiles";
-            menuItem_clearRecentFiles.Size = new System.Drawing.Size(180, 22);
+            menuItem_clearRecentFiles.Size = new System.Drawing.Size(101, 22);
             menuItem_clearRecentFiles.Text = "Clear";
             menuItem_clearRecentFiles.Click += menuItem_clearRecentFiles_Click;
             // 
             // toolStripSeparator22
             // 
             toolStripSeparator22.Name = "toolStripSeparator22";
-            toolStripSeparator22.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator22.Size = new System.Drawing.Size(98, 6);
             // 
             // menuStrip_edit
             // 
@@ -519,7 +520,7 @@
             // 
             menuItem_viewClipCollision.Name = "menuItem_viewClipCollision";
             menuItem_viewClipCollision.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D5;
-            menuItem_viewClipCollision.Size = new System.Drawing.Size(180, 22);
+            menuItem_viewClipCollision.Size = new System.Drawing.Size(165, 22);
             menuItem_viewClipCollision.Text = "Collision";
             menuItem_viewClipCollision.Click += menuItem_viewClipToggle_Click;
             // 
@@ -527,7 +528,7 @@
             // 
             menuItem_viewClipBreakable.Name = "menuItem_viewClipBreakable";
             menuItem_viewClipBreakable.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D6;
-            menuItem_viewClipBreakable.Size = new System.Drawing.Size(180, 22);
+            menuItem_viewClipBreakable.Size = new System.Drawing.Size(165, 22);
             menuItem_viewClipBreakable.Text = "Breakable";
             menuItem_viewClipBreakable.Click += menuItem_viewClipToggle_Click;
             // 
@@ -535,7 +536,7 @@
             // 
             menuItem_viewClipValues.Name = "menuItem_viewClipValues";
             menuItem_viewClipValues.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D7;
-            menuItem_viewClipValues.Size = new System.Drawing.Size(180, 22);
+            menuItem_viewClipValues.Size = new System.Drawing.Size(165, 22);
             menuItem_viewClipValues.Text = "Values";
             menuItem_viewClipValues.Click += menuItem_viewClipToggle_Click;
             // 
@@ -1144,18 +1145,18 @@
             // 
             // menuStrip_options
             // 
-            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { programSettingsToolStripMenuItem, toolStripSeparator31, menuItem_defaultView, toolStripSeparator21, menuItem_tooltips, changeEmulatorPathToolStripMenuItem, toolStripSeparator32, menuItem_bookmarks, toolStripSeparator33, button_experimental, button_legacy });
+            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_options, menuItem_projectSettings, toolStripSeparator31, menuItem_defaultView, toolStripSeparator21, menuItem_tooltips, changeEmulatorPathToolStripMenuItem, toolStripSeparator32, menuItem_bookmarks, toolStripSeparator33, button_experimental, button_legacy });
             menuStrip_options.Name = "menuStrip_options";
             menuStrip_options.Size = new System.Drawing.Size(61, 20);
             menuStrip_options.Text = "Options";
             // 
-            // programSettingsToolStripMenuItem
+            // menuItem_options
             // 
-            programSettingsToolStripMenuItem.Image = Properties.Resources.cog;
-            programSettingsToolStripMenuItem.Name = "programSettingsToolStripMenuItem";
-            programSettingsToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            programSettingsToolStripMenuItem.Text = "Preferences";
-            programSettingsToolStripMenuItem.Click += programSettingsToolStripMenuItem_Click;
+            menuItem_options.Image = Properties.Resources.cog;
+            menuItem_options.Name = "menuItem_options";
+            menuItem_options.Size = new System.Drawing.Size(193, 22);
+            menuItem_options.Text = "Preferences...";
+            menuItem_options.Click += programSettingsToolStripMenuItem_Click;
             // 
             // toolStripSeparator31
             // 
@@ -2265,6 +2266,14 @@
             comboBox_spriteset.TabIndex = 11;
             comboBox_spriteset.SelectedIndexChanged += comboBox_spriteset_SelectedIndexChanged;
             // 
+            // menuItem_projectSettings
+            // 
+            menuItem_projectSettings.Image = Properties.Resources.script_gear;
+            menuItem_projectSettings.Name = "menuItem_projectSettings";
+            menuItem_projectSettings.Size = new System.Drawing.Size(193, 22);
+            menuItem_projectSettings.Text = "Project Settings...";
+            menuItem_projectSettings.Click += menuItem_projectSettings_Click;
+            // 
             // FormMain
             // 
             AllowDrop = true;
@@ -2544,7 +2553,7 @@
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private Controls.ExtendedPanel panel_tileset;
         private Controls.ExtendedPanel panel_room;
-        private System.Windows.Forms.ToolStripMenuItem programSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_options;
         public System.Windows.Forms.ToolStripMenuItem menuItem_defaultBG0;
         public System.Windows.Forms.ToolStripMenuItem menuItem_defaultBG1;
         public System.Windows.Forms.ToolStripMenuItem menuItem_defaultBG2;
@@ -2559,6 +2568,7 @@
         public System.Windows.Forms.ToolStripMenuItem menuItem_defaultClipBreakable;
         public System.Windows.Forms.ToolStripMenuItem menuItem_defaultClipValues;
         public System.Windows.Forms.ToolStripMenuItem menuItem_tooltips;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_projectSettings;
     }
 }
 
