@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Dialogs\BackgroundPropertyDialog.cs" />
+    <Compile Update="Options\PagesApplication\PageAdvanced.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Options\PagesApplication\PageRom.cs">
       <SubType>UserControl</SubType>
     </Compile>

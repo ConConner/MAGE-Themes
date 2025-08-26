@@ -222,9 +222,7 @@ namespace mage
             menuItem_defaultScreens.Checked = Settings.Default.viewScreenOutlines;
             Hex.ToHex = Settings.Default.hexadecimal;
             menuItem_tooltips.Checked = Settings.Default.tooltips;
-            button_experimental.Checked = Settings.Default.experimentalFeatures;
             Program.ExperimentalFeaturesEnabled = Settings.Default.experimentalFeatures;
-            button_legacy.Checked = Settings.Default.legacyEditors;
             Program.LegacyEditors = Settings.Default.legacyEditors;
 
             zoom = Settings.Default.zoom;
@@ -1145,18 +1143,6 @@ namespace mage
                 FormBookmarks form = new();
                 form.Show();
             }
-        }
-
-        private void button_experimental_Click(object sender, EventArgs e)
-        {
-            Program.ExperimentalFeaturesEnabled = !Program.ExperimentalFeaturesEnabled;
-            button_experimental.Checked = Program.ExperimentalFeaturesEnabled;
-        }
-
-        private void button_legacy_Click(object sender, EventArgs e)
-        {
-            Program.LegacyEditors = !Program.LegacyEditors;
-            button_legacy.Checked = Program.LegacyEditors;
         }
 
         // help

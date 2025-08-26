@@ -170,9 +170,6 @@
             menuItem_tooltips = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_bookmarks = new System.Windows.Forms.ToolStripMenuItem();
-            toolStripSeparator33 = new System.Windows.Forms.ToolStripSeparator();
-            button_experimental = new System.Windows.Forms.ToolStripMenuItem();
-            button_legacy = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip_help = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_viewHelp = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_about = new System.Windows.Forms.ToolStripMenuItem();
@@ -225,6 +222,7 @@
             statusLabel_sel = new System.Windows.Forms.ToolStripStatusLabel();
             statusLabel_clip = new System.Windows.Forms.ToolStripStatusLabel();
             lbl_spring = new System.Windows.Forms.ToolStripStatusLabel();
+            statusStrip_emulator = new System.Windows.Forms.ToolStripDropDownButton();
             statusStrip_theme = new System.Windows.Forms.ToolStripDropDownButton();
             statusStrip_zoom = new System.Windows.Forms.ToolStripDropDownButton();
             toolStrip_zoom800 = new System.Windows.Forms.ToolStripMenuItem();
@@ -271,7 +269,6 @@
             toolStrip_patches = new System.Windows.Forms.ToolStripButton();
             comboBox_spriteset = new mage.Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
-            statusStrip_emulator = new System.Windows.Forms.ToolStripDropDownButton();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -1144,7 +1141,7 @@
             // 
             // menuStrip_options
             // 
-            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_options, menuItem_projectSettings, toolStripSeparator31, menuItem_defaultView, menuItem_tooltips, toolStripSeparator21, menuItem_bookmarks, toolStripSeparator33, button_experimental, button_legacy });
+            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_options, menuItem_projectSettings, toolStripSeparator31, menuItem_defaultView, menuItem_tooltips, toolStripSeparator21, menuItem_bookmarks });
             menuStrip_options.Name = "menuStrip_options";
             menuStrip_options.Size = new System.Drawing.Size(61, 20);
             menuStrip_options.Text = "Options";
@@ -1153,7 +1150,7 @@
             // 
             menuItem_options.Image = Properties.Resources.cog;
             menuItem_options.Name = "menuItem_options";
-            menuItem_options.Size = new System.Drawing.Size(190, 22);
+            menuItem_options.Size = new System.Drawing.Size(180, 22);
             menuItem_options.Text = "Preferences...";
             menuItem_options.Click += programSettingsToolStripMenuItem_Click;
             // 
@@ -1161,21 +1158,21 @@
             // 
             menuItem_projectSettings.Image = Properties.Resources.script_gear;
             menuItem_projectSettings.Name = "menuItem_projectSettings";
-            menuItem_projectSettings.Size = new System.Drawing.Size(190, 22);
+            menuItem_projectSettings.Size = new System.Drawing.Size(180, 22);
             menuItem_projectSettings.Text = "Project Settings...";
             menuItem_projectSettings.Click += menuItem_projectSettings_Click;
             // 
             // toolStripSeparator31
             // 
             toolStripSeparator31.Name = "toolStripSeparator31";
-            toolStripSeparator31.Size = new System.Drawing.Size(187, 6);
+            toolStripSeparator31.Size = new System.Drawing.Size(177, 6);
             // 
             // menuItem_defaultView
             // 
             menuItem_defaultView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_defaultBG0, menuItem_defaultBG1, menuItem_defaultBG2, menuItem_defaultBG3, menuItem_defaultClipdata, toolStripSeparator13, menuItem_defaultSprites, menuItem_defaultSpriteOutlines, menuItem_defaultDoors, menuItem_defaultScrolls, menuItem_defaultScreens });
             menuItem_defaultView.Enabled = false;
             menuItem_defaultView.Name = "menuItem_defaultView";
-            menuItem_defaultView.Size = new System.Drawing.Size(190, 22);
+            menuItem_defaultView.Size = new System.Drawing.Size(180, 22);
             menuItem_defaultView.Text = "Default View";
             // 
             // menuItem_defaultBG0
@@ -1292,41 +1289,22 @@
             // 
             menuItem_tooltips.Enabled = false;
             menuItem_tooltips.Name = "menuItem_tooltips";
-            menuItem_tooltips.Size = new System.Drawing.Size(190, 22);
+            menuItem_tooltips.Size = new System.Drawing.Size(180, 22);
             menuItem_tooltips.Text = "Disable Tooltips";
             menuItem_tooltips.Click += menuItem_tooltips_Click;
             // 
             // toolStripSeparator21
             // 
             toolStripSeparator21.Name = "toolStripSeparator21";
-            toolStripSeparator21.Size = new System.Drawing.Size(187, 6);
+            toolStripSeparator21.Size = new System.Drawing.Size(177, 6);
             // 
             // menuItem_bookmarks
             // 
             menuItem_bookmarks.Enabled = false;
             menuItem_bookmarks.Name = "menuItem_bookmarks";
-            menuItem_bookmarks.Size = new System.Drawing.Size(190, 22);
+            menuItem_bookmarks.Size = new System.Drawing.Size(180, 22);
             menuItem_bookmarks.Text = "Bookmarks";
             menuItem_bookmarks.Click += menuItem_bookmarks_Click;
-            // 
-            // toolStripSeparator33
-            // 
-            toolStripSeparator33.Name = "toolStripSeparator33";
-            toolStripSeparator33.Size = new System.Drawing.Size(187, 6);
-            // 
-            // button_experimental
-            // 
-            button_experimental.Name = "button_experimental";
-            button_experimental.Size = new System.Drawing.Size(190, 22);
-            button_experimental.Text = "Experimental Features";
-            button_experimental.Click += button_experimental_Click;
-            // 
-            // button_legacy
-            // 
-            button_legacy.Name = "button_legacy";
-            button_legacy.Size = new System.Drawing.Size(190, 22);
-            button_legacy.Text = "Use Legacy Editors";
-            button_legacy.Click += button_legacy_Click;
             // 
             // menuStrip_help
             // 
@@ -1832,8 +1810,17 @@
             // lbl_spring
             // 
             lbl_spring.Name = "lbl_spring";
-            lbl_spring.Size = new System.Drawing.Size(420, 19);
+            lbl_spring.Size = new System.Drawing.Size(451, 19);
             lbl_spring.Spring = true;
+            // 
+            // statusStrip_emulator
+            // 
+            statusStrip_emulator.Image = Properties.Resources.GBA_Icon;
+            statusStrip_emulator.ImageTransparentColor = System.Drawing.Color.Magenta;
+            statusStrip_emulator.Name = "statusStrip_emulator";
+            statusStrip_emulator.Size = new System.Drawing.Size(103, 22);
+            statusStrip_emulator.Text = "No Emulator";
+            statusStrip_emulator.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             // 
             // statusStrip_theme
             // 
@@ -2261,15 +2248,6 @@
             comboBox_spriteset.TabIndex = 11;
             comboBox_spriteset.SelectedIndexChanged += comboBox_spriteset_SelectedIndexChanged;
             // 
-            // statusstrip_emulator
-            // 
-            statusStrip_emulator.Image = Properties.Resources.GBA_Icon;
-            statusStrip_emulator.ImageTransparentColor = System.Drawing.Color.Magenta;
-            statusStrip_emulator.Name = "statusstrip_emulator";
-            statusStrip_emulator.Size = new System.Drawing.Size(103, 22);
-            statusStrip_emulator.Text = "No Emulator";
-            statusStrip_emulator.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            // 
             // FormMain
             // 
             AllowDrop = true;
@@ -2536,13 +2514,10 @@
         private System.Windows.Forms.ToolStripMenuItem menuItem_flip_h;
         private System.Windows.Forms.ToolStripMenuItem menuItem_flip_v;
         private System.Windows.Forms.ToolStripSeparator seperator_flip;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator33;
-        private System.Windows.Forms.ToolStripMenuItem button_experimental;
         private System.Windows.Forms.ToolStripMenuItem regularToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem croppedToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStrip_oamEditor;
         private System.Windows.Forms.ToolStripMenuItem menuItem_bookmarks;
-        private System.Windows.Forms.ToolStripMenuItem button_legacy;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator34;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private Controls.ExtendedPanel panel_tileset;

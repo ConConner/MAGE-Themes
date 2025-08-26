@@ -62,6 +62,7 @@
             pnl_color = new mage.Controls.ExtendedPanel();
             lbl_color = new System.Windows.Forms.Label();
             seperator1 = new mage.Controls.Seperator();
+            label_theme = new System.Windows.Forms.Label();
             groupBox_colors.SuspendLayout();
             panel_main.SuspendLayout();
             statusStrip.SuspendLayout();
@@ -72,7 +73,7 @@
             flatTextBox_name.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             flatTextBox_name.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             flatTextBox_name.DisplayBorder = true;
-            flatTextBox_name.Location = new System.Drawing.Point(6, 39);
+            flatTextBox_name.Location = new System.Drawing.Point(6, 57);
             flatTextBox_name.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             flatTextBox_name.MaxLength = 32767;
             flatTextBox_name.Multiline = false;
@@ -83,7 +84,7 @@
             flatTextBox_name.ReadOnly = false;
             flatTextBox_name.ScrollBars = System.Windows.Forms.ScrollBars.None;
             flatTextBox_name.SelectionStart = 0;
-            flatTextBox_name.Size = new System.Drawing.Size(358, 23);
+            flatTextBox_name.Size = new System.Drawing.Size(346, 23);
             flatTextBox_name.TabIndex = 13;
             flatTextBox_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             flatTextBox_name.ValueBox = false;
@@ -93,7 +94,7 @@
             // button_apply
             // 
             button_apply.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            button_apply.Location = new System.Drawing.Point(278, 248);
+            button_apply.Location = new System.Drawing.Point(266, 266);
             button_apply.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_apply.Name = "button_apply";
             button_apply.Size = new System.Drawing.Size(86, 27);
@@ -104,7 +105,7 @@
             // 
             // btn_remove
             // 
-            btn_remove.Location = new System.Drawing.Point(283, 6);
+            btn_remove.Location = new System.Drawing.Point(283, 24);
             btn_remove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             btn_remove.Name = "btn_remove";
             btn_remove.Size = new System.Drawing.Size(70, 27);
@@ -115,7 +116,7 @@
             // 
             // btn_add
             // 
-            btn_add.Location = new System.Drawing.Point(205, 6);
+            btn_add.Location = new System.Drawing.Point(205, 24);
             btn_add.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             btn_add.Name = "btn_add";
             btn_add.Size = new System.Drawing.Size(70, 27);
@@ -128,11 +129,11 @@
             // 
             groupBox_colors.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBox_colors.Controls.Add(panel_main);
-            groupBox_colors.Location = new System.Drawing.Point(6, 68);
+            groupBox_colors.Location = new System.Drawing.Point(6, 86);
             groupBox_colors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_colors.Name = "groupBox_colors";
             groupBox_colors.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_colors.Size = new System.Drawing.Size(358, 174);
+            groupBox_colors.Size = new System.Drawing.Size(346, 174);
             groupBox_colors.TabIndex = 9;
             groupBox_colors.TabStop = false;
             groupBox_colors.Text = "Colors";
@@ -159,14 +160,14 @@
             panel_main.Location = new System.Drawing.Point(4, 19);
             panel_main.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_main.Name = "panel_main";
-            panel_main.Size = new System.Drawing.Size(350, 152);
+            panel_main.Size = new System.Drawing.Size(338, 152);
             panel_main.TabIndex = 0;
             panel_main.Tag = "";
             // 
             // panel_accent
             // 
             panel_accent.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            panel_accent.Location = new System.Drawing.Point(323, 123);
+            panel_accent.Location = new System.Drawing.Point(311, 123);
             panel_accent.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_accent.Name = "panel_accent";
             panel_accent.Size = new System.Drawing.Size(23, 23);
@@ -176,7 +177,7 @@
             // panel_secondary
             // 
             panel_secondary.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            panel_secondary.Location = new System.Drawing.Point(323, 93);
+            panel_secondary.Location = new System.Drawing.Point(311, 93);
             panel_secondary.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_secondary.Name = "panel_secondary";
             panel_secondary.Size = new System.Drawing.Size(23, 23);
@@ -186,7 +187,7 @@
             // panel_primary
             // 
             panel_primary.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            panel_primary.Location = new System.Drawing.Point(323, 63);
+            panel_primary.Location = new System.Drawing.Point(311, 63);
             panel_primary.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_primary.Name = "panel_primary";
             panel_primary.Size = new System.Drawing.Size(23, 23);
@@ -196,7 +197,7 @@
             // panel_background
             // 
             panel_background.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            panel_background.Location = new System.Drawing.Point(323, 33);
+            panel_background.Location = new System.Drawing.Point(311, 33);
             panel_background.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_background.Name = "panel_background";
             panel_background.Size = new System.Drawing.Size(23, 23);
@@ -206,7 +207,7 @@
             // panel_text
             // 
             panel_text.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            panel_text.Location = new System.Drawing.Point(323, 3);
+            panel_text.Location = new System.Drawing.Point(311, 3);
             panel_text.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_text.Name = "panel_text";
             panel_text.Size = new System.Drawing.Size(23, 23);
@@ -229,7 +230,7 @@
             flatTextBox_accent.ReadOnly = false;
             flatTextBox_accent.ScrollBars = System.Windows.Forms.ScrollBars.None;
             flatTextBox_accent.SelectionStart = 0;
-            flatTextBox_accent.Size = new System.Drawing.Size(191, 23);
+            flatTextBox_accent.Size = new System.Drawing.Size(179, 23);
             flatTextBox_accent.TabIndex = 9;
             flatTextBox_accent.Tag = "panel_accent";
             flatTextBox_accent.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -252,7 +253,7 @@
             flatTextBox_secondary.ReadOnly = false;
             flatTextBox_secondary.ScrollBars = System.Windows.Forms.ScrollBars.None;
             flatTextBox_secondary.SelectionStart = 0;
-            flatTextBox_secondary.Size = new System.Drawing.Size(191, 23);
+            flatTextBox_secondary.Size = new System.Drawing.Size(179, 23);
             flatTextBox_secondary.TabIndex = 8;
             flatTextBox_secondary.Tag = "panel_secondary";
             flatTextBox_secondary.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -275,7 +276,7 @@
             flatTextBox_primary.ReadOnly = false;
             flatTextBox_primary.ScrollBars = System.Windows.Forms.ScrollBars.None;
             flatTextBox_primary.SelectionStart = 0;
-            flatTextBox_primary.Size = new System.Drawing.Size(191, 23);
+            flatTextBox_primary.Size = new System.Drawing.Size(179, 23);
             flatTextBox_primary.TabIndex = 7;
             flatTextBox_primary.Tag = "panel_primary";
             flatTextBox_primary.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -298,7 +299,7 @@
             flatTextBox_background.ReadOnly = false;
             flatTextBox_background.ScrollBars = System.Windows.Forms.ScrollBars.None;
             flatTextBox_background.SelectionStart = 0;
-            flatTextBox_background.Size = new System.Drawing.Size(191, 23);
+            flatTextBox_background.Size = new System.Drawing.Size(179, 23);
             flatTextBox_background.TabIndex = 6;
             flatTextBox_background.Tag = "panel_background";
             flatTextBox_background.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -321,7 +322,7 @@
             flatTextBox_text.ReadOnly = false;
             flatTextBox_text.ScrollBars = System.Windows.Forms.ScrollBars.None;
             flatTextBox_text.SelectionStart = 0;
-            flatTextBox_text.Size = new System.Drawing.Size(191, 23);
+            flatTextBox_text.Size = new System.Drawing.Size(179, 23);
             flatTextBox_text.TabIndex = 5;
             flatTextBox_text.Tag = "panel_text";
             flatTextBox_text.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -382,7 +383,7 @@
             // 
             comboBox_theme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBox_theme.FormattingEnabled = true;
-            comboBox_theme.Location = new System.Drawing.Point(6, 8);
+            comboBox_theme.Location = new System.Drawing.Point(6, 27);
             comboBox_theme.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_theme.Name = "comboBox_theme";
             comboBox_theme.Size = new System.Drawing.Size(191, 23);
@@ -392,10 +393,10 @@
             // statusStrip
             // 
             statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { label_spring, button_import, button_export });
-            statusStrip.Location = new System.Drawing.Point(3, 327);
+            statusStrip.Location = new System.Drawing.Point(3, 339);
             statusStrip.Name = "statusStrip";
             statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            statusStrip.Size = new System.Drawing.Size(365, 22);
+            statusStrip.Size = new System.Drawing.Size(353, 22);
             statusStrip.TabIndex = 7;
             statusStrip.Text = "statusStrip1";
             // 
@@ -457,7 +458,7 @@
             // 
             pnl_color.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             pnl_color.Cursor = System.Windows.Forms.Cursors.Hand;
-            pnl_color.Location = new System.Drawing.Point(115, 288);
+            pnl_color.Location = new System.Drawing.Point(115, 306);
             pnl_color.Name = "pnl_color";
             pnl_color.Size = new System.Drawing.Size(23, 23);
             pnl_color.TabIndex = 15;
@@ -467,7 +468,7 @@
             // lbl_color
             // 
             lbl_color.AutoSize = true;
-            lbl_color.Location = new System.Drawing.Point(6, 291);
+            lbl_color.Location = new System.Drawing.Point(6, 309);
             lbl_color.Name = "lbl_color";
             lbl_color.Size = new System.Drawing.Size(103, 15);
             lbl_color.TabIndex = 14;
@@ -476,18 +477,29 @@
             // seperator1
             // 
             seperator1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            seperator1.Location = new System.Drawing.Point(6, 281);
+            seperator1.Location = new System.Drawing.Point(6, 299);
             seperator1.Name = "seperator1";
             seperator1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            seperator1.Size = new System.Drawing.Size(357, 1);
+            seperator1.Size = new System.Drawing.Size(345, 1);
             seperator1.TabIndex = 16;
             seperator1.Text = "seperator1";
+            // 
+            // label_theme
+            // 
+            label_theme.AutoSize = true;
+            label_theme.Location = new System.Drawing.Point(6, 6);
+            label_theme.Margin = new System.Windows.Forms.Padding(3);
+            label_theme.Name = "label_theme";
+            label_theme.Size = new System.Drawing.Size(107, 15);
+            label_theme.TabIndex = 17;
+            label_theme.Text = "Application Theme";
             // 
             // PageAppearance
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
+            Controls.Add(label_theme);
             Controls.Add(seperator1);
             Controls.Add(pnl_color);
             Controls.Add(lbl_color);
@@ -500,7 +512,7 @@
             Controls.Add(statusStrip);
             Name = "PageAppearance";
             Padding = new System.Windows.Forms.Padding(3);
-            Size = new System.Drawing.Size(371, 352);
+            Size = new System.Drawing.Size(359, 364);
             groupBox_colors.ResumeLayout(false);
             panel_main.ResumeLayout(false);
             panel_main.PerformLayout();
@@ -545,5 +557,6 @@
         private Controls.ExtendedPanel pnl_color;
         private System.Windows.Forms.Label lbl_color;
         private Controls.Seperator seperator1;
+        private System.Windows.Forms.Label label_theme;
     }
 }

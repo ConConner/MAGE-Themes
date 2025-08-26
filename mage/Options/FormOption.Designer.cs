@@ -33,8 +33,8 @@
             listBox_pages = new System.Windows.Forms.ListBox();
             seperator1 = new mage.Controls.Seperator();
             panel_requiresRom = new System.Windows.Forms.Panel();
-            label_requiresRom = new System.Windows.Forms.Label();
             seperator2 = new mage.Controls.Seperator();
+            label_requiresRom = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)panel_main).BeginInit();
             panel_main.Panel1.SuspendLayout();
             panel_main.Panel2.SuspendLayout();
@@ -58,7 +58,7 @@
             // panel_main.Panel2
             // 
             panel_main.Panel2.Controls.Add(panel_requiresRom);
-            panel_main.Panel2.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            panel_main.Panel2.Padding = new System.Windows.Forms.Padding(0, 3, 4, 0);
             panel_main.Size = new System.Drawing.Size(584, 361);
             panel_main.SplitterDistance = 144;
             panel_main.TabIndex = 0;
@@ -90,11 +90,21 @@
             panel_requiresRom.Controls.Add(seperator2);
             panel_requiresRom.Controls.Add(label_requiresRom);
             panel_requiresRom.Dock = System.Windows.Forms.DockStyle.Top;
-            panel_requiresRom.Location = new System.Drawing.Point(0, 0);
+            panel_requiresRom.Location = new System.Drawing.Point(0, 3);
             panel_requiresRom.Name = "panel_requiresRom";
             panel_requiresRom.Size = new System.Drawing.Size(432, 30);
             panel_requiresRom.TabIndex = 0;
             panel_requiresRom.Visible = false;
+            // 
+            // seperator2
+            // 
+            seperator2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            seperator2.Location = new System.Drawing.Point(0, 29);
+            seperator2.Name = "seperator2";
+            seperator2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            seperator2.Size = new System.Drawing.Size(432, 1);
+            seperator2.TabIndex = 1;
+            seperator2.Text = "seperator2";
             // 
             // label_requiresRom
             // 
@@ -106,16 +116,6 @@
             label_requiresRom.Size = new System.Drawing.Size(332, 21);
             label_requiresRom.TabIndex = 0;
             label_requiresRom.Text = "A loaded ROM is required to edit this page";
-            // 
-            // seperator2
-            // 
-            seperator2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            seperator2.Location = new System.Drawing.Point(0, 29);
-            seperator2.Name = "seperator2";
-            seperator2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            seperator2.Size = new System.Drawing.Size(432, 1);
-            seperator2.TabIndex = 1;
-            seperator2.Text = "seperator2";
             // 
             // FormOption
             // 
