@@ -32,9 +32,14 @@
             panel_main = new System.Windows.Forms.SplitContainer();
             listBox_pages = new System.Windows.Forms.ListBox();
             seperator1 = new mage.Controls.Seperator();
+            panel_requiresRom = new System.Windows.Forms.Panel();
+            label_requiresRom = new System.Windows.Forms.Label();
+            seperator2 = new mage.Controls.Seperator();
             ((System.ComponentModel.ISupportInitialize)panel_main).BeginInit();
             panel_main.Panel1.SuspendLayout();
+            panel_main.Panel2.SuspendLayout();
             panel_main.SuspendLayout();
+            panel_requiresRom.SuspendLayout();
             SuspendLayout();
             // 
             // panel_main
@@ -49,8 +54,13 @@
             panel_main.Panel1.Controls.Add(listBox_pages);
             panel_main.Panel1.Controls.Add(seperator1);
             panel_main.Panel1.Padding = new System.Windows.Forms.Padding(6, 3, 3, 3);
-            panel_main.Size = new System.Drawing.Size(524, 361);
-            panel_main.SplitterDistance = 131;
+            // 
+            // panel_main.Panel2
+            // 
+            panel_main.Panel2.Controls.Add(panel_requiresRom);
+            panel_main.Panel2.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            panel_main.Size = new System.Drawing.Size(584, 361);
+            panel_main.SplitterDistance = 144;
             panel_main.TabIndex = 0;
             // 
             // listBox_pages
@@ -62,31 +72,66 @@
             listBox_pages.ItemHeight = 21;
             listBox_pages.Location = new System.Drawing.Point(6, 3);
             listBox_pages.Name = "listBox_pages";
-            listBox_pages.Size = new System.Drawing.Size(121, 355);
+            listBox_pages.Size = new System.Drawing.Size(134, 355);
             listBox_pages.TabIndex = 0;
             listBox_pages.SelectedIndexChanged += listBox_Pages_SelectedIndexChanged;
             // 
             // seperator1
             // 
             seperator1.Dock = System.Windows.Forms.DockStyle.Right;
-            seperator1.Location = new System.Drawing.Point(127, 3);
+            seperator1.Location = new System.Drawing.Point(140, 3);
             seperator1.Name = "seperator1";
             seperator1.Size = new System.Drawing.Size(1, 355);
             seperator1.TabIndex = 0;
             seperator1.Text = "seperator1";
             // 
+            // panel_requiresRom
+            // 
+            panel_requiresRom.Controls.Add(seperator2);
+            panel_requiresRom.Controls.Add(label_requiresRom);
+            panel_requiresRom.Dock = System.Windows.Forms.DockStyle.Top;
+            panel_requiresRom.Location = new System.Drawing.Point(0, 0);
+            panel_requiresRom.Name = "panel_requiresRom";
+            panel_requiresRom.Size = new System.Drawing.Size(432, 30);
+            panel_requiresRom.TabIndex = 0;
+            panel_requiresRom.Visible = false;
+            // 
+            // label_requiresRom
+            // 
+            label_requiresRom.AutoSize = true;
+            label_requiresRom.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            label_requiresRom.Location = new System.Drawing.Point(3, 3);
+            label_requiresRom.Margin = new System.Windows.Forms.Padding(3);
+            label_requiresRom.Name = "label_requiresRom";
+            label_requiresRom.Size = new System.Drawing.Size(332, 21);
+            label_requiresRom.TabIndex = 0;
+            label_requiresRom.Text = "A loaded ROM is required to edit this page";
+            // 
+            // seperator2
+            // 
+            seperator2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            seperator2.Location = new System.Drawing.Point(0, 29);
+            seperator2.Name = "seperator2";
+            seperator2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            seperator2.Size = new System.Drawing.Size(432, 1);
+            seperator2.TabIndex = 1;
+            seperator2.Text = "seperator2";
+            // 
             // FormOption
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(524, 361);
+            ClientSize = new System.Drawing.Size(584, 361);
             Controls.Add(panel_main);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new System.Drawing.Size(540, 400);
+            MinimumSize = new System.Drawing.Size(600, 400);
             Name = "FormOption";
             Text = "Options";
             panel_main.Panel1.ResumeLayout(false);
+            panel_main.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)panel_main).EndInit();
             panel_main.ResumeLayout(false);
+            panel_requiresRom.ResumeLayout(false);
+            panel_requiresRom.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -95,5 +140,8 @@
         private System.Windows.Forms.SplitContainer panel_main;
         private System.Windows.Forms.ListBox listBox_pages;
         private Controls.Seperator seperator1;
+        private System.Windows.Forms.Panel panel_requiresRom;
+        private System.Windows.Forms.Label label_requiresRom;
+        private Controls.Seperator seperator2;
     }
 }

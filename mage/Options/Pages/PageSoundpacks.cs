@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace mage.Options.Pages;
 
+[ToolboxItem(false)]
 public partial class PageSoundpacks : UserControl
 {
     public PageSoundpacks()

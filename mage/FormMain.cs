@@ -205,7 +205,7 @@ namespace mage
             menuItem_defaultDoors.Checked = Settings.Default.viewDoors;
             menuItem_defaultScrolls.Checked = Settings.Default.viewScrolls;
             menuItem_defaultScreens.Checked = Settings.Default.viewScreenOutlines;
-            menuItem_hexadecimal.Checked = Settings.Default.hexadecimal;
+            Hex.ToHex = Settings.Default.hexadecimal;
             menuItem_tooltips.Checked = Settings.Default.tooltips;
             button_experimental.Checked = Settings.Default.experimentalFeatures;
             Program.ExperimentalFeaturesEnabled = Settings.Default.experimentalFeatures;
@@ -266,7 +266,7 @@ namespace mage
             Settings.Default.viewDoors = menuItem_defaultDoors.Checked;
             Settings.Default.viewScrolls = menuItem_defaultScrolls.Checked;
             Settings.Default.viewScreenOutlines = menuItem_defaultScreens.Checked;
-            Settings.Default.hexadecimal = menuItem_hexadecimal.Checked;
+            Settings.Default.hexadecimal = Hex.ToHex;
             Settings.Default.tooltips = menuItem_tooltips.Checked;
             Settings.Default.zoom = zoom;
             Settings.Default.experimentalFeatures = Program.ExperimentalFeaturesEnabled;
@@ -1068,27 +1068,16 @@ namespace mage
             item.Checked = !item.Checked;
         }
 
-        private void menuItem_hexadecimal_Click(object sender, EventArgs e)
-        {
-            menuItem_hexadecimal.Checked = true;
-            menuItem_decimal.Checked = false;
-            Hex.ToHex = true;
-            UpdateRoomNumbers();
-        }
-
-        private void menuItem_decimal_Click(object sender, EventArgs e)
-        {
-            menuItem_hexadecimal.Checked = false;
-            menuItem_decimal.Checked = true;
-            Hex.ToHex = false;
-            UpdateRoomNumbers();
-        }
-
         private void menuItem_tooltips_Click(object sender, EventArgs e)
         {
             menuItem_tooltips.Checked = !menuItem_tooltips.Checked;
 
-            if (menuItem_tooltips.Checked)
+            HideTooltips(menuItem_tooltips.Checked);
+        }
+
+        public void HideTooltips(bool hide)
+        {
+            if (hide)
             {
                 roomTimer.Tick -= roomTimer_Tick;
                 tileTimer.Tick -= tileTimer_Tick;
@@ -1452,7 +1441,6 @@ namespace mage
             groupBox_tileset.Enabled = val;
             groupBox_room.Enabled = val;
             menuItem_defaultView.Enabled = val;
-            menuItem_numberBase.Enabled = val;
             menuItem_tooltips.Enabled = val;
             menuItem_bookmarks.Enabled = val;
 
@@ -1967,7 +1955,7 @@ namespace mage
             roomView.RedrawAll();
         }
 
-        private void UpdateRoomNumbers()
+        public void UpdateRoomNumbers()
         {
             for (int i = 0; i < comboBox_room.Items.Count; i++)
             {

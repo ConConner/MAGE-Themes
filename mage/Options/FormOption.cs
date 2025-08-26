@@ -18,12 +18,14 @@ public partial class FormOption : Form
     {
         public string Name;
         public UserControl Page;
+        public bool RequiresROM;
     }
 
     private List<OptionsPage> Pages = new List<OptionsPage>()
     {
-        new() { Name = "Appearance", Page = new PageAppearance() },
-        new() { Name = "Soundpacks", Page = new PageSoundpacks() },
+        new() { Name = "Appearance", Page = new PageAppearance(), RequiresROM = false },
+        new() { Name = "Soundpacks", Page = new PageSoundpacks(), RequiresROM = false },
+        new() { Name = "Default View", Page = new PageDefaults(), RequiresROM = true },
     };
 
     SplitterPanel PanelContent => panel_main.Panel2;
@@ -41,7 +43,14 @@ public partial class FormOption : Form
             PanelContent.Controls.Clear();
 
             PanelContent.Controls.Add(currentPage.Page);
+            PanelContent.Controls.Add(panel_requiresRom);
             currentPage.Page.Dock = DockStyle.Fill;
+            panel_requiresRom.Dock = DockStyle.Top;
+            currentPage.Page.BringToFront();
+
+            bool enabled = !currentPage.RequiresROM || ROM.Stream != null;
+            currentPage.Page.Enabled = enabled;
+            panel_requiresRom.Visible = !enabled;
 
             if (listBox_pages.SelectedIndex != value) listBox_pages.SelectedIndex = value;
         }
