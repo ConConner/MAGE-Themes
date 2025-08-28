@@ -157,6 +157,7 @@
   <ItemGroup>
     <PackageReference Include="FuzzySharp" Version="2.0.2" />
     <PackageReference Include="System.Reactive" Version="6.0.1" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Docs\doc.html" />

@@ -113,7 +113,7 @@ namespace mage
             // save new changes and launch
             try
             {
-                string path = Path.GetTempPath();
+                string path = Program.Config.TestRomPath != string.Empty ? Program.Config.TestRomPath : Path.GetTempPath();
                 string testSymbolPath = Path.Combine(path, "test.sym");
                 string romName = Path.GetFileNameWithoutExtension(main.filename);
                 romName = Path.Combine(Path.GetDirectoryName(main.filename), romName);

@@ -1,5 +1,6 @@
 ﻿using mage.Properties;
 using mage.Theming;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,8 +44,10 @@ public partial class PageRom : UserControl, IReloadablePage
     {
         InitializeComponent();
         Parent = FormMain.Instance;
+        textBox_testPath.TextChanged += TextBox_testPath_TextChanged;
         LoadPage();
     }
+
     public void LoadPage()
     {
         listBox_emulators.Items.Clear();
@@ -58,6 +61,10 @@ public partial class PageRom : UserControl, IReloadablePage
             listBox_emulators.SelectedIndex = index;
         }
         else SetCurrentEmulatorLabel("---");
+
+        init = true;
+        textBox_testPath.Text = Program.Config.TestRomPath;
+        init = false;
     }
 
     private void SetCurrentEmulatorLabel(string path)
@@ -94,4 +101,16 @@ public partial class PageRom : UserControl, IReloadablePage
         Parent.PopulateEmulatorList();
     }
 
+    private void button_selectPath_Click(object sender, EventArgs e)
+    {
+        var dialog = new CommonOpenFileDialog() { IsFolderPicker = true };
+        if (dialog.ShowDialog() != CommonFileDialogResult.Ok) return;
+        textBox_testPath.Text = dialog.FileName;
+    }
+
+    private void TextBox_testPath_TextChanged(object? sender, EventArgs e)
+    {
+        if (init) return;
+        Program.Config.TestRomPath = textBox_testPath.Text;
+    }
 }

@@ -17,6 +17,7 @@ public class Config
     #region Options
     public List<string> EmulatorPaths { get; set; } = new List<string>();
     public string SelectedEmulatorPath { get; set; } = string.Empty;
+    public string TestRomPath { get; set; } = string.Empty;
     #endregion
 
     #region Bookmarking
