@@ -46,6 +46,9 @@
     <Compile Update="Options\PagesApplication\PageRom.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Options\PagesProject\PageOverview.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

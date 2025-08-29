@@ -124,7 +124,7 @@ namespace mage
 
                 //Copy a symbol file if it exists
                 string romSymbolPath = romName + ".sym";
-                if (File.Exists(romSymbolPath)) File.Copy(romSymbolPath, testSymbolPath, true);
+                if (File.Exists(romSymbolPath) && Program.Config.IncludeSymbolFile) File.Copy(romSymbolPath, testSymbolPath, true);
 
                 Sound.PlaySound("test.wav");
                 RunEmulator($"\"{path}\"");

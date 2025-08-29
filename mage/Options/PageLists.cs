@@ -20,6 +20,6 @@ public static class PageLists
 
     public static List<OptionsPage> ProjectOptionsPages = new()
     {
-
+        new() { Name = "Overview", Page = new PageOverview(), RequiresROM = true},
     };
 }
