@@ -64,6 +64,7 @@ public partial class PageRom : UserControl, IReloadablePage
 
         init = true;
         textBox_testPath.Text = Program.Config.TestRomPath;
+        checkBox_includeSymbol.Checked = Program.Config.IncludeSymbolFile;
         init = false;
     }
 
@@ -112,5 +113,11 @@ public partial class PageRom : UserControl, IReloadablePage
     {
         if (init) return;
         Program.Config.TestRomPath = textBox_testPath.Text;
+    }
+
+    private void checkBox_includeSymbol_CheckedChanged(object sender, EventArgs e)
+    {
+        if (init) return;
+        Program.Config.IncludeSymbolFile = checkBox_includeSymbol.Checked;
     }
 }

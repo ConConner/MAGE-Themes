@@ -39,6 +39,7 @@
             label_testPath = new System.Windows.Forms.Label();
             button_selectPath = new System.Windows.Forms.Button();
             textBox_testPath = new mage.Theming.CustomControls.FlatTextBox();
+            checkBox_includeSymbol = new System.Windows.Forms.CheckBox();
             group_emulators.SuspendLayout();
             panel_emulatorControls.SuspendLayout();
             SuspendLayout();
@@ -170,10 +171,22 @@
             textBox_testPath.ValueBox = false;
             textBox_testPath.WordWrap = true;
             // 
+            // checkBox_includeSymbol
+            // 
+            checkBox_includeSymbol.AutoSize = true;
+            checkBox_includeSymbol.Location = new System.Drawing.Point(6, 273);
+            checkBox_includeSymbol.Name = "checkBox_includeSymbol";
+            checkBox_includeSymbol.Size = new System.Drawing.Size(303, 19);
+            checkBox_includeSymbol.TabIndex = 17;
+            checkBox_includeSymbol.Text = "Copy existing symbol files to the Test-ROM directory";
+            checkBox_includeSymbol.UseVisualStyleBackColor = true;
+            checkBox_includeSymbol.CheckedChanged += checkBox_includeSymbol_CheckedChanged;
+            // 
             // PageRom
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             AutoScroll = true;
+            Controls.Add(checkBox_includeSymbol);
             Controls.Add(textBox_testPath);
             Controls.Add(button_selectPath);
             Controls.Add(label_testPath);
@@ -202,5 +215,6 @@
         private System.Windows.Forms.Label label_testPath;
         private System.Windows.Forms.Button button_selectPath;
         private Theming.CustomControls.FlatTextBox textBox_testPath;
+        private System.Windows.Forms.CheckBox checkBox_includeSymbol;
     }
 }
