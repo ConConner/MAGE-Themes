@@ -32,6 +32,7 @@
             panel_main = new System.Windows.Forms.SplitContainer();
             listBox_pages = new System.Windows.Forms.ListBox();
             seperator1 = new mage.Controls.Seperator();
+            statusStrip = new System.Windows.Forms.StatusStrip();
             panel_requiresRom = new System.Windows.Forms.Panel();
             seperator2 = new mage.Controls.Seperator();
             label_requiresRom = new System.Windows.Forms.Label();
@@ -46,6 +47,7 @@
             // 
             panel_main.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_main.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            panel_main.IsSplitterFixed = true;
             panel_main.Location = new System.Drawing.Point(0, 0);
             panel_main.Name = "panel_main";
             // 
@@ -57,6 +59,7 @@
             // 
             // panel_main.Panel2
             // 
+            panel_main.Panel2.Controls.Add(statusStrip);
             panel_main.Panel2.Controls.Add(panel_requiresRom);
             panel_main.Panel2.Padding = new System.Windows.Forms.Padding(0, 3, 4, 0);
             panel_main.Size = new System.Drawing.Size(584, 361);
@@ -84,6 +87,14 @@
             seperator1.Size = new System.Drawing.Size(1, 355);
             seperator1.TabIndex = 0;
             seperator1.Text = "seperator1";
+            // 
+            // statusStrip
+            // 
+            statusStrip.Location = new System.Drawing.Point(0, 339);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new System.Drawing.Size(432, 22);
+            statusStrip.TabIndex = 1;
+            statusStrip.Text = "statusStrip1";
             // 
             // panel_requiresRom
             // 
@@ -128,6 +139,7 @@
             Text = "Options";
             panel_main.Panel1.ResumeLayout(false);
             panel_main.Panel2.ResumeLayout(false);
+            panel_main.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)panel_main).EndInit();
             panel_main.ResumeLayout(false);
             panel_requiresRom.ResumeLayout(false);
@@ -143,5 +155,6 @@
         private System.Windows.Forms.Panel panel_requiresRom;
         private System.Windows.Forms.Label label_requiresRom;
         private Controls.Seperator seperator2;
+        private System.Windows.Forms.StatusStrip statusStrip;
     }
 }

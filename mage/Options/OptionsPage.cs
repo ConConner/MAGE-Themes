@@ -12,4 +12,5 @@ public struct OptionsPage
     public string Name;
     public UserControl Page;
     public bool RequiresROM;
+    public StatusStrip? CustomStatusStrip;
 }

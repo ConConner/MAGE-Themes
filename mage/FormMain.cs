@@ -38,6 +38,7 @@ namespace mage
 
         #region properties
         public static FormMain Instance { get; private set; }
+        public EventHandler NewRomLoaded;
 
         public Room Room
         {
@@ -1438,6 +1439,7 @@ namespace mage
             menuItem_editBGs.Checked = toolStrip_editBGs.Checked = true;
             menuItem_editObjects.Checked = toolStrip_editObjects.Checked = false;
 
+            NewRomLoaded?.Invoke(this, null);
             Sound.PlaySound("load.wav");
         }
 
@@ -1467,6 +1469,7 @@ namespace mage
             groupBox_editBG.Enabled = val;
             groupBox_tileset.Enabled = val;
             groupBox_room.Enabled = val;
+            menuItem_projectSettings.Enabled = val;
             menuItem_defaultView.Enabled = val;
             menuItem_tooltips.Enabled = val;
             menuItem_bookmarks.Enabled = val;
@@ -2996,7 +2999,7 @@ namespace mage
 
         private void menuItem_projectSettings_Click(object sender, EventArgs e)
         {
-            new FormOption("Project Settings", PageLists.ProjectOptionsPages).ShowDialog();
+            new FormOption("Project Settings", PageLists.ProjectOptionsPages, "Overview").ShowDialog();
         }
     }
 }

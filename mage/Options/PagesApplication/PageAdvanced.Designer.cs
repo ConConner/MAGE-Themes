@@ -28,18 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            statusStrip1 = new System.Windows.Forms.StatusStrip();
             checkBox_experimental = new System.Windows.Forms.CheckBox();
             checkBox_legacyEditors = new System.Windows.Forms.CheckBox();
             SuspendLayout();
-            // 
-            // statusStrip1
-            // 
-            statusStrip1.Location = new System.Drawing.Point(3, 171);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(352, 22);
-            statusStrip1.TabIndex = 10;
-            statusStrip1.Text = "statusStrip1";
             // 
             // checkBox_experimental
             // 
@@ -69,7 +60,6 @@
             AutoScroll = true;
             Controls.Add(checkBox_legacyEditors);
             Controls.Add(checkBox_experimental);
-            Controls.Add(statusStrip1);
             Name = "PageAdvanced";
             Padding = new System.Windows.Forms.Padding(3);
             Size = new System.Drawing.Size(358, 196);
@@ -78,7 +68,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.CheckBox checkBox_experimental;
         private System.Windows.Forms.CheckBox checkBox_legacyEditors;
     }

@@ -15,7 +15,6 @@ public class ProjectConfig
     public Dictionary<byte, int> SecondarySpriteOAMRepoints { get; set; } = new();
 
 
-    // Default values need to be added here
     public static ProjectConfig DefaultConfig { get; } = new ProjectConfig()
     {
     };

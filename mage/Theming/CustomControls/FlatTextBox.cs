@@ -1,12 +1,13 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Runtime.Versioning;
-using System.Drawing.Drawing2D;
-using mage.Bookmarks;
-using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
+﻿using mage.Bookmarks;
 using mage.Options;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.DirectoryServices.ActiveDirectory;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Runtime.Versioning;
+using System.Windows.Forms;
 
 namespace mage.Theming.CustomControls;
 
@@ -93,6 +94,10 @@ public partial class FlatTextBox : UserControl
     #endregion
 
     #region events
+    [Browsable(true)]
+    [EditorBrowsable(EditorBrowsableState.Always)]
+    [Category("Behavior")]
+    [Description("Occurs when the text is changed.")]
     public new event EventHandler TextChanged
     {
         add => OnTextChanged += value;

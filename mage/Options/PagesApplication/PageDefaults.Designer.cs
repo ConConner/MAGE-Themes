@@ -51,7 +51,6 @@
             radio_dec = new System.Windows.Forms.RadioButton();
             seperator2 = new mage.Controls.Seperator();
             checkBox_hideTooltips = new System.Windows.Forms.CheckBox();
-            statusStrip1 = new System.Windows.Forms.StatusStrip();
             group_background.SuspendLayout();
             group_clipdata.SuspendLayout();
             group_roomObjects.SuspendLayout();
@@ -319,19 +318,10 @@
             checkBox_hideTooltips.UseVisualStyleBackColor = true;
             checkBox_hideTooltips.CheckedChanged += checkBox_hideTooltips_CheckedChanged;
             // 
-            // statusStrip1
-            // 
-            statusStrip1.Location = new System.Drawing.Point(3, 315);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(405, 22);
-            statusStrip1.TabIndex = 10;
-            statusStrip1.Text = "statusStrip1";
-            // 
             // PageDefaults
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             AutoScroll = true;
-            Controls.Add(statusStrip1);
             Controls.Add(checkBox_hideTooltips);
             Controls.Add(seperator2);
             Controls.Add(radio_dec);
@@ -380,6 +370,5 @@
         private System.Windows.Forms.RadioButton radio_dec;
         private Controls.Seperator seperator2;
         private System.Windows.Forms.CheckBox checkBox_hideTooltips;
-        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }

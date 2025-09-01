@@ -22,6 +22,8 @@ public partial class PageAppearance : UserControl, IReloadablePage
     ColorTheme selectedTheme;
     private FormMain parent = FormMain.Instance;
 
+    public StatusStrip CustomStrip;
+
     public PageAppearance()
     {
         InitializeComponent();
@@ -31,6 +33,10 @@ public partial class PageAppearance : UserControl, IReloadablePage
         flatTextBox_text.TextChanged += ColorValueChanged;
         flatTextBox_secondary.TextChanged += ColorValueChanged;
         flatTextBox_primary.TextChanged += ColorValueChanged;
+
+        // This code is so bad, I hate myself for not planning ahead.
+        CustomStrip = statusStrip;
+        Controls.Remove(statusStrip);
 
         LoadPage();
     }

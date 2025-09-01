@@ -33,13 +33,15 @@ public partial class FormOption : Form
             PanelContent.Controls.Clear();
             PanelContent.Controls.Add(currentPage.Page);
             PanelContent.Controls.Add(panel_requiresRom);
+            if (currentPage.CustomStatusStrip == null) PanelContent.Controls.Add(statusStrip);
+            else PanelContent.Controls.Add(currentPage.CustomStatusStrip);
             currentPage.Page.Dock = DockStyle.Fill;
             panel_requiresRom.Dock = DockStyle.Top;
             currentPage.Page.BringToFront();
 
             currentPage.Page.SuspendDrawing();
-            ThemeSwitcher.ChangeTheme(currentPage.Page.Controls);
-            ThemeSwitcher.InjectPaintOverrides(currentPage.Page.Controls);
+            ThemeSwitcher.ChangeTheme(Controls);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
             currentPage.Page.ResumeDrawing();
 
             bool enabled = !currentPage.RequiresROM || ROM.Stream != null;

@@ -9,9 +9,10 @@ namespace mage.Options;
 
 public static class PageLists
 {
+    private static PageAppearance AppearancePage = new();
     public static List<OptionsPage> ApplicationOptionPages = new()
     {
-        new() { Name = "Appearance", Page = new PageAppearance(), RequiresROM = false },
+        new() { Name = "Appearance", Page = AppearancePage, RequiresROM = false, CustomStatusStrip = AppearancePage.CustomStrip},
         new() { Name = "Default View", Page = new PageDefaults(), RequiresROM = true },
         new() { Name = "Tools", Page = new PageRom(), RequiresROM=false },
         new() { Name = "Soundpacks", Page = new PageSoundpacks(), RequiresROM = false },

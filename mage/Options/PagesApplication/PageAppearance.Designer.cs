@@ -403,7 +403,7 @@
             // label_spring
             // 
             label_spring.Name = "label_spring";
-            label_spring.Size = new System.Drawing.Size(238, 17);
+            label_spring.Size = new System.Drawing.Size(195, 17);
             label_spring.Spring = true;
             // 
             // button_import
@@ -546,7 +546,6 @@
         private System.Windows.Forms.Label label_background;
         private System.Windows.Forms.Label label_text;
         private Theming.CustomControls.FlatComboBox comboBox_theme;
-        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripDropDownButton button_export;
         private System.Windows.Forms.ToolStripMenuItem menuItem_export_current;
         private System.Windows.Forms.ToolStripMenuItem menuItem_export_all;
@@ -558,5 +557,6 @@
         private System.Windows.Forms.Label lbl_color;
         private Controls.Seperator seperator1;
         private System.Windows.Forms.Label label_theme;
+        public System.Windows.Forms.StatusStrip statusStrip;
     }
 }

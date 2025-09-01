@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            statusStrip1 = new System.Windows.Forms.StatusStrip();
             group_emulators = new System.Windows.Forms.GroupBox();
             listBox_emulators = new System.Windows.Forms.ListBox();
             panel_emulatorControls = new System.Windows.Forms.Panel();
@@ -43,14 +42,6 @@
             group_emulators.SuspendLayout();
             panel_emulatorControls.SuspendLayout();
             SuspendLayout();
-            // 
-            // statusStrip1
-            // 
-            statusStrip1.Location = new System.Drawing.Point(3, 310);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(361, 22);
-            statusStrip1.TabIndex = 10;
-            statusStrip1.Text = "statusStrip1";
             // 
             // group_emulators
             // 
@@ -193,7 +184,6 @@
             Controls.Add(seperator1);
             Controls.Add(label_currentEmulator);
             Controls.Add(group_emulators);
-            Controls.Add(statusStrip1);
             Name = "PageRom";
             Padding = new System.Windows.Forms.Padding(3);
             Size = new System.Drawing.Size(367, 335);
@@ -204,7 +194,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.GroupBox group_emulators;
         private System.Windows.Forms.ListBox listBox_emulators;
         private System.Windows.Forms.Panel panel_emulatorControls;
