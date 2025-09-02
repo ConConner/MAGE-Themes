@@ -33,6 +33,9 @@ public partial class PageOverview : UserControl, IReloadablePage
         }
         init = true;
 
+        group_rooms.Visible = true;
+        group_resources.Visible = true;
+
         label_createdValue.Text = $"{Version.DateCreated.ToString()} in {TransformVersionString(Version.VersionCreated)}";
         label_lastModifiedValue.Text = $"{Version.DateModified.ToString()} in {TransformVersionString(Version.VersionModified)}";
 
@@ -75,6 +78,13 @@ public partial class PageOverview : UserControl, IReloadablePage
             createdRoomCounts = true;
         }
 
+        // Set Project resources
+        textBox_tilesets.Text = Hex.ToString(Version.NumOfTilesets);
+        textBox_animatedTilesets.Text = Hex.ToString(Version.NumOfAnimTilesets);
+        textBox_animatedGraphics.Text = Hex.ToString(Version.NumOfAnimGfx);
+        textBox_animatedPalettes.Text = Hex.ToString(Version.NumOfAnimPalettes);
+        textBox_spritesets.Text = Hex.ToString(Version.NumOfSpritesets);
+
         ThemeSwitcher.ChangeTheme(group_rooms.Controls);
 
         init = false;
@@ -83,7 +93,6 @@ public partial class PageOverview : UserControl, IReloadablePage
     private void NewRomLoaded(object? sender, EventArgs e)
     {
         createdRoomCounts = false;
-
     }
 
     private string TransformVersionString(string version)
@@ -99,7 +108,13 @@ public partial class PageOverview : UserControl, IReloadablePage
         label_createdValue.Text = "No .proj file found";
         label_lastModifiedValue.Text = string.Empty;
 
-        group_rooms.Controls.Clear();
-        group_rooms.Height = 28;
+        textBox_tilesets.Text = string.Empty;
+        textBox_animatedTilesets.Text = string.Empty;
+        textBox_animatedGraphics.Text = string.Empty;
+        textBox_animatedPalettes.Text = string.Empty;
+        textBox_spritesets.Text = string.Empty;
+
+        group_rooms.Visible = false;
+        group_resources.Visible = false;
     }
 }
