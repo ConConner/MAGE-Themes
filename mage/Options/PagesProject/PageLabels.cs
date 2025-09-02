@@ -17,8 +17,7 @@ public partial class PageLabels : UserControl, IReloadablePage
     {
         InitializeComponent();
         FormMain.Instance.NewRomLoaded += NewRomLoaded;
-
-        // Attach TextChanged handlers to update Version.CustomAreaNames when edited
+        // Nuts
         textBox_area1.TextChanged += AreaName_TextChanged;
         textBox_area2.TextChanged += AreaName_TextChanged;
         textBox_area3.TextChanged += AreaName_TextChanged;
@@ -79,7 +78,6 @@ public partial class PageLabels : UserControl, IReloadablePage
 
     private void ShowDebugLabels(bool show)
     {
-        // Assuming labels are named label_area8, label_area9, label_area10 and are accessible:
         foreach (Control ctrl in group_areanames.Controls)
         {
             if (ctrl is Label lbl)
@@ -145,12 +143,8 @@ public partial class PageLabels : UserControl, IReloadablePage
 
     Version.CustomAreaNames = areaNames.ToArray();
 
-    // ✅ Save the project if one exists
     if (Version.project != Version.ProjectState.None)
     {
-        // Save using the same ROM/project filename
-        // You likely need to pass the correct filename from somewhere
-        // For this example, let’s assume FormMain.Instance.ProjectFilename exists
         string? filename = FormMain.Instance?.filename;
 
         if (!string.IsNullOrEmpty(filename))

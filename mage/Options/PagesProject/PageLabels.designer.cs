@@ -1,4 +1,4 @@
-﻿using mage.Theming.CustomControls; // Make sure this using is present
+﻿using mage.Theming.CustomControls; 
 
 namespace mage.Options.Pages
 {
@@ -92,7 +92,7 @@ namespace mage.Options.Pages
             SetupTextBox(this.textBox_area9, 8);
             SetupTextBox(this.textBox_area10, 9);
 
-            // Set up Labels
+            // Labels
             SetupLabel(label_area1, 0);
             SetupLabel(label_area2, 1);
             SetupLabel(label_area3, 2);
@@ -101,7 +101,7 @@ namespace mage.Options.Pages
             SetupLabel(label_area6, 5);
             SetupLabel(label_area7, 6);
 
-            // Override text for last three labels to "Debug 1", "Debug 2", "Debug 3"
+            // Override text 
             label_area8.Text = "Debug 1";
             label_area9.Text = "Debug 2";
             label_area10.Text = "Debug 3";
@@ -110,7 +110,6 @@ namespace mage.Options.Pages
             SetupLabel(label_area9, 8);
             SetupLabel(label_area10, 9);
 
-            // Add TextBoxes and Labels to group
             this.group_areanames.Controls.Add(this.textBox_area1);
             this.group_areanames.Controls.Add(label_area1);
             this.group_areanames.Controls.Add(this.textBox_area2);
