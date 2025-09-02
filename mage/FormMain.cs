@@ -1355,7 +1355,14 @@ namespace mage
             menuItem_motherShipHatches.Visible = menuItem_motherShipHatches.Enabled = !Version.IsMF;
 
             // get area names and rooms per area
-            areaNames = Version.AreaNames;
+            if (Version.CustomAreaNames != null && Version.project != Version.ProjectState.None) // Check if there's anything written to CustomAreaNAmes and also if there's a project file loaded
+			{
+				areaNames = Version.CustomAreaNames; // If so, load custom area names
+			}
+			else
+			{
+            areaNames = Version.AreaNames;  // If not, load regular area names
+			}
             roomsPerArea = Version.RoomsPerArea;
             comboBox_area.Items.Clear();
             comboBox_area.Items.AddRange(areaNames);

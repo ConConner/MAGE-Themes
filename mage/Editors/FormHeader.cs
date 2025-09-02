@@ -32,7 +32,14 @@ namespace mage
             status = new Status(statusLabel_changes, button_apply);
 
             // get area names and rooms per area
-            areaNames = Version.AreaNames;
+            if (Version.CustomAreaNames != null && Version.project != Version.ProjectState.None) // Check if there's anything written to CustomAreaNAmes and also if there's a project file loaded
+			{
+				areaNames = Version.CustomAreaNames; // If so, load custom area names
+			}
+			else
+			{
+            areaNames = Version.AreaNames;  // If not, load regular area names
+			}
             roomsPerArea = Version.RoomsPerArea;
             for (int i = 0; i < areaNames.Length; i++)
             {

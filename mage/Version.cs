@@ -22,6 +22,7 @@ namespace mage
         public static DateTime DateCreated { get; set; }
         public static string VersionModified { get; set; }
         public static DateTime DateModified { get; set; }
+		public static string[] CustomAreaNames { get; set; }	// Custom Area Names from project file, if one exists
 
         public static void LoadProject(string filename)
         {
@@ -85,6 +86,7 @@ namespace mage
                 VersionCreated = VersionModified;
                 DateCreated = DateModified;
                 newProject = true;
+				CustomAreaNames = AreaNames;
             }
 
             filename = Path.ChangeExtension(filename, ".proj");
@@ -119,6 +121,8 @@ namespace mage
             sw.WriteLine("[Project]");
             sw.WriteLine("ProjectBookmarks=" + BookmarkManager.SerializeCollections(BookmarkManager.ProjectCollections, false));
             sw.WriteLine("ProjectConfig=" + ProjectConfig.Serialize(Version.ProjectConfig));
+			
+			sw.WriteLine("CustomAreaNames=" + string.Join(",", CustomAreaNames));
 
             sw.Close();
             project = ProjectState.Exists;
