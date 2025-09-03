@@ -1,4 +1,5 @@
 ﻿using mage.Bookmarks;
+using mage.Options;
 using mage.Properties;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,13 @@ namespace mage
         private static ByteStream romStream;
 
         // project related
-        private enum ProjectState { None, New, Exists }
-        private static ProjectState project;
-        private static string VersionCreated { get; set; }
-        private static DateTime DateCreated { get; set; }
-        private static string VersionModified { get; set; }
-        private static DateTime DateModified { get; set; }
+        public enum ProjectState { None, New, Exists }
+        public static ProjectState project;
+        public static string VersionCreated { get; set; }
+        public static DateTime DateCreated { get; set; }
+        public static string VersionModified { get; set; }
+        public static DateTime DateModified { get; set; }
+		public static string[] CustomAreaNames { get; set; }	// Custom Area Names from project file, if one exists
 
         public static void LoadProject(string filename)
         {
@@ -84,6 +86,7 @@ namespace mage
                 VersionCreated = VersionModified;
                 DateCreated = DateModified;
                 newProject = true;
+				CustomAreaNames = AreaNames;
             }
 
             filename = Path.ChangeExtension(filename, ".proj");
@@ -118,6 +121,8 @@ namespace mage
             sw.WriteLine("[Project]");
             sw.WriteLine("ProjectBookmarks=" + BookmarkManager.SerializeCollections(BookmarkManager.ProjectCollections, false));
             sw.WriteLine("ProjectConfig=" + ProjectConfig.Serialize(Version.ProjectConfig));
+			
+			sw.WriteLine("CustomAreaNames=" + string.Join(",", CustomAreaNames));
 
             sw.Close();
             project = ProjectState.Exists;

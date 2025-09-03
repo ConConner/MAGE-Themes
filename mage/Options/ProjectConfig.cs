@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace mage;
+namespace mage.Options;
 
 public class ProjectConfig
 {
@@ -15,7 +15,6 @@ public class ProjectConfig
     public Dictionary<byte, int> SecondarySpriteOAMRepoints { get; set; } = new();
 
 
-    // Default values need to be added here
     public static ProjectConfig DefaultConfig { get; } = new ProjectConfig()
     {
     };

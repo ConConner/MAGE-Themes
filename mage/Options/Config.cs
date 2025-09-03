@@ -7,13 +7,20 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace mage;
+namespace mage.Options;
 
 /// <summary>
 /// Application wide Config file
 /// </summary>
 public class Config
 {
+    #region Options
+    public List<string> EmulatorPaths { get; set; } = new List<string>();
+    public string SelectedEmulatorPath { get; set; } = string.Empty;
+    public string TestRomPath { get; set; } = string.Empty;
+    public bool IncludeSymbolFile { get; set; } = true;
+    #endregion
+
     #region Bookmarking
     public enum BookmarkCollection
     {

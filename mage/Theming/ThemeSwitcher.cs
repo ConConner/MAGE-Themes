@@ -1,4 +1,5 @@
-﻿using mage.Theming.CustomControls;
+﻿using mage.Controls;
+using mage.Theming.CustomControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +26,8 @@ namespace mage.Theming
         /// <summary>
         /// The old color scheme of MAGE
         /// </summary>
-        public static ColorTheme StandardTheme { get; } = new ColorTheme() {
+        public static ColorTheme StandardTheme { get; } = new ColorTheme()
+        {
             Colors = new Dictionary<string, Color>() {
             {"TextColor",  ColorTranslator.FromHtml("#000000")},
             {"BackgroundColor",  ColorTranslator.FromHtml("#F0F0F0")},
@@ -56,7 +58,7 @@ namespace mage.Theming
         /// </summary>
         private static ColorTheme projectTheme;
         private static string projectThemeName;
-        public static string ProjectThemeName 
+        public static string ProjectThemeName
         {
             get => projectThemeName;
             set
@@ -65,7 +67,7 @@ namespace mage.Theming
                 {
                     if (value == ThemeSwitcher.StandardThemeName) Themes.Add(ThemeSwitcher.StandardThemeName, StandardTheme);
                     else if (value == ThemeSwitcher.StandardDarkThemeName) Themes.Add(ThemeSwitcher.StandardDarkThemeName, StandardDarkTheme);
-                    else 
+                    else
                     {
                         ProjectThemeName = ThemeSwitcher.StandardThemeName;
                         value = ThemeSwitcher.StandardThemeName;
@@ -75,7 +77,7 @@ namespace mage.Theming
                 ProjectTheme = Themes[value];
             }
         }
-        public static ColorTheme ProjectTheme 
+        public static ColorTheme ProjectTheme
         {
             get => projectTheme;
             set
@@ -90,7 +92,7 @@ namespace mage.Theming
         }
 
         public static event EventHandler<EventArgs> ThemeChanged;
-        
+
 
         /// <summary>
         /// Changes the properties of all Controls in <paramref name="container"/> to reflect the current theme
@@ -197,6 +199,11 @@ namespace mage.Theming
                 if (control is ContextMenuStrip ctx)
                 {
                     ctx.Renderer = new ContextMenuCustomRenderer();
+                }
+
+                if (control is Seperator sep)
+                {
+                    sep.Color = theme.SecondaryOutline;
                 }
             }
 
@@ -342,7 +349,7 @@ namespace mage.Theming
                 LineAlignment = StringAlignment.Center,
             };
 
-            using (Brush b = new SolidBrush(ProjectTheme.TextColorDisabled)) 
+            using (Brush b = new SolidBrush(ProjectTheme.TextColorDisabled))
                 e.Graphics.DrawString(btn.Text, btn.Font, b, buttonRect, s);
         }
 

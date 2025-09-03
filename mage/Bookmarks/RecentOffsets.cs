@@ -1,4 +1,5 @@
-﻿using mage.Theming;
+﻿using mage.Options;
+using mage.Theming;
 using mage.Theming.CustomControls;
 using System;
 using System.Collections.Generic;

@@ -6,6 +6,8 @@ TODO:
 - Fix help theming with light mode colors
 
 IDEAS:
+- Test Profiles
+
 - Data-driven clipdata lists
 
 - More built-in patches/hex tweaks
@@ -62,8 +64,6 @@ IDEAS:
 - Reduced error-handling option (sometimes things break in ways that aren't harmful, but MAGE stops you from using the related editor so you can't really fix it easily)
 
 - User-defined tileset autotiling
-
-- In-editor list of important graphics offsets; updates on repoint (stored to .proj?) ((actually, looks like Conner might already be working on something better?))
 
 - Red outline instead of green for sprites placed in positions where they won't spawn properly (this would be annoying to implement because it'd be too difficult to read that behavior from ROM, but hard-coding it will create ambiguity with ASM patches). Maybe make it user-defined? 
 
