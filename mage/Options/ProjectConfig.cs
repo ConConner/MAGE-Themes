@@ -13,11 +13,12 @@ public class ProjectConfig
     // Add Fields here
     public Dictionary<byte, int> PrimarySpriteOAMRepoints { get; set; } = new();
     public Dictionary<byte, int> SecondarySpriteOAMRepoints { get; set; } = new();
+    public bool EnableProjectCompilation { get; set; } = false;
+    public bool AbortTestingIfCompilationFailed { get; set; } = true;
+    public string CompilationScriptPath { get; set; } = "";
+    public string CompilationOutputRomName { get; set; } = "";
 
-
-    public static ProjectConfig DefaultConfig { get; } = new ProjectConfig()
-    {
-    };
+    public static ProjectConfig DefaultConfig { get; } = new ProjectConfig() { };
 
 
 

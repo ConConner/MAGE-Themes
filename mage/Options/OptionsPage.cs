@@ -9,8 +9,11 @@ namespace mage.Options;
 
 public struct OptionsPage
 {
-    public string Name;
-    public UserControl Page;
-    public bool RequiresROM;
-    public StatusStrip? CustomStatusStrip;
+    public OptionsPage() { }
+
+    public string Name = "";
+    public UserControl Page = null;
+    public bool RequiresROM = false;
+    public bool RequiresProject = false;
+    public StatusStrip? CustomStatusStrip = null;
 }

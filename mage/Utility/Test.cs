@@ -1,6 +1,7 @@
 ﻿using mage.Data;
 using mage.Options;
 using mage.Properties;
+using mage.Utility;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -114,20 +115,42 @@ namespace mage
             try
             {
                 string path = Program.Config.TestRomPath != string.Empty ? Program.Config.TestRomPath : Path.GetTempPath();
-                string testSymbolPath = Path.Combine(path, "test.sym");
                 string romName = Path.GetFileNameWithoutExtension(main.filename);
                 romName = Path.Combine(Path.GetDirectoryName(main.filename), romName);
 
-                path = Path.Combine(path, "test.gba");
+                string testSymbolName = "test";
+                string testRomPath = Path.Combine(path, "test.gba");
                 room.SaveObjects();
-                ROM.SaveROM(path, false);
+                ROM.SaveROM(testRomPath, false);
+
+                // Compilation
+                if (Version.ProjectConfig.EnableProjectCompilation && File.Exists(Version.ProjectConfig.CompilationScriptPath))
+                {
+                    var result = Compiling.Compile(testRomPath, Version.ProjectConfig.CompilationScriptPath, Version.ProjectConfig.CompilationOutputRomName);
+                    if (
+                        result.ExitCode != 0
+                        && Version.ProjectConfig.AbortTestingIfCompilationFailed
+                        && MessageBox.Show($"{result.Error}\n\nDo you want to abort the test?", "Error while compiling", MessageBoxButtons.YesNo)
+                        == DialogResult.Yes
+                    ) return;
+
+                    // Any other case
+                    string outPutRomPath = Path.Combine(path, Version.ProjectConfig.CompilationOutputRomName);
+                    if (File.Exists(outPutRomPath))
+                    {
+                        testRomPath = outPutRomPath;
+                        testSymbolName = Path.GetFileNameWithoutExtension(testRomPath);
+                    }
+
+                }
 
                 //Copy a symbol file if it exists
                 string romSymbolPath = romName + ".sym";
+                string testSymbolPath = Path.Combine(path, $"{testSymbolName}.sym");
                 if (File.Exists(romSymbolPath) && Program.Config.IncludeSymbolFile) File.Copy(romSymbolPath, testSymbolPath, true);
 
                 Sound.PlaySound("test.wav");
-                RunEmulator($"\"{path}\"");
+                RunEmulator($"\"{testRomPath}\"");
             }
             catch (Exception e)
             {
