@@ -1,3 +1,21 @@
+# [1.6.0](https://github.com/ConConner/MAGE-Themes/compare/v1.5.1...v1.6.0) (2025-09-11)
+
+
+### Bug Fixes
+
+* values of internal bookmarks can't be highlighted with the mouse ([f775444](https://github.com/ConConner/MAGE-Themes/commit/f77544494c0df89c710ca44255bc2859dbaeb053))
+* version string contains a trailing 0 in about page ([a169c7a](https://github.com/ConConner/MAGE-Themes/commit/a169c7abfe6023263f32de28e4883bbaf490d361))
+
+
+### Features
+
+* "save with ctrl+s" and more shortcuts added ([9d2e399](https://github.com/ConConner/MAGE-Themes/commit/9d2e399954802ac54053c516a96a107ec03742d8))
+* add icons to the menu bar items ([3684e50](https://github.com/ConConner/MAGE-Themes/commit/3684e5040078227f5de1193a102eec26c3a73e49))
+* add multiple emulators and choose between them ([437ee80](https://github.com/ConConner/MAGE-Themes/commit/437ee80c8971a2bbf61654ae66e3d16b1ff2b416))
+* change Test-ROM path ([31eeca8](https://github.com/ConConner/MAGE-Themes/commit/31eeca8d54849c55480ac72ae9d4562fc229855b)), closes [#22](https://github.com/ConConner/MAGE-Themes/issues/22)
+* choose to include symbol file with Test-ROM ([7fd0e8d](https://github.com/ConConner/MAGE-Themes/commit/7fd0e8db6451cebba6677f28798920b6835d17a2))
+* new options menu ([88fcfca](https://github.com/ConConner/MAGE-Themes/commit/88fcfca9a6013f0ef50c52fa0d2700a480a5408b))
+
 ## [1.5.1](https://github.com/ConConner/MAGE-Themes/compare/v1.5.0...v1.5.1) (2025-08-23)
 
 
