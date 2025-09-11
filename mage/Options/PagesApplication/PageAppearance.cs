@@ -54,6 +54,7 @@ public partial class PageAppearance : UserControl, IReloadablePage
     private void loadAllThemes()
     {
         init = true;
+        comboBox_theme.Items.Clear();
         foreach (KeyValuePair<string, ColorTheme> pair in ThemeSwitcher.Themes)
         {
             comboBox_theme.Items.Add(pair.Key);
