@@ -28,7 +28,8 @@ using System.Reflection;
 using System.Text;
 using mage.Updates;
 using System.Linq;
-using mage.Dialogs; // added for font stuff - alexman25
+using mage.Dialogs;
+using mage.Options; // added for font stuff - alexman25
 
 namespace mage
 {
@@ -36,6 +37,8 @@ namespace mage
     {
 
         #region properties
+        public static FormMain Instance { get; private set; }
+        public EventHandler NewRomLoaded;
 
         public Room Room
         {
@@ -115,12 +118,14 @@ namespace mage
         public FormMain()
         {
             InitializeComponent();
+            Instance = this;
 
             InitFont(Properties.Resources.zm_digits);
 
             DisplayRecentFiles();
             InitializeSettings();
             PopulateThemeList(null, null);
+            PopulateEmulatorList();
             ShowSplash();
 
             roomView.Scrolled += roomView_Scrolled;
@@ -188,6 +193,20 @@ namespace mage
             DisplayRecentFiles();
         }
 
+        private void MigrateSettings()
+        {
+            if (Settings.Default.emulatorPath != string.Empty)
+            {
+                string path = Settings.Default.emulatorPath;
+                if (Program.Config.EmulatorPaths.Count == 0)
+                {
+                    Program.Config.EmulatorPaths.Add(path);
+                    Program.Config.SelectedEmulatorPath = path;
+                }
+                Settings.Default.emulatorPath = string.Empty;
+            }
+        }
+
         private void InitializeSettings()
         {
             menuItem_defaultBG0.Checked = Settings.Default.viewBG0;
@@ -202,11 +221,9 @@ namespace mage
             menuItem_defaultDoors.Checked = Settings.Default.viewDoors;
             menuItem_defaultScrolls.Checked = Settings.Default.viewScrolls;
             menuItem_defaultScreens.Checked = Settings.Default.viewScreenOutlines;
-            menuItem_hexadecimal.Checked = Settings.Default.hexadecimal;
+            Hex.ToHex = Settings.Default.hexadecimal;
             menuItem_tooltips.Checked = Settings.Default.tooltips;
-            button_experimental.Checked = Settings.Default.experimentalFeatures;
             Program.ExperimentalFeaturesEnabled = Settings.Default.experimentalFeatures;
-            button_legacy.Checked = Settings.Default.legacyEditors;
             Program.LegacyEditors = Settings.Default.legacyEditors;
 
             zoom = Settings.Default.zoom;
@@ -247,6 +264,8 @@ namespace mage
             catch { ZMGlobalBookmarks = new(); }
             try { MFGlobalBookmarks = BookmarkManager.DeserializeCollections(Settings.Default.MFglobalBookmarks); }
             catch { MFGlobalBookmarks = new(); }
+
+            MigrateSettings();
         }
 
         private void SaveSettings()
@@ -263,7 +282,7 @@ namespace mage
             Settings.Default.viewDoors = menuItem_defaultDoors.Checked;
             Settings.Default.viewScrolls = menuItem_defaultScrolls.Checked;
             Settings.Default.viewScreenOutlines = menuItem_defaultScreens.Checked;
-            Settings.Default.hexadecimal = menuItem_hexadecimal.Checked;
+            Settings.Default.hexadecimal = Hex.ToHex;
             Settings.Default.tooltips = menuItem_tooltips.Checked;
             Settings.Default.zoom = zoom;
             Settings.Default.experimentalFeatures = Program.ExperimentalFeaturesEnabled;
@@ -400,7 +419,34 @@ namespace mage
             Marshal.FreeCoTaskMem(data);
         }
 
-        private void PopulateThemeList(object sender, EventArgs e)
+        public void PopulateEmulatorList()
+        {
+            statusStrip_emulator.DropDown.Items.Clear();
+            statusStrip_emulator.Visible = Program.Config.EmulatorPaths.Count > 1;
+            if (Program.Config.SelectedEmulatorPath == "") statusStrip_emulator.Text = "No Emulator Selected";
+            else statusStrip_emulator.Text = Path.GetFileNameWithoutExtension(Program.Config.SelectedEmulatorPath);
+
+            foreach (string path in Program.Config.EmulatorPaths)
+            {
+                string name = Path.GetFileNameWithoutExtension(path);
+                ToolStripMenuItem i = new();
+                i.Text = name;
+                i.Click += (o, e) =>
+                {
+                    Program.Config.SelectedEmulatorPath = path;
+                    statusStrip_emulator.Text = name;
+                };
+                statusStrip_emulator.DropDown.Items.Add(i);
+            }
+
+            statusStrip_emulator.DropDown.Items.Add(new ToolStripSeparator());
+
+            ToolStripMenuItem editEmulatorPath = new() { Text = "Edit Emulators" };
+            editEmulatorPath.Click += (o, e) => new FormOption("Preferences", PageLists.ApplicationOptionPages, "Tools").ShowDialog();
+            statusStrip_emulator.DropDown.Items.Add(editEmulatorPath);
+        }
+
+        public void PopulateThemeList(object sender, EventArgs e)
         {
             statusStrip_theme.DropDown.Items.Clear();
             statusStrip_theme.Text = ThemeSwitcher.ProjectThemeName;
@@ -1065,32 +1111,16 @@ namespace mage
             item.Checked = !item.Checked;
         }
 
-        private void menuItem_hexadecimal_Click(object sender, EventArgs e)
-        {
-            menuItem_hexadecimal.Checked = true;
-            menuItem_decimal.Checked = false;
-            Hex.ToHex = true;
-            UpdateRoomNumbers();
-        }
-
-        private void menuItem_decimal_Click(object sender, EventArgs e)
-        {
-            menuItem_hexadecimal.Checked = false;
-            menuItem_decimal.Checked = true;
-            Hex.ToHex = false;
-            UpdateRoomNumbers();
-        }
-
-        private void btn_soundpacks_Click(object sender, EventArgs e)
-        {
-            new FormSoundPack().Show();
-        }
-
         private void menuItem_tooltips_Click(object sender, EventArgs e)
         {
             menuItem_tooltips.Checked = !menuItem_tooltips.Checked;
 
-            if (menuItem_tooltips.Checked)
+            HideTooltips(menuItem_tooltips.Checked);
+        }
+
+        public void HideTooltips(bool hide)
+        {
+            if (hide)
             {
                 roomTimer.Tick -= roomTimer_Tick;
                 tileTimer.Tick -= tileTimer_Tick;
@@ -1102,13 +1132,9 @@ namespace mage
             }
         }
 
-        private void changeEmulatorPathToolStripMenuItem_Click(object sender, EventArgs e) => Test.SetEmulatorPath();
-
         private void themeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var editor = new ThemeEditor();
-            editor.ThemesChanged += PopulateThemeList;
-            editor.ShowDialog();
+            new FormOption("Preferences", PageLists.ApplicationOptionPages, "Appearance").ShowDialog();
         }
 
         private void menuItem_bookmarks_Click(object sender, EventArgs e)
@@ -1118,18 +1144,6 @@ namespace mage
                 FormBookmarks form = new();
                 form.Show();
             }
-        }
-
-        private void button_experimental_Click(object sender, EventArgs e)
-        {
-            Program.ExperimentalFeaturesEnabled = !Program.ExperimentalFeaturesEnabled;
-            button_experimental.Checked = Program.ExperimentalFeaturesEnabled;
-        }
-
-        private void button_legacy_Click(object sender, EventArgs e)
-        {
-            Program.LegacyEditors = !Program.LegacyEditors;
-            button_legacy.Checked = Program.LegacyEditors;
         }
 
         // help
@@ -1425,6 +1439,7 @@ namespace mage
             menuItem_editBGs.Checked = toolStrip_editBGs.Checked = true;
             menuItem_editObjects.Checked = toolStrip_editObjects.Checked = false;
 
+            NewRomLoaded?.Invoke(this, null);
             Sound.PlaySound("load.wav");
         }
 
@@ -1454,8 +1469,8 @@ namespace mage
             groupBox_editBG.Enabled = val;
             groupBox_tileset.Enabled = val;
             groupBox_room.Enabled = val;
+            menuItem_projectSettings.Enabled = val;
             menuItem_defaultView.Enabled = val;
-            menuItem_numberBase.Enabled = val;
             menuItem_tooltips.Enabled = val;
             menuItem_bookmarks.Enabled = val;
 
@@ -1970,7 +1985,7 @@ namespace mage
             roomView.RedrawAll();
         }
 
-        private void UpdateRoomNumbers()
+        public void UpdateRoomNumbers()
         {
             for (int i = 0; i < comboBox_room.Items.Count; i++)
             {
@@ -2977,6 +2992,14 @@ namespace mage
         private void flipRoomVToolStripMenuItem_Click(object sender, EventArgs e)
             => PerformAction(new FlipRoom(room, false, true));
 
+        private void programSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormOption("Preferences", PageLists.ApplicationOptionPages, "Appearance").ShowDialog();
+        }
 
+        private void menuItem_projectSettings_Click(object sender, EventArgs e)
+        {
+            new FormOption("Project Settings", PageLists.ProjectOptionsPages, "Overview").ShowDialog();
+        }
     }
 }

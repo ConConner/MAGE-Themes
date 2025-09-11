@@ -1,4 +1,5 @@
-﻿using mage.Properties;
+﻿using mage.Options;
+using mage.Properties;
 using mage.Updates;
 using System;
 using System.Drawing;

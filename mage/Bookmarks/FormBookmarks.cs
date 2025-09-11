@@ -1,4 +1,5 @@
 ﻿using FuzzySharp;
+using mage.Options;
 using mage.Theming;
 using System;
 using System.Collections.Generic;
@@ -365,7 +366,10 @@ public partial class FormBookmarks : Form, Editor
         bool isBookmark = item is Bookmark;
 
         group_details.Visible = true;
-        group_details.Enabled = AllowedToEdit;
+
+        textBox_name.ReadOnly = !AllowedToEdit;
+        textBox_description.ReadOnly = !AllowedToEdit;
+        textBox_value.ReadOnly = !AllowedToEdit;
 
         textBox_value.Visible = isBookmark;
         label_value.Visible = isBookmark;

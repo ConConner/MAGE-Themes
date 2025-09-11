@@ -1,5 +1,7 @@
 ﻿using mage.Data;
+using mage.Options;
 using mage.Properties;
+using mage.Utility;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -14,7 +16,7 @@ namespace mage
             Room room = main.Room;
             DoorList doorList = room.doorList;
             bool isMF = Version.IsMF;
-            
+
             // backup previous rom data
             byte[] backup = ROM.BackupData();
 
@@ -112,21 +114,43 @@ namespace mage
             // save new changes and launch
             try
             {
-                string path = Path.GetTempPath();
-                string testSymbolPath = Path.Combine(path, "test.sym");
+                string path = Program.Config.TestRomPath != string.Empty ? Program.Config.TestRomPath : Path.GetTempPath();
                 string romName = Path.GetFileNameWithoutExtension(main.filename);
                 romName = Path.Combine(Path.GetDirectoryName(main.filename), romName);
 
-                path = Path.Combine(path, "test.gba");
+                string testSymbolName = "test";
+                string testRomPath = Path.Combine(path, "test.gba");
                 room.SaveObjects();
-                ROM.SaveROM(path, false);
+                ROM.SaveROM(testRomPath, false);
+
+                // Compilation
+                if (Version.ProjectConfig.EnableProjectCompilation && File.Exists(Version.ProjectConfig.CompilationScriptPath))
+                {
+                    var result = Compiling.Compile(testRomPath, Version.ProjectConfig.CompilationScriptPath, Version.ProjectConfig.CompilationOutputRomName);
+                    if (
+                        result.ExitCode != 0
+                        && Version.ProjectConfig.AbortTestingIfCompilationFailed
+                        && MessageBox.Show($"{result.Error}\n\nDo you want to abort the test?", "Error while compiling", MessageBoxButtons.YesNo)
+                        == DialogResult.Yes
+                    ) return;
+
+                    // Any other case
+                    string outPutRomPath = Path.Combine(path, Version.ProjectConfig.CompilationOutputRomName);
+                    if (File.Exists(outPutRomPath))
+                    {
+                        testRomPath = outPutRomPath;
+                        testSymbolName = Path.GetFileNameWithoutExtension(testRomPath);
+                    }
+
+                }
 
                 //Copy a symbol file if it exists
                 string romSymbolPath = romName + ".sym";
-                if (File.Exists(romSymbolPath)) File.Copy(romSymbolPath, testSymbolPath, true);
+                string testSymbolPath = Path.Combine(path, $"{testSymbolName}.sym");
+                if (File.Exists(romSymbolPath) && Program.Config.IncludeSymbolFile) File.Copy(romSymbolPath, testSymbolPath, true);
 
                 Sound.PlaySound("test.wav");
-                RunEmulator($"\"{path}\"");
+                RunEmulator($"\"{testRomPath}\"");
             }
             catch (Exception e)
             {
@@ -179,48 +203,36 @@ namespace mage
         private static void RunEmulator(string romPath)
         {
             // check for emulator path
-            string emuPath = Settings.Default.emulatorPath;
+            string emuPath = Program.Config.SelectedEmulatorPath;
             string error = null;
-            if (string.IsNullOrEmpty(emuPath))
+            if (string.IsNullOrEmpty(emuPath) && Program.Config.EmulatorPaths.Count == 0)
             {
-                error = "GBA emulator path has not been set. Would you like to set it now?";
+                error = "No GBA emulator paths have been added. Would you like to add one now?";
+            }
+            else if (string.IsNullOrEmpty(emuPath))
+            {
+                error = "No GBA emulator has been selected. Would you like to select one now?";
             }
             else if (!File.Exists(emuPath))
             {
-                error = $"Could not find GBA emulator at path:\n\n{emuPath}" + 
-                    "\n\nWould you like to update it now?";
+                error = $"Could not find GBA emulator {Path.GetFileName(emuPath)} at path:\n\n{emuPath}" +
+                    "\n\nWould you like to update it now or choose a different path?";
             }
             if (error != null)
             {
-                emuPath = AskForNewPath(error);
-                if (emuPath == null)
-                    return;
+                AskForNewPath(error);
+                return;
             }
             System.Diagnostics.Process.Start(emuPath, romPath);
         }
 
-        public static string SetEmulatorPath()
-        {
-            // get emulator path
-            var ofd = new OpenFileDialog();
-            ofd.Filter = "GBA emulator (*.exe)|*.exe|All files (*.*)|*.*";
-            if (ofd.ShowDialog() != DialogResult.OK)
-                return null;
-            
-            string emuPath = ofd.FileName;
-            Settings.Default.emulatorPath = emuPath;
-            Settings.Default.Save();
-            return emuPath;
-        }
-
-        private static string AskForNewPath(string msg)
+        private static void AskForNewPath(string msg)
         {
             var result = MessageBox.Show(msg, "",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-            if (result != DialogResult.Yes)
-                return null;
+            if (result != DialogResult.Yes) return;
 
-            return SetEmulatorPath();
+            new FormOption("Preferences", PageLists.ApplicationOptionPages, "Tools").ShowDialog();
         }
 
     }
