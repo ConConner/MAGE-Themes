@@ -850,6 +850,7 @@
             // 
             // menuItem_clipShortcuts
             // 
+            menuItem_clipShortcuts.Image = Properties.Resources.shortcut_shot;
             menuItem_clipShortcuts.Name = "menuItem_clipShortcuts";
             menuItem_clipShortcuts.Size = new System.Drawing.Size(183, 22);
             menuItem_clipShortcuts.Text = "Clipdata Shortcuts";
@@ -931,47 +932,47 @@
             // menuItem_exportTileset
             // 
             menuItem_exportTileset.Name = "menuItem_exportTileset";
-            menuItem_exportTileset.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportTileset.Size = new System.Drawing.Size(152, 22);
             menuItem_exportTileset.Text = "Tileset...";
             menuItem_exportTileset.Click += menuItem_exportTileset_Click;
             // 
             // menuItem_exportBG
             // 
             menuItem_exportBG.Name = "menuItem_exportBG";
-            menuItem_exportBG.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportBG.Size = new System.Drawing.Size(152, 22);
             menuItem_exportBG.Text = "Background...";
             menuItem_exportBG.Click += menuItem_exportBG_Click;
             // 
             // menuItem_exportRoom
             // 
             menuItem_exportRoom.Name = "menuItem_exportRoom";
-            menuItem_exportRoom.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportRoom.Size = new System.Drawing.Size(152, 22);
             menuItem_exportRoom.Text = "Room...";
             menuItem_exportRoom.Click += menuItem_exportRoom_Click;
             // 
             // toolStripSeparator7
             // 
             toolStripSeparator7.Name = "toolStripSeparator7";
-            toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator7.Size = new System.Drawing.Size(149, 6);
             // 
             // menuItem_exportTilesetImage
             // 
             menuItem_exportTilesetImage.Name = "menuItem_exportTilesetImage";
-            menuItem_exportTilesetImage.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportTilesetImage.Size = new System.Drawing.Size(152, 22);
             menuItem_exportTilesetImage.Text = "Tileset Image...";
             menuItem_exportTilesetImage.Click += menuItem_exportTilesetImage_Click;
             // 
             // menuItem_exportBG0image
             // 
             menuItem_exportBG0image.Name = "menuItem_exportBG0image";
-            menuItem_exportBG0image.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportBG0image.Size = new System.Drawing.Size(152, 22);
             menuItem_exportBG0image.Text = "BG0 Image...";
             menuItem_exportBG0image.Click += menuItem_exportBG0image_Click;
             // 
             // menuItem_exportBG3image
             // 
             menuItem_exportBG3image.Name = "menuItem_exportBG3image";
-            menuItem_exportBG3image.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportBG3image.Size = new System.Drawing.Size(152, 22);
             menuItem_exportBG3image.Text = "BG3 Image...";
             menuItem_exportBG3image.Click += menuItem_exportBG3image_Click;
             // 
@@ -979,7 +980,7 @@
             // 
             menuItem_exportRoomImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { regularToolStripMenuItem, croppedToolStripMenuItem });
             menuItem_exportRoomImage.Name = "menuItem_exportRoomImage";
-            menuItem_exportRoomImage.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportRoomImage.Size = new System.Drawing.Size(152, 22);
             menuItem_exportRoomImage.Text = "Room Image";
             // 
             // regularToolStripMenuItem
@@ -1075,42 +1076,42 @@
             // menuItem_addBG
             // 
             menuItem_addBG.Name = "menuItem_addBG";
-            menuItem_addBG.Size = new System.Drawing.Size(180, 22);
+            menuItem_addBG.Size = new System.Drawing.Size(144, 22);
             menuItem_addBG.Text = "Background";
             menuItem_addBG.Click += menuItem_addItem_Click;
             // 
             // menuItem_addEnemyset
             // 
             menuItem_addEnemyset.Name = "menuItem_addEnemyset";
-            menuItem_addEnemyset.Size = new System.Drawing.Size(180, 22);
+            menuItem_addEnemyset.Size = new System.Drawing.Size(144, 22);
             menuItem_addEnemyset.Text = "Room Sprites";
             menuItem_addEnemyset.Click += menuItem_addItem_Click;
             // 
             // menuItem_addRoom
             // 
             menuItem_addRoom.Name = "menuItem_addRoom";
-            menuItem_addRoom.Size = new System.Drawing.Size(180, 22);
+            menuItem_addRoom.Size = new System.Drawing.Size(144, 22);
             menuItem_addRoom.Text = "Room";
             menuItem_addRoom.Click += menuItem_addItem_Click;
             // 
             // menuItem_addTileset
             // 
             menuItem_addTileset.Name = "menuItem_addTileset";
-            menuItem_addTileset.Size = new System.Drawing.Size(180, 22);
+            menuItem_addTileset.Size = new System.Drawing.Size(144, 22);
             menuItem_addTileset.Text = "Tileset";
             menuItem_addTileset.Click += menuItem_addItem_Click;
             // 
             // menuItem_addSpriteset
             // 
             menuItem_addSpriteset.Name = "menuItem_addSpriteset";
-            menuItem_addSpriteset.Size = new System.Drawing.Size(180, 22);
+            menuItem_addSpriteset.Size = new System.Drawing.Size(144, 22);
             menuItem_addSpriteset.Text = "Spriteset";
             menuItem_addSpriteset.Click += menuItem_addItem_Click;
             // 
             // menuItem_addAnim
             // 
             menuItem_addAnim.Name = "menuItem_addAnim";
-            menuItem_addAnim.Size = new System.Drawing.Size(180, 22);
+            menuItem_addAnim.Size = new System.Drawing.Size(144, 22);
             menuItem_addAnim.Text = "Animation";
             menuItem_addAnim.Click += menuItem_addItem_Click;
             // 
