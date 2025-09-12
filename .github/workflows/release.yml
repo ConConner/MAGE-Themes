@@ -3,6 +3,8 @@ name: Semantic Release
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'mage/**'
 
 jobs:
   release:
