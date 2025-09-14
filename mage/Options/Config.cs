@@ -19,6 +19,8 @@ public class Config
     public string SelectedEmulatorPath { get; set; } = string.Empty;
     public string TestRomPath { get; set; } = string.Empty;
     public bool IncludeSymbolFile { get; set; } = true;
+    public bool AutomaticallyCheckForUpdates { get; set; } = true;
+    public bool OnlyNotifyOnMajor { get; set; } = false;
     #endregion
 
     #region Bookmarking
