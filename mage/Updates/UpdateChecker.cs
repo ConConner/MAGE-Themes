@@ -24,6 +24,7 @@ public sealed class UpdateChecker
             ignoredVersions = new StringCollection();
             Properties.Settings.Default.updateCheckIgnoreVersions = ignoredVersions;
         }
+        if (!Program.Config.AutomaticallyCheckForUpdates && !ignoreIgnoredVersions) return;
 
         try
         {
@@ -33,14 +34,21 @@ public sealed class UpdateChecker
             var tag = doc.RootElement.GetProperty("tag_name").GetString().TrimStart('v');
             var url = doc.RootElement.GetProperty("assets")[0].GetProperty("browser_download_url").GetString();
 
-            if (new System.Version(tag) > new System.Version(Program.Version) && (!ignoredVersions.Contains(tag) || ignoreIgnoredVersions))
+            System.Version oldVersion = new System.Version(Program.Version);
+            System.Version newVersion = new System.Version(tag);
+            bool isNewMajor = newVersion.Minor > oldVersion.Minor;
+
+            if (newVersion > oldVersion && (!ignoredVersions.Contains(tag) || ignoreIgnoredVersions)
+                && (!Program.Config.OnlyNotifyOnMajor || isNewMajor))
+            {
                 _ = Task.Run(() => new FormUpdateAvailable(tag, url, ignoreIgnoredVersions).ShowDialog());
+            }
             else if (ignoreIgnoredVersions)
             {
                 MessageBox.Show("No new version found.");
             }
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             Debugger.Break();
             Debug.WriteLine(ex);

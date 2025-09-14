@@ -16,6 +16,7 @@ public static class PageLists
         new() { Name = "Default View", Page = new PageDefaults(), RequiresROM = true },
         new() { Name = "Tools", Page = new PageRom(), RequiresROM=false },
         new() { Name = "Soundpacks", Page = new PageSoundpacks(), RequiresROM = false },
+        new() { Name = "Updates", Page = new PageUpdates(), RequiresROM = false },
         new() { Name = "Advanced", Page = new PageAdvanced(), RequiresROM=false },
     };
 
