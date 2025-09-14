@@ -1,3 +1,13 @@
+# [1.7.0](https://github.com/ConConner/MAGE-Themes/compare/v1.6.0...v1.7.0) (2025-09-14)
+
+
+### Features
+
+* add elevator shortcuts to clipdata shortcuts ([8d52a50](https://github.com/ConConner/MAGE-Themes/commit/8d52a5020c7675cfcf2883ed3e24ab99e1bc4432))
+* added hatches to clipdata shortcuts ([7af22d5](https://github.com/ConConner/MAGE-Themes/commit/7af22d57f097f3012b99f3db5a097126ce6e546e))
+* choose whether to check for updates ([dde1b4d](https://github.com/ConConner/MAGE-Themes/commit/dde1b4d31f436b2e08e334d615185597b32f6ab9))
+* rearranged clipdata shortcuts ([d122c0b](https://github.com/ConConner/MAGE-Themes/commit/d122c0b3c361b477cef5bc7255f02eda1520857b))
+
 # [1.6.0](https://github.com/ConConner/MAGE-Themes/compare/v1.5.1...v1.6.0) (2025-09-11)
 
 
