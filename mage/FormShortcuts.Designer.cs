@@ -151,6 +151,11 @@
             label_blue_hatch = new System.Windows.Forms.Label();
             button_gray_hatch = new System.Windows.Forms.Button();
             label1 = new System.Windows.Forms.Label();
+            groupBox_elevator = new System.Windows.Forms.GroupBox();
+            button1 = new System.Windows.Forms.Button();
+            label2 = new System.Windows.Forms.Label();
+            button2 = new System.Windows.Forms.Button();
+            label3 = new System.Windows.Forms.Label();
             groupBox_basic.SuspendLayout();
             groupBox_ground.SuspendLayout();
             groupBox_slopes.SuspendLayout();
@@ -164,6 +169,7 @@
             groupBox_shot.SuspendLayout();
             groupBox_doors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)flatNumericUpDown1).BeginInit();
+            groupBox_elevator.SuspendLayout();
             SuspendLayout();
             // 
             // button_air
@@ -1071,7 +1077,7 @@
             groupBox_transitions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_transitions.Name = "groupBox_transitions";
             groupBox_transitions.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_transitions.Size = new System.Drawing.Size(168, 250);
+            groupBox_transitions.Size = new System.Drawing.Size(168, 126);
             groupBox_transitions.TabIndex = 4;
             groupBox_transitions.TabStop = false;
             groupBox_transitions.Text = "Transitions";
@@ -1561,11 +1567,66 @@
             label1.TabIndex = 2;
             label1.Text = "Gray Hatch";
             // 
+            // groupBox_elevator
+            // 
+            groupBox_elevator.Controls.Add(button1);
+            groupBox_elevator.Controls.Add(button2);
+            groupBox_elevator.Controls.Add(label2);
+            groupBox_elevator.Controls.Add(label3);
+            groupBox_elevator.Location = new System.Drawing.Point(749, 146);
+            groupBox_elevator.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_elevator.Name = "groupBox_elevator";
+            groupBox_elevator.Size = new System.Drawing.Size(168, 118);
+            groupBox_elevator.TabIndex = 12;
+            groupBox_elevator.TabStop = false;
+            groupBox_elevator.Text = "Elevators";
+            // 
+            // button1
+            // 
+            button1.Image = Properties.Resources.shortcut_trans_down;
+            button1.Location = new System.Drawing.Point(7, 55);
+            button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(28, 28);
+            button1.TabIndex = 6;
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(42, 61);
+            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(38, 15);
+            label2.TabIndex = 3;
+            label2.Text = "Down";
+            // 
+            // button2
+            // 
+            button2.Image = Properties.Resources.shortcut_trans_up;
+            button2.Location = new System.Drawing.Point(7, 22);
+            button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(28, 28);
+            button2.TabIndex = 5;
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(42, 29);
+            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(22, 15);
+            label3.TabIndex = 4;
+            label3.Text = "Up";
+            // 
             // FormShortcuts
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(930, 467);
+            Controls.Add(groupBox_elevator);
             Controls.Add(groupBox_doors);
             Controls.Add(groupBox_energy);
             Controls.Add(groupBox_breakable);
@@ -1608,6 +1669,8 @@
             groupBox_doors.ResumeLayout(false);
             groupBox_doors.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)flatNumericUpDown1).EndInit();
+            groupBox_elevator.ResumeLayout(false);
+            groupBox_elevator.PerformLayout();
             ResumeLayout(false);
 
         }
@@ -1736,5 +1799,10 @@
         private System.Windows.Forms.Label label_blue_hatch;
         private Theming.CustomControls.FlatNumericUpDown flatNumericUpDown1;
         private System.Windows.Forms.Label label_door_slot;
+        private System.Windows.Forms.GroupBox groupBox_elevator;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
