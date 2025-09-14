@@ -37,6 +37,16 @@ namespace mage
                 label_acid.Enabled = false;
                 button_crumble_slow.Enabled = false;
                 label_crumble_slow.Enabled = false;
+
+                numericUpDown_slot.Enabled = true;
+                label_door_slot.Enabled = true;
+
+                //Change hatch labels
+                label_gray_hatch.Text = "Gray [Lv.0]";
+                label_blue_hatch.Text = "Blue [Lv.1]";
+                label_green_hatch.Text = "Green [Lv.2]";
+                label_yellow_hatch.Text = "Yellow [Lv.3]";
+                label_red_hatch.Text = "Red [Lv.4]";
             }
         }
 
@@ -282,7 +292,7 @@ namespace mage
         private void button_crumble_Click(object sender, EventArgs e)
         {
             if (isMF) { main.Clipdata = 0x5A; }
-            else {main.Clipdata = 0x56; }
+            else { main.Clipdata = 0x56; }
         }
 
         private void button_crumble_slow_Click(object sender, EventArgs e)
@@ -353,7 +363,52 @@ namespace mage
             main.Clipdata = 0x61;
         }
         #endregion
-        
 
+        #region hatches
+        private void button_gray_hatch_Click(object sender, EventArgs e)
+        {
+            if (isMF) main.Clipdata = (ushort)(0x30 + numericUpDown_slot.Value - 1);
+            else main.Clipdata = 0x30;
+        }
+
+        private void button_blue_hatch_Click(object sender, EventArgs e)
+        {
+            if (isMF) main.Clipdata = (ushort)(0x36 + numericUpDown_slot.Value - 1);
+            else main.Clipdata = 0x36;
+        }
+
+        private void button_red_hatch_Click(object sender, EventArgs e)
+        {
+            ushort val = (ushort)numericUpDown_slot.Value;
+            bool jump = val > 3;
+
+            if (isMF) main.Clipdata = (ushort)(0x3C + val - 1 + (jump ? 0x10 - 0x3 : 0));
+            else main.Clipdata = 0x40;
+        }
+
+        private void button_green_hatch_Click(object sender, EventArgs e)
+        {
+            if (isMF) main.Clipdata = (ushort)(0x40 + numericUpDown_slot.Value - 1);
+            else main.Clipdata = 0x46;
+        }
+
+        private void button_yellow_hatch_Click(object sender, EventArgs e)
+        {
+            if (isMF) main.Clipdata = (ushort)(0x46 + numericUpDown_slot.Value - 1);
+            else main.Clipdata = 0x4C;
+        }
+        #endregion
+
+        #region elevators
+        private void button_elevator_up_Click(object sender, EventArgs e)
+        {
+            main.Clipdata = 0x29;
+        }
+
+        private void button_elevator_down_Click(object sender, EventArgs e)
+        {
+            main.Clipdata = 0x2A;
+        }
+        #endregion
     }
 }

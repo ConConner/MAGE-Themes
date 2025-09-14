@@ -139,7 +139,7 @@
             button_shot_no = new System.Windows.Forms.Button();
             label_shot_no = new System.Windows.Forms.Label();
             groupBox_doors = new System.Windows.Forms.GroupBox();
-            flatNumericUpDown1 = new mage.Theming.CustomControls.FlatNumericUpDown();
+            numericUpDown_slot = new mage.Theming.CustomControls.FlatNumericUpDown();
             label_door_slot = new System.Windows.Forms.Label();
             button_yellow_hatch = new System.Windows.Forms.Button();
             label_yellow_hatch = new System.Windows.Forms.Label();
@@ -150,12 +150,12 @@
             button_blue_hatch = new System.Windows.Forms.Button();
             label_blue_hatch = new System.Windows.Forms.Label();
             button_gray_hatch = new System.Windows.Forms.Button();
-            label1 = new System.Windows.Forms.Label();
+            label_gray_hatch = new System.Windows.Forms.Label();
             groupBox_elevator = new System.Windows.Forms.GroupBox();
-            button1 = new System.Windows.Forms.Button();
-            label2 = new System.Windows.Forms.Label();
-            button2 = new System.Windows.Forms.Button();
-            label3 = new System.Windows.Forms.Label();
+            button_elevator_down = new System.Windows.Forms.Button();
+            button_elevator_up = new System.Windows.Forms.Button();
+            label_elevator_down = new System.Windows.Forms.Label();
+            label_elevator_up = new System.Windows.Forms.Label();
             groupBox_basic.SuspendLayout();
             groupBox_ground.SuspendLayout();
             groupBox_slopes.SuspendLayout();
@@ -168,7 +168,7 @@
             groupBox_liquids.SuspendLayout();
             groupBox_shot.SuspendLayout();
             groupBox_doors.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)flatNumericUpDown1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_slot).BeginInit();
             groupBox_elevator.SuspendLayout();
             SuspendLayout();
             // 
@@ -1427,7 +1427,7 @@
             // 
             // groupBox_doors
             // 
-            groupBox_doors.Controls.Add(flatNumericUpDown1);
+            groupBox_doors.Controls.Add(numericUpDown_slot);
             groupBox_doors.Controls.Add(label_door_slot);
             groupBox_doors.Controls.Add(button_yellow_hatch);
             groupBox_doors.Controls.Add(label_yellow_hatch);
@@ -1438,7 +1438,7 @@
             groupBox_doors.Controls.Add(button_blue_hatch);
             groupBox_doors.Controls.Add(label_blue_hatch);
             groupBox_doors.Controls.Add(button_gray_hatch);
-            groupBox_doors.Controls.Add(label1);
+            groupBox_doors.Controls.Add(label_gray_hatch);
             groupBox_doors.Location = new System.Drawing.Point(608, 14);
             groupBox_doors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_doors.Name = "groupBox_doors";
@@ -1447,19 +1447,22 @@
             groupBox_doors.TabStop = false;
             groupBox_doors.Text = "Hatches";
             // 
-            // flatNumericUpDown1
+            // numericUpDown_slot
             // 
-            flatNumericUpDown1.Location = new System.Drawing.Point(7, 48);
-            flatNumericUpDown1.Maximum = new decimal(new int[] { 6, 0, 0, 0 });
-            flatNumericUpDown1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            flatNumericUpDown1.Name = "flatNumericUpDown1";
-            flatNumericUpDown1.Size = new System.Drawing.Size(120, 23);
-            flatNumericUpDown1.TabIndex = 12;
-            flatNumericUpDown1.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDown_slot.Enabled = false;
+            numericUpDown_slot.Hexadecimal = true;
+            numericUpDown_slot.Location = new System.Drawing.Point(7, 48);
+            numericUpDown_slot.Maximum = new decimal(new int[] { 6, 0, 0, 0 });
+            numericUpDown_slot.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDown_slot.Name = "numericUpDown_slot";
+            numericUpDown_slot.Size = new System.Drawing.Size(120, 23);
+            numericUpDown_slot.TabIndex = 12;
+            numericUpDown_slot.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label_door_slot
             // 
             label_door_slot.AutoSize = true;
+            label_door_slot.Enabled = false;
             label_door_slot.Location = new System.Drawing.Point(7, 27);
             label_door_slot.Margin = new System.Windows.Forms.Padding(3);
             label_door_slot.Name = "label_door_slot";
@@ -1469,13 +1472,14 @@
             // 
             // button_yellow_hatch
             // 
-            button_yellow_hatch.Image = Properties.Resources.shortcut_missile;
+            button_yellow_hatch.Image = Properties.Resources.shortcut_hatch_yellow;
             button_yellow_hatch.Location = new System.Drawing.Point(7, 214);
             button_yellow_hatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_yellow_hatch.Name = "button_yellow_hatch";
             button_yellow_hatch.Size = new System.Drawing.Size(28, 28);
             button_yellow_hatch.TabIndex = 9;
             button_yellow_hatch.UseVisualStyleBackColor = true;
+            button_yellow_hatch.Click += button_yellow_hatch_Click;
             // 
             // label_yellow_hatch
             // 
@@ -1483,19 +1487,20 @@
             label_yellow_hatch.Location = new System.Drawing.Point(42, 221);
             label_yellow_hatch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_yellow_hatch.Name = "label_yellow_hatch";
-            label_yellow_hatch.Size = new System.Drawing.Size(76, 15);
+            label_yellow_hatch.Size = new System.Drawing.Size(75, 15);
             label_yellow_hatch.TabIndex = 10;
-            label_yellow_hatch.Text = "Yellow Hatch";
+            label_yellow_hatch.Text = "Power bomb";
             // 
             // button_green_hatch
             // 
-            button_green_hatch.Image = Properties.Resources.shortcut_missile;
+            button_green_hatch.Image = Properties.Resources.shortcut_hatch_green;
             button_green_hatch.Location = new System.Drawing.Point(7, 182);
             button_green_hatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_green_hatch.Name = "button_green_hatch";
             button_green_hatch.Size = new System.Drawing.Size(28, 28);
             button_green_hatch.TabIndex = 7;
             button_green_hatch.UseVisualStyleBackColor = true;
+            button_green_hatch.Click += button_green_hatch_Click;
             // 
             // label_green_hatch
             // 
@@ -1503,19 +1508,20 @@
             label_green_hatch.Location = new System.Drawing.Point(42, 189);
             label_green_hatch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_green_hatch.Name = "label_green_hatch";
-            label_green_hatch.Size = new System.Drawing.Size(73, 15);
+            label_green_hatch.Size = new System.Drawing.Size(76, 15);
             label_green_hatch.TabIndex = 8;
-            label_green_hatch.Text = "Green Hatch";
+            label_green_hatch.Text = "Super missile";
             // 
             // button_red_hatch
             // 
-            button_red_hatch.Image = Properties.Resources.shortcut_missile;
+            button_red_hatch.Image = Properties.Resources.shortcut_hatch_red;
             button_red_hatch.Location = new System.Drawing.Point(7, 150);
             button_red_hatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_red_hatch.Name = "button_red_hatch";
             button_red_hatch.Size = new System.Drawing.Size(28, 28);
             button_red_hatch.TabIndex = 5;
             button_red_hatch.UseVisualStyleBackColor = true;
+            button_red_hatch.Click += button_red_hatch_Click;
             // 
             // label_red_hatch
             // 
@@ -1523,19 +1529,20 @@
             label_red_hatch.Location = new System.Drawing.Point(42, 157);
             label_red_hatch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_red_hatch.Name = "label_red_hatch";
-            label_red_hatch.Size = new System.Drawing.Size(62, 15);
+            label_red_hatch.Size = new System.Drawing.Size(43, 15);
             label_red_hatch.TabIndex = 6;
-            label_red_hatch.Text = "Red Hatch";
+            label_red_hatch.Text = "Missile";
             // 
             // button_blue_hatch
             // 
-            button_blue_hatch.Image = Properties.Resources.shortcut_missile;
+            button_blue_hatch.Image = Properties.Resources.shortcut_hatch_blue;
             button_blue_hatch.Location = new System.Drawing.Point(7, 117);
             button_blue_hatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_blue_hatch.Name = "button_blue_hatch";
             button_blue_hatch.Size = new System.Drawing.Size(28, 28);
             button_blue_hatch.TabIndex = 3;
             button_blue_hatch.UseVisualStyleBackColor = true;
+            button_blue_hatch.Click += button_blue_hatch_Click;
             // 
             // label_blue_hatch
             // 
@@ -1543,36 +1550,37 @@
             label_blue_hatch.Location = new System.Drawing.Point(42, 124);
             label_blue_hatch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_blue_hatch.Name = "label_blue_hatch";
-            label_blue_hatch.Size = new System.Drawing.Size(65, 15);
+            label_blue_hatch.Size = new System.Drawing.Size(47, 15);
             label_blue_hatch.TabIndex = 4;
-            label_blue_hatch.Text = "Blue Hatch";
+            label_blue_hatch.Text = "Regular";
             // 
             // button_gray_hatch
             // 
-            button_gray_hatch.Image = Properties.Resources.shortcut_missile;
+            button_gray_hatch.Image = Properties.Resources.shortcut_hatch_gray;
             button_gray_hatch.Location = new System.Drawing.Point(7, 85);
             button_gray_hatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_gray_hatch.Name = "button_gray_hatch";
             button_gray_hatch.Size = new System.Drawing.Size(28, 28);
             button_gray_hatch.TabIndex = 1;
             button_gray_hatch.UseVisualStyleBackColor = true;
+            button_gray_hatch.Click += button_gray_hatch_Click;
             // 
-            // label1
+            // label_gray_hatch
             // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(42, 92);
-            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(66, 15);
-            label1.TabIndex = 2;
-            label1.Text = "Gray Hatch";
+            label_gray_hatch.AutoSize = true;
+            label_gray_hatch.Location = new System.Drawing.Point(42, 92);
+            label_gray_hatch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_gray_hatch.Name = "label_gray_hatch";
+            label_gray_hatch.Size = new System.Drawing.Size(45, 15);
+            label_gray_hatch.TabIndex = 2;
+            label_gray_hatch.Text = "Locked";
             // 
             // groupBox_elevator
             // 
-            groupBox_elevator.Controls.Add(button1);
-            groupBox_elevator.Controls.Add(button2);
-            groupBox_elevator.Controls.Add(label2);
-            groupBox_elevator.Controls.Add(label3);
+            groupBox_elevator.Controls.Add(button_elevator_down);
+            groupBox_elevator.Controls.Add(button_elevator_up);
+            groupBox_elevator.Controls.Add(label_elevator_down);
+            groupBox_elevator.Controls.Add(label_elevator_up);
             groupBox_elevator.Location = new System.Drawing.Point(749, 146);
             groupBox_elevator.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_elevator.Name = "groupBox_elevator";
@@ -1581,50 +1589,51 @@
             groupBox_elevator.TabStop = false;
             groupBox_elevator.Text = "Elevators";
             // 
-            // button1
+            // button_elevator_down
             // 
-            button1.Image = Properties.Resources.shortcut_trans_down;
-            button1.Location = new System.Drawing.Point(7, 55);
-            button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(28, 28);
-            button1.TabIndex = 6;
-            button1.UseVisualStyleBackColor = true;
+            button_elevator_down.Image = Properties.Resources.shortcut_elevator_down;
+            button_elevator_down.Location = new System.Drawing.Point(7, 55);
+            button_elevator_down.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_elevator_down.Name = "button_elevator_down";
+            button_elevator_down.Size = new System.Drawing.Size(28, 28);
+            button_elevator_down.TabIndex = 6;
+            button_elevator_down.UseVisualStyleBackColor = true;
+            button_elevator_down.Click += button_elevator_down_Click;
             // 
-            // label2
+            // button_elevator_up
             // 
-            label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(42, 61);
-            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(38, 15);
-            label2.TabIndex = 3;
-            label2.Text = "Down";
+            button_elevator_up.Image = Properties.Resources.shortcut_elevator_up;
+            button_elevator_up.Location = new System.Drawing.Point(7, 22);
+            button_elevator_up.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_elevator_up.Name = "button_elevator_up";
+            button_elevator_up.Size = new System.Drawing.Size(28, 28);
+            button_elevator_up.TabIndex = 5;
+            button_elevator_up.UseVisualStyleBackColor = true;
+            button_elevator_up.Click += button_elevator_up_Click;
             // 
-            // button2
+            // label_elevator_down
             // 
-            button2.Image = Properties.Resources.shortcut_trans_up;
-            button2.Location = new System.Drawing.Point(7, 22);
-            button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(28, 28);
-            button2.TabIndex = 5;
-            button2.UseVisualStyleBackColor = true;
+            label_elevator_down.AutoSize = true;
+            label_elevator_down.Location = new System.Drawing.Point(42, 61);
+            label_elevator_down.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_elevator_down.Name = "label_elevator_down";
+            label_elevator_down.Size = new System.Drawing.Size(38, 15);
+            label_elevator_down.TabIndex = 3;
+            label_elevator_down.Text = "Down";
             // 
-            // label3
+            // label_elevator_up
             // 
-            label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(42, 29);
-            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(22, 15);
-            label3.TabIndex = 4;
-            label3.Text = "Up";
+            label_elevator_up.AutoSize = true;
+            label_elevator_up.Location = new System.Drawing.Point(42, 29);
+            label_elevator_up.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_elevator_up.Name = "label_elevator_up";
+            label_elevator_up.Size = new System.Drawing.Size(22, 15);
+            label_elevator_up.TabIndex = 4;
+            label_elevator_up.Text = "Up";
             // 
             // FormShortcuts
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             ClientSize = new System.Drawing.Size(930, 467);
             Controls.Add(groupBox_elevator);
             Controls.Add(groupBox_doors);
@@ -1668,7 +1677,7 @@
             groupBox_shot.PerformLayout();
             groupBox_doors.ResumeLayout(false);
             groupBox_doors.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)flatNumericUpDown1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown_slot).EndInit();
             groupBox_elevator.ResumeLayout(false);
             groupBox_elevator.PerformLayout();
             ResumeLayout(false);
@@ -1788,7 +1797,7 @@
         private System.Windows.Forms.Label label_shot_no;
         private System.Windows.Forms.GroupBox groupBox_doors;
         private System.Windows.Forms.Button button_gray_hatch;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label_gray_hatch;
         private System.Windows.Forms.Button button_yellow_hatch;
         private System.Windows.Forms.Label label_yellow_hatch;
         private System.Windows.Forms.Button button_green_hatch;
@@ -1797,12 +1806,12 @@
         private System.Windows.Forms.Label label_red_hatch;
         private System.Windows.Forms.Button button_blue_hatch;
         private System.Windows.Forms.Label label_blue_hatch;
-        private Theming.CustomControls.FlatNumericUpDown flatNumericUpDown1;
+        private Theming.CustomControls.FlatNumericUpDown numericUpDown_slot;
         private System.Windows.Forms.Label label_door_slot;
         private System.Windows.Forms.GroupBox groupBox_elevator;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button_elevator_down;
+        private System.Windows.Forms.Button button_elevator_up;
+        private System.Windows.Forms.Label label_elevator_down;
+        private System.Windows.Forms.Label label_elevator_up;
     }
 }

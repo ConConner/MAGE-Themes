@@ -1170,6 +1170,26 @@ namespace mage.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap shortcut_elevator_down {
+            get {
+                object obj = ResourceManager.GetObject("shortcut_elevator_down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap shortcut_elevator_up {
+            get {
+                object obj = ResourceManager.GetObject("shortcut_elevator_up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap shortcut_energy {
             get {
                 object obj = ResourceManager.GetObject("shortcut_energy", resourceCulture);
@@ -1193,6 +1213,56 @@ namespace mage.Properties {
         public static System.Drawing.Bitmap shortcut_energy_water {
             get {
                 object obj = ResourceManager.GetObject("shortcut_energy_water", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap shortcut_hatch_blue {
+            get {
+                object obj = ResourceManager.GetObject("shortcut_hatch_blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap shortcut_hatch_gray {
+            get {
+                object obj = ResourceManager.GetObject("shortcut_hatch_gray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap shortcut_hatch_green {
+            get {
+                object obj = ResourceManager.GetObject("shortcut_hatch_green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap shortcut_hatch_red {
+            get {
+                object obj = ResourceManager.GetObject("shortcut_hatch_red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap shortcut_hatch_yellow {
+            get {
+                object obj = ResourceManager.GetObject("shortcut_hatch_yellow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
