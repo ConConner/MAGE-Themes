@@ -150,6 +150,18 @@ public partial class FormOam : Form
     }
     private bool viewVram = false;
 
+    private bool LoadCommonGraphics
+    {
+        get => loadCommonGraphics;
+        set
+        {
+            loadCommonGraphics = value;
+            Program.Config.OamEditorLoadCommonGraphics = value;
+            button_loadCommonGraphics.Checked = value;
+        }
+    }
+    private bool loadCommonGraphics = true;
+
     private int SelectedPartIndex
     {
         get => selectedPartIndex;
@@ -208,6 +220,7 @@ public partial class FormOam : Form
         ViewOrigin = Program.Config.OamEditorViewOrigin;
         ViewPartOutline = Program.Config.OamEditorViewPartOutlines;
         ViewPalette = Program.Config.OamEditorViewPalette;
+        LoadCommonGraphics = Program.Config.OamEditorLoadCommonGraphics;
         UpdateGfxZoom(Program.Config.OamEditorGfxZoom);
         UpdateOamZoom(Program.Config.OamEditorOamZoom);
 
@@ -460,7 +473,7 @@ public partial class FormOam : Form
             gfxObject = new GFX(romStream, offset, width, height);
         }
 
-        CreateVram();
+        CreateVram(button_loadCommonGraphics.Checked);
         DrawFrame(comboBox_Frame.SelectedIndex);
         DrawImage();
         UpdateGfxZoom(gfxView_gfx.Zoom);
@@ -485,6 +498,13 @@ public partial class FormOam : Form
 
     private void button_viewPalette_Click(object sender, EventArgs e) => ViewPalette = !button_viewPalette.Checked;
     private void button_viewVram_Click(object sender, EventArgs e) => ViewVram = !button_viewVram.Checked;
+    private void button_loadCommonGraphics_Click(object sender, EventArgs e)
+    {
+        LoadCommonGraphics = !button_loadCommonGraphics.Checked;
+        Status.LoadNew();
+        DrawNewGFX();
+        LoadPalette(0);
+    }
 
     private void checkBox_compressed_CheckedChanged(object sender, EventArgs e)
     {
@@ -498,6 +518,15 @@ public partial class FormOam : Form
     private void gfxView_gfx_MouseMove(object sender, TileDisplay.TileDisplayArgs e)
     {
         int offset = ViewVram ? 0 : 16;
+        if (ViewVram && LoadCommonGraphics)
+        {
+            offset = 16;
+        }
+        else if (!ViewVram && !LoadCommonGraphics)
+        {
+            offset = 0;
+        }
+
         int tileNum = e.TileIndexPosition.X + (e.TileIndexPosition.Y + offset) * 32;
         statusLabel_coor.Text = Hex.ToString(tileNum);
 
@@ -530,6 +559,15 @@ public partial class FormOam : Form
     private void gfxView_gfx_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
         int offset = ViewVram ? 0 : 16;
+        if (ViewVram && LoadCommonGraphics)
+        {
+            offset = 16;
+        }
+        else if (!ViewVram && !LoadCommonGraphics)
+        {
+            offset = 0;
+        }
+
         int tileNum = e.TileIndexPosition.X + (e.TileIndexPosition.Y + offset) * 32;
 
         if (SelectedPartIndex == -1) return;
@@ -540,7 +578,7 @@ public partial class FormOam : Form
     #region PAL
     private void DrawPalette()
     {
-        CreateVram();
+        CreateVram(button_loadCommonGraphics.Checked);
         paletteView.TileImage = vram.palette.Draw(16, 0, 16, 0);
         DrawFrame(comboBox_Frame.SelectedIndex);
     }
@@ -559,7 +597,7 @@ public partial class FormOam : Form
             int count = !checkBox_compressed.Checked ? 8 : (gfxObject.height / 2);
 
             palette = new Palette(romStream, offset, count);
-            CreateVram();
+            CreateVram(button_loadCommonGraphics.Checked);
             DrawImage();
             DrawPalette();
         }
@@ -663,9 +701,9 @@ public partial class FormOam : Form
         }
     }
 
-    private void CreateVram()
+    private void CreateVram(Boolean loadCommonGraphics)
     {
-        vram = new VramObj(gfxObject, palette);
+        vram = new VramObj(gfxObject, palette, loadCommonGraphics);
     }
 
     private void DrawFrame(int frameNumber)
