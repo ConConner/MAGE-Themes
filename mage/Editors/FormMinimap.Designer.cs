@@ -144,7 +144,7 @@
             comboBox_type.Location = new System.Drawing.Point(50, 70);
             comboBox_type.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_type.Name = "comboBox_type";
-            comboBox_type.Size = new System.Drawing.Size(123, 23);
+            comboBox_type.Size = new System.Drawing.Size(96, 23);
             comboBox_type.TabIndex = 2;
             comboBox_type.SelectedIndexChanged += SelectedSquareChanged;
             // 

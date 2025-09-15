@@ -123,91 +123,102 @@ namespace mage.Theming
 
             foreach (Control control in container)
             {
-                //excludes
                 if (control is TileView ||
                     control is RoomView ||
                     control.Tag?.ToString() == "unthemed")
                     continue;
 
-                //base change
-                control.BackColor = theme.BackgroundColor;
-                control.ForeColor = theme.TextColor;
-                control.Invalidate();
-                if (control.Tag?.ToString() == "accent") control.BackColor = theme.AccentColor;
-
-                if (control.HasChildren)
-                {
-                    ChangeTheme(control.Controls);
-                }
-
-                //Special handeling for special controls
-                if (control is FlatComboBox)
-                {
-                    FlatComboBox box = control as FlatComboBox;
-                    box.BorderColor = theme.PrimaryOutline;
-                    box.ButtonColor = theme.BackgroundColor;
-                }
-
-                if (control is ToolStrip)
-                {
-                    ToolStrip strip = control as ToolStrip;
-                    strip.Renderer = new MenuStripCustomRenderer(theme);
-                }
-
-                if (control is Button)
-                {
-                    Button btn = control as Button;
-                    btn.FlatStyle = FlatStyle.Flat;
-                    btn.FlatAppearance.BorderColor = theme.PrimaryOutline;
-                    btn.FlatAppearance.MouseOverBackColor = theme.AccentColor;
-                    btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(0x7F, theme.AccentColor);
-                }
-
-                if (control is FlatTextBox)
-                {
-                    FlatTextBox box = control as FlatTextBox;
-                    box.BorderColor = theme.PrimaryOutline;
-                }
-
-                if (control is FlatNumericUpDown)
-                {
-                    FlatNumericUpDown num = control as FlatNumericUpDown;
-                    num.BorderStyle = BorderStyle.FixedSingle;
-                    num.BorderColor = theme.PrimaryOutline;
-                    num.ButtonHighlightColor = theme.AccentColor;
-                }
-
-                if (control is FlatTabControl)
-                {
-                    FlatTabControl tab = control as FlatTabControl;
-                    tab.BorderColor = theme.SecondaryOutline;
-                }
-
-                if (control is LinkLabel)
-                {
-                    LinkLabel lbl = control as LinkLabel;
-                    lbl.LinkColor = theme.AccentColor;
-                    lbl.VisitedLinkColor = theme.AccentColor;
-                }
-
-                if (control is TreeView)
-                {
-                    TreeView tv = control as TreeView;
-                    tv.LineColor = theme.PrimaryOutline;
-                }
-
-                if (control is ContextMenuStrip ctx)
-                {
-                    ctx.Renderer = new ContextMenuCustomRenderer();
-                }
-
-                if (control is Seperator sep)
-                {
-                    sep.Color = theme.SecondaryOutline;
-                }
+                ChangeTheme(control);
             }
 
             Base?.ResumeLayout();
+        }
+
+        /// <summary>
+        /// Changes the properties of <paramref name="control"/> to reflect the current theme
+        /// selected in the <see cref="ThemeSwitcher.ProjectTheme"/>.
+        /// </summary>
+        /// <param name="control"></param>
+        public static void ChangeTheme(Control control)
+        {
+            ColorTheme theme = ProjectTheme;
+
+            //base change
+            control.BackColor = theme.BackgroundColor;
+            control.ForeColor = theme.TextColor;
+            control.Invalidate();
+            if (control.Tag?.ToString() == "accent") control.BackColor = theme.AccentColor;
+
+            if (control.HasChildren)
+            {
+                ChangeTheme(control.Controls);
+            }
+
+            //Special handeling for special controls
+            if (control is FlatComboBox)
+            {
+                FlatComboBox box = control as FlatComboBox;
+                box.BorderColor = theme.PrimaryOutline;
+                box.ButtonColor = theme.BackgroundColor;
+            }
+
+            if (control is ToolStrip)
+            {
+                ToolStrip strip = control as ToolStrip;
+                strip.Renderer = new MenuStripCustomRenderer(theme);
+            }
+
+            if (control is Button)
+            {
+                Button btn = control as Button;
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.FlatAppearance.BorderColor = theme.PrimaryOutline;
+                btn.FlatAppearance.MouseOverBackColor = theme.AccentColor;
+                btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(0x7F, theme.AccentColor);
+            }
+
+            if (control is FlatTextBox)
+            {
+                FlatTextBox box = control as FlatTextBox;
+                box.BorderColor = theme.PrimaryOutline;
+            }
+
+            if (control is FlatNumericUpDown)
+            {
+                FlatNumericUpDown num = control as FlatNumericUpDown;
+                num.BorderStyle = BorderStyle.FixedSingle;
+                num.BorderColor = theme.PrimaryOutline;
+                num.ButtonHighlightColor = theme.AccentColor;
+            }
+
+            if (control is FlatTabControl)
+            {
+                FlatTabControl tab = control as FlatTabControl;
+                tab.BorderColor = theme.SecondaryOutline;
+            }
+
+            if (control is LinkLabel)
+            {
+                LinkLabel lbl = control as LinkLabel;
+                lbl.LinkColor = theme.AccentColor;
+                lbl.VisitedLinkColor = theme.AccentColor;
+            }
+
+            if (control is TreeView)
+            {
+                TreeView tv = control as TreeView;
+                tv.LineColor = theme.PrimaryOutline;
+            }
+
+            if (control is ContextMenuStrip ctx)
+            {
+                ctx.Renderer = new ContextMenuCustomRenderer();
+            }
+
+            if (control is Seperator sep)
+            {
+                sep.Color = theme.SecondaryOutline;
+            }
         }
 
         /// <summary>

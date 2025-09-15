@@ -29,7 +29,8 @@ using System.Text;
 using mage.Updates;
 using System.Linq;
 using mage.Dialogs;
-using mage.Options; // added for font stuff - alexman25
+using mage.Options;
+using mage.Editors.NewEditors; // added for font stuff - alexman25
 
 namespace mage
 {
@@ -804,6 +805,16 @@ namespace mage
 
         private void menuItem_minimapEditor_Click(object sender, EventArgs e)
         {
+            if (Program.ExperimentalFeaturesEnabled)
+            {
+                if (!FindOpenForm(typeof(FormMinimapNew), false))
+                {
+                    FormMinimapNew form = new FormMinimapNew(this);
+                    form.Show();
+                }
+                return;
+            }
+
             if (!FindOpenForm(typeof(FormMinimap), false))
             {
                 FormMinimap form = new FormMinimap(this);
