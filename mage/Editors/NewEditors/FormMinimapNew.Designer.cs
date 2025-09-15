@@ -41,11 +41,11 @@
             statusStrip_exportImage = new System.Windows.Forms.ToolStripMenuItem();
             button_apply = new System.Windows.Forms.ToolStripDropDownButton();
             group_selection = new System.Windows.Forms.GroupBox();
-            splitContainer1 = new System.Windows.Forms.SplitContainer();
+            splitContainer_main = new System.Windows.Forms.SplitContainer();
             statusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel1.SuspendLayout();
-            splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer_main).BeginInit();
+            splitContainer_main.Panel1.SuspendLayout();
+            splitContainer_main.SuspendLayout();
             SuspendLayout();
             // 
             // statusStrip
@@ -139,39 +139,39 @@
             group_selection.Dock = System.Windows.Forms.DockStyle.Top;
             group_selection.Location = new System.Drawing.Point(6, 3);
             group_selection.Name = "group_selection";
-            group_selection.Size = new System.Drawing.Size(231, 100);
+            group_selection.Size = new System.Drawing.Size(276, 100);
             group_selection.TabIndex = 13;
             group_selection.TabStop = false;
             group_selection.Text = "Selection";
             // 
-            // splitContainer1
+            // splitContainer_main
             // 
-            splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            splitContainer1.Location = new System.Drawing.Point(0, 0);
-            splitContainer1.Name = "splitContainer1";
+            splitContainer_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainer_main.Location = new System.Drawing.Point(0, 0);
+            splitContainer_main.Name = "splitContainer_main";
             // 
-            // splitContainer1.Panel1
+            // splitContainer_main.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(group_selection);
-            splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(6, 3, 3, 3);
-            splitContainer1.Size = new System.Drawing.Size(800, 426);
-            splitContainer1.SplitterDistance = 240;
-            splitContainer1.TabIndex = 14;
+            splitContainer_main.Panel1.Controls.Add(group_selection);
+            splitContainer_main.Panel1.Padding = new System.Windows.Forms.Padding(6, 3, 3, 3);
+            splitContainer_main.Size = new System.Drawing.Size(800, 426);
+            splitContainer_main.SplitterDistance = 285;
+            splitContainer_main.TabIndex = 14;
             // 
             // FormMinimapNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             ClientSize = new System.Drawing.Size(800, 450);
-            Controls.Add(splitContainer1);
+            Controls.Add(splitContainer_main);
             Controls.Add(statusStrip);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Name = "FormMinimapNew";
             Text = "Map Editor";
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
-            splitContainer1.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
+            splitContainer_main.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer_main).EndInit();
+            splitContainer_main.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -190,6 +190,6 @@
         private System.Windows.Forms.ToolStripMenuItem statusStrip_exportImage;
         private System.Windows.Forms.ToolStripDropDownButton button_apply;
         private System.Windows.Forms.GroupBox group_selection;
-        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer splitContainer_main;
     }
 }
