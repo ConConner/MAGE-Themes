@@ -522,6 +522,11 @@ public partial class FormOam : Form
     private void gfxView_gfx_MouseMove(object sender, TileDisplay.TileDisplayArgs e)
     {
         int offset = ViewVram ? 0 : 16;
+        if (!ViewVram)
+        {
+            if (LoadCommonGraphics) offset = 16;
+            else offset = 0;
+        }
         int tileNum = e.TileIndexPosition.X + (e.TileIndexPosition.Y + offset) * 32;
         statusLabel_coor.Text = Hex.ToString(tileNum);
 
@@ -554,6 +559,11 @@ public partial class FormOam : Form
     private void gfxView_gfx_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
         int offset = ViewVram ? 0 : 16;
+        if (!ViewVram)
+        {
+            if (LoadCommonGraphics) offset = 16;
+            else offset = 0;
+        }
         int tileNum = e.TileIndexPosition.X + (e.TileIndexPosition.Y + offset) * 32;
 
         if (SelectedPartIndex == -1) return;
