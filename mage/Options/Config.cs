@@ -61,6 +61,7 @@ public class Config
     public bool OamEditorViewPartOutlines { get; set; } = true;
     public bool OamEditorViewPalette { get; set; } = true;
     public bool OamEditorViewVram { get; set; } = false;
+    public bool OamEditorLoadCommonGraphics { get; set; } = true;
     public int OamEditorGfxZoom { get; set; } = 2;
     public int OamEditorOamZoom { get; set; } = 2;
     #endregion
