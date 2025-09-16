@@ -407,7 +407,7 @@
             // button_loadCommonGraphics
             // 
             button_loadCommonGraphics.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_loadCommonGraphics.Image = Properties.Resources.toolbar_minimap;
+            button_loadCommonGraphics.Image = Properties.Resources.toolbar_weapon;
             button_loadCommonGraphics.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_loadCommonGraphics.Name = "button_loadCommonGraphics";
             button_loadCommonGraphics.Size = new System.Drawing.Size(23, 22);

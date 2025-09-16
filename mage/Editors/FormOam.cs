@@ -161,7 +161,6 @@ public partial class FormOam : Form
 
             if (!loading)
             {
-                Status.LoadNew();
                 DrawNewGFX();
                 LoadPalette(0);
             }
