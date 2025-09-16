@@ -158,6 +158,13 @@ public partial class FormOam : Form
             loadCommonGraphics = value;
             Program.Config.OamEditorLoadCommonGraphics = value;
             button_loadCommonGraphics.Checked = value;
+
+            if (!loading)
+            {
+                Status.LoadNew();
+                DrawNewGFX();
+                LoadPalette(0);
+            }
         }
     }
     private bool loadCommonGraphics = true;
@@ -220,11 +227,12 @@ public partial class FormOam : Form
         ViewOrigin = Program.Config.OamEditorViewOrigin;
         ViewPartOutline = Program.Config.OamEditorViewPartOutlines;
         ViewPalette = Program.Config.OamEditorViewPalette;
-        LoadCommonGraphics = Program.Config.OamEditorLoadCommonGraphics;
         UpdateGfxZoom(Program.Config.OamEditorGfxZoom);
         UpdateOamZoom(Program.Config.OamEditorOamZoom);
 
         loading = true;
+
+        LoadCommonGraphics = true; // We don't want to draw/reload graphics during initalization so this must come after `loading = true`
 
         textBox_imageOffset.Text = Hex.ToString(gfxOffset);
         textBox_palOffset.Text = Hex.ToString(palOffset);
@@ -482,6 +490,7 @@ public partial class FormOam : Form
     private void DrawImage()
     {
         if (!ViewVram) gfxImage = gfxObject.Draw4bpp(palette, 0, true);
+        else if (ViewVram && !LoadCommonGraphics) gfxImage = gfxObject.Draw4bpp(palette, 0, true); // A weird edge-case where this condition would render a blank Vram Viewer
         else gfxImage = vram.VramGFX.Draw15bpp(vram.palette, selectedPaletteRow, true);
         gfxView_gfx.TileImage = gfxImage;
     }
@@ -498,13 +507,8 @@ public partial class FormOam : Form
 
     private void button_viewPalette_Click(object sender, EventArgs e) => ViewPalette = !button_viewPalette.Checked;
     private void button_viewVram_Click(object sender, EventArgs e) => ViewVram = !button_viewVram.Checked;
-    private void button_loadCommonGraphics_Click(object sender, EventArgs e)
-    {
-        LoadCommonGraphics = !button_loadCommonGraphics.Checked;
-        Status.LoadNew();
-        DrawNewGFX();
-        LoadPalette(0);
-    }
+    private void button_loadCommonGraphics_Click(object sender, EventArgs e) => LoadCommonGraphics = !button_loadCommonGraphics.Checked;
+
 
     private void checkBox_compressed_CheckedChanged(object sender, EventArgs e)
     {
@@ -518,15 +522,6 @@ public partial class FormOam : Form
     private void gfxView_gfx_MouseMove(object sender, TileDisplay.TileDisplayArgs e)
     {
         int offset = ViewVram ? 0 : 16;
-        if (ViewVram && LoadCommonGraphics)
-        {
-            offset = 16;
-        }
-        else if (!ViewVram && !LoadCommonGraphics)
-        {
-            offset = 0;
-        }
-
         int tileNum = e.TileIndexPosition.X + (e.TileIndexPosition.Y + offset) * 32;
         statusLabel_coor.Text = Hex.ToString(tileNum);
 
@@ -559,15 +554,6 @@ public partial class FormOam : Form
     private void gfxView_gfx_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
         int offset = ViewVram ? 0 : 16;
-        if (ViewVram && LoadCommonGraphics)
-        {
-            offset = 16;
-        }
-        else if (!ViewVram && !LoadCommonGraphics)
-        {
-            offset = 0;
-        }
-
         int tileNum = e.TileIndexPosition.X + (e.TileIndexPosition.Y + offset) * 32;
 
         if (SelectedPartIndex == -1) return;

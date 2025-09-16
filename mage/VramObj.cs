@@ -19,10 +19,7 @@ namespace mage
         {
             romStream = ROM.Stream;
             int dstOffset = 0;
-            if (loadCommonGraphics)
-            {
-                dstOffset += 0x4000;
-            }
+            if (loadCommonGraphics) dstOffset += 0x4000;
             LoadGenericData(loadCommonGraphics);
 
             // copy gfx
@@ -30,7 +27,17 @@ namespace mage
             Buffer.BlockCopy(gfx.data, 0, objTiles, dstOffset, length);
 
             //palette
-            palette.Copy(pal, 0, 8 % 16, pal.Rows);
+            if (loadCommonGraphics)
+            {
+                // Math.Clamp fixes a bug where palette row length can be determined by decompressed
+                //   graphics calculated height and could get calculated to a number larger than 15
+                palette.Copy(pal, 0, 8 % 16, Math.Clamp(pal.Rows, 0, 8));
+            }
+            else // Shifts palette for current offset to row 0
+            {
+                Palette tempPalette = new Palette(romStream, pal.Offset, pal.Rows);
+                palette.Copy(tempPalette, 0, 0, pal.Rows);
+            }
         }
 
         public VramObj(Spriteset spriteset, Boolean loadCommonGraphics = true)
@@ -69,15 +76,19 @@ namespace mage
         {
             // gfx
             objTiles = new byte[0x8000];
-            if (loadCommonGraphics){
+            if (loadCommonGraphics) // Shows common in-game OAM graphics
+            {
                 byte[] data = ROM.GenericSpriteGfx.data;
                 Buffer.BlockCopy(data, 0, objTiles, 0x800, data.Length);
             }
 
             // palette
             palette = new Palette(16);
-            Palette genPal = ROM.GenericSpritePalette;
-            palette.Copy(genPal, 0, 2, genPal.Rows);
+            if (loadCommonGraphics) // Shows palette for common in-game OAM
+            {
+                Palette genPal = ROM.GenericSpritePalette;
+                palette.Copy(genPal, 0, 2, genPal.Rows);
+            }
         }
 
         private void LoadSprite(byte spriteID, byte gfxRow)
