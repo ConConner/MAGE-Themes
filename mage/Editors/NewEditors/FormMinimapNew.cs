@@ -17,7 +17,7 @@ namespace mage.Editors.NewEditors;
 
 public partial class FormMinimapNew : Form, Editor
 {
-    private FlatComboBox comboBox_tilesType;
+    // Shortcuts
     private string[] tileTypeItems => Version.IsMF ?
         new[] { "Normal", "Hidden" } :
         new[] { "Start", "Normal", "Heated", "Hidden", "Heated (hidden)" };
@@ -26,9 +26,38 @@ public partial class FormMinimapNew : Form, Editor
         new[] { "Explored", "Downloaded", "Start" };
     private int numOfPalettes => Version.IsMF ? 3 : 5;
 
+    // Properties
+    private bool tilesFlippedH = false;
+    private bool TilesFlippedH
+    {
+        get => tilesFlippedH;
+        set
+        {
+            if (value == tilesFlippedH) return;
+            tilesFlippedH = value;
+
+            button_flipTilesH.Checked = value;
+            DrawTiles(TilesFlippedH, TilesFlippedV);
+        }
+    }
+    private bool tilesFlippedV = false;
+    private bool TilesFlippedV
+    {
+        get => tilesFlippedV;
+        set
+        {
+            if (value == tilesFlippedV) return;
+            tilesFlippedV = value;
+
+            button_flipTilesV.Checked = value;
+            DrawTiles(TilesFlippedH, TilesFlippedV);
+        }
+    }
 
     // fields
     private const int maxZoom = 4;
+
+    private FlatComboBox comboBox_tilesType;
 
     private bool init = false;
     private Minimap LoadedMap;
@@ -140,15 +169,16 @@ public partial class FormMinimapNew : Form, Editor
     #endregion
 
     #region Tiles
-    private unsafe void DrawTiles()
+    private unsafe void DrawTiles(bool xFlip = false, bool yFlip = false)
     {
         // get minimap gfx data
         byte[] data = new byte[numTiles * 32];
         romStream.CopyToArray(Version.MinimapGfxOffset, data, 0, data.Length);
 
         // create bitmap
-        int height = numTiles / 32;
-        Bitmap tileImage = new Bitmap(322, height * 10 + 2, PixelFormat.Format4bppIndexed);
+        const int tilesWide = 32;
+        int height = numTiles / tilesWide;
+        Bitmap tileImage = new Bitmap(tilesWide * 10 + 2, height * 10 + 2, PixelFormat.Format4bppIndexed);
 
         palette.SetBitmapPalette(tileImage, 1, 1);
         ColorPalette cp = tileImage.Palette;
@@ -158,26 +188,40 @@ public partial class FormMinimapNew : Form, Editor
         Rectangle rect = new Rectangle(0, 0, tileImage.Width, tileImage.Height);
         BitmapData imgData = tileImage.LockBits(rect, ImageLockMode.WriteOnly, tileImage.PixelFormat);
 
-        int width = imgData.Stride;
-        byte* imgPtr = (byte*)imgData.Scan0 + width * 2 + 1;
-        int index = 0;
 
-        for (int y = 0; y < height; y++)
+        // Function to get the pointer to a specific pixel pair on a map tile
+        byte* getPointerForPixelPair(int tileX, int tileY, int row, int pixelpair, bool flipH = false, bool flipV = false, int gap = 1)
         {
-            for (int x = 0; x < 32; x++)
+            //Gap is always *2
+            int width = imgData.Stride;
+            byte* basePtr = (byte*)imgData.Scan0 + width * (gap * 2) + gap;
+
+            int actualR = flipV ? (7 - row) : row;
+            int actualPP = flipH ? (3 - pixelpair) : pixelpair;
+
+            return basePtr + (tileY * width * (8 + 2 * gap)) + (tileX * (4 + gap)) + (actualR * width) + actualPP;
+        }
+
+
+        for (int y = 0; y < height; y++) // For each row of tiles
+        {
+            for (int x = 0; x < tilesWide; x++) // For each column in the row
             {
-                for (int r = 0; r < 8; r++)
+                for (int r = 0; r < 8; r++) // For each pixel row in the tile
                 {
-                    for (int pp = 0; pp < 4; pp++)
+                    for (int pp = 0; pp < 4; pp++) // For each pair of pixels in the row (4bpp = 2 pixels per byte)
                     {
-                        byte val = data[index++];
-                        *imgPtr++ = (byte)(((val & 0xF) << 4) | (val >> 4));
+                        // Data for current tile
+                        int index = (y * 32 + x) * 32 + r * 4 + pp;
+                        byte val = data[index];
+
+                        byte* pixelPtr = getPointerForPixelPair(x, y, r, pp, xFlip, yFlip, gap: 1);
+
+                        if (xFlip) *pixelPtr = val;
+                        else *pixelPtr = (byte)(((val & 0xF) << 4) | (val >> 4));
                     }
-                    imgPtr += (width - 4);
                 }
-                imgPtr -= (width * 8 - 5);
             }
-            imgPtr += (width * 9 + 4);
         }
 
         tileImage.UnlockBits(imgData);
@@ -195,6 +239,9 @@ public partial class FormMinimapNew : Form, Editor
         img.Palette = cp;
         tileDisplay_tiles.Invalidate();
     }
+
+    private void button_flipTilesH_Click(object sender, EventArgs e) => TilesFlippedH = !TilesFlippedH;
+    private void button_flipTilesV_Click(object sender, EventArgs e) => TilesFlippedV = !TilesFlippedV;
     #endregion
 
     #region Map

@@ -178,7 +178,7 @@
             group_selection.Dock = System.Windows.Forms.DockStyle.Top;
             group_selection.Location = new System.Drawing.Point(6, 3);
             group_selection.Name = "group_selection";
-            group_selection.Size = new System.Drawing.Size(357, 87);
+            group_selection.Size = new System.Drawing.Size(354, 87);
             group_selection.TabIndex = 13;
             group_selection.TabStop = false;
             group_selection.Text = "Selection";
@@ -228,7 +228,7 @@
             // splitContainer_main
             // 
             splitContainer_main.Dock = System.Windows.Forms.DockStyle.Fill;
-            splitContainer_main.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            splitContainer_main.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             splitContainer_main.Location = new System.Drawing.Point(0, 0);
             splitContainer_main.Name = "splitContainer_main";
             // 
@@ -244,7 +244,8 @@
             splitContainer_main.Panel2.Controls.Add(groupBox_map);
             splitContainer_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
             splitContainer_main.Size = new System.Drawing.Size(897, 568);
-            splitContainer_main.SplitterDistance = 366;
+            splitContainer_main.SplitterDistance = 363;
+            splitContainer_main.SplitterWidth = 3;
             splitContainer_main.TabIndex = 14;
             // 
             // groupBox_mapTiles
@@ -254,7 +255,7 @@
             groupBox_mapTiles.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_mapTiles.Location = new System.Drawing.Point(6, 90);
             groupBox_mapTiles.Name = "groupBox_mapTiles";
-            groupBox_mapTiles.Size = new System.Drawing.Size(357, 475);
+            groupBox_mapTiles.Size = new System.Drawing.Size(354, 475);
             groupBox_mapTiles.TabIndex = 14;
             groupBox_mapTiles.TabStop = false;
             groupBox_mapTiles.Text = "Tiles";
@@ -266,7 +267,7 @@
             panel_tileView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_tileView.Location = new System.Drawing.Point(3, 44);
             panel_tileView.Name = "panel_tileView";
-            panel_tileView.Size = new System.Drawing.Size(351, 428);
+            panel_tileView.Size = new System.Drawing.Size(348, 428);
             panel_tileView.TabIndex = 2;
             // 
             // tileDisplay_tiles
@@ -295,7 +296,7 @@
             toolStrip_tiles.Location = new System.Drawing.Point(3, 19);
             toolStrip_tiles.Name = "toolStrip_tiles";
             toolStrip_tiles.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_tiles.Size = new System.Drawing.Size(351, 25);
+            toolStrip_tiles.Size = new System.Drawing.Size(348, 25);
             toolStrip_tiles.TabIndex = 1;
             toolStrip_tiles.Text = "toolStrip1";
             // 
@@ -312,6 +313,7 @@
             button_flipTilesH.Name = "button_flipTilesH";
             button_flipTilesH.Size = new System.Drawing.Size(23, 22);
             button_flipTilesH.Text = "Flip Horizontally (H, X)";
+            button_flipTilesH.Click += button_flipTilesH_Click;
             // 
             // button_flipTilesV
             // 
@@ -321,6 +323,7 @@
             button_flipTilesV.Name = "button_flipTilesV";
             button_flipTilesV.Size = new System.Drawing.Size(23, 22);
             button_flipTilesV.Text = "Flip Vertically (V, Y)";
+            button_flipTilesV.Click += button_flipTilesV_Click;
             // 
             // toolStripSeparator1
             // 
@@ -362,7 +365,7 @@
             groupBox_map.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_map.Location = new System.Drawing.Point(3, 3);
             groupBox_map.Name = "groupBox_map";
-            groupBox_map.Size = new System.Drawing.Size(518, 562);
+            groupBox_map.Size = new System.Drawing.Size(522, 562);
             groupBox_map.TabIndex = 0;
             groupBox_map.TabStop = false;
             groupBox_map.Text = "Map";
@@ -374,7 +377,7 @@
             panel_mapView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_mapView.Location = new System.Drawing.Point(3, 44);
             panel_mapView.Name = "panel_mapView";
-            panel_mapView.Size = new System.Drawing.Size(512, 515);
+            panel_mapView.Size = new System.Drawing.Size(516, 515);
             panel_mapView.TabIndex = 2;
             // 
             // tileDisplay_map
@@ -403,7 +406,7 @@
             toolStrip_map.Location = new System.Drawing.Point(3, 19);
             toolStrip_map.Name = "toolStrip_map";
             toolStrip_map.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_map.Size = new System.Drawing.Size(512, 25);
+            toolStrip_map.Size = new System.Drawing.Size(516, 25);
             toolStrip_map.TabIndex = 1;
             toolStrip_map.Text = "toolStrip1";
             // 

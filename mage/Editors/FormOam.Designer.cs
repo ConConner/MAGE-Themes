@@ -834,7 +834,7 @@
             groupBox_oamDisplay.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_oamDisplay.Name = "groupBox_oamDisplay";
             groupBox_oamDisplay.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_oamDisplay.Size = new System.Drawing.Size(828, 421);
+            groupBox_oamDisplay.Size = new System.Drawing.Size(828, 422);
             groupBox_oamDisplay.TabIndex = 4;
             groupBox_oamDisplay.TabStop = false;
             groupBox_oamDisplay.Text = "OAM Frame";
@@ -847,7 +847,7 @@
             panel_oam.Location = new System.Drawing.Point(4, 44);
             panel_oam.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_oam.Name = "panel_oam";
-            panel_oam.Size = new System.Drawing.Size(820, 374);
+            panel_oam.Size = new System.Drawing.Size(820, 375);
             panel_oam.TabIndex = 0;
             // 
             // oamView_oam
@@ -954,6 +954,7 @@
             splitContainer_views.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 6);
             splitContainer_views.Size = new System.Drawing.Size(834, 741);
             splitContainer_views.SplitterDistance = 307;
+            splitContainer_views.SplitterWidth = 3;
             splitContainer_views.TabIndex = 6;
             // 
             // panel_palette

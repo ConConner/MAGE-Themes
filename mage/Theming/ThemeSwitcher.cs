@@ -243,6 +243,11 @@ namespace mage.Theming
                 if (control is Button) control.Paint += DrawButton;
                 if (control is Label) control.Paint += DrawLabel;
                 if (control is RadioButton) control.Paint += DrawRadioButton;
+                if (control is SplitContainer)
+                {
+                    control.Paint += DrawSplitterHandle;
+                    control.Resize += SplitterResize;
+                }
             }
         }
 
@@ -380,6 +385,53 @@ namespace mage.Theming
             e.Graphics.Clear(ProjectTheme.BackgroundColor);
             using (Brush b = new SolidBrush(ProjectTheme.TextColorDisabled))
                 e.Graphics.DrawString(l.Text, l.Font, b, r);
+        }
+
+        private static void DrawSplitterHandle(object? sender, PaintEventArgs e)
+        {
+            var splitter = sender as SplitContainer;
+            if (splitter.IsSplitterFixed) return;
+            var splitterRect = splitter.SplitterRectangle;
+
+            // Define layout of splitter handle
+            int dotsWidth = 2;
+            int dotsHeight = 12;
+            int dotSize = 1;
+            int shortSpacing = 1;
+            int longSpacing = 2;
+
+            int handleWidth = dotsWidth * dotSize + (dotsWidth - 1) * shortSpacing;
+            int handleHeight = dotsHeight * dotSize + (dotsHeight - 1) * longSpacing;
+
+            // Swap all variables if orientation is not vertical
+            if (splitter.Orientation == Orientation.Horizontal)
+            {
+                (handleWidth, handleHeight) = (handleHeight, handleWidth);
+                (dotsWidth, dotsHeight) = (dotsHeight, dotsWidth);
+                (shortSpacing, longSpacing) = (longSpacing, shortSpacing);
+            }
+
+            int startX = splitterRect.X + (splitterRect.Width - handleWidth) / 2;
+            int startY = splitterRect.Y + (splitterRect.Height - handleHeight) / 2;
+
+            // Draw splitter handle
+            using (var brush = new SolidBrush(ProjectTheme.PrimaryOutline))
+            {
+                for (int row = 0; row < dotsHeight; row++)
+                {
+                    for (int col = 0; col < dotsWidth; col++)
+                    {
+                        int x = startX + col * (dotSize + shortSpacing);
+                        int y = startY + row * (dotSize + longSpacing);
+                        e.Graphics.FillRectangle(brush, x, y, dotSize, dotSize);
+                    }
+                }
+            }
+        }
+        private static void SplitterResize(object? sender, EventArgs e)
+        {
+            var splitter = sender as SplitContainer;
+            splitter.Invalidate(splitter.SplitterRectangle);
         }
 
 

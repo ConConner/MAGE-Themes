@@ -30,14 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTileTableNew));
             panel_gfxView = new mage.Controls.ExtendedPanel();
-            gfxView = new Controls.TileDisplay();
+            gfxView = new mage.Controls.TileDisplay();
             panel_Main = new System.Windows.Forms.SplitContainer();
             panel_gfxAndPal = new System.Windows.Forms.SplitContainer();
             group_palette = new System.Windows.Forms.GroupBox();
             checkBox_copyPalette = new System.Windows.Forms.CheckBox();
             checkBox_showPalette = new System.Windows.Forms.CheckBox();
-            paletteView = new Controls.TileDisplay();
-            comboBox_palette = new Theming.CustomControls.FlatComboBox();
+            paletteView = new mage.Controls.TileDisplay();
+            comboBox_palette = new mage.Theming.CustomControls.FlatComboBox();
             label_pal = new System.Windows.Forms.Label();
             group_gfx = new System.Windows.Forms.GroupBox();
             toolStrip_gfx = new System.Windows.Forms.ToolStrip();
@@ -45,34 +45,34 @@
             button_gfxZoomOut = new System.Windows.Forms.ToolStripButton();
             label_gfxZoom = new System.Windows.Forms.ToolStripLabel();
             panel_select = new mage.Controls.ExtendedPanel();
-            tab_select = new Theming.CustomControls.FlatTabControl();
+            tab_select = new mage.Theming.CustomControls.FlatTabControl();
             tabPage_tileset = new System.Windows.Forms.TabPage();
             label_height = new System.Windows.Forms.Label();
-            numericUpDown_height = new Theming.CustomControls.FlatNumericUpDown();
-            comboBox_tileset = new Theming.CustomControls.FlatComboBox();
+            numericUpDown_height = new mage.Theming.CustomControls.FlatNumericUpDown();
+            comboBox_tileset = new mage.Theming.CustomControls.FlatComboBox();
             label_tileset = new System.Windows.Forms.Label();
             tabPage_background = new System.Windows.Forms.TabPage();
             label_bg = new System.Windows.Forms.Label();
             label_room = new System.Windows.Forms.Label();
             label_area = new System.Windows.Forms.Label();
-            comboBox_size = new Theming.CustomControls.FlatComboBox();
-            comboBox_bg = new Theming.CustomControls.FlatComboBox();
-            comboBox_area = new Theming.CustomControls.FlatComboBox();
-            comboBox_room = new Theming.CustomControls.FlatComboBox();
+            comboBox_size = new mage.Theming.CustomControls.FlatComboBox();
+            comboBox_bg = new mage.Theming.CustomControls.FlatComboBox();
+            comboBox_area = new mage.Theming.CustomControls.FlatComboBox();
+            comboBox_room = new mage.Theming.CustomControls.FlatComboBox();
             label_size = new System.Windows.Forms.Label();
             tabPage_offset = new System.Windows.Forms.TabPage();
             label_shift = new System.Windows.Forms.Label();
-            numericUpDown_shift = new Theming.CustomControls.FlatNumericUpDown();
+            numericUpDown_shift = new mage.Theming.CustomControls.FlatNumericUpDown();
             button_go = new System.Windows.Forms.Button();
-            textBox_pal = new Theming.CustomControls.FlatTextBox();
-            textBox_gfx = new Theming.CustomControls.FlatTextBox();
-            textBox_ttb = new Theming.CustomControls.FlatTextBox();
+            textBox_pal = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_gfx = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_ttb = new mage.Theming.CustomControls.FlatTextBox();
             label_palette = new System.Windows.Forms.Label();
             label_graphics = new System.Windows.Forms.Label();
             label_tileTable = new System.Windows.Forms.Label();
             group_table = new System.Windows.Forms.GroupBox();
             panel_tableView = new mage.Controls.ExtendedPanel();
-            tableView = new Controls.TileDisplay();
+            tableView = new mage.Controls.TileDisplay();
             toolStrip_table = new System.Windows.Forms.ToolStrip();
             button_flipH = new System.Windows.Forms.ToolStripButton();
             button_flipV = new System.Windows.Forms.ToolStripButton();
@@ -174,6 +174,7 @@
             panel_Main.RightToLeft = System.Windows.Forms.RightToLeft.No;
             panel_Main.Size = new System.Drawing.Size(837, 639);
             panel_Main.SplitterDistance = 544;
+            panel_Main.SplitterWidth = 3;
             panel_Main.TabIndex = 1;
             // 
             // panel_gfxAndPal
@@ -664,7 +665,7 @@
             group_table.Dock = System.Windows.Forms.DockStyle.Fill;
             group_table.Location = new System.Drawing.Point(3, 3);
             group_table.Name = "group_table";
-            group_table.Size = new System.Drawing.Size(280, 633);
+            group_table.Size = new System.Drawing.Size(281, 633);
             group_table.TabIndex = 0;
             group_table.TabStop = false;
             group_table.Text = "Tile Table";
@@ -676,7 +677,7 @@
             panel_tableView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_tableView.Location = new System.Drawing.Point(3, 44);
             panel_tableView.Name = "panel_tableView";
-            panel_tableView.Size = new System.Drawing.Size(274, 586);
+            panel_tableView.Size = new System.Drawing.Size(275, 586);
             panel_tableView.TabIndex = 1;
             panel_tableView.MouseLeave += panel_tableView_MouseLeave;
             // 
@@ -710,7 +711,7 @@
             toolStrip_table.Location = new System.Drawing.Point(3, 19);
             toolStrip_table.Name = "toolStrip_table";
             toolStrip_table.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_table.Size = new System.Drawing.Size(274, 25);
+            toolStrip_table.Size = new System.Drawing.Size(275, 25);
             toolStrip_table.TabIndex = 0;
             toolStrip_table.Text = "toolStrip1";
             // 
@@ -939,8 +940,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel_gfxView;
         private Controls.TileDisplay gfxView;
         private System.Windows.Forms.SplitContainer panel_Main;
         private System.Windows.Forms.SplitContainer panel_gfxAndPal;
@@ -948,7 +947,6 @@
         private System.Windows.Forms.TabPage tabPage_tileset;
         private System.Windows.Forms.TabPage tabPage_background;
         private System.Windows.Forms.TabPage tabPage_offset;
-        private System.Windows.Forms.Panel panel_select;
         private System.Windows.Forms.GroupBox group_gfx;
         private System.Windows.Forms.GroupBox group_palette;
         private System.Windows.Forms.StatusStrip statusStrip_main;
@@ -959,7 +957,6 @@
         private System.Windows.Forms.ToolStripLabel label_gfxZoom;
         private System.Windows.Forms.Label label_pal;
         private System.Windows.Forms.ToolStrip toolStrip_table;
-        private System.Windows.Forms.Panel panel_tableView;
         private Controls.TileDisplay tableView;
         private Theming.CustomControls.FlatComboBox comboBox_palette;
         private System.Windows.Forms.ToolStripButton button_tableZoomIn;
@@ -1004,5 +1001,8 @@
         private System.Windows.Forms.Label label_palette;
         private System.Windows.Forms.Label label_graphics;
         private System.Windows.Forms.Label label_tileTable;
+        private Controls.ExtendedPanel panel_gfxView;
+        private Controls.ExtendedPanel panel_select;
+        private Controls.ExtendedPanel panel_tableView;
     }
 }
