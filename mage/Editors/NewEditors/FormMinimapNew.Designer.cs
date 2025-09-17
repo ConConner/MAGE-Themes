@@ -61,6 +61,7 @@
             panel_mapView = new mage.Controls.ExtendedPanel();
             tileDisplay_map = new mage.Controls.TileDisplay();
             toolStrip_map = new System.Windows.Forms.ToolStrip();
+            toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             button_flipMapH = new System.Windows.Forms.ToolStripButton();
             button_flipMapV = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -86,10 +87,10 @@
             // statusStrip
             // 
             statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_coor, statusLabel_tile, statusLabel_changes, statusStrip_spring, statusStrip_import, statusStrip_export, button_apply });
-            statusStrip.Location = new System.Drawing.Point(0, 568);
+            statusStrip.Location = new System.Drawing.Point(0, 569);
             statusStrip.Name = "statusStrip";
             statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            statusStrip.Size = new System.Drawing.Size(897, 24);
+            statusStrip.Size = new System.Drawing.Size(917, 24);
             statusStrip.TabIndex = 12;
             statusStrip.Text = "statusStrip1";
             // 
@@ -122,7 +123,7 @@
             // statusStrip_spring
             // 
             statusStrip_spring.Name = "statusStrip_spring";
-            statusStrip_spring.Size = new System.Drawing.Size(560, 19);
+            statusStrip_spring.Size = new System.Drawing.Size(580, 19);
             statusStrip_spring.Spring = true;
             // 
             // statusStrip_import
@@ -178,7 +179,7 @@
             group_selection.Dock = System.Windows.Forms.DockStyle.Top;
             group_selection.Location = new System.Drawing.Point(6, 3);
             group_selection.Name = "group_selection";
-            group_selection.Size = new System.Drawing.Size(354, 87);
+            group_selection.Size = new System.Drawing.Size(377, 87);
             group_selection.TabIndex = 13;
             group_selection.TabStop = false;
             group_selection.Text = "Selection";
@@ -243,8 +244,8 @@
             // 
             splitContainer_main.Panel2.Controls.Add(groupBox_map);
             splitContainer_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
-            splitContainer_main.Size = new System.Drawing.Size(897, 568);
-            splitContainer_main.SplitterDistance = 363;
+            splitContainer_main.Size = new System.Drawing.Size(917, 569);
+            splitContainer_main.SplitterDistance = 386;
             splitContainer_main.SplitterWidth = 3;
             splitContainer_main.TabIndex = 14;
             // 
@@ -255,7 +256,7 @@
             groupBox_mapTiles.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_mapTiles.Location = new System.Drawing.Point(6, 90);
             groupBox_mapTiles.Name = "groupBox_mapTiles";
-            groupBox_mapTiles.Size = new System.Drawing.Size(354, 475);
+            groupBox_mapTiles.Size = new System.Drawing.Size(377, 476);
             groupBox_mapTiles.TabIndex = 14;
             groupBox_mapTiles.TabStop = false;
             groupBox_mapTiles.Text = "Tiles";
@@ -267,7 +268,7 @@
             panel_tileView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_tileView.Location = new System.Drawing.Point(3, 44);
             panel_tileView.Name = "panel_tileView";
-            panel_tileView.Size = new System.Drawing.Size(348, 428);
+            panel_tileView.Size = new System.Drawing.Size(371, 429);
             panel_tileView.TabIndex = 2;
             // 
             // tileDisplay_tiles
@@ -285,9 +286,13 @@
             tileDisplay_tiles.TabStop = false;
             tileDisplay_tiles.Tag = "unthemed";
             tileDisplay_tiles.Text = "tileDisplay1";
+            tileDisplay_tiles.TileGridOrigin = new System.Drawing.Point(1, 1);
             tileDisplay_tiles.TileImage = null;
             tileDisplay_tiles.TileSize = 10;
             tileDisplay_tiles.Zoom = 1;
+            tileDisplay_tiles.TileMouseDown += tileDisplay_tiles_TileMouseDown;
+            tileDisplay_tiles.TileMouseUp += tileDisplay_tiles_TileMouseUp;
+            tileDisplay_tiles.TileMouseMove += tileDisplay_tiles_TileMouseMove;
             // 
             // toolStrip_tiles
             // 
@@ -296,7 +301,7 @@
             toolStrip_tiles.Location = new System.Drawing.Point(3, 19);
             toolStrip_tiles.Name = "toolStrip_tiles";
             toolStrip_tiles.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_tiles.Size = new System.Drawing.Size(348, 25);
+            toolStrip_tiles.Size = new System.Drawing.Size(371, 25);
             toolStrip_tiles.TabIndex = 1;
             toolStrip_tiles.Text = "toolStrip1";
             // 
@@ -365,7 +370,7 @@
             groupBox_map.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_map.Location = new System.Drawing.Point(3, 3);
             groupBox_map.Name = "groupBox_map";
-            groupBox_map.Size = new System.Drawing.Size(522, 562);
+            groupBox_map.Size = new System.Drawing.Size(519, 563);
             groupBox_map.TabIndex = 0;
             groupBox_map.TabStop = false;
             groupBox_map.Text = "Map";
@@ -377,15 +382,15 @@
             panel_mapView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_mapView.Location = new System.Drawing.Point(3, 44);
             panel_mapView.Name = "panel_mapView";
-            panel_mapView.Size = new System.Drawing.Size(516, 515);
+            panel_mapView.Size = new System.Drawing.Size(513, 516);
             panel_mapView.TabIndex = 2;
             // 
             // tileDisplay_map
             // 
             tileDisplay_map.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
             tileDisplay_map.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            tileDisplay_map.GridCellHeight = 16;
-            tileDisplay_map.GridCellWidth = 16;
+            tileDisplay_map.GridCellHeight = 8;
+            tileDisplay_map.GridCellWidth = 8;
             tileDisplay_map.Location = new System.Drawing.Point(0, 6);
             tileDisplay_map.Name = "tileDisplay_map";
             tileDisplay_map.ShowGrid = false;
@@ -395,20 +400,29 @@
             tileDisplay_map.TabStop = false;
             tileDisplay_map.Tag = "unthemed";
             tileDisplay_map.Text = "tileDisplay1";
+            tileDisplay_map.TileGridOrigin = new System.Drawing.Point(0, 0);
             tileDisplay_map.TileImage = null;
             tileDisplay_map.TileSize = 8;
             tileDisplay_map.Zoom = 1;
+            tileDisplay_map.TileMouseDown += tileDisplay_map_TileMouseDown;
+            tileDisplay_map.TileMouseUp += tileDisplay_map_TileMouseUp;
+            tileDisplay_map.TileMouseMove += tileDisplay_map_TileMouseMove;
             // 
             // toolStrip_map
             // 
             toolStrip_map.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_map.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_flipMapH, button_flipMapV, toolStripSeparator4, button_grid, toolStripSeparator5, button_mapZoomIn, button_mapZoomOut, label_mapZoom });
+            toolStrip_map.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripSeparator6, button_flipMapH, button_flipMapV, toolStripSeparator4, button_grid, toolStripSeparator5, button_mapZoomIn, button_mapZoomOut, label_mapZoom });
             toolStrip_map.Location = new System.Drawing.Point(3, 19);
             toolStrip_map.Name = "toolStrip_map";
             toolStrip_map.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_map.Size = new System.Drawing.Size(516, 25);
+            toolStrip_map.Size = new System.Drawing.Size(513, 25);
             toolStrip_map.TabIndex = 1;
             toolStrip_map.Text = "toolStrip1";
+            // 
+            // toolStripSeparator6
+            // 
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
             // button_flipMapH
             // 
@@ -444,6 +458,7 @@
             button_grid.Name = "button_grid";
             button_grid.Size = new System.Drawing.Size(23, 22);
             button_grid.Text = "Grid (G)";
+            button_grid.CheckStateChanged += button_grid_CheckStateChanged;
             // 
             // toolStripSeparator5
             // 
@@ -481,7 +496,7 @@
             // FormMinimapNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(897, 592);
+            ClientSize = new System.Drawing.Size(917, 593);
             Controls.Add(splitContainer_main);
             Controls.Add(statusStrip);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
@@ -554,5 +569,6 @@
         private Controls.TileDisplay tileDisplay_tiles;
         private Controls.ExtendedPanel panel_mapView;
         private Controls.TileDisplay tileDisplay_map;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }

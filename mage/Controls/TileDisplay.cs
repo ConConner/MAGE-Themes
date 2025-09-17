@@ -86,6 +86,11 @@ public partial class TileDisplay : Control
         }
     }
     private int zoom = 0;
+
+    /// <summary>
+    /// The origin from where to calculate the tile positions in pixels
+    /// </summary>
+    public Point TileGridOrigin { get; set; } = new(0, 0);
     #endregion
 
     #region Events
@@ -123,7 +128,7 @@ public partial class TileDisplay : Control
             e.Button,
             e.Clicks,
             pixelPos,
-            new Point(e.X, e.Y),
+            new Point(e.X - TileGridOrigin.X, e.Y - TileGridOrigin.Y),
             TileSize,
             e.Delta
         );
@@ -134,7 +139,7 @@ public partial class TileDisplay : Control
     public TileDisplay()
     {
         InitializeComponent();
-    
+
         // Setup
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
         BackgroundImageLayout = ImageLayout.Stretch;
@@ -142,7 +147,7 @@ public partial class TileDisplay : Control
         TabStop = false;
 
         Drawables.Clear();
-        
+
         //Bind Events
         MouseDown += (object? s, MouseEventArgs e) => TileMouseDown?.Invoke(this, generateArgs(e));
         MouseUp += (object? s, MouseEventArgs e) => TileMouseUp?.Invoke(this, generateArgs(e));

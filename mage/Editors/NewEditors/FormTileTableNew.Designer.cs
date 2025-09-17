@@ -143,6 +143,7 @@
             gfxView.TabStop = false;
             gfxView.Tag = "unthemed";
             gfxView.Text = "tileDisplay1";
+            gfxView.TileGridOrigin = new System.Drawing.Point(0, 0);
             gfxView.TileImage = null;
             gfxView.TileSize = 8;
             gfxView.Zoom = 0;
@@ -257,6 +258,7 @@
             paletteView.TabIndex = 2;
             paletteView.TabStop = false;
             paletteView.Text = "tileDisplay1";
+            paletteView.TileGridOrigin = new System.Drawing.Point(0, 0);
             paletteView.TileImage = null;
             paletteView.TileSize = 17;
             paletteView.Visible = false;
@@ -696,6 +698,7 @@
             tableView.TabStop = false;
             tableView.Tag = "unthemed";
             tableView.Text = "tileDisplay1";
+            tableView.TileGridOrigin = new System.Drawing.Point(0, 0);
             tableView.TileImage = null;
             tableView.TileSize = 8;
             tableView.Zoom = 0;

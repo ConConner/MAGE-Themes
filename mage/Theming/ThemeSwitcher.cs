@@ -394,21 +394,19 @@ namespace mage.Theming
             var splitterRect = splitter.SplitterRectangle;
 
             // Define layout of splitter handle
-            int dotsWidth = 2;
-            int dotsHeight = 12;
-            int dotSize = 1;
-            int shortSpacing = 1;
-            int longSpacing = 2;
+            int dotsWide = 1;
+            int dotsHigh = 10;
+            int dotSize = 3;
+            int spacing = 3;
 
-            int handleWidth = dotsWidth * dotSize + (dotsWidth - 1) * shortSpacing;
-            int handleHeight = dotsHeight * dotSize + (dotsHeight - 1) * longSpacing;
+            int handleWidth = dotsWide * dotSize + (dotsWide - 1) * spacing;
+            int handleHeight = dotsHigh * dotSize + (dotsHigh - 1) * spacing;
 
             // Swap all variables if orientation is not vertical
             if (splitter.Orientation == Orientation.Horizontal)
             {
                 (handleWidth, handleHeight) = (handleHeight, handleWidth);
-                (dotsWidth, dotsHeight) = (dotsHeight, dotsWidth);
-                (shortSpacing, longSpacing) = (longSpacing, shortSpacing);
+                (dotsWide, dotsHigh) = (dotsHigh, dotsWide);
             }
 
             int startX = splitterRect.X + (splitterRect.Width - handleWidth) / 2;
@@ -417,12 +415,12 @@ namespace mage.Theming
             // Draw splitter handle
             using (var brush = new SolidBrush(ProjectTheme.PrimaryOutline))
             {
-                for (int row = 0; row < dotsHeight; row++)
+                for (int row = 0; row < dotsHigh; row++)
                 {
-                    for (int col = 0; col < dotsWidth; col++)
+                    for (int col = 0; col < dotsWide; col++)
                     {
-                        int x = startX + col * (dotSize + shortSpacing);
-                        int y = startY + row * (dotSize + longSpacing);
+                        int x = startX + col * (dotSize + spacing);
+                        int y = startY + row * (dotSize + spacing);
                         e.Graphics.FillRectangle(brush, x, y, dotSize, dotSize);
                     }
                 }
