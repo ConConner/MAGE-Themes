@@ -3040,5 +3040,10 @@ namespace mage
         {
             new FormOption("Project Settings", PageLists.ProjectOptionsPages, "Overview").ShowDialog();
         }
+
+        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            comboBox_clipdata.Invalidate();
+        }
     }
 }

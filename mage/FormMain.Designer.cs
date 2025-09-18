@@ -274,6 +274,7 @@
             toolStrip_patches = new System.Windows.Forms.ToolStripButton();
             comboBox_spriteset = new mage.Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
+            splitContainer1 = new System.Windows.Forms.SplitContainer();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -287,6 +288,10 @@
             groupBox_editBG.SuspendLayout();
             statusStrip.SuspendLayout();
             toolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip
@@ -296,7 +301,7 @@
             menuStrip.Name = "menuStrip";
             menuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
             menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            menuStrip.Size = new System.Drawing.Size(929, 24);
+            menuStrip.Size = new System.Drawing.Size(796, 24);
             menuStrip.TabIndex = 0;
             // 
             // menuStrip_file
@@ -1360,11 +1365,10 @@
             groupBox_location.Controls.Add(label_room);
             groupBox_location.Controls.Add(label_area);
             groupBox_location.Enabled = false;
-            groupBox_location.Location = new System.Drawing.Point(14, 60);
-            groupBox_location.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_location.Location = new System.Drawing.Point(14, 6);
             groupBox_location.Name = "groupBox_location";
             groupBox_location.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_location.Size = new System.Drawing.Size(158, 87);
+            groupBox_location.Size = new System.Drawing.Size(140, 87);
             groupBox_location.TabIndex = 0;
             groupBox_location.TabStop = false;
             groupBox_location.Text = "Location";
@@ -1376,7 +1380,7 @@
             comboBox_room.Location = new System.Drawing.Point(57, 50);
             comboBox_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_room.Name = "comboBox_room";
-            comboBox_room.Size = new System.Drawing.Size(89, 23);
+            comboBox_room.Size = new System.Drawing.Size(73, 23);
             comboBox_room.TabIndex = 10;
             comboBox_room.SelectedIndexChanged += comboBox_room_SelectedIndexChanged;
             comboBox_room.KeyPress += comboBox_KeyPress;
@@ -1388,7 +1392,7 @@
             comboBox_area.Location = new System.Drawing.Point(57, 21);
             comboBox_area.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_area.Name = "comboBox_area";
-            comboBox_area.Size = new System.Drawing.Size(89, 23);
+            comboBox_area.Size = new System.Drawing.Size(73, 23);
             comboBox_area.TabIndex = 9;
             comboBox_area.SelectedIndexChanged += comboBox_area_SelectedIndexChanged;
             // 
@@ -1414,17 +1418,15 @@
             // 
             // groupBox_tileset
             // 
-            groupBox_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            groupBox_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBox_tileset.Controls.Add(panel_tileset);
             groupBox_tileset.Controls.Add(toolStrip_gfx);
             groupBox_tileset.Controls.Add(panel_clipdata);
             groupBox_tileset.Enabled = false;
-            groupBox_tileset.Location = new System.Drawing.Point(14, 185);
-            groupBox_tileset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_tileset.MinimumSize = new System.Drawing.Size(335, 358);
+            groupBox_tileset.Location = new System.Drawing.Point(14, 130);
             groupBox_tileset.Name = "groupBox_tileset";
             groupBox_tileset.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_tileset.Size = new System.Drawing.Size(335, 358);
+            groupBox_tileset.Size = new System.Drawing.Size(282, 288);
             groupBox_tileset.TabIndex = 4;
             groupBox_tileset.TabStop = false;
             groupBox_tileset.Text = "Tileset";
@@ -1437,7 +1439,7 @@
             panel_tileset.Location = new System.Drawing.Point(4, 72);
             panel_tileset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_tileset.Name = "panel_tileset";
-            panel_tileset.Size = new System.Drawing.Size(327, 283);
+            panel_tileset.Size = new System.Drawing.Size(274, 213);
             panel_tileset.TabIndex = 0;
             // 
             // tileView
@@ -1471,7 +1473,7 @@
             toolStrip_gfx.Location = new System.Drawing.Point(4, 47);
             toolStrip_gfx.Name = "toolStrip_gfx";
             toolStrip_gfx.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_gfx.Size = new System.Drawing.Size(327, 25);
+            toolStrip_gfx.Size = new System.Drawing.Size(274, 25);
             toolStrip_gfx.TabIndex = 14;
             toolStrip_gfx.Text = "toolStrip1";
             // 
@@ -1509,16 +1511,16 @@
             panel_clipdata.Dock = System.Windows.Forms.DockStyle.Top;
             panel_clipdata.Location = new System.Drawing.Point(4, 19);
             panel_clipdata.Name = "panel_clipdata";
-            panel_clipdata.Size = new System.Drawing.Size(327, 28);
+            panel_clipdata.Size = new System.Drawing.Size(274, 28);
             panel_clipdata.TabIndex = 13;
             // 
             // button_clipdata_shortcuts
             // 
             button_clipdata_shortcuts.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             button_clipdata_shortcuts.Image = Properties.Resources.shortcut_shot;
-            button_clipdata_shortcuts.Location = new System.Drawing.Point(303, -1);
+            button_clipdata_shortcuts.Location = new System.Drawing.Point(247, 0);
             button_clipdata_shortcuts.Name = "button_clipdata_shortcuts";
-            button_clipdata_shortcuts.Size = new System.Drawing.Size(24, 24);
+            button_clipdata_shortcuts.Size = new System.Drawing.Size(23, 23);
             button_clipdata_shortcuts.TabIndex = 12;
             ToolTip.SetToolTip(button_clipdata_shortcuts, "Clipdata Shortcuts");
             button_clipdata_shortcuts.UseVisualStyleBackColor = true;
@@ -1530,16 +1532,16 @@
             comboBox_clipdata.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBox_clipdata.DropDownWidth = 228;
             comboBox_clipdata.FormattingEnabled = true;
-            comboBox_clipdata.Location = new System.Drawing.Point(62, 0);
+            comboBox_clipdata.Location = new System.Drawing.Point(53, 1);
             comboBox_clipdata.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_clipdata.Name = "comboBox_clipdata";
-            comboBox_clipdata.Size = new System.Drawing.Size(234, 23);
+            comboBox_clipdata.Size = new System.Drawing.Size(187, 23);
             comboBox_clipdata.TabIndex = 11;
             // 
             // label_clipdata
             // 
             label_clipdata.AutoSize = true;
-            label_clipdata.Location = new System.Drawing.Point(0, 3);
+            label_clipdata.Location = new System.Drawing.Point(0, 4);
             label_clipdata.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_clipdata.Name = "label_clipdata";
             label_clipdata.Size = new System.Drawing.Size(54, 15);
@@ -1548,39 +1550,37 @@
             // 
             // groupBox_room
             // 
-            groupBox_room.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBox_room.Controls.Add(panel_room);
+            groupBox_room.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_room.Enabled = false;
-            groupBox_room.Location = new System.Drawing.Point(356, 60);
+            groupBox_room.Location = new System.Drawing.Point(3, 6);
             groupBox_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_room.MinimumSize = new System.Drawing.Size(559, 482);
             groupBox_room.Name = "groupBox_room";
             groupBox_room.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_room.Size = new System.Drawing.Size(559, 482);
+            groupBox_room.Size = new System.Drawing.Size(477, 412);
             groupBox_room.TabIndex = 0;
             groupBox_room.TabStop = false;
             groupBox_room.Text = "Room";
             // 
             // panel_room
             // 
-            panel_room.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             panel_room.AutoScroll = true;
             panel_room.Controls.Add(roomView);
-            panel_room.Location = new System.Drawing.Point(8, 22);
+            panel_room.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel_room.Location = new System.Drawing.Point(4, 19);
             panel_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            panel_room.MinimumSize = new System.Drawing.Size(542, 453);
             panel_room.Name = "panel_room";
-            panel_room.Size = new System.Drawing.Size(542, 453);
+            panel_room.Size = new System.Drawing.Size(469, 390);
             panel_room.TabIndex = 0;
             // 
             // roomView
             // 
             roomView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             roomView.ContextMenuStrip = contextMenu;
-            roomView.Location = new System.Drawing.Point(0, 0);
+            roomView.Location = new System.Drawing.Point(6, 3);
             roomView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             roomView.Name = "roomView";
-            roomView.Size = new System.Drawing.Size(523, 434);
+            roomView.Size = new System.Drawing.Size(129, 123);
             roomView.TabIndex = 0;
             roomView.TabStop = false;
             roomView.DoubleClick += roomView_DoubleClick;
@@ -1714,11 +1714,10 @@
             groupBox_viewBG.Controls.Add(checkBox_viewBG1);
             groupBox_viewBG.Controls.Add(checkBox_viewBG0);
             groupBox_viewBG.Enabled = false;
-            groupBox_viewBG.Location = new System.Drawing.Point(178, 60);
-            groupBox_viewBG.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_viewBG.Location = new System.Drawing.Point(160, 6);
             groupBox_viewBG.Name = "groupBox_viewBG";
             groupBox_viewBG.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_viewBG.Size = new System.Drawing.Size(82, 118);
+            groupBox_viewBG.Size = new System.Drawing.Size(65, 118);
             groupBox_viewBG.TabIndex = 2;
             groupBox_viewBG.TabStop = false;
             groupBox_viewBG.Text = "View";
@@ -1778,11 +1777,10 @@
             groupBox_editBG.Controls.Add(checkBox_editBG1);
             groupBox_editBG.Controls.Add(checkBox_editBG0);
             groupBox_editBG.Enabled = false;
-            groupBox_editBG.Location = new System.Drawing.Point(267, 60);
-            groupBox_editBG.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_editBG.Location = new System.Drawing.Point(231, 6);
             groupBox_editBG.Name = "groupBox_editBG";
             groupBox_editBG.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_editBG.Size = new System.Drawing.Size(82, 118);
+            groupBox_editBG.Size = new System.Drawing.Size(65, 118);
             groupBox_editBG.TabIndex = 3;
             groupBox_editBG.TabStop = false;
             groupBox_editBG.Tag = "";
@@ -1839,12 +1837,12 @@
             // statusStrip
             // 
             statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_coor, statusLabel_sel, statusLabel_clip, lbl_spring, statusStrip_emulator, statusStrip_theme, statusStrip_zoom });
-            statusStrip.Location = new System.Drawing.Point(0, 549);
+            statusStrip.Location = new System.Drawing.Point(0, 473);
             statusStrip.Name = "statusStrip";
             statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
             statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             statusStrip.ShowItemToolTips = true;
-            statusStrip.Size = new System.Drawing.Size(929, 24);
+            statusStrip.Size = new System.Drawing.Size(796, 24);
             statusStrip.TabIndex = 0;
             // 
             // statusLabel_coor
@@ -1882,7 +1880,7 @@
             // lbl_spring
             // 
             lbl_spring.Name = "lbl_spring";
-            lbl_spring.Size = new System.Drawing.Size(451, 19);
+            lbl_spring.Size = new System.Drawing.Size(318, 19);
             lbl_spring.Spring = true;
             // 
             // statusStrip_emulator
@@ -1949,8 +1947,8 @@
             // 
             label_spriteset.AutoSize = true;
             label_spriteset.Enabled = false;
-            label_spriteset.Location = new System.Drawing.Point(14, 156);
-            label_spriteset.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_spriteset.Location = new System.Drawing.Point(14, 104);
+            label_spriteset.Margin = new System.Windows.Forms.Padding(3);
             label_spriteset.Name = "label_spriteset";
             label_spriteset.Size = new System.Drawing.Size(55, 15);
             label_spriteset.TabIndex = 8;
@@ -1964,7 +1962,7 @@
             toolStrip.Name = "toolStrip";
             toolStrip.Padding = new System.Windows.Forms.Padding(4, 0, 1, 0);
             toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip.Size = new System.Drawing.Size(929, 25);
+            toolStrip.Size = new System.Drawing.Size(796, 25);
             toolStrip.TabIndex = 0;
             // 
             // toolStrip_open
@@ -2313,35 +2311,55 @@
             // 
             comboBox_spriteset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBox_spriteset.FormattingEnabled = true;
-            comboBox_spriteset.Location = new System.Drawing.Point(81, 153);
-            comboBox_spriteset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_spriteset.Location = new System.Drawing.Point(71, 101);
             comboBox_spriteset.Name = "comboBox_spriteset";
-            comboBox_spriteset.Size = new System.Drawing.Size(79, 23);
+            comboBox_spriteset.Size = new System.Drawing.Size(73, 23);
             comboBox_spriteset.TabIndex = 11;
             comboBox_spriteset.SelectedIndexChanged += comboBox_spriteset_SelectedIndexChanged;
+            // 
+            // splitContainer1
+            // 
+            splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            splitContainer1.Location = new System.Drawing.Point(0, 49);
+            splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(groupBox_location);
+            splitContainer1.Panel1.Controls.Add(groupBox_viewBG);
+            splitContainer1.Panel1.Controls.Add(comboBox_spriteset);
+            splitContainer1.Panel1.Controls.Add(groupBox_editBG);
+            splitContainer1.Panel1.Controls.Add(label_spriteset);
+            splitContainer1.Panel1.Controls.Add(groupBox_tileset);
+            splitContainer1.Panel1MinSize = 299;
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(groupBox_room);
+            splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(3, 6, 14, 6);
+            splitContainer1.Panel2MinSize = 300;
+            splitContainer1.Size = new System.Drawing.Size(796, 424);
+            splitContainer1.SplitterDistance = 299;
+            splitContainer1.SplitterWidth = 3;
+            splitContainer1.TabIndex = 12;
+            splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
             // 
             // FormMain
             // 
             AllowDrop = true;
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(929, 573);
-            Controls.Add(comboBox_spriteset);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            ClientSize = new System.Drawing.Size(796, 497);
+            Controls.Add(splitContainer1);
             Controls.Add(toolStrip);
-            Controls.Add(label_spriteset);
             Controls.Add(statusStrip);
-            Controls.Add(groupBox_editBG);
-            Controls.Add(groupBox_viewBG);
-            Controls.Add(groupBox_room);
-            Controls.Add(groupBox_tileset);
-            Controls.Add(groupBox_location);
             Controls.Add(menuStrip);
             HelpButton = true;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             MainMenuStrip = menuStrip;
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            MinimumSize = new System.Drawing.Size(945, 612);
+            MinimumSize = new System.Drawing.Size(812, 536);
             Name = "FormMain";
             Text = "MAGE Themes";
             FormClosing += FormMain_FormClosing;
@@ -2370,6 +2388,11 @@
             statusStrip.PerformLayout();
             toolStrip.ResumeLayout(false);
             toolStrip.PerformLayout();
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel1.PerformLayout();
+            splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2620,6 +2643,7 @@
         private System.Windows.Forms.ToolStripButton button_tilesZoomIn;
         private System.Windows.Forms.ToolStripButton button_tilesZoomOut;
         private System.Windows.Forms.ToolStripLabel label_tileZoom;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
 
