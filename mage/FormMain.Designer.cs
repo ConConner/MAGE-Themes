@@ -181,11 +181,16 @@
             label_room = new System.Windows.Forms.Label();
             label_area = new System.Windows.Forms.Label();
             groupBox_tileset = new System.Windows.Forms.GroupBox();
+            panel_tileset = new mage.Controls.ExtendedPanel();
+            tileView = new mage.Controls.TileDisplay();
+            toolStrip_gfx = new System.Windows.Forms.ToolStrip();
+            button_tilesZoomIn = new System.Windows.Forms.ToolStripButton();
+            button_tilesZoomOut = new System.Windows.Forms.ToolStripButton();
+            label_tileZoom = new System.Windows.Forms.ToolStripLabel();
+            panel_clipdata = new System.Windows.Forms.Panel();
             button_clipdata_shortcuts = new System.Windows.Forms.Button();
             comboBox_clipdata = new mage.Theming.CustomControls.FlatComboBox();
             label_clipdata = new System.Windows.Forms.Label();
-            panel_tileset = new mage.Controls.ExtendedPanel();
-            tileView = new TileView();
             groupBox_room = new System.Windows.Forms.GroupBox();
             panel_room = new mage.Controls.ExtendedPanel();
             roomView = new RoomView();
@@ -273,6 +278,8 @@
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
             panel_tileset.SuspendLayout();
+            toolStrip_gfx.SuspendLayout();
+            panel_clipdata.SuspendLayout();
             groupBox_room.SuspendLayout();
             panel_room.SuspendLayout();
             contextMenu.SuspendLayout();
@@ -1408,10 +1415,9 @@
             // groupBox_tileset
             // 
             groupBox_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            groupBox_tileset.Controls.Add(button_clipdata_shortcuts);
-            groupBox_tileset.Controls.Add(comboBox_clipdata);
-            groupBox_tileset.Controls.Add(label_clipdata);
             groupBox_tileset.Controls.Add(panel_tileset);
+            groupBox_tileset.Controls.Add(toolStrip_gfx);
+            groupBox_tileset.Controls.Add(panel_clipdata);
             groupBox_tileset.Enabled = false;
             groupBox_tileset.Location = new System.Drawing.Point(14, 185);
             groupBox_tileset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1423,10 +1429,94 @@
             groupBox_tileset.TabStop = false;
             groupBox_tileset.Text = "Tileset";
             // 
+            // panel_tileset
+            // 
+            panel_tileset.AutoScroll = true;
+            panel_tileset.Controls.Add(tileView);
+            panel_tileset.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel_tileset.Location = new System.Drawing.Point(4, 72);
+            panel_tileset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panel_tileset.Name = "panel_tileset";
+            panel_tileset.Size = new System.Drawing.Size(327, 283);
+            panel_tileset.TabIndex = 0;
+            // 
+            // tileView
+            // 
+            tileView.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
+            tileView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            tileView.GridCellHeight = 16;
+            tileView.GridCellWidth = 16;
+            tileView.Location = new System.Drawing.Point(0, 0);
+            tileView.Name = "tileView";
+            tileView.ShowGrid = false;
+            tileView.ShowOamOrigin = false;
+            tileView.Size = new System.Drawing.Size(0, 0);
+            tileView.TabIndex = 0;
+            tileView.TabStop = false;
+            tileView.Text = "tileDisplay1";
+            tileView.TileGridOrigin = new System.Drawing.Point(0, 0);
+            tileView.TileImage = null;
+            tileView.TileSize = 16;
+            tileView.Zoom = 0;
+            tileView.TileMouseDown += tileView_MouseDown;
+            tileView.TileMouseUp += tileView_MouseUp;
+            tileView.TileMouseMove += tileView_MouseMove;
+            tileView.Scrolled += tileView_Scrolled;
+            tileView.MouseLeave += tileView_MouseLeave;
+            // 
+            // toolStrip_gfx
+            // 
+            toolStrip_gfx.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_tilesZoomIn, button_tilesZoomOut, label_tileZoom });
+            toolStrip_gfx.Location = new System.Drawing.Point(4, 47);
+            toolStrip_gfx.Name = "toolStrip_gfx";
+            toolStrip_gfx.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            toolStrip_gfx.Size = new System.Drawing.Size(327, 25);
+            toolStrip_gfx.TabIndex = 14;
+            toolStrip_gfx.Text = "toolStrip1";
+            // 
+            // button_tilesZoomIn
+            // 
+            button_tilesZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_tilesZoomIn.Image = Properties.Resources.zoom_in;
+            button_tilesZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_tilesZoomIn.Name = "button_tilesZoomIn";
+            button_tilesZoomIn.Size = new System.Drawing.Size(23, 22);
+            button_tilesZoomIn.Text = "Zoom In";
+            button_tilesZoomIn.Click += button_tilesZoomIn_Click;
+            // 
+            // button_tilesZoomOut
+            // 
+            button_tilesZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_tilesZoomOut.Image = Properties.Resources.zoom_out;
+            button_tilesZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_tilesZoomOut.Name = "button_tilesZoomOut";
+            button_tilesZoomOut.Size = new System.Drawing.Size(23, 22);
+            button_tilesZoomOut.Text = "Zoom Out";
+            button_tilesZoomOut.Click += button_tilesZoomOut_Click;
+            // 
+            // label_tileZoom
+            // 
+            label_tileZoom.Name = "label_tileZoom";
+            label_tileZoom.Size = new System.Drawing.Size(35, 22);
+            label_tileZoom.Text = "100%";
+            // 
+            // panel_clipdata
+            // 
+            panel_clipdata.Controls.Add(button_clipdata_shortcuts);
+            panel_clipdata.Controls.Add(comboBox_clipdata);
+            panel_clipdata.Controls.Add(label_clipdata);
+            panel_clipdata.Dock = System.Windows.Forms.DockStyle.Top;
+            panel_clipdata.Location = new System.Drawing.Point(4, 19);
+            panel_clipdata.Name = "panel_clipdata";
+            panel_clipdata.Size = new System.Drawing.Size(327, 28);
+            panel_clipdata.TabIndex = 13;
+            // 
             // button_clipdata_shortcuts
             // 
+            button_clipdata_shortcuts.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             button_clipdata_shortcuts.Image = Properties.Resources.shortcut_shot;
-            button_clipdata_shortcuts.Location = new System.Drawing.Point(303, 22);
+            button_clipdata_shortcuts.Location = new System.Drawing.Point(303, -1);
             button_clipdata_shortcuts.Name = "button_clipdata_shortcuts";
             button_clipdata_shortcuts.Size = new System.Drawing.Size(24, 24);
             button_clipdata_shortcuts.TabIndex = 12;
@@ -1436,50 +1526,25 @@
             // 
             // comboBox_clipdata
             // 
+            comboBox_clipdata.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBox_clipdata.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBox_clipdata.DropDownWidth = 228;
             comboBox_clipdata.FormattingEnabled = true;
-            comboBox_clipdata.Location = new System.Drawing.Point(68, 22);
+            comboBox_clipdata.Location = new System.Drawing.Point(62, 0);
             comboBox_clipdata.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_clipdata.Name = "comboBox_clipdata";
-            comboBox_clipdata.Size = new System.Drawing.Size(228, 23);
+            comboBox_clipdata.Size = new System.Drawing.Size(234, 23);
             comboBox_clipdata.TabIndex = 11;
             // 
             // label_clipdata
             // 
             label_clipdata.AutoSize = true;
-            label_clipdata.Location = new System.Drawing.Point(8, 27);
+            label_clipdata.Location = new System.Drawing.Point(0, 3);
             label_clipdata.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_clipdata.Name = "label_clipdata";
             label_clipdata.Size = new System.Drawing.Size(54, 15);
             label_clipdata.TabIndex = 0;
             label_clipdata.Text = "Clipdata:";
-            // 
-            // panel_tileset
-            // 
-            panel_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            panel_tileset.AutoScroll = true;
-            panel_tileset.Controls.Add(tileView);
-            panel_tileset.Location = new System.Drawing.Point(8, 55);
-            panel_tileset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            panel_tileset.MinimumSize = new System.Drawing.Size(318, 295);
-            panel_tileset.Name = "panel_tileset";
-            panel_tileset.Size = new System.Drawing.Size(318, 295);
-            panel_tileset.TabIndex = 0;
-            // 
-            // tileView
-            // 
-            tileView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            tileView.Location = new System.Drawing.Point(0, 0);
-            tileView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tileView.Name = "tileView";
-            tileView.Size = new System.Drawing.Size(299, 295);
-            tileView.TabIndex = 0;
-            tileView.TabStop = false;
-            tileView.MouseDown += tileView_MouseDown;
-            tileView.MouseLeave += tileView_MouseLeave;
-            tileView.MouseMove += tileView_MouseMove;
-            tileView.MouseUp += tileView_MouseUp;
             // 
             // groupBox_room
             // 
@@ -2290,6 +2355,10 @@
             groupBox_tileset.ResumeLayout(false);
             groupBox_tileset.PerformLayout();
             panel_tileset.ResumeLayout(false);
+            toolStrip_gfx.ResumeLayout(false);
+            toolStrip_gfx.PerformLayout();
+            panel_clipdata.ResumeLayout(false);
+            panel_clipdata.PerformLayout();
             groupBox_room.ResumeLayout(false);
             panel_room.ResumeLayout(false);
             contextMenu.ResumeLayout(false);
@@ -2428,7 +2497,6 @@
         private System.Windows.Forms.ToolStripButton toolStrip_animation;
         private System.Windows.Forms.ToolStripButton toolStrip_tileTable;
         private System.Windows.Forms.ToolStripMenuItem menuItem_tileTableEditor;
-        private TileView tileView;
         private RoomView roomView;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem contextItem_addSprite;
@@ -2546,6 +2614,12 @@
         public System.Windows.Forms.ToolStripMenuItem menuItem_tooltips;
         private System.Windows.Forms.ToolStripMenuItem menuItem_projectSettings;
         private System.Windows.Forms.ToolStripDropDownButton statusStrip_emulator;
+        private Controls.TileDisplay tileView;
+        private System.Windows.Forms.Panel panel_clipdata;
+        private System.Windows.Forms.ToolStrip toolStrip_gfx;
+        private System.Windows.Forms.ToolStripButton button_tilesZoomIn;
+        private System.Windows.Forms.ToolStripButton button_tilesZoomOut;
+        private System.Windows.Forms.ToolStripLabel label_tileZoom;
     }
 }
 

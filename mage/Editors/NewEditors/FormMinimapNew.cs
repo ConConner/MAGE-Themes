@@ -876,6 +876,23 @@ public partial class FormMinimapNew : Form, Editor
         button_tilesZoomOut.Enabled = tileDisplay_tiles.Zoom > 0;
         label_tilesZoom.Text = $"{1 << tileDisplay_tiles.Zoom}00%";
     }
+
+    private void tileDisplay_tiles_Scrolled(object sender, MouseEventArgs e)
+    {
+        if ((ModifierKeys & Keys.Control) == Keys.Control)
+        {
+            if (e.Delta > 0) UpdateTilesZoom(tileDisplay_tiles.Zoom + 1);
+            if (e.Delta < 0) UpdateTilesZoom(tileDisplay_tiles.Zoom - 1);
+        }
+    }
+    private void tileDisplay_map_Scrolled(object sender, MouseEventArgs e)
+    {
+        if ((ModifierKeys & Keys.Control) == Keys.Control)
+        {
+            if (e.Delta > 0) UpdateMapZoom(tileDisplay_map.Zoom + 1);
+            if (e.Delta < 0) UpdateMapZoom(tileDisplay_map.Zoom - 1);
+        }
+    }
     #endregion
 
     #region Import / Export
@@ -952,7 +969,4 @@ public partial class FormMinimapNew : Form, Editor
         }
     }
     #endregion
-
-
-
 }
