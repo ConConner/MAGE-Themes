@@ -34,6 +34,8 @@ public partial class FormMinimapNew : Form, Editor
         public bool yFlip { get; set; } = false;
         public int Palette { get; set; } = 0;
 
+        public int Flip => (xFlip ? 1 : 0) | (yFlip ? 2 : 0);
+
         public static implicit operator ushort(MapTile t) => (ushort)(t.TileID | (t.xFlip ? 0x400 : 0) | (t.yFlip ? 0x800 : 0) | t.Palette << 12);
         public static implicit operator MapTile(ushort v) => new(v);
     }
@@ -85,6 +87,12 @@ public partial class FormMinimapNew : Form, Editor
         set
         {
             if (selectedArea == value) return;
+            if (status.UnsavedChanges && !CheckUnsaved())
+            {
+                comboBox_area.SelectedIndex = selectedArea;
+                return;
+            }
+
             selectedArea = value;
             LoadMap();
         }
@@ -139,7 +147,6 @@ public partial class FormMinimapNew : Form, Editor
             button_flipMapH.Enabled = value;
             button_flipMapV.Enabled = value;
             comboBox_mapType.Enabled = value;
-            comboBox_mapType.SelectedIndex = -1;
         }
     }
     #endregion
@@ -147,6 +154,8 @@ public partial class FormMinimapNew : Form, Editor
     public FormMinimapNew(FormMain main)
     {
         InitializeComponent();
+
+        splitContainer_main.SplitterDistance = 386; // Theres a WinForms Designer bug that resizes this splitter after every build
 
         ThemeSwitcher.ChangeTheme(Controls, this);
         ThemeSwitcher.InjectPaintOverrides(Controls);
@@ -172,7 +181,31 @@ public partial class FormMinimapNew : Form, Editor
 
     public void UpdateEditor()
     {
+        int paletteOffset = Version.MinimapPaletteOffset;
+        palette = new Palette(romStream, paletteOffset, numOfPalettes);
+        palette.SetARGB(1, 0, 0);
 
+        DrawTiles();
+        DrawMap();
+    }
+
+    private void Save()
+    {
+        ROM.SaveMinimap(LoadedMap);
+        status.Save();
+    }
+
+    /// <summary>
+    /// Prompts the user if they want to save the current changes or cancel.
+    /// </summary>
+    /// <returns>False if cancelled. True for other options. Saves if yes is clicked</returns>
+    private bool CheckUnsaved()
+    {
+        DialogResult result = MessageBox.Show("Do you want to save changes to the Map?",
+            "Unsaved Changes", MessageBoxButtons.YesNoCancel);
+        if (result == DialogResult.Cancel) return false;
+        if (result == DialogResult.Yes) Save();
+        return true;
     }
 
     #region Setup
@@ -206,8 +239,9 @@ public partial class FormMinimapNew : Form, Editor
         {
             Width = 101,
             DropDownStyle = ComboBoxStyle.DropDownList,
+            Enabled = false,
         };
-        // TODO: ADD EVENT: comboBox_tilesType.SelectedIndexChanged += ComboBox_mapType_SelectedIndexChanged;
+        comboBox_mapType.SelectedIndexChanged += ComboBox_mapType_SelectedIndexChanged;
         ThemeSwitcher.ChangeTheme(comboBox_mapType);
 
         // Add to toolStrips
@@ -273,7 +307,8 @@ public partial class FormMinimapNew : Form, Editor
         int height = numTiles / tilesWide;
         Bitmap tileImage = new Bitmap(tilesWide * 10 + 2, height * 10 + 2, PixelFormat.Format4bppIndexed);
 
-        palette.SetBitmapPalette(tileImage, 1, 1);
+        int palRow = comboBox_tilesType.SelectedIndex + (Version.IsMF ? 1 : 0);
+        palette.SetBitmapPalette(tileImage, palRow, 1);
         ColorPalette cp = tileImage.Palette;
         cp.Entries[0] = Color.Transparent;
         tileImage.Palette = cp;
@@ -331,6 +366,8 @@ public partial class FormMinimapNew : Form, Editor
         cp.Entries[0] = Color.Transparent;
         img.Palette = cp;
         tileDisplay_tiles.Invalidate();
+
+        SelectFromTiles();
     }
 
     private void button_flipTilesH_Click(object sender, EventArgs e) => TilesFlippedH = !TilesFlippedH;
@@ -349,7 +386,8 @@ public partial class FormMinimapNew : Form, Editor
             for (int y = 0; y < height; y++)
             {
                 int tileNum = (TileSelection.X / tS + x) + ((TileSelection.Y / tS + y) * 32);
-                int palette = comboBox_tilesType.SelectedIndex + (Version.IsMF ? 1 : 0);
+                int palette = comboBox_tilesType.SelectedIndex;
+                if (Version.IsMF && palette == 1) { palette = 2; }
                 selectedTiles[x, y] = new MapTile()
                 {
                     TileID = tileNum,
@@ -436,12 +474,102 @@ public partial class FormMinimapNew : Form, Editor
         if (comboBox_state.SelectedIndex == 0) { DrawMap(); }
         else { comboBox_state.SelectedIndex = 0; }
 
+        MapSelectionVisible = false;
+        MapCursor.Visible = false;
+        selectedTiles = null;
+
         status.LoadNew();
     }
 
     private void DrawMap()
     {
         tileDisplay_map.TileImage = LoadedMap.Draw(romStream, palette, comboBox_state.SelectedIndex);
+    }
+
+    private void button_flipMapH_Click(object sender, EventArgs e)
+    {
+        if (!MapSelectionVisible) return;
+
+        int xPos = MapSelection.X / tileDisplay_map.TileSize;
+        int yPos = MapSelection.Y / tileDisplay_map.TileSize;
+        int width = selectedTilesSize.Width;
+        int height = selectedTilesSize.Height;
+
+        MapTile[,] flippedTiles = new MapTile[width, height];
+
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+            {
+                int realPosX = xPos + x;
+                int realPosY = yPos + y;
+
+                MapTile tile = LoadedMap.GetSquare(new(realPosX, realPosY));
+                tile.xFlip = !tile.xFlip;
+                flippedTiles[width - x - 1, y] = tile;
+            }
+
+        selectedTiles = flippedTiles;
+        PasteSelectedTiles(new(xPos, yPos));
+        MapSelection.InvalidateDrawable(MapSelection);
+        status.ChangeMade();
+    }
+
+    private void button_flipMapV_Click(object sender, EventArgs e)
+    {
+        if (!MapSelectionVisible) return;
+
+        int xPos = MapSelection.X / tileDisplay_map.TileSize;
+        int yPos = MapSelection.Y / tileDisplay_map.TileSize;
+        int width = selectedTilesSize.Width;
+        int height = selectedTilesSize.Height;
+
+        MapTile[,] flippedTiles = new MapTile[width, height];
+
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+            {
+                int realPosX = xPos + x;
+                int realPosY = yPos + y;
+
+                MapTile tile = LoadedMap.GetSquare(new(realPosX, realPosY));
+                tile.yFlip = !tile.yFlip;
+                flippedTiles[x, height - y - 1] = tile;
+            }
+
+        selectedTiles = flippedTiles;
+        PasteSelectedTiles(new(xPos, yPos));
+        MapSelection.InvalidateDrawable(MapSelection);
+        status.ChangeMade();
+    }
+
+    private void ComboBox_mapType_SelectedIndexChanged(object? sender, EventArgs e)
+    {
+        if (!MapSelectionVisible || init) return;
+        if (comboBox_mapType.SelectedIndex == -1) return;
+
+        int xPos = MapSelection.X / tileDisplay_map.TileSize;
+        int yPos = MapSelection.Y / tileDisplay_map.TileSize;
+        int width = selectedTilesSize.Width;
+        int height = selectedTilesSize.Height;
+
+        MapTile[,] modifiedTiles = new MapTile[width, height];
+
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+            {
+                int realPosX = xPos + x;
+                int realPosY = yPos + y;
+
+                MapTile tile = LoadedMap.GetSquare(new(realPosX, realPosY));
+                tile.Palette = comboBox_mapType.SelectedIndex;
+                if (Version.IsMF && tile.Palette == 1) tile.Palette = 2;
+                modifiedTiles[x, y] = tile;
+            }
+
+        selectedTiles = modifiedTiles;
+        PasteSelectedTiles(new(xPos, yPos));
+        MapSelection.InvalidateDrawable(MapSelection);
+        status.ChangeMade();
     }
 
     private void comboBox_area_SelectedIndexChanged(object sender, EventArgs e)
@@ -453,6 +581,7 @@ public partial class FormMinimapNew : Form, Editor
     {
         DrawMap();
     }
+
     private void button_grid_CheckStateChanged(object sender, EventArgs e) => tileDisplay_map.ShowGrid = button_grid.Checked;
 
     private void PasteSelectedTiles(Point location)
@@ -467,11 +596,31 @@ public partial class FormMinimapNew : Form, Editor
             {
                 if (location.X + x >= widthTiles || location.Y + y >= heightTiles || location.X + x < 0 || location.Y + y < 0) continue;
 
-                LoadedMap.SetSquare(new(location.X + x, location.Y + y), selectedTiles[x, y]);
+                MapTile tile = selectedTiles[x, y];
+                LoadedMap.SetSquare(new(location.X + x, location.Y + y), tile);
+                LoadedMap.Edited = true;
+
+                // Draw New Square (Copied code so might be bad)
+                int pal = tile.Palette;
+                int tileId = tile.TileID;
+                Minimap.GetSquareDisplayInfo(comboBox_state.SelectedIndex, ref pal, ref tileId, Version.IsMF);
+
+                GFX gfx = new GFX(romStream, Version.MinimapGfxOffset + tileId * 0x20, 1, 1);
+                Bitmap square = gfx.Draw4bpp(palette, pal, true);
+                ColorPalette cp = square.Palette;
+                cp.Entries[0] = Color.Black;
+                square.Palette = cp;
+
+                if (tile.Flip != 0) Draw.Flip4bpp(square, tile.Flip);
+                using (Graphics g = Graphics.FromImage(tileDisplay_map.TileImage))
+                {
+                    Point p = new((location.X + x) * tileDisplay_map.TileSize, (location.Y + y) * tileDisplay_map.TileSize);
+                    g.DrawImage(square, p.X, p.Y);
+                }
+
             }
 
-
-        DrawMap();
+        Sound.PlaySound("map.wav");
         status.ChangeMade();
     }
 
@@ -483,12 +632,33 @@ public partial class FormMinimapNew : Form, Editor
         int height = MapSelection.Height / tileDisplay_map.TileSize;
         selectedTiles = new MapTile[width, height];
 
+        int checkType = -1;
+        int checkFlip = -1;
+        bool sharedType = true;
+        bool sharedFlip = true;
+
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
             {
                 Point p = new(MapSelection.X / tileDisplay_map.TileSize + x, MapSelection.Y / tileDisplay_map.TileSize + y);
-                selectedTiles[x, y] = LoadedMap.GetSquare(p);
+                MapTile tile = LoadedMap.GetSquare(p);
+
+                // Compare with the other selected map tiles
+                if (checkType == -1) checkType = tile.Palette;
+                if (checkFlip == -1) checkFlip = tile.Flip;
+                sharedType = checkType == tile.Palette && sharedType;
+                sharedFlip = checkFlip == tile.Flip && sharedFlip;
+
+                selectedTiles[x, y] = tile;
             }
+
+        if (sharedType)
+        {
+            if (Version.IsMF && checkType == 2) checkType = 1;
+            init = true;
+            comboBox_mapType.SelectedIndex = checkType;
+            init = false;
+        }
     }
 
     private void tileDisplay_map_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
@@ -521,6 +691,7 @@ public partial class FormMinimapNew : Form, Editor
         if (e.X < 0 || e.Y < 0 || e.X >= tileDisplay_map.Width || e.Y >= tileDisplay_map.Height) return;
 
         MapCursor.Rectangle = new Rectangle(e.TilePixelPosition.X, e.TilePixelPosition.Y, selectedTilesSize.Width * e.TileSize, selectedTilesSize.Height * e.TileSize);
+        statusLabel_coor.Text = $"({Hex.ToString(e.TileIndexPosition.X)}, {Hex.ToString(e.TileIndexPosition.Y)})";
 
         if (e.Button == MouseButtons.Left) PasteSelectedTiles(e.TileIndexPosition);
         else if (e.Button == MouseButtons.Right)
@@ -551,6 +722,7 @@ public partial class FormMinimapNew : Form, Editor
 
         if (MapSelectionVisible)
         {
+            comboBox_mapType.SelectedIndex = -1;
             SelectFromMap();
             MapCursor.Rectangle = new Rectangle(e.TilePixelPosition.X, e.TilePixelPosition.Y, selectedTilesSize.Width * e.TileSize, selectedTilesSize.Height * e.TileSize);
         }
@@ -580,5 +752,14 @@ public partial class FormMinimapNew : Form, Editor
     #endregion
 
     #region Import / Export
+    #endregion
+
+    #region Other Events
+    private void button_apply_Click(object sender, EventArgs e) => Save();
+    private void FormMinimapNew_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (!status.UnsavedChanges) return;
+        if (!CheckUnsaved()) e.Cancel = true;
+    }
     #endregion
 }
