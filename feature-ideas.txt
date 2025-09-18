@@ -1,8 +1,10 @@
 TODO:
 - Write OAM Editor documentation
 - Write Bookmark documentation / Recent Offset Documentation
+- Write new Map Editor documentation -> move old map editor documentation
 
 - move OAM out of experimental
+- move Map Editor out of experimental
 - Fix help theming with light mode colors
 
 IDEAS:
