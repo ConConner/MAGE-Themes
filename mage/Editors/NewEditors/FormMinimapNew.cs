@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using mage.Controls;
+using System.Drawing.Drawing2D;
 
 namespace mage.Editors.NewEditors;
 
@@ -117,7 +118,7 @@ public partial class FormMinimapNew : Form, Editor
         {
             viewRoomOutlines = value;
             button_viewRooms.Checked = value;
-            // TODO: Add Config setting
+            Program.Config.MapEditorViewRoomOutlines = value;
 
             LoadRooms((byte)SelectedArea);
             foreach (Drawable d in roomOutlines) d.Visible = value;
@@ -130,9 +131,10 @@ public partial class FormMinimapNew : Form, Editor
     #region Fields
     Pen CursorPen = new Pen(Color.Red, 1);
     Pen GridPen = new Pen(Color.Gray, 1);
-    Pen RoomOutline = new Pen(Color.Orange, 1);
     Pen SelectionPenWhite = new Pen(Color.White, 1) { DashPattern = new float[] { 2, 3 } };
     Pen SelectionPenBlack = new Pen(Color.Black, 1) { DashPattern = new float[] { 2, 3 }, DashOffset = 2 };
+    Pen RoomOutlinePenLight = new Pen(Color.HotPink, 1) { DashPattern = new float[] { 2, 2 }, Alignment = PenAlignment.Inset };
+    Pen RoomOutlinePenDark = new Pen(Color.Red, 1) { DashPattern = new float[] { 2, 2 }, DashOffset = 1, Alignment = PenAlignment.Inset };
 
     private bool init = false;
     private const int maxZoom = 4;
@@ -149,7 +151,7 @@ public partial class FormMinimapNew : Form, Editor
     private ByteStream romStream;
 
     private bool roomListReloadRequired = true;
-    private List<Room?> Rooms;
+    private List<Room?> Rooms = new();
     private List<Drawable> roomOutlines = new();
 
     // Drawables for UI
@@ -198,6 +200,8 @@ public partial class FormMinimapNew : Form, Editor
         SetValuesBasedOnGame();
         SetPalette();
         PopulateBoxesBasedOnGame();
+
+        ViewRoomOutlines = Program.Config.MapEditorViewRoomOutlines;
 
         DrawTiles();
         tileDisplay_tiles.BackColor = Color.Black;
@@ -787,10 +791,15 @@ public partial class FormMinimapNew : Form, Editor
             Point roomPos = new(r.header.mapX * tileDisplay_map.TileSize, r.header.mapY * tileDisplay_map.TileSize);
             Size roomSize = new(r.WidthInScreens * tileDisplay_map.TileSize, r.HeightInScreens * tileDisplay_map.TileSize);
             Rectangle roomRect = new(roomPos, roomSize);
-            Drawable outline = new(roomRect, RoomOutline, 1)
+
+            bool increasePenWidth = tileDisplay_map.Zoom >= 2;
+            RoomOutlinePenLight.Width = increasePenWidth ? 2 : 1;
+            RoomOutlinePenDark.Width = increasePenWidth ? 2 : 1;
+            Drawable outline = new(roomRect, RoomOutlinePenLight, increasePenWidth ? 0 : 1)
             {
                 Visible = ViewRoomOutlines,
             };
+            outline.DrawPens.Add(RoomOutlinePenDark);
 
             roomOutlines.Add(outline);
             tileDisplay_map.AddDrawable(outline);
@@ -813,6 +822,8 @@ public partial class FormMinimapNew : Form, Editor
         button_mapZoomIn.Enabled = tileDisplay_map.Zoom < maxZoom;
         button_mapZoomOut.Enabled = tileDisplay_map.Zoom > 0;
         label_mapZoom.Text = $"{1 << tileDisplay_map.Zoom}00%";
+
+        SetRoomOutlines();
     }
 
     private void button_tilesZoomIn_Click(object sender, EventArgs e) => UpdateTilesZoom(tileDisplay_tiles.Zoom + 1);
