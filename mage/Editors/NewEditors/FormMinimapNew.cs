@@ -152,6 +152,8 @@ public partial class FormMinimapNew : Form, Editor
 
     private bool roomListReloadRequired = true;
     private List<Room?> Rooms = new();
+    private List<Room> roomJumpList = new();
+    private int lastJumpIndex = -1;
     private List<Drawable> roomOutlines = new();
 
     // Drawables for UI
@@ -811,6 +813,45 @@ public partial class FormMinimapNew : Form, Editor
 
         tileDisplay_map.Invalidate();
     }
+
+    private void JumpToRoom()
+    {
+        if (MapCursor == null) return;
+        LoadRooms((byte)SelectedArea);
+
+        byte x = (byte)(MapCursor.X / tileDisplay_map.TileSize);
+        byte y = (byte)(MapCursor.Y / tileDisplay_map.TileSize);
+
+        //Loop throug all rooms and get list of rooms that match
+        List<Room> matchingRooms = new();
+
+        foreach (Room? r in Rooms)
+        {
+            if (r == null) continue;
+            if (r.Contains(x, y)) matchingRooms.Add(r);
+        }
+
+        if (matchingRooms.Count == 1) main.JumpToRoom(matchingRooms[0].AreaID, matchingRooms[0].RoomID);
+
+        if (matchingRooms.Count > 1)
+        {
+            //Set data up for cycling
+            if (!roomJumpList.SequenceEqual(matchingRooms))
+            {
+                lastJumpIndex = 0;
+                roomJumpList = matchingRooms;
+            }
+            else
+            {
+                lastJumpIndex++;
+                if (lastJumpIndex >= matchingRooms.Count) lastJumpIndex = 0;
+                roomJumpList = matchingRooms;
+            }
+            main.JumpToRoom(matchingRooms[lastJumpIndex].AreaID, matchingRooms[lastJumpIndex].RoomID);
+        }
+
+        return;
+    }
     #endregion
 
     #region Zooming
@@ -838,16 +879,80 @@ public partial class FormMinimapNew : Form, Editor
     #endregion
 
     #region Import / Export
+    private void statusStrip_exportRaw_Click(object sender, EventArgs e)
+    {
+        SaveFileDialog saveRaw = new SaveFileDialog();
+        saveRaw.Filter = "All files (*.*)|*.*";
+        if (saveRaw.ShowDialog() == DialogResult.OK)
+        {
+            ByteStream output = new ByteStream();
+            LoadedMap.Write(output, false, true);
+            output.Export(saveRaw.FileName);
+        }
+    }
+
+    private void statusStrip_exportImage_Click(object sender, EventArgs e)
+    {
+        SaveFileDialog saveMap = new SaveFileDialog();
+        saveMap.Filter = "PNG files (*.png)|*.png";
+        if (saveMap.ShowDialog() == DialogResult.OK)
+        {
+            tileDisplay_map.TileImage.Save(saveMap.FileName);
+        }
+    }
+
+    private void statusStrip_importRaw_Click(object sender, EventArgs e)
+    {
+        OpenFileDialog openRaw = new OpenFileDialog();
+        openRaw.Filter = "All files (*.*)|*.*";
+        if (openRaw.ShowDialog() == DialogResult.OK)
+        {
+            byte[] temp = System.IO.File.ReadAllBytes(openRaw.FileName);
+            ByteStream input = new ByteStream(temp);
+            LoadedMap.Import(input);
+            LoadedMap.Write(romStream, true, false);
+            DrawMap();
+
+            status.Import();
+        }
+    }
     #endregion
 
     #region Other Events
     private void button_apply_Click(object sender, EventArgs e) => Save();
+
     private void FormMinimapNew_FormClosing(object sender, FormClosingEventArgs e)
     {
         if (!status.UnsavedChanges) return;
         if (!CheckUnsaved()) e.Cancel = true;
     }
+
+    private void FormMinimapNew_KeyDown(object sender, KeyEventArgs e)
+    {
+        switch (e.KeyCode)
+        {
+            case Keys.H:
+            case Keys.X:
+                if (MapSelectionVisible) button_flipMapH_Click(sender, e);
+                else button_flipTilesH_Click(sender, e);
+                break;
+
+            case Keys.V:
+            case Keys.Y:
+                if (MapSelectionVisible) button_flipMapV_Click(sender, e);
+                else button_flipTilesV_Click(sender, e);
+                break;
+
+            case Keys.G:
+                JumpToRoom();
+                break;
+
+            default:
+                break;
+        }
+    }
     #endregion
+
 
 
 }

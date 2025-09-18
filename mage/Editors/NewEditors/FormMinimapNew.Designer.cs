@@ -113,7 +113,7 @@
             // statusStrip_spring
             // 
             statusStrip_spring.Name = "statusStrip_spring";
-            statusStrip_spring.Size = new System.Drawing.Size(580, 19);
+            statusStrip_spring.Size = new System.Drawing.Size(650, 19);
             statusStrip_spring.Spring = true;
             // 
             // statusStrip_import
@@ -129,6 +129,7 @@
             statusStrip_importRaw.Name = "statusStrip_importRaw";
             statusStrip_importRaw.Size = new System.Drawing.Size(105, 22);
             statusStrip_importRaw.Text = "Raw...";
+            statusStrip_importRaw.Click += statusStrip_importRaw_Click;
             // 
             // statusStrip_export
             // 
@@ -143,12 +144,14 @@
             statusStrip_exportRaw.Name = "statusStrip_exportRaw";
             statusStrip_exportRaw.Size = new System.Drawing.Size(116, 22);
             statusStrip_exportRaw.Text = "Raw...";
+            statusStrip_exportRaw.Click += statusStrip_exportRaw_Click;
             // 
             // statusStrip_exportImage
             // 
             statusStrip_exportImage.Name = "statusStrip_exportImage";
             statusStrip_exportImage.Size = new System.Drawing.Size(116, 22);
             statusStrip_exportImage.Text = "Image...";
+            statusStrip_exportImage.Click += statusStrip_exportImage_Click;
             // 
             // button_apply
             // 
@@ -170,7 +173,7 @@
             group_selection.Dock = System.Windows.Forms.DockStyle.Top;
             group_selection.Location = new System.Drawing.Point(6, 3);
             group_selection.Name = "group_selection";
-            group_selection.Size = new System.Drawing.Size(381, 87);
+            group_selection.Size = new System.Drawing.Size(384, 87);
             group_selection.TabIndex = 13;
             group_selection.TabStop = false;
             group_selection.Text = "Selection";
@@ -236,7 +239,7 @@
             splitContainer_main.Panel2.Controls.Add(groupBox_map);
             splitContainer_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
             splitContainer_main.Size = new System.Drawing.Size(917, 569);
-            splitContainer_main.SplitterDistance = 390;
+            splitContainer_main.SplitterDistance = 393;
             splitContainer_main.SplitterWidth = 3;
             splitContainer_main.TabIndex = 14;
             // 
@@ -247,7 +250,7 @@
             groupBox_mapTiles.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_mapTiles.Location = new System.Drawing.Point(6, 90);
             groupBox_mapTiles.Name = "groupBox_mapTiles";
-            groupBox_mapTiles.Size = new System.Drawing.Size(381, 476);
+            groupBox_mapTiles.Size = new System.Drawing.Size(384, 476);
             groupBox_mapTiles.TabIndex = 14;
             groupBox_mapTiles.TabStop = false;
             groupBox_mapTiles.Text = "Tiles";
@@ -259,7 +262,7 @@
             panel_tileView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_tileView.Location = new System.Drawing.Point(3, 44);
             panel_tileView.Name = "panel_tileView";
-            panel_tileView.Size = new System.Drawing.Size(375, 429);
+            panel_tileView.Size = new System.Drawing.Size(378, 429);
             panel_tileView.TabIndex = 2;
             // 
             // tileDisplay_tiles
@@ -292,7 +295,7 @@
             toolStrip_tiles.Location = new System.Drawing.Point(3, 19);
             toolStrip_tiles.Name = "toolStrip_tiles";
             toolStrip_tiles.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_tiles.Size = new System.Drawing.Size(375, 25);
+            toolStrip_tiles.Size = new System.Drawing.Size(378, 25);
             toolStrip_tiles.TabIndex = 1;
             toolStrip_tiles.Text = "toolStrip1";
             // 
@@ -361,7 +364,7 @@
             groupBox_map.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_map.Location = new System.Drawing.Point(3, 3);
             groupBox_map.Name = "groupBox_map";
-            groupBox_map.Size = new System.Drawing.Size(515, 563);
+            groupBox_map.Size = new System.Drawing.Size(512, 563);
             groupBox_map.TabIndex = 0;
             groupBox_map.TabStop = false;
             groupBox_map.Text = "Map";
@@ -373,7 +376,7 @@
             panel_mapView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_mapView.Location = new System.Drawing.Point(3, 44);
             panel_mapView.Name = "panel_mapView";
-            panel_mapView.Size = new System.Drawing.Size(509, 516);
+            panel_mapView.Size = new System.Drawing.Size(506, 516);
             panel_mapView.TabIndex = 2;
             // 
             // tileDisplay_map
@@ -406,7 +409,7 @@
             toolStrip_map.Location = new System.Drawing.Point(3, 19);
             toolStrip_map.Name = "toolStrip_map";
             toolStrip_map.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_map.Size = new System.Drawing.Size(509, 25);
+            toolStrip_map.Size = new System.Drawing.Size(506, 25);
             toolStrip_map.TabIndex = 1;
             toolStrip_map.Text = "toolStrip1";
             // 
@@ -460,7 +463,7 @@
             button_grid.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_grid.Name = "button_grid";
             button_grid.Size = new System.Drawing.Size(23, 22);
-            button_grid.Text = "Grid (G)";
+            button_grid.Text = "Grid";
             button_grid.CheckStateChanged += button_grid_CheckStateChanged;
             // 
             // toolStripSeparator5
@@ -503,10 +506,12 @@
             Controls.Add(splitContainer_main);
             Controls.Add(statusStrip);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             MinimumSize = new System.Drawing.Size(625, 420);
             Name = "FormMinimapNew";
             Text = "Map Editor";
             FormClosing += FormMinimapNew_FormClosing;
+            KeyDown += FormMinimapNew_KeyDown;
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
             group_selection.ResumeLayout(false);
