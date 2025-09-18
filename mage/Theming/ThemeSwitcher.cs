@@ -123,91 +123,102 @@ namespace mage.Theming
 
             foreach (Control control in container)
             {
-                //excludes
                 if (control is TileView ||
                     control is RoomView ||
                     control.Tag?.ToString() == "unthemed")
                     continue;
 
-                //base change
-                control.BackColor = theme.BackgroundColor;
-                control.ForeColor = theme.TextColor;
-                control.Invalidate();
-                if (control.Tag?.ToString() == "accent") control.BackColor = theme.AccentColor;
-
-                if (control.HasChildren)
-                {
-                    ChangeTheme(control.Controls);
-                }
-
-                //Special handeling for special controls
-                if (control is FlatComboBox)
-                {
-                    FlatComboBox box = control as FlatComboBox;
-                    box.BorderColor = theme.PrimaryOutline;
-                    box.ButtonColor = theme.BackgroundColor;
-                }
-
-                if (control is ToolStrip)
-                {
-                    ToolStrip strip = control as ToolStrip;
-                    strip.Renderer = new MenuStripCustomRenderer(theme);
-                }
-
-                if (control is Button)
-                {
-                    Button btn = control as Button;
-                    btn.FlatStyle = FlatStyle.Flat;
-                    btn.FlatAppearance.BorderColor = theme.PrimaryOutline;
-                    btn.FlatAppearance.MouseOverBackColor = theme.AccentColor;
-                    btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(0x7F, theme.AccentColor);
-                }
-
-                if (control is FlatTextBox)
-                {
-                    FlatTextBox box = control as FlatTextBox;
-                    box.BorderColor = theme.PrimaryOutline;
-                }
-
-                if (control is FlatNumericUpDown)
-                {
-                    FlatNumericUpDown num = control as FlatNumericUpDown;
-                    num.BorderStyle = BorderStyle.FixedSingle;
-                    num.BorderColor = theme.PrimaryOutline;
-                    num.ButtonHighlightColor = theme.AccentColor;
-                }
-
-                if (control is FlatTabControl)
-                {
-                    FlatTabControl tab = control as FlatTabControl;
-                    tab.BorderColor = theme.SecondaryOutline;
-                }
-
-                if (control is LinkLabel)
-                {
-                    LinkLabel lbl = control as LinkLabel;
-                    lbl.LinkColor = theme.AccentColor;
-                    lbl.VisitedLinkColor = theme.AccentColor;
-                }
-
-                if (control is TreeView)
-                {
-                    TreeView tv = control as TreeView;
-                    tv.LineColor = theme.PrimaryOutline;
-                }
-
-                if (control is ContextMenuStrip ctx)
-                {
-                    ctx.Renderer = new ContextMenuCustomRenderer();
-                }
-
-                if (control is Seperator sep)
-                {
-                    sep.Color = theme.SecondaryOutline;
-                }
+                ChangeTheme(control);
             }
 
             Base?.ResumeLayout();
+        }
+
+        /// <summary>
+        /// Changes the properties of <paramref name="control"/> to reflect the current theme
+        /// selected in the <see cref="ThemeSwitcher.ProjectTheme"/>.
+        /// </summary>
+        /// <param name="control"></param>
+        public static void ChangeTheme(Control control)
+        {
+            ColorTheme theme = ProjectTheme;
+
+            //base change
+            control.BackColor = theme.BackgroundColor;
+            control.ForeColor = theme.TextColor;
+            control.Invalidate();
+            if (control.Tag?.ToString() == "accent") control.BackColor = theme.AccentColor;
+
+            if (control.HasChildren)
+            {
+                ChangeTheme(control.Controls);
+            }
+
+            //Special handeling for special controls
+            if (control is FlatComboBox)
+            {
+                FlatComboBox box = control as FlatComboBox;
+                box.BorderColor = theme.PrimaryOutline;
+                box.ButtonColor = theme.BackgroundColor;
+            }
+
+            if (control is ToolStrip)
+            {
+                ToolStrip strip = control as ToolStrip;
+                strip.Renderer = new MenuStripCustomRenderer(theme);
+            }
+
+            if (control is Button)
+            {
+                Button btn = control as Button;
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.FlatAppearance.BorderColor = theme.PrimaryOutline;
+                btn.FlatAppearance.MouseOverBackColor = theme.AccentColor;
+                btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(0x7F, theme.AccentColor);
+            }
+
+            if (control is FlatTextBox)
+            {
+                FlatTextBox box = control as FlatTextBox;
+                box.BorderColor = theme.PrimaryOutline;
+            }
+
+            if (control is FlatNumericUpDown)
+            {
+                FlatNumericUpDown num = control as FlatNumericUpDown;
+                num.BorderStyle = BorderStyle.FixedSingle;
+                num.BorderColor = theme.PrimaryOutline;
+                num.ButtonHighlightColor = theme.AccentColor;
+            }
+
+            if (control is FlatTabControl)
+            {
+                FlatTabControl tab = control as FlatTabControl;
+                tab.BorderColor = theme.SecondaryOutline;
+            }
+
+            if (control is LinkLabel)
+            {
+                LinkLabel lbl = control as LinkLabel;
+                lbl.LinkColor = theme.AccentColor;
+                lbl.VisitedLinkColor = theme.AccentColor;
+            }
+
+            if (control is TreeView)
+            {
+                TreeView tv = control as TreeView;
+                tv.LineColor = theme.PrimaryOutline;
+            }
+
+            if (control is ContextMenuStrip ctx)
+            {
+                ctx.Renderer = new ContextMenuCustomRenderer();
+            }
+
+            if (control is Seperator sep)
+            {
+                sep.Color = theme.SecondaryOutline;
+            }
         }
 
         /// <summary>
@@ -232,6 +243,11 @@ namespace mage.Theming
                 if (control is Button) control.Paint += DrawButton;
                 if (control is Label) control.Paint += DrawLabel;
                 if (control is RadioButton) control.Paint += DrawRadioButton;
+                if (control is SplitContainer)
+                {
+                    control.Paint += DrawSplitterHandle;
+                    control.Resize += SplitterResize;
+                }
             }
         }
 
@@ -369,6 +385,51 @@ namespace mage.Theming
             e.Graphics.Clear(ProjectTheme.BackgroundColor);
             using (Brush b = new SolidBrush(ProjectTheme.TextColorDisabled))
                 e.Graphics.DrawString(l.Text, l.Font, b, r);
+        }
+
+        private static void DrawSplitterHandle(object? sender, PaintEventArgs e)
+        {
+            var splitter = sender as SplitContainer;
+            if (splitter.IsSplitterFixed) return;
+            var splitterRect = splitter.SplitterRectangle;
+
+            // Define layout of splitter handle
+            int dotsWide = 1;
+            int dotsHigh = 10;
+            int dotSize = 3;
+            int spacing = 3;
+
+            int handleWidth = dotsWide * dotSize + (dotsWide - 1) * spacing;
+            int handleHeight = dotsHigh * dotSize + (dotsHigh - 1) * spacing;
+
+            // Swap all variables if orientation is not vertical
+            if (splitter.Orientation == Orientation.Horizontal)
+            {
+                (handleWidth, handleHeight) = (handleHeight, handleWidth);
+                (dotsWide, dotsHigh) = (dotsHigh, dotsWide);
+            }
+
+            int startX = splitterRect.X + (splitterRect.Width - handleWidth) / 2;
+            int startY = splitterRect.Y + (splitterRect.Height - handleHeight) / 2;
+
+            // Draw splitter handle
+            using (var brush = new SolidBrush(ProjectTheme.PrimaryOutline))
+            {
+                for (int row = 0; row < dotsHigh; row++)
+                {
+                    for (int col = 0; col < dotsWide; col++)
+                    {
+                        int x = startX + col * (dotSize + spacing);
+                        int y = startY + row * (dotSize + spacing);
+                        e.Graphics.FillRectangle(brush, x, y, dotSize, dotSize);
+                    }
+                }
+            }
+        }
+        private static void SplitterResize(object? sender, EventArgs e)
+        {
+            var splitter = sender as SplitContainer;
+            splitter.Invalidate(splitter.SplitterRectangle);
         }
 
 

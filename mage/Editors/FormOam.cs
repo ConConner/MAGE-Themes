@@ -150,6 +150,24 @@ public partial class FormOam : Form
     }
     private bool viewVram = false;
 
+    private bool LoadCommonGraphics
+    {
+        get => loadCommonGraphics;
+        set
+        {
+            loadCommonGraphics = value;
+            Program.Config.OamEditorLoadCommonGraphics = value;
+            button_loadCommonGraphics.Checked = value;
+
+            if (!loading)
+            {
+                DrawNewGFX();
+                LoadPalette(0);
+            }
+        }
+    }
+    private bool loadCommonGraphics = true;
+
     private int SelectedPartIndex
     {
         get => selectedPartIndex;
@@ -212,6 +230,8 @@ public partial class FormOam : Form
         UpdateOamZoom(Program.Config.OamEditorOamZoom);
 
         loading = true;
+
+        LoadCommonGraphics = true; // We don't want to draw/reload graphics during initalization so this must come after `loading = true`
 
         textBox_imageOffset.Text = Hex.ToString(gfxOffset);
         textBox_palOffset.Text = Hex.ToString(palOffset);
@@ -460,7 +480,7 @@ public partial class FormOam : Form
             gfxObject = new GFX(romStream, offset, width, height);
         }
 
-        CreateVram();
+        CreateVram(button_loadCommonGraphics.Checked);
         DrawFrame(comboBox_Frame.SelectedIndex);
         DrawImage();
         UpdateGfxZoom(gfxView_gfx.Zoom);
@@ -469,6 +489,7 @@ public partial class FormOam : Form
     private void DrawImage()
     {
         if (!ViewVram) gfxImage = gfxObject.Draw4bpp(palette, 0, true);
+        else if (ViewVram && !LoadCommonGraphics) gfxImage = gfxObject.Draw4bpp(palette, 0, true); // A weird edge-case where this condition would render a blank Vram Viewer
         else gfxImage = vram.VramGFX.Draw15bpp(vram.palette, selectedPaletteRow, true);
         gfxView_gfx.TileImage = gfxImage;
     }
@@ -485,6 +506,8 @@ public partial class FormOam : Form
 
     private void button_viewPalette_Click(object sender, EventArgs e) => ViewPalette = !button_viewPalette.Checked;
     private void button_viewVram_Click(object sender, EventArgs e) => ViewVram = !button_viewVram.Checked;
+    private void button_loadCommonGraphics_Click(object sender, EventArgs e) => LoadCommonGraphics = !button_loadCommonGraphics.Checked;
+
 
     private void checkBox_compressed_CheckedChanged(object sender, EventArgs e)
     {
@@ -498,6 +521,11 @@ public partial class FormOam : Form
     private void gfxView_gfx_MouseMove(object sender, TileDisplay.TileDisplayArgs e)
     {
         int offset = ViewVram ? 0 : 16;
+        if (!ViewVram)
+        {
+            if (LoadCommonGraphics) offset = 16;
+            else offset = 0;
+        }
         int tileNum = e.TileIndexPosition.X + (e.TileIndexPosition.Y + offset) * 32;
         statusLabel_coor.Text = Hex.ToString(tileNum);
 
@@ -530,6 +558,11 @@ public partial class FormOam : Form
     private void gfxView_gfx_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
         int offset = ViewVram ? 0 : 16;
+        if (!ViewVram)
+        {
+            if (LoadCommonGraphics) offset = 16;
+            else offset = 0;
+        }
         int tileNum = e.TileIndexPosition.X + (e.TileIndexPosition.Y + offset) * 32;
 
         if (SelectedPartIndex == -1) return;
@@ -540,7 +573,7 @@ public partial class FormOam : Form
     #region PAL
     private void DrawPalette()
     {
-        CreateVram();
+        CreateVram(button_loadCommonGraphics.Checked);
         paletteView.TileImage = vram.palette.Draw(16, 0, 16, 0);
         DrawFrame(comboBox_Frame.SelectedIndex);
     }
@@ -559,7 +592,7 @@ public partial class FormOam : Form
             int count = !checkBox_compressed.Checked ? 8 : (gfxObject.height / 2);
 
             palette = new Palette(romStream, offset, count);
-            CreateVram();
+            CreateVram(button_loadCommonGraphics.Checked);
             DrawImage();
             DrawPalette();
         }
@@ -663,9 +696,9 @@ public partial class FormOam : Form
         }
     }
 
-    private void CreateVram()
+    private void CreateVram(Boolean loadCommonGraphics)
     {
-        vram = new VramObj(gfxObject, palette);
+        vram = new VramObj(gfxObject, palette, loadCommonGraphics);
     }
 
     private void DrawFrame(int frameNumber)

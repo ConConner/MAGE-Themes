@@ -14,25 +14,36 @@ namespace mage
 
         private Dictionary<int, int> rowAssignments;
         private ByteStream romStream;
-        
-        public VramObj(GFX gfx, Palette pal)
+
+        public VramObj(GFX gfx, Palette pal, Boolean loadCommonGraphics = true)
         {
             romStream = ROM.Stream;
-            LoadGenericData();
+            int dstOffset = 0;
+            if (loadCommonGraphics) dstOffset += 0x4000;
+            LoadGenericData(loadCommonGraphics);
 
             // copy gfx
-            int dstOffset = 0x4000;
             int length = Math.Min(0x8000 - dstOffset, gfx.data.Length);
             Buffer.BlockCopy(gfx.data, 0, objTiles, dstOffset, length);
 
             //palette
-            palette.Copy(pal, 0, 8 % 16, pal.Rows);
+            if (loadCommonGraphics)
+            {
+                // Math.Clamp fixes a bug where palette row length can be determined by decompressed
+                //   graphics calculated height and could get calculated to a number larger than 15
+                palette.Copy(pal, 0, 8 % 16, Math.Clamp(pal.Rows, 0, 8));
+            }
+            else // Shifts palette for current offset to row 0
+            {
+                Palette tempPalette = new Palette(romStream, pal.Offset, pal.Rows);
+                palette.Copy(tempPalette, 0, 0, pal.Rows);
+            }
         }
 
-        public VramObj(Spriteset spriteset)
+        public VramObj(Spriteset spriteset, Boolean loadCommonGraphics = true)
         {
             romStream = ROM.Stream;
-            LoadGenericData();
+            LoadGenericData(loadCommonGraphics);
 
             rowAssignments = new Dictionary<int, int>();
             for (int i = 0; i < spriteset.spriteIDs.Count; i++)
@@ -43,10 +54,10 @@ namespace mage
             }
         }
 
-        public VramObj(byte spriteID, bool primary)
+        public VramObj(byte spriteID, bool primary, Boolean loadCommonGraphics = true)
         {
             romStream = ROM.Stream;
-            LoadGenericData();
+            LoadGenericData(loadCommonGraphics);
 
             rowAssignments = new Dictionary<int, int>();
             if (!primary)
@@ -61,17 +72,23 @@ namespace mage
             LoadSprite(spriteID, 0);
         }
 
-        private void LoadGenericData()
+        private void LoadGenericData(bool loadCommonGraphics)
         {
             // gfx
             objTiles = new byte[0x8000];
-            byte[] data = ROM.GenericSpriteGfx.data;
-            Buffer.BlockCopy(data, 0, objTiles, 0x800, data.Length);
+            if (loadCommonGraphics) // Shows common in-game OAM graphics
+            {
+                byte[] data = ROM.GenericSpriteGfx.data;
+                Buffer.BlockCopy(data, 0, objTiles, 0x800, data.Length);
+            }
 
             // palette
             palette = new Palette(16);
-            Palette genPal = ROM.GenericSpritePalette;
-            palette.Copy(genPal, 0, 2, genPal.Rows);
+            if (loadCommonGraphics) // Shows palette for common in-game OAM
+            {
+                Palette genPal = ROM.GenericSpritePalette;
+                palette.Copy(genPal, 0, 2, genPal.Rows);
+            }
         }
 
         private void LoadSprite(byte spriteID, byte gfxRow)

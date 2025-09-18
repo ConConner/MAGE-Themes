@@ -37,6 +37,7 @@ MAGE Themes:
 - .mgt, .mgr, .rlebg and lzbg can be imported via drag & drop
 - Tilesets can be imported via drag & drop with an Image
 - Tiletable Editor reworked
+- Map Editor reworked
 - Cropped room image Export
 - Added OAM Editor
 - Added Bookmarking System

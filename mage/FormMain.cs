@@ -1,35 +1,37 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
+using mage.Actions;
+using mage.Bookmarks;
+using mage.Controls; // added for font stuff - alexman25
+using mage.Data;
+using mage.Dialogs;
+using mage.Editors;
+using mage.Editors.NewEditors;
+using mage.Options;
 using mage.Properties;
 using mage.Theming;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Runtime.InteropServices;
-using System.Drawing.Text;
-using mage.Data;
 using mage.Tools;
-using System.IO.Compression;
-using System.Numerics;
-using System.Diagnostics.Eventing.Reader;
-using System.Windows.Forms.Design.Behavior;
-using mage.Utility;
-using mage.Actions;
-using mage.Editors;
-using System.Linq.Expressions;
-using System.Diagnostics;
-using Microsoft.Win32;
-using mage.Bookmarks;
-using System.Security.Cryptography.X509Certificates;
-using System.Reflection;
-using System.Text;
 using mage.Updates;
+using mage.Utility;
+using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
+using System.Drawing;
+using System.Drawing.Text;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
-using mage.Dialogs;
-using mage.Options; // added for font stuff - alexman25
+using System.Linq.Expressions;
+using System.Numerics;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Windows.Forms;
+using System.Windows.Forms.Design.Behavior;
+using System.Windows.Forms.VisualStyles;
 
 namespace mage
 {
@@ -109,6 +111,14 @@ namespace mage
         }
         private bool ctxtMenuOpen = false;
 
+        // Drawables
+        Pen CursorPen = new Pen(Color.Red, 1);
+        Pen SelectionPenWhite = new Pen(Color.White, 1) { DashPattern = new float[] { 2, 3 } };
+        Pen SelectionPenBlack = new Pen(Color.Black, 1) { DashPattern = new float[] { 2, 3 }, DashOffset = 2 };
+        private Drawable TileCursor;
+        private Drawable TileSelection;
+        private Point TileCursorIndex;
+
         // Temporary Bookmarks
         private List<BookmarkFolder> ZMGlobalBookmarks { get; set; }
         private List<BookmarkFolder> MFGlobalBookmarks { get; set; }
@@ -140,6 +150,14 @@ namespace mage
             seperator_flip.Visible = menuItem_flip_h.Visible = menuItem_flip_v.Visible = Program.ExperimentalFeaturesEnabled;
             toolStrip_oamEditor.Visible = Program.ExperimentalFeaturesEnabled;
             menuItem_oamViewer.Visible = Program.ExperimentalFeaturesEnabled;
+
+            // Add Drawables
+            TileCursor = new(Rectangle.Empty, CursorPen, 1) { Visible = false };
+            TileSelection = new(Rectangle.Empty, SelectionPenWhite, 1) { Visible = false };
+            TileSelection.DrawPens.Add(SelectionPenBlack);
+            tileView.AddDrawable(TileCursor);
+            tileView.AddDrawable(TileSelection);
+            UpdateTilesetZoom(0);
         }
 
         #region opening/closing
@@ -804,6 +822,16 @@ namespace mage
 
         private void menuItem_minimapEditor_Click(object sender, EventArgs e)
         {
+            if (Program.ExperimentalFeaturesEnabled)
+            {
+                if (!FindOpenForm(typeof(FormMinimapNew), false))
+                {
+                    FormMinimapNew form = new FormMinimapNew(this);
+                    form.Show();
+                }
+                return;
+            }
+
             if (!FindOpenForm(typeof(FormMinimap), false))
             {
                 FormMinimap form = new FormMinimap(this);
@@ -1628,15 +1656,19 @@ namespace mage
             skipEvents = false;
         }
 
+        private void ResetTileView()
+        {
+            TileCursor.Visible = false;
+            TileSelection.Visible = false;
+        }
         private void ResetValues()
         {
             // tile and map view
             pivot = new Point(-1, -1);
             selection = new Rectangle(-1, -1, 1, 1);
 
-            tileCursor = new Point(-1, -1);
-            tileView.Reset();
-            tileView.BackgroundImage = room.vram.Image;
+            ResetTileView();
+            tileView.TileImage = room.vram.Image;
 
             roomCursor = new Point(-1, -1);
             roomView.Reset();
@@ -2273,7 +2305,6 @@ namespace mage
 
         private Point roomCursor;
         private Point pixelCursor;
-        private Point tileCursor;
 
         private Point pivot;
         private Rectangle selection;
@@ -2311,7 +2342,7 @@ namespace mage
             pivot = new Point(-1, -1);
             blocks = new Block[width, height];
 
-            if (tileView.HasSelection)
+            if (TileSelection.Visible)
             {
                 for (int y = 0; y < height; y++)
                 {
@@ -2348,7 +2379,7 @@ namespace mage
             ushort clip = 0xFFFF;
             if (EditCLP)
             {
-                if (tileView.HasSelection || menuItem_forceClipdata.Checked)
+                if (TileSelection.Visible || menuItem_forceClipdata.Checked)
                 {
                     clip = Clipdata;
                 }
@@ -2380,7 +2411,7 @@ namespace mage
         {
             if (clipboard == null || !clipboard.Visible) { return; }
 
-            if (tileView.HasSelection)
+            if (TileSelection.Visible)
             {
                 clipboard.UpdateImage((Bitmap)tileView.BackgroundImage, selection);
             }
@@ -2412,6 +2443,24 @@ namespace mage
             if (OutlineEffect)
             {
                 selEffect = (roomCursor.Y == room.header.effectY) && (roomCursor.X == 0 || roomCursor.X == room.Width - 1);
+            }
+        }
+
+        private void UpdateTilesetZoom(int value)
+        {
+            tileView.Zoom = Math.Clamp(value, 0, 4);
+            button_tilesZoomIn.Enabled = tileView.Zoom < 4;
+            button_tilesZoomOut.Enabled = tileView.Zoom > 0;
+            label_tileZoom.Text = $"{1 << tileView.Zoom}00%";
+        }
+        private void button_tilesZoomIn_Click(object sender, EventArgs e) => UpdateTilesetZoom(tileView.Zoom + 1);
+        private void button_tilesZoomOut_Click(object sender, EventArgs e) => UpdateTilesetZoom(tileView.Zoom - 1);
+        private void tileView_Scrolled(object sender, MouseEventArgs e)
+        {
+            if ((ModifierKeys & Keys.Control) == Keys.Control)
+            {
+                if (e.Delta > 0) UpdateTilesetZoom(tileView.Zoom + 1);
+                if (e.Delta < 0) UpdateTilesetZoom(tileView.Zoom - 1);
             }
         }
 
@@ -2485,18 +2534,18 @@ namespace mage
         private void tileTimer_Tick(object sender, EventArgs e)
         {
             tileTimer.Stop();
-            if (tileCursor.X == -1) { return; }
+            if (!TileCursor.Visible) { return; }
 
-            string caption = "Block: " + Hex.ToString(tileCursor.Y * 16 + tileCursor.X);
-            tileTip.Show(caption, tileView, tileCursor.X * 16, tileCursor.Y * 16 + 24);
+            string caption = "Block: " + Hex.ToString(TileCursorIndex.Y * 16 + TileCursorIndex.X);
+            tileTip.Show(caption, tileView, TileCursorIndex.X * 16, TileCursorIndex.Y * 16 + 24);
         }
 
-        private void tileView_MouseDown(object sender, MouseEventArgs e)
+        private void tileView_MouseDown(object sender, TileDisplay.TileDisplayArgs e)
         {
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
                 // start new selection
-                pivot = tileCursor;
+                pivot = TileCursorIndex;
                 selection = new Rectangle(pivot.X, pivot.Y, 1, 1);
 
                 // remove selection from room if necessary
@@ -2508,58 +2557,51 @@ namespace mage
                     roomView.Invalidate(rect1);
                 }
                 // remove previous selection from tileset if necessary
-                Rectangle rect2 = new Rectangle(pivot.X * 16, pivot.Y * 16, 16, 16);
-                if (tileView.HasSelection)
-                {
-                    rect2 = Draw.Union(rect2, tileView.selRect);
-                }
-                tileView.ResizeSelection(selection);
-                tileView.Invalidate(rect2);
+                Rectangle rect2 = new Rectangle(pivot.X * tileView.TileSize, pivot.Y * tileView.TileSize, tileView.TileSize, tileView.TileSize);
+                TileSelection.Rectangle = rect2;
+                TileSelection.Visible = true;
                 UpdateStatusSel();
             }
         }
 
-        private void tileView_MouseMove(object sender, MouseEventArgs e)
+        private void tileView_MouseMove(object sender, TileDisplay.TileDisplayArgs e)
         {
-            int x = e.X >> 4;
-            int y = e.Y >> 4;
-            if (x == tileCursor.X && y == tileCursor.Y) { return; }
-            if (x < 0 || x >= 16 || y < 0 || y >= tileView.Height / 16) { return; }
+            int ts = tileView.TileSize;
+            int x = e.TileIndexPosition.X;
+            int y = e.TileIndexPosition.Y;
+            if (x == TileCursorIndex.X && y == TileCursorIndex.Y) return;
+            if (x < 0 || x >= 16 || y < 0 || y >= tileView.Height / tileView.TileSize) return;
 
-            tileCursor.X = x;
-            tileCursor.Y = y;
+            TileCursorIndex.X = x;
+            TileCursorIndex.Y = y;
             ResetTileTip(true);
 
             // if any mouse button is pressed
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
-                if (tileView.HasSelection)
+                if (TileSelection.Visible)
                 {
                     // redraw selection using pivot
-                    Rectangle rect = tileView.selRect;
-                    ResizeSelection(tileCursor);
-                    tileView.ResizeSelection(selection);
-                    tileView.MoveRed(x, y);
-                    rect = Draw.Union(rect, tileView.selRect);
-                    tileView.Invalidate(rect);
+                    ResizeSelection(TileCursorIndex);
+                    TileSelection.Rectangle = new(selection.X * ts, selection.Y * ts, selection.Width * ts, selection.Height * ts);
+                    TileCursor.Rectangle = new(x * ts, y * ts, ts, ts);
                     UpdateStatusSel();
                 }
             }
             else
             {
                 // redraw red rectangle
-                Rectangle rect = tileView.redRect;
-                tileView.MoveRed(x, y);
-                rect = Draw.Union(rect, tileView.redRect);
-                tileView.Invalidate(rect);
+                TileCursor.Rectangle = new(x * ts, y * ts, ts, ts);
             }
+
+            TileCursor.Visible = true;
         }
 
-        private void tileView_MouseUp(object sender, MouseEventArgs e)
+        private void tileView_MouseUp(object sender, TileDisplay.TileDisplayArgs e)
         {
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
-                if (tileView.HasSelection)
+                if (TileSelection.Visible)
                 {
                     CopyBlocks();
                     pivot = new Point(-1, -1);
@@ -2607,12 +2649,9 @@ namespace mage
                     selection = new Rectangle(pivot.X, pivot.Y, 1, 1);
 
                     // remove selection from tileset if necessary
-                    if (tileView.HasSelection)
+                    if (TileSelection.Visible)
                     {
-                        Rectangle rect1 = tileView.selRect;
-                        rect1.Width++; rect1.Height++;
-                        tileView.selRect = new Rectangle(-1, -1, 15, 15);
-                        tileView.Invalidate(rect1);
+                        TileSelection.Visible = false;
                     }
                     // remove previous selection from room if necessary
                     Rectangle rect2 = roomView.redRect;
@@ -3000,6 +3039,11 @@ namespace mage
         private void menuItem_projectSettings_Click(object sender, EventArgs e)
         {
             new FormOption("Project Settings", PageLists.ProjectOptionsPages, "Overview").ShowDialog();
+        }
+
+        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            comboBox_clipdata.Invalidate();
         }
     }
 }

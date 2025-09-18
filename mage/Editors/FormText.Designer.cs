@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormText));
-            comboBox_language = new Theming.CustomControls.FlatComboBox();
+            comboBox_language = new mage.Theming.CustomControls.FlatComboBox();
             label_language = new System.Windows.Forms.Label();
             label_number = new System.Windows.Forms.Label();
-            comboBox_number = new Theming.CustomControls.FlatComboBox();
+            comboBox_number = new mage.Theming.CustomControls.FlatComboBox();
             pictureBox_text = new GfxView();
             checkBox_newLine = new System.Windows.Forms.CheckBox();
             checkBox_wordWrap = new System.Windows.Forms.CheckBox();
             label_text = new System.Windows.Forms.Label();
-            comboBox_text = new Theming.CustomControls.FlatComboBox();
+            comboBox_text = new mage.Theming.CustomControls.FlatComboBox();
             label_offset = new System.Windows.Forms.Label();
             panel_gfx = new mage.Controls.ExtendedPanel();
             groupBox_options = new System.Windows.Forms.GroupBox();
-            textBox_offsetVal = new Theming.CustomControls.FlatTextBox();
+            textBox_offsetVal = new mage.Theming.CustomControls.FlatTextBox();
             label_charPos = new System.Windows.Forms.Label();
             label_pos = new System.Windows.Forms.Label();
             button_close = new System.Windows.Forms.Button();
@@ -51,7 +51,7 @@
             button_update = new System.Windows.Forms.Button();
             button_editPalette = new System.Windows.Forms.Button();
             pictureBox_palette = new System.Windows.Forms.PictureBox();
-            textBox = new Theming.CustomControls.FlatTextBox();
+            textBox = new mage.Theming.CustomControls.FlatTextBox();
             statusStrip = new System.Windows.Forms.StatusStrip();
             statusLabel_changes = new System.Windows.Forms.ToolStripStatusLabel();
             spring = new System.Windows.Forms.ToolStripStatusLabel();
@@ -354,7 +354,7 @@
             textBox.BorderColor = System.Drawing.Color.Black;
             textBox.DisplayBorder = true;
             textBox.Font = new System.Drawing.Font("Courier New", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            textBox.Location = new System.Drawing.Point(13, 3);
+            textBox.Location = new System.Drawing.Point(13, 6);
             textBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox.MaxLength = 32767;
             textBox.Multiline = true;
@@ -465,14 +465,15 @@
             // splitContainer.Panel2
             // 
             splitContainer.Panel2.Controls.Add(textBox);
+            splitContainer.Panel2.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
             splitContainer.Size = new System.Drawing.Size(755, 471);
-            splitContainer.SplitterDistance = 177;
+            splitContainer.SplitterDistance = 172;
+            splitContainer.SplitterWidth = 3;
             splitContainer.TabIndex = 3;
             // 
             // FormText
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             ClientSize = new System.Drawing.Size(755, 493);
             Controls.Add(splitContainer);
             Controls.Add(statusStrip);
@@ -508,7 +509,6 @@
         private System.Windows.Forms.Label label_text;
         private mage.Theming.CustomControls.FlatComboBox comboBox_text;
         private System.Windows.Forms.Label label_offset;
-        private System.Windows.Forms.Panel panel_gfx;
         private System.Windows.Forms.GroupBox groupBox_options;
         private System.Windows.Forms.Button button_close;
         private System.Windows.Forms.Button button_apply;
@@ -532,5 +532,6 @@
         private System.Windows.Forms.ToolStripMenuItem button_zoom100;
         private System.Windows.Forms.SplitContainer splitContainer;
         private Theming.CustomControls.FlatTextBox textBox_offsetVal;
+        private Controls.ExtendedPanel panel_gfx;
     }
 }

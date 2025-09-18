@@ -49,6 +49,7 @@
             toolStrip1 = new System.Windows.Forms.ToolStrip();
             button_viewPalette = new System.Windows.Forms.ToolStripButton();
             button_viewVram = new System.Windows.Forms.ToolStripButton();
+            button_loadCommonGraphics = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             button_gfxZoomIn = new System.Windows.Forms.ToolStripButton();
             button_gfxZoomOut = new System.Windows.Forms.ToolStripButton();
@@ -376,7 +377,7 @@
             // toolStrip1
             // 
             toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_viewPalette, button_viewVram, toolStripSeparator1, button_gfxZoomIn, button_gfxZoomOut, label_gfxZoom });
+            toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_viewPalette, button_viewVram, button_loadCommonGraphics, toolStripSeparator1, button_gfxZoomIn, button_gfxZoomOut, label_gfxZoom });
             toolStrip1.Location = new System.Drawing.Point(4, 19);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new System.Drawing.Size(529, 25);
@@ -402,6 +403,16 @@
             button_viewVram.Size = new System.Drawing.Size(23, 22);
             button_viewVram.Text = "View entire VRAM";
             button_viewVram.Click += button_viewVram_Click;
+            // 
+            // button_loadCommonGraphics
+            // 
+            button_loadCommonGraphics.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_loadCommonGraphics.Image = Properties.Resources.toolbar_weapon;
+            button_loadCommonGraphics.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_loadCommonGraphics.Name = "button_loadCommonGraphics";
+            button_loadCommonGraphics.Size = new System.Drawing.Size(23, 22);
+            button_loadCommonGraphics.Text = "Load Common Graphics";
+            button_loadCommonGraphics.Click += button_loadCommonGraphics_Click;
             // 
             // toolStripSeparator1
             // 
@@ -823,7 +834,7 @@
             groupBox_oamDisplay.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_oamDisplay.Name = "groupBox_oamDisplay";
             groupBox_oamDisplay.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_oamDisplay.Size = new System.Drawing.Size(828, 421);
+            groupBox_oamDisplay.Size = new System.Drawing.Size(828, 422);
             groupBox_oamDisplay.TabIndex = 4;
             groupBox_oamDisplay.TabStop = false;
             groupBox_oamDisplay.Text = "OAM Frame";
@@ -836,7 +847,7 @@
             panel_oam.Location = new System.Drawing.Point(4, 44);
             panel_oam.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_oam.Name = "panel_oam";
-            panel_oam.Size = new System.Drawing.Size(820, 374);
+            panel_oam.Size = new System.Drawing.Size(820, 375);
             panel_oam.TabIndex = 0;
             // 
             // oamView_oam
@@ -943,6 +954,7 @@
             splitContainer_views.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 6);
             splitContainer_views.Size = new System.Drawing.Size(834, 741);
             splitContainer_views.SplitterDistance = 307;
+            splitContainer_views.SplitterWidth = 3;
             splitContainer_views.TabIndex = 6;
             // 
             // panel_palette
@@ -1295,5 +1307,6 @@
         private System.Windows.Forms.ToolStripMenuItem button_exportAnimation;
         private System.Windows.Forms.ToolStripMenuItem button_importOam;
         private System.Windows.Forms.ToolStripMenuItem button_exportAssembly;
+        private System.Windows.Forms.ToolStripButton button_loadCommonGraphics;
     }
 }

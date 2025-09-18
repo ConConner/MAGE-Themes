@@ -31,12 +31,12 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMinimap));
             label_area = new System.Windows.Forms.Label();
-            comboBox_area = new Theming.CustomControls.FlatComboBox();
-            comboBox_view = new Theming.CustomControls.FlatComboBox();
+            comboBox_area = new mage.Theming.CustomControls.FlatComboBox();
+            comboBox_view = new mage.Theming.CustomControls.FlatComboBox();
             label_view = new System.Windows.Forms.Label();
             label_palette = new System.Windows.Forms.Label();
-            comboBox_palette = new Theming.CustomControls.FlatComboBox();
-            comboBox_type = new Theming.CustomControls.FlatComboBox();
+            comboBox_palette = new mage.Theming.CustomControls.FlatComboBox();
+            comboBox_type = new mage.Theming.CustomControls.FlatComboBox();
             label_type = new System.Windows.Forms.Label();
             checkBox_xflip = new System.Windows.Forms.CheckBox();
             checkBox_yflip = new System.Windows.Forms.CheckBox();
@@ -144,7 +144,7 @@
             comboBox_type.Location = new System.Drawing.Point(50, 70);
             comboBox_type.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_type.Name = "comboBox_type";
-            comboBox_type.Size = new System.Drawing.Size(123, 23);
+            comboBox_type.Size = new System.Drawing.Size(96, 23);
             comboBox_type.TabIndex = 2;
             comboBox_type.SelectedIndexChanged += SelectedSquareChanged;
             // 
@@ -439,7 +439,7 @@
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             MinimumSize = new System.Drawing.Size(915, 605);
             Name = "FormMinimap";
-            Text = "Minimap Editor";
+            Text = "Map Editor";
             KeyDown += FormMinimap_KeyDown;
             groupBox_map.ResumeLayout(false);
             groupBox_map.PerformLayout();
@@ -476,8 +476,6 @@
         private GfxView gfxView_map;
         private GfxView gfxView_squares;
         private GfxView gfxView_sel;
-        private System.Windows.Forms.Panel panel_squares;
-        private System.Windows.Forms.Panel panel_black;
         private System.Windows.Forms.GroupBox groupBox_tiles;
         private System.Windows.Forms.Button button_bgColor;
         private System.Windows.Forms.ToolTip toolTip_bgColor;
@@ -491,5 +489,7 @@
         private System.Windows.Forms.ToolStripMenuItem statusStrip_importRaw;
         private System.Windows.Forms.ToolStripMenuItem statusStrip_exportRaw;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel_changes;
+        private Controls.ExtendedPanel panel_squares;
+        private Controls.ExtendedPanel panel_black;
     }
 }

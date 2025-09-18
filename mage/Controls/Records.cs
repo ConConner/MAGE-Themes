@@ -16,7 +16,7 @@ namespace mage.Controls;
 /// <param name="indent">a value that is applied to the width and height of the rectangle AFTER its zoomed</param>
 public class Drawable
 {
-    public Drawable() : this(Rectangle.Empty, Pens.Red) {}
+    public Drawable() : this(Rectangle.Empty, Pens.Red) { }
     public Drawable(Rectangle Rectangle, Pen DrawPen, int indent = 0)
     {
         this.Rectangle = Rectangle;
