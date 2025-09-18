@@ -18,13 +18,13 @@ namespace mage.Theming
     {
         ColorTheme Theme;
 
-        public MenuStripCustomRenderer(ColorTheme theme) : this(new MenuStripColorTable(theme)) 
-        { 
-            Theme = theme; 
+        public MenuStripCustomRenderer(ColorTheme theme) : this(new MenuStripColorTable(theme))
+        {
+            Theme = theme;
         }
-        public MenuStripCustomRenderer(ProfessionalColorTable colorTable) : base(colorTable) 
-        { 
-            RoundedEdges = false; 
+        private MenuStripCustomRenderer(ProfessionalColorTable colorTable) : base(colorTable)
+        {
+            RoundedEdges = false;
         }
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)

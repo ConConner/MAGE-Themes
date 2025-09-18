@@ -50,8 +50,7 @@ public partial class FormMinimapNew : Form, Editor
     private int numOfPalettes => Version.IsMF ? 3 : 5;
     private int tilesBorderSize => 1;
 
-    // Properties
-    private bool tilesFlippedH = false;
+    #region Properties
     private bool TilesFlippedH
     {
         get => tilesFlippedH;
@@ -65,7 +64,7 @@ public partial class FormMinimapNew : Form, Editor
             SelectFromTiles();
         }
     }
-    private bool tilesFlippedV = false;
+    private bool tilesFlippedH = false;
     private bool TilesFlippedV
     {
         get => tilesFlippedV;
@@ -79,8 +78,8 @@ public partial class FormMinimapNew : Form, Editor
             SelectFromTiles();
         }
     }
+    private bool tilesFlippedV = false;
 
-    private int selectedArea = -1;
     private int SelectedArea
     {
         get => selectedArea;
@@ -94,11 +93,13 @@ public partial class FormMinimapNew : Form, Editor
             }
 
             selectedArea = value;
+            roomListReloadRequired = true;
+            if (ViewRoomOutlines) LoadRooms((byte)value);
             LoadMap();
         }
     }
+    private int selectedArea = -1;
 
-    private MapTile[,] selectedTiles;
     private Size selectedTilesSize
     {
         get
@@ -107,10 +108,29 @@ public partial class FormMinimapNew : Form, Editor
             return new Size(selectedTiles.GetLength(0), selectedTiles.GetLength(1));
         }
     }
+    private MapTile[,] selectedTiles;
+
+    private bool ViewRoomOutlines
+    {
+        get => viewRoomOutlines;
+        set
+        {
+            viewRoomOutlines = value;
+            button_viewRooms.Checked = value;
+            // TODO: Add Config setting
+
+            LoadRooms((byte)SelectedArea);
+            foreach (Drawable d in roomOutlines) d.Visible = value;
+            tileDisplay_map.Invalidate();
+        }
+    }
+    private bool viewRoomOutlines = false;
+    #endregion
 
     #region Fields
     Pen CursorPen = new Pen(Color.Red, 1);
     Pen GridPen = new Pen(Color.Gray, 1);
+    Pen RoomOutline = new Pen(Color.Orange, 1);
     Pen SelectionPenWhite = new Pen(Color.White, 1) { DashPattern = new float[] { 2, 3 } };
     Pen SelectionPenBlack = new Pen(Color.Black, 1) { DashPattern = new float[] { 2, 3 }, DashOffset = 2 };
 
@@ -127,6 +147,10 @@ public partial class FormMinimapNew : Form, Editor
 
     private FormMain main;
     private ByteStream romStream;
+
+    private bool roomListReloadRequired = true;
+    private List<Room?> Rooms;
+    private List<Drawable> roomOutlines = new();
 
     // Drawables for UI
     private Drawable TileCursor;
@@ -150,6 +174,7 @@ public partial class FormMinimapNew : Form, Editor
         }
     }
     #endregion
+
 
     public FormMinimapNew(FormMain main)
     {
@@ -179,6 +204,7 @@ public partial class FormMinimapNew : Form, Editor
         comboBox_tilesType.SelectedIndex = Version.IsMF ? 0 : 1;
     }
 
+
     public void UpdateEditor()
     {
         int paletteOffset = Version.MinimapPaletteOffset;
@@ -187,6 +213,7 @@ public partial class FormMinimapNew : Form, Editor
 
         DrawTiles();
         DrawMap();
+        roomListReloadRequired = true;
     }
 
     private void Save()
@@ -729,6 +756,54 @@ public partial class FormMinimapNew : Form, Editor
     }
     #endregion
 
+    #region Room Display
+    private void button_viewRooms_Click(object sender, EventArgs e) => ViewRoomOutlines = !ViewRoomOutlines;
+
+    private void LoadRooms(byte area)
+    {
+        if (roomListReloadRequired == false) return;
+
+        Rooms = new();
+        if (area < Version.RoomsPerArea.Length)
+            for (byte i = 0; i < Version.RoomsPerArea[area]; i++)
+            {
+                Room? r = null;
+                try { r = new Room(area, i); }
+                catch { }
+                Rooms.Add(r);
+            }
+        SetRoomOutlines();
+
+        roomListReloadRequired = false;
+    }
+
+    private void SetRoomOutlines()
+    {
+        roomOutlines.Clear();
+        tileDisplay_map.ResetDrawables();
+
+        foreach (Room r in Rooms)
+        {
+            Point roomPos = new(r.header.mapX * tileDisplay_map.TileSize, r.header.mapY * tileDisplay_map.TileSize);
+            Size roomSize = new(r.WidthInScreens * tileDisplay_map.TileSize, r.HeightInScreens * tileDisplay_map.TileSize);
+            Rectangle roomRect = new(roomPos, roomSize);
+            Drawable outline = new(roomRect, RoomOutline, 1)
+            {
+                Visible = ViewRoomOutlines,
+            };
+
+            roomOutlines.Add(outline);
+            tileDisplay_map.AddDrawable(outline);
+        }
+
+        // Add back cursor and selection
+        tileDisplay_map.AddDrawable(MapSelection);
+        tileDisplay_map.AddDrawable(MapCursor);
+
+        tileDisplay_map.Invalidate();
+    }
+    #endregion
+
     #region Zooming
     private void button_mapZoomIn_Click(object sender, EventArgs e) => UpdateMapZoom(tileDisplay_map.Zoom + 1);
     private void button_mapZoomOut_Click(object sender, EventArgs e) => UpdateMapZoom(tileDisplay_map.Zoom - 1);
@@ -762,4 +837,6 @@ public partial class FormMinimapNew : Form, Editor
         if (!CheckUnsaved()) e.Cancel = true;
     }
     #endregion
+
+
 }
