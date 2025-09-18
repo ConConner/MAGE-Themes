@@ -1,3 +1,22 @@
+# [1.8.0](https://github.com/ConConner/MAGE-Themes/compare/v1.7.0...v1.8.0) (2025-09-18)
+
+
+### Bug Fixes
+
+* oam editor: palette loading can lead to an out of bounds error ([a405b58](https://github.com/ConConner/MAGE-Themes/commit/a405b58eaf691356bdf7dea58ea1c1a07b331bf4))
+
+
+### Features
+
+* display room outlines in the map editor [experimental] ([1851882](https://github.com/ConConner/MAGE-Themes/commit/185188293328b92f274cf0b8cacae9228b2c6adf))
+* new map editor [experimental] ([24eec3a](https://github.com/ConConner/MAGE-Themes/commit/24eec3aaed57dd88bcfa71751a419eb0626794dc))
+* renamed "Minimap Editor" to "Map Editor" ([4793e14](https://github.com/ConConner/MAGE-Themes/commit/4793e14c8c8c4974dab618fc2efa1045479568a4))
+* renamed "Minimap Tile Builder" to "Map Tile Builder" ([f623761](https://github.com/ConConner/MAGE-Themes/commit/f62376138ab82cdfc9e94edb872885fe51985b54))
+* resizeable panels display a handle ([462ab82](https://github.com/ConConner/MAGE-Themes/commit/462ab8238d9e7b464d0841c058222e24c58e62fb))
+* room editor layout changes: tileset display can be resized ([9d42740](https://github.com/ConConner/MAGE-Themes/commit/9d42740dc39106cd25b39b923cb72d13a9316109))
+* toggle usage of common sprite graphics in oam editor ([b090c0e](https://github.com/ConConner/MAGE-Themes/commit/b090c0efdbad7249f635733ac0cc76588ca5ab57))
+* zoom in room editor tileset ([716145e](https://github.com/ConConner/MAGE-Themes/commit/716145e7949044a743574e8f9a9569f0175da040))
+
 # [1.7.0](https://github.com/ConConner/MAGE-Themes/compare/v1.6.0...v1.7.0) (2025-09-14)
 
 
