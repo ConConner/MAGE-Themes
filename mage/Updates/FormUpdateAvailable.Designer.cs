@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            pictureBoxWithInterpolationMode1 = new Theming.CustomControls.PictureBoxWithInterpolationMode();
+            pictureBoxWithInterpolationMode1 = new mage.Theming.CustomControls.PictureBoxWithInterpolationMode();
             label_mageVersion = new System.Windows.Forms.Label();
             button_dismiss = new System.Windows.Forms.Button();
             button_skip = new System.Windows.Forms.Button();
             button_download = new System.Windows.Forms.Button();
-            textBox_description = new Theming.CustomControls.FlatTextBox();
+            textBox_description = new mage.Theming.CustomControls.FlatTextBox();
             button_viewPage = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)pictureBoxWithInterpolationMode1).BeginInit();
             SuspendLayout();
@@ -61,6 +61,7 @@
             // 
             // button_dismiss
             // 
+            button_dismiss.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             button_dismiss.Location = new System.Drawing.Point(12, 218);
             button_dismiss.Name = "button_dismiss";
             button_dismiss.Size = new System.Drawing.Size(79, 23);
@@ -71,6 +72,7 @@
             // 
             // button_skip
             // 
+            button_skip.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             button_skip.Location = new System.Drawing.Point(97, 218);
             button_skip.Name = "button_skip";
             button_skip.Size = new System.Drawing.Size(101, 23);
@@ -81,6 +83,7 @@
             // 
             // button_download
             // 
+            button_download.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             button_download.Location = new System.Drawing.Point(482, 218);
             button_download.Name = "button_download";
             button_download.Size = new System.Drawing.Size(79, 23);
@@ -112,6 +115,7 @@
             // 
             // button_viewPage
             // 
+            button_viewPage.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             button_viewPage.Location = new System.Drawing.Point(367, 218);
             button_viewPage.Name = "button_viewPage";
             button_viewPage.Size = new System.Drawing.Size(109, 23);
