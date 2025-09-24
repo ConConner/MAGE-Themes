@@ -1152,6 +1152,7 @@
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Name = "FormSprite";
             Text = "Sprite Editor";
+            FormClosing += FormSprite_FormClosing;
             groupBox_vulnerability.ResumeLayout(false);
             groupBox_vulnerability.PerformLayout();
             groupBox_dropProbability.ResumeLayout(false);

@@ -7,8 +7,6 @@ using System.Windows.Forms;
 
 namespace mage
 {
-
-
     public partial class FormSprite : Form, Editor
     {
         // fields
@@ -24,6 +22,45 @@ namespace mage
         private Status status;
         private bool loading;
         private bool updatingValues;
+
+        private bool preventCheckUnsaved = false;
+
+        // Properties
+        private int SpriteID
+        {
+            get => spriteID;
+            set
+            {
+                if (spriteID == value) return;
+                if (!preventCheckUnsaved && status.UnsavedChanges && !CheckUnsaved())
+                {
+                    comboBox_sprite.SelectedIndex = spriteID;
+                    return;
+                }
+                spriteID = value;
+                LoadSprite((byte)comboBox_sprite.SelectedIndex);
+            }
+        }
+        private int spriteID = -1;
+
+        private int Type
+        {
+            get => type;
+            set
+            {
+                if (type == value) return;
+                if (status.UnsavedChanges && !CheckUnsaved())
+                {
+                    comboBox_type.SelectedIndex = type;
+                    return;
+                }
+                type = value;
+                preventCheckUnsaved = true;
+                TypeChanged();
+                preventCheckUnsaved = false;
+            }
+        }
+        private int type = -1;
 
         // constructor
         public FormSprite(FormMain main, byte spriteID)
@@ -62,7 +99,7 @@ namespace mage
             }
         }
 
-        private void comboBox_type_SelectedIndexChanged(object sender, EventArgs e)
+        private void TypeChanged()
         {
             loading = true;
 
@@ -97,10 +134,9 @@ namespace mage
             }
         }
 
-        private void comboBox_sprite_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LoadSprite((byte)comboBox_sprite.SelectedIndex);
-        }
+        private void comboBox_type_SelectedIndexChanged(object sender, EventArgs e) => Type = comboBox_type.SelectedIndex;
+
+        private void comboBox_sprite_SelectedIndexChanged(object sender, EventArgs e) => SpriteID = comboBox_sprite.SelectedIndex;
 
         private void LoadSprite(byte spriteID)
         {
@@ -495,6 +531,25 @@ namespace mage
         private void textBox_iceResistance_TextChanged(object sender, EventArgs e)
         {
             if (!loading) { status.ChangeMade(); }
+        }
+
+        /// <summary>
+        /// Prompts the user if they want to save the current changes or cancel.
+        /// </summary>
+        /// <returns>False if cancelled. True for other options. Saves if yes is clicked</returns>
+        private bool CheckUnsaved()
+        {
+            DialogResult result = MessageBox.Show("Do you want to save changes to the Sprite?",
+                "Unsaved Changes", MessageBoxButtons.YesNoCancel);
+            if (result == DialogResult.Cancel) return false;
+            if (result == DialogResult.Yes) button_apply_Click(null, null);
+            return true;
+        }
+
+        private void FormSprite_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!status.UnsavedChanges) return;
+            if (!CheckUnsaved()) e.Cancel = true;
         }
     }
 }
