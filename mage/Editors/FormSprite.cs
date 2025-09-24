@@ -7,6 +7,8 @@ using System.Windows.Forms;
 
 namespace mage
 {
+
+
     public partial class FormSprite : Form, Editor
     {
         // fields
@@ -28,17 +30,6 @@ namespace mage
         {
             InitializeComponent();
 
-            //Adding events because fucking designer wont show them for fucks sake
-            textBox_healthXP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_missileXP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_redXP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_noDropP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_smallHealthP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_largeHealthP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_missileP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_superMissileP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_powerBombP.TextChanged += textBox_dropPercent_TextChanged;
-
             ThemeSwitcher.ChangeTheme(Controls, this);
             ThemeSwitcher.InjectPaintOverrides(Controls);
 
@@ -58,7 +49,7 @@ namespace mage
                 numericUpDown_gfxRows.Enabled = false;
             }
 
-            status = new Status(statusLabel_changes, button_apply);
+            status = new Status(statusLabel_changes, toolStripButton_apply);
             comboBox_type.SelectedIndex = 0;
         }
 
@@ -214,6 +205,9 @@ namespace mage
             checkBox_speedScrew.Checked = ((vul & 0x20) != 0);
             checkBox_frozen.Checked = ((vul & 0x40) != 0);
 
+            textBox_iceResistance.Enabled = !Version.IsMF;
+            label_iceResistance.Enabled = !Version.IsMF;
+
             // drop probability
             if (Version.IsMF)
             {
@@ -237,6 +231,7 @@ namespace mage
                 textBox_missile.Text = Hex.ToString(currStats.missile);
                 textBox_superMissile.Text = Hex.ToString(currStats.superMissile);
                 textBox_powerBomb.Text = Hex.ToString(currStats.powerBomb);
+                textBox_iceResistance.Text = Hex.ToString(currStats.iceResistance);
             }
         }
 
@@ -336,7 +331,7 @@ namespace mage
 
             var controls = panel_percentage.Controls;
             double total = 0;
-            
+
             try
             {
                 foreach (Control ctrl in controls)
@@ -470,6 +465,7 @@ namespace mage
                     currStats.missile = Hex.ToUshort(textBox_missile.Text);
                     currStats.superMissile = Hex.ToUshort(textBox_superMissile.Text);
                     currStats.powerBomb = Hex.ToUshort(textBox_powerBomb.Text);
+                    currStats.iceResistance = Hex.ToByte(textBox_iceResistance.Text);
                 }
 
                 // write stats
@@ -496,11 +492,9 @@ namespace mage
             }
         }
 
-        private void button_close_Click(object sender, EventArgs e)
+        private void textBox_iceResistance_TextChanged(object sender, EventArgs e)
         {
-            Close();
+            if (!loading) { status.ChangeMade(); }
         }
-
-
     }
 }
