@@ -23,21 +23,49 @@ namespace mage
         private bool loading;
         private bool updatingValues;
 
+        private bool preventCheckUnsaved = false;
+
+        // Properties
+        private int SpriteID
+        {
+            get => spriteID;
+            set
+            {
+                if (spriteID == value) return;
+                if (!preventCheckUnsaved && status.UnsavedChanges && !CheckUnsaved())
+                {
+                    comboBox_sprite.SelectedIndex = spriteID;
+                    return;
+                }
+                spriteID = value;
+                LoadSprite((byte)comboBox_sprite.SelectedIndex);
+            }
+        }
+        private int spriteID = -1;
+
+        private int Type
+        {
+            get => type;
+            set
+            {
+                if (type == value) return;
+                if (status.UnsavedChanges && !CheckUnsaved())
+                {
+                    comboBox_type.SelectedIndex = type;
+                    return;
+                }
+                type = value;
+                preventCheckUnsaved = true;
+                TypeChanged();
+                preventCheckUnsaved = false;
+            }
+        }
+        private int type = -1;
+
         // constructor
         public FormSprite(FormMain main, byte spriteID)
         {
             InitializeComponent();
-
-            //Adding events because fucking designer wont show them for fucks sake
-            textBox_healthXP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_missileXP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_redXP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_noDropP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_smallHealthP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_largeHealthP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_missileP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_superMissileP.TextChanged += textBox_dropPercent_TextChanged;
-            textBox_powerBombP.TextChanged += textBox_dropPercent_TextChanged;
 
             ThemeSwitcher.ChangeTheme(Controls, this);
             ThemeSwitcher.InjectPaintOverrides(Controls);
@@ -58,7 +86,7 @@ namespace mage
                 numericUpDown_gfxRows.Enabled = false;
             }
 
-            status = new Status(statusLabel_changes, button_apply);
+            status = new Status(statusLabel_changes, toolStripButton_apply);
             comboBox_type.SelectedIndex = 0;
         }
 
@@ -71,7 +99,7 @@ namespace mage
             }
         }
 
-        private void comboBox_type_SelectedIndexChanged(object sender, EventArgs e)
+        private void TypeChanged()
         {
             loading = true;
 
@@ -106,10 +134,9 @@ namespace mage
             }
         }
 
-        private void comboBox_sprite_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LoadSprite((byte)comboBox_sprite.SelectedIndex);
-        }
+        private void comboBox_type_SelectedIndexChanged(object sender, EventArgs e) => Type = comboBox_type.SelectedIndex;
+
+        private void comboBox_sprite_SelectedIndexChanged(object sender, EventArgs e) => SpriteID = comboBox_sprite.SelectedIndex;
 
         private void LoadSprite(byte spriteID)
         {
@@ -214,6 +241,9 @@ namespace mage
             checkBox_speedScrew.Checked = ((vul & 0x20) != 0);
             checkBox_frozen.Checked = ((vul & 0x40) != 0);
 
+            textBox_iceResistance.Enabled = !Version.IsMF;
+            label_iceResistance.Enabled = !Version.IsMF;
+
             // drop probability
             if (Version.IsMF)
             {
@@ -237,6 +267,7 @@ namespace mage
                 textBox_missile.Text = Hex.ToString(currStats.missile);
                 textBox_superMissile.Text = Hex.ToString(currStats.superMissile);
                 textBox_powerBomb.Text = Hex.ToString(currStats.powerBomb);
+                textBox_iceResistance.Text = Hex.ToString(currStats.iceResistance);
             }
         }
 
@@ -336,7 +367,7 @@ namespace mage
 
             var controls = panel_percentage.Controls;
             double total = 0;
-            
+
             try
             {
                 foreach (Control ctrl in controls)
@@ -470,6 +501,7 @@ namespace mage
                     currStats.missile = Hex.ToUshort(textBox_missile.Text);
                     currStats.superMissile = Hex.ToUshort(textBox_superMissile.Text);
                     currStats.powerBomb = Hex.ToUshort(textBox_powerBomb.Text);
+                    currStats.iceResistance = Hex.ToByte(textBox_iceResistance.Text);
                 }
 
                 // write stats
@@ -496,11 +528,28 @@ namespace mage
             }
         }
 
-        private void button_close_Click(object sender, EventArgs e)
+        private void textBox_iceResistance_TextChanged(object sender, EventArgs e)
         {
-            Close();
+            if (!loading) { status.ChangeMade(); }
         }
 
+        /// <summary>
+        /// Prompts the user if they want to save the current changes or cancel.
+        /// </summary>
+        /// <returns>False if cancelled. True for other options. Saves if yes is clicked</returns>
+        private bool CheckUnsaved()
+        {
+            DialogResult result = MessageBox.Show("Do you want to save changes to the Sprite?",
+                "Unsaved Changes", MessageBoxButtons.YesNoCancel);
+            if (result == DialogResult.Cancel) return false;
+            if (result == DialogResult.Yes) button_apply_Click(null, null);
+            return true;
+        }
 
+        private void FormSprite_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!status.UnsavedChanges) return;
+            if (!CheckUnsaved()) e.Cancel = true;
+        }
     }
 }

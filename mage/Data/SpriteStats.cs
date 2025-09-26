@@ -20,6 +20,7 @@ namespace mage
         public ushort missile;
         public ushort superMissile;
         public ushort powerBomb;
+        public byte iceResistance;
 
         // meta
         public byte spriteID;
@@ -70,6 +71,7 @@ namespace mage
                 }
 
                 vulnerability = romStream.Read8(offset + 4);
+                iceResistance = romStream.Read8(offset + 5);
                 noDrop = romStream.Read16(offset + 6);
                 smallHealth = romStream.Read16(offset + 8);
                 largeHealth = romStream.Read16(offset + 0xA);
@@ -115,6 +117,7 @@ namespace mage
                 }
 
                 romStream.Write8(offset + 4, vulnerability);
+                romStream.Write8(offset + 5, iceResistance);
                 romStream.Write16(offset + 6, noDrop);
                 romStream.Write16(offset + 8, smallHealth);
                 romStream.Write16(offset + 0xA, largeHealth);

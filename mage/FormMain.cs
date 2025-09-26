@@ -875,6 +875,15 @@ namespace mage
             }
         }
 
+        private void menuItem_creditsEditor_Click(object sender, EventArgs e)
+        {
+            if (!FindOpenForm(typeof(FormCredits), false))
+            {
+                FormCredits form = new FormCredits();
+                form.Show();
+            }
+        }
+
         // tools
         private void menuItem_roomOptions_Click(object sender, EventArgs e)
         {
