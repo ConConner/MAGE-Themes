@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -86,7 +88,8 @@ public partial class FormCredits : Form
 
     private void Save()
     {
-
+        Status.Save();
+        LoadedCredits.Write(ROM.Stream);
     }
 
     private void dataGrid_credits_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -122,5 +125,79 @@ public partial class FormCredits : Form
             e.Cancel = true;
             return;
         }
+    }
+
+    private void button_testCredits_Click(object sender, EventArgs e)
+    {
+        Test.Credits(LoadedCredits);
+    }
+
+    private void button_apply_Click(object sender, EventArgs e) => Save();
+
+    private List<CreditsEntry> ParseTextFile(string fileName)
+    {
+        string file = File.ReadAllText(fileName);
+        StringReader sr = new StringReader(file);
+
+        List<CreditsEntry> entries = new();
+        string line;
+        while ((line = sr.ReadLine()) != null)
+        {
+            string[] items = line.Split(new[] { ' ' }, 2);
+
+            byte type = Convert.ToByte(items[0], 16);
+            string text = "";
+            if (items.Length != 1) text = items[1];
+
+            CreditsEntry entry = new CreditsEntry((CreditsEntryType)type, text);
+            entries.Add(entry);
+        }
+        return entries;
+    }
+
+    private void statusButton_import_Click(object sender, EventArgs e)
+    {
+        var ofd = new OpenFileDialog()
+        {
+            Filter = "Text files (*.txt)|*.txt",
+            DefaultExt = "txt"
+        };
+        if (ofd.ShowDialog() != DialogResult.OK) return;
+
+        try 
+        { 
+            var entries = ParseTextFile(ofd.FileName);
+
+            LoadedCredits.Entries.RaiseListChangedEvents = false;
+            LoadedCredits.Entries.Clear();
+            foreach (var et in entries) LoadedCredits.Entries.Add(et);
+            LoadedCredits.Entries.RaiseListChangedEvents = true;
+            LoadedCredits.Entries.ResetBindings();
+        }
+        catch
+        {
+            MessageBox.Show("Could not parse the credits file", "Parsing Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void statusButton_export_Click(object sender, EventArgs e)
+    {
+        var sfd = new SaveFileDialog()
+        {
+            Filter = "Text files (*.txt)|*.txt",
+            DefaultExt = "txt"
+        };
+        if (sfd.ShowDialog() != DialogResult.OK) return;
+
+        StringBuilder sb = new StringBuilder();
+        foreach (var entry in LoadedCredits.Entries)
+        {
+            byte type = (byte)entry.Type;
+            string text = entry.Text;
+            string line = $"{type.ToString("X2")} {text}";
+            sb.AppendLine(line);
+        }
+
+        File.WriteAllText(sfd.FileName, sb.ToString());
     }
 }

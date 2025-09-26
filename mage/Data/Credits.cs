@@ -10,17 +10,16 @@ namespace mage.Data;
 
 public enum CreditsEntryType : byte
 {
-    BlueText = 0,
-    RedText = 1,
-    WhiteTextLarge = 2,
-    WhiteTextSmall = 3,
     LineBreak = 5,
-    EndCredits = 6,
-
+    TextBlue = 0,
+    TextRed = 1,
+    TextWhiteLarge = 2,
+    TextWhiteSmall = 3,
     GraphicAllRights = 0xA,
     GraphicCopyright = 0xB,
     GraphicScenario = 0xC,
-    GraphicReserved = 0xD
+    GraphicReserved = 0xD,
+    Stop = 6,
 }
 
 public class CreditsEntry
@@ -38,7 +37,7 @@ public class CreditsEntry
     }
     public CreditsEntry()
     {
-        this.Type = CreditsEntryType.BlueText;
+        this.Type = CreditsEntryType.LineBreak;
         this.Text = string.Empty;
     }
 
@@ -59,7 +58,7 @@ public class CreditsEntry
         get
         {
             byte[] result = new byte[36];
-            byte type = (byte)Type;
+            result[0] = (byte)Type;
             Array.Copy(Encoding.ASCII.GetBytes(Text), 0, result, 1, Text.Length);
             return result;
         }
@@ -98,7 +97,7 @@ public class Credits
                 CreditsEntry entry = new CreditsEntry(line);
                 entries.Add(entry);
 
-                if (entry.Type == CreditsEntryType.EndCredits)
+                if (entry.Type == CreditsEntryType.Stop)
                     reachedEnd = true;
                 i++;
                 if (entries.Count > 500) throw new Exception();
@@ -113,16 +112,19 @@ public class Credits
 
     public void Write(ByteStream rom)
     {
-        ByteStream data = new(Length);
+        if (Entries.Count == 0) return;
+        byte[] data = new byte[Length];
         for (int i = 0; i < Entries.Count; i++)
         {
             CreditsEntry entry = Entries[i];
             byte[] entryData = entry.Data;
 
             int currentOffset = i * entryLength;
-            data.CopyFromArray(entryData, 0, currentOffset, entryLength);
+            Array.Copy(entryData, 0, data, currentOffset, entryLength);
         }
 
-        rom.Write2(data, originalLength, ref offset, true);
+        ByteStream dataStream = new(data);
+        int offsetCopy = offset;
+        rom.Write2(dataStream, originalLength, ref offsetCopy, true);
     }
 }
