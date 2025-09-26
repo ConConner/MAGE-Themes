@@ -114,7 +114,7 @@ namespace mage
             // save new changes and launch
             try
             {
-                string path = Program.Config.TestRomPath != string.Empty ? Program.Config.TestRomPath : Path.GetTempPath();
+                string path = GetTestRomPath();
                 string romName = Path.GetFileNameWithoutExtension(main.filename);
                 romName = Path.Combine(Path.GetDirectoryName(main.filename), romName);
 
@@ -198,6 +198,41 @@ namespace mage
 
             // restore data
             ROM.RestoreData(backup);
+        }
+
+        public static void Credits(Credits credits)
+        {
+            byte[] backup = ROM.BackupData();
+            credits.Write(ROM.Stream);
+
+            //Tweak to instantly launch into Credits
+            if (Version.IsMF)
+            {
+                ROM.Stream.Write16(0x82A, 0x0);
+                ROM.Stream.Write8(0x82E, 0xB);
+            }
+            else ROM.Stream.Write8(0x2D4, 0x8);
+
+            //save changes and launch
+            try
+            {
+                string path = GetTestRomPath();
+                path = Path.Combine(path, "test.gba");
+                ROM.SaveROM(path, false);
+                RunEmulator(path);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Test ROM could not be launched.\n\n" + e.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            ROM.RestoreData(backup);
+        }
+
+        private static string GetTestRomPath()
+        {
+            return Program.Config.TestRomPath != string.Empty ? Program.Config.TestRomPath : Path.GetTempPath();
         }
 
         private static void RunEmulator(string romPath)

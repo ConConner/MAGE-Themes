@@ -47,6 +47,7 @@ CharacterWidthsPtr=79130
 Languages=Japanese,Hiragana,English,German,French,Italian,Spanish
 DemoInputPtr=717A8
 DemoRamPtr=7185C
+CreditsPtr=A231C
 
 [AMTJ]
 AreaHeaderPtr=64EB0
@@ -84,3 +85,4 @@ CharacterWidthsPtr=79904
 Languages=Japanese,Hiragana,English,German,French,Italian,Spanish
 DemoInputPtr=717A8
 DemoRamPtr=0
+CreditsPtr=0

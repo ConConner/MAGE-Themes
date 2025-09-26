@@ -60,10 +60,5 @@ namespace mage.Dialogs
             DialogResult = DialogResult.OK;
             Close();
         }
-
-        private void TilesetDialog_Resize(object sender, EventArgs e)
-        {
-            Debug.WriteLine(Size.ToString());
-        }
     }
 }

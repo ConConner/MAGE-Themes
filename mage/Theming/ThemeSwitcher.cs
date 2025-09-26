@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
 using System.Runtime.Versioning;
+using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
 using System.Windows.Forms;
@@ -219,6 +220,80 @@ namespace mage.Theming
             {
                 sep.Color = theme.SecondaryOutline;
             }
+
+            if (control is DataGridView dgv)
+            {
+                dgv.BackgroundColor = theme.BackgroundColor;
+                dgv.EnableHeadersVisualStyles = false;
+                dgv.BorderStyle = BorderStyle.None;
+                dgv.GridColor = theme.SecondaryOutline;
+
+                dgv.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle()
+                {
+                    BackColor = theme.BackgroundColor,
+                    ForeColor = theme.TextColor,
+                    SelectionBackColor = theme.BackgroundColor,
+                    SelectionForeColor = theme.TextColor
+                };
+                dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+                dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+
+                dgv.RowHeadersDefaultCellStyle = new DataGridViewCellStyle()
+                {
+                    BackColor = theme.BackgroundColor,
+                    ForeColor = theme.TextColor,
+                };
+                dgv.DefaultCellStyle = new DataGridViewCellStyle()
+                {
+                    BackColor = theme.BackgroundColor,
+                    ForeColor = theme.TextColor,
+                    SelectionBackColor = theme.AccentColor,
+                    SelectionForeColor = theme.TextColorHighlight
+                };
+
+                dgv.CellPainting += (_, e) =>
+                {
+
+                    if (e.ColumnIndex >= 0 && e.RowIndex >= 0 &&
+                        dgv.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn)
+                    {
+                        bool isSelected = (e.State & DataGridViewElementStates.Selected) != 0;
+
+                        var backColor = isSelected ? theme.AccentColor : theme.BackgroundColor;
+                        var textColor = isSelected ? theme.TextColorHighlight : theme.TextColor;
+
+                        using var backBrush = new SolidBrush(backColor);
+                        using var textBrush = new SolidBrush(textColor);
+                        using var gridPen = new Pen(theme.SecondaryOutline);
+
+                        // fill background
+                        e.Graphics.FillRectangle(backBrush, e.CellBounds);
+
+                        // draw text
+                        var text = e.FormattedValue?.ToString() ?? "";
+                        var textRect = new Rectangle(e.CellBounds.X + 4, e.CellBounds.Y,
+                                                   e.CellBounds.Width - 4, e.CellBounds.Height);
+
+                        var sf = new StringFormat
+                        {
+                            Alignment = StringAlignment.Near,
+                            LineAlignment = StringAlignment.Center
+                        };
+
+                        e.Graphics.DrawString(text, e.CellStyle.Font, textBrush, textRect, sf);
+
+                        // draw grid lines
+                        e.Graphics.DrawLine(gridPen, e.CellBounds.Right - 1, e.CellBounds.Top,
+                                           e.CellBounds.Right - 1, e.CellBounds.Bottom - 1);
+                        e.Graphics.DrawLine(gridPen, e.CellBounds.Left, e.CellBounds.Bottom - 1,
+                                           e.CellBounds.Right - 1, e.CellBounds.Bottom - 1);
+                        e.Graphics.DrawLine(gridPen, e.CellBounds.Left, e.CellBounds.Top,
+                                           e.CellBounds.Left, e.CellBounds.Bottom - 1);
+
+                        e.Handled = true;
+                    }
+                };
+            }
         }
 
         /// <summary>
@@ -247,6 +322,10 @@ namespace mage.Theming
                 {
                     control.Paint += DrawSplitterHandle;
                     control.Resize += SplitterResize;
+                }
+                if (control is DataGridView dgv)
+                {
+                    dgv.EditingControlShowing += DrawDataGridViewControlShowing;
                 }
             }
         }
@@ -432,6 +511,28 @@ namespace mage.Theming
             splitter.Invalidate(splitter.SplitterRectangle);
         }
 
+        private static void DrawDataGridViewControlShowing(object? sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (e.Control is not ComboBox cbb) return;
+            cbb.DrawMode = DrawMode.OwnerDrawFixed;
+            cbb.BackColor = ProjectTheme.BackgroundColor;
+            cbb.ForeColor = ProjectTheme.TextColor;
+
+            cbb.DrawItem -= DataGridComboboxItemDraw;
+            cbb.DrawItem += DataGridComboboxItemDraw;
+        }
+
+        private static void DataGridComboboxItemDraw(object? sender, DrawItemEventArgs e)
+        {
+            ComboBox cbb = sender as ComboBox;
+            if (cbb == null) return;
+            e.DrawBackground();
+            var g = e.Graphics;
+            using var br = new SolidBrush(projectTheme.TextColor);
+            g.DrawString(cbb.Items[e.Index].ToString(),
+                         cbb.Font,
+                         br, e.Bounds);
+        }
 
         //JSON CONVERSION
         static JsonSerializerOptions jsonOptions = new JsonSerializerOptions()

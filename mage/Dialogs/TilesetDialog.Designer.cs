@@ -51,7 +51,6 @@
             MinimumSize = new System.Drawing.Size(307, 500);
             Name = "TilesetDialog";
             Text = "Select Tileset";
-            Resize += TilesetDialog_Resize;
             ResumeLayout(false);
         }
 

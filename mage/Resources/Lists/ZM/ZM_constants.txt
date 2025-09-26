@@ -47,6 +47,7 @@ CharacterWidthsPtr=6E478
 Languages=Japanese,Hiragana,English
 DemoInputPtr=60C14
 DemoRamPtr=753C8
+CreditsPtr=856C8
 
 [BMXP]
 AreaHeaderPtr=0
@@ -84,3 +85,4 @@ CharacterWidthsPtr=6E568
 Languages=Japanese,Hiragana,English,German,French,Italian,Spanish
 DemoInputPtr=0
 DemoRamPtr=0
+CreditsPtr=0

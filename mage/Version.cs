@@ -236,6 +236,7 @@ namespace mage
         public static string[] Languages { get; private set; }
         public static int DemoInputOffset { get { return romStream.ReadPtr(DemoInputPtr); } }
         public static int DemoRamOffset { get { return romStream.ReadPtr(DemoRamPtr); } }
+        public static int CreditsOffset { get { return romStream.ReadPtr(CreditsPtr); } }
 
         public static Dictionary<byte, int> PSpriteOAM { get; private set; }
         public static Dictionary<byte, Point> SpritePositions { get; private set; }
@@ -378,6 +379,7 @@ namespace mage
         private static int CharacterWidthsPtr { get; set; }
         private static int DemoInputPtr { get; set; }
         private static int DemoRamPtr { get; set; }
+        private static int CreditsPtr { get; set; }
         #endregion
 
         public static bool IsValid(string gameCode)
