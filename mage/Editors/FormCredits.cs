@@ -38,6 +38,7 @@ public partial class FormCredits : Form
         LoadedCredits = new(ROM.Stream, Version.CreditsOffset);
         InitializeColumns();
         dataGrid_credits.CellValidating += DataGrid_credits_CellValidating;
+        dataGrid_credits.EditingControlShowing += dataGrid_credits_EditingControlShowing;
 
         Status = new(statusLabel_changes, button_apply);
     }
@@ -68,15 +69,12 @@ public partial class FormCredits : Form
         };
         if (!Version.IsMF)
             colText.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        colText.DefaultCellStyle.Font = new Font("Consolas", 9.75F);
 
         dataGrid_credits.Columns.AddRange(colType, colText);
         dataGrid_credits.DataSource = LoadedCredits.Entries;
     }
 
-    /// <summary>
-    /// Prompts the user if they want to save the current changes or cancel.
-    /// </summary>
-    /// <returns>False if cancelled. True for other options. Saves if yes is clicked</returns>
     private bool CheckUnsaved()
     {
         DialogResult result = MessageBox.Show("Do you want to save changes to the Credits?",
@@ -86,10 +84,40 @@ public partial class FormCredits : Form
         return true;
     }
 
+    private bool ApplyPendingChanges()
+    {
+        if (dataGrid_credits.IsCurrentCellInEditMode)
+        {
+            try { dataGrid_credits.CurrentCell = null; }
+            catch { return false; }
+            return true;
+        }
+        return true;
+    }
+
     private void Save()
     {
+        if (!ApplyPendingChanges()) return;
         Status.Save();
         LoadedCredits.Write(ROM.Stream);
+    }
+
+    #region Events
+    private void dataGrid_credits_EditingControlShowing(object? sender, DataGridViewEditingControlShowingEventArgs e)
+    {
+        var dg = (DataGridView)sender;
+        if (dg.CurrentCell.OwningColumn == colText && e.Control is TextBox tb)
+        {
+            tb.TextChanged -= cellTextBox_TextChanged;
+            tb.TextChanged += cellTextBox_TextChanged;
+        }
+    }
+
+    private void cellTextBox_TextChanged(object? sender, EventArgs e)
+    {
+        var tb = (TextBox)sender;
+        tb.BackColor = tb.Text.Length > 35 ? Color.Red : ThemeSwitcher.ProjectTheme.BackgroundColor;
+        tb.ForeColor = tb.Text.Length > 35 ? Color.White : ThemeSwitcher.ProjectTheme.TextColor;
     }
 
     private void dataGrid_credits_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -129,11 +157,14 @@ public partial class FormCredits : Form
 
     private void button_testCredits_Click(object sender, EventArgs e)
     {
+        if (!ApplyPendingChanges()) return;
         Test.Credits(LoadedCredits);
     }
 
     private void button_apply_Click(object sender, EventArgs e) => Save();
+    #endregion
 
+    #region Export Import
     private List<CreditsEntry> ParseTextFile(string fileName)
     {
         string file = File.ReadAllText(fileName);
@@ -177,7 +208,12 @@ public partial class FormCredits : Form
         catch
         {
             MessageBox.Show("Could not parse the credits file", "Parsing Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
         }
+
+        Status.ChangeMade();
+        Status.Save();
+        Save();
     }
 
     private void statusButton_export_Click(object sender, EventArgs e)
@@ -200,4 +236,5 @@ public partial class FormCredits : Form
 
         File.WriteAllText(sfd.FileName, sb.ToString());
     }
+    #endregion
 }
