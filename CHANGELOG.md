@@ -1,3 +1,22 @@
+# [1.9.0](https://github.com/ConConner/MAGE-Themes/compare/v1.8.0...v1.9.0) (2025-09-26)
+
+
+### Bug Fixes
+
+* buttons on the "new update available" form do not scale correctly ([cd58920](https://github.com/ConConner/MAGE-Themes/commit/cd5892011862fec1ce8ee32bd3a61046b499ea95))
+* demo test does not respect TestRom path ([8e953d6](https://github.com/ConConner/MAGE-Themes/commit/8e953d6e44e39138cc28d3b9f98e226aef9641f8))
+
+
+### Features
+
+* add unsaved changes check to sprite editor ([840ac9b](https://github.com/ConConner/MAGE-Themes/commit/840ac9b1678608db6796b821b5da29b451aa8d15))
+* added credits editor ([d8d0766](https://github.com/ConConner/MAGE-Themes/commit/d8d0766af8a88fc675a3033d2db003526e028c9f))
+* added outlines to the tilesets in the tileset dialog ([374936c](https://github.com/ConConner/MAGE-Themes/commit/374936cee794d71332066a50d4ee3557b23588e1))
+* import and export credits compatible with ConCons Credits Crediter ([7cbf53d](https://github.com/ConConner/MAGE-Themes/commit/7cbf53d2c18f786db129ecbbf72271f5040129d8))
+* modify freezing resistance for ZM in the sprite editor ([d070fdd](https://github.com/ConConner/MAGE-Themes/commit/d070fddabdb63f2a53382eb5c48e0a327c08edea))
+* moved bookmarks button from "Options" to "Tools" ([0ae574b](https://github.com/ConConner/MAGE-Themes/commit/0ae574b6e537e06d4fc50d9fa9d5aca0a4af6158))
+* update docs ([9963347](https://github.com/ConConner/MAGE-Themes/commit/99633470191bc32dbfb1a7ac609360d8cfdb26e5))
+
 # [1.8.0](https://github.com/ConConner/MAGE-Themes/compare/v1.7.0...v1.8.0) (2025-09-18)
 
 
