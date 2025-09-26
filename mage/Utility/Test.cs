@@ -185,7 +185,7 @@ namespace mage
             // save new changes and launch
             try
             {
-                string path = Path.GetTempPath();
+                string path = GetTestRomPath();
                 path = Path.Combine(path, "test.gba");
                 ROM.SaveROM(path, false);
                 RunEmulator(path);
