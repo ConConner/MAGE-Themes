@@ -5,74 +5,97 @@
 	<title>Technical Info</title>
 	<meta charset="UTF-8">
 	<style>
+		:root {
+			--text-color: #f0f0f0;
+			--text-color-link: #A0A0F0;
+			--bg-color: #202020;
+			--bg-color-content: #181818;
+			--accent-color: #306090;
+			--accent-dark: #102030;
+			--accent-color-secondary: #603090;
+			--accent-dark-secondary: #201030;
+			--table-color-border: #c0c0c0;
+		}
+
 		body {
-			color: #f0f0f0;
-			background-color:#202020;
-			display:block;
-			border:0;
-			margin:16px;
-			padding:0px;
-			font-family:verdana, sans-serif;
+			color: var(--text-color);
+			background-color: var(--bg-color);
+			display: block;
+			border: 0;
+			margin: 16px;
+			padding: 0px;
+			font-family: verdana, sans-serif;
 		}
+
 		.content {
-			background-color:#181818;
-			padding:10px;
-			padding-top:16px;
-			width:94%;
-			margin-left:auto;
-			margin-right:auto;
+			background-color: var(--bg-color-content);
+			padding: 10px;
+			padding-top: 16px;
+			width: 94%;
+			margin-left: auto;
+			margin-right: auto;
 		}
+
 		a {
-			color: #A0A0F0
+			color: var(--text-color-link);
 		}
+
 		h1 {
-			font-size:36px;
+			font-size: 36px;
 		}
+
 		h2 {
-			background-color:#102030;
-			border-top:3px solid #306090;
-			margin-top:40px;
-			padding:8px;
+			background-color: var(--accent-dark);
+			border-top: 3px solid var(--accent-color);
+			margin-top: 40px;
+			padding: 8px;
 		}
+
 		h3 {
-			background-color:#201030;
-			border-top:1px solid #603090;
-			margin-top:40px;
-			margin-left:0px;
-			padding:4px;
+			background-color: var(--accent-dark-secondary);
+			border-top: 1px solid var(--accent-color-secondary);
+			margin-top: 40px;
+			margin-left: 0px;
+			padding: 4px;
 		}
+
 		span.smallLink {
-			font-size:75%;
+			font-size: 75%;
 		}
+
 		ul {
-			list-style:none;
-			padding-left:0;
+			margin-bottom: 30px;
 		}
+
 		li.toc1 {
-			font-size:85%;
-			list-style-type:none;
+			font-size: 85%;
+			list-style-type: none;
 		}
+
 		li.toc2 {
-			font-size:85%;
-			list-style-type:none;
-			text-indent:20px;
+			font-size: 85%;
+			list-style-type: none;
+			text-indent: 20px;
 		}
+
 		table {
-			border-collapse:collapse;
-			margin-bottom:1em;
+			border-collapse: collapse;
 		}
+
 		table, th, td {
-			background-color: #202020;
-			border:1px solid #c0c0c0;
-			padding:0.2em;
+			background-color: var(--bg-color);
+			border: 1px solid var(--table-color-border);
+			padding: 0.2em;
 		}
+
 		td {
-			padding-right:1em;
+			padding-right: 1em;
 		}
+
 		th {
-			background-color:#181818;
-			padding-left:0.5em;
-			padding-right:0.5em;
+			background-color: var(--bg-color-content);
+			padding-left: 1em;
+			padding-right: 1em;
 		}
 	</style>
 </head>

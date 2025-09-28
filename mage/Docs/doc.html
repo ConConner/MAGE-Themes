@@ -5,9 +5,21 @@
 	<title>MAGE Themes Documentation</title>
 	<meta charset="UTF-8">
 	<style>
+		:root {
+			--text-color: #f0f0f0;
+			--text-color-link: #A0A0F0;
+			--bg-color: #202020;
+			--bg-color-content: #181818;
+			--accent-color: #306090;
+			--accent-dark: #102030;
+			--accent-color-secondary: #603090;
+			--accent-dark-secondary: #201030;
+			--table-color-border: #c0c0c0;
+		}
+
 		body {
-			color: #f0f0f0;
-			background-color: #202020;
+			color: var(--text-color);
+			background-color: var(--bg-color);
 			display: block;
 			border: 0;
 			margin: 16px;
@@ -16,7 +28,7 @@
 		}
 
 		.content {
-			background-color: #181818;
+			background-color: var(--bg-color-content);
 			padding: 10px;
 			padding-top: 16px;
 			width: 94%;
@@ -25,7 +37,7 @@
 		}
 
 		a {
-			color: #A0A0F0
+			color: var(--text-color-link);
 		}
 
 		h1 {
@@ -33,15 +45,15 @@
 		}
 
 		h2 {
-			background-color: #102030;
-			border-top: 3px solid #306090;
+			background-color: var(--accent-dark);
+			border-top: 3px solid var(--accent-color);
 			margin-top: 40px;
 			padding: 8px;
 		}
 
 		h3 {
-			background-color: #201030;
-			border-top: 1px solid #603090;
+			background-color: var(--accent-dark-secondary);
+			border-top: 1px solid var(--accent-color-secondary);
 			margin-top: 40px;
 			margin-left: 0px;
 			padding: 4px;
@@ -71,8 +83,8 @@
 		}
 
 		table, th, td {
-			background-color: #202020;
-			border: 1px solid #c0c0c0;
+			background-color: var(--bg-color);
+			border: 1px solid var(--table-color-border);
 			padding: 0.2em;
 		}
 
@@ -81,7 +93,7 @@
 		}
 
 		th {
-			background-color: #181818;
+			background-color: var(--bg-color-content);
 			padding-left: 1em;
 			padding-right: 1em;
 		}

@@ -101,16 +101,34 @@ public partial class HelpViewer : Form
 
     private string GetCustomCSS(ColorTheme theme)
     {
-        Color background2 = ColorOperations.ShiftLightness(theme.BackgroundColor, -0.02f);
+        Color textColor = theme.TextColor;
+        Color textColorLink = theme.AccentColor;
+        Color bgColor = theme.BackgroundColor;
+        Color bgColorContent = ColorOperations.ShiftLightness(theme.BackgroundColor, -0.02f);
+        Color accentColor = theme.AccentColor;
 
-        Color accent2color = ColorOperations.ShiftHue(theme.AccentColor, 30f);
-        Color accent2colorDark = ControlPaint.Dark(accent2color, 0.40f);
+        // Adjust accent colors based on theme type
+        Color accentDark = theme.IsDarkTheme
+            ? ColorOperations.ShiftLightness(accentColor, -0.3f) 
+            : ColorOperations.ShiftLightness(accentColor, 0.3f); 
+
+        Color accentColorSecondary = ColorOperations.ShiftHue(theme.AccentColor, 30f);
+        Color accentDarkSecondary = theme.IsDarkTheme
+            ? ColorOperations.ShiftLightness(accentColorSecondary, -0.3f)
+            : ColorOperations.ShiftLightness(accentColorSecondary, 0.3f);
+
+        Color tableColorBorder = theme.IsDarkTheme
+            ? ColorOperations.ShiftLightness(theme.BackgroundColor, 0.15f) 
+            : ColorOperations.ShiftLightness(theme.BackgroundColor, -0.10f); 
+
+        // Contrast-aware text colors for headers
+        Color accentText = theme.GetContrastingColor(accentDark);
 
         return $@"
 		<style>
 			body {{
-				color: {theme.TextColor.ToHexString()};
-				background-color: {theme.BackgroundColor.ToHexString()};
+				color: {textColor.ToHexString()};
+				background-color: {bgColor.ToHexString()};
 				display:block;
 				border:0;
 				margin:16px;
@@ -118,7 +136,7 @@ public partial class HelpViewer : Form
 				font-family:verdana, sans-serif;
 			}}
 			.content {{
-				background-color:{background2.ToHexString()};
+				background-color:{bgColorContent.ToHexString()};
 				padding:10px;
 				padding-top:16px;
 				width:94%;
@@ -126,32 +144,34 @@ public partial class HelpViewer : Form
 				margin-right:auto;
 			}}
 			a {{
-				color: {theme.AccentColor.ToHexString()}
+				color: {textColorLink.ToHexString()}
 			}}
 
 			h2 {{
-				background-color:{ControlPaint.Dark(theme.AccentColor, 0.40f).ToHexString()};
-				border-top:3px solid {theme.AccentColor.ToHexString()};
+				background-color:{accentDark.ToHexString()};
+				border-top:3px solid {accentColor.ToHexString()};
+				color:{accentText.ToHexString()};
 				margin-top:40px;
 				padding:8px;
 		
 			}}
 			h3 {{
-				background-color:{accent2colorDark.ToHexString()};
-				border-top:1px solid {accent2color.ToHexString()};
+				background-color:{accentDarkSecondary.ToHexString()};
+				border-top:1px solid {accentColorSecondary.ToHexString()};
+				color:{accentText.ToHexString()};
 				margin-top:40px;
 				margin-left:0px;
 				padding:4px;
 			}}
 
 			table, th, td {{
-				background-color: {theme.BackgroundColor.ToHexString()};
-				border:1px solid {ControlPaint.Dark(theme.TextColor, 0.10f).ToHexString()};
+				background-color: {bgColor.ToHexString()};
+				border:1px solid {tableColorBorder.ToHexString()};
 				padding:0.2em;
 			}}
 
 			th {{
-				background-color:{ControlPaint.Dark(theme.BackgroundColor, 0.10f).ToHexString()};
+				background-color:{bgColorContent.ToHexString()};
 				padding-left:1em;
 				padding-right:1em;
 			}}

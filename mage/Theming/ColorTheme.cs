@@ -17,22 +17,7 @@ public class ColorTheme
     [JsonIgnore]
     public Color TextColorDisabled => Color.FromArgb(disabledAlpha, TextColor);
     [JsonIgnore]
-    public Color TextColorHighlight { 
-        get
-        {
-            double contrast = 0;
-            string color = "AccentColor";
-            foreach(KeyValuePair<string, Color> p in Colors)
-            {
-                if (p.Value.Contrast(AccentColor) > contrast)
-                {
-                    contrast = p.Value.Contrast(AccentColor);
-                    color = p.Key;
-                }
-            }
-            return Colors[color];
-        } 
-    }
+    public Color TextColorHighlight => GetContrastingColor(AccentColor);
     [JsonIgnore]
     public Color PrimaryOutline => Colors["PrimaryOutline"];
     [JsonIgnore]
@@ -42,6 +27,24 @@ public class ColorTheme
     [JsonIgnore]
     public Color AccentColor => Colors["AccentColor"];
 
+    [JsonIgnore]
+    public bool IsDarkTheme => BackgroundColor.GetRelativeLuminance() < 0.5;
+
     [JsonInclude]
     public Dictionary<string, Color> Colors { get; set; } = new Dictionary<string, Color>();
+
+    public Color GetContrastingColor(Color color)
+    {
+        double contrast = 0;
+        string contrastColorKey = "AccentColor";
+        foreach (KeyValuePair<string, Color> p in Colors)
+        {
+            if (p.Value.Contrast(color) > contrast)
+            {
+                contrast = p.Value.Contrast(color);
+                contrastColorKey = p.Key;
+            }
+        }
+        return Colors[contrastColorKey];
+    }
 }
