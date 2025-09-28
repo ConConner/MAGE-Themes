@@ -37,6 +37,10 @@ public class ColorTheme
     {
         double contrast = 0;
         string contrastColorKey = "AccentColor";
+
+        Colors["White"] = Color.White;
+        Colors["Black"] = Color.Black;
+
         foreach (KeyValuePair<string, Color> p in Colors)
         {
             if (p.Value.Contrast(color) > contrast)
@@ -45,6 +49,10 @@ public class ColorTheme
                 contrastColorKey = p.Key;
             }
         }
-        return Colors[contrastColorKey];
+        Color contrastColor = Colors[contrastColorKey];
+
+        Colors.Remove("White");
+        Colors.Remove("Black");
+        return contrastColor;
     }
 }
