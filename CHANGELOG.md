@@ -1,3 +1,16 @@
+## [1.9.1](https://github.com/ConConner/MAGE-Themes/compare/v1.9.0...v1.9.1) (2025-09-28)
+
+
+### Bug Fixes
+
+* accent contrast color would sometimes result in illegible text ([f37bc0c](https://github.com/ConConner/MAGE-Themes/commit/f37bc0c9f81a41a3a39291b2382234f1586aaf6c))
+* changing a theme directly after opening the preferences menu sets every color to the background color ([7b705b3](https://github.com/ConConner/MAGE-Themes/commit/7b705b3b732e3dd4501a25cc9a87134efd80a10a))
+* changing themes in room editor changes the background color of the tileset view ([e898a15](https://github.com/ConConner/MAGE-Themes/commit/e898a153d0af52854c85c3ddd0b7d56f3f8433d2))
+* credits editor crashes if no text is commited in an edit ([31b90ca](https://github.com/ConConner/MAGE-Themes/commit/31b90caf32e0cd07bc8405e147653238078170d7))
+* credits editor documentation missing ([9a1cebf](https://github.com/ConConner/MAGE-Themes/commit/9a1cebfbc249ead9d1f9d533ddb4647eef2c179e))
+* help viewer does not follow links to internal documentation correctly ([497e819](https://github.com/ConConner/MAGE-Themes/commit/497e81934f511c887da7ff6be510343c368bf371))
+* help viewer theming results in illegible headers ([e3b2342](https://github.com/ConConner/MAGE-Themes/commit/e3b23423e796500ba04a9f417dccc25167460376))
+
 # [1.9.0](https://github.com/ConConner/MAGE-Themes/compare/v1.8.0...v1.9.0) (2025-09-26)
 
 
