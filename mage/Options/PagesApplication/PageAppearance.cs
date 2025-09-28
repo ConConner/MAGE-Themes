@@ -43,12 +43,10 @@ public partial class PageAppearance : UserControl, IReloadablePage
 
     public void LoadPage()
     {
-        loadAllThemes();
-
         ThemeSwitcher.ChangeTheme(Controls);
         ThemeSwitcher.InjectPaintOverrides(Controls);
 
-        pnl_color.BackColor = GBAtoRGB(parent.Bg3Color);
+        loadAllThemes();
     }
 
     private void loadAllThemes()
