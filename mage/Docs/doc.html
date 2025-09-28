@@ -666,6 +666,76 @@
 		<p>
 			The credits editor is used for editing the text that appears during the credits sequence. The credits are made up of individual entries, each of which has a type and some text. The type determines how the text will be displayed.
 		</p>
+		<p>The following types exist:</p>
+		<table>
+			<tr>
+				<th>Type</th>
+				<th>Description</th>
+				<th>Value</th>
+			</tr>
+			<tr>
+				<td>TextBlue</td>
+				<td>Line of small blue text</td>
+				<td>0x0</td>
+			</tr>
+			<tr>
+				<td>TextRed</td>
+				<td>Line of small red text</td>
+				<td>0x1</td>
+			</tr>
+			<tr>
+				<td>TextWhiteLarge</td>
+				<td>Line of large white text. Can be used as a large line break.</td>
+				<td>0x2</td>
+			</tr>
+			<tr>
+				<td>TextWhiteSmall</td>
+				<td>Line of small white text</td>
+				<td>0x3</td>
+			</tr>
+			<tr>
+				<td>LineBreak</td>
+				<td>Small line break. Does not display text</td>
+				<td>0x5</td>
+			</tr>
+			<tr>
+				<td>Stop</td>
+				<td>Credits end as soon as this line is reached. Does not display text</td>
+				<td>0x6</td>
+			</tr>
+			<tr>
+				<td>GraphicAllRights</td>
+				<td>Displays part of the copyright message. Does not display text</td>
+				<td>0xA</td>
+			</tr>
+			<tr>
+				<td>GraphicCopyright</td>
+				<td>Displays part of the copyright message. Does not display text</td>
+				<td>0xB</td>
+			</tr>
+			<tr>
+				<td>GraphicScenario</td>
+				<td>Displays part of the copyright message. Does not display text</td>
+				<td>0xC</td>
+			</tr>
+			<tr>
+				<td>GraphicReserved</td>
+				<td>Displays part of the copyright message. Does not display text</td>
+				<td>0xD</td>
+			</tr>
+		</table>
+		<p>
+			You can edit the type of a credits entry by selecting it and choosing a new type from a dropdown menu. You can edit the text of a credits entry by selecting it and typing in the text box. Delete an entry by selecting one or more and pressing the delete key. To add a new entry, go to the bottom of the list and click on the empty entry row.
+		</p>
+		<p>
+			In Metroid: Zero Mission, the text of the credits is automatically centered on the screen. In Metroif Fusion, the text is left-aligned and needs to be manually centered using spaces. The maximum length of a line of text is 35 characters.
+		</p>
+		<p>
+			You may preview your changes by clicking the "Test Credits" button. This will start a ROM that plays the credits sequence in the emulator you have set. If no emulator path is set, MAGE will prompt you to select an emulator to use.
+		</p>
+		<p>
+			To export credits you can click on the "Export" button. This will export the credits as a text file that can be edited in a text editor or can be imported back into MAGE by clicking on the "Import" button. The text file stores each entry on a new line, starting with the type value in hexadecimal, followed by a space and then the text.
+		</p>
 		<span class="smallLink">(<a href="#top">top</a>)</span>
 
 		<h2 id="room-options">Room Options</h2>
