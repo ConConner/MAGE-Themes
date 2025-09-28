@@ -47,6 +47,7 @@ public class CreditsEntry
         get => _text;
         set
         {
+            if (value == null) return;
             if (value.Length > 35) throw new ArgumentException("Text too long. Max is 35", nameof(Text));
             _text = value;
         }
