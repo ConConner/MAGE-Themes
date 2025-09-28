@@ -27,31 +27,74 @@ public partial class HelpViewer : Form
     }
 
     WebBrowser Browser;
+	private string _pendingFragment;
 
-    public HelpViewer(string heading = "")
+    public HelpViewer(string page = null, string fragment = null)
     {
         InitializeComponent();
 
         ThemeSwitcher.ChangeTheme(Controls, this);
         ThemeSwitcher.InjectPaintOverrides(Controls);
 
-        Browser = new WebBrowser()
-        {
-            Dock = DockStyle.Fill,
-        };
-        LoadPage(DocFiles.HelpDoc);
+        Browser = new WebBrowser() { Dock = DockStyle.Fill };
+        Browser.Navigating += Browser_Navigating;
+        Browser.DocumentCompleted += Browser_DocumentCompleted;
 
+		LoadPage(page ?? DocFiles.HelpDoc, fragment);
         group_help.Controls.Add(Browser);
     }
 
-    private void LoadPage(string page)
+    private void Browser_Navigating(object? sender, WebBrowserNavigatingEventArgs e)
+    {
+		string url = e.Url.ToString();
+
+		if (url.StartsWith("about:blank")) return;
+
+        if (url.StartsWith("http://") || url.StartsWith("https://"))
+        {
+            e.Cancel = true;
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url)
+            {
+                UseShellExecute = true
+            });
+            return;
+        }
+
+        if (url.Contains(".html"))
+		{
+			e.Cancel = true;
+			var parts = url.Split('#');
+			string docName = Path.GetFileName(parts[0]).Replace("about:", "");
+			string fragment = parts.Length > 1 ? parts[1] : null;
+
+			LoadPage(docName, fragment);
+		}
+    }
+
+    private void LoadPage(string page, string fragment = null)
     {
         string html = LoadHtml(page)
             .Replace("</head>", GetCustomCSS(ThemeSwitcher.ProjectTheme) + "</head>");
-        Browser.DocumentText = html;
+
+		_pendingFragment = fragment;
+		Browser.DocumentText = html;
+	}
+
+	private void Browser_DocumentCompleted(object? sender, WebBrowserDocumentCompletedEventArgs e)
+    {
+		if (string.IsNullOrEmpty(_pendingFragment)) return;
+
+		Browser.Document?.Window?.ScrollTo(0, GetElementTop(_pendingFragment));
+		_pendingFragment = null;
     }
 
-    private static string LoadHtml(string file)
+	private int GetElementTop(string elementId)
+	{
+		var element = Browser.Document?.GetElementById(elementId);
+		return element?.OffsetRectangle.Top ?? 0;
+	}
+
+	private static string LoadHtml(string file)
     {
         return FormMain.LoadAssemblyResourceAsString($"mage.Docs.{file}")!;
     }

@@ -1188,7 +1188,7 @@ namespace mage
         {
             if (!FindOpenForm(typeof(HelpViewer), true))
             {
-                HelpViewer form = new HelpViewer();
+                HelpViewer form = new HelpViewer("doc.html", "credits-editor");
                 form.Show();
             }
         }
