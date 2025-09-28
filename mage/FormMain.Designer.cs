@@ -373,14 +373,14 @@
             // menuItem_clearRecentFiles
             // 
             menuItem_clearRecentFiles.Name = "menuItem_clearRecentFiles";
-            menuItem_clearRecentFiles.Size = new System.Drawing.Size(180, 22);
+            menuItem_clearRecentFiles.Size = new System.Drawing.Size(101, 22);
             menuItem_clearRecentFiles.Text = "Clear";
             menuItem_clearRecentFiles.Click += menuItem_clearRecentFiles_Click;
             // 
             // toolStripSeparator22
             // 
             toolStripSeparator22.Name = "toolStripSeparator22";
-            toolStripSeparator22.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator22.Size = new System.Drawing.Size(98, 6);
             // 
             // menuStrip_edit
             // 
@@ -708,7 +708,7 @@
             // 
             menuItem_headerEditor.Image = Properties.Resources.toolbar_header;
             menuItem_headerEditor.Name = "menuItem_headerEditor";
-            menuItem_headerEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_headerEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_headerEditor.Text = "Header Editor";
             menuItem_headerEditor.Click += menuItem_headerEditor_Click;
             // 
@@ -716,20 +716,20 @@
             // 
             menuItem_tilesetEditor.Image = Properties.Resources.shortcut_screw;
             menuItem_tilesetEditor.Name = "menuItem_tilesetEditor";
-            menuItem_tilesetEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_tilesetEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_tilesetEditor.Text = "Tileset Editor";
             menuItem_tilesetEditor.Click += menuItem_tilesetEditor_Click;
             // 
             // toolStripSeparator24
             // 
             toolStripSeparator24.Name = "toolStripSeparator24";
-            toolStripSeparator24.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator24.Size = new System.Drawing.Size(167, 6);
             // 
             // menuItem_graphicsEditor
             // 
             menuItem_graphicsEditor.Image = Properties.Resources.toolbar_graphics;
             menuItem_graphicsEditor.Name = "menuItem_graphicsEditor";
-            menuItem_graphicsEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_graphicsEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_graphicsEditor.Text = "Graphics Editor";
             menuItem_graphicsEditor.Click += menuItem_graphicsEditor_Click;
             // 
@@ -737,7 +737,7 @@
             // 
             menuItem_paletteEditor.Image = Properties.Resources.toolbar_palette;
             menuItem_paletteEditor.Name = "menuItem_paletteEditor";
-            menuItem_paletteEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_paletteEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_paletteEditor.Text = "Palette Editor";
             menuItem_paletteEditor.Click += menuItem_paletteEditor_Click;
             // 
@@ -745,7 +745,7 @@
             // 
             menuItem_tileTableEditor.Image = Properties.Resources.toolbar_tile_table;
             menuItem_tileTableEditor.Name = "menuItem_tileTableEditor";
-            menuItem_tileTableEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_tileTableEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_tileTableEditor.Text = "Tile Table Editor";
             menuItem_tileTableEditor.Click += menuItem_tileTableEditor_Click;
             // 
@@ -753,7 +753,7 @@
             // 
             menuItem_animationEditor.Image = Properties.Resources.toolbar_animation;
             menuItem_animationEditor.Name = "menuItem_animationEditor";
-            menuItem_animationEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_animationEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_animationEditor.Text = "Animation Editor";
             menuItem_animationEditor.Click += menuItem_animationEditor_Click;
             // 
@@ -761,20 +761,20 @@
             // 
             menuItem_oamViewer.Image = Properties.Resources.toolbar_oam;
             menuItem_oamViewer.Name = "menuItem_oamViewer";
-            menuItem_oamViewer.Size = new System.Drawing.Size(180, 22);
+            menuItem_oamViewer.Size = new System.Drawing.Size(170, 22);
             menuItem_oamViewer.Text = "OAM Editor";
             menuItem_oamViewer.Click += menuItem_oamViewer_Click;
             // 
             // toolStripSeparator25
             // 
             toolStripSeparator25.Name = "toolStripSeparator25";
-            toolStripSeparator25.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator25.Size = new System.Drawing.Size(167, 6);
             // 
             // menuItem_spriteEditor
             // 
             menuItem_spriteEditor.Image = Properties.Resources.toolbar_sprite;
             menuItem_spriteEditor.Name = "menuItem_spriteEditor";
-            menuItem_spriteEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_spriteEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_spriteEditor.Text = "Sprite Editor";
             menuItem_spriteEditor.Click += menuItem_spriteEditor_Click;
             // 
@@ -782,7 +782,7 @@
             // 
             menuItem_spritesetEditor.Image = Properties.Resources.toolbar_spriteset;
             menuItem_spritesetEditor.Name = "menuItem_spritesetEditor";
-            menuItem_spritesetEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_spritesetEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_spritesetEditor.Text = "Spriteset Editor";
             menuItem_spritesetEditor.Click += menuItem_spritesetEditor_Click;
             // 
@@ -790,7 +790,7 @@
             // 
             menuItem_minimapEditor.Image = Properties.Resources.toolbar_minimap;
             menuItem_minimapEditor.Name = "menuItem_minimapEditor";
-            menuItem_minimapEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_minimapEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_minimapEditor.Text = "Map Editor";
             menuItem_minimapEditor.Click += menuItem_minimapEditor_Click;
             // 
@@ -798,20 +798,20 @@
             // 
             menuItem_connectionEditor.Image = Properties.Resources.toolbar_connection;
             menuItem_connectionEditor.Name = "menuItem_connectionEditor";
-            menuItem_connectionEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_connectionEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_connectionEditor.Text = "Connection Editor";
             menuItem_connectionEditor.Click += menuItem_connectionEditor_Click;
             // 
             // toolStripSeparator26
             // 
             toolStripSeparator26.Name = "toolStripSeparator26";
-            toolStripSeparator26.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator26.Size = new System.Drawing.Size(167, 6);
             // 
             // menuItem_textEditor
             // 
             menuItem_textEditor.Image = Properties.Resources.toolbar_text;
             menuItem_textEditor.Name = "menuItem_textEditor";
-            menuItem_textEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_textEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_textEditor.Text = "Text Editor";
             menuItem_textEditor.Click += menuItem_textEditor_Click;
             // 
@@ -819,7 +819,7 @@
             // 
             menuItem_demoEditor.Image = Properties.Resources.toolbar_demo;
             menuItem_demoEditor.Name = "menuItem_demoEditor";
-            menuItem_demoEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_demoEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_demoEditor.Text = "Demo Editor";
             menuItem_demoEditor.Click += menuItem_demoEditor_Click;
             // 
@@ -827,7 +827,7 @@
             // 
             menuItem_physicsEditor.Image = Properties.Resources.toolbar_physics;
             menuItem_physicsEditor.Name = "menuItem_physicsEditor";
-            menuItem_physicsEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_physicsEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_physicsEditor.Text = "Physics Editor";
             menuItem_physicsEditor.Click += menuItem_physicsEditor_Click;
             // 
@@ -835,7 +835,7 @@
             // 
             menuItem_weaponEditor.Image = Properties.Resources.toolbar_weapon;
             menuItem_weaponEditor.Name = "menuItem_weaponEditor";
-            menuItem_weaponEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_weaponEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_weaponEditor.Text = "Weapon Editor";
             menuItem_weaponEditor.Click += menuItem_weaponEditor_Click;
             // 
@@ -843,7 +843,7 @@
             // 
             menuItem_creditsEditor.Image = Properties.Resources.toolbar_credits;
             menuItem_creditsEditor.Name = "menuItem_creditsEditor";
-            menuItem_creditsEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_creditsEditor.Size = new System.Drawing.Size(170, 22);
             menuItem_creditsEditor.Text = "Credits Editor";
             menuItem_creditsEditor.Click += menuItem_creditsEditor_Click;
             // 
@@ -859,7 +859,7 @@
             // 
             menuItem_roomOptions.Image = Properties.Resources.toolbar_options;
             menuItem_roomOptions.Name = "menuItem_roomOptions";
-            menuItem_roomOptions.Size = new System.Drawing.Size(180, 22);
+            menuItem_roomOptions.Size = new System.Drawing.Size(171, 22);
             menuItem_roomOptions.Text = "Room Options...";
             menuItem_roomOptions.Click += menuItem_roomOptions_Click;
             // 
@@ -867,7 +867,7 @@
             // 
             menuItem_testRoom.Image = Properties.Resources.toolbar_test;
             menuItem_testRoom.Name = "menuItem_testRoom";
-            menuItem_testRoom.Size = new System.Drawing.Size(180, 22);
+            menuItem_testRoom.Size = new System.Drawing.Size(171, 22);
             menuItem_testRoom.Text = "Test Room...";
             menuItem_testRoom.Click += menuItem_testRoom_Click;
             // 
@@ -875,34 +875,34 @@
             // 
             menuItem_clipShortcuts.Image = Properties.Resources.shortcut_shot;
             menuItem_clipShortcuts.Name = "menuItem_clipShortcuts";
-            menuItem_clipShortcuts.Size = new System.Drawing.Size(180, 22);
+            menuItem_clipShortcuts.Size = new System.Drawing.Size(171, 22);
             menuItem_clipShortcuts.Text = "Clipdata Shortcuts";
             menuItem_clipShortcuts.Click += menuItem_clipShortcuts_Click;
             // 
             // toolStripSeparator28
             // 
             toolStripSeparator28.Name = "toolStripSeparator28";
-            toolStripSeparator28.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator28.Size = new System.Drawing.Size(168, 6);
             // 
             // menuItem_bookmarks
             // 
             menuItem_bookmarks.Enabled = false;
             menuItem_bookmarks.Image = Properties.Resources.book_open;
             menuItem_bookmarks.Name = "menuItem_bookmarks";
-            menuItem_bookmarks.Size = new System.Drawing.Size(180, 22);
+            menuItem_bookmarks.Size = new System.Drawing.Size(171, 22);
             menuItem_bookmarks.Text = "Bookmarks";
             menuItem_bookmarks.Click += menuItem_bookmarks_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator2.Size = new System.Drawing.Size(168, 6);
             // 
             // menuItem_import
             // 
             menuItem_import.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_importTileset, menuItem_importRLE, menuItem_importLZ77, menuItem_importRoom, toolStripSeparator8, menuItem_importTilesetImage, menuItem_importLZ77BGimage, menuItem_importEnding });
             menuItem_import.Name = "menuItem_import";
-            menuItem_import.Size = new System.Drawing.Size(180, 22);
+            menuItem_import.Size = new System.Drawing.Size(171, 22);
             menuItem_import.Text = "Import";
             // 
             // menuItem_importTileset
@@ -963,7 +963,7 @@
             // 
             menuItem_export.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_exportTileset, menuItem_exportBG, menuItem_exportRoom, toolStripSeparator7, menuItem_exportTilesetImage, menuItem_exportBG0image, menuItem_exportBG3image, menuItem_exportRoomImage });
             menuItem_export.Name = "menuItem_export";
-            menuItem_export.Size = new System.Drawing.Size(180, 22);
+            menuItem_export.Size = new System.Drawing.Size(171, 22);
             menuItem_export.Text = "Export";
             // 
             // menuItem_exportTileset
@@ -1038,7 +1038,7 @@
             // 
             bulkToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_exportAllRooms, button_areaImage, toolStripSeparator29, button_importAllRooms });
             bulkToolStripMenuItem.Name = "bulkToolStripMenuItem";
-            bulkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            bulkToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             bulkToolStripMenuItem.Text = "Bulk";
             // 
             // button_exportAllRooms
@@ -1072,7 +1072,7 @@
             // 
             menuItem_compression.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_LZ77comp, menuItem_LZ77decomp });
             menuItem_compression.Name = "menuItem_compression";
-            menuItem_compression.Size = new System.Drawing.Size(180, 22);
+            menuItem_compression.Size = new System.Drawing.Size(171, 22);
             menuItem_compression.Text = "Compression";
             // 
             // menuItem_LZ77comp
@@ -1092,13 +1092,13 @@
             // toolStripSeparator23
             // 
             toolStripSeparator23.Name = "toolStripSeparator23";
-            toolStripSeparator23.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator23.Size = new System.Drawing.Size(168, 6);
             // 
             // menuItem_tileBuilder
             // 
             menuItem_tileBuilder.Image = Properties.Resources.toolbar_tile_builder;
             menuItem_tileBuilder.Name = "menuItem_tileBuilder";
-            menuItem_tileBuilder.Size = new System.Drawing.Size(180, 22);
+            menuItem_tileBuilder.Size = new System.Drawing.Size(171, 22);
             menuItem_tileBuilder.Text = "Map Tile Builder";
             menuItem_tileBuilder.Click += menuItem_tileBuilder_Click;
             // 
@@ -1107,7 +1107,7 @@
             menuItem_add.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_addBG, menuItem_addEnemyset, menuItem_addRoom, menuItem_addTileset, menuItem_addSpriteset, menuItem_addAnim });
             menuItem_add.Image = Properties.Resources.toolbar_add;
             menuItem_add.Name = "menuItem_add";
-            menuItem_add.Size = new System.Drawing.Size(180, 22);
+            menuItem_add.Size = new System.Drawing.Size(171, 22);
             menuItem_add.Text = "Add";
             // 
             // menuItem_addBG
@@ -1156,20 +1156,20 @@
             // 
             menuItem_patches.Image = Properties.Resources.toolbar_patches;
             menuItem_patches.Name = "menuItem_patches";
-            menuItem_patches.Size = new System.Drawing.Size(180, 22);
+            menuItem_patches.Size = new System.Drawing.Size(171, 22);
             menuItem_patches.Text = "Patches";
             menuItem_patches.Click += menuItem_patches_Click;
             // 
             // seperator_flip
             // 
             seperator_flip.Name = "seperator_flip";
-            seperator_flip.Size = new System.Drawing.Size(177, 6);
+            seperator_flip.Size = new System.Drawing.Size(168, 6);
             seperator_flip.Visible = false;
             // 
             // menuItem_flip_h
             // 
             menuItem_flip_h.Name = "menuItem_flip_h";
-            menuItem_flip_h.Size = new System.Drawing.Size(180, 22);
+            menuItem_flip_h.Size = new System.Drawing.Size(171, 22);
             menuItem_flip_h.Text = "Flip Room H";
             menuItem_flip_h.Visible = false;
             menuItem_flip_h.Click += flipRoomToolStripMenuItem_Click;
@@ -1177,7 +1177,7 @@
             // menuItem_flip_v
             // 
             menuItem_flip_v.Name = "menuItem_flip_v";
-            menuItem_flip_v.Size = new System.Drawing.Size(180, 22);
+            menuItem_flip_v.Size = new System.Drawing.Size(171, 22);
             menuItem_flip_v.Text = "Flip Room V";
             menuItem_flip_v.Visible = false;
             menuItem_flip_v.Click += flipRoomVToolStripMenuItem_Click;
@@ -1193,7 +1193,7 @@
             // 
             menuItem_options.Image = Properties.Resources.cog;
             menuItem_options.Name = "menuItem_options";
-            menuItem_options.Size = new System.Drawing.Size(180, 22);
+            menuItem_options.Size = new System.Drawing.Size(165, 22);
             menuItem_options.Text = "Preferences...";
             menuItem_options.Click += programSettingsToolStripMenuItem_Click;
             // 
@@ -1202,21 +1202,21 @@
             menuItem_projectSettings.Enabled = false;
             menuItem_projectSettings.Image = Properties.Resources.script_gear;
             menuItem_projectSettings.Name = "menuItem_projectSettings";
-            menuItem_projectSettings.Size = new System.Drawing.Size(180, 22);
+            menuItem_projectSettings.Size = new System.Drawing.Size(165, 22);
             menuItem_projectSettings.Text = "Project Settings...";
             menuItem_projectSettings.Click += menuItem_projectSettings_Click;
             // 
             // toolStripSeparator31
             // 
             toolStripSeparator31.Name = "toolStripSeparator31";
-            toolStripSeparator31.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator31.Size = new System.Drawing.Size(162, 6);
             // 
             // menuItem_defaultView
             // 
             menuItem_defaultView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_defaultBG0, menuItem_defaultBG1, menuItem_defaultBG2, menuItem_defaultBG3, menuItem_defaultClipdata, toolStripSeparator13, menuItem_defaultSprites, menuItem_defaultSpriteOutlines, menuItem_defaultDoors, menuItem_defaultScrolls, menuItem_defaultScreens });
             menuItem_defaultView.Enabled = false;
             menuItem_defaultView.Name = "menuItem_defaultView";
-            menuItem_defaultView.Size = new System.Drawing.Size(180, 22);
+            menuItem_defaultView.Size = new System.Drawing.Size(165, 22);
             menuItem_defaultView.Text = "Default View";
             // 
             // menuItem_defaultBG0
@@ -1333,14 +1333,14 @@
             // 
             menuItem_tooltips.Enabled = false;
             menuItem_tooltips.Name = "menuItem_tooltips";
-            menuItem_tooltips.Size = new System.Drawing.Size(180, 22);
+            menuItem_tooltips.Size = new System.Drawing.Size(165, 22);
             menuItem_tooltips.Text = "Disable Tooltips";
             menuItem_tooltips.Click += menuItem_tooltips_Click;
             // 
             // toolStripSeparator21
             // 
             toolStripSeparator21.Name = "toolStripSeparator21";
-            toolStripSeparator21.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator21.Size = new System.Drawing.Size(162, 6);
             // 
             // menuStrip_help
             // 
@@ -1472,6 +1472,7 @@
             tileView.Size = new System.Drawing.Size(0, 0);
             tileView.TabIndex = 0;
             tileView.TabStop = false;
+            tileView.Tag = "unthemed";
             tileView.Text = "tileDisplay1";
             tileView.TileGridOrigin = new System.Drawing.Point(0, 0);
             tileView.TileImage = null;
