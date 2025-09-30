@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/ConConner/MAGE-Themes/compare/v1.9.1...v1.9.2) (2025-09-30)
+
+
+### Bug Fixes
+
+* color behind bg3 option does not display the current color after reload ([c83fb1f](https://github.com/ConConner/MAGE-Themes/commit/c83fb1fde05069578fd40770786e6fb5c4983d03))
+
 ## [1.9.1](https://github.com/ConConner/MAGE-Themes/compare/v1.9.0...v1.9.1) (2025-09-28)
 
 
