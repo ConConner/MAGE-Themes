@@ -55,6 +55,9 @@
     <Compile Update="Options\PagesProject\PageCompiling.designer.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Options\PagesProject\PageBackups.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Options\PagesProject\PageOverview.cs">
       <SubType>UserControl</SubType>
     </Compile>
