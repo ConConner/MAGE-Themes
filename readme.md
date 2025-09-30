@@ -1,8 +1,16 @@
-[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/ConConner/MAGE-Themes/total?style=flat-square&color=%25232ea043&label=Downloads)](https://github.com/ConConner/MAGE-Themes/releases/latest)
-[![Discord](https://img.shields.io/discord/675716572156788776?color=%2347a6ff&label=Dev.%20Discord&logo=Discord&logoColor=%23FFFFFF&style=flat-square)](https://discord.gg/YT6M2rAqqS) [![](https://img.shields.io/badge/Community-Metroid%20Construction-eb7f00?style=flat-square)](https://metroidconstruction.com/)
+[![GitHub Release](https://img.shields.io/github/v/release/ConConner/MAGE-Themes?style=flat-square&label=Version)](https://github.com/ConConner/MAGE-Themes/releases/latest) [![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/ConConner/MAGE-Themes/total?style=flat-square&color=%25232ea043&label=Downloads)](https://github.com/ConConner/MAGE-Themes/releases/latest) [![Discord](https://img.shields.io/discord/675716572156788776?color=%2347a6ff&label=Dev.%20Discord&logo=Discord&logoColor=%23FFFFFF&style=flat-square)](https://discord.gg/YT6M2rAqqS) [![](https://img.shields.io/badge/Community-Metroid%20Construction-eb7f00?style=flat-square)](https://metroidconstruction.com/)
 
  # <img src="mage/Resources/Icons/mage.png" width="30"> MAGE Themes
- **Metroid Advance Game Editor Themes**
+
+<h1> 
+ <p align=center> 
+  <a href="https://github.com/ConConner/MAGE-Themes/releases/latest">
+   Download
+  </a>
+ </p> 
+</h1> 
+
+**Metroid Advance Game Editor Themes**
 
 Metroid Advance Game Editor (MAGE) is a comprehensive hacking utility for Metroid Fusion and Metroid Zero Mission originally created by [biosp4rk](https://github.com/biosp4rk). It is a .NET 3.0 application written in C#.  
 MAGE Themes is a modification of the original MAGE 1.4 source code started by [ConConner](https://github.com/ConConner), introducing several bug fixes, quality of life improvements and entirely new features. It is a .NET 6.0 application.
