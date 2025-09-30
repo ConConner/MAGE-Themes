@@ -38,6 +38,8 @@ public partial class PageAppearance : UserControl, IReloadablePage
         CustomStrip = statusStrip;
         Controls.Remove(statusStrip);
 
+        pnl_color.BackColor = GBAtoRGB(parent.Bg3Color);
+
         LoadPage();
     }
 
