@@ -1,4 +1,4 @@
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/ConConner/MAGE-Themes/total?style=flat-square&color=%25232ea043&label=Downloads)
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/ConConner/MAGE-Themes/total?style=flat-square&color=%25232ea043&label=Downloads)](https://github.com/ConConner/MAGE-Themes/releases/latest)
 [![Discord](https://img.shields.io/discord/675716572156788776?color=%2347a6ff&label=Dev.%20Discord&logo=Discord&logoColor=%23FFFFFF&style=flat-square)](https://discord.gg/YT6M2rAqqS) [![](https://img.shields.io/badge/Community-Metroid%20Construction-eb7f00?style=flat-square)](https://metroidconstruction.com/)
 
  # <img src="mage/Resources/Icons/mage.png" width="30"> MAGE Themes
