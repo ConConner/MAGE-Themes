@@ -1,3 +1,12 @@
+# [1.10.0](https://github.com/ConConner/MAGE-Themes/compare/v1.9.2...v1.10.0) (2025-10-12)
+
+
+### Features
+
+* backup name format can be specified ([51da9b6](https://github.com/ConConner/MAGE-Themes/commit/51da9b61c44041eed40df5e48a986f20cba83fbf))
+* backups can be saved under a ./backups/ directory ([b086e1f](https://github.com/ConConner/MAGE-Themes/commit/b086e1f2b4562743b81f6d837fc9a8711becce4e))
+* backups can be set to be created periodically ([233eb28](https://github.com/ConConner/MAGE-Themes/commit/233eb2828bd19bb7e35b25d89f6b75028be62503))
+
 ## [1.9.2](https://github.com/ConConner/MAGE-Themes/compare/v1.9.1...v1.9.2) (2025-09-30)
 
 
