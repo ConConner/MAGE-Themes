@@ -1434,6 +1434,12 @@ namespace mage
             Controls.Remove(splash);
             splash.Dispose();
             groupBox_location.Enabled = true;
+
+            if (Version.ProjectConfig.BackupsCreatePeriodically)
+            {
+                Version.BackupService = BackupService.FromMinutes(Version.ProjectConfig.BackupsAutoCreationInterval);
+                Version.BackupService.Start();
+            }
         }
 
         // Look for Input Mono to use in clipdata list; default to Consolas if absent - alexman25

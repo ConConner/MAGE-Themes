@@ -1,6 +1,7 @@
 ﻿using mage.Bookmarks;
 using mage.Options;
 using mage.Properties;
+using mage.Utility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -141,6 +142,7 @@ namespace mage
         public static int MetroidOffset { get; private set; }
         public static List<BookmarkFolder> ProjectBookmarks { get; private set; }
         public static ProjectConfig ProjectConfig { get; private set; } = ProjectConfig.DefaultConfig;
+        public static BackupService? BackupService { get; set; } = null;
 
         public static string[] Clipdata
         {

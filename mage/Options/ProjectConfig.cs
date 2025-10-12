@@ -21,6 +21,8 @@ public class ProjectConfig
 
     public bool BackupsMoveIntoSeperateDirectory { get; set; } = false;
     public string BackupDateFormatString { get; set; } = "yyyy-MM-dd_HH-mm-ss";
+    public bool BackupsCreatePeriodically { get; set; } = false;
+    public int BackupsAutoCreationInterval { get; set; } = 30;
 
     public static ProjectConfig DefaultConfig { get; } = new ProjectConfig() { };
 

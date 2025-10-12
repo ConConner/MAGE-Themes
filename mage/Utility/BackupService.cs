@@ -24,6 +24,9 @@ public class BackupService
     private void DoBackup(object? sender, ElapsedEventArgs e)
     {
         if (FormMain.Instance == null) return;
+        if (ROM.Stream == null) return;
         FormMain.Instance.CreateBackup();
     }
+
+    public static BackupService FromMinutes(int minutes) => new BackupService(minutes * 60 * 1000);
 }
