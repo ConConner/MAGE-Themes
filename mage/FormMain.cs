@@ -516,14 +516,25 @@ namespace mage
             }
         }
 
-        private void menuItem_createBackup_Click(object sender, EventArgs e)
+        public void CreateBackup()
         {
+            if (!menuItem_createBackup.Enabled) return;
+
             // add current room if not yet added
             room.SaveObjects();
 
             // get file name
-            string directory = Path.GetDirectoryName(filename) + Path.DirectorySeparatorChar;
-            string backup = directory + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".gba";
+            char s = Path.DirectorySeparatorChar;
+            bool moveInFolder = Version.ProjectConfig.BackupsMoveIntoSeperateDirectory;
+
+            string directory = Path.GetDirectoryName(filename) + s;
+            if (moveInFolder)
+            {
+                directory += "Backups" + s;
+                Directory.CreateDirectory(directory);
+            }
+
+            string backup = directory + DateTime.Now.ToString(Version.ProjectConfig.BackupDateFormatString) + ".gba";
 
             // save backup
             byte[] copy = ROM.BackupData();
@@ -531,6 +542,11 @@ namespace mage
             if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0) Version.UpdateProject();
             Version.SaveProject(backup);
             ROM.RestoreData(copy);
+        }
+
+        private void menuItem_createBackup_Click(object sender, EventArgs e)
+        {
+            CreateBackup();
         }
 
         private void menuItem_clearRecentFiles_Click(object sender, EventArgs e)
@@ -1418,6 +1434,12 @@ namespace mage
             Controls.Remove(splash);
             splash.Dispose();
             groupBox_location.Enabled = true;
+
+            if (Version.ProjectConfig.BackupsCreatePeriodically)
+            {
+                Version.BackupService = BackupService.FromMinutes(Version.ProjectConfig.BackupsAutoCreationInterval);
+                Version.BackupService.Start();
+            }
         }
 
         // Look for Input Mono to use in clipdata list; default to Consolas if absent - alexman25

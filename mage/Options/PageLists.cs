@@ -24,5 +24,6 @@ public static class PageLists
     {
         new() { Name = "Overview", Page = new PageOverview(), RequiresROM = true},
         //new() { Name = "Compiling", Page = new PageCompiling(), RequiresROM = true},
+        new() { Name = "Backups", Page = new PageBackups(), RequiresROM = true },
     };
 }
