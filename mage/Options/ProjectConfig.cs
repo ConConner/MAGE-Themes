@@ -24,6 +24,8 @@ public class ProjectConfig
     public bool BackupsCreatePeriodically { get; set; } = false;
     public int BackupsAutoCreationInterval { get; set; } = 30;
 
+    public string DecompPath { get; set; } = "";
+
     public static ProjectConfig DefaultConfig { get; } = new ProjectConfig() { };
 
 

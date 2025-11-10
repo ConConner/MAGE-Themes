@@ -37,6 +37,8 @@
             menuItem_saveROMas = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_createBackup = new System.Windows.Forms.ToolStripMenuItem();
+            seperator_decomp = new System.Windows.Forms.ToolStripSeparator();
+            menuItem_saveDecomp = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_recentFiles = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_clearRecentFiles = new System.Windows.Forms.ToolStripMenuItem();
@@ -171,7 +173,6 @@
             menuItem_defaultScrolls = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_defaultScreens = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_tooltips = new System.Windows.Forms.ToolStripMenuItem();
-            toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
             menuStrip_help = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_viewHelp = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_about = new System.Windows.Forms.ToolStripMenuItem();
@@ -309,7 +310,7 @@
             // 
             // menuStrip_file
             // 
-            menuStrip_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_openROM, menuItem_saveROM, menuItem_saveROMas, toolStripSeparator5, menuItem_createBackup, toolStripSeparator3, menuItem_recentFiles });
+            menuStrip_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_openROM, menuItem_saveROM, menuItem_saveROMas, toolStripSeparator5, menuItem_createBackup, seperator_decomp, menuItem_saveDecomp, toolStripSeparator3, menuItem_recentFiles });
             menuStrip_file.Name = "menuStrip_file";
             menuStrip_file.Size = new System.Drawing.Size(37, 20);
             menuStrip_file.Text = "File";
@@ -357,6 +358,21 @@
             menuItem_createBackup.Size = new System.Drawing.Size(223, 22);
             menuItem_createBackup.Text = "Create Backup...";
             menuItem_createBackup.Click += menuItem_createBackup_Click;
+            // 
+            // seperator_decomp
+            // 
+            seperator_decomp.Name = "seperator_decomp";
+            seperator_decomp.Size = new System.Drawing.Size(220, 6);
+            seperator_decomp.Visible = false;
+            // 
+            // menuItem_saveDecomp
+            // 
+            menuItem_saveDecomp.Image = Properties.Resources.page_white_c;
+            menuItem_saveDecomp.Name = "menuItem_saveDecomp";
+            menuItem_saveDecomp.Size = new System.Drawing.Size(223, 22);
+            menuItem_saveDecomp.Text = "Save to Decomp";
+            menuItem_saveDecomp.Visible = false;
+            menuItem_saveDecomp.Click += menuItem_saveDecomp_Click;
             // 
             // toolStripSeparator3
             // 
@@ -1184,7 +1200,7 @@
             // 
             // menuStrip_options
             // 
-            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_options, menuItem_projectSettings, toolStripSeparator31, menuItem_defaultView, menuItem_tooltips, toolStripSeparator21 });
+            menuStrip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_options, menuItem_projectSettings, toolStripSeparator31, menuItem_defaultView, menuItem_tooltips });
             menuStrip_options.Name = "menuStrip_options";
             menuStrip_options.Size = new System.Drawing.Size(61, 20);
             menuStrip_options.Text = "Options";
@@ -1336,11 +1352,6 @@
             menuItem_tooltips.Size = new System.Drawing.Size(165, 22);
             menuItem_tooltips.Text = "Disable Tooltips";
             menuItem_tooltips.Click += menuItem_tooltips_Click;
-            // 
-            // toolStripSeparator21
-            // 
-            toolStripSeparator21.Name = "toolStripSeparator21";
-            toolStripSeparator21.Size = new System.Drawing.Size(162, 6);
             // 
             // menuStrip_help
             // 
@@ -2579,7 +2590,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItem_zoomOut;
         private System.Windows.Forms.ToolStripMenuItem menuItem_outlineScreens;
         private System.Windows.Forms.ToolStripMenuItem menuItem_viewAnimPal;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator21;
         private System.Windows.Forms.ToolStripMenuItem menuItem_compression;
         private System.Windows.Forms.ToolStripMenuItem menuItem_LZ77comp;
         private System.Windows.Forms.ToolStripMenuItem menuItem_LZ77decomp;
@@ -2676,6 +2686,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator28;
         private System.Windows.Forms.ToolStripMenuItem menuItem_creditsEditor;
         private System.Windows.Forms.ToolStripButton toolStrip_credits;
+        private System.Windows.Forms.ToolStripSeparator seperator_decomp;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_saveDecomp;
     }
 }
 

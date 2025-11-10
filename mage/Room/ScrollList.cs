@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
 namespace mage
 {
-    public class ScrollList
+    public class ScrollList : IEnumerable<Scroll>
     {
         // properties
         public bool Edited { get; set; }
@@ -19,6 +20,11 @@ namespace mage
         {
             get { return scrolls[i]; }
             set { scrolls[i] = value; }
+        }
+        public IEnumerator<Scroll> GetEnumerator() => scrolls.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         // drawing
@@ -418,7 +424,5 @@ namespace mage
 
             return dataToWrite;
         }
-
-
     }
 }

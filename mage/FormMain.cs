@@ -2,6 +2,7 @@ using mage.Actions;
 using mage.Bookmarks;
 using mage.Controls; // added for font stuff - alexman25
 using mage.Data;
+using mage.Decomp;
 using mage.Dialogs;
 using mage.Editors;
 using mage.Editors.NewEditors;
@@ -487,6 +488,13 @@ namespace mage
         private void SwitchedTheme(object sender, EventArgs e)
         {
             statusStrip_theme.Text = ThemeSwitcher.ProjectThemeName;
+        }
+
+        public void UpdateSaveDecompButton()
+        {
+            bool visible = Version.ProjectConfig.DecompPath != "" && Program.ExperimentalFeaturesEnabled;
+            seperator_decomp.Visible = visible;
+            menuItem_saveDecomp.Visible = visible;
         }
         #endregion
 
@@ -1497,6 +1505,8 @@ namespace mage
             EnableControls(true);
             menuItem_editBGs.Checked = toolStrip_editBGs.Checked = true;
             menuItem_editObjects.Checked = toolStrip_editObjects.Checked = false;
+
+            UpdateSaveDecompButton();
 
             NewRomLoaded?.Invoke(this, null);
             Sound.PlaySound("load.wav");
@@ -3075,6 +3085,18 @@ namespace mage
         private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
         {
             comboBox_clipdata.Invalidate();
+        }
+
+        private void menuItem_saveDecomp_Click(object sender, EventArgs e)
+        {
+            Dictionary<int, ResourceResponse>? existingBackgrounds = new();
+            for (int i = 0; i < Version.RoomsPerArea[room.AreaID]; i++)
+            {
+                Room r = new(room.AreaID, i);
+                RoomHandler.SaveRLEBackgrounds(r, existingBackgrounds);
+                RoomHandler.SaveLZ77Backgrounds(r, existingBackgrounds);
+                RoomHandler.SaveRoomData(r, existingBackgrounds);
+            }
         }
     }
 }

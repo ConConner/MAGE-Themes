@@ -70,6 +70,7 @@ public partial class FormOption : Form
         foreach (OptionsPage page in Pages)
         {
             if (page.RequiresProject && Version.project == Version.ProjectState.None) continue;
+            if (page.CheckIsEnabled() != true) continue;
             listBox_pages.Items.Add(page.Name);
         }
         SelectedPage = GetPageIndex(pageName);

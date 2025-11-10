@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -6,7 +7,7 @@ using System.IO;
 
 namespace mage
 {
-    public class EnemyList
+    public class EnemyList : IEnumerable<Enemy>
     {
         // properties
         public int Count { get { return enemies.Count; } }
@@ -21,6 +22,8 @@ namespace mage
             get { return enemies[i]; }
             set { enemies[i] = value; }
         }
+        public IEnumerator<Enemy> GetEnumerator() => enemies.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         // meta
         public int number;

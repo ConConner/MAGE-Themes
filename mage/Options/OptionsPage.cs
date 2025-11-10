@@ -15,5 +15,6 @@ public struct OptionsPage
     public UserControl Page = null;
     public bool RequiresROM = false;
     public bool RequiresProject = false;
+    public Func<bool> CheckIsEnabled = () => true;
     public StatusStrip? CustomStatusStrip = null;
 }

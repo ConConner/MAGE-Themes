@@ -25,5 +25,6 @@ public static class PageLists
         new() { Name = "Overview", Page = new PageOverview(), RequiresROM = true},
         //new() { Name = "Compiling", Page = new PageCompiling(), RequiresROM = true},
         new() { Name = "Backups", Page = new PageBackups(), RequiresROM = true },
+        new() { Name = "Decomp", Page = new PageDecomp(), RequiresROM = true, CheckIsEnabled = () => !Version.IsMF && Program.ExperimentalFeaturesEnabled}
     };
 }
