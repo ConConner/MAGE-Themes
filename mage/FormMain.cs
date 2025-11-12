@@ -3089,14 +3089,7 @@ namespace mage
 
         private void menuItem_saveDecomp_Click(object sender, EventArgs e)
         {
-            Dictionary<int, ResourceResponse>? existingBackgrounds = new();
-            for (int i = 0; i < Version.RoomsPerArea[room.AreaID]; i++)
-            {
-                Room r = new(room.AreaID, i);
-                RoomHandler.SaveRLEBackgrounds(r, existingBackgrounds);
-                RoomHandler.SaveLZ77Backgrounds(r, existingBackgrounds);
-                RoomHandler.SaveRoomData(r, existingBackgrounds);
-            }
+            new DecompExportHandler().ExportGame();
         }
     }
 }

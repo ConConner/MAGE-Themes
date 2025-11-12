@@ -63,6 +63,12 @@ namespace mage
             catch { return null; }
         }
 
+        public static int Count(byte areaID)
+        {
+            try { return doors[areaID].Count; }
+            catch { return 0; }
+        }
+
         public static Door GetDestinationDoor(Door d)
         {
             int dstArea = d.areaID;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mage.Properties;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -29,19 +30,23 @@ public static class RoomHandler
         // Parent filepath
         string areaNameCap = Version.AreaNames[bg.AreaID];
         string areaName = areaNameCap.ToLower();
-        string path = Path.Combine(Version.ProjectConfig.DecompPath, "data", "rooms", areaName);
+        string relativePath = Path.Combine("data", "rooms", areaName);
+        string path = Path.Combine(Version.ProjectConfig.DecompPath, relativePath);
 
         // Path
         string fileName = $"{areaName}_{bg.RoomID}_{bgName}.gfx";
-        fileName = Path.Combine(path, fileName);
+        path = Path.Combine(path, fileName);
 
         ResourceResponse response = new();
         ByteStream bs = new();
         bg.Export(bs);
-        FileWriter.WriteToFile(fileName, bs);
-        response.ResourcePath = fileName;
+        FileWriter.WriteToFile(path, bs);
+
+        response.ResourcePathReal = path;
+        response.ResourcePathDecomp = $"data/rooms/{areaName}/{fileName}";
         response.ResourceLabel = $"s{areaNameCap}_{bg.RoomID}_{bgName}";
         response.Size = bs.Length;
+
         return response;
     }
 
@@ -136,12 +141,31 @@ public static class RoomHandler
     }
 
 
-    private static string GenerateBGInclude(ResourceResponse resource)
+    private static string GenerateBGInclude(ResourceResponse resource, List<string>? labels)
     {
-        return $"const u8 {resource.ResourceLabel}[{resource.Size}] = INCBIN_U8(\"{resource.ResourcePath}\");";
+        string label = $"{resource.ResourceLabel}[{resource.Size}]";
+        if (labels != null) labels.Add(label);
+        return $"const u8 {label} = INCBIN_U8(\"{resource.ResourcePathDecomp}\");";
+    }
+    public static void GenerateLZ77Include(StringBuilder fileData, Room room, Dictionary<int, ResourceResponse> backgrounds, List<string>? labels, HashSet<int> usedPointers)
+    {
+        bool bg0Exists = room.backgrounds.bg0.IsLZ77 & backgrounds.TryGetValue(room.header.BG0ptr, out ResourceResponse bg0);
+        bool bg3Exists = backgrounds.TryGetValue(room.header.BG3ptr, out ResourceResponse bg3);
+
+        if (bg0Exists && !usedPointers.Contains(room.header.BG0ptr))
+        {
+            fileData.AppendLine(GenerateBGInclude(bg0, labels));
+            usedPointers.Add(room.header.BG0ptr);
+        }
+        if (bg3Exists && !usedPointers.Contains(room.header.BG3ptr)) 
+        {
+            fileData.AppendLine(GenerateBGInclude(bg3, labels));
+            usedPointers.Add(room.header.BG3ptr);
+        }
     }
 
-    public static void SaveRoomData(Room room, Dictionary<int, ResourceResponse> backgrounds)
+
+    public static void SaveRoomData(Room room, Dictionary<int, ResourceResponse> backgrounds, List<string> labels)
     {
         // Build .c file
         string areaNameCap = Version.AreaNames[room.AreaID];
@@ -154,12 +178,16 @@ public static class RoomHandler
         fileData.AppendLine("#include \"macros.h\"");
 
         // Scroll Data
-        List<string> scrolls = GetScrollsAsArray(room);
-        int numScrolls = room.scrollList.Count;
-        fileData.AppendLine($"const u8 s{areaNameCap}_{room.RoomID}_Scrolls[SCROLL_DATA_SIZE({numScrolls})] = {{");
-        fileData.Append('\t');
-        fileData.AppendJoin(',', scrolls); fileData.AppendLine();
-        fileData.AppendLine("};");
+        if (room.scrollList.Count != 0) {
+            List<string> scrolls = GetScrollsAsArray(room);
+            int numScrolls = room.scrollList.Count;
+            string scrollLabel = $"s{areaNameCap}_{room.RoomID}_Scrolls[SCROLL_DATA_SIZE({numScrolls})]";
+            fileData.AppendLine($"const u8 {scrollLabel} = {{");
+            fileData.Append('\t');
+            fileData.AppendJoin(',', scrolls); fileData.AppendLine();
+            fileData.AppendLine("};");
+            labels.Add(scrollLabel);
+        }
 
         // Sprites
         for (int i = 0; i < 3; i++)
@@ -168,23 +196,25 @@ public static class RoomHandler
             if (sprites == null) continue;
             int numSprites = room.enemyLists[i].Count;
 
-            fileData.AppendLine($"const u8 s{areaNameCap}_{room.RoomID}_Spriteset{i}[ENEMY_ROOM_DATA_ARRAY_SIZE({numSprites + 1})] = {{");
+            string spriteLabel = $"s{areaNameCap}_{room.RoomID}_Spriteset{i}[ENEMY_ROOM_DATA_ARRAY_SIZE({numSprites + 1})]";
+            fileData.AppendLine($"const u8 {spriteLabel} = {{");
             fileData.Append('\t');
             fileData.AppendJoin(',', sprites); fileData.AppendLine();
             fileData.AppendLine("};");
+            labels.Add(spriteLabel);
         }
 
         // Backgrounds 
         for (int i = 0; i < 4; i++)
         {
             // Get resource
-            if (room.backgrounds[i].IsLZ77) continue;
+            if (room.backgrounds[i].IsLZ77 || !room.backgrounds[i].Exists) continue;
             int pointer = GetBackgroundPointer(room, i);
             ResourceResponse resource;
             bool found = backgrounds.TryGetValue(pointer, out resource);
             if (!found) continue;
 
-            fileData.AppendLine(GenerateBGInclude(resource));
+            fileData.AppendLine(GenerateBGInclude(resource, labels));
         }
 
         // Write File

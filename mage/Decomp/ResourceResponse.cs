@@ -8,7 +8,8 @@ namespace mage.Decomp;
 
 public struct ResourceResponse
 {
-    public string ResourcePath;
+    public string ResourcePathReal;
+    public string ResourcePathDecomp;
     public string ResourceLabel;
     public int ResourcePointer;
     public int Size;
