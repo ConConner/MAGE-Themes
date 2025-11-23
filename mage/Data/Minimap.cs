@@ -28,6 +28,21 @@ namespace mage
             Initialize(romStream);
         }
 
+        private Minimap() { }
+
+        public Minimap Copy()
+        {
+            Minimap copy = new Minimap();
+            copy.isMF = this.isMF;
+            copy.areaID = this.areaID;
+            copy.pointer = this.pointer;
+            copy.origLen = this.origLen;
+            copy.Edited = this.Edited;
+            copy.map = (this.map.Clone() as ushort[,])!;
+
+            return copy;
+        }
+
         private void Initialize(ByteStream src)
         {
             try
