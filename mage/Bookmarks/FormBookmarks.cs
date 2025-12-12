@@ -85,6 +85,7 @@ public partial class FormBookmarks : Form, Editor
             else if (value.SelectedIndex == -1)
             {
                 tree_bookmarks.Nodes.Clear();
+                panel_treeViewControls.Visible = false;
                 Program.Config.BookmarkLastUsedCollectionIndex = value.SelectedIndex;
                 DisplayBookmarkDetails(null);
             }
@@ -273,6 +274,9 @@ public partial class FormBookmarks : Form, Editor
         SelectedTreeNode = null;
         tree_bookmarks.SelectedNode = null;
 
+        panel_treeViewControls.Visible = AllowedToEdit;
+        button_tool_delete.Visible = false;
+
         SelectedItem = CurrentCollections[LastCollectionUsed.Box.SelectedIndex];
     }
 
@@ -329,20 +333,19 @@ public partial class FormBookmarks : Form, Editor
     {
         var hit = tree_bookmarks.HitTest(e.Location);
 
-        if (e.Button == MouseButtons.Right)
-        {
-            ContextMenuTreeNode = hit.Node;
-            button_createFolder.Enabled = AllowedToEdit;
-            button_createBookmark.Enabled = AllowedToEdit;
-            button_createCopy.Enabled = hit.Node != null && !isDialog;
-            button_exportFolder.Enabled = hit.Node != null && hit.Node.Tag is BookmarkFolder;
-            button_delete.Enabled = hit.Node != null && AllowedToEdit;
-        }
+        ContextMenuTreeNode = hit.Node;
+        button_createFolder.Enabled = AllowedToEdit;
+        button_createBookmark.Enabled = AllowedToEdit;
+        button_createCopy.Enabled = hit.Node != null && !isDialog;
+        button_exportFolder.Enabled = hit.Node != null && hit.Node.Tag is BookmarkFolder;
+        button_delete.Enabled = button_tool_delete.Visible = hit.Node != null && AllowedToEdit;
     }
 
     private void tree_bookmarks_AfterSelect(object sender, TreeViewEventArgs e)
     {
         listbox_globalCollections.SelectedItem = null;
+        listbox_projectCollections.SelectedItem = null;
+        listbox_internalCollections.SelectedItem = null;
         SelectedTreeNode = e.Node;
         SelectedItem = e.Node.Tag as BookmarkItem;
 
@@ -438,9 +441,13 @@ public partial class FormBookmarks : Form, Editor
     private void TextBox_value_TextChanged(object? sender, EventArgs e)
     {
         if (init) return;
-        if (LastCollectionUsed.Box != null) return;
+        if (LastCollectionUsed.Box.SelectedIndex != -1) return;
         if (SelectedTreeNode == null && SelectedItem == null) return;
-        (SelectedItem as Bookmark).Value = Hex.ToInt(textBox_value.Text);
+
+        int value = (SelectedItem as Bookmark).Value;
+        try { value = Hex.ToInt(textBox_value.Text); }
+        catch { }
+        finally { (SelectedItem as Bookmark).Value = value; }
     }
 
     private void TextBox_description_TextChanged(object? sender, EventArgs e)
@@ -844,5 +851,6 @@ public partial class FormBookmarks : Form, Editor
             SelectedIndex = -1
         };
     }
+
     #endregion
 }

@@ -55,6 +55,12 @@
             panel_main = new mage.Controls.ExtendedPanel();
             panel_bookmarks = new mage.Controls.ExtendedPanel();
             group_bookmarks = new System.Windows.Forms.GroupBox();
+            panel_treeView = new System.Windows.Forms.Panel();
+            panel_treeViewControls = new System.Windows.Forms.Panel();
+            seperator1 = new mage.Controls.Seperator();
+            button_tool_createFolder = new System.Windows.Forms.Button();
+            button_tool_delete = new System.Windows.Forms.Button();
+            button_tool_createBookmark = new System.Windows.Forms.Button();
             textBox_search = new mage.Theming.CustomControls.FlatTextBox();
             panel_collections = new mage.Controls.ExtendedPanel();
             panel_projectCollections = new mage.Controls.ExtendedPanel();
@@ -86,7 +92,6 @@
             layer3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layer4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             context_listBox = new System.Windows.Forms.ContextMenuStrip(components);
-            panel_treeView = new System.Windows.Forms.Panel();
             context_treeview.SuspendLayout();
             group_globalCollections.SuspendLayout();
             panel_globalCollectionControls.SuspendLayout();
@@ -94,6 +99,8 @@
             panel_main.SuspendLayout();
             panel_bookmarks.SuspendLayout();
             group_bookmarks.SuspendLayout();
+            panel_treeView.SuspendLayout();
+            panel_treeViewControls.SuspendLayout();
             panel_collections.SuspendLayout();
             panel_projectCollections.SuspendLayout();
             group_projectCollections.SuspendLayout();
@@ -103,7 +110,6 @@
             group_internalCollections.SuspendLayout();
             group_details.SuspendLayout();
             menuStrip1.SuspendLayout();
-            panel_treeView.SuspendLayout();
             SuspendLayout();
             // 
             // tree_bookmarks
@@ -122,7 +128,7 @@
             treeNode1.Text = "Node0";
             tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode1 });
             tree_bookmarks.SelectedImageIndex = 0;
-            tree_bookmarks.Size = new System.Drawing.Size(342, 375);
+            tree_bookmarks.Size = new System.Drawing.Size(342, 347);
             tree_bookmarks.TabIndex = 0;
             tree_bookmarks.ItemDrag += tree_bookmarks_ItemDrag;
             tree_bookmarks.AfterSelect += tree_bookmarks_AfterSelect;
@@ -200,9 +206,8 @@
             // 
             listbox_globalCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_globalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            listbox_globalCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            listbox_globalCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F);
             listbox_globalCollections.FormattingEnabled = true;
-            listbox_globalCollections.ItemHeight = 15;
             listbox_globalCollections.Location = new System.Drawing.Point(6, 22);
             listbox_globalCollections.Name = "listbox_globalCollections";
             listbox_globalCollections.Size = new System.Drawing.Size(152, 112);
@@ -214,7 +219,7 @@
             group_globalCollections.Controls.Add(listbox_globalCollections);
             group_globalCollections.Controls.Add(panel_globalCollectionControls);
             group_globalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            group_globalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            group_globalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             group_globalCollections.Location = new System.Drawing.Point(0, 3);
             group_globalCollections.Name = "group_globalCollections";
             group_globalCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
@@ -340,6 +345,74 @@
             group_bookmarks.TabStop = false;
             group_bookmarks.Text = "Bookmarks";
             // 
+            // panel_treeView
+            // 
+            panel_treeView.Controls.Add(tree_bookmarks);
+            panel_treeView.Controls.Add(panel_treeViewControls);
+            panel_treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel_treeView.Location = new System.Drawing.Point(3, 42);
+            panel_treeView.Name = "panel_treeView";
+            panel_treeView.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            panel_treeView.Size = new System.Drawing.Size(342, 378);
+            panel_treeView.TabIndex = 2;
+            // 
+            // panel_treeViewControls
+            // 
+            panel_treeViewControls.Controls.Add(seperator1);
+            panel_treeViewControls.Controls.Add(button_tool_createFolder);
+            panel_treeViewControls.Controls.Add(button_tool_delete);
+            panel_treeViewControls.Controls.Add(button_tool_createBookmark);
+            panel_treeViewControls.Dock = System.Windows.Forms.DockStyle.Bottom;
+            panel_treeViewControls.Location = new System.Drawing.Point(0, 350);
+            panel_treeViewControls.Name = "panel_treeViewControls";
+            panel_treeViewControls.Size = new System.Drawing.Size(342, 28);
+            panel_treeViewControls.TabIndex = 4;
+            // 
+            // seperator1
+            // 
+            seperator1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            seperator1.Location = new System.Drawing.Point(52, 8);
+            seperator1.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            seperator1.Name = "seperator1";
+            seperator1.Size = new System.Drawing.Size(1, 17);
+            seperator1.TabIndex = 6;
+            seperator1.Text = "seperator1";
+            // 
+            // button_tool_createFolder
+            // 
+            button_tool_createFolder.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            button_tool_createFolder.Image = Properties.Resources.folder_add;
+            button_tool_createFolder.Location = new System.Drawing.Point(26, 5);
+            button_tool_createFolder.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            button_tool_createFolder.Name = "button_tool_createFolder";
+            button_tool_createFolder.Size = new System.Drawing.Size(23, 23);
+            button_tool_createFolder.TabIndex = 5;
+            button_tool_createFolder.UseVisualStyleBackColor = true;
+            button_tool_createFolder.Click += button_createFolder_Click;
+            // 
+            // button_tool_delete
+            // 
+            button_tool_delete.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            button_tool_delete.Image = Properties.Resources.delete;
+            button_tool_delete.Location = new System.Drawing.Point(56, 5);
+            button_tool_delete.Name = "button_tool_delete";
+            button_tool_delete.Size = new System.Drawing.Size(23, 23);
+            button_tool_delete.TabIndex = 4;
+            button_tool_delete.UseVisualStyleBackColor = true;
+            button_tool_delete.Click += button_delete_Click;
+            // 
+            // button_tool_createBookmark
+            // 
+            button_tool_createBookmark.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            button_tool_createBookmark.Image = Properties.Resources.page_white_add;
+            button_tool_createBookmark.Location = new System.Drawing.Point(0, 5);
+            button_tool_createBookmark.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            button_tool_createBookmark.Name = "button_tool_createBookmark";
+            button_tool_createBookmark.Size = new System.Drawing.Size(23, 23);
+            button_tool_createBookmark.TabIndex = 3;
+            button_tool_createBookmark.UseVisualStyleBackColor = true;
+            button_tool_createBookmark.Click += button_createBookmark_Click;
+            // 
             // textBox_search
             // 
             textBox_search.BorderColor = System.Drawing.Color.Black;
@@ -386,7 +459,7 @@
             group_projectCollections.Controls.Add(listbox_projectCollections);
             group_projectCollections.Controls.Add(panel_projectCollectionControls);
             group_projectCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            group_projectCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            group_projectCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             group_projectCollections.Location = new System.Drawing.Point(0, 0);
             group_projectCollections.Name = "group_projectCollections";
             group_projectCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
@@ -399,9 +472,8 @@
             // 
             listbox_projectCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_projectCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            listbox_projectCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            listbox_projectCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F);
             listbox_projectCollections.FormattingEnabled = true;
-            listbox_projectCollections.ItemHeight = 15;
             listbox_projectCollections.Location = new System.Drawing.Point(6, 22);
             listbox_projectCollections.Name = "listbox_projectCollections";
             listbox_projectCollections.Size = new System.Drawing.Size(152, 118);
@@ -464,7 +536,7 @@
             // 
             group_internalCollections.Controls.Add(listbox_internalCollections);
             group_internalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            group_internalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            group_internalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             group_internalCollections.Location = new System.Drawing.Point(0, 0);
             group_internalCollections.Name = "group_internalCollections";
             group_internalCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
@@ -477,9 +549,8 @@
             // 
             listbox_internalCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_internalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            listbox_internalCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            listbox_internalCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F);
             listbox_internalCollections.FormattingEnabled = true;
-            listbox_internalCollections.ItemHeight = 15;
             listbox_internalCollections.Location = new System.Drawing.Point(6, 22);
             listbox_internalCollections.Name = "listbox_internalCollections";
             listbox_internalCollections.Size = new System.Drawing.Size(152, 63);
@@ -678,16 +749,6 @@
             context_listBox.Name = "context_listBox";
             context_listBox.Size = new System.Drawing.Size(61, 4);
             // 
-            // panel_treeView
-            // 
-            panel_treeView.Controls.Add(tree_bookmarks);
-            panel_treeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel_treeView.Location = new System.Drawing.Point(3, 42);
-            panel_treeView.Name = "panel_treeView";
-            panel_treeView.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            panel_treeView.Size = new System.Drawing.Size(342, 378);
-            panel_treeView.TabIndex = 2;
-            // 
             // FormBookmarks
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -709,6 +770,8 @@
             panel_main.ResumeLayout(false);
             panel_bookmarks.ResumeLayout(false);
             group_bookmarks.ResumeLayout(false);
+            panel_treeView.ResumeLayout(false);
+            panel_treeViewControls.ResumeLayout(false);
             panel_collections.ResumeLayout(false);
             panel_projectCollections.ResumeLayout(false);
             group_projectCollections.ResumeLayout(false);
@@ -720,7 +783,6 @@
             group_details.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            panel_treeView.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -783,5 +845,10 @@
         private System.Windows.Forms.ToolStripMenuItem button_importProject;
         private System.Windows.Forms.ToolStripMenuItem button_importGlobal;
         private System.Windows.Forms.Panel panel_treeView;
+        private System.Windows.Forms.Panel panel_treeViewControls;
+        private System.Windows.Forms.Button button_tool_delete;
+        private System.Windows.Forms.Button button_tool_createBookmark;
+        private Controls.Seperator seperator1;
+        private System.Windows.Forms.Button button_tool_createFolder;
     }
 }

@@ -1,195 +1,196 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Version>1.10.0</Version>
-    <OutputType>WinExe</OutputType>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <PublishSingleFile>true</PublishSingleFile>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.10.0</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Resources\Icons\mage.ico</ApplicationIcon>
-    <StartupObject>
-    </StartupObject>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Docs\doc.html" />
-    <None Remove="Docs\legacy.html" />
-    <None Remove="Docs\technical.html" />
-    <None Remove="Resources\Bookmarks\ZM\ZM_U_GFX_Bookmarks.mbc" />
-    <None Remove="Resources\Bookmarks\ZM\ZM_U_OAM_Bookmarks.mbc" />
-    <None Remove="Resources\Bookmarks\ZM\ZM_U_PAL_Bookmarks.mbc" />
-    <None Remove="Resources\Bookmarks\ZM_U_OAM_Bookmarks.mbc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Dialogs\BackgroundPropertyDialog.cs" />
-    <Compile Update="Options\PagesApplication\PageUpdates.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Options\PagesApplication\PageAdvanced.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Options\PagesApplication\PageRom.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Options\PagesProject\PageCompiling.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Options\PagesProject\PageCompiling.designer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Options\PagesProject\PageBackups.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Options\PagesProject\PageOverview.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Update="Theming\CustomControls\FlatComboBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Theming\CustomControls\FlatNumericUpDown.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Theming\CustomControls\FlatTabControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Theming\CustomControls\FlatTextBox.cs" />
-    <Compile Update="GfxView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="TileView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="RoomView.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Icons\button_bg_color.png" />
-    <Content Include="Resources\Icons\toolbar_animation.png" />
-    <Content Include="Resources\Icons\toolbar_connection.png" />
-    <Content Include="Resources\Icons\toolbar_edit_objects.png" />
-    <Content Include="Resources\Icons\toolbar_graphics.png" />
-    <Content Include="Resources\Icons\toolbar_header.png" />
-    <Content Include="Resources\Icons\toolbar_minimap.png" />
-    <Content Include="Resources\Icons\toolbar_open.png" />
-    <Content Include="Resources\Icons\toolbar_options.png" />
-    <Content Include="Resources\Icons\toolbar_outline_doors.png" />
-    <Content Include="Resources\Icons\toolbar_outline_scrolls.png" />
-    <Content Include="Resources\Icons\toolbar_outline_sprites.png" />
-    <Content Include="Resources\Icons\toolbar_palette.png" />
-    <Content Include="Resources\Icons\toolbar_patches.png" />
-    <Content Include="Resources\Icons\toolbar_redo.png" />
-    <Content Include="Resources\Icons\toolbar_save.png" />
-    <Content Include="Resources\Icons\toolbar_sprite.png" />
-    <Content Include="Resources\Icons\toolbar_text.png" />
-    <Content Include="Resources\Icons\toolbar_tile_builder.png" />
-    <Content Include="Resources\Icons\toolbar_tile_table.png" />
-    <Content Include="Resources\Icons\toolbar_view_sprites.png" />
-    <Content Include="Resources\Icons\toolbar_spriteset.png" />
-    <Content Include="Resources\Icons\toolbar_test.png" />
-    <Content Include="Resources\Icons\toolbar_undo.png" />
-    <Content Include="Resources\Icons\toolbar_weapon.png" />
-    <Content Include="Resources\Icons\toolbar_zoom.png" />
-    <Content Include="Resources\Lists\endings.txt" />
-    <Content Include="Resources\Lists\MF\MF_U_physics.txt" />
-    <Content Include="Resources\Lists\MF\MF_U_sSpriteOAM.txt" />
-    <Content Include="Resources\Lists\ZM\ZM_spritePositions.txt" />
-    <Content Include="Resources\Lists\ZM\ZM_U_physics.txt" />
-    <Content Include="Resources\Misc\flip_v.png" />
-    <Content Include="Resources\Lists\MF\MF_spritePositions.txt" />
-    <Content Include="Resources\Misc\flip_h.png" />
-    <Content Include="Resources\Misc\scrollNums.png" />
-    <Content Include="Resources\Lists\textLists.txt" />
-    <Content Include="Resources\Lists\ZM\ZM_U_tileTables.txt" />
-    <Content Include="Resources\Lists\MF\MF_chars.txt" />
-    <Content Include="Resources\Lists\MF\MF_J_patches.txt" />
-    <Content Include="Resources\Lists\MF\MF_J_pSpriteOAM.txt" />
-    <Content Include="Resources\Lists\MF\MF_U_tileTables.txt" />
-    <Content Include="Resources\Lists\ZM\ZM_chars.txt" />
-    <Content Include="Resources\Lists\ZM\ZM_clipFromMF.txt" />
-    <Content Include="Resources\Icons\shortcut_super_block.png" />
-    <Content Include="Resources\Lists\MF\MF_clipFromZM.txt" />
-    <Content Include="Resources\Icons\shortcut_air.png" />
-    <Content Include="Resources\Icons\shortcut_bomb.png" />
-    <Content Include="Resources\Icons\shortcut_crumble.png" />
-    <Content Include="Resources\Icons\shortcut_energy.png" />
-    <Content Include="Resources\Icons\shortcut_missile.png" />
-    <Content Include="Resources\Icons\shortcut_missile_block.png" />
-    <Content Include="Resources\Icons\shortcut_screw.png" />
-    <Content Include="Resources\Icons\shortcut_shot.png" />
-    <Content Include="Resources\Icons\shortcut_solid.png" />
-    <Content Include="Resources\Icons\shortcut_speed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Docs\technical.html" />
-    <EmbeddedResource Include="Resources\Bookmarks\ZM\ZM_U_GFX_Bookmarks.mbc" />
-    <EmbeddedResource Include="Resources\Bookmarks\ZM\ZM_U_OAM_Bookmarks.mbc" />
-    <EmbeddedResource Include="Resources\Bookmarks\ZM\ZM_U_PAL_Bookmarks.mbc" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FuzzySharp" Version="2.0.2" />
-    <PackageReference Include="System.Reactive" Version="6.0.1" />
-    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Docs\doc.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Docs\legacy.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<Version>1.10.0</Version>
+		<OutputType>WinExe</OutputType>
+		<IsWebBootstrapper>false</IsWebBootstrapper>
+		<PublishUrl>publish\</PublishUrl>
+		<Install>true</Install>
+		<InstallFrom>Disk</InstallFrom>
+		<PublishSingleFile>true</PublishSingleFile>
+		<UpdateEnabled>false</UpdateEnabled>
+		<UpdateMode>Foreground</UpdateMode>
+		<UpdateInterval>7</UpdateInterval>
+		<UpdateIntervalUnits>Days</UpdateIntervalUnits>
+		<UpdatePeriodically>false</UpdatePeriodically>
+		<UpdateRequired>false</UpdateRequired>
+		<MapFileExtensions>true</MapFileExtensions>
+		<ApplicationRevision>1</ApplicationRevision>
+		<ApplicationVersion>1.10.0</ApplicationVersion>
+		<UseApplicationTrust>false</UseApplicationTrust>
+		<BootstrapperEnabled>true</BootstrapperEnabled>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ApplicationIcon>Resources\Icons\mage.ico</ApplicationIcon>
+		<StartupObject>
+		</StartupObject>
+		<NoWarn>$(NoWarn);WFO1000</NoWarn>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="Docs\doc.html" />
+		<None Remove="Docs\legacy.html" />
+		<None Remove="Docs\technical.html" />
+		<None Remove="Resources\Bookmarks\ZM\ZM_U_GFX_Bookmarks.mbc" />
+		<None Remove="Resources\Bookmarks\ZM\ZM_U_OAM_Bookmarks.mbc" />
+		<None Remove="Resources\Bookmarks\ZM\ZM_U_PAL_Bookmarks.mbc" />
+		<None Remove="Resources\Bookmarks\ZM_U_OAM_Bookmarks.mbc" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Dialogs\BackgroundPropertyDialog.cs" />
+		<Compile Update="Options\PagesApplication\PageUpdates.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Update="Options\PagesApplication\PageAdvanced.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Update="Options\PagesApplication\PageRom.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Update="Options\PagesProject\PageCompiling.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Update="Options\PagesProject\PageCompiling.designer.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Update="Options\PagesProject\PageBackups.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Update="Options\PagesProject\PageOverview.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+		<Compile Update="Theming\CustomControls\FlatComboBox.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="Theming\CustomControls\FlatNumericUpDown.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="Theming\CustomControls\FlatTabControl.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="Theming\CustomControls\FlatTextBox.cs" />
+		<Compile Update="GfxView.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="TileView.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="RoomView.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Resources\Icons\button_bg_color.png" />
+		<Content Include="Resources\Icons\toolbar_animation.png" />
+		<Content Include="Resources\Icons\toolbar_connection.png" />
+		<Content Include="Resources\Icons\toolbar_edit_objects.png" />
+		<Content Include="Resources\Icons\toolbar_graphics.png" />
+		<Content Include="Resources\Icons\toolbar_header.png" />
+		<Content Include="Resources\Icons\toolbar_minimap.png" />
+		<Content Include="Resources\Icons\toolbar_open.png" />
+		<Content Include="Resources\Icons\toolbar_options.png" />
+		<Content Include="Resources\Icons\toolbar_outline_doors.png" />
+		<Content Include="Resources\Icons\toolbar_outline_scrolls.png" />
+		<Content Include="Resources\Icons\toolbar_outline_sprites.png" />
+		<Content Include="Resources\Icons\toolbar_palette.png" />
+		<Content Include="Resources\Icons\toolbar_patches.png" />
+		<Content Include="Resources\Icons\toolbar_redo.png" />
+		<Content Include="Resources\Icons\toolbar_save.png" />
+		<Content Include="Resources\Icons\toolbar_sprite.png" />
+		<Content Include="Resources\Icons\toolbar_text.png" />
+		<Content Include="Resources\Icons\toolbar_tile_builder.png" />
+		<Content Include="Resources\Icons\toolbar_tile_table.png" />
+		<Content Include="Resources\Icons\toolbar_view_sprites.png" />
+		<Content Include="Resources\Icons\toolbar_spriteset.png" />
+		<Content Include="Resources\Icons\toolbar_test.png" />
+		<Content Include="Resources\Icons\toolbar_undo.png" />
+		<Content Include="Resources\Icons\toolbar_weapon.png" />
+		<Content Include="Resources\Icons\toolbar_zoom.png" />
+		<Content Include="Resources\Lists\endings.txt" />
+		<Content Include="Resources\Lists\MF\MF_U_physics.txt" />
+		<Content Include="Resources\Lists\MF\MF_U_sSpriteOAM.txt" />
+		<Content Include="Resources\Lists\ZM\ZM_spritePositions.txt" />
+		<Content Include="Resources\Lists\ZM\ZM_U_physics.txt" />
+		<Content Include="Resources\Misc\flip_v.png" />
+		<Content Include="Resources\Lists\MF\MF_spritePositions.txt" />
+		<Content Include="Resources\Misc\flip_h.png" />
+		<Content Include="Resources\Misc\scrollNums.png" />
+		<Content Include="Resources\Lists\textLists.txt" />
+		<Content Include="Resources\Lists\ZM\ZM_U_tileTables.txt" />
+		<Content Include="Resources\Lists\MF\MF_chars.txt" />
+		<Content Include="Resources\Lists\MF\MF_J_patches.txt" />
+		<Content Include="Resources\Lists\MF\MF_J_pSpriteOAM.txt" />
+		<Content Include="Resources\Lists\MF\MF_U_tileTables.txt" />
+		<Content Include="Resources\Lists\ZM\ZM_chars.txt" />
+		<Content Include="Resources\Lists\ZM\ZM_clipFromMF.txt" />
+		<Content Include="Resources\Icons\shortcut_super_block.png" />
+		<Content Include="Resources\Lists\MF\MF_clipFromZM.txt" />
+		<Content Include="Resources\Icons\shortcut_air.png" />
+		<Content Include="Resources\Icons\shortcut_bomb.png" />
+		<Content Include="Resources\Icons\shortcut_crumble.png" />
+		<Content Include="Resources\Icons\shortcut_energy.png" />
+		<Content Include="Resources\Icons\shortcut_missile.png" />
+		<Content Include="Resources\Icons\shortcut_missile_block.png" />
+		<Content Include="Resources\Icons\shortcut_screw.png" />
+		<Content Include="Resources\Icons\shortcut_shot.png" />
+		<Content Include="Resources\Icons\shortcut_solid.png" />
+		<Content Include="Resources\Icons\shortcut_speed.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<BootstrapperPackage Include=".NETFramework,Version=v4.5">
+			<Visible>False</Visible>
+			<ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+			<Install>true</Install>
+		</BootstrapperPackage>
+		<BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+			<Visible>False</Visible>
+			<ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+			<Install>false</Install>
+		</BootstrapperPackage>
+		<BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+			<Visible>False</Visible>
+			<ProductName>.NET Framework 3.5 SP1</ProductName>
+			<Install>false</Install>
+		</BootstrapperPackage>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Docs\technical.html" />
+		<EmbeddedResource Include="Resources\Bookmarks\ZM\ZM_U_GFX_Bookmarks.mbc" />
+		<EmbeddedResource Include="Resources\Bookmarks\ZM\ZM_U_OAM_Bookmarks.mbc" />
+		<EmbeddedResource Include="Resources\Bookmarks\ZM\ZM_U_PAL_Bookmarks.mbc" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="FuzzySharp" Version="2.0.2" />
+		<PackageReference Include="System.Reactive" Version="6.0.1" />
+		<PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Docs\doc.html" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Docs\legacy.html" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 </Project>

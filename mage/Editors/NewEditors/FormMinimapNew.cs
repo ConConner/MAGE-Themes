@@ -488,7 +488,8 @@ public partial class FormMinimapNew : Form, Editor
     {
         try
         {
-            LoadedMap = ROM.LoadMinimap((byte)SelectedArea);
+            Minimap _temp = ROM.LoadMinimap((byte)SelectedArea);
+            LoadedMap = _temp.Copy();
         }
         catch (CorruptDataException)
         {

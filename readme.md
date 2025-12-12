@@ -13,7 +13,7 @@
 **Metroid Advance Game Editor Themes**
 
 Metroid Advance Game Editor (MAGE) is a comprehensive hacking utility for Metroid Fusion and Metroid Zero Mission originally created by [biosp4rk](https://github.com/biosp4rk). It is a .NET 3.0 application written in C#.  
-MAGE Themes is a modification of the original MAGE 1.4 source code started by [ConConner](https://github.com/ConConner), introducing several bug fixes, quality of life improvements and entirely new features. It is a .NET 6.0 application.
+MAGE Themes is a modification of the original MAGE 1.4 source code started by [ConConner](https://github.com/ConConner), introducing several bug fixes, quality of life improvements and entirely new features. It is a .NET 10.0 application.
 
 Currently both versions are only compatible with the North American (U) version of each game.
 
@@ -21,7 +21,7 @@ MAGE (the original) is no longer being worked on. Issues should only be directed
 
 ## Releases
 Releases are created automatically when new features are available on the main branch.  
-To launch MAGE Themes you need to install the [.NET Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-9.0.8-windows-x64-installer) version 6 or higher.
+To launch MAGE Themes you need to install the [.NET Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-10.0.101-windows-x64-installer) version 10 or higher.
 
 **[Download the latest version](https://github.com/ConConner/MAGE-Themes/releases/latest)**
 
