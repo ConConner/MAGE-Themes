@@ -343,6 +343,8 @@ public partial class FormBookmarks : Form, Editor
     private void tree_bookmarks_AfterSelect(object sender, TreeViewEventArgs e)
     {
         listbox_globalCollections.SelectedItem = null;
+        listbox_projectCollections.SelectedItem = null;
+        listbox_internalCollections.SelectedItem = null;
         SelectedTreeNode = e.Node;
         SelectedItem = e.Node.Tag as BookmarkItem;
 
