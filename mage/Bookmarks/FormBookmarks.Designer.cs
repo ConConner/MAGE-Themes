@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node0");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Node0");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBookmarks));
             tree_bookmarks = new System.Windows.Forms.TreeView();
             context_treeview = new System.Windows.Forms.ContextMenuStrip(components);
@@ -55,6 +55,7 @@
             panel_main = new mage.Controls.ExtendedPanel();
             panel_bookmarks = new mage.Controls.ExtendedPanel();
             group_bookmarks = new System.Windows.Forms.GroupBox();
+            panel_treeView = new System.Windows.Forms.Panel();
             textBox_search = new mage.Theming.CustomControls.FlatTextBox();
             panel_collections = new mage.Controls.ExtendedPanel();
             panel_projectCollections = new mage.Controls.ExtendedPanel();
@@ -86,7 +87,6 @@
             layer3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             layer4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             context_listBox = new System.Windows.Forms.ContextMenuStrip(components);
-            panel_treeView = new System.Windows.Forms.Panel();
             context_treeview.SuspendLayout();
             group_globalCollections.SuspendLayout();
             panel_globalCollectionControls.SuspendLayout();
@@ -94,6 +94,7 @@
             panel_main.SuspendLayout();
             panel_bookmarks.SuspendLayout();
             group_bookmarks.SuspendLayout();
+            panel_treeView.SuspendLayout();
             panel_collections.SuspendLayout();
             panel_projectCollections.SuspendLayout();
             group_projectCollections.SuspendLayout();
@@ -103,7 +104,6 @@
             group_internalCollections.SuspendLayout();
             group_details.SuspendLayout();
             menuStrip1.SuspendLayout();
-            panel_treeView.SuspendLayout();
             SuspendLayout();
             // 
             // tree_bookmarks
@@ -118,9 +118,9 @@
             tree_bookmarks.ImageList = imageList_treeIcons;
             tree_bookmarks.Location = new System.Drawing.Point(0, 3);
             tree_bookmarks.Name = "tree_bookmarks";
-            treeNode1.Name = "Node0";
-            treeNode1.Text = "Node0";
-            tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode1 });
+            treeNode2.Name = "Node0";
+            treeNode2.Text = "Node0";
+            tree_bookmarks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode2 });
             tree_bookmarks.SelectedImageIndex = 0;
             tree_bookmarks.Size = new System.Drawing.Size(342, 375);
             tree_bookmarks.TabIndex = 0;
@@ -200,9 +200,8 @@
             // 
             listbox_globalCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_globalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            listbox_globalCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            listbox_globalCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F);
             listbox_globalCollections.FormattingEnabled = true;
-            listbox_globalCollections.ItemHeight = 15;
             listbox_globalCollections.Location = new System.Drawing.Point(6, 22);
             listbox_globalCollections.Name = "listbox_globalCollections";
             listbox_globalCollections.Size = new System.Drawing.Size(152, 112);
@@ -214,7 +213,7 @@
             group_globalCollections.Controls.Add(listbox_globalCollections);
             group_globalCollections.Controls.Add(panel_globalCollectionControls);
             group_globalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            group_globalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            group_globalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             group_globalCollections.Location = new System.Drawing.Point(0, 3);
             group_globalCollections.Name = "group_globalCollections";
             group_globalCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
@@ -340,6 +339,16 @@
             group_bookmarks.TabStop = false;
             group_bookmarks.Text = "Bookmarks";
             // 
+            // panel_treeView
+            // 
+            panel_treeView.Controls.Add(tree_bookmarks);
+            panel_treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel_treeView.Location = new System.Drawing.Point(3, 42);
+            panel_treeView.Name = "panel_treeView";
+            panel_treeView.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            panel_treeView.Size = new System.Drawing.Size(342, 378);
+            panel_treeView.TabIndex = 2;
+            // 
             // textBox_search
             // 
             textBox_search.BorderColor = System.Drawing.Color.Black;
@@ -386,7 +395,7 @@
             group_projectCollections.Controls.Add(listbox_projectCollections);
             group_projectCollections.Controls.Add(panel_projectCollectionControls);
             group_projectCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            group_projectCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            group_projectCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             group_projectCollections.Location = new System.Drawing.Point(0, 0);
             group_projectCollections.Name = "group_projectCollections";
             group_projectCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
@@ -399,9 +408,8 @@
             // 
             listbox_projectCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_projectCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            listbox_projectCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            listbox_projectCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F);
             listbox_projectCollections.FormattingEnabled = true;
-            listbox_projectCollections.ItemHeight = 15;
             listbox_projectCollections.Location = new System.Drawing.Point(6, 22);
             listbox_projectCollections.Name = "listbox_projectCollections";
             listbox_projectCollections.Size = new System.Drawing.Size(152, 118);
@@ -464,7 +472,7 @@
             // 
             group_internalCollections.Controls.Add(listbox_internalCollections);
             group_internalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            group_internalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            group_internalCollections.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             group_internalCollections.Location = new System.Drawing.Point(0, 0);
             group_internalCollections.Name = "group_internalCollections";
             group_internalCollections.Padding = new System.Windows.Forms.Padding(6, 6, 3, 3);
@@ -477,9 +485,8 @@
             // 
             listbox_internalCollections.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listbox_internalCollections.Dock = System.Windows.Forms.DockStyle.Fill;
-            listbox_internalCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            listbox_internalCollections.Font = new System.Drawing.Font("Segoe UI Semilight", 9F);
             listbox_internalCollections.FormattingEnabled = true;
-            listbox_internalCollections.ItemHeight = 15;
             listbox_internalCollections.Location = new System.Drawing.Point(6, 22);
             listbox_internalCollections.Name = "listbox_internalCollections";
             listbox_internalCollections.Size = new System.Drawing.Size(152, 63);
@@ -678,16 +685,6 @@
             context_listBox.Name = "context_listBox";
             context_listBox.Size = new System.Drawing.Size(61, 4);
             // 
-            // panel_treeView
-            // 
-            panel_treeView.Controls.Add(tree_bookmarks);
-            panel_treeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel_treeView.Location = new System.Drawing.Point(3, 42);
-            panel_treeView.Name = "panel_treeView";
-            panel_treeView.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            panel_treeView.Size = new System.Drawing.Size(342, 378);
-            panel_treeView.TabIndex = 2;
-            // 
             // FormBookmarks
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -709,6 +706,7 @@
             panel_main.ResumeLayout(false);
             panel_bookmarks.ResumeLayout(false);
             group_bookmarks.ResumeLayout(false);
+            panel_treeView.ResumeLayout(false);
             panel_collections.ResumeLayout(false);
             panel_projectCollections.ResumeLayout(false);
             group_projectCollections.ResumeLayout(false);
@@ -720,7 +718,6 @@
             group_details.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            panel_treeView.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }

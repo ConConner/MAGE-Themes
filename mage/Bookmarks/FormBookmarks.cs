@@ -440,9 +440,13 @@ public partial class FormBookmarks : Form, Editor
     private void TextBox_value_TextChanged(object? sender, EventArgs e)
     {
         if (init) return;
-        if (LastCollectionUsed.Box != null) return;
+        if (LastCollectionUsed.Box.SelectedIndex != -1) return;
         if (SelectedTreeNode == null && SelectedItem == null) return;
-        (SelectedItem as Bookmark).Value = Hex.ToInt(textBox_value.Text);
+
+        int value = (SelectedItem as Bookmark).Value;
+        try { value = Hex.ToInt(textBox_value.Text); }
+        catch { }
+        finally { (SelectedItem as Bookmark).Value = value; }
     }
 
     private void TextBox_description_TextChanged(object? sender, EventArgs e)
@@ -846,5 +850,6 @@ public partial class FormBookmarks : Form, Editor
             SelectedIndex = -1
         };
     }
+
     #endregion
 }
