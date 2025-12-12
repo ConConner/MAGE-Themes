@@ -1,3 +1,19 @@
+# [1.11.0](https://github.com/ConConner/MAGE-Themes/compare/v1.10.0...v1.11.0) (2025-12-12)
+
+
+### Bug Fixes
+
+* importing a tileset with a different height may squash the tile view until resize ([7ce6425](https://github.com/ConConner/MAGE-Themes/commit/7ce6425536520022fcee1f127ad98cf6ac7f8d85))
+* map editor does sometimes not discard changes when swapping maps ([fb7b2b9](https://github.com/ConConner/MAGE-Themes/commit/fb7b2b9398946c200fc70bbc8f5e59556cf8c596))
+* project bookmarks cannot be properly renamed ([d1c10d9](https://github.com/ConConner/MAGE-Themes/commit/d1c10d91728fee687751fbe985d2b1c9762875a3))
+* values cannot be set for global bookmarks ([354e237](https://github.com/ConConner/MAGE-Themes/commit/354e2376bd78e408533b485e70d60c0f75dbea66))
+
+
+### Features
+
+* added new controls to bookmarks to reduce context menu usage ([c65275d](https://github.com/ConConner/MAGE-Themes/commit/c65275d6762e1471a3aa2ded4f14666f6c3b73b2))
+* upgrade to .NET version 10 ([9b1a4c4](https://github.com/ConConner/MAGE-Themes/commit/9b1a4c4773c52e4e38c968375cadea4bc8333044))
+
 # [1.10.0](https://github.com/ConConner/MAGE-Themes/compare/v1.9.2...v1.10.0) (2025-10-12)
 
 
