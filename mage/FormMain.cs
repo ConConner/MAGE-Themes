@@ -1689,7 +1689,7 @@ namespace mage
             {
                 UpdateViewOptions();
 
-                tileView.BackgroundImage = room.vram.Image;
+                tileView.TileImage = room.vram.Image;
                 roomView.Room = room;
                 UpdateBGs();
             }
@@ -2454,7 +2454,7 @@ namespace mage
 
             if (TileSelection.Visible)
             {
-                clipboard.UpdateImage((Bitmap)tileView.BackgroundImage, selection);
+                clipboard.UpdateImage((Bitmap)tileView.TileImage, selection);
             }
             else if (roomView.HasSelection)
             {
