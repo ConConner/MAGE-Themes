@@ -32,10 +32,11 @@ public class DecompExportHandler
             AreaHandler.SaveAreaRoomsHeader(areaID, roomDataLabels);
         }
 
-        // Fix Scrolls
+        // Update References in several Files
         GameHandler.SaveGameScrollData();
         GameHandler.SaveGameDoorData();
         GameHandler.SaveGameRoomEntryData(gameBackgrounds);
+        GameHandler.UpdateGameRoomEntryHeader();
         GameHandler.UpdateLinkerRooms();
     }
 }

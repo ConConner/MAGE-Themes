@@ -65,6 +65,30 @@ public static class GameHandler
         FileWriter.WriteToFile(path, fileData);
     }
 
+    public static void UpdateGameRoomEntryHeader()
+    {
+        string path = Path.Combine(Version.ProjectConfig.DecompPath, "include", "data", "rooms_data.h");
+        string fileData = File.ReadAllText(path);
+
+        for (int area = 0; area < Version.AreaNames.Length; area++)
+        {
+            string areaName = Version.AreaNames[area];
+
+            // Update Doors
+            int doorCount = DoorData.Count((byte)area) + 1;
+            string doorPattern = $@"extern const struct Door s{areaName}Doors\[\d+\];";
+            string doorReplacement = $"extern const struct Door s{areaName}Doors[{doorCount}];";
+            fileData = Regex.Replace(fileData, doorPattern, doorReplacement);
+
+            // Update Room Entries
+            int roomCount = Version.RoomsPerArea[area];
+            string roomPattern = $@"extern const struct RoomEntryRom s{areaName}RoomEntries\[\d+\];";
+            string roomReplacement = $"extern const struct RoomEntryRom s{areaName}RoomEntries[{roomCount}];";
+            fileData = Regex.Replace(fileData, roomPattern, roomReplacement);
+        }
+
+        FileWriter.WriteToFile(path, fileData);
+    }
 
     private static List<string> GenerateLinkerRoomIncludes()
     {
@@ -75,7 +99,7 @@ public static class GameHandler
             string areaNameLower = areaName.ToLower();
 
             for (int room = 0; room < Version.RoomsPerArea[area]; room++)
-                { data.Add($"\t\tsrc/data/rooms/{areaNameLower}/{areaName}_{room}.o(.rodata);"); }
+            { data.Add($"\t\tsrc/data/rooms/{areaNameLower}/{areaName}_{room}.o(.rodata);"); }
 
             data.Add($"\t\tsrc/data/rooms/{areaNameLower}/Bg3.o(.rodata);");
         }
