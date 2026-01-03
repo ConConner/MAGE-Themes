@@ -453,6 +453,9 @@ public partial class FormMinimapNew : Form, Editor
 
         TileCursor.Rectangle = new Rectangle(e.TilePixelPosition.X + tilesBorderSize, e.TilePixelPosition.Y + tilesBorderSize, e.TileSize, e.TileSize);
 
+        int id = e.TileIndexPosition.X + e.TileIndexPosition.Y * 32;
+        statusLabel_coor.Text = $"ID: {Hex.ToString(id)}";
+
         if ((e.Button == MouseButtons.Left || e.Button == MouseButtons.Right) && TileSelection.Visible)
         {
             TileCursor.Visible = false;
