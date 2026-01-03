@@ -1,3 +1,13 @@
+## [1.11.1](https://github.com/ConConner/MAGE-Themes/compare/v1.11.0...v1.11.1) (2026-01-03)
+
+
+### Bug Fixes
+
+* bookmarks become uneditable when opening bookmark window without prior bookmark selection ([6a51150](https://github.com/ConConner/MAGE-Themes/commit/6a51150a5a40e831cc08deedb3b46b3ca98556db))
+* map editor is missing button to edit map graphics ([d20ec30](https://github.com/ConConner/MAGE-Themes/commit/d20ec3028269eb9b26322be84f7c2f3abc221544))
+* map editor is missing selected tile-id display ([fd9d4a8](https://github.com/ConConner/MAGE-Themes/commit/fd9d4a8a2b9d6c8117c4616a87b818407a03ed76))
+* map editor is missing unexplored (visual) map type for metroid fusion ([2becb87](https://github.com/ConConner/MAGE-Themes/commit/2becb879030ba7b4ed7b5b973b16cb5acfecea02))
+
 # [1.11.0](https://github.com/ConConner/MAGE-Themes/compare/v1.10.0...v1.11.0) (2025-12-12)
 
 
