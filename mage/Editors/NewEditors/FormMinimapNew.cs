@@ -969,5 +969,12 @@ public partial class FormMinimapNew : Form, Editor
                 break;
         }
     }
+
+    private void button_editGfx_Click(object sender, EventArgs e)
+    {
+        int height = numTiles / 32;
+        FormGraphics form = new FormGraphics(main, Version.MinimapGfxOffset, 32, height, Version.MinimapPaletteOffset);
+        form.Show();
+    }
     #endregion
 }
