@@ -43,7 +43,7 @@ public partial class FormMinimapNew : Form, Editor
 
     // Shortcuts
     private string[] tileTypeItems => Version.IsMF ?
-        new[] { "Normal", "Hidden" } :
+        new[] { "Unexplored (Visual)", "Normal", "Hidden" } :
         new[] { "Start", "Normal", "Heated", "Hidden", "Heated (hidden)" };
     private string[] mapStateItems => Version.IsMF ?
         new[] { "Explored", "Downloaded" } :
@@ -207,7 +207,7 @@ public partial class FormMinimapNew : Form, Editor
 
         DrawTiles();
         tileDisplay_tiles.BackColor = Color.Black;
-        comboBox_tilesType.SelectedIndex = Version.IsMF ? 0 : 1;
+        comboBox_tilesType.SelectedIndex = 1;
     }
 
 
@@ -394,7 +394,7 @@ public partial class FormMinimapNew : Form, Editor
         Bitmap img = (Bitmap)tileDisplay_tiles.TileImage;
         if (img == null) return;
 
-        palette.SetBitmapPalette(img, comboBox_tilesType.SelectedIndex + (Version.IsMF ? 1 : 0), 1);
+        palette.SetBitmapPalette(img, comboBox_tilesType.SelectedIndex, 1);
         ColorPalette cp = img.Palette;
         cp.Entries[0] = Color.Transparent;
         img.Palette = cp;
@@ -420,7 +420,7 @@ public partial class FormMinimapNew : Form, Editor
             {
                 int tileNum = (TileSelection.X / tS + x) + ((TileSelection.Y / tS + y) * 32);
                 int palette = comboBox_tilesType.SelectedIndex;
-                if (Version.IsMF && palette == 1) { palette = 2; }
+                if (Version.IsMF && palette == 1) { palette = 0; }
                 selectedTiles[x, y] = new MapTile()
                 {
                     TileID = tileNum,
@@ -596,7 +596,7 @@ public partial class FormMinimapNew : Form, Editor
 
                 MapTile tile = LoadedMap.GetSquare(new(realPosX, realPosY));
                 tile.Palette = comboBox_mapType.SelectedIndex;
-                if (Version.IsMF && tile.Palette == 1) tile.Palette = 2;
+                if (Version.IsMF && tile.Palette == 1) tile.Palette = 0;
                 modifiedTiles[x, y] = tile;
             }
 
@@ -688,7 +688,7 @@ public partial class FormMinimapNew : Form, Editor
 
         if (sharedType)
         {
-            if (Version.IsMF && checkType == 2) checkType = 1;
+            if (Version.IsMF && checkType == 0) checkType = 1;
             init = true;
             comboBox_mapType.SelectedIndex = checkType;
             init = false;
