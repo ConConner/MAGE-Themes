@@ -357,7 +357,7 @@ public partial class FormBookmarks : Form, Editor
         if (item == null)
         {
             init = true;
-            group_details.Enabled = false;
+            group_details.Visible = false;
             textBox_name.Text = String.Empty;
             textBox_description.Text = String.Empty;
             textBox_value.Text = String.Empty;

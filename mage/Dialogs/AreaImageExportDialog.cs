@@ -73,6 +73,8 @@ public partial class AreaImageExportDialog : Form
 
             if (requireDoors && r.doorList.Count < 1) continue;
 
+            //TODO: Add option to hide backgrounds
+            //r.backgrounds.View[0] = false;
             rooms.Add(r);
 
             //Figuring out the minimum size of the area in screens
