@@ -25,6 +25,15 @@ namespace mage
                 this.Size = new Size(BackgroundImage.Width << zoom, BackgroundImage.Height << zoom);
             }
         }
+        private int PenDashOffset
+        {
+            get => (int)wp.DashOffset;
+            set
+            {
+                wp.DashOffset = value % 5;
+                bp.DashOffset = (value + 2) % 5;
+            }
+        }
 
         // fields
         public Rectangle redRect;
@@ -48,8 +57,22 @@ namespace mage
             bp = new Pen(Color.Black);
             mp = new Pen(Color.FromArgb(0xFF, 0x00, 0x84));
 
-            wp.DashPattern = bp.DashPattern = new float[] { 2, 3 };
-            bp.DashOffset = 2;
+            wp.DashPattern = [2, 3];
+            bp.DashPattern = [3, 2];
+            PenDashOffset = 0;
+
+            Timer dashAnimationTimer = new Timer { Interval = 100 };
+            dashAnimationTimer.Tick += (_, _) =>
+            {
+                PenDashOffset += 1;
+                if (selRect.X != -1)
+                {
+                    var invalidateArea = selRect;
+                    invalidateArea.Inflate(1, 1);
+                    Invalidate(invalidateArea);
+                }
+            };
+            dashAnimationTimer.Start();
         }
 
         public bool UpdateZoom(int newZoom, bool resize)
@@ -89,7 +112,7 @@ namespace mage
         public void ResizeSelection(Rectangle rect)
         {
             int shift = 4 + zoom;
-            selRect = new Rectangle(rect.X << shift, rect.Y << shift, 
+            selRect = new Rectangle(rect.X << shift, rect.Y << shift,
                 (rect.Width << shift) - 1, (rect.Height << shift) - 1);
         }
 
