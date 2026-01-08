@@ -372,7 +372,10 @@ namespace mage.Theming
         {
             CheckBox box = sender as CheckBox;
 
+            bool checkRight = box.CheckAlign == ContentAlignment.MiddleRight;
+
             Point pt = new Point(e.ClipRectangle.Left, e.ClipRectangle.Top);
+            if (checkRight) pt = new(e.ClipRectangle.Right - 14, e.ClipRectangle.Top);
             Rectangle rect = new Rectangle(pt, new Size(13, 13));
 
             e.Graphics.Clear(ProjectTheme.BackgroundColor);
@@ -396,7 +399,7 @@ namespace mage.Theming
 
             //Draw Text
             Brush textBrush = box.Enabled ? new SolidBrush(ProjectTheme.TextColor) : new SolidBrush(ProjectTheme.TextColorDisabled);
-            e.Graphics.DrawString(box.Text, box.Font, textBrush, box.Padding.Left + 16, box.Padding.Top);
+            e.Graphics.DrawString(box.Text, box.Font, textBrush, box.Padding.Left + (checkRight ? 0 : 16), box.Padding.Top);
         }
 
         public static void DrawRadioButton(object sender, PaintEventArgs e)

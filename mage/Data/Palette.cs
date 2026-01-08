@@ -92,6 +92,15 @@ namespace mage
             img.Palette = cp;
         }
 
+        /// <summary>
+        /// Draws a representation of the <see cref="Palette"/> as a <see cref="Bitmap"/>.
+        /// Each color is drawn as a square of the specified size. Each square is separated by a 1-pixel grid of the specified color.
+        /// </summary>
+        /// <param name="size">Size of a colored square</param>
+        /// <param name="row">Which row of the palette should be drawn</param>
+        /// <param name="len">Amount of rows that get drawn after the selected row</param>
+        /// <param name="gridColorArgb">Color of the grid around the colored squares</param>
+        /// <returns>A Bitmap with the palette drawn onto it</returns>
         public Bitmap Draw(int size, int row, int len, long gridColorArgb = 0xFFD8D8D8)
         {
             Bitmap img = new Bitmap(16 * size + 17, len * size + len + 1, PixelFormat.Format16bppRgb555);
@@ -128,7 +137,7 @@ namespace mage
             {
                 bs.Seek(offset);
             }
-            
+
             int len = Rows;
 
             for (int r = 0; r < len; r++)  // for each entry
@@ -187,7 +196,7 @@ namespace mage
         public void Export(string path, PalFileType type)
         {
             ByteStream bs = new ByteStream();
-           
+
             if (type == PalFileType.TLP)
             {
                 bs.WriteASCII("TPL");
