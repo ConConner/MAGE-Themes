@@ -224,7 +224,7 @@ public partial class FormMinimapNew : Form, Editor
 
     private void Save()
     {
-        ROM.SaveMinimap(LoadedMap);
+        ROM.SaveMinimap(LoadedMap.Copy());
         status.Save();
     }
 
