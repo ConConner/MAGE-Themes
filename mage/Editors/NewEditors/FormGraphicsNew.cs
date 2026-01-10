@@ -1,4 +1,5 @@
-﻿using mage.Controls;
+﻿using mage.Actions.GraphicsEditor;
+using mage.Controls;
 using mage.Theming;
 using System;
 using System.Collections.Generic;
@@ -42,9 +43,15 @@ public partial class FormGraphicsNew : Form
     private GFX loadedGFX;
     private Palette loadedPalette;
     private ToolSettings settings = new ToolSettings();
+    private GraphicsUndoRedo UndoRedo = new GraphicsUndoRedo();
 
     private TileDisplay tileDisplay_palette;
     private DualColorBox colorDisplay;
+
+    private GraphicsActionGroup latestActionGroup;
+
+    //TODO: this is just for a test
+    private Point lastPixel = Point.Empty;
 
     public FormGraphicsNew(FormMain main, int gfxOffset, int width, int height, int palOffset)
     {
@@ -102,6 +109,33 @@ public partial class FormGraphicsNew : Form
 
     #region General Events
     private void button_load_Click(object sender, EventArgs e) => LoadData();
+    #endregion
+
+    #region Undo Redo
+    public void AddAction(GraphicsAction a)
+    {
+        UndoRedo.AddActionWithoutDo(a);
+        setUndoRedoButtons();
+    }
+
+    private void setUndoRedoButtons()
+    {
+        button_undo.Enabled = UndoRedo.CanUndo;
+        button_redo.Enabled = UndoRedo.CanRedo;
+        DrawGFX();
+    }
+
+    private void button_undo_ButtonClick(object sender, EventArgs e)
+    {
+        UndoRedo.Undo();
+        setUndoRedoButtons();
+    }
+
+    private void button_redo_ButtonClick(object sender, EventArgs e)
+    {
+        UndoRedo.Redo();
+        setUndoRedoButtons();
+    }
     #endregion
 
     #region GFX
@@ -164,20 +198,43 @@ public partial class FormGraphicsNew : Form
     }
 
     // Editing Events
-    private void tileDisplay_gfx_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    private void tileDisplay_gfx_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
-        if (e.Button == MouseButtons.Left)
+        if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
         {
-            loadedGFX.SetPixel(e.PixelPosition, 14);
-            DrawGFX();
-        }
-        if (e.Button == MouseButtons.Right)
-        {
-            loadedGFX.SetPixel(e.PixelPosition, 0);
+            latestActionGroup = new GraphicsActionGroup();
+            var drawAction = new EditPixelAction(loadedGFX, e.PixelPosition, 14);
+            drawAction.Do();
+            latestActionGroup.AddAction(drawAction);
             DrawGFX();
         }
     }
 
+    private void tileDisplay_gfx_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        if (e.PixelPosition == lastPixel) return;
+        lastPixel = e.PixelPosition;
+
+        if (e.Button == MouseButtons.Left)
+        {
+            var drawAction = new EditPixelAction(loadedGFX, e.PixelPosition, 14);
+            drawAction.Do();
+            latestActionGroup.AddAction(drawAction);
+            DrawGFX();
+        }
+        if (e.Button == MouseButtons.Right)
+        {
+            var drawAction = new EditPixelAction(loadedGFX, e.PixelPosition, 0);
+            drawAction.Do();
+            latestActionGroup.AddAction(drawAction);
+            DrawGFX();
+        }
+    }
+
+    private void tileDisplay_gfx_TileMouseUp(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        AddAction(latestActionGroup);
+    }
     #endregion
 
     #region Palette

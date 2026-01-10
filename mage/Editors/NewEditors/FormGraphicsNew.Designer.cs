@@ -512,6 +512,8 @@
             tileDisplay_gfx.TileImage = null;
             tileDisplay_gfx.TileSize = 8;
             tileDisplay_gfx.Zoom = 0;
+            tileDisplay_gfx.TileMouseDown += tileDisplay_gfx_TileMouseDown;
+            tileDisplay_gfx.TileMouseUp += tileDisplay_gfx_TileMouseUp;
             tileDisplay_gfx.TileMouseMove += tileDisplay_gfx_TileMouseMove;
             tileDisplay_gfx.Scrolled += tileDisplay_gfx_Scrolled;
             // 
@@ -565,20 +567,24 @@
             // button_undo
             // 
             button_undo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_undo.Enabled = false;
             button_undo.Image = Properties.Resources.toolbar_undo;
             button_undo.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_undo.Name = "button_undo";
             button_undo.Size = new System.Drawing.Size(32, 22);
             button_undo.Text = "Undo";
+            button_undo.ButtonClick += button_undo_ButtonClick;
             // 
             // button_redo
             // 
             button_redo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_redo.Enabled = false;
             button_redo.Image = Properties.Resources.toolbar_redo;
             button_redo.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_redo.Name = "button_redo";
             button_redo.Size = new System.Drawing.Size(32, 22);
             button_redo.Text = "Redo";
+            button_redo.ButtonClick += button_redo_ButtonClick;
             // 
             // toolStripSeparator6
             // 

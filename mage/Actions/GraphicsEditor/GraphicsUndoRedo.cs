@@ -28,13 +28,6 @@ public class GraphicsUndoRedo
         undoStack.Push(a);
     }
 
-    public void Do(GraphicsAction a)
-    {
-        a.Do();
-        redoStack.Clear();
-        undoStack.Push(a);
-    }
-
     public GraphicsAction Undo()
     {
         GraphicsAction a = undoStack.Pop();

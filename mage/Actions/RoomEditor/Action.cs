@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace mage.Actions.RoomEditor
+namespace mage
 {
     public abstract class Action
     {
