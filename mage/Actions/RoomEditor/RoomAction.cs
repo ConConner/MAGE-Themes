@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace mage
+namespace mage.Actions.RoomEditor
 {
     public abstract class RoomAction : Action
     {

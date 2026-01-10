@@ -15,6 +15,18 @@ namespace mage.Editors.NewEditors;
 
 public partial class FormGraphicsNew : Form
 {
+    private struct ToolSettings
+    {
+        public ToolSettings() { }
+
+        public Tools SelectedTool = Tools.Brush;
+        public int BrushSize = 1;
+        public int GridWidth = 8;
+        public int GridHeight = 8;
+        public int ColorLeftIndex = 1;
+        public int ColorRightIndex = 0;
+    }
+
     private enum Tools
     {
         Select,
@@ -29,6 +41,7 @@ public partial class FormGraphicsNew : Form
     private FormMain main;
     private GFX loadedGFX;
     private Palette loadedPalette;
+    private ToolSettings settings = new ToolSettings();
 
     private TileDisplay tileDisplay_palette;
     private DualColorBox colorDisplay;
@@ -36,7 +49,6 @@ public partial class FormGraphicsNew : Form
     public FormGraphicsNew(FormMain main, int gfxOffset, int width, int height, int palOffset)
     {
         InitializeComponent();
-
         // Theme Switching
         ThemeSwitcher.ChangeTheme(Controls, this);
         ThemeSwitcher.InjectPaintOverrides(Controls);
@@ -56,6 +68,7 @@ public partial class FormGraphicsNew : Form
 
         //Populate toolstrip
         AddPaletteDisplay();
+        settings = new ToolSettings();
 
         LoadData();
     }
@@ -149,6 +162,22 @@ public partial class FormGraphicsNew : Form
     {
         numericUpDown_height.Enabled = !checkBox_compressed.Checked;
     }
+
+    // Editing Events
+    private void tileDisplay_gfx_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        if (e.Button == MouseButtons.Left)
+        {
+            loadedGFX.SetPixel(e.PixelPosition, 14);
+            DrawGFX();
+        }
+        if (e.Button == MouseButtons.Right)
+        {
+            loadedGFX.SetPixel(e.PixelPosition, 0);
+            DrawGFX();
+        }
+    }
+
     #endregion
 
     #region Palette

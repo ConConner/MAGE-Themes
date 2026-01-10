@@ -77,6 +77,9 @@
             button_decreasePalette = new System.Windows.Forms.ToolStripButton();
             button_increasePalette = new System.Windows.Forms.ToolStripButton();
             toolStrip_gfx = new System.Windows.Forms.ToolStrip();
+            button_undo = new System.Windows.Forms.ToolStripSplitButton();
+            button_redo = new System.Windows.Forms.ToolStripSplitButton();
+            toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             button_toolSelect = new System.Windows.Forms.ToolStripButton();
             button_toolPen = new System.Windows.Forms.ToolStripButton();
             button_toolFill = new System.Windows.Forms.ToolStripButton();
@@ -90,9 +93,6 @@
             button_imageZoomOut = new System.Windows.Forms.ToolStripButton();
             label_imageZoom = new System.Windows.Forms.ToolStripLabel();
             panel_imageContainer = new mage.Controls.ExtendedPanel();
-            toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            button_redo = new System.Windows.Forms.ToolStripSplitButton();
-            button_undo = new System.Windows.Forms.ToolStripSplitButton();
             groupBox_imageControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_height).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_width).BeginInit();
@@ -512,6 +512,7 @@
             tileDisplay_gfx.TileImage = null;
             tileDisplay_gfx.TileSize = 8;
             tileDisplay_gfx.Zoom = 0;
+            tileDisplay_gfx.TileMouseMove += tileDisplay_gfx_TileMouseMove;
             tileDisplay_gfx.Scrolled += tileDisplay_gfx_Scrolled;
             // 
             // toolStrip_palette
@@ -560,6 +561,29 @@
             toolStrip_gfx.Size = new System.Drawing.Size(606, 25);
             toolStrip_gfx.TabIndex = 1;
             toolStrip_gfx.Text = "toolStrip1";
+            // 
+            // button_undo
+            // 
+            button_undo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_undo.Image = Properties.Resources.toolbar_undo;
+            button_undo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_undo.Name = "button_undo";
+            button_undo.Size = new System.Drawing.Size(32, 22);
+            button_undo.Text = "Undo";
+            // 
+            // button_redo
+            // 
+            button_redo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_redo.Image = Properties.Resources.toolbar_redo;
+            button_redo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_redo.Name = "button_redo";
+            button_redo.Size = new System.Drawing.Size(32, 22);
+            button_redo.Text = "Redo";
+            // 
+            // toolStripSeparator6
+            // 
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
             // button_toolSelect
             // 
@@ -669,29 +693,6 @@
             panel_imageContainer.Padding = new System.Windows.Forms.Padding(3, 3, 6, 6);
             panel_imageContainer.Size = new System.Drawing.Size(621, 428);
             panel_imageContainer.TabIndex = 6;
-            // 
-            // toolStripSeparator6
-            // 
-            toolStripSeparator6.Name = "toolStripSeparator6";
-            toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
-            // 
-            // button_redo
-            // 
-            button_redo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_redo.Image = Properties.Resources.toolbar_redo;
-            button_redo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_redo.Name = "button_redo";
-            button_redo.Size = new System.Drawing.Size(32, 22);
-            button_redo.Text = "Redo";
-            // 
-            // button_undo
-            // 
-            button_undo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_undo.Image = Properties.Resources.toolbar_undo;
-            button_undo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_undo.Name = "button_undo";
-            button_undo.Size = new System.Drawing.Size(32, 22);
-            button_undo.Text = "Undo";
             // 
             // FormGraphicsNew
             // 

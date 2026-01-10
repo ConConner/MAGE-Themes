@@ -1,4 +1,5 @@
 using mage.Actions;
+using mage.Actions.RoomEditor;
 using mage.Bookmarks;
 using mage.Controls; // added for font stuff - alexman25
 using mage.Data;
