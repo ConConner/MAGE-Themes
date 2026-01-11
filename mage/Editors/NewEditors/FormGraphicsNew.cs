@@ -1,4 +1,5 @@
 ﻿using mage.Actions.GraphicsEditor;
+using mage.Bookmarks;
 using mage.Controls;
 using mage.Theming;
 using System;
@@ -7,6 +8,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Text;
+using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -20,20 +23,29 @@ public partial class FormGraphicsNew : Form
     {
         public ToolSettings() { }
 
-        public Tools SelectedTool = Tools.Brush;
+        public Tool SelectedTool;
         public int BrushSize = 1;
         public int GridWidth = 8;
         public int GridHeight = 8;
-        public int ColorLeftIndex = 1;
-        public int ColorRightIndex = 0;
+        public int ColorLeftIndex = -1;
+        public int ColorRightIndex = -1;
+        public Shape Shape = Shape.Rectangle;
     }
 
-    private enum Tools
+    private enum Tool
     {
         Select,
-        Brush,
+        Pen,
         Fill,
-        Eyedropper
+        Eyedropper,
+        Shape,
+    }
+
+    private enum Shape
+    {
+        Rectangle,
+        Ellipse,
+        Line,
     }
 
     private bool init = false;
@@ -48,10 +60,82 @@ public partial class FormGraphicsNew : Form
     private TileDisplay tileDisplay_palette;
     private DualColorBox colorDisplay;
 
-    private GraphicsActionGroup latestActionGroup;
+    private GraphicsActionGroup? latestActionGroup;
 
-    //TODO: this is just for a test
-    private Point lastPixel = Point.Empty;
+    private Point LastPixel = Point.Empty;
+    private Point? SelectionPivot = null;
+
+    private Status Status;
+
+    // Drawables
+    private static float[] DashPattern = new float[] { 2, 3 };
+    private Pen DottedPenWhite = new Pen(Color.White, 1) { DashPattern = DashPattern };
+    private Pen DottedPenBlack = new Pen(Color.Black, 1) { DashPattern = DashPattern, DashOffset = 2 };
+    private Drawable Selection;
+
+    private Pen ShapePen = new Pen(Color.Aqua, 1) { DashPattern = DashPattern };
+    private Drawable ShapeDrawable;
+
+    // Properties
+    private Tool SelectedTool
+    {
+        get => settings.SelectedTool;
+        set
+        {
+            if (settings.SelectedTool == value) return;
+            settings.SelectedTool = value;
+
+            UntoggleAllTools();
+            switch (value)
+            {
+                case Tool.Select:
+                    button_toolSelect.Checked = true;
+                    break;
+                case Tool.Pen:
+                    button_toolPen.Checked = true;
+                    break;
+                case Tool.Fill:
+                    button_toolFill.Checked = true;
+                    break;
+                case Tool.Shape:
+                    button_toolShape.Checked = true;
+                    break;
+            }
+        }
+    }
+
+    private int ColorLeft
+    {
+        get => settings.ColorLeftIndex;
+        set
+        {
+            if (settings.ColorLeftIndex == value) return;
+            settings.ColorLeftIndex = value;
+            colorDisplay.ColorLeft = loadedPalette.GetOpaqueColor(0, value);
+        }
+    }
+    private int ColorRight
+    {
+        get => settings.ColorRightIndex;
+        set
+        {
+            if (settings.ColorRightIndex == value) return;
+            settings.ColorRightIndex = value;
+            colorDisplay.ColorRight = loadedPalette.GetOpaqueColor(0, value);
+        }
+    }
+
+    private int SelectionDashOffset
+    {
+        get => (int)DottedPenWhite.DashOffset;
+        set
+        {
+            DottedPenWhite.DashOffset = value;
+            ShapePen.DashOffset = value;
+            DottedPenBlack.DashOffset = value + 2;
+        }
+    }
+
 
     public FormGraphicsNew(FormMain main, int gfxOffset, int width, int height, int palOffset)
     {
@@ -73,11 +157,33 @@ public partial class FormGraphicsNew : Form
         }
         init = false;
 
+        // Intialize Drawables
+        Selection = new Drawable(Rectangle.Empty, DottedPenWhite, 1) { Visible = false };
+        Selection.DrawPens.Add(DottedPenBlack);
+        tileDisplay_gfx.AddDrawable(Selection);
+        ShapeDrawable = new Drawable(Rectangle.Empty, ShapePen, 1) { Visible = false };
+        ShapeDrawable.DrawPens.Add(DottedPenBlack);
+        tileDisplay_gfx.AddDrawable(ShapeDrawable);
+
+        // Selection Animation
+        Timer dashAnimationTimer = new Timer { Interval = 100 };
+        dashAnimationTimer.Tick += (_, _) =>
+        {
+            SelectionDashOffset += 1;
+            if (Selection.Visible) Selection.InvalidateDrawable(Selection);
+            if (ShapeDrawable.Visible) ShapeDrawable.InvalidateDrawable(ShapeDrawable);
+        };
+        dashAnimationTimer.Start();
+
         //Populate toolstrip
         AddPaletteDisplay();
-        settings = new ToolSettings();
+        SelectedTool = Tool.Pen;
 
         LoadData();
+        Status = new Status(statusLabel_changes, button_apply);
+
+        ColorLeft = 1;
+        ColorRight = 0;
     }
 
     private void LoadData()
@@ -88,13 +194,36 @@ public partial class FormGraphicsNew : Form
         DrawGFX();
     }
 
+    private void Save()
+    {
+        int prevOffset = loadedGFX.Offset;
+        loadedGFX.Write(ROM.Stream, false);
+
+        FormMain.UpdateEditors();
+        Status.Save();
+
+        if (prevOffset != loadedGFX.Offset)
+        {
+            textBox_imageOffset.Text = Hex.ToString(loadedGFX.Offset);
+            if (
+                MessageBox.Show(
+                    "The graphics need to be repointed.\n\nDo you want to save the new location as a Bookmark?",
+                    "Repointing required", MessageBoxButtons.YesNo, MessageBoxIcon.Information
+                )
+                == DialogResult.Yes
+                && BookmarkManager.RepointedDataCreateBookmark(prevOffset, loadedGFX.Offset)
+            ) return;
+
+            string message = "Graphics were repointed to " + Hex.ToString(loadedGFX.Offset);
+            MessageBox.Show(message, "Repointed Graphics", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+    }
+
     private void AddPaletteDisplay()
     {
-        tileDisplay_palette = new()
-        {
-            TileSize = 21,
-        };
-        colorDisplay = new();
+        tileDisplay_palette = new() { TileSize = 17 }; // Displays palette
+        tileDisplay_palette.TileMouseDown += TileDisplay_palette_TileMouseDown;
+        colorDisplay = new(); // Displays selected colors
 
         var paletteHost = new ToolStripControlHost(tileDisplay_palette)
         {
@@ -107,8 +236,34 @@ public partial class FormGraphicsNew : Form
         toolStrip_palette.Items.Insert(0, colorHost);
     }
 
+    private Rectangle GetRectangleFromPoints(Point p1, Point p2)
+    {
+        int x = Math.Min(p1.X, p2.X);
+        int y = Math.Min(p1.Y, p2.Y);
+        int width = Math.Abs(p1.X - p2.X) + 1;
+        int height = Math.Abs(p1.Y - p2.Y) + 1;
+        return new Rectangle(x, y, width, height);
+    }
+
     #region General Events
     private void button_load_Click(object sender, EventArgs e) => LoadData();
+
+    private void button_apply_Click(object sender, EventArgs e) => Save();
+    #endregion
+
+    #region Tools
+    private void button_toolSelect_Click(object sender, EventArgs e) => SelectedTool = Tool.Select;
+    private void button_toolPen_Click(object sender, EventArgs e) => SelectedTool = Tool.Pen;
+    private void button_toolFill_Click(object sender, EventArgs e) => SelectedTool = Tool.Fill;
+    private void button_toolShape_Click(object sender, EventArgs e) => SelectedTool = Tool.Shape;
+
+    private void UntoggleAllTools()
+    {
+        button_toolSelect.Checked = false;
+        button_toolPen.Checked = false;
+        button_toolFill.Checked = false;
+        button_toolShape.Checked = false;
+    }
     #endregion
 
     #region Undo Redo
@@ -116,6 +271,8 @@ public partial class FormGraphicsNew : Form
     {
         UndoRedo.AddActionWithoutDo(a);
         setUndoRedoButtons();
+
+        Status.ChangeMade();
     }
 
     private void setUndoRedoButtons()
@@ -192,6 +349,14 @@ public partial class FormGraphicsNew : Form
         statusLabel_size.Text = tileDisplay_gfx.TileImage.Width + " x " + tileDisplay_gfx.TileImage.Height;
     }
 
+    private void DoDrawPixel(Point p, int palIndex)
+    {
+        var drawAction = new EditPixelAction(loadedGFX, p, palIndex);
+        drawAction.Do();
+        if (latestActionGroup != null) latestActionGroup.AddAction(drawAction);
+        DrawGFX();
+    }
+
     private void checkBox_compressed_CheckedChanged(object sender, EventArgs e)
     {
         numericUpDown_height.Enabled = !checkBox_compressed.Checked;
@@ -200,40 +365,108 @@ public partial class FormGraphicsNew : Form
     // Editing Events
     private void tileDisplay_gfx_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
-        if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
+        switch (SelectedTool)
         {
-            latestActionGroup = new GraphicsActionGroup();
-            var drawAction = new EditPixelAction(loadedGFX, e.PixelPosition, 14);
-            drawAction.Do();
-            latestActionGroup.AddAction(drawAction);
-            DrawGFX();
+            case Tool.Pen:
+                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
+
+                // Place Pixels
+                latestActionGroup = new GraphicsActionGroup();
+                if (e.Button == MouseButtons.Left) DoDrawPixel(e.PixelPosition, ColorLeft);
+                if (e.Button == MouseButtons.Right) DoDrawPixel(e.PixelPosition, ColorRight);
+                break;
+
+            case Tool.Select:
+                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
+
+                SelectionPivot = e.PixelPosition;
+                Selection.Visible = true;
+                Selection.Rectangle = new Rectangle(e.PixelPosition, new Size(1, 1));
+                break;
+            case Tool.Fill:
+                break;
+
+            case Tool.Shape:
+                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
+
+                SelectionPivot = e.PixelPosition;
+                ShapeDrawable.Visible = true;
+                ShapeDrawable.Rectangle = new Rectangle(e.PixelPosition, new Size(1, 1));
+                break;
         }
     }
 
     private void tileDisplay_gfx_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
-        if (e.PixelPosition == lastPixel) return;
-        lastPixel = e.PixelPosition;
+        // Only Update if moved to a new pixel
+        if (e.PixelPosition == LastPixel) return;
+        LastPixel = e.PixelPosition;
 
-        if (e.Button == MouseButtons.Left)
+        switch (SelectedTool)
         {
-            var drawAction = new EditPixelAction(loadedGFX, e.PixelPosition, 14);
-            drawAction.Do();
-            latestActionGroup.AddAction(drawAction);
-            DrawGFX();
-        }
-        if (e.Button == MouseButtons.Right)
-        {
-            var drawAction = new EditPixelAction(loadedGFX, e.PixelPosition, 0);
-            drawAction.Do();
-            latestActionGroup.AddAction(drawAction);
-            DrawGFX();
+            case Tool.Pen:
+                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
+
+                // Place Pixels
+                if (e.Button == MouseButtons.Left) DoDrawPixel(e.PixelPosition, ColorLeft);
+                if (e.Button == MouseButtons.Right) DoDrawPixel(e.PixelPosition, ColorRight);
+                break;
+
+            case Tool.Select:
+                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
+                if (SelectionPivot == null) break;
+
+                Selection.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition);
+                break;
+            case Tool.Fill:
+                break;
+
+            case Tool.Shape:
+                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
+                if (SelectionPivot == null) break;
+
+                ShapeDrawable.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition);
+                break;
         }
     }
 
     private void tileDisplay_gfx_TileMouseUp(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
-        AddAction(latestActionGroup);
+        switch (SelectedTool)
+        {
+            case Tool.Pen:
+                break;
+            case Tool.Select:
+                break;
+            case Tool.Fill:
+                break;
+            case Tool.Shape:
+                ShapeDrawable.Visible = false;
+
+                switch (settings.Shape)
+                {
+                    case Shape.Rectangle:
+                        int _color = e.Button == MouseButtons.Left ? settings.ColorLeftIndex : settings.ColorRightIndex;
+                        var rectangleAction = new DrawAreaAction(loadedGFX, ShapeDrawable.Rectangle, _color);
+                        AddAction(rectangleAction);
+                        rectangleAction.Do();
+                        DrawGFX();
+                        break;
+
+                    case Shape.Ellipse:
+                        break;
+                    case Shape.Line:
+                        break;
+                }
+                break;
+        }
+
+        // Finalise Action Group
+        if (latestActionGroup != null) AddAction(latestActionGroup);
+        latestActionGroup = null;
+
+        // Clear variables
+        SelectionPivot = null;
     }
     #endregion
 
@@ -263,6 +496,13 @@ public partial class FormGraphicsNew : Form
     private void DrawPalette()
     {
         tileDisplay_palette.TileImage = loadedPalette.Draw(16, 0, 1, gridColorArgb: 0);
+    }
+
+    private void TileDisplay_palette_TileMouseDown(object? sender, TileDisplay.TileDisplayArgs e)
+    {
+        int palIndex = e.TileIndexPosition.X;
+        if (e.Button == MouseButtons.Left) ColorLeft = palIndex;
+        else if (e.Button == MouseButtons.Right) ColorRight = palIndex;
     }
 
     private void button_increasePalette_Click(object sender, EventArgs e)

@@ -48,23 +48,23 @@
             statusLabel_changes = new System.Windows.Forms.ToolStripStatusLabel();
             spring = new System.Windows.Forms.ToolStripStatusLabel();
             statusButton_import = new System.Windows.Forms.ToolStripDropDownButton();
-            graphicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            rawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            paletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            rawToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            tileLayerProToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            yYCHRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            statusButton_graphicsImport = new System.Windows.Forms.ToolStripMenuItem();
+            button_importGraphicsRaw = new System.Windows.Forms.ToolStripMenuItem();
+            button_importGraphicsImage = new System.Windows.Forms.ToolStripMenuItem();
+            statusButton_paletteImport = new System.Windows.Forms.ToolStripMenuItem();
+            button_importPaletteRaw = new System.Windows.Forms.ToolStripMenuItem();
+            button_importPaletteTLP = new System.Windows.Forms.ToolStripMenuItem();
+            button_importPaletteYYCHR = new System.Windows.Forms.ToolStripMenuItem();
             statusButton_export = new System.Windows.Forms.ToolStripDropDownButton();
-            graphicsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            rawToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            statusButton_graphicsExport = new System.Windows.Forms.ToolStripMenuItem();
+            button_exportGraphicsRaw = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            imageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            button_exportGraphicsImage = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_pixelFormat = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_4bitIndexed = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_24bitRGB = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_32bitARGB = new System.Windows.Forms.ToolStripMenuItem();
-            paletteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            statusButton_paletteExport = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_palExport_raw = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_palExport_tlp = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_palExport_yychr = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +83,7 @@
             button_toolSelect = new System.Windows.Forms.ToolStripButton();
             button_toolPen = new System.Windows.Forms.ToolStripButton();
             button_toolFill = new System.Windows.Forms.ToolStripButton();
+            button_toolShape = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             button_flipH = new System.Windows.Forms.ToolStripButton();
             button_flipV = new System.Windows.Forms.ToolStripButton();
@@ -313,13 +314,13 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(483, 17);
+            spring.Size = new System.Drawing.Size(452, 17);
             spring.Spring = true;
             // 
             // statusButton_import
             // 
             statusButton_import.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            statusButton_import.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { graphicsToolStripMenuItem, paletteToolStripMenuItem });
+            statusButton_import.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { statusButton_graphicsImport, statusButton_paletteImport });
             statusButton_import.Image = (System.Drawing.Image)resources.GetObject("statusButton_import.Image");
             statusButton_import.ImageTransparentColor = System.Drawing.Color.Magenta;
             statusButton_import.Name = "statusButton_import";
@@ -327,54 +328,54 @@
             statusButton_import.Size = new System.Drawing.Size(47, 20);
             statusButton_import.Text = "Import";
             // 
-            // graphicsToolStripMenuItem
+            // statusButton_graphicsImport
             // 
-            graphicsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { rawToolStripMenuItem, imageToolStripMenuItem });
-            graphicsToolStripMenuItem.Name = "graphicsToolStripMenuItem";
-            graphicsToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            graphicsToolStripMenuItem.Text = "Graphics";
+            statusButton_graphicsImport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_importGraphicsRaw, button_importGraphicsImage });
+            statusButton_graphicsImport.Name = "statusButton_graphicsImport";
+            statusButton_graphicsImport.Size = new System.Drawing.Size(120, 22);
+            statusButton_graphicsImport.Text = "Graphics";
             // 
-            // rawToolStripMenuItem
+            // button_importGraphicsRaw
             // 
-            rawToolStripMenuItem.Name = "rawToolStripMenuItem";
-            rawToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            rawToolStripMenuItem.Text = "Raw...";
+            button_importGraphicsRaw.Name = "button_importGraphicsRaw";
+            button_importGraphicsRaw.Size = new System.Drawing.Size(116, 22);
+            button_importGraphicsRaw.Text = "Raw...";
             // 
-            // imageToolStripMenuItem
+            // button_importGraphicsImage
             // 
-            imageToolStripMenuItem.Name = "imageToolStripMenuItem";
-            imageToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            imageToolStripMenuItem.Text = "Image...";
+            button_importGraphicsImage.Name = "button_importGraphicsImage";
+            button_importGraphicsImage.Size = new System.Drawing.Size(116, 22);
+            button_importGraphicsImage.Text = "Image...";
             // 
-            // paletteToolStripMenuItem
+            // statusButton_paletteImport
             // 
-            paletteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { rawToolStripMenuItem1, tileLayerProToolStripMenuItem, yYCHRToolStripMenuItem });
-            paletteToolStripMenuItem.Name = "paletteToolStripMenuItem";
-            paletteToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            paletteToolStripMenuItem.Text = "Palette";
+            statusButton_paletteImport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_importPaletteRaw, button_importPaletteTLP, button_importPaletteYYCHR });
+            statusButton_paletteImport.Name = "statusButton_paletteImport";
+            statusButton_paletteImport.Size = new System.Drawing.Size(120, 22);
+            statusButton_paletteImport.Text = "Palette";
             // 
-            // rawToolStripMenuItem1
+            // button_importPaletteRaw
             // 
-            rawToolStripMenuItem1.Name = "rawToolStripMenuItem1";
-            rawToolStripMenuItem1.Size = new System.Drawing.Size(153, 22);
-            rawToolStripMenuItem1.Text = "Raw...";
+            button_importPaletteRaw.Name = "button_importPaletteRaw";
+            button_importPaletteRaw.Size = new System.Drawing.Size(153, 22);
+            button_importPaletteRaw.Text = "Raw...";
             // 
-            // tileLayerProToolStripMenuItem
+            // button_importPaletteTLP
             // 
-            tileLayerProToolStripMenuItem.Name = "tileLayerProToolStripMenuItem";
-            tileLayerProToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            tileLayerProToolStripMenuItem.Text = "Tile Layer Pro...";
+            button_importPaletteTLP.Name = "button_importPaletteTLP";
+            button_importPaletteTLP.Size = new System.Drawing.Size(153, 22);
+            button_importPaletteTLP.Text = "Tile Layer Pro...";
             // 
-            // yYCHRToolStripMenuItem
+            // button_importPaletteYYCHR
             // 
-            yYCHRToolStripMenuItem.Name = "yYCHRToolStripMenuItem";
-            yYCHRToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            yYCHRToolStripMenuItem.Text = "YY-CHR...";
+            button_importPaletteYYCHR.Name = "button_importPaletteYYCHR";
+            button_importPaletteYYCHR.Size = new System.Drawing.Size(153, 22);
+            button_importPaletteYYCHR.Text = "YY-CHR...";
             // 
             // statusButton_export
             // 
             statusButton_export.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            statusButton_export.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { graphicsToolStripMenuItem1, paletteToolStripMenuItem1 });
+            statusButton_export.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { statusButton_graphicsExport, statusButton_paletteExport });
             statusButton_export.Image = (System.Drawing.Image)resources.GetObject("statusButton_export.Image");
             statusButton_export.ImageTransparentColor = System.Drawing.Color.Magenta;
             statusButton_export.Name = "statusButton_export";
@@ -382,29 +383,29 @@
             statusButton_export.Size = new System.Drawing.Size(45, 20);
             statusButton_export.Text = "Export";
             // 
-            // graphicsToolStripMenuItem1
+            // statusButton_graphicsExport
             // 
-            graphicsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { rawToolStripMenuItem2, toolStripSeparator2, imageToolStripMenuItem1, menuItem_pixelFormat });
-            graphicsToolStripMenuItem1.Name = "graphicsToolStripMenuItem1";
-            graphicsToolStripMenuItem1.Size = new System.Drawing.Size(120, 22);
-            graphicsToolStripMenuItem1.Text = "Graphics";
+            statusButton_graphicsExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_exportGraphicsRaw, toolStripSeparator2, button_exportGraphicsImage, menuItem_pixelFormat });
+            statusButton_graphicsExport.Name = "statusButton_graphicsExport";
+            statusButton_graphicsExport.Size = new System.Drawing.Size(120, 22);
+            statusButton_graphicsExport.Text = "Graphics";
             // 
-            // rawToolStripMenuItem2
+            // button_exportGraphicsRaw
             // 
-            rawToolStripMenuItem2.Name = "rawToolStripMenuItem2";
-            rawToolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
-            rawToolStripMenuItem2.Text = "Raw...";
+            button_exportGraphicsRaw.Name = "button_exportGraphicsRaw";
+            button_exportGraphicsRaw.Size = new System.Drawing.Size(140, 22);
+            button_exportGraphicsRaw.Text = "Raw...";
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
             toolStripSeparator2.Size = new System.Drawing.Size(137, 6);
             // 
-            // imageToolStripMenuItem1
+            // button_exportGraphicsImage
             // 
-            imageToolStripMenuItem1.Name = "imageToolStripMenuItem1";
-            imageToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
-            imageToolStripMenuItem1.Text = "Image...";
+            button_exportGraphicsImage.Name = "button_exportGraphicsImage";
+            button_exportGraphicsImage.Size = new System.Drawing.Size(140, 22);
+            button_exportGraphicsImage.Text = "Image...";
             // 
             // menuItem_pixelFormat
             // 
@@ -436,12 +437,12 @@
             menuItem_32bitARGB.Size = new System.Drawing.Size(144, 22);
             menuItem_32bitARGB.Text = "32-bit ARGB";
             // 
-            // paletteToolStripMenuItem1
+            // statusButton_paletteExport
             // 
-            paletteToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_palExport_raw, menuItem_palExport_tlp, menuItem_palExport_yychr });
-            paletteToolStripMenuItem1.Name = "paletteToolStripMenuItem1";
-            paletteToolStripMenuItem1.Size = new System.Drawing.Size(120, 22);
-            paletteToolStripMenuItem1.Text = "Palette";
+            statusButton_paletteExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_palExport_raw, menuItem_palExport_tlp, menuItem_palExport_yychr });
+            statusButton_paletteExport.Name = "statusButton_paletteExport";
+            statusButton_paletteExport.Size = new System.Drawing.Size(120, 22);
+            statusButton_paletteExport.Text = "Palette";
             // 
             // menuItem_palExport_raw
             // 
@@ -470,6 +471,7 @@
             button_apply.ShowDropDownArrow = false;
             button_apply.Size = new System.Drawing.Size(58, 20);
             button_apply.Text = "Apply";
+            button_apply.Click += button_apply_Click;
             // 
             // groupBox_image
             // 
@@ -556,7 +558,7 @@
             // toolStrip_gfx
             // 
             toolStrip_gfx.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator6, button_toolSelect, button_toolPen, button_toolFill, toolStripSeparator1, button_flipH, button_flipV, toolStripSeparator3, button_grid, toolStripSeparator4, button_imageZoomIn, button_imageZoomOut, label_imageZoom });
+            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator6, button_toolSelect, button_toolPen, button_toolFill, button_toolShape, toolStripSeparator1, button_flipH, button_flipV, toolStripSeparator3, button_grid, toolStripSeparator4, button_imageZoomIn, button_imageZoomOut, label_imageZoom });
             toolStrip_gfx.Location = new System.Drawing.Point(3, 19);
             toolStrip_gfx.Name = "toolStrip_gfx";
             toolStrip_gfx.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -599,6 +601,7 @@
             button_toolSelect.Name = "button_toolSelect";
             button_toolSelect.Size = new System.Drawing.Size(23, 22);
             button_toolSelect.Text = "Select";
+            button_toolSelect.Click += button_toolSelect_Click;
             // 
             // button_toolPen
             // 
@@ -608,6 +611,7 @@
             button_toolPen.Name = "button_toolPen";
             button_toolPen.Size = new System.Drawing.Size(23, 22);
             button_toolPen.Text = "Pen";
+            button_toolPen.Click += button_toolPen_Click;
             // 
             // button_toolFill
             // 
@@ -617,6 +621,17 @@
             button_toolFill.Name = "button_toolFill";
             button_toolFill.Size = new System.Drawing.Size(23, 22);
             button_toolFill.Text = "Fill";
+            button_toolFill.Click += button_toolFill_Click;
+            // 
+            // button_toolShape
+            // 
+            button_toolShape.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_toolShape.Image = Properties.Resources.shape_square;
+            button_toolShape.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_toolShape.Name = "button_toolShape";
+            button_toolShape.Size = new System.Drawing.Size(23, 22);
+            button_toolShape.Text = "Shape";
+            button_toolShape.Click += button_toolShape_Click;
             // 
             // toolStripSeparator1
             // 
@@ -708,6 +723,7 @@
             Controls.Add(panel_input);
             Controls.Add(statusStrip_main);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             Name = "FormGraphicsNew";
             Text = "Graphics Editor";
             groupBox_imageControl.ResumeLayout(false);
@@ -746,19 +762,19 @@
         private System.Windows.Forms.ToolStripStatusLabel statusLabel_changes;
         private System.Windows.Forms.ToolStripStatusLabel spring;
         private System.Windows.Forms.ToolStripDropDownButton statusButton_import;
-        private System.Windows.Forms.ToolStripMenuItem graphicsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rawToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem imageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem paletteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rawToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem tileLayerProToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem yYCHRToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem statusButton_graphicsImport;
+        private System.Windows.Forms.ToolStripMenuItem button_importGraphicsRaw;
+        private System.Windows.Forms.ToolStripMenuItem button_importGraphicsImage;
+        private System.Windows.Forms.ToolStripMenuItem statusButton_paletteImport;
+        private System.Windows.Forms.ToolStripMenuItem button_importPaletteRaw;
+        private System.Windows.Forms.ToolStripMenuItem button_importPaletteTLP;
+        private System.Windows.Forms.ToolStripMenuItem button_importPaletteYYCHR;
         private System.Windows.Forms.ToolStripDropDownButton statusButton_export;
-        private System.Windows.Forms.ToolStripMenuItem graphicsToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem rawToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem statusButton_graphicsExport;
+        private System.Windows.Forms.ToolStripMenuItem button_exportGraphicsRaw;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem imageToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem paletteToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem button_exportGraphicsImage;
+        private System.Windows.Forms.ToolStripMenuItem statusButton_paletteExport;
         private System.Windows.Forms.ToolStripDropDownButton button_apply;
         private System.Windows.Forms.ToolStripMenuItem menuItem_pixelFormat;
         private System.Windows.Forms.ToolStripMenuItem menuItem_4bitIndexed;
@@ -795,5 +811,6 @@
         private System.Windows.Forms.ToolStripSplitButton button_undo;
         private System.Windows.Forms.ToolStripSplitButton button_redo;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripButton button_toolShape;
     }
 }

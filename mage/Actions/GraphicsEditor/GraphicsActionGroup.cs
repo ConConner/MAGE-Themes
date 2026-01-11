@@ -26,8 +26,7 @@ internal class GraphicsActionGroup : GraphicsAction
     {
         get
         {
-            string text = actions[0].ActionText;
-            if (actions.Count > 1) text += $" ({actions.Count})";
+            string text = actions[actions.Count - 1].ActionText;
             return text;
         }
     }

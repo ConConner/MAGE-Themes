@@ -176,6 +176,7 @@ public partial class TileDisplay : Control
         Rectangle r = Rectangle.Union(drawable.Rectangle, drawable.OldRectangle);
         r = new Rectangle(r.X << zoom, r.Y << zoom, r.Width << zoom, r.Height << zoom);
         r.Inflate(drawable.Indent << zoom, drawable.Indent << zoom);
+        r.Inflate(1, 1);
         Invalidate(r);
     }
 

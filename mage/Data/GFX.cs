@@ -312,7 +312,7 @@ namespace mage
             int byteOffsetInTile = (localY * 4) + (localX / 2);
             int finalIndex = tileStartOffset + byteOffsetInTile;
 
-            if (finalIndex > data.Length) return -1;
+            if (finalIndex >= data.Length) return -1;
 
             // Extract Nibble
             byte b = data[finalIndex];
@@ -338,7 +338,7 @@ namespace mage
             int byteOffsetInTile = (localY * 4) + (localX / 2);
             int finalIndex = tileStartOffset + byteOffsetInTile;
 
-            if (finalIndex > data.Length) return;
+            if (finalIndex >= data.Length) return;
 
             // Set Nibble
             byte b = data[finalIndex];
