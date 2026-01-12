@@ -100,7 +100,7 @@ public partial class FormGraphicsNew : Form
                     break;
                 case Tool.Shape:
                     button_toolShape.Checked = true;
-                    panel_shapeSettings.Visible = true;
+                    //panel_shapeSettings.Visible = true;
                     break;
                 case Tool.Eyedropper:
                     button_eyeDropper.Checked = true;
@@ -125,7 +125,6 @@ public partial class FormGraphicsNew : Form
         get;
         set
         {
-            if (field == value) return;
             field = value;
             colorDisplay.ColorLeft = loadedPalette.GetOpaqueColor(0, value);
         }
@@ -135,7 +134,6 @@ public partial class FormGraphicsNew : Form
         get => field;
         set
         {
-            if (field == value) return;
             field = value;
             colorDisplay.ColorRight = loadedPalette.GetOpaqueColor(0, value);
         }
@@ -185,6 +183,8 @@ public partial class FormGraphicsNew : Form
 
         this.main = main;
 
+        Status = new Status(statusLabel_changes, button_apply);
+
         init = true;
         textBox_imageOffset.Text = Hex.ToString(gfxOffset);
         textBox_palOffset.Text = Hex.ToString(palOffset);
@@ -219,7 +219,6 @@ public partial class FormGraphicsNew : Form
         SelectedTool = Tool.Pen;
 
         LoadData();
-        Status = new Status(statusLabel_changes, button_apply);
 
         ColorLeft = 1;
         ColorRight = 0;
@@ -230,6 +229,7 @@ public partial class FormGraphicsNew : Form
 
     private void LoadData()
     {
+        if (Status.UnsavedChanges && !CheckUnsaved()) return;
         if (!LoadPalette(0)) return;
         if (!LoadNewGFX()) return;
         DrawPalette();
@@ -323,6 +323,52 @@ public partial class FormGraphicsNew : Form
     private void button_load_Click(object sender, EventArgs e) => LoadData();
 
     private void button_apply_Click(object sender, EventArgs e) => Save();
+
+    private void FormGraphicsNew_KeyDown(object sender, KeyEventArgs e)
+    {
+        switch (e.KeyCode)
+        {
+            case Keys.B:
+                button_toolPen_Click(this, e);
+                break;
+
+            case Keys.S:
+                if (ModifierKeys == Keys.Control)
+                {
+                    Save();
+                    break;
+                }
+                button_toolShape_Click(this, e);
+                break;
+
+            case Keys.C:
+                button_eyeDropper_Click(this, e);
+                break;
+
+            case Keys.M:
+                button_toolSelect_Click(this, e);
+                break;
+
+            case Keys.F:
+                button_toolFill_Click(this, e);
+                break;
+
+            case Keys.Z:
+                if (ModifierKeys == (Keys.Control | Keys.Shift))
+                {
+                    if (!UndoRedo.CanRedo) break;
+                    Redo();
+                    break;
+                }
+                else if (ModifierKeys == Keys.Control)
+                {
+                    if (!UndoRedo.CanUndo) break;
+                    Undo();
+                    break;
+                }
+                break;
+        }
+    }
     #endregion
 
     #region Tools
@@ -391,6 +437,33 @@ public partial class FormGraphicsNew : Form
         Status.ChangeMade();
     }
 
+    private void Undo()
+    {
+        UndoRedo.Undo();
+        setUndoRedoButtons();
+    }
+
+    private void Redo()
+    {
+        UndoRedo.Redo();
+        setUndoRedoButtons();
+    }
+
+    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GraphicsAction> stack)
+    {
+        int count = Math.Min(16, stack.Count);
+        int lastIndex = stack.Count - 1;
+
+        button.DropDownItems.Clear();
+        for (int i = 0; i < count; i++)
+        {
+            ToolStripMenuItem item = new ToolStripMenuItem();
+            item.Tag = i + 1;
+            item.Text = stack[lastIndex - i].ActionText;
+            button.DropDownItems.Add(item);
+        }
+    }
+
     private void setUndoRedoButtons()
     {
         button_undo.Enabled = UndoRedo.CanUndo;
@@ -398,16 +471,24 @@ public partial class FormGraphicsNew : Form
         DrawGFX();
     }
 
-    private void button_undo_ButtonClick(object sender, EventArgs e)
+    private void button_undo_ButtonClick(object sender, EventArgs e) => Undo();
+
+    private void button_redo_ButtonClick(object sender, EventArgs e) => Redo();
+
+    private void button_undo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_undo, UndoRedo.UndoStack);
+
+    private void button_redo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_redo, UndoRedo.RedoStack);
+
+    private void button_undo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
     {
-        UndoRedo.Undo();
-        setUndoRedoButtons();
+        int num = (int)e.ClickedItem.Tag;
+        for (int i = 0; i < num; i++) Undo();
     }
 
-    private void button_redo_ButtonClick(object sender, EventArgs e)
+    private void button_redo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
     {
-        UndoRedo.Redo();
-        setUndoRedoButtons();
+        int num = (int)e.ClickedItem.Tag;
+        for (int i = 0; i < num; i++) Redo();
     }
     #endregion
 
@@ -512,6 +593,7 @@ public partial class FormGraphicsNew : Form
         bool neighbouring = FillToolRestrictions.HasFlag(FillRestrictions.Neighbouring);
         RunFloodFill(e.PixelPosition, FillDictionary, oldPalIndex, newPalIndex, neighbouring);
 
+        if (FillDictionary.Count == 0) return;
         var fillAction = new FillAreaAction(loadedGFX, FillDictionary);
         fillAction.Do();
         AddAction(fillAction);
@@ -687,15 +769,15 @@ public partial class FormGraphicsNew : Form
             if (diff != 0)
             {
                 offset += diff;
+                init = true;
                 textBox_palOffset.Text = Hex.ToString(offset);
+                init = false;
             }
 
             loadedPalette = new Palette(ROM.Stream, offset, 1);
         }
         catch (Exception ex)
         {
-            MessageBox.Show("The offset entered was not valid.\n\n" + ex.GetType().ToString() + '\n'
-                    + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
         }
         return true;
@@ -704,6 +786,18 @@ public partial class FormGraphicsNew : Form
     private void DrawPalette()
     {
         tileDisplay_palette.TileImage = loadedPalette.Draw(16, 0, 1, gridColorArgb: 0);
+        ColorLeft = ColorLeft;
+        ColorRight = ColorRight;
+    }
+
+    private void textBox_palOffset_TextChanged(object sender, EventArgs e)
+    {
+        if (init) return;
+        if (LoadPalette(0))
+        {
+            DrawPalette();
+            DrawGFX();
+        }
     }
 
     private void TileDisplay_palette_TileMouseDown(object? sender, TileDisplay.TileDisplayArgs e)

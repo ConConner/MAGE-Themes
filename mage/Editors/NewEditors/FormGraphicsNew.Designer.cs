@@ -178,6 +178,7 @@
             textBox_palOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_palOffset.ValueBox = true;
             textBox_palOffset.WordWrap = true;
+            textBox_palOffset.TextChanged += textBox_palOffset_TextChanged;
             // 
             // label_height
             // 
@@ -630,6 +631,8 @@
             button_undo.Size = new System.Drawing.Size(32, 22);
             button_undo.Text = "Undo";
             button_undo.ButtonClick += button_undo_ButtonClick;
+            button_undo.DropDownOpening += button_undo_DropDownOpening;
+            button_undo.DropDownItemClicked += button_undo_DropDownItemClicked;
             // 
             // button_redo
             // 
@@ -641,6 +644,8 @@
             button_redo.Size = new System.Drawing.Size(32, 22);
             button_redo.Text = "Redo";
             button_redo.ButtonClick += button_redo_ButtonClick;
+            button_redo.DropDownOpening += button_redo_DropDownOpening;
+            button_redo.DropDownItemClicked += button_redo_DropDownItemClicked;
             // 
             // toolStripSeparator6
             // 
@@ -701,6 +706,7 @@
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            toolStripSeparator1.Visible = false;
             // 
             // button_flipH
             // 
@@ -711,6 +717,7 @@
             button_flipH.Name = "button_flipH";
             button_flipH.Size = new System.Drawing.Size(23, 22);
             button_flipH.Text = "Flip Horizontally (H, X)";
+            button_flipH.Visible = false;
             // 
             // button_flipV
             // 
@@ -721,6 +728,7 @@
             button_flipV.Name = "button_flipV";
             button_flipV.Size = new System.Drawing.Size(23, 22);
             button_flipV.Text = "Flip Vertically (V, Y)";
+            button_flipV.Visible = false;
             // 
             // toolStripSeparator3
             // 
@@ -808,6 +816,7 @@
             KeyPreview = true;
             Name = "FormGraphicsNew";
             Text = "Graphics Editor";
+            KeyDown += FormGraphicsNew_KeyDown;
             groupBox_imageControl.ResumeLayout(false);
             groupBox_imageControl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_height).EndInit();
