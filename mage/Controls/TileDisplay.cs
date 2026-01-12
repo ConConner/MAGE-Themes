@@ -50,8 +50,26 @@ public partial class TileDisplay : Control
         }
     }
     private bool showGrid = false;
-    public int GridCellWidth { get; set; } = 16;
-    public int GridCellHeight { get; set; } = 16;
+    public int GridCellWidth
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            Invalidate();
+        }
+    } = 16;
+    public int GridCellHeight
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            Invalidate();
+        }
+    } = 16;
 
     /// <summary>
     /// This is a bad fix for the replacement of the OAM view

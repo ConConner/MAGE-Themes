@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Drawing.Text;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
@@ -14,24 +15,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace mage.Editors.NewEditors;
 
 public partial class FormGraphicsNew : Form
 {
-    private struct ToolSettings
-    {
-        public ToolSettings() { }
-
-        public Tool SelectedTool;
-        public int BrushSize = 1;
-        public int GridWidth = 8;
-        public int GridHeight = 8;
-        public int ColorLeftIndex = -1;
-        public int ColorRightIndex = -1;
-        public Shape Shape = Shape.Rectangle;
-    }
-
     private enum Tool
     {
         Select,
@@ -48,13 +37,19 @@ public partial class FormGraphicsNew : Form
         Line,
     }
 
+    [Flags]
+    private enum FillRestrictions
+    {
+        Neighbouring = 1,
+        Grid = 2
+    }
+
     private bool init = false;
 
     // fields
     private FormMain main;
     private GFX loadedGFX;
     private Palette loadedPalette;
-    private ToolSettings settings = new ToolSettings();
     private GraphicsUndoRedo UndoRedo = new GraphicsUndoRedo();
 
     private TileDisplay tileDisplay_palette;
@@ -67,6 +62,8 @@ public partial class FormGraphicsNew : Form
 
     private Status Status;
 
+    private FillRestrictions FillToolRestrictions = FillRestrictions.Neighbouring;
+
     // Drawables
     private static float[] DashPattern = new float[] { 2, 3 };
     private Pen DottedPenWhite = new Pen(Color.White, 1) { DashPattern = DashPattern };
@@ -76,14 +73,17 @@ public partial class FormGraphicsNew : Form
     private Pen ShapePen = new Pen(Color.Aqua, 1) { DashPattern = DashPattern };
     private Drawable ShapeDrawable;
 
+    private Pen GridPen = new Pen(Color.White, 1);
+    private Pen PixelGridPen = new Pen(Color.Gray, 1);
+
     // Properties
     private Tool SelectedTool
     {
-        get => settings.SelectedTool;
+        get;
         set
         {
-            if (settings.SelectedTool == value) return;
-            settings.SelectedTool = value;
+            if (field == value) return;
+            field = value;
 
             UntoggleAllTools();
             switch (value)
@@ -96,31 +96,47 @@ public partial class FormGraphicsNew : Form
                     break;
                 case Tool.Fill:
                     button_toolFill.Checked = true;
+                    panel_fillSettings.Visible = true;
                     break;
                 case Tool.Shape:
                     button_toolShape.Checked = true;
+                    panel_shapeSettings.Visible = true;
+                    break;
+                case Tool.Eyedropper:
+                    button_eyeDropper.Checked = true;
                     break;
             }
+
+            FinishToolAction();
+        }
+    }
+    private Shape SelectedShape
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
         }
     }
 
     private int ColorLeft
     {
-        get => settings.ColorLeftIndex;
+        get;
         set
         {
-            if (settings.ColorLeftIndex == value) return;
-            settings.ColorLeftIndex = value;
+            if (field == value) return;
+            field = value;
             colorDisplay.ColorLeft = loadedPalette.GetOpaqueColor(0, value);
         }
     }
     private int ColorRight
     {
-        get => settings.ColorRightIndex;
+        get => field;
         set
         {
-            if (settings.ColorRightIndex == value) return;
-            settings.ColorRightIndex = value;
+            if (field == value) return;
+            field = value;
             colorDisplay.ColorRight = loadedPalette.GetOpaqueColor(0, value);
         }
     }
@@ -136,7 +152,30 @@ public partial class FormGraphicsNew : Form
         }
     }
 
+    private int GridSize
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            tileDisplay_gfx.GridCellHeight = value;
+            tileDisplay_gfx.GridCellWidth = value;
+        }
+    } = 8;
+    private bool ShowGrid
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            HandleShowGrid();
+        }
+    }
 
+
+    #region Constructor
     public FormGraphicsNew(FormMain main, int gfxOffset, int width, int height, int palOffset)
     {
         InitializeComponent();
@@ -184,7 +223,10 @@ public partial class FormGraphicsNew : Form
 
         ColorLeft = 1;
         ColorRight = 0;
+        updateZoom(1);
     }
+    #endregion
+
 
     private void LoadData()
     {
@@ -219,6 +261,19 @@ public partial class FormGraphicsNew : Form
         }
     }
 
+    /// <summary>
+    /// Prompts the user if they want to save the current changes or cancel.
+    /// </summary>
+    /// <returns>False if cancelled. True for other options. Saves if yes is clicked</returns>
+    private bool CheckUnsaved()
+    {
+        DialogResult result = MessageBox.Show("Do you want to save changes to Graphics?",
+            "Unsaved Changes", MessageBoxButtons.YesNoCancel);
+        if (result == DialogResult.Cancel) return false;
+        if (result == DialogResult.Yes) Save();
+        return true;
+    }
+
     private void AddPaletteDisplay()
     {
         tileDisplay_palette = new() { TileSize = 17 }; // Displays palette
@@ -245,6 +300,25 @@ public partial class FormGraphicsNew : Form
         return new Rectangle(x, y, width, height);
     }
 
+    private bool IsInSelection(Point p)
+    {
+        // Return true if no selection, since everything is "in" the selection
+        if (!Selection.Visible) return true;
+        return Selection.Rectangle.Contains(p);
+    }
+
+    private void HandleShowGrid()
+    {
+        if (!ShowGrid)
+        {
+            tileDisplay_gfx.ShowGrid = false;
+            return;
+        }
+
+        if (GridSize == 1 && tileDisplay_gfx.Zoom <= 1) tileDisplay_gfx.ShowGrid = false;
+        else tileDisplay_gfx.ShowGrid = true;
+    }
+
     #region General Events
     private void button_load_Click(object sender, EventArgs e) => LoadData();
 
@@ -256,6 +330,7 @@ public partial class FormGraphicsNew : Form
     private void button_toolPen_Click(object sender, EventArgs e) => SelectedTool = Tool.Pen;
     private void button_toolFill_Click(object sender, EventArgs e) => SelectedTool = Tool.Fill;
     private void button_toolShape_Click(object sender, EventArgs e) => SelectedTool = Tool.Shape;
+    private void button_eyeDropper_Click(object sender, EventArgs e) => SelectedTool = Tool.Eyedropper;
 
     private void UntoggleAllTools()
     {
@@ -263,6 +338,47 @@ public partial class FormGraphicsNew : Form
         button_toolPen.Checked = false;
         button_toolFill.Checked = false;
         button_toolShape.Checked = false;
+        button_eyeDropper.Checked = false;
+
+        panel_fillSettings.Visible = false;
+        panel_shapeSettings.Visible = false;
+    }
+
+    // Tool Settings
+    private void checkBox_neighbouring_CheckedChanged(object sender, EventArgs e) => SetFillFlags();
+    private void checkBox_gridFill_CheckedChanged(object sender, EventArgs e) => SetFillFlags();
+
+    private void SetFillFlags()
+    {
+        FillToolRestrictions = 0;
+        if (checkBox_neighbouring.Checked) FillToolRestrictions |= FillRestrictions.Neighbouring;
+        if (checkBox_gridFill.Checked) FillToolRestrictions |= FillRestrictions.Grid;
+    }
+    #endregion
+
+    #region Toolbar (other)
+    private void button_grid_ButtonClick(object sender, EventArgs e)
+    {
+        ShowGrid = !ShowGrid;
+        HandleShowGrid();
+    }
+
+    private void button_pixelGrid_Click(object sender, EventArgs e)
+    {
+        button_tileGrid.Checked = false;
+        button_pixelGrid.Checked = true;
+        GridSize = 1;
+        tileDisplay_gfx.GridPen = PixelGridPen;
+        HandleShowGrid();
+    }
+
+    private void button_tileGrid_Click(object sender, EventArgs e)
+    {
+        button_pixelGrid.Checked = false;
+        button_tileGrid.Checked = true;
+        GridSize = 8;
+        tileDisplay_gfx.GridPen = GridPen;
+        HandleShowGrid();
     }
     #endregion
 
@@ -351,6 +467,7 @@ public partial class FormGraphicsNew : Form
 
     private void DoDrawPixel(Point p, int palIndex)
     {
+        if (!IsInSelection(p)) return;
         var drawAction = new EditPixelAction(loadedGFX, p, palIndex);
         drawAction.Do();
         if (latestActionGroup != null) latestActionGroup.AddAction(drawAction);
@@ -362,36 +479,127 @@ public partial class FormGraphicsNew : Form
         numericUpDown_height.Enabled = !checkBox_compressed.Checked;
     }
 
+    // Editing functions
+    private void PickColor(TileDisplay.TileDisplayArgs e)
+    {
+        if (e.Button == MouseButtons.Left) ColorLeft = loadedGFX.GetPixel(e.PixelPosition);
+        if (e.Button == MouseButtons.Right) ColorRight = loadedGFX.GetPixel(e.PixelPosition);
+    }
+
+    private void HandlePen(TileDisplay.TileDisplayArgs e)
+    {
+        if (e.Button == MouseButtons.Left) DoDrawPixel(e.PixelPosition, ColorLeft);
+        if (e.Button == MouseButtons.Right) DoDrawPixel(e.PixelPosition, ColorRight);
+    }
+
+    private void FinishToolAction()
+    {
+        // Finalise Action Group
+        if (latestActionGroup != null && latestActionGroup.ActionCount > 0) AddAction(latestActionGroup);
+        latestActionGroup = null;
+
+        // Clear variables
+        SelectionPivot = null;
+    }
+
+    private void HandleFill(TileDisplay.TileDisplayArgs e)
+    {
+        var FillDictionary = new Dictionary<Point, int>();
+        int oldPalIndex = loadedGFX.GetPixel(e.PixelPosition);
+        int newPalIndex = e.Button == MouseButtons.Left ? ColorLeft : ColorRight;
+        if (oldPalIndex == newPalIndex) return;
+
+        bool neighbouring = FillToolRestrictions.HasFlag(FillRestrictions.Neighbouring);
+        RunFloodFill(e.PixelPosition, FillDictionary, oldPalIndex, newPalIndex, neighbouring);
+
+        var fillAction = new FillAreaAction(loadedGFX, FillDictionary);
+        fillAction.Do();
+        AddAction(fillAction);
+        DrawGFX();
+    }
+
+    private bool IsFillablePixel(Point p, Dictionary<Point, int> alreadyFilled, int oldPalIndex, Point tile, bool neighbouring)
+    {
+        if (p.X < 0 || p.Y < 0 || p.X >= loadedGFX.width * 8 || p.Y >= loadedGFX.height * 8) return false;
+        if (!IsInSelection(p)) return false;
+        if (alreadyFilled.ContainsKey(p)) return false;
+
+        int currentIndex = loadedGFX.GetPixel(p);
+        if (currentIndex == -1) return false;
+        if (neighbouring && currentIndex != oldPalIndex) return false;
+
+        if (FillToolRestrictions.HasFlag(FillRestrictions.Grid) && ShowGrid && GridSize == 8)
+            if (p.X / 8 != tile.X || p.Y / 8 != tile.Y) return false;
+        return true;
+    }
+
+    private void RunFloodFill(Point startPixel, Dictionary<Point, int> alreadyFilled, int oldPalIndex, int newPalIndex, bool neighbouring = true)
+    {
+        Queue<Point> pixels = new Queue<Point>();
+        pixels.Enqueue(startPixel);
+        Point tile = new(startPixel.X / 8, startPixel.Y / 8);
+
+        while (pixels.Count > 0)
+        {
+            Point p = pixels.Dequeue();
+
+            if (!IsFillablePixel(p, alreadyFilled, oldPalIndex, tile, neighbouring)) continue;
+
+            // This is all code for a stupid workaround with global fill
+            int oldColor = loadedGFX.GetPixel(p);
+            if (loadedGFX.GetPixel(p) == oldPalIndex) alreadyFilled[p] = newPalIndex;
+            else alreadyFilled[p] = oldColor;
+
+            pixels.Enqueue(new Point(p.X + 1, p.Y));
+            pixels.Enqueue(new Point(p.X - 1, p.Y));
+            pixels.Enqueue(new Point(p.X, p.Y + 1));
+            pixels.Enqueue(new Point(p.X, p.Y - 1));
+        }
+    }
+
+
     // Editing Events
     private void tileDisplay_gfx_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
+        if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
+
+        // Eyedropper quick pick
+        if (ModifierKeys == Keys.Alt)
+        {
+            PickColor(e);
+            return;
+        }
+
         switch (SelectedTool)
         {
             case Tool.Pen:
-                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
 
                 // Place Pixels
                 latestActionGroup = new GraphicsActionGroup();
-                if (e.Button == MouseButtons.Left) DoDrawPixel(e.PixelPosition, ColorLeft);
-                if (e.Button == MouseButtons.Right) DoDrawPixel(e.PixelPosition, ColorRight);
+                HandlePen(e);
                 break;
 
             case Tool.Select:
-                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
 
                 SelectionPivot = e.PixelPosition;
-                Selection.Visible = true;
+                if (Selection.Visible) Selection.Visible = false; // Deselct Selection
+                else Selection.Visible = true;
                 Selection.Rectangle = new Rectangle(e.PixelPosition, new Size(1, 1));
                 break;
+
             case Tool.Fill:
+                HandleFill(e);
                 break;
 
             case Tool.Shape:
-                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
 
                 SelectionPivot = e.PixelPosition;
                 ShapeDrawable.Visible = true;
                 ShapeDrawable.Rectangle = new Rectangle(e.PixelPosition, new Size(1, 1));
+                break;
+            case Tool.Eyedropper:
+
+                PickColor(e);
                 break;
         }
     }
@@ -402,29 +610,28 @@ public partial class FormGraphicsNew : Form
         if (e.PixelPosition == LastPixel) return;
         LastPixel = e.PixelPosition;
 
+        if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
+        if (ModifierKeys == Keys.Alt) return;
+
         switch (SelectedTool)
         {
             case Tool.Pen:
-                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
-
-                // Place Pixels
-                if (e.Button == MouseButtons.Left) DoDrawPixel(e.PixelPosition, ColorLeft);
-                if (e.Button == MouseButtons.Right) DoDrawPixel(e.PixelPosition, ColorRight);
+                HandlePen(e);
                 break;
 
             case Tool.Select:
-                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
-                if (SelectionPivot == null) break;
 
+                if (SelectionPivot == null) break;
+                Selection.Visible = true;
                 Selection.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition);
                 break;
+
             case Tool.Fill:
                 break;
 
             case Tool.Shape:
-                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) break;
-                if (SelectionPivot == null) break;
 
+                if (SelectionPivot == null) break;
                 ShapeDrawable.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition);
                 break;
         }
@@ -443,11 +650,17 @@ public partial class FormGraphicsNew : Form
             case Tool.Shape:
                 ShapeDrawable.Visible = false;
 
-                switch (settings.Shape)
+                switch (SelectedShape)
                 {
                     case Shape.Rectangle:
-                        int _color = e.Button == MouseButtons.Left ? settings.ColorLeftIndex : settings.ColorRightIndex;
-                        var rectangleAction = new DrawAreaAction(loadedGFX, ShapeDrawable.Rectangle, _color);
+                        int _color = e.Button == MouseButtons.Left ? ColorLeft : ColorRight;
+
+                        // Get intersecting area with selection
+                        Rectangle area = ShapeDrawable.Rectangle;
+                        if (Selection.Visible) area = Rectangle.Intersect(area, Selection.Rectangle);
+                        if (area.IsEmpty) break;
+
+                        var rectangleAction = new DrawAreaAction(loadedGFX, area, _color);
                         AddAction(rectangleAction);
                         rectangleAction.Do();
                         DrawGFX();
@@ -461,12 +674,7 @@ public partial class FormGraphicsNew : Form
                 break;
         }
 
-        // Finalise Action Group
-        if (latestActionGroup != null) AddAction(latestActionGroup);
-        latestActionGroup = null;
-
-        // Clear variables
-        SelectionPivot = null;
+        FinishToolAction();
     }
     #endregion
 
@@ -541,6 +749,9 @@ public partial class FormGraphicsNew : Form
         button_imageZoomIn.Enabled = tileDisplay_gfx.Zoom < maxZoom;
         button_imageZoomOut.Enabled = tileDisplay_gfx.Zoom > 0;
         label_imageZoom.Text = $"{1 << tileDisplay_gfx.Zoom}00%";
+
+        // Grid logic
+        HandleShowGrid();
     }
     #endregion
 }

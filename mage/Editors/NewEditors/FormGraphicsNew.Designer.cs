@@ -76,6 +76,10 @@
             toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             button_decreasePalette = new System.Windows.Forms.ToolStripButton();
             button_increasePalette = new System.Windows.Forms.ToolStripButton();
+            panel_shapeSettings = new System.Windows.Forms.Panel();
+            panel_fillSettings = new System.Windows.Forms.Panel();
+            checkBox_gridFill = new System.Windows.Forms.CheckBox();
+            checkBox_neighbouring = new System.Windows.Forms.CheckBox();
             toolStrip_gfx = new System.Windows.Forms.ToolStrip();
             button_undo = new System.Windows.Forms.ToolStripSplitButton();
             button_redo = new System.Windows.Forms.ToolStripSplitButton();
@@ -84,11 +88,14 @@
             button_toolPen = new System.Windows.Forms.ToolStripButton();
             button_toolFill = new System.Windows.Forms.ToolStripButton();
             button_toolShape = new System.Windows.Forms.ToolStripButton();
+            button_eyeDropper = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             button_flipH = new System.Windows.Forms.ToolStripButton();
             button_flipV = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             button_grid = new System.Windows.Forms.ToolStripSplitButton();
+            button_tileGrid = new System.Windows.Forms.ToolStripMenuItem();
+            button_pixelGrid = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             button_imageZoomIn = new System.Windows.Forms.ToolStripButton();
             button_imageZoomOut = new System.Windows.Forms.ToolStripButton();
@@ -103,6 +110,7 @@
             groupBox_image.SuspendLayout();
             panel_imageDisplay.SuspendLayout();
             toolStrip_palette.SuspendLayout();
+            panel_fillSettings.SuspendLayout();
             toolStrip_gfx.SuspendLayout();
             panel_imageContainer.SuspendLayout();
             SuspendLayout();
@@ -314,7 +322,7 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(452, 17);
+            spring.Size = new System.Drawing.Size(483, 17);
             spring.Spring = true;
             // 
             // statusButton_import
@@ -477,6 +485,8 @@
             // 
             groupBox_image.Controls.Add(panel_imageDisplay);
             groupBox_image.Controls.Add(toolStrip_palette);
+            groupBox_image.Controls.Add(panel_shapeSettings);
+            groupBox_image.Controls.Add(panel_fillSettings);
             groupBox_image.Controls.Add(toolStrip_gfx);
             groupBox_image.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_image.Location = new System.Drawing.Point(3, 3);
@@ -491,9 +501,9 @@
             panel_imageDisplay.AutoScroll = true;
             panel_imageDisplay.Controls.Add(tileDisplay_gfx);
             panel_imageDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel_imageDisplay.Location = new System.Drawing.Point(3, 69);
+            panel_imageDisplay.Location = new System.Drawing.Point(3, 119);
             panel_imageDisplay.Name = "panel_imageDisplay";
-            panel_imageDisplay.Size = new System.Drawing.Size(606, 347);
+            panel_imageDisplay.Size = new System.Drawing.Size(606, 297);
             panel_imageDisplay.TabIndex = 3;
             // 
             // tileDisplay_gfx
@@ -523,7 +533,7 @@
             // 
             toolStrip_palette.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripSeparator5, button_decreasePalette, button_increasePalette });
-            toolStrip_palette.Location = new System.Drawing.Point(3, 44);
+            toolStrip_palette.Location = new System.Drawing.Point(3, 94);
             toolStrip_palette.Name = "toolStrip_palette";
             toolStrip_palette.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             toolStrip_palette.Size = new System.Drawing.Size(606, 25);
@@ -555,10 +565,54 @@
             button_increasePalette.Text = "Next Palette Row";
             button_increasePalette.Click += button_increasePalette_Click;
             // 
+            // panel_shapeSettings
+            // 
+            panel_shapeSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            panel_shapeSettings.Location = new System.Drawing.Point(3, 69);
+            panel_shapeSettings.Name = "panel_shapeSettings";
+            panel_shapeSettings.Size = new System.Drawing.Size(606, 25);
+            panel_shapeSettings.TabIndex = 6;
+            panel_shapeSettings.Visible = false;
+            // 
+            // panel_fillSettings
+            // 
+            panel_fillSettings.Controls.Add(checkBox_gridFill);
+            panel_fillSettings.Controls.Add(checkBox_neighbouring);
+            panel_fillSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            panel_fillSettings.Location = new System.Drawing.Point(3, 44);
+            panel_fillSettings.Name = "panel_fillSettings";
+            panel_fillSettings.Size = new System.Drawing.Size(606, 25);
+            panel_fillSettings.TabIndex = 5;
+            panel_fillSettings.Visible = false;
+            // 
+            // checkBox_gridFill
+            // 
+            checkBox_gridFill.AutoSize = true;
+            checkBox_gridFill.Location = new System.Drawing.Point(109, 4);
+            checkBox_gridFill.Name = "checkBox_gridFill";
+            checkBox_gridFill.Size = new System.Drawing.Size(113, 19);
+            checkBox_gridFill.TabIndex = 1;
+            checkBox_gridFill.Text = "Stop on Tile Grid";
+            checkBox_gridFill.UseVisualStyleBackColor = true;
+            checkBox_gridFill.CheckedChanged += checkBox_gridFill_CheckedChanged;
+            // 
+            // checkBox_neighbouring
+            // 
+            checkBox_neighbouring.AutoSize = true;
+            checkBox_neighbouring.Checked = true;
+            checkBox_neighbouring.CheckState = System.Windows.Forms.CheckState.Checked;
+            checkBox_neighbouring.Location = new System.Drawing.Point(3, 4);
+            checkBox_neighbouring.Name = "checkBox_neighbouring";
+            checkBox_neighbouring.Size = new System.Drawing.Size(100, 19);
+            checkBox_neighbouring.TabIndex = 0;
+            checkBox_neighbouring.Text = "Neighbouring";
+            checkBox_neighbouring.UseVisualStyleBackColor = true;
+            checkBox_neighbouring.CheckedChanged += checkBox_neighbouring_CheckedChanged;
+            // 
             // toolStrip_gfx
             // 
             toolStrip_gfx.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator6, button_toolSelect, button_toolPen, button_toolFill, button_toolShape, toolStripSeparator1, button_flipH, button_flipV, toolStripSeparator3, button_grid, toolStripSeparator4, button_imageZoomIn, button_imageZoomOut, label_imageZoom });
+            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator6, button_toolSelect, button_toolPen, button_toolFill, button_toolShape, button_eyeDropper, toolStripSeparator1, button_flipH, button_flipV, toolStripSeparator3, button_grid, toolStripSeparator4, button_imageZoomIn, button_imageZoomOut, label_imageZoom });
             toolStrip_gfx.Location = new System.Drawing.Point(3, 19);
             toolStrip_gfx.Name = "toolStrip_gfx";
             toolStrip_gfx.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -616,7 +670,7 @@
             // button_toolFill
             // 
             button_toolFill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_toolFill.Image = Properties.Resources.fill_bucket;
+            button_toolFill.Image = Properties.Resources.paintcan;
             button_toolFill.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_toolFill.Name = "button_toolFill";
             button_toolFill.Size = new System.Drawing.Size(23, 22);
@@ -632,6 +686,16 @@
             button_toolShape.Size = new System.Drawing.Size(23, 22);
             button_toolShape.Text = "Shape";
             button_toolShape.Click += button_toolShape_Click;
+            // 
+            // button_eyeDropper
+            // 
+            button_eyeDropper.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_eyeDropper.Image = Properties.Resources.eyedropper;
+            button_eyeDropper.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_eyeDropper.Name = "button_eyeDropper";
+            button_eyeDropper.Size = new System.Drawing.Size(23, 22);
+            button_eyeDropper.Text = "Eyedropper";
+            button_eyeDropper.Click += button_eyeDropper_Click;
             // 
             // toolStripSeparator1
             // 
@@ -666,11 +730,29 @@
             // button_grid
             // 
             button_grid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_grid.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_tileGrid, button_pixelGrid });
             button_grid.Image = Properties.Resources.grid;
             button_grid.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_grid.Name = "button_grid";
             button_grid.Size = new System.Drawing.Size(32, 22);
             button_grid.Text = "Grid";
+            button_grid.ButtonClick += button_grid_ButtonClick;
+            // 
+            // button_tileGrid
+            // 
+            button_tileGrid.Checked = true;
+            button_tileGrid.CheckState = System.Windows.Forms.CheckState.Checked;
+            button_tileGrid.Name = "button_tileGrid";
+            button_tileGrid.Size = new System.Drawing.Size(124, 22);
+            button_tileGrid.Text = "Tile Grid";
+            button_tileGrid.Click += button_tileGrid_Click;
+            // 
+            // button_pixelGrid
+            // 
+            button_pixelGrid.Name = "button_pixelGrid";
+            button_pixelGrid.Size = new System.Drawing.Size(124, 22);
+            button_pixelGrid.Text = "Pixel Grid";
+            button_pixelGrid.Click += button_pixelGrid_Click;
             // 
             // toolStripSeparator4
             // 
@@ -739,6 +821,8 @@
             panel_imageDisplay.ResumeLayout(false);
             toolStrip_palette.ResumeLayout(false);
             toolStrip_palette.PerformLayout();
+            panel_fillSettings.ResumeLayout(false);
+            panel_fillSettings.PerformLayout();
             toolStrip_gfx.ResumeLayout(false);
             toolStrip_gfx.PerformLayout();
             panel_imageContainer.ResumeLayout(false);
@@ -812,5 +896,12 @@
         private System.Windows.Forms.ToolStripSplitButton button_redo;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripButton button_toolShape;
+        private System.Windows.Forms.ToolStripButton button_eyeDropper;
+        private System.Windows.Forms.ToolStripMenuItem button_tileGrid;
+        private System.Windows.Forms.ToolStripMenuItem button_pixelGrid;
+        private System.Windows.Forms.Panel panel_fillSettings;
+        private System.Windows.Forms.Panel panel_shapeSettings;
+        private System.Windows.Forms.CheckBox checkBox_gridFill;
+        private System.Windows.Forms.CheckBox checkBox_neighbouring;
     }
 }

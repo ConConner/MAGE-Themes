@@ -203,6 +203,16 @@ namespace mage.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap eyedropper {
+            get {
+                object obj = ResourceManager.GetObject("eyedropper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap fill_bucket {
             get {
                 object obj = ResourceManager.GetObject("fill_bucket", resourceCulture);
@@ -1093,6 +1103,16 @@ namespace mage.Properties {
         public static System.Drawing.Bitmap page_white_add {
             get {
                 object obj = ResourceManager.GetObject("page_white_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap paintcan {
+            get {
+                object obj = ResourceManager.GetObject("paintcan", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

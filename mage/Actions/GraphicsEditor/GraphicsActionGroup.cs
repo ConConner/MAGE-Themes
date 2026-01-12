@@ -36,6 +36,8 @@ internal class GraphicsActionGroup : GraphicsAction
         actions.Add(action);
     }
 
+    public int ActionCount => actions.Count;
+
     public override void Do() { foreach (var a in actions) a.Do(); }
     public override void Undo()
     {
