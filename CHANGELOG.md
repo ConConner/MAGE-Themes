@@ -1,3 +1,18 @@
+# [1.12.0](https://github.com/ConConner/MAGE-Themes/compare/v1.11.1...v1.12.0) (2026-01-13)
+
+
+### Bug Fixes
+
+* map editor does not discard changes after manually saving and swapping maps ([876628b](https://github.com/ConConner/MAGE-Themes/commit/876628b756fe184e0bfc2cbdc94d1bdc0a4230e3))
+
+
+### Features
+
+* added button to edit graphics in tile table editor ([f0f3533](https://github.com/ConConner/MAGE-Themes/commit/f0f3533d3cbf9d51860ba2fb5bcf13225f6dc178))
+* new graphics editor [experimental] ([284b26e](https://github.com/ConConner/MAGE-Themes/commit/284b26e0824ff9ccf2594ecdd20e740d5a1de381))
+* room editor selection is animated (might be removed again later) ([54c59a6](https://github.com/ConConner/MAGE-Themes/commit/54c59a6157ec4e96b111cfb5cffc80aa1e18641c))
+* select multiple rooms to exclude at once in area export ([8ecbd43](https://github.com/ConConner/MAGE-Themes/commit/8ecbd4362b958521c46fb6d0bef4d3f965c5c0f9))
+
 ## [1.11.1](https://github.com/ConConner/MAGE-Themes/compare/v1.11.0...v1.11.1) (2026-01-03)
 
 
