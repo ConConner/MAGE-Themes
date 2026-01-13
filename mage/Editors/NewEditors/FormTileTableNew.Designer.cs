@@ -93,6 +93,8 @@
             statusButton_import = new System.Windows.Forms.ToolStripDropDownButton();
             statusButton_export = new System.Windows.Forms.ToolStripDropDownButton();
             button_apply = new System.Windows.Forms.ToolStripDropDownButton();
+            toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            button_editGfx = new System.Windows.Forms.ToolStripButton();
             panel_gfxView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panel_Main).BeginInit();
             panel_Main.Panel1.SuspendLayout();
@@ -300,7 +302,7 @@
             // toolStrip_gfx
             // 
             toolStrip_gfx.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_gfxZoomIn, button_gfxZoomOut, label_gfxZoom });
+            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_gfxZoomIn, button_gfxZoomOut, label_gfxZoom, toolStripSeparator4, button_editGfx });
             toolStrip_gfx.Location = new System.Drawing.Point(3, 19);
             toolStrip_gfx.Name = "toolStrip_gfx";
             toolStrip_gfx.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -893,6 +895,21 @@
             button_apply.Text = "Apply";
             button_apply.Click += button_apply_Click;
             // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // button_editGfx
+            // 
+            button_editGfx.Image = Properties.Resources.toolbar_graphics;
+            button_editGfx.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_editGfx.Name = "button_editGfx";
+            button_editGfx.Size = new System.Drawing.Size(71, 22);
+            button_editGfx.Text = "Edit GFX";
+            button_editGfx.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            button_editGfx.Click += button_editGfx_Click;
+            // 
             // FormTileTableNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1007,5 +1024,7 @@
         private Controls.ExtendedPanel panel_gfxView;
         private Controls.ExtendedPanel panel_select;
         private Controls.ExtendedPanel panel_tableView;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton button_editGfx;
     }
 }
