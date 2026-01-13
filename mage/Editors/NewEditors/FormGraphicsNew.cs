@@ -8,7 +8,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Design;
+using System.Drawing.Imaging;
 using System.Drawing.Text;
+using System.IO;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -76,7 +78,7 @@ public partial class FormGraphicsNew : Form
     private Pen GridPen = new Pen(Color.White, 1);
     private Pen PixelGridPen = new Pen(Color.Gray, 1);
 
-    // Properties
+    #region Properties
     private Tool SelectedTool
     {
         get;
@@ -171,7 +173,7 @@ public partial class FormGraphicsNew : Form
             HandleShowGrid();
         }
     }
-
+    #endregion
 
     #region Constructor
     public FormGraphicsNew(FormMain main, int gfxOffset, int width, int height, int palOffset)
@@ -226,7 +228,7 @@ public partial class FormGraphicsNew : Form
     }
     #endregion
 
-
+    #region Base Methods
     private void LoadData()
     {
         if (Status.UnsavedChanges && !CheckUnsaved()) return;
@@ -243,6 +245,10 @@ public partial class FormGraphicsNew : Form
 
         FormMain.UpdateEditors();
         Status.Save();
+
+        numericUpDown_height.Value = Math.Min(loadedGFX.height, 32);
+
+        DrawGFX();
 
         if (prevOffset != loadedGFX.Offset)
         {
@@ -318,6 +324,7 @@ public partial class FormGraphicsNew : Form
         if (GridSize == 1 && tileDisplay_gfx.Zoom <= 1) tileDisplay_gfx.ShowGrid = false;
         else tileDisplay_gfx.ShowGrid = true;
     }
+    #endregion
 
     #region General Events
     private void button_load_Click(object sender, EventArgs e) => LoadData();
@@ -441,12 +448,14 @@ public partial class FormGraphicsNew : Form
     {
         UndoRedo.Undo();
         setUndoRedoButtons();
+        Status.ChangeMade();
     }
 
     private void Redo()
     {
         UndoRedo.Redo();
         setUndoRedoButtons();
+        Status.ChangeMade();
     }
 
     private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GraphicsAction> stack)
@@ -506,7 +515,7 @@ public partial class FormGraphicsNew : Form
                         + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
         }
-        int width = (int)numericUpDown_height.Value;
+        int width = (int)numericUpDown_width.Value;
 
         if (checkBox_compressed.Checked)
         {
@@ -847,5 +856,113 @@ public partial class FormGraphicsNew : Form
         // Grid logic
         HandleShowGrid();
     }
+    #endregion
+
+    #region Import/Export
+
+    private void ImportPalette(PalFileType type)
+    {
+        OpenFileDialog import = new OpenFileDialog();
+        import.Filter = FormPalette.GetFileFilter(type);
+        if (import.ShowDialog() == DialogResult.OK)
+        {
+            loadedPalette.Import(import.FileName, type);
+            loadedPalette.Write(ROM.Stream);
+            DrawPalette();
+        }
+    }
+
+    private void ExportPalette(PalFileType type)
+    {
+        SaveFileDialog export = new SaveFileDialog();
+        export.Filter = FormPalette.GetFileFilter(type);
+        if (export.ShowDialog() == DialogResult.OK)
+        {
+            loadedPalette.Export(export.FileName, type);
+        }
+    }
+
+    private void button_importGraphicsRaw_Click(object sender, EventArgs e)
+    {
+        OpenFileDialog openRaw = new OpenFileDialog();
+        openRaw.Filter = "GFX files (*.gfx)|*.gfx|All files (*.*)|*.*";
+        if (openRaw.ShowDialog() == DialogResult.OK)
+        {
+            byte[] data = File.ReadAllBytes(openRaw.FileName);
+
+            loadedGFX = new GFX(loadedGFX, data);
+            Save();
+        }
+    }
+
+    private void button_importGraphicsImage_Click(object sender, EventArgs e)
+    {
+        OpenFileDialog openImg = new OpenFileDialog();
+        openImg.Filter = "Bitmaps (*.png, *.bmp, *.gif, *.jpeg, *.jpg, *.tif, *.tiff)|*.png;*.bmp;*.gif;*.jpeg;*.jpg;*.tif;*.tiff";
+        if (openImg.ShowDialog() == DialogResult.OK)
+        {
+            Bitmap inputImg = Draw.BitmapFromFile(openImg.FileName);
+
+            try
+            {
+                PortImage pi = new PortImage(inputImg);
+                pi.GetGfx(loadedPalette, false);
+                loadedGFX = new GFX(loadedGFX, pi.gfxData);
+                Save();
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+
+    private void button_importPaletteRaw_Click(object sender, EventArgs e) => ImportPalette(PalFileType.Raw);
+
+    private void button_importPaletteTLP_Click(object sender, EventArgs e) => ImportPalette(PalFileType.TLP);
+
+    private void button_importPaletteYYCHR_Click(object sender, EventArgs e) => ImportPalette(PalFileType.YYCHR);
+
+    private void button_exportGraphicsRaw_Click(object sender, EventArgs e)
+    {
+        SaveFileDialog saveRaw = new SaveFileDialog();
+        saveRaw.Filter = "GFX files (*.gfx)|*.gfx|All files (*.*)|*.*";
+        if (saveRaw.ShowDialog() == DialogResult.OK)
+        {
+            File.WriteAllBytes(saveRaw.FileName, loadedGFX.data);
+        }
+    }
+
+    private void button_exportGraphicsImage_Click(object sender, EventArgs e)
+    {
+        SaveFileDialog saveImg = new SaveFileDialog();
+        saveImg.Filter = "PNG files (*.png)|*.png";
+        if (saveImg.ShowDialog() == DialogResult.OK)
+        {
+            PixelFormat format = PixelFormat.Undefined;
+            if (menuItem_4bitIndexed.Checked) { format = PixelFormat.Format4bppIndexed; }
+            else if (menuItem_24bitRGB.Checked) { format = PixelFormat.Format24bppRgb; }
+            else if (menuItem_32bitARGB.Checked) { format = PixelFormat.Format32bppArgb; }
+
+            Bitmap output = PortImage.Export((Bitmap)tileDisplay_gfx.TileImage, format);
+            output.Save(saveImg.FileName);
+        }
+    }
+
+    private void menuItem_pixelFormat_Click(object sender, EventArgs e)
+    {
+        menuItem_4bitIndexed.Checked = false;
+        menuItem_24bitRGB.Checked = false;
+        menuItem_32bitARGB.Checked = false;
+
+        ToolStripMenuItem item = sender as ToolStripMenuItem;
+        item.Checked = true;
+    }
+
+    private void menuItem_palExport_raw_Click(object sender, EventArgs e) => ExportPalette(PalFileType.Raw);
+
+    private void menuItem_palExport_tlp_Click(object sender, EventArgs e) => ExportPalette(PalFileType.TLP);
+
+    private void menuItem_palExport_yychr_Click(object sender, EventArgs e) => ExportPalette(PalFileType.YYCHR);
     #endregion
 }

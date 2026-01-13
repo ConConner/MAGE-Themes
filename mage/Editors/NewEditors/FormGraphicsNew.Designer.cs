@@ -323,7 +323,7 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(483, 17);
+            spring.Size = new System.Drawing.Size(452, 17);
             spring.Spring = true;
             // 
             // statusButton_import
@@ -341,7 +341,7 @@
             // 
             statusButton_graphicsImport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_importGraphicsRaw, button_importGraphicsImage });
             statusButton_graphicsImport.Name = "statusButton_graphicsImport";
-            statusButton_graphicsImport.Size = new System.Drawing.Size(120, 22);
+            statusButton_graphicsImport.Size = new System.Drawing.Size(180, 22);
             statusButton_graphicsImport.Text = "Graphics";
             // 
             // button_importGraphicsRaw
@@ -349,18 +349,20 @@
             button_importGraphicsRaw.Name = "button_importGraphicsRaw";
             button_importGraphicsRaw.Size = new System.Drawing.Size(116, 22);
             button_importGraphicsRaw.Text = "Raw...";
+            button_importGraphicsRaw.Click += button_importGraphicsRaw_Click;
             // 
             // button_importGraphicsImage
             // 
             button_importGraphicsImage.Name = "button_importGraphicsImage";
             button_importGraphicsImage.Size = new System.Drawing.Size(116, 22);
             button_importGraphicsImage.Text = "Image...";
+            button_importGraphicsImage.Click += button_importGraphicsImage_Click;
             // 
             // statusButton_paletteImport
             // 
             statusButton_paletteImport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_importPaletteRaw, button_importPaletteTLP, button_importPaletteYYCHR });
             statusButton_paletteImport.Name = "statusButton_paletteImport";
-            statusButton_paletteImport.Size = new System.Drawing.Size(120, 22);
+            statusButton_paletteImport.Size = new System.Drawing.Size(180, 22);
             statusButton_paletteImport.Text = "Palette";
             // 
             // button_importPaletteRaw
@@ -368,18 +370,21 @@
             button_importPaletteRaw.Name = "button_importPaletteRaw";
             button_importPaletteRaw.Size = new System.Drawing.Size(153, 22);
             button_importPaletteRaw.Text = "Raw...";
+            button_importPaletteRaw.Click += button_importPaletteRaw_Click;
             // 
             // button_importPaletteTLP
             // 
             button_importPaletteTLP.Name = "button_importPaletteTLP";
             button_importPaletteTLP.Size = new System.Drawing.Size(153, 22);
             button_importPaletteTLP.Text = "Tile Layer Pro...";
+            button_importPaletteTLP.Click += button_importPaletteTLP_Click;
             // 
             // button_importPaletteYYCHR
             // 
             button_importPaletteYYCHR.Name = "button_importPaletteYYCHR";
             button_importPaletteYYCHR.Size = new System.Drawing.Size(153, 22);
             button_importPaletteYYCHR.Text = "YY-CHR...";
+            button_importPaletteYYCHR.Click += button_importPaletteYYCHR_Click;
             // 
             // statusButton_export
             // 
@@ -396,39 +401,42 @@
             // 
             statusButton_graphicsExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_exportGraphicsRaw, toolStripSeparator2, button_exportGraphicsImage, menuItem_pixelFormat });
             statusButton_graphicsExport.Name = "statusButton_graphicsExport";
-            statusButton_graphicsExport.Size = new System.Drawing.Size(120, 22);
+            statusButton_graphicsExport.Size = new System.Drawing.Size(180, 22);
             statusButton_graphicsExport.Text = "Graphics";
             // 
             // button_exportGraphicsRaw
             // 
             button_exportGraphicsRaw.Name = "button_exportGraphicsRaw";
-            button_exportGraphicsRaw.Size = new System.Drawing.Size(140, 22);
+            button_exportGraphicsRaw.Size = new System.Drawing.Size(180, 22);
             button_exportGraphicsRaw.Text = "Raw...";
+            button_exportGraphicsRaw.Click += button_exportGraphicsRaw_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(137, 6);
+            toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // button_exportGraphicsImage
             // 
             button_exportGraphicsImage.Name = "button_exportGraphicsImage";
-            button_exportGraphicsImage.Size = new System.Drawing.Size(140, 22);
+            button_exportGraphicsImage.Size = new System.Drawing.Size(180, 22);
             button_exportGraphicsImage.Text = "Image...";
+            button_exportGraphicsImage.Click += button_exportGraphicsImage_Click;
             // 
             // menuItem_pixelFormat
             // 
             menuItem_pixelFormat.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_4bitIndexed, menuItem_24bitRGB, menuItem_32bitARGB });
             menuItem_pixelFormat.Name = "menuItem_pixelFormat";
-            menuItem_pixelFormat.Size = new System.Drawing.Size(140, 22);
+            menuItem_pixelFormat.Size = new System.Drawing.Size(180, 22);
             menuItem_pixelFormat.Text = "Pixel Format";
             // 
             // menuItem_4bitIndexed
             // 
             menuItem_4bitIndexed.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             menuItem_4bitIndexed.Name = "menuItem_4bitIndexed";
-            menuItem_4bitIndexed.Size = new System.Drawing.Size(144, 22);
+            menuItem_4bitIndexed.Size = new System.Drawing.Size(180, 22);
             menuItem_4bitIndexed.Text = "4-bit Indexed";
+            menuItem_4bitIndexed.Click += menuItem_pixelFormat_Click;
             // 
             // menuItem_24bitRGB
             // 
@@ -436,21 +444,23 @@
             menuItem_24bitRGB.CheckState = System.Windows.Forms.CheckState.Checked;
             menuItem_24bitRGB.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             menuItem_24bitRGB.Name = "menuItem_24bitRGB";
-            menuItem_24bitRGB.Size = new System.Drawing.Size(144, 22);
+            menuItem_24bitRGB.Size = new System.Drawing.Size(180, 22);
             menuItem_24bitRGB.Text = "24-bit RGB";
+            menuItem_24bitRGB.Click += menuItem_pixelFormat_Click;
             // 
             // menuItem_32bitARGB
             // 
             menuItem_32bitARGB.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             menuItem_32bitARGB.Name = "menuItem_32bitARGB";
-            menuItem_32bitARGB.Size = new System.Drawing.Size(144, 22);
+            menuItem_32bitARGB.Size = new System.Drawing.Size(180, 22);
             menuItem_32bitARGB.Text = "32-bit ARGB";
+            menuItem_32bitARGB.Click += menuItem_pixelFormat_Click;
             // 
             // statusButton_paletteExport
             // 
             statusButton_paletteExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_palExport_raw, menuItem_palExport_tlp, menuItem_palExport_yychr });
             statusButton_paletteExport.Name = "statusButton_paletteExport";
-            statusButton_paletteExport.Size = new System.Drawing.Size(120, 22);
+            statusButton_paletteExport.Size = new System.Drawing.Size(180, 22);
             statusButton_paletteExport.Text = "Palette";
             // 
             // menuItem_palExport_raw
@@ -458,18 +468,21 @@
             menuItem_palExport_raw.Name = "menuItem_palExport_raw";
             menuItem_palExport_raw.Size = new System.Drawing.Size(153, 22);
             menuItem_palExport_raw.Text = "Raw...";
+            menuItem_palExport_raw.Click += menuItem_palExport_raw_Click;
             // 
             // menuItem_palExport_tlp
             // 
             menuItem_palExport_tlp.Name = "menuItem_palExport_tlp";
             menuItem_palExport_tlp.Size = new System.Drawing.Size(153, 22);
             menuItem_palExport_tlp.Text = "Tile Layer Pro...";
+            menuItem_palExport_tlp.Click += menuItem_palExport_tlp_Click;
             // 
             // menuItem_palExport_yychr
             // 
             menuItem_palExport_yychr.Name = "menuItem_palExport_yychr";
             menuItem_palExport_yychr.Size = new System.Drawing.Size(153, 22);
             menuItem_palExport_yychr.Text = "YY-CHR...";
+            menuItem_palExport_yychr.Click += menuItem_palExport_yychr_Click;
             // 
             // button_apply
             // 
