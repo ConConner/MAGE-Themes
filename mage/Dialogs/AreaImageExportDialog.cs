@@ -41,23 +41,13 @@ public partial class AreaImageExportDialog : Form
         }
     }
 
-    private void button_choose_Click(object sender, EventArgs e)
+    private void button_save_Click(object sender, EventArgs e)
     {
         SaveFileDialog dialog = new SaveFileDialog();
         dialog.Filter = "PNG files (*.png)|*.png";
         if (dialog.ShowDialog() != DialogResult.OK) return;
 
         filePath = dialog.FileName;
-        panel1.Enabled = true;
-    }
-
-    private void button_save_Click(object sender, EventArgs e)
-    {
-        if (filePath == String.Empty)
-        {
-            MessageBox.Show("No save location selected", "Select save location!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
 
         // Export image
         List<Room> rooms = new List<Room>();

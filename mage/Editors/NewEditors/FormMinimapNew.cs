@@ -224,7 +224,7 @@ public partial class FormMinimapNew : Form, Editor
 
     private void Save()
     {
-        ROM.SaveMinimap(LoadedMap);
+        ROM.SaveMinimap(LoadedMap.Copy());
         status.Save();
     }
 
@@ -976,8 +976,10 @@ public partial class FormMinimapNew : Form, Editor
     private void button_editGfx_Click(object sender, EventArgs e)
     {
         int height = numTiles / 32;
-        FormGraphics form = new FormGraphics(main, Version.MinimapGfxOffset, 32, height, Version.MinimapPaletteOffset);
-        form.Show();
+        Form f;
+        if (!Program.ExperimentalFeaturesEnabled) f = new FormGraphics(main, Version.MinimapGfxOffset, 32, height, Version.MinimapPaletteOffset);
+        else f = new FormGraphicsNew(main, Version.MinimapGfxOffset, 32, height, Version.MinimapPaletteOffset);
+        f.Show();
     }
     #endregion
 }

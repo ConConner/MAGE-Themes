@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Numerics;
 
 namespace mage
 {
@@ -284,6 +285,66 @@ namespace mage
 
             img.UnlockBits(imgData);
             return img;
+        }
+
+        /// <summary>
+        /// Gets the palette index (0-15) of the pixel at the specified coordinates.
+        /// </summary>
+        /// <returns>-1 if it cannot find any pixel at that location</returns>
+        public int GetPixel(Point point) => GetPixel(point.X, point.Y);
+
+        /// <summary>
+        /// Gets the palette index (0-15) of the pixel at the specified coordinates.
+        /// </summary>
+        /// <returns>-1 if it cannot find any pixel at that location</returns>
+        public int GetPixel(int x, int y)
+        {
+            if (x < 0 || x >= width * 8 || y < 0 || y >= height * 8) return -1;
+
+            // Calculate Array Offset
+            int tileX = x / 8;
+            int tileY = y / 8;
+            int localX = x % 8;
+            int localY = y % 8;
+
+            int tileIndex = (tileY * width) + tileX;
+            int tileStartOffset = tileIndex * 0x20;
+            int byteOffsetInTile = (localY * 4) + (localX / 2);
+            int finalIndex = tileStartOffset + byteOffsetInTile;
+
+            if (finalIndex >= data.Length) return -1;
+
+            // Extract Nibble
+            byte b = data[finalIndex];
+            if (localX % 2 == 0) return (byte)(b & 0xF);
+            else return (byte)((b >> 4) & 0xF);
+        }
+
+        public void SetPixel(Point point, int palIndex) => SetPixel(point.X, point.Y, palIndex);
+
+        public void SetPixel(int x, int y, int palIndex)
+        {
+            if (x < 0 || x >= width * 8 || y < 0 || y >= height * 8) return;
+            palIndex = palIndex % 16;
+
+            // Calculate Array Offset
+            int tileX = x / 8;
+            int tileY = y / 8;
+            int localX = x % 8;
+            int localY = y % 8;
+
+            int tileIndex = (tileY * width) + tileX;
+            int tileStartOffset = tileIndex * 0x20;
+            int byteOffsetInTile = (localY * 4) + (localX / 2);
+            int finalIndex = tileStartOffset + byteOffsetInTile;
+
+            if (finalIndex >= data.Length) return;
+
+            // Set Nibble
+            byte b = data[finalIndex];
+            if (localX % 2 == 0) b = (byte)((b & 0xF0) | (palIndex & 0x0F));
+            else b = (byte)((b & 0x0F) | ((palIndex & 0x0F) << 4));
+            data[finalIndex] = b;
         }
 
         public void Write(ByteStream dst, bool export)

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mage.Actions;
+namespace mage.Actions.RoomEditor;
 
 public class FlipRoom : RoomAction
 {

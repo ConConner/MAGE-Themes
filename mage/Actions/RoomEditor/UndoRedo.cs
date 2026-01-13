@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace mage
+namespace mage.Actions.RoomEditor
 {
     public class UndoRedo
     {

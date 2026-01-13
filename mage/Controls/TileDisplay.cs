@@ -50,8 +50,26 @@ public partial class TileDisplay : Control
         }
     }
     private bool showGrid = false;
-    public int GridCellWidth { get; set; } = 16;
-    public int GridCellHeight { get; set; } = 16;
+    public int GridCellWidth
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            Invalidate();
+        }
+    } = 16;
+    public int GridCellHeight
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
+            Invalidate();
+        }
+    } = 16;
 
     /// <summary>
     /// This is a bad fix for the replacement of the OAM view
@@ -176,6 +194,7 @@ public partial class TileDisplay : Control
         Rectangle r = Rectangle.Union(drawable.Rectangle, drawable.OldRectangle);
         r = new Rectangle(r.X << zoom, r.Y << zoom, r.Width << zoom, r.Height << zoom);
         r.Inflate(drawable.Indent << zoom, drawable.Indent << zoom);
+        r.Inflate(1, 1);
         Invalidate(r);
     }
 

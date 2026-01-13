@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace mage
+namespace mage.Actions.RoomEditor
 {
     public class EditBlocks : RoomAction
     {

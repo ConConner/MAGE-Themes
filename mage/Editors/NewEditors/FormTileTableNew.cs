@@ -17,6 +17,7 @@ using mage.Dialogs;
 using System.Xml;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using mage.Bookmarks;
+using mage.Editors.NewEditors;
 
 namespace mage.Editors
 {
@@ -97,6 +98,8 @@ namespace mage.Editors
 
         private Room? openedInRoom;
         private Status Status;
+        private int gfxSourceOffset;
+        private int palSourceOffset;
 
         // Tooltip
         Point TableTileNumPosition;
@@ -505,6 +508,8 @@ namespace mage.Editors
             gfxData = new byte[0x8000];
             Array.Copy(vram.BGtiles, gfxData, 0x8000);
             palette = vram.BGpalette;
+            gfxSourceOffset = tileset.RLEgfx.Offset;
+            palSourceOffset = tileset.palette.Offset;
 
             // initialize tiletable
             tileTable = new ushort[0x1000];
@@ -598,6 +603,8 @@ namespace mage.Editors
             gfxData = new byte[0x8000];
             Array.Copy(vram.BGtiles, 0x4000, gfxData, 0, 0x8000);
             palette = vram.BGpalette;
+            gfxSourceOffset = tileset.LZ77gfx.Offset;
+            palSourceOffset = tileset.palette.Offset;
 
             // Palette
             comboBox_palette.SelectedIndex = 0;
@@ -646,7 +653,8 @@ namespace mage.Editors
                 SetTileTableImage(256, numOfTiles / 4);
 
                 init = false;
-
+                gfxSourceOffset = gfxOffset;
+                palSourceOffset = palOffset;
             }
             catch
             {
@@ -1365,5 +1373,13 @@ namespace mage.Editors
 
         #endregion
         #endregion
+
+        private void button_editGfx_Click(object sender, EventArgs e)
+        {
+            Form f;
+            if (Program.ExperimentalFeaturesEnabled) f = new FormGraphicsNew(FormMain.Instance, gfxSourceOffset, 32, 0, palSourceOffset);
+            else f = new FormGraphics(FormMain.Instance, gfxSourceOffset, 32, 0, palSourceOffset);
+            f.Show();
+        }
     }
 }

@@ -1,4 +1,5 @@
 using mage.Actions;
+using mage.Actions.RoomEditor;
 using mage.Bookmarks;
 using mage.Controls; // added for font stuff - alexman25
 using mage.Data;
@@ -749,10 +750,21 @@ namespace mage
 
         private void menuItem_graphicsEditor_Click(object sender, EventArgs e)
         {
+            int gfxOffset = room.tileset.RLEgfx.Offset;
+            int palOffset = room.tileset.palette.Offset + 0x20;
+
+            if (Program.ExperimentalFeaturesEnabled)
+            {
+                if (!FindOpenForm(typeof(FormGraphicsNew), false))
+                {
+                    var form = new FormGraphicsNew(this, gfxOffset, 32, 0, palOffset);
+                    form.Show();
+                }
+                return;
+            }
+
             if (!FindOpenForm(typeof(FormGraphics), false))
             {
-                int gfxOffset = room.tileset.RLEgfx.Offset;
-                int palOffset = room.tileset.palette.Offset + 0x20;
                 FormGraphics form = new FormGraphics(this, gfxOffset, 32, 0, palOffset);
                 form.Show();
             }
