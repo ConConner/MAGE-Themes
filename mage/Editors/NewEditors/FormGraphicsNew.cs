@@ -572,8 +572,10 @@ public partial class FormGraphicsNew : Form
     // Editing functions
     private void PickColor(TileDisplay.TileDisplayArgs e)
     {
-        if (e.Button == MouseButtons.Left) ColorLeft = loadedGFX.GetPixel(e.PixelPosition);
-        if (e.Button == MouseButtons.Right) ColorRight = loadedGFX.GetPixel(e.PixelPosition);
+        int pixel = loadedGFX.GetPixel(e.PixelPosition);
+        if (pixel == -1) return;
+        if (e.Button == MouseButtons.Left) ColorLeft = pixel;
+        if (e.Button == MouseButtons.Right) ColorRight = pixel;
     }
 
     private void HandlePen(TileDisplay.TileDisplayArgs e)
