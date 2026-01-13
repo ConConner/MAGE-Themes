@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/ConConner/MAGE-Themes/compare/v1.12.0...v1.12.1) (2026-01-13)
+
+
+### Bug Fixes
+
+* picking a color in unused graphics editor space crashes the program ([cb3d723](https://github.com/ConConner/MAGE-Themes/commit/cb3d723ed25a978a0a2797c493bb4630205b801b))
+
 # [1.12.0](https://github.com/ConConner/MAGE-Themes/compare/v1.11.1...v1.12.0) (2026-01-13)
 
 
