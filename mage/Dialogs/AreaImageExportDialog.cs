@@ -73,7 +73,7 @@ public partial class AreaImageExportDialog : Form
             if (r.header.mapX + r.WidthInScreens > bounds.Item2.X) bounds.Item2.X = r.header.mapX + r.WidthInScreens;
             if (r.header.mapY + r.HeightInScreens > bounds.Item2.Y) bounds.Item2.Y = r.header.mapY + r.HeightInScreens;
         }
-        //Rectangle used to crop image
+        //Rectangle with maximum area size
         Rectangle areaSize = new Rectangle(
             bounds.Item1.X * 15 * 16,
             bounds.Item1.Y * 10 * 16,
@@ -81,12 +81,8 @@ public partial class AreaImageExportDialog : Form
             (bounds.Item2.Y - bounds.Item1.Y) * 10 * 16
         );
 
-        //Maximum Area Size
-        int areaPixelWidth = 15 * 16 * 32;
-        int areaPixelHeight = 10 * 16 * 32;
-
         //Creating bitmap
-        Bitmap areaImage = new(areaPixelWidth, areaPixelHeight);
+        Bitmap areaImage = new(areaSize.Width, areaSize.Height);
         Graphics g = Graphics.FromImage(areaImage);
 
         foreach (Room r in rooms)
@@ -96,19 +92,14 @@ public partial class AreaImageExportDialog : Form
 
             Rectangle visibleRegion = new Rectangle(16 * 2, 16 * 2, (r.Width - 4) * 16, (r.Height - 4) * 16);
 
-            int areaCoordinateX = r.header.mapX * 15 * 16;
-            int areaCoordinateY = r.header.mapY * 10 * 16;
+            int areaCoordinateX = r.header.mapX * 15 * 16 - areaSize.X;
+            int areaCoordinateY = r.header.mapY * 10 * 16 - areaSize.Y;
             g.DrawImage(roomImage, areaCoordinateX, areaCoordinateY, visibleRegion, GraphicsUnit.Pixel);
             roomImage.Dispose();
         }
-
         g.Dispose();
 
-        //Crop image
-        Bitmap clone = areaImage.Clone(areaSize, areaImage.PixelFormat);
-        clone.Save(filePath);
-
-        clone.Dispose();
+        areaImage.Save(filePath);
         areaImage.Dispose();
         Close();
     }
