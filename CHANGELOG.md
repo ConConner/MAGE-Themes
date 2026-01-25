@@ -1,3 +1,10 @@
+## [1.12.3](https://github.com/ConConner/MAGE-Themes/compare/v1.12.2...v1.12.3) (2026-01-25)
+
+
+### Bug Fixes
+
+* clipdata cannot be placed without a tile selection ([c8c4ec9](https://github.com/ConConner/MAGE-Themes/commit/c8c4ec93fe7263068f7d84c3540d3581f3b192b0)), closes [#68](https://github.com/ConConner/MAGE-Themes/issues/68)
+
 ## [1.12.2](https://github.com/ConConner/MAGE-Themes/compare/v1.12.1...v1.12.2) (2026-01-25)
 
 
