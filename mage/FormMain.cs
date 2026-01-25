@@ -16,6 +16,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Drawing.Text;
@@ -2422,12 +2423,27 @@ namespace mage
             ushort clip = 0xFFFF;
             if (EditCLP)
             {
-                if (TileSelection.Visible || menuItem_forceClipdata.Checked)
+                bool onlyEditingClip = !EditBG0 && !EditBG1 && !EditBG2 && selection.X == -1;
+
+                if (TileSelection.Visible || menuItem_forceClipdata.Checked || onlyEditingClip)
                 {
                     clip = Clipdata;
                 }
                 else { clip = 0xFFFE; }
                 Sound.PlaySound("clip.wav");
+
+                // Handle case where only editing clipdata with no selection
+                if (selection.X == -1 && onlyEditingClip)
+                {
+                    blocks = new Block[1, 1];
+                    blocks[0, 0] = new Block()
+                    {
+                        BG0 = 0,
+                        BG1 = 0,
+                        BG2 = 0,
+                        CLP = clip
+                    };
+                }
             }
 
             EditBlocks a;
@@ -2668,11 +2684,12 @@ namespace mage
 
         private void roomView_MouseDown(object sender, MouseEventArgs e)
         {
+            bool editOnlyClip = EditCLP && !EditBG0 && !EditBG1 && !EditBG2;
             if (e.Button == MouseButtons.Left && pivot.X == -1)
             {
                 if (EditBGs)
                 {
-                    if (selection.X != -1)
+                    if (selection.X != -1 || editOnlyClip)
                     {
                         PasteBlocks(false);
                         UpdateStatusCoor();
@@ -2759,9 +2776,10 @@ namespace mage
 
             if (e.Button == MouseButtons.Left && pivot.X == -1)
             {
+                bool editOnlyClip = EditCLP && !EditBG0 && !EditBG1 && !EditBG2;
                 if (EditBGs)
                 {
-                    if (selection.X != -1 && EditAnyBG)
+                    if (selection.X != -1 && EditAnyBG || editOnlyClip)
                     {
                         Rectangle rect = roomView.redRect;
                         rect.Width++; rect.Height++;
