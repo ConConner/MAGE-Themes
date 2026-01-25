@@ -1,3 +1,10 @@
+## [1.12.2](https://github.com/ConConner/MAGE-Themes/compare/v1.12.1...v1.12.2) (2026-01-25)
+
+
+### Bug Fixes
+
+* large area image exports can crash the program ([0ae6e4a](https://github.com/ConConner/MAGE-Themes/commit/0ae6e4af4637d07d803637f0edff558b3995bf19))
+
 ## [1.12.1](https://github.com/ConConner/MAGE-Themes/compare/v1.12.0...v1.12.1) (2026-01-13)
 
 
