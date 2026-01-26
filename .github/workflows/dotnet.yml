@@ -22,7 +22,7 @@ jobs:
       with:
         dotnet-version: 10.0.x
 
-    - name: Setup Variables#
+    - name: Setup Variables
       shell: bash
       run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
       
