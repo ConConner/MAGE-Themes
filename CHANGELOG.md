@@ -1,3 +1,10 @@
+## [1.12.4](https://github.com/ConConner/MAGE-Themes/compare/v1.12.3...v1.12.4) (2026-01-29)
+
+
+### Bug Fixes
+
+* OAM assembly export is missing colon and should use static labels ([afce28c](https://github.com/ConConner/MAGE-Themes/commit/afce28c5819fcf4e1572781c360615861a830fa4))
+
 ## [1.12.3](https://github.com/ConConner/MAGE-Themes/compare/v1.12.2...v1.12.3) (2026-01-25)
 
 
