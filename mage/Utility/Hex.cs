@@ -23,9 +23,9 @@ namespace mage
             return Convert.ToString(value, radix).ToUpper();
         }
 
-        public static string ToPrefixedString(int value)
+        public static string ToPrefixedPaddedString(int value)
         {
-            return $"0x{Convert.ToString(value, 16).ToUpper()}";
+            return $"0x{Convert.ToString(value, 16).ToUpper().PadLeft(4, '0')}";
         }
 
         public static byte ToByte(string text)

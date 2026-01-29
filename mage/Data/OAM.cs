@@ -410,31 +410,31 @@ namespace mage
         public string ToASM(string animationName = "oam")
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(".align 2,0");
+
+            sb.AppendLine(".align");
+            sb.AppendLine($"OAM_{animationName}_Animation:");
+            for (int i = 0; i < NumFrames; i++)
+            {
+                Frame frame = Frames[i];
+                sb.AppendLine($"\t.dw @{animationName}_Frame{Hex.ToPrefixedPaddedString(i)}, {Hex.ToPrefixedPaddedString(frame.duration)}");
+            }
+            sb.AppendLine("\t.dw 0,0");
+
             sb.AppendLine();
 
             for (int i = 0; i < NumFrames; i++)
             {
                 Frame frame = Frames[i];
-                sb.AppendLine($"{animationName}_Frame{Hex.ToPrefixedString(i)}:");
-                sb.AppendLine($"\t.dh {Hex.ToPrefixedString(frame.numParts)}");
+                sb.AppendLine($"@OAM_{animationName}_Frame{Hex.ToPrefixedPaddedString(i)}:");
+                sb.AppendLine($"\t.dh {Hex.ToPrefixedPaddedString(frame.numParts)}");
 
                 foreach (Part p in frame.parts)
                 {
                     ushort[] attributes = p.GetAttributes();
-                    sb.AppendLine($"\t.dh {Hex.ToPrefixedString(attributes[0])},{Hex.ToPrefixedString(attributes[1])},{Hex.ToPrefixedString(attributes[2])}");
+                    sb.AppendLine($"\t.dh {Hex.ToPrefixedPaddedString(attributes[0])},{Hex.ToPrefixedPaddedString(attributes[1])},{Hex.ToPrefixedPaddedString(attributes[2])}");
                 }
                 sb.AppendLine();
             }
-
-            sb.AppendLine($"{animationName}_Animation");
-            for (int i = 0; i < NumFrames; i++)
-            {
-                Frame frame = Frames[i];
-                sb.AppendLine($"\t.dw {animationName}_Frame{Hex.ToPrefixedString(i)}, {Hex.ToPrefixedString(frame.duration)}");
-            }
-            sb.AppendLine("\t.dw 0,0");
-
             return sb.ToString();
         }
 

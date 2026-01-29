@@ -1316,8 +1316,9 @@ public partial class FormOam : Form
             MessageBox.Show("No OAM loaded", "OAM Required", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
-
-        File.WriteAllText(saveASM.FileName, oam.ToASM());
+        string animationName = Path.GetFileName(saveASM.FileName);
+        animationName = Path.GetFileNameWithoutExtension(animationName);
+        File.WriteAllText(saveASM.FileName, oam.ToASM(animationName));
     }
 
     void button_importOam_Click(object sender, EventArgs e)
