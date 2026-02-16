@@ -1,3 +1,11 @@
+# [1.13.0](https://github.com/ConConner/MAGE-Themes/compare/v1.12.4...v1.13.0) (2026-02-16)
+
+
+### Features
+
+* hybrid rom compilation ([5621751](https://github.com/ConConner/MAGE-Themes/commit/5621751b2eda16ef444a1f75bb0cb1bbd8a36bb1))
+* test rom with hybrid rom compilation ([5083dac](https://github.com/ConConner/MAGE-Themes/commit/5083dacc27d8b8e5baa6bbdc1c3944199eb23519))
+
 ## [1.12.4](https://github.com/ConConner/MAGE-Themes/compare/v1.12.3...v1.12.4) (2026-01-29)
 
 
