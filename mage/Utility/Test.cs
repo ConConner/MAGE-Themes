@@ -1,4 +1,5 @@
-﻿using mage.Data;
+﻿using mage.Compiling;
+using mage.Data;
 using mage.Options;
 using mage.Properties;
 using mage.Utility;
@@ -114,40 +115,36 @@ namespace mage
             // save new changes and launch
             try
             {
-                string path = GetTestRomPath();
-                string romName = Path.GetFileNameWithoutExtension(main.filename);
-                romName = Path.Combine(Path.GetDirectoryName(main.filename), romName);
+                string testDirectoryPath = GetTestRomPath();
 
-                string testSymbolName = "test";
-                string testRomPath = Path.Combine(path, "test.gba");
+                string baseRomName = Path.GetFileNameWithoutExtension(main.filename);
+                baseRomName = Path.Combine(Path.GetDirectoryName(main.filename), baseRomName);
+                string baseRomSymbolPath = baseRomName + ".sym";
+                string testSymbolPath = Path.Combine(testDirectoryPath, $"test.sym");
+
+                string testRomPath = Path.Combine(testDirectoryPath, "test.gba");
                 room.SaveObjects();
                 ROM.SaveROM(testRomPath, false);
 
                 // Compilation
                 if (Version.ProjectConfig.EnableProjectCompilation && File.Exists(Version.ProjectConfig.CompilationScriptPath))
                 {
-                    var result = Compiling.Compile(testRomPath, Version.ProjectConfig.CompilationScriptPath, Version.ProjectConfig.CompilationOutputRomName);
-                    if (
-                        result.ExitCode != 0
-                        && Version.ProjectConfig.AbortTestingIfCompilationFailed
-                        && MessageBox.Show($"{result.Error}\n\nDo you want to abort the test?", "Error while compiling", MessageBoxButtons.YesNo)
-                        == DialogResult.Yes
-                    ) return;
+                    var dialog = new FormScriptOutput(Version.ProjectConfig.CompilationScriptPath, testRomPath);
+                    var dr = dialog.ShowDialog();
 
-                    // Any other case
-                    string outPutRomPath = Path.Combine(path, Version.ProjectConfig.CompilationOutputRomName);
-                    if (File.Exists(outPutRomPath))
+                    if (dr == DialogResult.OK && !string.IsNullOrEmpty(dialog.NewOutputPath))
                     {
-                        testRomPath = outPutRomPath;
-                        testSymbolName = Path.GetFileNameWithoutExtension(testRomPath);
-                    }
+                        testRomPath = dialog.NewOutputPath;
 
+                        string testSymbolName = Path.GetFileNameWithoutExtension(testRomPath);
+                        string newTestRomDirectory = Path.GetDirectoryName(testRomPath);
+                        testSymbolPath = Path.Combine(newTestRomDirectory, $"{testSymbolName}.sym");
+                    }
+                    else if (dr == DialogResult.Cancel) return;
                 }
 
                 //Copy a symbol file if it exists
-                string romSymbolPath = romName + ".sym";
-                string testSymbolPath = Path.Combine(path, $"{testSymbolName}.sym");
-                if (File.Exists(romSymbolPath) && Program.Config.IncludeSymbolFile) File.Copy(romSymbolPath, testSymbolPath, true);
+                if (File.Exists(baseRomSymbolPath) && Program.Config.IncludeSymbolFile) File.Copy(baseRomSymbolPath, testSymbolPath, true);
 
                 Sound.PlaySound("test.wav");
                 RunEmulator($"\"{testRomPath}\"");
@@ -157,9 +154,11 @@ namespace mage
                 MessageBox.Show("Test ROM could not be launched.\n\n" + e.Message,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            // restore data
-            ROM.RestoreData(backup);
+            finally
+            {
+                // restore data
+                ROM.RestoreData(backup);
+            }
         }
 
         public static void Demo(byte demoNum)

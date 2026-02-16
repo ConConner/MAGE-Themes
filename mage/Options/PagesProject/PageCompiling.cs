@@ -28,9 +28,7 @@ public partial class PageCompiling : UserControl, IReloadablePage
 
         checkBox_enableCompilation.Checked = Version.ProjectConfig.EnableProjectCompilation;
         group_compilationSettings.Enabled = Version.ProjectConfig.EnableProjectCompilation;
-        checkBox_abortTestOnError.Checked = Version.ProjectConfig.AbortTestingIfCompilationFailed;
         textBox_scriptPath.Text = Version.ProjectConfig.CompilationScriptPath;
-        textBox_outputName.Text = Version.ProjectConfig.CompilationOutputRomName;
 
         init = false;
     }
@@ -46,18 +44,6 @@ public partial class PageCompiling : UserControl, IReloadablePage
     {
         if (init) return;
         Version.ProjectConfig.CompilationScriptPath = textBox_scriptPath.Text;
-    }
-
-    private void textBox_outputName_TextChanged(object sender, EventArgs e)
-    {
-        if (init) return;
-        Version.ProjectConfig.CompilationOutputRomName = textBox_outputName.Text;
-    }
-
-    private void checkBox_abortTestOnError_CheckedChanged(object sender, EventArgs e)
-    {
-        if (init) return;
-        Version.ProjectConfig.AbortTestingIfCompilationFailed = checkBox_abortTestOnError.Checked;
     }
 
     private void button_selectScriptPath_Click(object sender, EventArgs e)

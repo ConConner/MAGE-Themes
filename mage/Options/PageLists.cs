@@ -23,7 +23,7 @@ public static class PageLists
     public static List<OptionsPage> ProjectOptionsPages = new()
     {
         new() { Name = "Overview", Page = new PageOverview(), RequiresROM = true},
-        //new() { Name = "Compiling", Page = new PageCompiling(), RequiresROM = true},
+        new() { Name = "Compiling", Page = new PageCompiling(), RequiresROM = true},
         new() { Name = "Backups", Page = new PageBackups(), RequiresROM = true },
     };
 }
