@@ -582,6 +582,7 @@ namespace mage
 
             // Copy new ROM
             if (goalFileName == outputRomPath) return; // Already done
+            if (File.Exists(goalFileName)) File.Delete(goalFileName);
             try { File.Copy(outputRomPath, goalFileName); }
             catch (Exception e)
             {
@@ -589,6 +590,7 @@ namespace mage
                 return;
             }
         }
+
         private void btn_saveCompiled_Click(object sender, EventArgs e)
         {
             if (!Version.ProjectConfig.EnableProjectCompilation) return;
