@@ -16,6 +16,7 @@ public class ProjectConfig
 
     public bool EnableProjectCompilation { get; set; } = false;
     public string CompilationScriptPath { get; set; } = "";
+    public bool CompilationIgnoreErrors { get; set; } = false;
 
     public bool BackupsMoveIntoSeperateDirectory { get; set; } = false;
     public string BackupDateFormatString { get; set; } = "yyyy-MM-dd_HH-mm-ss";

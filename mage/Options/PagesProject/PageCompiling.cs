@@ -29,6 +29,7 @@ public partial class PageCompiling : UserControl, IReloadablePage
         checkBox_enableCompilation.Checked = Version.ProjectConfig.EnableProjectCompilation;
         group_compilationSettings.Enabled = Version.ProjectConfig.EnableProjectCompilation;
         textBox_scriptPath.Text = Version.ProjectConfig.CompilationScriptPath;
+        chb_ignoreErrors.Checked = Version.ProjectConfig.CompilationIgnoreErrors;
 
         init = false;
     }
@@ -49,9 +50,15 @@ public partial class PageCompiling : UserControl, IReloadablePage
     private void button_selectScriptPath_Click(object sender, EventArgs e)
     {
         OpenFileDialog dialog = new();
-        dialog.Filter = "Scripts|*.bat;*.cmd;*.ps1;*.vbs;*.js|All Files|*.*";
+        dialog.Filter = "Scripts|*.bat;*.ps1;|All Files|*.*";
         if (dialog.ShowDialog() != DialogResult.OK) return;
 
         textBox_scriptPath.Text = dialog.FileName;
+    }
+
+    private void chb_ignoreErrors_CheckedChanged(object sender, EventArgs e)
+    {
+        if (init) return;
+        Version.ProjectConfig.CompilationIgnoreErrors = chb_ignoreErrors.Checked;
     }
 }

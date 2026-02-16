@@ -18,11 +18,14 @@ internal class ScriptExecutor : IScriptRunner
     private readonly string? arguments;
     private readonly Action<string> logLine;
     private Process? process;
+    private string workingDirectory;
 
     public string Name => $"External: {executable}";
 
     public ScriptExecutor(string executable, string? arguments, Action<string> logLine)
     {
+        workingDirectory = Path.GetDirectoryName(executable) ?? Environment.CurrentDirectory;
+
         // Check if powershell
         if (executable.EndsWith(".ps1", StringComparison.OrdinalIgnoreCase))
         {
@@ -53,6 +56,7 @@ internal class ScriptExecutor : IScriptRunner
             FileName = executable,
             Arguments = args,
             UseShellExecute = false,
+            WorkingDirectory = workingDirectory,
             CreateNoWindow = true,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
@@ -67,14 +71,14 @@ internal class ScriptExecutor : IScriptRunner
         {
             if (e.Data is null) return;
             stdoutLines.Add(e.Data);
-            logLine($"[stdout] {e.Data}");
+            logLine($"> {e.Data}");
         };
 
         process.ErrorDataReceived += (_, e) =>
         {
             if (e.Data is null) return;
             stdoutLines.Add(e.Data);
-            logLine($"[stderr] {e.Data}");
+            logLine($"[error] {e.Data}");
         };
 
         process.Exited += (_, _) =>
@@ -114,6 +118,17 @@ internal class ScriptExecutor : IScriptRunner
                 Error = romPath is null
                     ? "Script produced no valid absolute path on stdout."
                     : $"Declared output path does not exist: {romPath}",
+            };
+        }
+
+        if (!romPath.EndsWith(".gba", StringComparison.OrdinalIgnoreCase))
+        {
+            string actualExtension = Path.GetExtension(romPath);
+            return new ScriptResult()
+            {
+                Success = false,
+                ExitCode = exitCode,
+                Error = $"Declared output path is not a .gba file: Expected .gba got {actualExtension}"
             };
         }
 

@@ -1,6 +1,7 @@
 using mage.Actions;
 using mage.Actions.RoomEditor;
 using mage.Bookmarks;
+using mage.Compiling;
 using mage.Controls; // added for font stuff - alexman25
 using mage.Data;
 using mage.Dialogs;
@@ -549,6 +550,46 @@ namespace mage
         private void menuItem_createBackup_Click(object sender, EventArgs e)
         {
             CreateBackup();
+        }
+
+        public void CreateCompilation(string goalFileName)
+        {
+            if (filename == goalFileName)
+            {
+                MessageBox.Show("Compiled ROM should not overwrite the currently opened ROM. Choose a different location.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Create temp ROM
+            string tempFileName = Path.Combine(Path.GetTempPath(), "temp.gba");
+            SaveROM();
+            ROM.SaveROM(tempFileName, false);
+
+            // Compile
+            var dialog = new FormScriptOutput(Version.ProjectConfig.CompilationScriptPath, tempFileName);
+            var dr = dialog.ShowDialog();
+            if (dr == DialogResult.Cancel) return;
+
+            string outputRomPath = tempFileName;
+            if (dialog.NewOutputPath != null) outputRomPath = dialog.NewOutputPath;
+
+            // Copy new ROM
+            if (goalFileName == outputRomPath) return; // Already done
+            try { File.Copy(outputRomPath, goalFileName); }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Could not save compiled ROM.\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+        private void btn_saveCompiled_Click(object sender, EventArgs e)
+        {
+            if (!Version.ProjectConfig.EnableProjectCompilation) return;
+
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "GBA ROM files (*.gba)|*.gba";
+            if (saveFile.ShowDialog() == DialogResult.OK) CreateCompilation(saveFile.FileName);
         }
 
         private void menuItem_clearRecentFiles_Click(object sender, EventArgs e)

@@ -278,6 +278,7 @@
             comboBox_spriteset = new mage.Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
             splitContainer1 = new System.Windows.Forms.SplitContainer();
+            btn_saveCompiled = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -309,7 +310,7 @@
             // 
             // menuStrip_file
             // 
-            menuStrip_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_openROM, menuItem_saveROM, menuItem_saveROMas, toolStripSeparator5, menuItem_createBackup, toolStripSeparator3, menuItem_recentFiles });
+            menuStrip_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_openROM, menuItem_saveROM, menuItem_saveROMas, btn_saveCompiled, toolStripSeparator5, menuItem_createBackup, toolStripSeparator3, menuItem_recentFiles });
             menuStrip_file.Name = "menuStrip_file";
             menuStrip_file.Size = new System.Drawing.Size(37, 20);
             menuStrip_file.Text = "File";
@@ -319,7 +320,7 @@
             menuItem_openROM.Image = Properties.Resources.toolbar_open;
             menuItem_openROM.Name = "menuItem_openROM";
             menuItem_openROM.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O;
-            menuItem_openROM.Size = new System.Drawing.Size(223, 22);
+            menuItem_openROM.Size = new System.Drawing.Size(232, 22);
             menuItem_openROM.Text = "Open ROM...";
             menuItem_openROM.Click += menuItem_openROM_Click;
             // 
@@ -329,7 +330,7 @@
             menuItem_saveROM.Image = Properties.Resources.toolbar_save;
             menuItem_saveROM.Name = "menuItem_saveROM";
             menuItem_saveROM.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S;
-            menuItem_saveROM.Size = new System.Drawing.Size(223, 22);
+            menuItem_saveROM.Size = new System.Drawing.Size(232, 22);
             menuItem_saveROM.Text = "Save ROM";
             menuItem_saveROM.Click += menuItem_saveROM_Click;
             // 
@@ -339,14 +340,14 @@
             menuItem_saveROMas.Image = Properties.Resources.disk_multiple;
             menuItem_saveROMas.Name = "menuItem_saveROMas";
             menuItem_saveROMas.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.S;
-            menuItem_saveROMas.Size = new System.Drawing.Size(223, 22);
+            menuItem_saveROMas.Size = new System.Drawing.Size(232, 22);
             menuItem_saveROMas.Text = "Save ROM as...";
             menuItem_saveROMas.Click += menuItem_saveROMAs_Click;
             // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new System.Drawing.Size(220, 6);
+            toolStripSeparator5.Size = new System.Drawing.Size(229, 6);
             // 
             // menuItem_createBackup
             // 
@@ -354,33 +355,33 @@
             menuItem_createBackup.Image = Properties.Resources.drive_disk;
             menuItem_createBackup.Name = "menuItem_createBackup";
             menuItem_createBackup.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B;
-            menuItem_createBackup.Size = new System.Drawing.Size(223, 22);
+            menuItem_createBackup.Size = new System.Drawing.Size(232, 22);
             menuItem_createBackup.Text = "Create Backup...";
             menuItem_createBackup.Click += menuItem_createBackup_Click;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new System.Drawing.Size(220, 6);
+            toolStripSeparator3.Size = new System.Drawing.Size(229, 6);
             // 
             // menuItem_recentFiles
             // 
             menuItem_recentFiles.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_clearRecentFiles, toolStripSeparator22 });
             menuItem_recentFiles.Name = "menuItem_recentFiles";
-            menuItem_recentFiles.Size = new System.Drawing.Size(223, 22);
+            menuItem_recentFiles.Size = new System.Drawing.Size(232, 22);
             menuItem_recentFiles.Text = "Recent Files";
             // 
             // menuItem_clearRecentFiles
             // 
             menuItem_clearRecentFiles.Name = "menuItem_clearRecentFiles";
-            menuItem_clearRecentFiles.Size = new System.Drawing.Size(101, 22);
+            menuItem_clearRecentFiles.Size = new System.Drawing.Size(180, 22);
             menuItem_clearRecentFiles.Text = "Clear";
             menuItem_clearRecentFiles.Click += menuItem_clearRecentFiles_Click;
             // 
             // toolStripSeparator22
             // 
             toolStripSeparator22.Name = "toolStripSeparator22";
-            toolStripSeparator22.Size = new System.Drawing.Size(98, 6);
+            toolStripSeparator22.Size = new System.Drawing.Size(177, 6);
             // 
             // menuStrip_edit
             // 
@@ -2374,6 +2375,16 @@
             splitContainer1.TabIndex = 12;
             splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
             // 
+            // btn_saveCompiled
+            // 
+            btn_saveCompiled.Image = Properties.Resources.script_code_red;
+            btn_saveCompiled.Name = "btn_saveCompiled";
+            btn_saveCompiled.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.C;
+            btn_saveCompiled.Size = new System.Drawing.Size(232, 22);
+            btn_saveCompiled.Text = "Compile ROM...";
+            btn_saveCompiled.Visible = false;
+            btn_saveCompiled.Click += btn_saveCompiled_Click;
+            // 
             // FormMain
             // 
             AllowDrop = true;
@@ -2676,6 +2687,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator28;
         private System.Windows.Forms.ToolStripMenuItem menuItem_creditsEditor;
         private System.Windows.Forms.ToolStripButton toolStrip_credits;
+        private System.Windows.Forms.ToolStripMenuItem btn_saveCompiled;
     }
 }
 

@@ -32,7 +32,7 @@ public partial class FormScriptOutput : Form
 
     public async void RunScript()
     {
-        var scriptRunner = new ScriptExecutor(scriptPath, null, line => Invoke(() => log(line)));
+        using var scriptRunner = new ScriptExecutor(scriptPath, null, line => Invoke(() => log(line)));
         var result = await scriptRunner.ExecuteAsync(tempRomPath, cts.Token);
 
         if (result.Success)
@@ -45,6 +45,7 @@ public partial class FormScriptOutput : Form
         {
             log($"[FAIL] exit {result.ExitCode}: {result.Error}");
             pnl_error.Visible = true;
+            if (Version.ProjectConfig.CompilationIgnoreErrors) btn_launchAnyways_Click(null, null);
         }
     }
 

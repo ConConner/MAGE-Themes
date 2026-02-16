@@ -30,6 +30,7 @@
         {
             checkBox_enableCompilation = new System.Windows.Forms.CheckBox();
             group_compilationSettings = new System.Windows.Forms.GroupBox();
+            chb_ignoreErrors = new System.Windows.Forms.CheckBox();
             label_scriptPath = new System.Windows.Forms.Label();
             button_selectScriptPath = new System.Windows.Forms.Button();
             textBox_scriptPath = new mage.Theming.CustomControls.FlatTextBox();
@@ -41,24 +42,36 @@
             checkBox_enableCompilation.AutoSize = true;
             checkBox_enableCompilation.Location = new System.Drawing.Point(6, 6);
             checkBox_enableCompilation.Name = "checkBox_enableCompilation";
-            checkBox_enableCompilation.Size = new System.Drawing.Size(249, 19);
+            checkBox_enableCompilation.Size = new System.Drawing.Size(169, 19);
             checkBox_enableCompilation.TabIndex = 0;
-            checkBox_enableCompilation.Text = "Enable Compilation with an external script";
+            checkBox_enableCompilation.Text = "Enable Hybrid Compilation";
             checkBox_enableCompilation.UseVisualStyleBackColor = true;
             checkBox_enableCompilation.CheckedChanged += checkBox_enableCompilation_CheckedChanged;
             // 
             // group_compilationSettings
             // 
             group_compilationSettings.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            group_compilationSettings.Controls.Add(chb_ignoreErrors);
             group_compilationSettings.Controls.Add(label_scriptPath);
             group_compilationSettings.Controls.Add(button_selectScriptPath);
             group_compilationSettings.Controls.Add(textBox_scriptPath);
             group_compilationSettings.Location = new System.Drawing.Point(6, 31);
             group_compilationSettings.Name = "group_compilationSettings";
-            group_compilationSettings.Size = new System.Drawing.Size(423, 79);
+            group_compilationSettings.Size = new System.Drawing.Size(423, 99);
             group_compilationSettings.TabIndex = 1;
             group_compilationSettings.TabStop = false;
             group_compilationSettings.Text = "Compilation settings";
+            // 
+            // chb_ignoreErrors
+            // 
+            chb_ignoreErrors.AutoSize = true;
+            chb_ignoreErrors.Location = new System.Drawing.Point(6, 72);
+            chb_ignoreErrors.Name = "chb_ignoreErrors";
+            chb_ignoreErrors.Size = new System.Drawing.Size(339, 19);
+            chb_ignoreErrors.TabIndex = 2;
+            chb_ignoreErrors.Text = "Automatically ignore errors and continue with default ROM";
+            chb_ignoreErrors.UseVisualStyleBackColor = true;
+            chb_ignoreErrors.CheckedChanged += chb_ignoreErrors_CheckedChanged;
             // 
             // label_scriptPath
             // 
@@ -124,5 +137,6 @@
         private System.Windows.Forms.Label label_scriptPath;
         private System.Windows.Forms.Button button_selectScriptPath;
         private Theming.CustomControls.FlatTextBox textBox_scriptPath;
+        private System.Windows.Forms.CheckBox chb_ignoreErrors;
     }
 }
