@@ -1130,6 +1130,16 @@ namespace mage.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap script_code_red {
+            get {
+                object obj = ResourceManager.GetObject("script_code_red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap script_gear {
             get {
                 object obj = ResourceManager.GetObject("script_gear", resourceCulture);

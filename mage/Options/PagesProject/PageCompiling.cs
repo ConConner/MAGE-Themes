@@ -28,9 +28,8 @@ public partial class PageCompiling : UserControl, IReloadablePage
 
         checkBox_enableCompilation.Checked = Version.ProjectConfig.EnableProjectCompilation;
         group_compilationSettings.Enabled = Version.ProjectConfig.EnableProjectCompilation;
-        checkBox_abortTestOnError.Checked = Version.ProjectConfig.AbortTestingIfCompilationFailed;
         textBox_scriptPath.Text = Version.ProjectConfig.CompilationScriptPath;
-        textBox_outputName.Text = Version.ProjectConfig.CompilationOutputRomName;
+        chb_ignoreErrors.Checked = Version.ProjectConfig.CompilationIgnoreErrors;
 
         init = false;
     }
@@ -40,6 +39,7 @@ public partial class PageCompiling : UserControl, IReloadablePage
         if (init) return;
         group_compilationSettings.Enabled = checkBox_enableCompilation.Checked;
         Version.ProjectConfig.EnableProjectCompilation = checkBox_enableCompilation.Checked;
+        FormMain.Instance.UpdateCompilationButton();
     }
 
     private void textBox_scriptPath_TextChanged(object sender, EventArgs e)
@@ -48,24 +48,18 @@ public partial class PageCompiling : UserControl, IReloadablePage
         Version.ProjectConfig.CompilationScriptPath = textBox_scriptPath.Text;
     }
 
-    private void textBox_outputName_TextChanged(object sender, EventArgs e)
-    {
-        if (init) return;
-        Version.ProjectConfig.CompilationOutputRomName = textBox_outputName.Text;
-    }
-
-    private void checkBox_abortTestOnError_CheckedChanged(object sender, EventArgs e)
-    {
-        if (init) return;
-        Version.ProjectConfig.AbortTestingIfCompilationFailed = checkBox_abortTestOnError.Checked;
-    }
-
     private void button_selectScriptPath_Click(object sender, EventArgs e)
     {
         OpenFileDialog dialog = new();
-        dialog.Filter = "Scripts|*.bat;*.cmd;*.ps1;*.vbs;*.js|All Files|*.*";
+        dialog.Filter = "Scripts|*.bat;*.ps1;|All Files|*.*";
         if (dialog.ShowDialog() != DialogResult.OK) return;
 
         textBox_scriptPath.Text = dialog.FileName;
+    }
+
+    private void chb_ignoreErrors_CheckedChanged(object sender, EventArgs e)
+    {
+        if (init) return;
+        Version.ProjectConfig.CompilationIgnoreErrors = chb_ignoreErrors.Checked;
     }
 }
