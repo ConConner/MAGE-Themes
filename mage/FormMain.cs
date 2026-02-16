@@ -491,6 +491,12 @@ namespace mage
         {
             statusStrip_theme.Text = ThemeSwitcher.ProjectThemeName;
         }
+
+        public void UpdateCompilationButton()
+        {
+            bool visible = Version.ProjectConfig.EnableProjectCompilation && File.Exists(Version.ProjectConfig.CompilationScriptPath);
+            btn_saveCompiled.Visible = visible;
+        }
         #endregion
 
 
@@ -1549,6 +1555,7 @@ namespace mage
 
             // enable controls
             EnableControls(true);
+            UpdateCompilationButton();
             menuItem_editBGs.Checked = toolStrip_editBGs.Checked = true;
             menuItem_editObjects.Checked = toolStrip_editObjects.Checked = false;
 

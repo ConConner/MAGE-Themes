@@ -39,6 +39,7 @@ public partial class PageCompiling : UserControl, IReloadablePage
         if (init) return;
         group_compilationSettings.Enabled = checkBox_enableCompilation.Checked;
         Version.ProjectConfig.EnableProjectCompilation = checkBox_enableCompilation.Checked;
+        FormMain.Instance.UpdateCompilationButton();
     }
 
     private void textBox_scriptPath_TextChanged(object sender, EventArgs e)
