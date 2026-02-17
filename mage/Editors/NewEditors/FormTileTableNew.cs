@@ -242,7 +242,7 @@ namespace mage.Editors
                 for (int y = 0; y < height; y++)
                 {
                     // Get number for current tile
-                    int gfxNum = (GfxSelection.X / 8 + x) + ((GfxSelection.Y / 8 + y) * 32);
+                    int gfxNum = (GfxSelection.X / 8 + x) + ((GfxSelection.Y / 8 + y) * 32) + (int)numericUpDown_shift.Value & 0x3FF;
                     //Apply current palette
                     if (CopyPalette) gfxNum |= (comboBox_palette.SelectedIndex << 12);
                     selectedTiles[x, y] = (ushort)gfxNum;
@@ -1021,6 +1021,7 @@ namespace mage.Editors
             oldSelectedTab = tab_select.SelectedIndex;
             Reset();
 
+            numericUpDown_shift.Value = 0;
             if (openedInRoom == null) return;
             if (selectedTab == Tab.Tileset)
             {
@@ -1259,6 +1260,7 @@ namespace mage.Editors
             {
                 TileTip.TileGFX = tableView.TileImage;
                 TileTip.TileVal = tileTable[GetIndexFromLocation(e.TileIndexPosition.X, e.TileIndexPosition.Y)];
+                TileTip.Shift = (int)numericUpDown_shift.Value;
                 TileTip.PositionOnImage = e.TilePixelPosition;
             }
 
