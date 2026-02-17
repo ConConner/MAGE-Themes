@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,5 +26,10 @@ public class ExtendedPanel : Panel
             return;
         }
         base.OnMouseWheel(e);
+    }
+
+    protected override Point ScrollToControl(Control activeControl)
+    {
+        return this.AutoScrollPosition;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
@@ -272,6 +273,12 @@ namespace mage
         {
             Scrolled.Invoke(this, e);
             base.OnMouseWheel(e);
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (!this.Focused) this.Focus();
         }
     }
 }

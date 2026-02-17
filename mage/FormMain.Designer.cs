@@ -35,6 +35,7 @@
             menuItem_openROM = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_saveROM = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_saveROMas = new System.Windows.Forms.ToolStripMenuItem();
+            btn_saveCompiled = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_createBackup = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -278,7 +279,6 @@
             comboBox_spriteset = new mage.Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
             splitContainer1 = new System.Windows.Forms.SplitContainer();
-            btn_saveCompiled = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -344,6 +344,16 @@
             menuItem_saveROMas.Text = "Save ROM as...";
             menuItem_saveROMas.Click += menuItem_saveROMAs_Click;
             // 
+            // btn_saveCompiled
+            // 
+            btn_saveCompiled.Image = Properties.Resources.script_code_red;
+            btn_saveCompiled.Name = "btn_saveCompiled";
+            btn_saveCompiled.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.C;
+            btn_saveCompiled.Size = new System.Drawing.Size(232, 22);
+            btn_saveCompiled.Text = "Compile ROM...";
+            btn_saveCompiled.Visible = false;
+            btn_saveCompiled.Click += btn_saveCompiled_Click;
+            // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
@@ -374,14 +384,14 @@
             // menuItem_clearRecentFiles
             // 
             menuItem_clearRecentFiles.Name = "menuItem_clearRecentFiles";
-            menuItem_clearRecentFiles.Size = new System.Drawing.Size(180, 22);
+            menuItem_clearRecentFiles.Size = new System.Drawing.Size(101, 22);
             menuItem_clearRecentFiles.Text = "Clear";
             menuItem_clearRecentFiles.Click += menuItem_clearRecentFiles_Click;
             // 
             // toolStripSeparator22
             // 
             toolStripSeparator22.Name = "toolStripSeparator22";
-            toolStripSeparator22.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator22.Size = new System.Drawing.Size(98, 6);
             // 
             // menuStrip_edit
             // 
@@ -1399,7 +1409,7 @@
             comboBox_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_room.Name = "comboBox_room";
             comboBox_room.Size = new System.Drawing.Size(73, 23);
-            comboBox_room.TabIndex = 10;
+            comboBox_room.TabIndex = 1;
             comboBox_room.SelectedIndexChanged += comboBox_room_SelectedIndexChanged;
             comboBox_room.KeyPress += comboBox_KeyPress;
             // 
@@ -1411,7 +1421,7 @@
             comboBox_area.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_area.Name = "comboBox_area";
             comboBox_area.Size = new System.Drawing.Size(73, 23);
-            comboBox_area.TabIndex = 9;
+            comboBox_area.TabIndex = 0;
             comboBox_area.SelectedIndexChanged += comboBox_area_SelectedIndexChanged;
             // 
             // label_room
@@ -2372,18 +2382,8 @@
             splitContainer1.Size = new System.Drawing.Size(799, 424);
             splitContainer1.SplitterDistance = 299;
             splitContainer1.SplitterWidth = 3;
-            splitContainer1.TabIndex = 12;
+            splitContainer1.TabIndex = 0;
             splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
-            // 
-            // btn_saveCompiled
-            // 
-            btn_saveCompiled.Image = Properties.Resources.script_code_red;
-            btn_saveCompiled.Name = "btn_saveCompiled";
-            btn_saveCompiled.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.C;
-            btn_saveCompiled.Size = new System.Drawing.Size(232, 22);
-            btn_saveCompiled.Text = "Compile ROM...";
-            btn_saveCompiled.Visible = false;
-            btn_saveCompiled.Click += btn_saveCompiled_Click;
             // 
             // FormMain
             // 
