@@ -11,6 +11,7 @@ using mage.Options;
 using mage.Properties;
 using mage.Theming;
 using mage.Tools;
+using mage.Tweaks;
 using mage.Updates;
 using mage.Utility;
 using Microsoft.Win32;
@@ -1563,6 +1564,11 @@ namespace mage
 
             NewRomLoaded?.Invoke(this, null);
             Sound.PlaySound("load.wav");
+
+            // TEST REMOVE PLEASE
+            string json = "{\"Name\": \"Chozo Statue Flip\",\"Author\": \"Biospark\",\"Description\": \"Flips Chozo Statue\",\"Parameters\": [ {\"Name\": \"spriteID\",\"Description\": \"Sprite ID of the Chozo Statue that gets flipped\",\"Value\": 35},{\"Name\": \"flip\",\"Description\": \"0xDC for left, 0xD4 for right\",\"Value\": 220}],\"Patches\": [{\"Offset\": \"0x13C08 + (spriteID - 0x22) * 0x4\",\"Data\": [\"flip\"]}]}";
+            Tweak t = JsonSerializer.Deserialize<Tweak>(json);
+            t.Apply(ROM.Stream);
         }
 
         private void EnableControls(bool val)
