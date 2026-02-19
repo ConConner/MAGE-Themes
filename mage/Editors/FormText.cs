@@ -406,7 +406,7 @@ namespace mage
 
         private void button_editGfx_Click(object sender, EventArgs e)
         {
-            FormGraphicsNew.OpenGraphicsEditor(Version.TextGfxOffset, 32, 32, Version.TextPaletteOffset):
+            FormGraphicsNew.OpenGraphicsEditor(Version.TextGfxOffset, 32, 32, Version.TextPaletteOffset);
         }
 
         private void button_update_Click(object sender, EventArgs e)

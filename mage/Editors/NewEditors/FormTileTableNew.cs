@@ -142,7 +142,6 @@ namespace mage.Editors
         private int oldSelectedArea;
         private int oldSelectedRoom;
         private int oldSelectedBG;
-        private int oldSelectedSize;
         #endregion
 
         public FormTileTableNew()
@@ -372,7 +371,7 @@ namespace mage.Editors
 
                 // compress by LZ77
                 ByteStream compData = new ByteStream();
-                compData.Write32(oldSelectedSize);
+                compData.Write32(comboBox_size.SelectedIndex);
                 int newCompLen = Compress.CompLZ77(uncompData, length, compData);
 
                 // get pointer
@@ -1104,7 +1103,6 @@ namespace mage.Editors
         private void comboBox_size_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (init) return;
-            oldSelectedSize = comboBox_size.SelectedIndex;
             SetBackgroundImage();
             Status.ChangeMade();
         }
