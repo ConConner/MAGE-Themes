@@ -198,6 +198,12 @@ namespace mage.Editors
             comboBox_tileset.SelectedIndex = room.tileset.number;
         }
 
+        public FormTileTableNew(int tileset) : this()
+        {
+            openedInRoom = null;
+            comboBox_tileset.SelectedIndex = tileset;
+        }
+
         #region Helpers
         /// <summary>
         /// Gets the index for a single tile from the tile x and y position on a metatile canvas.
@@ -1378,10 +1384,7 @@ namespace mage.Editors
 
         private void button_editGfx_Click(object sender, EventArgs e)
         {
-            Form f;
-            if (Program.ExperimentalFeaturesEnabled) f = new FormGraphicsNew(FormMain.Instance, gfxSourceOffset, 32, 0, palSourceOffset);
-            else f = new FormGraphics(FormMain.Instance, gfxSourceOffset, 32, 0, palSourceOffset);
-            f.Show();
+            FormGraphicsNew.OpenGraphicsEditor(gfxSourceOffset, 32, 0, palSourceOffset);
         }
     }
 }

@@ -976,10 +976,7 @@ public partial class FormMinimapNew : Form, Editor
     private void button_editGfx_Click(object sender, EventArgs e)
     {
         int height = numTiles / 32;
-        Form f;
-        if (!Program.ExperimentalFeaturesEnabled) f = new FormGraphics(main, Version.MinimapGfxOffset, 32, height, Version.MinimapPaletteOffset);
-        else f = new FormGraphicsNew(main, Version.MinimapGfxOffset, 32, height, Version.MinimapPaletteOffset);
-        f.Show();
+        FormGraphicsNew.OpenGraphicsEditor(Version.MinimapGfxOffset, 32, height, Version.MinimapPaletteOffset);
     }
     #endregion
 }

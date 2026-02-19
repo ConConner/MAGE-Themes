@@ -1,4 +1,5 @@
-﻿using mage.Theming;
+﻿using mage.Editors.NewEditors;
+using mage.Theming;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -89,7 +90,7 @@ namespace mage
             for (int i = 0; i < 16; i++)
             {
                 comboBox_tilesetSlot.Items.Add(Hex.ToString(i));
-            }          
+            }
 
             // graphics
             count = Version.NumOfAnimGfx;
@@ -167,7 +168,7 @@ namespace mage
             double frames = sw.ElapsedMilliseconds * 0.06;
             sw.Reset();
             sw.Start();
-            
+
             if (animGfx.type != 0 && animGfx.numStates > 0)
             {
                 UpdateGraphics(frames);
@@ -409,8 +410,7 @@ namespace mage
             {
                 palOffset = Version.GenericBgPaletteOffset;
             }
-            FormGraphics form = new FormGraphics(main, animGfx.gfx.Offset, 4, height, palOffset);
-            form.Show();
+            FormGraphicsNew.OpenGraphicsEditor(animGfx.gfx.Offset, 4, height, palOffset);
         }
 
         private void button_gfxApply_Click(object sender, EventArgs e)
@@ -517,7 +517,7 @@ namespace mage
                 romStream.Write8(offset + 1, delay);
                 romStream.Write8(offset + 2, rows);
 
-                animPalette = new AnimPalette(romStream, number);               
+                animPalette = new AnimPalette(romStream, number);
                 DrawPalette(0);
                 ResetAnimation();
 
@@ -537,6 +537,6 @@ namespace mage
             Close();
         }
 
-        
+
     }
 }
