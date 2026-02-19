@@ -1503,6 +1503,7 @@ namespace mage
                 Version.BackupService = BackupService.FromMinutes(Version.ProjectConfig.BackupsAutoCreationInterval);
                 Version.BackupService.Start();
             }
+            else Version.BackupService = null;
         }
 
         // Look for Input Mono to use in clipdata list; default to Consolas if absent - alexman25

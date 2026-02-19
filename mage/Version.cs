@@ -142,7 +142,15 @@ namespace mage
         public static int MetroidOffset { get; private set; }
         public static List<BookmarkFolder> ProjectBookmarks { get; private set; }
         public static ProjectConfig ProjectConfig { get; private set; } = ProjectConfig.DefaultConfig;
-        public static BackupService? BackupService { get; set; } = null;
+        public static BackupService? BackupService
+        {
+            get => field;
+            set
+            {
+                if (field != null) field.Stop();
+                field = value;
+            }
+        }
 
         public static string[] Clipdata
         {
@@ -585,9 +593,9 @@ namespace mage
                 }
             }
             if (!repointedInProject) foreach (var kvp in PSpriteOAM)
-                {
-                    if (kvp.Value == oldOffset) ProjectConfig.PrimarySpriteOAMRepoints[kvp.Key] = newOffset;
-                }
+            {
+                if (kvp.Value == oldOffset) ProjectConfig.PrimarySpriteOAMRepoints[kvp.Key] = newOffset;
+            }
 
             foreach (var kvp in ProjectConfig.SecondarySpriteOAMRepoints)
             {
@@ -598,9 +606,9 @@ namespace mage
                 }
             }
             if (!repointedInProject) foreach (var kvp in SSpriteOAM)
-                {
-                    if (kvp.Value == oldOffset) ProjectConfig.SecondarySpriteOAMRepoints[kvp.Key] = newOffset;
-                }
+            {
+                if (kvp.Value == oldOffset) ProjectConfig.SecondarySpriteOAMRepoints[kvp.Key] = newOffset;
+            }
         }
 
         public static void MarkOAMInvalid(byte spriteID, bool isSecondary)
