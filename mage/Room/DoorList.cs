@@ -68,14 +68,14 @@ namespace mage
                     if (!includeMoreInfo) continue;
 
                     // Draw Door Numbers
-                    Point pnt = new Point(d.xStart * 16, d.yStart * 16);
-                    mage.Draw.DrawNumber(g, pnt, d.doorNum);
+                    Point pnt = new Point(d.xStart * 16 + 8, d.yStart * 16 + 8);
+                    mage.Draw.DrawNumberCenteredRespectBase(g, pnt, d.doorNum);
 
                     // Draw connected door ID
                     if (ySize >= 3)
                     {
-                        Point dstPnt = new Point(d.xStart * 16, d.yEnd * 16);
-                        mage.Draw.DrawNumber(g, dstPnt, d.dstDoor);
+                        Point dstPnt = new Point(d.xStart * 16 + 8, d.yEnd * 16 + 8);
+                        mage.Draw.DrawNumberCenteredRespectBase(g, dstPnt, d.dstDoor);
 
                         //Draw Arrow
                         Point arrowPoint = new Point(d.xStart * 16, (d.yStart * 16 + d.yEnd * 16) / 2);
@@ -83,8 +83,8 @@ namespace mage
                     }
                     else if (xSize >= 3)
                     {
-                        Point dstPnt = new Point(d.xEnd * 16, d.yStart * 16);
-                        mage.Draw.DrawNumber(g, dstPnt, d.dstDoor);
+                        Point dstPnt = new Point(d.xEnd * 16 + 8, d.yStart * 16 + 8);
+                        mage.Draw.DrawNumberCenteredRespectBase(g, dstPnt, d.dstDoor);
 
                         //Draw Arrow
                         Point arrowPoint = new Point((d.xStart * 16 + d.xEnd * 16) / 2, d.yStart * 16);
@@ -184,7 +184,7 @@ namespace mage
         public void Clear()
         {
             Edited = true;
-            foreach(Door d in doors)
+            foreach (Door d in doors)
             {
                 d.Edited = true;
                 d.srcRoom = 0xFF;
