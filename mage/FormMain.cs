@@ -1324,6 +1324,11 @@ namespace mage
             }
         }
 
+        private void tweaksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormTweaks().Show();
+        }
+
         #endregion
 
 

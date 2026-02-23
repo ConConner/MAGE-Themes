@@ -294,6 +294,92 @@ namespace mage.Theming
                     }
                 };
             }
+
+            if (control is ListView lv)
+            {
+                lv.OwnerDraw = true;
+                lv.BorderStyle = BorderStyle.None;
+                lv.ColumnWidthChanged += (_, _) => lv.Invalidate(true);
+
+                var sf = new StringFormat
+                {
+                    Alignment = StringAlignment.Near,
+                    LineAlignment = StringAlignment.Center,
+                    Trimming = StringTrimming.EllipsisCharacter
+                };
+
+                lv.DrawColumnHeader += (_, e) =>
+                {
+                    using var backBrush = new SolidBrush(theme.BackgroundColor);
+                    using var textBrush = new SolidBrush(theme.TextColor);
+                    using var borderPen = new Pen(theme.SecondaryOutline);
+
+                    e.Graphics.FillRectangle(backBrush, e.Bounds);
+                    e.Graphics.DrawLine(borderPen, e.Bounds.Left, e.Bounds.Bottom - 1,
+                                       e.Bounds.Right - 1, e.Bounds.Bottom - 1);
+                    e.Graphics.DrawLine(borderPen, e.Bounds.Right - 1, e.Bounds.Top,
+                                       e.Bounds.Right - 1, e.Bounds.Bottom - 1);
+
+                    var textRect = new Rectangle(e.Bounds.X + 4, e.Bounds.Y,
+                                                 e.Bounds.Width - 8, e.Bounds.Height);
+                    e.Graphics.DrawString(e.Header.Text, lv.Font, textBrush, textRect, sf);
+
+                    if (e.ColumnIndex == lv.Columns.Count - 1)
+                    {
+                        int gapWidth = lv.ClientRectangle.Width - e.Bounds.Right;
+                        if (gapWidth > 0)
+                        {
+                            var gapRect = new Rectangle(e.Bounds.Right, e.Bounds.Y,
+                                                        gapWidth, e.Bounds.Height);
+                            var oldClip = e.Graphics.Clip;
+                            e.Graphics.SetClip(gapRect);
+                            e.Graphics.FillRectangle(backBrush, gapRect);
+                            e.Graphics.DrawLine(borderPen, gapRect.Left, gapRect.Bottom - 1,
+                                               gapRect.Right, gapRect.Bottom - 1);
+                            e.Graphics.Clip = oldClip;
+                        }
+                    }
+                };
+
+                lv.DrawItem += (_, e) => e.DrawDefault = lv.View != View.Details;
+
+                lv.DrawSubItem += (_, e) =>
+                {
+                    bool isSelected = e.Item.Selected;
+                    var backColor = isSelected ? theme.AccentColor : theme.BackgroundColor;
+                    var textColor = isSelected ? theme.TextColorHighlight : theme.TextColor;
+
+                    using var backBrush = new SolidBrush(backColor);
+                    using var textBrush = new SolidBrush(textColor);
+                    using var gridPen = new Pen(theme.SecondaryOutline);
+
+                    e.Graphics.FillRectangle(backBrush, e.Bounds);
+
+                    int textX = e.Bounds.X + 4;
+                    int availableWidth = e.Bounds.Width - 8;
+
+                    if (e.ColumnIndex == 0 && lv.SmallImageList != null &&
+                        e.Item.ImageIndex >= 0 &&
+                        e.Item.ImageIndex < lv.SmallImageList.Images.Count)
+                    {
+                        var img = lv.SmallImageList.Images[e.Item.ImageIndex];
+                        int imgY = e.Bounds.Y + (e.Bounds.Height - img.Height) / 2;
+                        e.Graphics.DrawImage(img, e.Bounds.X + 4, imgY);
+                        textX += img.Width + 4;
+                        availableWidth -= img.Width + 4;
+                    }
+
+                    var textRect = new Rectangle(textX, e.Bounds.Y,
+                                                 availableWidth, e.Bounds.Height);
+                    e.Graphics.DrawString(e.SubItem?.Text ?? "", lv.Font,
+                                         textBrush, textRect, sf);
+
+                    e.Graphics.DrawLine(gridPen, e.Bounds.Right - 1, e.Bounds.Top,
+                                       e.Bounds.Right - 1, e.Bounds.Bottom - 1);
+                    e.Graphics.DrawLine(gridPen, e.Bounds.Left, e.Bounds.Bottom - 1,
+                                       e.Bounds.Right - 1, e.Bounds.Bottom - 1);
+                };
+            }
         }
 
         /// <summary>
