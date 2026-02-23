@@ -322,7 +322,8 @@ namespace mage.Theming
 
                     var textRect = new Rectangle(e.Bounds.X + 4, e.Bounds.Y,
                                                  e.Bounds.Width - 8, e.Bounds.Height);
-                    e.Graphics.DrawString(e.Header.Text, lv.Font, textBrush, textRect, sf);
+                    using var font = new Font(lv.Font, FontStyle.Bold);
+                    e.Graphics.DrawString(e.Header.Text, font, textBrush, textRect, sf);
 
                     if (e.ColumnIndex == lv.Columns.Count - 1)
                     {

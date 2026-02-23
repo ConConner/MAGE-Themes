@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NCalc;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -30,7 +31,7 @@ public static class TweakValidation
 
         if (param.Type == ParameterType.Value)
         {
-            if (param.Options is not null || param.Options!.Length > 2)
+            if (param.Options is not null && param.Options!.Length > 2)
             {
                 ShowValidationError($"Parameter of type Value only takes two options: Min Value, Max Value. Supplied: {param.Options.Length}");
                 return false;
@@ -70,7 +71,7 @@ public static class TweakValidation
             }
             for (int i = 1; i < param.Options.Length; i += 2)
             {
-                try { Hex.ToInt(param.Options[i]); }
+                try { evaluate(param.Options[i]); }
                 catch
                 {
                     ShowValidationError($"Option Value[{i}] is not a number");
@@ -89,10 +90,10 @@ public static class TweakValidation
         int? min = null;
         int? max = null;
         if (options.Length >= 1)
-            try { min = Hex.ToInt(options[0]); }
+            try { min = evaluate(options[0]); }
             catch { throw new Exception("Min Value is not a number"); }
         if (options.Length == 2)
-            try { max = Hex.ToInt(options[1]); }
+            try { max = evaluate(options[1]); }
             catch { throw new Exception("Max Value is not a number"); }
         return (min, max);
     }
@@ -102,9 +103,15 @@ public static class TweakValidation
         if (val is null || options is null) return true;
 
         foreach (var opt in options)
-            try { if (Hex.ToInt(opt) == val) return true; }
+            try { if (evaluate(opt) == val) return true; }
             catch { continue; }
 
         return false;
+    }
+
+    private static int evaluate(string expression)
+    {
+        Expression ex = new Expression(expression);
+        return Convert.ToInt32(ex.Evaluate());
     }
 }

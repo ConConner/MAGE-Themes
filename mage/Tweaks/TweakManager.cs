@@ -15,11 +15,15 @@ public static class TweakManager
     {
         get
         {
-            string json = File.ReadAllText("C:\\Users\\Conner\\Desktop\\testtweak.json");
-            return Deserialize(json);
+            if (field == null)
+            {
+                string json = File.ReadAllText("C:\\Users\\Conner\\Desktop\\testtweak.json");
+                field = Deserialize(json);
+            }
+            return field;
         }
         set;
-    } = new();
+    } = null;
 
 
     // Serializing

@@ -79,12 +79,12 @@
             // columnHeader_author
             // 
             columnHeader_author.Text = "Author";
-            columnHeader_author.Width = 85;
+            columnHeader_author.Width = 83;
             // 
             // columnHeader_applied
             // 
             columnHeader_applied.Text = "Applied";
-            columnHeader_applied.Width = 51;
+            columnHeader_applied.Width = 53;
             // 
             // FormPatches
             // 

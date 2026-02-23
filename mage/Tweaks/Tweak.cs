@@ -51,7 +51,7 @@ public class Tweak
     {
         if (patch.OldData == null) return;
 
-        byte[] expected = patch.OldData;
+        byte[] expected = patch.ResolveOldData();
         int len = expected.Length;
 
         byte[] current = new byte[len];
@@ -84,7 +84,7 @@ public class Tweak
                 patch.OldOffset = offset;
 
                 // Checking if overwriting should be done or saving old values
-                if (patch.OldData == null || HasDynamicPatchLocation) patch.OldData = old;
+                if (patch.OldData == null || HasDynamicPatchLocation) patch.SetOldData(old);
                 else CheckIfOverwritingCorrectVals(rom, patch, offset);
 
                 // Write patch data
@@ -114,7 +114,7 @@ public class Tweak
         foreach (var patch in Patches)
         {
             int offset = patch.OldOffset ?? 0;
-            byte[] old = patch.OldData;
+            byte[] old = patch.ResolveOldData();
             rom.CopyFromArray(old, 0, offset, old.Length);
         }
 
