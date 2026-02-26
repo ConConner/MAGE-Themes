@@ -179,7 +179,7 @@ public class ClipTypes
         }
     }
 
-    public void DrawCollisionPixel(Bitmap b, RoomPixelImageExportDialogResult options, bool cropped = false)
+    public void DrawCollisionPixel(Bitmap b, PixelImageColors options, bool cropped = false)
     {
         int w = clip.width;
         int h = clip.height;
@@ -218,7 +218,7 @@ public class ClipTypes
             }
     }
 
-    public Color? GetColorForClipdataPixel(ushort clipVal, RoomPixelImageExportDialogResult options)
+    public Color? GetColorForClipdataPixel(ushort clipVal, PixelImageColors options)
     {
         if (Version.IsMF)
         {

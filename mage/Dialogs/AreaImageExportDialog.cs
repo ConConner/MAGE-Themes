@@ -22,6 +22,7 @@ public partial class AreaImageExportDialog : Form
     private bool requireDoors => checkBox_roomRequireDoors.Checked;
     private List<int> excludedRooms => listbox_excludedRooms.SelectedIndices.Cast<int>().ToList();
     private bool pixelMode;
+    PixelImageColors pixelColors;
 
     public AreaImageExportDialog(FormMain main, byte[] roomsPerArea, int area, bool pixelMode = false)
     {
@@ -43,6 +44,17 @@ public partial class AreaImageExportDialog : Form
 
         Text = pixelMode ? "Export Area Pixel Image" : "Export Area Image";
         this.pixelMode = pixelMode;
+
+        if (pixelMode)
+        {
+            RoomPixelImageExportDialog dialog = new RoomPixelImageExportDialog();
+            if (dialog.ShowDialog() != DialogResult.OK)
+            {
+                DialogResult = DialogResult.Cancel;
+                Close();
+            }
+            pixelColors = dialog.Colors;
+        }
     }
 
     private void button_save_Click(object sender, EventArgs e)
@@ -117,6 +129,7 @@ public partial class AreaImageExportDialog : Form
 
     private void exportPixelImage(List<Room> rooms, (Point, Point) bounds)
     {
+
         //Rectangle with maximum area size
         Rectangle areaSize = new(
             bounds.Item1.X * 15,
@@ -132,7 +145,7 @@ public partial class AreaImageExportDialog : Form
         foreach (Room r in rooms)
         {
             using Bitmap roomImage = new(r.Width - 4, r.Height - 4);
-            r.backgrounds.clipTypes.DrawCollisionPixel(roomImage, new(), true);
+            r.backgrounds.clipTypes.DrawCollisionPixel(roomImage, pixelColors, true);
 
             int areaCoordinateX = r.header.mapX * 15 - areaSize.X;
             int areaCoordinateY = r.header.mapY * 10 - areaSize.Y;

@@ -317,7 +317,13 @@ namespace mage
             Settings.Default.legacyEditors = Program.LegacyEditors;
 
             //Config
-            Settings.Default.config = JsonSerializer.Serialize(Program.Config);
+            var configOptions = new JsonSerializerOptions()
+            {
+                Converters = {
+                    new ColorJsonConverter()
+                }
+            };
+            Settings.Default.config = JsonSerializer.Serialize(Program.Config, configOptions);
 
             //Room Viewer Settings
             Settings.Default.bg3color = Bg3Color;
@@ -1167,12 +1173,16 @@ namespace mage
 
         private void menuItem_exportPixelRoomImage_Click(object sender, EventArgs e)
         {
+            RoomPixelImageExportDialog dialog = new RoomPixelImageExportDialog();
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+            PixelImageColors colors = dialog.Colors;
+
             SaveFileDialog saveRoom = new SaveFileDialog();
             saveRoom.Filter = "PNG files (*.png)|*.png";
             if (saveRoom.ShowDialog() == DialogResult.OK)
             {
                 using Bitmap image = new Bitmap(room.Width - 4, room.Height - 4);
-                room.backgrounds.clipTypes.DrawCollisionPixel(image, new(), true);
+                room.backgrounds.clipTypes.DrawCollisionPixel(image, colors, true);
                 image.Save(saveRoom.FileName);
             }
         }

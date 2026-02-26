@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mage.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,10 @@ public class Config
     public bool IncludeSymbolFile { get; set; } = true;
     public bool AutomaticallyCheckForUpdates { get; set; } = true;
     public bool OnlyNotifyOnMajor { get; set; } = false;
+    #endregion
+
+    #region Pixel Image exporting
+    public PixelImageColors PixelImageColors { get; set; } = new();
     #endregion
 
     #region Bookmarking
