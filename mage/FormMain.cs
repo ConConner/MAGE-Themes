@@ -1171,8 +1171,8 @@ namespace mage
             saveRoom.Filter = "PNG files (*.png)|*.png";
             if (saveRoom.ShowDialog() == DialogResult.OK)
             {
-                using Bitmap image = new Bitmap(room.Width, room.Height);
-                room.backgrounds.clipTypes.DrawCollisionPixel(image, new());
+                using Bitmap image = new Bitmap(room.Width - 4, room.Height - 4);
+                room.backgrounds.clipTypes.DrawCollisionPixel(image, new(), true);
                 image.Save(saveRoom.FileName);
             }
         }
@@ -1180,6 +1180,11 @@ namespace mage
         private void menuItem_areaImage_Click(object sender, EventArgs e)
         {
             new AreaImageExportDialog(this, roomsPerArea, room.AreaID).ShowDialog();
+        }
+
+        private void button_exportAreaPixel_Click(object sender, EventArgs e)
+        {
+            new AreaImageExportDialog(this, roomsPerArea, room.AreaID, true).ShowDialog();
         }
 
         private void menuItem_LZ77comp_Click(object sender, EventArgs e)

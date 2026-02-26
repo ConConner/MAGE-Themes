@@ -131,9 +131,12 @@
             menuItem_exportRoomImage = new System.Windows.Forms.ToolStripMenuItem();
             regularToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             croppedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            pixelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             bulkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             button_exportAllRooms = new System.Windows.Forms.ToolStripMenuItem();
             button_areaImage = new System.Windows.Forms.ToolStripMenuItem();
+            button_exportAreaRegular = new System.Windows.Forms.ToolStripMenuItem();
+            button_exportAreaPixel = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator29 = new System.Windows.Forms.ToolStripSeparator();
             button_importAllRooms = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_compression = new System.Windows.Forms.ToolStripMenuItem();
@@ -280,7 +283,6 @@
             comboBox_spriteset = new mage.Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
             splitContainer1 = new System.Windows.Forms.SplitContainer();
-            pixelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -1036,16 +1038,23 @@
             // regularToolStripMenuItem
             // 
             regularToolStripMenuItem.Name = "regularToolStripMenuItem";
-            regularToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            regularToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             regularToolStripMenuItem.Text = "Regular...";
             regularToolStripMenuItem.Click += menuItem_exportRoomImage_Click;
             // 
             // croppedToolStripMenuItem
             // 
             croppedToolStripMenuItem.Name = "croppedToolStripMenuItem";
-            croppedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            croppedToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             croppedToolStripMenuItem.Text = "Cropped...";
             croppedToolStripMenuItem.Click += menuItem_exportCroppedRoomImage_Click;
+            // 
+            // pixelToolStripMenuItem
+            // 
+            pixelToolStripMenuItem.Name = "pixelToolStripMenuItem";
+            pixelToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            pixelToolStripMenuItem.Text = "Pixel...";
+            pixelToolStripMenuItem.Click += menuItem_exportPixelRoomImage_Click;
             // 
             // bulkToolStripMenuItem
             // 
@@ -1063,10 +1072,24 @@
             // 
             // button_areaImage
             // 
+            button_areaImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_exportAreaRegular, button_exportAreaPixel });
             button_areaImage.Name = "button_areaImage";
             button_areaImage.Size = new System.Drawing.Size(180, 22);
-            button_areaImage.Text = "Export Area Image...";
-            button_areaImage.Click += menuItem_areaImage_Click;
+            button_areaImage.Text = "Export Area Image";
+            // 
+            // button_exportAreaRegular
+            // 
+            button_exportAreaRegular.Name = "button_exportAreaRegular";
+            button_exportAreaRegular.Size = new System.Drawing.Size(180, 22);
+            button_exportAreaRegular.Text = "Regular...";
+            button_exportAreaRegular.Click += menuItem_areaImage_Click;
+            // 
+            // button_exportAreaPixel
+            // 
+            button_exportAreaPixel.Name = "button_exportAreaPixel";
+            button_exportAreaPixel.Size = new System.Drawing.Size(180, 22);
+            button_exportAreaPixel.Text = "Pixel...";
+            button_exportAreaPixel.Click += button_exportAreaPixel_Click;
             // 
             // toolStripSeparator29
             // 
@@ -2394,13 +2417,6 @@
             splitContainer1.TabIndex = 0;
             splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
             // 
-            // pixelToolStripMenuItem
-            // 
-            pixelToolStripMenuItem.Name = "pixelToolStripMenuItem";
-            pixelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            pixelToolStripMenuItem.Text = "Pixel...";
-            pixelToolStripMenuItem.Click += menuItem_exportPixelRoomImage_Click;
-            // 
             // FormMain
             // 
             AllowDrop = true;
@@ -2706,6 +2722,8 @@
         private System.Windows.Forms.ToolStripMenuItem btn_saveCompiled;
         private System.Windows.Forms.ToolStripMenuItem tweaksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pixelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem button_exportAreaRegular;
+        private System.Windows.Forms.ToolStripMenuItem button_exportAreaPixel;
     }
 }
 

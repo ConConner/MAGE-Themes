@@ -179,10 +179,14 @@ public class ClipTypes
         }
     }
 
-    public void DrawCollisionPixel(Bitmap b, RoomPixelImageExportDialogResult options)
+    public void DrawCollisionPixel(Bitmap b, RoomPixelImageExportDialogResult options, bool cropped = false)
     {
         int w = clip.width;
         int h = clip.height;
+        int endX = cropped ? w - 2 : w;
+        int endY = cropped ? h - 2 : h;
+        int startX = cropped ? 2 : 0;
+        int startY = cropped ? 2 : 0;
 
         // get clip type values
         int offset = Version.ClipdataTypeOffset;
@@ -196,8 +200,8 @@ public class ClipTypes
         }
 
         // Draw new values
-        for (int y = 0; y < h; y++)
-            for (int x = 0; x < w; x++)
+        for (int y = startY; y < endY; y++)
+            for (int x = startX; x < endX; x++)
             {
                 byte type = clipType[x, y];
                 if (type > 0xC) type = 0;
@@ -208,7 +212,9 @@ public class ClipTypes
 
                 drawColor = GetColorForClipdataPixel(val, options) ?? drawColor;
 
-                b.SetPixel(x, y, drawColor);
+                int posX = cropped ? x - 2 : x;
+                int posY = cropped ? y - 2 : y;
+                b.SetPixel(posX, posY, drawColor);
             }
     }
 

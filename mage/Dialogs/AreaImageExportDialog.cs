@@ -21,8 +21,9 @@ public partial class AreaImageExportDialog : Form
     private string areaName => Version.AreaNames[area];
     private bool requireDoors => checkBox_roomRequireDoors.Checked;
     private List<int> excludedRooms => listbox_excludedRooms.SelectedIndices.Cast<int>().ToList();
+    private bool pixelMode;
 
-    public AreaImageExportDialog(FormMain main, byte[] roomsPerArea, int area)
+    public AreaImageExportDialog(FormMain main, byte[] roomsPerArea, int area, bool pixelMode = false)
     {
         InitializeComponent();
 
@@ -39,6 +40,9 @@ public partial class AreaImageExportDialog : Form
             string item = $"{areaName} - {Hex.ToString(i)}";
             listbox_excludedRooms.Items.Add(item);
         }
+
+        Text = pixelMode ? "Export Area Pixel Image" : "Export Area Image";
+        this.pixelMode = pixelMode;
     }
 
     private void button_save_Click(object sender, EventArgs e)
@@ -49,7 +53,7 @@ public partial class AreaImageExportDialog : Form
 
         filePath = dialog.FileName;
 
-        // Export image
+        // List of all relevant rooms
         List<Room> rooms = new List<Room>();
         (Point, Point) bounds = new(new Point(16, 16), new Point(0, 0));
 
@@ -73,6 +77,13 @@ public partial class AreaImageExportDialog : Form
             if (r.header.mapX + r.WidthInScreens > bounds.Item2.X) bounds.Item2.X = r.header.mapX + r.WidthInScreens;
             if (r.header.mapY + r.HeightInScreens > bounds.Item2.Y) bounds.Item2.Y = r.header.mapY + r.HeightInScreens;
         }
+
+        if (!pixelMode) exportAreaImage(rooms, bounds);
+        else exportPixelImage(rooms, bounds);
+    }
+
+    private void exportAreaImage(List<Room> rooms, (Point, Point) bounds)
+    {
         //Rectangle with maximum area size
         Rectangle areaSize = new Rectangle(
             bounds.Item1.X * 15 * 16,
@@ -101,6 +112,34 @@ public partial class AreaImageExportDialog : Form
 
         areaImage.Save(filePath);
         areaImage.Dispose();
+        Close();
+    }
+
+    private void exportPixelImage(List<Room> rooms, (Point, Point) bounds)
+    {
+        //Rectangle with maximum area size
+        Rectangle areaSize = new(
+            bounds.Item1.X * 15,
+            bounds.Item1.Y * 10,
+            (bounds.Item2.X - bounds.Item1.X) * 15,
+            (bounds.Item2.Y - bounds.Item1.Y) * 10
+        );
+
+        //Creating bitmap
+        using Bitmap areaImage = new Bitmap(areaSize.Width, areaSize.Height);
+        using Graphics g = Graphics.FromImage(areaImage);
+
+        foreach (Room r in rooms)
+        {
+            using Bitmap roomImage = new(r.Width - 4, r.Height - 4);
+            r.backgrounds.clipTypes.DrawCollisionPixel(roomImage, new(), true);
+
+            int areaCoordinateX = r.header.mapX * 15 - areaSize.X;
+            int areaCoordinateY = r.header.mapY * 10 - areaSize.Y;
+            g.DrawImage(roomImage, areaCoordinateX, areaCoordinateY, roomImage.Width, roomImage.Height);
+        }
+
+        areaImage.Save(filePath);
         Close();
     }
 }
