@@ -1,4 +1,5 @@
 ﻿using mage.Theming;
+using mage.Tweaks.ParameterControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,6 +61,36 @@ public partial class FormTweaks : Form
         pnl_parameters.Enabled = !t.Applied;
 
         btn_applyRevert.Text = t.Applied ? "Revert" : "Apply";
+
+        DisplayTweakParameters(t);
+    }
+
+    private void DisplayTweakParameters(Tweak t)
+    {
+        pnl_parameters.SuspendLayout();
+
+        pnl_parameters.Controls.Clear();
+        foreach (TweakParameter p in t.Parameters)
+        {
+            Control? c = null;
+            switch (p.Type)
+            {
+                case ParameterType.Value:
+                    c = new TweakParameterValue(p);
+                    break;
+                case ParameterType.Selection:
+                    c = new TweakParameterSelection(p);
+                    break;
+                case ParameterType.Toggle:
+                    c = new TweakParameterToggle(p);
+                    break;
+            }
+
+            c?.Dock = DockStyle.Top;
+            pnl_parameters.Controls.Add(c);
+            c?.BringToFront();
+        }
+        pnl_parameters.ResumeLayout();
     }
 
     private void lst_tweaks_Resize(object sender, EventArgs e)

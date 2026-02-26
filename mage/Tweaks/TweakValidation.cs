@@ -55,11 +55,6 @@ public static class TweakValidation
 
         if (param.Type == ParameterType.Toggle)
         {
-            if (param.Options is null || param.Options.Length != 2)
-            {
-                ShowValidationError($"Parameter of type Toggle requires exactly two options: Toggle Off, Toggle On. Supplied: {param.Options.Length}");
-                return false;
-            }
         }
 
         if (param.Type == ParameterType.Selection)

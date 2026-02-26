@@ -7,7 +7,8 @@ namespace mage.Tweaks;
 
 public class TweakParameter
 {
-    public string Name { get; set; } = "New Tweak";
+    public string Name { get; set; } = "new_parameter";
+    public string? DisplayName { get; set; }
     public string? Description { get; set; }
     public long? Value { get; set; }
 

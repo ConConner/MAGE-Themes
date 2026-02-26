@@ -152,6 +152,7 @@
             // 
             // btn_applyRevert
             // 
+            btn_applyRevert.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             btn_applyRevert.Location = new System.Drawing.Point(204, 391);
             btn_applyRevert.Name = "btn_applyRevert";
             btn_applyRevert.Size = new System.Drawing.Size(75, 23);

@@ -90,6 +90,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="RoomView.cs" />
+    <Compile Update="Tweaks\ParameterControls\TweakParameterSelection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Tweaks\ParameterControls\TweakParameterToggle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Icons\button_bg_color.png" />
