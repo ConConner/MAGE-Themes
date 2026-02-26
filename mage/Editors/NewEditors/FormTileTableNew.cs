@@ -1384,5 +1384,20 @@ namespace mage.Editors
         {
             FormGraphicsNew.OpenGraphicsEditor(gfxSourceOffset, 32, 0, palSourceOffset);
         }
+
+        private void btn_exportImg_Click(object sender, EventArgs e)
+        {
+            if (tableView.TileImage is null)
+            {
+                MessageBox.Show("Please load a Tile Table first.", "No Tile Table loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            SaveFileDialog saveTileset = new SaveFileDialog();
+            saveTileset.Filter = "PNG files (*.png)|*.png";
+            if (saveTileset.ShowDialog() != DialogResult.OK) return;
+
+            tableView.TileImage.Save(saveTileset.FileName);
+        }
     }
 }
