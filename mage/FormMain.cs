@@ -257,7 +257,13 @@ namespace mage
             statusStrip_zoom.Text = $"{1 << zoom}00%";
 
             // Config object
-            try { Program.Config = JsonSerializer.Deserialize<Config>(Settings.Default.config); }
+            var configOptions = new JsonSerializerOptions()
+            {
+                Converters = {
+                    new ColorJsonConverter()
+                }
+            };
+            try { Program.Config = JsonSerializer.Deserialize<Config>(Settings.Default.config, configOptions); }
             catch { Program.Config = new(); }
 
             //Room Viewer Settings
@@ -1154,8 +1160,20 @@ namespace mage
             if (saveRoom.ShowDialog() == DialogResult.OK)
             {
                 Rectangle cropArea = new Rectangle(16 * 2, 16 * 2, (room.Width - 4) * 16, (room.Height - 4) * 16);
-                Bitmap roomBitmap = new Bitmap(roomView.BackgroundImage);
+                using Bitmap roomBitmap = new Bitmap(roomView.BackgroundImage);
                 roomBitmap.Clone(cropArea, roomView.BackgroundImage.PixelFormat).Save(saveRoom.FileName);
+            }
+        }
+
+        private void menuItem_exportPixelRoomImage_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveRoom = new SaveFileDialog();
+            saveRoom.Filter = "PNG files (*.png)|*.png";
+            if (saveRoom.ShowDialog() == DialogResult.OK)
+            {
+                using Bitmap image = new Bitmap(room.Width, room.Height);
+                room.backgrounds.clipTypes.DrawCollisionPixel(image, new());
+                image.Save(saveRoom.FileName);
             }
         }
 
