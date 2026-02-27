@@ -11,19 +11,7 @@ namespace mage.Tweaks;
 public static class TweakManager
 {
     public static List<Tweak> OnlineTweaks { get; set; } = new();
-    public static List<Tweak> ProjectTweaks
-    {
-        get
-        {
-            if (field == null)
-            {
-                string json = File.ReadAllText("C:\\Users\\Conner\\Desktop\\testtweak.json");
-                field = Deserialize(json);
-            }
-            return field;
-        }
-        set;
-    } = null;
+    public static List<Tweak> ProjectTweaks { get; set; } = new();
 
 
     // Serializing

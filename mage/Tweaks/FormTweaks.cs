@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Windows.Forms;
 
 namespace mage.Tweaks;
@@ -89,6 +91,9 @@ public partial class FormTweaks : Form
             c?.Dock = DockStyle.Top;
             pnl_parameters.Controls.Add(c);
             c?.BringToFront();
+            if (c is null) continue;
+
+            tlt_parameterTip.SetToolTip(c, p.Description);
         }
         pnl_parameters.ResumeLayout();
     }
@@ -117,7 +122,7 @@ public partial class FormTweaks : Form
 
     private void lst_tweaks_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
     {
-        bool itemSelected = e.Item != null;
+        bool itemSelected = e.Item != null && lst_tweaks.Items.Contains(e.Item);
 
         pnl_main.Panel2Collapsed = !itemSelected;
         grp_properties.Enabled = itemSelected;
@@ -158,5 +163,50 @@ public partial class FormTweaks : Form
     private void UpdateListItem(ListViewItem item, Tweak tweak)
     {
         item.ImageIndex = tweak.Applied ? 0 : 1;
+    }
+
+    private void btn_delete_Click(object sender, EventArgs e)
+    {
+        if (selectedTweak is null) return;
+
+        if (MessageBox.Show("Deleting a Tweak cannot be undone. If this Tweak is currently applied, it will be reverted first.", "Delete Tweak",
+            MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
+            != DialogResult.OK) return;
+
+        if (selectedTweak.Applied) Revert(selectedTweak);
+        TweakManager.ProjectTweaks.Remove(selectedTweak);
+        lst_tweaks.Items.Remove(selectedItem);
+
+        selectedItem = null;
+        selectedTweak = null;
+    }
+
+    private void btn_import_Click(object sender, EventArgs e)
+    {
+        using var dialog = new OpenFileDialog
+        {
+            Multiselect = true,
+            Filter = "Tweak files (*.mtw)|*.mtw",
+            Title = "Select Tweaks"
+        };
+        if (dialog.ShowDialog() != DialogResult.OK) return;
+
+        foreach (string file in dialog.FileNames)
+        {
+            try { TweakManager.ProjectTweaks.Add(ImportTweak(file)); }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not import tweak from:\n{file}\n\n{ex.Message}");
+                continue;
+            }
+        }
+        PopulateTweaksList();
+    }
+
+    private Tweak ImportTweak(string filename)
+    {
+        string json = File.ReadAllText(filename);
+        Tweak t = JsonSerializer.Deserialize<Tweak>(json);
+        return t;
     }
 }

@@ -28,14 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTweaks));
             statusStrip1 = new System.Windows.Forms.StatusStrip();
+            lbl_spring = new System.Windows.Forms.ToolStripStatusLabel();
+            btn_add = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_import = new System.Windows.Forms.ToolStripMenuItem();
             grp_tweaks = new System.Windows.Forms.GroupBox();
             lst_tweaks = new System.Windows.Forms.ListView();
             clm_name = new System.Windows.Forms.ColumnHeader();
             clm_author = new System.Windows.Forms.ColumnHeader();
             pnl_main = new System.Windows.Forms.SplitContainer();
             grp_properties = new System.Windows.Forms.GroupBox();
+            btn_delete = new System.Windows.Forms.Button();
             sep_parameters = new mage.Controls.Seperator();
             btn_applyRevert = new System.Windows.Forms.Button();
             pnl_parameters = new System.Windows.Forms.Panel();
@@ -46,6 +51,8 @@
             lbl_descriptionLabel = new System.Windows.Forms.Label();
             lbl_name = new System.Windows.Forms.Label();
             lbl_labelName = new System.Windows.Forms.Label();
+            tlt_parameterTip = new System.Windows.Forms.ToolTip(components);
+            statusStrip1.SuspendLayout();
             grp_tweaks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pnl_main).BeginInit();
             pnl_main.Panel1.SuspendLayout();
@@ -56,11 +63,34 @@
             // 
             // statusStrip1
             // 
+            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_spring, btn_add });
             statusStrip1.Location = new System.Drawing.Point(0, 429);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new System.Drawing.Size(734, 22);
             statusStrip1.TabIndex = 0;
             statusStrip1.Text = "statusStrip1";
+            // 
+            // lbl_spring
+            // 
+            lbl_spring.Name = "lbl_spring";
+            lbl_spring.Size = new System.Drawing.Size(595, 17);
+            lbl_spring.Spring = true;
+            // 
+            // btn_add
+            // 
+            btn_add.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_import });
+            btn_add.Image = Properties.Resources.toolbar_add;
+            btn_add.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_add.Name = "btn_add";
+            btn_add.Size = new System.Drawing.Size(93, 20);
+            btn_add.Text = "Add Tweak";
+            // 
+            // btn_import
+            // 
+            btn_import.Name = "btn_import";
+            btn_import.Size = new System.Drawing.Size(180, 22);
+            btn_import.Text = "Import...";
+            btn_import.Click += btn_import_Click;
             // 
             // grp_tweaks
             // 
@@ -122,6 +152,7 @@
             // 
             // grp_properties
             // 
+            grp_properties.Controls.Add(btn_delete);
             grp_properties.Controls.Add(sep_parameters);
             grp_properties.Controls.Add(btn_applyRevert);
             grp_properties.Controls.Add(pnl_parameters);
@@ -139,6 +170,20 @@
             grp_properties.TabIndex = 0;
             grp_properties.TabStop = false;
             grp_properties.Text = "Properties";
+            // 
+            // btn_delete
+            // 
+            btn_delete.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            btn_delete.Image = Properties.Resources.delete;
+            btn_delete.Location = new System.Drawing.Point(6, 391);
+            btn_delete.Name = "btn_delete";
+            btn_delete.Size = new System.Drawing.Size(74, 23);
+            btn_delete.TabIndex = 10;
+            btn_delete.Text = "Delete";
+            btn_delete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            btn_delete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            btn_delete.UseVisualStyleBackColor = true;
+            btn_delete.Click += btn_delete_Click;
             // 
             // sep_parameters
             // 
@@ -254,6 +299,13 @@
             lbl_labelName.TabIndex = 0;
             lbl_labelName.Text = "Name:";
             // 
+            // tlt_parameterTip
+            // 
+            tlt_parameterTip.AutoPopDelay = 10000;
+            tlt_parameterTip.InitialDelay = 500;
+            tlt_parameterTip.ReshowDelay = 100;
+            tlt_parameterTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            // 
             // FormTweaks
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -264,6 +316,8 @@
             MinimumSize = new System.Drawing.Size(750, 490);
             Name = "FormTweaks";
             Text = "Tweak Manager";
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             grp_tweaks.ResumeLayout(false);
             pnl_main.Panel1.ResumeLayout(false);
             pnl_main.Panel2.ResumeLayout(false);
@@ -294,5 +348,10 @@
         private System.Windows.Forms.Button btn_applyRevert;
         private System.Windows.Forms.Panel pnl_parameters;
         private Controls.Seperator sep_parameters;
+        private System.Windows.Forms.ToolTip tlt_parameterTip;
+        private System.Windows.Forms.ToolStripStatusLabel lbl_spring;
+        private System.Windows.Forms.ToolStripDropDownButton btn_add;
+        private System.Windows.Forms.ToolStripMenuItem btn_import;
+        private System.Windows.Forms.Button btn_delete;
     }
 }

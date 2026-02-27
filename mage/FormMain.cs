@@ -561,7 +561,7 @@ namespace mage
             // save backup
             byte[] copy = ROM.BackupData();
             ROM.SaveROM(backup, false);
-            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0) Version.UpdateProject();
+            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0 || TweakManager.ProjectTweaks.Count > 0) Version.UpdateProject();
             Version.SaveProject(backup);
             ROM.RestoreData(copy);
         }
@@ -1454,7 +1454,7 @@ namespace mage
 
             // save all edited lists and compress backgrounds
             ROM.SaveROM(filename, true);
-            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0) Version.UpdateProject();
+            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0 || BookmarkManager.ProjectCollections.Count > 0) Version.UpdateProject();
             bool newProject = Version.SaveProject(filename);
             if (newProject)
             {

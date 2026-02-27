@@ -1,6 +1,7 @@
 ﻿using mage.Bookmarks;
 using mage.Options;
 using mage.Properties;
+using mage.Tweaks;
 using mage.Utility;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,7 @@ namespace mage
             catch { return; }
 
             if (ProjectBookmarks != null) BookmarkManager.ProjectCollections = ProjectBookmarks;
+            if (ProjectTweaks != null) TweakManager.ProjectTweaks = ProjectTweaks;
             project = ProjectState.Exists;
         }
 
@@ -119,6 +121,7 @@ namespace mage
             // extended project data
             sw.WriteLine("[Project]");
             sw.WriteLine("ProjectBookmarks=" + BookmarkManager.SerializeCollections(BookmarkManager.ProjectCollections, false));
+            sw.WriteLine("ProjectTweaks=" + TweakManager.Serialize(TweakManager.ProjectTweaks, false));
             sw.WriteLine("ProjectConfig=" + ProjectConfig.Serialize(Version.ProjectConfig));
 
             sw.Close();
@@ -141,6 +144,7 @@ namespace mage
         public static byte NumOfDemos { get; private set; }
         public static int MetroidOffset { get; private set; }
         public static List<BookmarkFolder> ProjectBookmarks { get; private set; }
+        public static List<Tweak> ProjectTweaks { get; private set; }
         public static ProjectConfig ProjectConfig { get; private set; } = ProjectConfig.DefaultConfig;
         public static BackupService? BackupService
         {
@@ -552,6 +556,11 @@ namespace mage
             {
                 List<BookmarkFolder> bf = BookmarkManager.DeserializeCollections(value);
                 info.SetValue(null, bf, null);
+            }
+            else if (info.PropertyType == typeof(List<Tweak>))
+            {
+                List<Tweak> tw = TweakManager.Deserialize(value);
+                info.SetValue(null, tw, null);
             }
             else if (info.PropertyType == typeof(ProjectConfig))
             {
