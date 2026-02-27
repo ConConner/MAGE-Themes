@@ -279,6 +279,7 @@
             toolStrip_test = new System.Windows.Forms.ToolStripButton();
             toolStrip_tileBuilder = new System.Windows.Forms.ToolStripButton();
             toolStrip_add = new System.Windows.Forms.ToolStripButton();
+            toolStripButton_tweaks = new System.Windows.Forms.ToolStripButton();
             toolStrip_patches = new System.Windows.Forms.ToolStripButton();
             comboBox_spriteset = new mage.Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
@@ -309,7 +310,7 @@
             menuStrip.Name = "menuStrip";
             menuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
             menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            menuStrip.Size = new System.Drawing.Size(799, 24);
+            menuStrip.Size = new System.Drawing.Size(824, 24);
             menuStrip.TabIndex = 0;
             // 
             // menuStrip_file
@@ -984,47 +985,47 @@
             // menuItem_exportTileset
             // 
             menuItem_exportTileset.Name = "menuItem_exportTileset";
-            menuItem_exportTileset.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportTileset.Size = new System.Drawing.Size(152, 22);
             menuItem_exportTileset.Text = "Tileset...";
             menuItem_exportTileset.Click += menuItem_exportTileset_Click;
             // 
             // menuItem_exportBG
             // 
             menuItem_exportBG.Name = "menuItem_exportBG";
-            menuItem_exportBG.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportBG.Size = new System.Drawing.Size(152, 22);
             menuItem_exportBG.Text = "Background...";
             menuItem_exportBG.Click += menuItem_exportBG_Click;
             // 
             // menuItem_exportRoom
             // 
             menuItem_exportRoom.Name = "menuItem_exportRoom";
-            menuItem_exportRoom.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportRoom.Size = new System.Drawing.Size(152, 22);
             menuItem_exportRoom.Text = "Room...";
             menuItem_exportRoom.Click += menuItem_exportRoom_Click;
             // 
             // toolStripSeparator7
             // 
             toolStripSeparator7.Name = "toolStripSeparator7";
-            toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator7.Size = new System.Drawing.Size(149, 6);
             // 
             // menuItem_exportTilesetImage
             // 
             menuItem_exportTilesetImage.Name = "menuItem_exportTilesetImage";
-            menuItem_exportTilesetImage.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportTilesetImage.Size = new System.Drawing.Size(152, 22);
             menuItem_exportTilesetImage.Text = "Tileset Image...";
             menuItem_exportTilesetImage.Click += menuItem_exportTilesetImage_Click;
             // 
             // menuItem_exportBG0image
             // 
             menuItem_exportBG0image.Name = "menuItem_exportBG0image";
-            menuItem_exportBG0image.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportBG0image.Size = new System.Drawing.Size(152, 22);
             menuItem_exportBG0image.Text = "BG0 Image...";
             menuItem_exportBG0image.Click += menuItem_exportBG0image_Click;
             // 
             // menuItem_exportBG3image
             // 
             menuItem_exportBG3image.Name = "menuItem_exportBG3image";
-            menuItem_exportBG3image.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportBG3image.Size = new System.Drawing.Size(152, 22);
             menuItem_exportBG3image.Text = "BG3 Image...";
             menuItem_exportBG3image.Click += menuItem_exportBG3image_Click;
             // 
@@ -1032,7 +1033,7 @@
             // 
             menuItem_exportRoomImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { regularToolStripMenuItem, croppedToolStripMenuItem, pixelToolStripMenuItem });
             menuItem_exportRoomImage.Name = "menuItem_exportRoomImage";
-            menuItem_exportRoomImage.Size = new System.Drawing.Size(180, 22);
+            menuItem_exportRoomImage.Size = new System.Drawing.Size(152, 22);
             menuItem_exportRoomImage.Text = "Room Image";
             // 
             // regularToolStripMenuItem
@@ -1066,7 +1067,7 @@
             // button_exportAllRooms
             // 
             button_exportAllRooms.Name = "button_exportAllRooms";
-            button_exportAllRooms.Size = new System.Drawing.Size(180, 22);
+            button_exportAllRooms.Size = new System.Drawing.Size(171, 22);
             button_exportAllRooms.Text = "Export Rooms...";
             button_exportAllRooms.Click += menuItem_bulkExportScreens_Click;
             // 
@@ -1074,33 +1075,33 @@
             // 
             button_areaImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_exportAreaRegular, button_exportAreaPixel });
             button_areaImage.Name = "button_areaImage";
-            button_areaImage.Size = new System.Drawing.Size(180, 22);
+            button_areaImage.Size = new System.Drawing.Size(171, 22);
             button_areaImage.Text = "Export Area Image";
             // 
             // button_exportAreaRegular
             // 
             button_exportAreaRegular.Name = "button_exportAreaRegular";
-            button_exportAreaRegular.Size = new System.Drawing.Size(180, 22);
+            button_exportAreaRegular.Size = new System.Drawing.Size(123, 22);
             button_exportAreaRegular.Text = "Regular...";
             button_exportAreaRegular.Click += menuItem_areaImage_Click;
             // 
             // button_exportAreaPixel
             // 
             button_exportAreaPixel.Name = "button_exportAreaPixel";
-            button_exportAreaPixel.Size = new System.Drawing.Size(180, 22);
+            button_exportAreaPixel.Size = new System.Drawing.Size(123, 22);
             button_exportAreaPixel.Text = "Pixel...";
             button_exportAreaPixel.Click += button_exportAreaPixel_Click;
             // 
             // toolStripSeparator29
             // 
             toolStripSeparator29.Name = "toolStripSeparator29";
-            toolStripSeparator29.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator29.Size = new System.Drawing.Size(168, 6);
             toolStripSeparator29.Visible = false;
             // 
             // button_importAllRooms
             // 
             button_importAllRooms.Name = "button_importAllRooms";
-            button_importAllRooms.Size = new System.Drawing.Size(180, 22);
+            button_importAllRooms.Size = new System.Drawing.Size(171, 22);
             button_importAllRooms.Text = "Import Rooms...";
             button_importAllRooms.Visible = false;
             // 
@@ -1190,6 +1191,7 @@
             // 
             // tweaksToolStripMenuItem
             // 
+            tweaksToolStripMenuItem.Image = Properties.Resources.toolbox;
             tweaksToolStripMenuItem.Name = "tweaksToolStripMenuItem";
             tweaksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             tweaksToolStripMenuItem.Text = "Tweaks";
@@ -1618,7 +1620,7 @@
             groupBox_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_room.Name = "groupBox_room";
             groupBox_room.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_room.Size = new System.Drawing.Size(480, 412);
+            groupBox_room.Size = new System.Drawing.Size(505, 412);
             groupBox_room.TabIndex = 0;
             groupBox_room.TabStop = false;
             groupBox_room.Text = "Room";
@@ -1631,7 +1633,7 @@
             panel_room.Location = new System.Drawing.Point(4, 19);
             panel_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_room.Name = "panel_room";
-            panel_room.Size = new System.Drawing.Size(472, 390);
+            panel_room.Size = new System.Drawing.Size(497, 390);
             panel_room.TabIndex = 0;
             // 
             // roomView
@@ -1903,7 +1905,7 @@
             statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
             statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             statusStrip.ShowItemToolTips = true;
-            statusStrip.Size = new System.Drawing.Size(799, 24);
+            statusStrip.Size = new System.Drawing.Size(824, 24);
             statusStrip.TabIndex = 0;
             // 
             // statusLabel_coor
@@ -1941,7 +1943,7 @@
             // lbl_spring
             // 
             lbl_spring.Name = "lbl_spring";
-            lbl_spring.Size = new System.Drawing.Size(321, 19);
+            lbl_spring.Size = new System.Drawing.Size(346, 19);
             lbl_spring.Spring = true;
             // 
             // statusStrip_emulator
@@ -2018,12 +2020,12 @@
             // toolStrip
             // 
             toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStrip_open, toolStrip_save, toolStripSeparator9, toolStrip_undo, toolStrip_redo, toolStripSeparator10, toolStrip_editBGs, toolStrip_editObjects, toolStripSeparator15, toolStrip_viewSprites, toolStrip_outlineSprites, toolStrip_outlineDoors, toolStrip_outlineScrolls, toolStrip_outlineEffect, toolStripSeparator16, toolStrip_header, toolStrip_tileset, toolStrip_graphics, toolStrip_palette, toolStrip_tileTable, toolStrip_animation, toolStrip_sprite, toolStrip_spriteset, toolStrip_oamEditor, toolStrip_connection, toolStrip_minimap, toolStrip_text, toolStrip_demoEditor, toolStrip_physics, toolStrip_weapon, toolStrip_credits, toolStripSeparator11, toolStrip_options, toolStrip_test, toolStrip_tileBuilder, toolStrip_add, toolStrip_patches });
+            toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStrip_open, toolStrip_save, toolStripSeparator9, toolStrip_undo, toolStrip_redo, toolStripSeparator10, toolStrip_editBGs, toolStrip_editObjects, toolStripSeparator15, toolStrip_viewSprites, toolStrip_outlineSprites, toolStrip_outlineDoors, toolStrip_outlineScrolls, toolStrip_outlineEffect, toolStripSeparator16, toolStrip_header, toolStrip_tileset, toolStrip_graphics, toolStrip_palette, toolStrip_tileTable, toolStrip_animation, toolStrip_sprite, toolStrip_spriteset, toolStrip_oamEditor, toolStrip_connection, toolStrip_minimap, toolStrip_text, toolStrip_demoEditor, toolStrip_physics, toolStrip_weapon, toolStrip_credits, toolStripSeparator11, toolStrip_options, toolStrip_test, toolStrip_tileBuilder, toolStrip_add, toolStripButton_tweaks, toolStrip_patches });
             toolStrip.Location = new System.Drawing.Point(0, 24);
             toolStrip.Name = "toolStrip";
             toolStrip.Padding = new System.Windows.Forms.Padding(4, 0, 1, 0);
             toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip.Size = new System.Drawing.Size(799, 25);
+            toolStrip.Size = new System.Drawing.Size(824, 25);
             toolStrip.TabIndex = 0;
             // 
             // toolStrip_open
@@ -2369,13 +2371,24 @@
             toolStrip_add.Text = "Add";
             toolStrip_add.Click += toolStrip_add_Click;
             // 
+            // toolStripButton_tweaks
+            // 
+            toolStripButton_tweaks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolStripButton_tweaks.Enabled = false;
+            toolStripButton_tweaks.Image = Properties.Resources.toolbox;
+            toolStripButton_tweaks.ImageTransparentColor = System.Drawing.Color.Magenta;
+            toolStripButton_tweaks.Name = "toolStripButton_tweaks";
+            toolStripButton_tweaks.Size = new System.Drawing.Size(23, 22);
+            toolStripButton_tweaks.Text = "Tweaks";
+            toolStripButton_tweaks.Click += tweaksToolStripMenuItem_Click;
+            // 
             // toolStrip_patches
             // 
             toolStrip_patches.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             toolStrip_patches.Enabled = false;
             toolStrip_patches.Image = Properties.Resources.toolbar_patches;
             toolStrip_patches.Name = "toolStrip_patches";
-            toolStrip_patches.Size = new System.Drawing.Size(23, 22);
+            toolStrip_patches.Size = new System.Drawing.Size(23, 20);
             toolStrip_patches.Text = "Patches";
             toolStrip_patches.Click += menuItem_patches_Click;
             // 
@@ -2411,7 +2424,7 @@
             splitContainer1.Panel2.Controls.Add(groupBox_room);
             splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(3, 6, 14, 6);
             splitContainer1.Panel2MinSize = 300;
-            splitContainer1.Size = new System.Drawing.Size(799, 424);
+            splitContainer1.Size = new System.Drawing.Size(824, 424);
             splitContainer1.SplitterDistance = 299;
             splitContainer1.SplitterWidth = 3;
             splitContainer1.TabIndex = 0;
@@ -2421,7 +2434,7 @@
             // 
             AllowDrop = true;
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(799, 497);
+            ClientSize = new System.Drawing.Size(824, 497);
             Controls.Add(splitContainer1);
             Controls.Add(toolStrip);
             Controls.Add(statusStrip);
@@ -2431,7 +2444,7 @@
             KeyPreview = true;
             MainMenuStrip = menuStrip;
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            MinimumSize = new System.Drawing.Size(815, 536);
+            MinimumSize = new System.Drawing.Size(840, 536);
             Name = "FormMain";
             Text = "MAGE Themes";
             FormClosing += FormMain_FormClosing;
@@ -2724,6 +2737,7 @@
         private System.Windows.Forms.ToolStripMenuItem pixelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem button_exportAreaRegular;
         private System.Windows.Forms.ToolStripMenuItem button_exportAreaPixel;
+        private System.Windows.Forms.ToolStripButton toolStripButton_tweaks;
     }
 }
 
