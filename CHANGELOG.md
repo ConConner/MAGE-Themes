@@ -1,3 +1,24 @@
+# [1.14.0](https://github.com/ConConner/MAGE-Themes/compare/v1.13.0...v1.14.0) (2026-02-27)
+
+
+### Bug Fixes
+
+* door-id-overlays do not respect number base preference ([79a710c](https://github.com/ConConner/MAGE-Themes/commit/79a710c86619fbaaccc28c6b55383620e999e33c)), closes [#58](https://github.com/ConConner/MAGE-Themes/issues/58)
+* list view control is not themed correctly ([f021ebe](https://github.com/ConConner/MAGE-Themes/commit/f021ebeade2f6e1c9ec233cb440f5351aec55ff2))
+* some editor shortcuts do not respect the editor choice preference ([d15c989](https://github.com/ConConner/MAGE-Themes/commit/d15c9891f839c3cd089ddccdcc6e7530a9b3da1e))
+* switching roms leads to multiple backups being created during auto-backup ([9d5553c](https://github.com/ConConner/MAGE-Themes/commit/9d5553c5db1862921b063c18b390258df63c571b)), closes [#33](https://github.com/ConConner/MAGE-Themes/issues/33)
+* testing a room sometimes selects tourian in the area selector ([8217711](https://github.com/ConConner/MAGE-Themes/commit/8217711a1c498adfd43e4bab31f39a702850d842)), closes [#47](https://github.com/ConConner/MAGE-Themes/issues/47)
+* tile table editor might resize lz77 bg to 256x256 ([5594c6d](https://github.com/ConConner/MAGE-Themes/commit/5594c6d93a181594458852509bda2b9a13fccba0)), closes [#37](https://github.com/ConConner/MAGE-Themes/issues/37)
+* tiles cannot be placed in TTE when shift is applied ([fa96af1](https://github.com/ConConner/MAGE-Themes/commit/fa96af12436c6f2d31527758e64fb5d1bb799567)), closes [#69](https://github.com/ConConner/MAGE-Themes/issues/69)
+
+
+### Features
+
+* added tweak manager ([4efa88e](https://github.com/ConConner/MAGE-Themes/commit/4efa88e80c0ed4adead46692cf53917163cdb123))
+* export area as pixel image ([6fcb518](https://github.com/ConConner/MAGE-Themes/commit/6fcb5188d35a87eb2814c760c1937a730482d575)), closes [#80](https://github.com/ConConner/MAGE-Themes/issues/80)
+* export room as pixel image ([48d9da0](https://github.com/ConConner/MAGE-Themes/commit/48d9da0000e55059df03f65d52d22dce70bf145c))
+* export tile table as image ([a35f970](https://github.com/ConConner/MAGE-Themes/commit/a35f9707c9b3cff8c0bdc7d4d50ec861949e4050))
+
 # [1.13.0](https://github.com/ConConner/MAGE-Themes/compare/v1.12.4...v1.13.0) (2026-02-16)
 
 
