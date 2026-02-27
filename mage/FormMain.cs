@@ -1,6 +1,7 @@
 using mage.Actions;
 using mage.Actions.RoomEditor;
 using mage.Bookmarks;
+using mage.Compiling;
 using mage.Controls; // added for font stuff - alexman25
 using mage.Data;
 using mage.Dialogs;
@@ -10,6 +11,7 @@ using mage.Options;
 using mage.Properties;
 using mage.Theming;
 using mage.Tools;
+using mage.Tweaks;
 using mage.Updates;
 using mage.Utility;
 using Microsoft.Win32;
@@ -255,7 +257,13 @@ namespace mage
             statusStrip_zoom.Text = $"{1 << zoom}00%";
 
             // Config object
-            try { Program.Config = JsonSerializer.Deserialize<Config>(Settings.Default.config); }
+            var configOptions = new JsonSerializerOptions()
+            {
+                Converters = {
+                    new ColorJsonConverter()
+                }
+            };
+            try { Program.Config = JsonSerializer.Deserialize<Config>(Settings.Default.config, configOptions); }
             catch { Program.Config = new(); }
 
             //Room Viewer Settings
@@ -309,7 +317,13 @@ namespace mage
             Settings.Default.legacyEditors = Program.LegacyEditors;
 
             //Config
-            Settings.Default.config = JsonSerializer.Serialize(Program.Config);
+            var configOptions = new JsonSerializerOptions()
+            {
+                Converters = {
+                    new ColorJsonConverter()
+                }
+            };
+            Settings.Default.config = JsonSerializer.Serialize(Program.Config, configOptions);
 
             //Room Viewer Settings
             Settings.Default.bg3color = Bg3Color;
@@ -490,6 +504,12 @@ namespace mage
         {
             statusStrip_theme.Text = ThemeSwitcher.ProjectThemeName;
         }
+
+        public void UpdateCompilationButton()
+        {
+            bool visible = Version.ProjectConfig.EnableProjectCompilation && File.Exists(Version.ProjectConfig.CompilationScriptPath);
+            btn_saveCompiled.Visible = visible;
+        }
         #endregion
 
 
@@ -541,7 +561,7 @@ namespace mage
             // save backup
             byte[] copy = ROM.BackupData();
             ROM.SaveROM(backup, false);
-            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0) Version.UpdateProject();
+            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0 || TweakManager.ProjectTweaks.Count > 0) Version.UpdateProject();
             Version.SaveProject(backup);
             ROM.RestoreData(copy);
         }
@@ -549,6 +569,48 @@ namespace mage
         private void menuItem_createBackup_Click(object sender, EventArgs e)
         {
             CreateBackup();
+        }
+
+        public void CreateCompilation(string goalFileName)
+        {
+            if (filename == goalFileName)
+            {
+                MessageBox.Show("Compiled ROM should not overwrite the currently opened ROM. Choose a different location.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Create temp ROM
+            string tempFileName = Path.Combine(Path.GetTempPath(), "temp.gba");
+            SaveROM();
+            ROM.SaveROM(tempFileName, false);
+
+            // Compile
+            var dialog = new FormScriptOutput(Version.ProjectConfig.CompilationScriptPath, tempFileName);
+            var dr = dialog.ShowDialog();
+            if (dr == DialogResult.Cancel) return;
+
+            string outputRomPath = tempFileName;
+            if (dialog.NewOutputPath != null) outputRomPath = dialog.NewOutputPath;
+
+            // Copy new ROM
+            if (goalFileName == outputRomPath) return; // Already done
+            if (File.Exists(goalFileName)) File.Delete(goalFileName);
+            try { File.Copy(outputRomPath, goalFileName); }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Could not save compiled ROM.\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void btn_saveCompiled_Click(object sender, EventArgs e)
+        {
+            if (!Version.ProjectConfig.EnableProjectCompilation) return;
+
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "GBA ROM files (*.gba)|*.gba";
+            if (saveFile.ShowDialog() == DialogResult.OK) CreateCompilation(saveFile.FileName);
         }
 
         private void menuItem_clearRecentFiles_Click(object sender, EventArgs e)
@@ -1104,14 +1166,35 @@ namespace mage
             if (saveRoom.ShowDialog() == DialogResult.OK)
             {
                 Rectangle cropArea = new Rectangle(16 * 2, 16 * 2, (room.Width - 4) * 16, (room.Height - 4) * 16);
-                Bitmap roomBitmap = new Bitmap(roomView.BackgroundImage);
+                using Bitmap roomBitmap = new Bitmap(roomView.BackgroundImage);
                 roomBitmap.Clone(cropArea, roomView.BackgroundImage.PixelFormat).Save(saveRoom.FileName);
+            }
+        }
+
+        private void menuItem_exportPixelRoomImage_Click(object sender, EventArgs e)
+        {
+            RoomPixelImageExportDialog dialog = new RoomPixelImageExportDialog();
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+            PixelImageColors colors = dialog.Colors;
+
+            SaveFileDialog saveRoom = new SaveFileDialog();
+            saveRoom.Filter = "PNG files (*.png)|*.png";
+            if (saveRoom.ShowDialog() == DialogResult.OK)
+            {
+                using Bitmap image = new Bitmap(room.Width - 4, room.Height - 4);
+                room.backgrounds.clipTypes.DrawCollisionPixel(image, colors, true);
+                image.Save(saveRoom.FileName);
             }
         }
 
         private void menuItem_areaImage_Click(object sender, EventArgs e)
         {
             new AreaImageExportDialog(this, roomsPerArea, room.AreaID).ShowDialog();
+        }
+
+        private void button_exportAreaPixel_Click(object sender, EventArgs e)
+        {
+            new AreaImageExportDialog(this, roomsPerArea, room.AreaID, true).ShowDialog();
         }
 
         private void menuItem_LZ77comp_Click(object sender, EventArgs e)
@@ -1274,6 +1357,11 @@ namespace mage
             }
         }
 
+        private void tweaksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormTweaks().Show();
+        }
+
         #endregion
 
 
@@ -1366,7 +1454,7 @@ namespace mage
 
             // save all edited lists and compress backgrounds
             ROM.SaveROM(filename, true);
-            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0) Version.UpdateProject();
+            if (!ProjectConfig.IsDefault(Version.ProjectConfig) || BookmarkManager.ProjectCollections.Count > 0 || BookmarkManager.ProjectCollections.Count > 0) Version.UpdateProject();
             bool newProject = Version.SaveProject(filename);
             if (newProject)
             {
@@ -1453,6 +1541,7 @@ namespace mage
                 Version.BackupService = BackupService.FromMinutes(Version.ProjectConfig.BackupsAutoCreationInterval);
                 Version.BackupService.Start();
             }
+            else Version.BackupService = null;
         }
 
         // Look for Input Mono to use in clipdata list; default to Consolas if absent - alexman25
@@ -1508,6 +1597,7 @@ namespace mage
 
             // enable controls
             EnableControls(true);
+            UpdateCompilationButton();
             menuItem_editBGs.Checked = toolStrip_editBGs.Checked = true;
             menuItem_editObjects.Checked = toolStrip_editObjects.Checked = false;
 

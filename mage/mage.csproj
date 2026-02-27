@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0-windows</TargetFramework>
-    <Version>1.12.4</Version>
+    <Version>1.14.0</Version>
     <OutputType>WinExe</OutputType>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -16,7 +16,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.12.4</ApplicationVersion>
+    <ApplicationVersion>1.14.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
@@ -91,6 +91,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="RoomView.cs" />
+    <Compile Update="Tweaks\ParameterControls\TweakParameterSelection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Tweaks\ParameterControls\TweakParameterToggle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Icons\button_bg_color.png" />
@@ -174,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FuzzySharp" Version="2.0.2" />
+    <PackageReference Include="NCalcSync" Version="5.11.0" />
     <PackageReference Include="System.Reactive" Version="6.0.1" />
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>

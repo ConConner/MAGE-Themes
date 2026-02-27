@@ -1,4 +1,5 @@
-﻿using mage.Theming;
+﻿using mage.Editors.NewEditors;
+using mage.Theming;
 using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -16,7 +17,7 @@ namespace mage
             public int height;
             public int value;
         }
-        
+
         private int gfxOffset;
         private int palOffset;
         private int width;
@@ -41,7 +42,7 @@ namespace mage
 
             statusLabel_changes.Text = "";
             status = new Status(statusLabel_changes, button_apply);
-            
+
             InitializeTree();
         }
 
@@ -171,8 +172,7 @@ namespace mage
 
         private void button_gfx_Click(object sender, EventArgs e)
         {
-            FormGraphics form = new FormGraphics(main, gfxOffset, width, height, palOffset);
-            form.Show();
+            FormGraphicsNew.OpenGraphicsEditor(gfxOffset, width, height, palOffset);
         }
 
         private void button_palette_Click(object sender, EventArgs e)
@@ -197,7 +197,7 @@ namespace mage
             }
             catch (Exception ex)
             {
-                MessageBox.Show("The value entered was not valid.\n\n" + ex.Message, 
+                MessageBox.Show("The value entered was not valid.\n\n" + ex.Message,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

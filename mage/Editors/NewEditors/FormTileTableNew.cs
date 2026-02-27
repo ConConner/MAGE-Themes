@@ -142,7 +142,6 @@ namespace mage.Editors
         private int oldSelectedArea;
         private int oldSelectedRoom;
         private int oldSelectedBG;
-        private int oldSelectedSize;
         #endregion
 
         public FormTileTableNew()
@@ -198,6 +197,12 @@ namespace mage.Editors
             comboBox_tileset.SelectedIndex = room.tileset.number;
         }
 
+        public FormTileTableNew(int tileset) : this()
+        {
+            openedInRoom = null;
+            comboBox_tileset.SelectedIndex = tileset;
+        }
+
         #region Helpers
         /// <summary>
         /// Gets the index for a single tile from the tile x and y position on a metatile canvas.
@@ -242,7 +247,7 @@ namespace mage.Editors
                 for (int y = 0; y < height; y++)
                 {
                     // Get number for current tile
-                    int gfxNum = (GfxSelection.X / 8 + x) + ((GfxSelection.Y / 8 + y) * 32);
+                    int gfxNum = (GfxSelection.X / 8 + x) + ((GfxSelection.Y / 8 + y) * 32) + (int)numericUpDown_shift.Value & 0x3FF;
                     //Apply current palette
                     if (CopyPalette) gfxNum |= (comboBox_palette.SelectedIndex << 12);
                     selectedTiles[x, y] = (ushort)gfxNum;
@@ -366,7 +371,7 @@ namespace mage.Editors
 
                 // compress by LZ77
                 ByteStream compData = new ByteStream();
-                compData.Write32(oldSelectedSize);
+                compData.Write32(comboBox_size.SelectedIndex);
                 int newCompLen = Compress.CompLZ77(uncompData, length, compData);
 
                 // get pointer
@@ -1021,6 +1026,7 @@ namespace mage.Editors
             oldSelectedTab = tab_select.SelectedIndex;
             Reset();
 
+            numericUpDown_shift.Value = 0;
             if (openedInRoom == null) return;
             if (selectedTab == Tab.Tileset)
             {
@@ -1097,7 +1103,6 @@ namespace mage.Editors
         private void comboBox_size_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (init) return;
-            oldSelectedSize = comboBox_size.SelectedIndex;
             SetBackgroundImage();
             Status.ChangeMade();
         }
@@ -1259,6 +1264,7 @@ namespace mage.Editors
             {
                 TileTip.TileGFX = tableView.TileImage;
                 TileTip.TileVal = tileTable[GetIndexFromLocation(e.TileIndexPosition.X, e.TileIndexPosition.Y)];
+                TileTip.Shift = (int)numericUpDown_shift.Value;
                 TileTip.PositionOnImage = e.TilePixelPosition;
             }
 
@@ -1376,10 +1382,22 @@ namespace mage.Editors
 
         private void button_editGfx_Click(object sender, EventArgs e)
         {
-            Form f;
-            if (Program.ExperimentalFeaturesEnabled) f = new FormGraphicsNew(FormMain.Instance, gfxSourceOffset, 32, 0, palSourceOffset);
-            else f = new FormGraphics(FormMain.Instance, gfxSourceOffset, 32, 0, palSourceOffset);
-            f.Show();
+            FormGraphicsNew.OpenGraphicsEditor(gfxSourceOffset, 32, 0, palSourceOffset);
+        }
+
+        private void btn_exportImg_Click(object sender, EventArgs e)
+        {
+            if (tableView.TileImage is null)
+            {
+                MessageBox.Show("Please load a Tile Table first.", "No Tile Table loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            SaveFileDialog saveTileset = new SaveFileDialog();
+            saveTileset.Filter = "PNG files (*.png)|*.png";
+            if (saveTileset.ShowDialog() != DialogResult.OK) return;
+
+            tableView.TileImage.Save(saveTileset.FileName);
         }
     }
 }

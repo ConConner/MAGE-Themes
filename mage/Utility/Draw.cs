@@ -113,7 +113,7 @@ namespace mage
         {
             Rectangle srcRect = new Rectangle(0, 0, src.Width, src.Height);
             BitmapData srcData = src.LockBits(srcRect, ImageLockMode.ReadOnly, src.PixelFormat);
-            
+
             int xStart = Math.Max(0, x);
             int yStart = Math.Max(0, y);
             int width = Math.Min(x + src.Width, dstData.Width) - xStart;
@@ -316,6 +316,25 @@ namespace mage
                 new Rectangle((tens + 1) * 8, 0, 8, 8), GraphicsUnit.Pixel);
         }
 
+        public static void DrawNumberCenteredRespectBase(Graphics g, Point point, byte num)
+        {
+            string numAsString = Hex.ToString(num);
+            int len = numAsString.Length;
+            int textWidth = len * 8;
+
+            int xLeft = point.X - textWidth / 2;
+
+            Bitmap nums = Properties.Resources.scrollNums;
+            for (int i = 0; i < len; i++)
+            {
+                byte val = Hex.ToByte(numAsString[i].ToString());
+                var numGfx = new Rectangle((val + 1) * 8, 0, 8, 8);
+                var goalRegion = new Rectangle(xLeft + (i * 8), point.Y - 4, 8, 8);
+
+                g.DrawImage(nums, goalRegion, numGfx, GraphicsUnit.Pixel);
+            }
+        }
+
         public static void DrawArrow(Graphics g, Point point, ArrowDirection dir)
         {
             Bitmap arrows = Properties.Resources.arrows;
@@ -328,13 +347,14 @@ namespace mage
         public static Bitmap BitmapFromFile(string filename)
         {
             FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
-            Bitmap b = (Bitmap) Bitmap.FromStream(fs);
+            Bitmap b = (Bitmap)Bitmap.FromStream(fs);
 
             fs.Dispose();
             return b;
         }
 
-        public enum ArrowDirection : int {
+        public enum ArrowDirection : int
+        {
             Right = 0,
             Down = 1,
             Left = 2,

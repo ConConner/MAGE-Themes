@@ -15,9 +15,8 @@ public class ProjectConfig
     public Dictionary<byte, int> SecondarySpriteOAMRepoints { get; set; } = new();
 
     public bool EnableProjectCompilation { get; set; } = false;
-    public bool AbortTestingIfCompilationFailed { get; set; } = true;
     public string CompilationScriptPath { get; set; } = "";
-    public string CompilationOutputRomName { get; set; } = "";
+    public bool CompilationIgnoreErrors { get; set; } = false;
 
     public bool BackupsMoveIntoSeperateDirectory { get; set; } = false;
     public string BackupDateFormatString { get; set; } = "yyyy-MM-dd_HH-mm-ss";

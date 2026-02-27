@@ -17,10 +17,11 @@ public class TileTableTooltip : ToolTip
     public Image TileGFX { get; set; } = null;
     public Point PositionOnImage = new Point(-1, -1);
     public ushort TileVal = 0;
-    public int TileID => TileVal & 0x3FF;
+    public int TileID => TileVal - Shift & 0x3FF;
     public int TilePal => TileVal >> 12;
     public bool FlipH => (TileVal & 0x400) != 0;
     public bool FlipV => (TileVal & 0x800) != 0;
+    public int Shift = 0;
 
     public TileTableTooltip()
     {
@@ -67,7 +68,7 @@ public class TileTableTooltip : ToolTip
         // Title text
         g.DrawString(caption, captionFont, textBrush, drawLocation);
         drawLocation.Y += (int)captionSize.Height + margin;
-        
+
         // Tile ID
         g.DrawString($"ID:\t {Hex.ToString(TileID)}", regularFont, textBrush, drawLocation);
         drawLocation.Y += regularHeight + margin;
@@ -90,8 +91,8 @@ public class TileTableTooltip : ToolTip
             // Draw actual Tile
             g.InterpolationMode = InterpolationMode.NearestNeighbor;
             g.DrawImage(
-                TileGFX, 
-                new Rectangle(drawLocation.X + vArrow.Width + 1, drawLocation.Y + hArrow.Height + 1, previewSize, previewSize), 
+                TileGFX,
+                new Rectangle(drawLocation.X + vArrow.Width + 1, drawLocation.Y + hArrow.Height + 1, previewSize, previewSize),
                 new Rectangle(PositionOnImage.X, PositionOnImage.Y, 7, 7), GraphicsUnit.Pixel
             );
         }
