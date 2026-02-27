@@ -1,4 +1,6 @@
-﻿using mage.Theming;
+﻿using mage.Editors;
+using mage.Editors.NewEditors;
+using mage.Theming;
 using System;
 using System.Windows.Forms;
 
@@ -63,14 +65,18 @@ namespace mage
             status.ChangeMade();
         }
 
+        private void openGraphicsEditor(int gfxOffset, int palOffset)
+        {
+            FormGraphicsNew.OpenGraphicsEditor(gfxOffset, 32, 0, palOffset);
+        }
+
         private void button_editRLE_Click(object sender, EventArgs e)
         {
             try
             {
                 int gfxOffset = Hex.ToInt(textBox_rleGfx.Text);
                 int palOffset = Hex.ToInt(textBox_palette.Text) + 0x20;
-                FormGraphics form = new FormGraphics(main, gfxOffset, 32, 0, palOffset);
-                form.Show();
+                openGraphicsEditor(gfxOffset, palOffset);
             }
             catch (Exception ex)
             {
@@ -91,8 +97,7 @@ namespace mage
             {
                 int gfxOffset = Hex.ToInt(textBox_lz77gfx.Text);
                 int palOffset = Hex.ToInt(textBox_palette.Text) + 0x20;
-                FormGraphics form = new FormGraphics(main, gfxOffset, 32, 0, palOffset);
-                form.Show();
+                openGraphicsEditor(gfxOffset, palOffset);
             }
             catch (Exception ex)
             {
@@ -103,8 +108,16 @@ namespace mage
 
         private void button_editTileTable_Click(object sender, EventArgs e)
         {
-            FormTileTable form = new FormTileTable(main, comboBox_tileset.SelectedIndex);
-            form.Show();
+            if (Program.LegacyEditors)
+            {
+                FormTileTable form = new FormTileTable(main, comboBox_tileset.SelectedIndex);
+                form.Show();
+            }
+            else
+            {
+                FormTileTableNew form = new FormTileTableNew(comboBox_tileset.SelectedIndex);
+                form.Show();
+            }
         }
 
         private void button_editAnimTileset_Click(object sender, EventArgs e)

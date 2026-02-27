@@ -127,8 +127,8 @@
   <data name="shortcut_power" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_power.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="toolbar_connection" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\toolbar_connection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ZM_U_locationNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Misc\ZM_U_locationNames.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="zoom_out" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zoom_out.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,9 +148,6 @@
   <data name="ZM_U_testRoom" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Misc\ZM_U_testRoom.ips;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="toolbar_outline_scrolls" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\toolbar_outline_scrolls.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ZM_U_disableChozoHints" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Patches\ZM_U_disableChozoHints.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -169,14 +166,14 @@
   <data name="toolbar_oam" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\toolbar_oam.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="toolbar_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\toolbar_save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="shortcut_hatch_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shortcut_hatch_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MF_U_physics" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lists\MF\MF_U_physics.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  </data>
+  <data name="shortcut_slope45_pos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\shortcut_slope45_pos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MF_U_skipIntro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Patches\MF_U_skipIntro.ips;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -193,8 +190,8 @@
   <data name="MF_U_demoRAM" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lists\MF\MF_U_demoRAM.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
-  <data name="ZM_U_locationNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Misc\ZM_U_locationNames.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="disk_multiple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\disk_multiple.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="shortcut_power_water" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_power_water.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -223,6 +220,9 @@
   <data name="toolbar_open" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\toolbar_open.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="shortcut_bomb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\shortcut_bomb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="shortcut_power_hidden" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_power_hidden.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -235,8 +235,8 @@
   <data name="ZM_U_sSpriteOAM" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lists\ZM\ZM_U_sSpriteOAM.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
-  <data name="button_bg_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\button_bg_color.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ZM_U_addElevators1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Patches\ZM_U_addElevators1.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="cog" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -259,11 +259,17 @@
   <data name="shortcut_dusty" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_dusty.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="item_zero" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TestRoom\item_zero.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="toolbar_outline_effect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\toolbar_outline_effect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ZM_U_removeCloseup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Patches\ZM_U_removeCloseup.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shortcut_shot_TL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\shortcut_shot_TL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolbar_weapon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\toolbar_weapon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="test_play" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TestRoom\test_play.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -343,6 +349,9 @@
   <data name="page_copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\page_copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="button_bg_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\button_bg_color.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="endings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lists\endings.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
@@ -379,9 +388,6 @@
   <data name="toolbar_outline_sprites" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\toolbar_outline_sprites.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pencil" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pencil.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ZM_U_addMinimapTiles" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Patches\ZM_U_addMinimapTiles.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -394,8 +400,11 @@
   <data name="magePNG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\mage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shortcut_lava_strong" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\shortcut_lava_strong.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="shortcut_super_block" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\shortcut_super_block.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ZM_U_testDemo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Misc\ZM_U_testDemo.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="toolbar_zoom" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\toolbar_zoom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -421,9 +430,6 @@
   <data name="item_full_gravity" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TestRoom\item_full_gravity.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="toolbar_outline_effect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\toolbar_outline_effect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="shortcut_crumble_slow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_crumble_slow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -432,6 +438,9 @@
   </data>
   <data name="toolbar_header" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\toolbar_header.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="accept" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\accept.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="toolbar_minimap" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\toolbar_minimap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -445,14 +454,17 @@
   <data name="MF_U_sSpriteOAM" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lists\MF\MF_U_sSpriteOAM.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
-  <data name="status_screen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TestRoom\status_screen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MF_U_getPowerBombs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Patches\MF_U_getPowerBombs.ips;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="zm_digits" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zm_digits.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="arrows" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Misc\arrows.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="item_zero" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestRoom\item_zero.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="grid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\grid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -472,8 +484,8 @@
   <data name="bullet_arrow_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bullet_arrow_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MF_U_pSpriteOAM" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Lists\MF\MF_U_pSpriteOAM.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  <data name="toolbar_redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\toolbar_redo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="shortcut_trans_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_trans_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -481,29 +493,26 @@
   <data name="shortcut_energy_water" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_energy_water.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="MZM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MZM.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fill_bucket" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fill_bucket.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="MF_U_weapons" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lists\MF\MF_U_weapons.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
-  </data>
-  <data name="shortcut_super_block" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\shortcut_super_block.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="shortcut_super_hidden" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_super_hidden.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="toolbar_sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\toolbar_sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="toolbar_connection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\toolbar_connection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ZM_clipdata" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lists\ZM\ZM_clipdata.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="scrollNums" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Misc\scrollNums.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ZM_U_physics" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Lists\ZM\ZM_U_physics.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
-  </data>
-  <data name="ZM_U_addElevators1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Patches\ZM_U_addElevators1.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ZM_genTileTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Misc\ZM_genTileTable;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -535,14 +544,14 @@
   <data name="item_disabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TestRoom\item_disabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="disk_multiple" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\disk_multiple.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="toolbar_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\toolbar_save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MF_U_addMinimapTiles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Patches\MF_U_addMinimapTiles.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ZM_U_pSpriteOAM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Lists\ZM\ZM_U_pSpriteOAM.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
-  <data name="MF_U_getPowerBombs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Patches\MF_U_getPowerBombs.ips;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="toolbar_outline_scrolls" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\toolbar_outline_scrolls.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="help" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -550,20 +559,17 @@
   <data name="toolbar_demo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\toolbar_demo.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="toolbar_weapon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\toolbar_weapon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MF_U_pSpriteOAM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Lists\MF\MF_U_pSpriteOAM.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
-  <data name="shortcut_bomb" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\shortcut_bomb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="toolbar_sprite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\toolbar_sprite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="textLists" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lists\textLists.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="item_gravity" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TestRoom\item_gravity.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MF_J_patches" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Lists\MF\MF_J_patches.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
   <data name="shortcut_missile_water" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_missile_water.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -577,8 +583,8 @@
   <data name="shortcut_air" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_air.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shortcut_slope45_pos" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\shortcut_slope45_pos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="shortcut_lava_strong" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons\shortcut_lava_strong.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="shortcut_lava_weak" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_lava_weak.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -586,20 +592,17 @@
   <data name="clipNums" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Misc\clipNums.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MF_U_noMinimap" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Patches\MF_U_noMinimap.ips;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="MF_U_locationNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Misc\MF_U_locationNames.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="fill_bucket" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fill_bucket.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="control_play_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\control_play_blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="status_screen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TestRoom\status_screen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="shape_flip_vertical" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shape_flip_vertical.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="control_play_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\control_play_blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="page_white_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\page_white_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -613,17 +616,20 @@
   <data name="MF_clipdata" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lists\MF\MF_clipdata.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
-  <data name="ZM_U_testDemo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Misc\ZM_U_testDemo.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ZM_U_physics" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Lists\ZM\ZM_U_physics.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
-  <data name="MZM" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MZM.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="MF_U_noMinimap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Patches\MF_U_noMinimap.ips;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="shortcut_super_water" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_super_water.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="shape_group" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shape_group.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="script_code_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\script_code_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="shortcut_missile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_missile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -634,20 +640,23 @@
   <data name="ZM_U_weapons" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lists\ZM\ZM_U_weapons.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
+  <data name="transparent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\transparent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="shortcut_shot_BR" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_shot_BR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shortcut_shot_TL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\shortcut_shot_TL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MF_U_addMinimapTiles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Patches\MF_U_addMinimapTiles.ips;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="toolbar_view_sprites" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\toolbar_view_sprites.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="toolbar_redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\toolbar_redo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MF_J_patches" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Lists\MF\MF_J_patches.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
   </data>
-  <data name="ZM_U_pSpriteOAM" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Lists\ZM\ZM_U_pSpriteOAM.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  <data name="pencil" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pencil.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ZM_constants" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lists\ZM\ZM_constants.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
@@ -664,7 +673,7 @@
   <data name="shortcut_slope27_Lneg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_slope27_Lneg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="script_code_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\script_code_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="toolbox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\toolbox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

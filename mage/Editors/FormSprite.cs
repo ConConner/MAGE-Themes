@@ -1,4 +1,5 @@
-﻿using mage.Theming;
+﻿using mage.Editors.NewEditors;
+using mage.Theming;
 using mage.Theming.CustomControls;
 using System;
 using System.Diagnostics;
@@ -443,16 +444,10 @@ namespace mage
 
         private void button_editGFX_Click(object sender, EventArgs e)
         {
-            FormGraphics formGfx;
             if (Version.IsMF)
-            {
-                formGfx = new FormGraphics(main, currGfx.GfxOffset, 32, currGfx.NumGfxRows * 2, currGfx.PalOffset);
-            }
+                FormGraphicsNew.OpenGraphicsEditor(currGfx.GfxOffset, 32, currGfx.NumGfxRows * 2, currGfx.PalOffset);
             else
-            {
-                formGfx = new FormGraphics(main, currGfx.GfxOffset, 0, 0, currGfx.PalOffset);
-            }
-            formGfx.Show();
+                FormGraphicsNew.OpenGraphicsEditor(currGfx.GfxOffset, 0, 0, currGfx.PalOffset);
         }
 
         private void button_editPalette_Click(object sender, EventArgs e)

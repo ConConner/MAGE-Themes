@@ -1,4 +1,5 @@
-﻿using mage.Theming;
+﻿using mage.Editors.NewEditors;
+using mage.Theming;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -379,8 +380,7 @@ namespace mage
         private void button_editGFX_Click(object sender, EventArgs e)
         {
             int height = numTiles / 32;
-            FormGraphics form = new FormGraphics(main, Version.MinimapGfxOffset, 32, height, Version.MinimapPaletteOffset);
-            form.Show();
+            FormGraphicsNew.OpenGraphicsEditor(Version.MinimapGfxOffset, 32, height, Version.MinimapPaletteOffset);
         }
 
         private void button_bgColor_Click(object sender, EventArgs e)

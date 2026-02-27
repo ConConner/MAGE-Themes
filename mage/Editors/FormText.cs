@@ -1,4 +1,5 @@
-﻿using mage.Theming;
+﻿using mage.Editors.NewEditors;
+using mage.Theming;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -405,8 +406,7 @@ namespace mage
 
         private void button_editGfx_Click(object sender, EventArgs e)
         {
-            FormGraphics form = new FormGraphics(main, Version.TextGfxOffset, 32, 32, Version.TextPaletteOffset);
-            form.Show();
+            FormGraphicsNew.OpenGraphicsEditor(Version.TextGfxOffset, 32, 32, Version.TextPaletteOffset);
         }
 
         private void button_update_Click(object sender, EventArgs e)

@@ -44,6 +44,8 @@
             button_gfxZoomIn = new System.Windows.Forms.ToolStripButton();
             button_gfxZoomOut = new System.Windows.Forms.ToolStripButton();
             label_gfxZoom = new System.Windows.Forms.ToolStripLabel();
+            toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            button_editGfx = new System.Windows.Forms.ToolStripButton();
             panel_select = new mage.Controls.ExtendedPanel();
             tab_select = new mage.Theming.CustomControls.FlatTabControl();
             tabPage_tileset = new System.Windows.Forms.TabPage();
@@ -93,8 +95,9 @@
             statusButton_import = new System.Windows.Forms.ToolStripDropDownButton();
             statusButton_export = new System.Windows.Forms.ToolStripDropDownButton();
             button_apply = new System.Windows.Forms.ToolStripDropDownButton();
-            toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            button_editGfx = new System.Windows.Forms.ToolStripButton();
+            btn_exportTT = new System.Windows.Forms.ToolStripMenuItem();
+            btn_exportImg = new System.Windows.Forms.ToolStripMenuItem();
+            bnt_importTT = new System.Windows.Forms.ToolStripMenuItem();
             panel_gfxView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panel_Main).BeginInit();
             panel_Main.Panel1.SuspendLayout();
@@ -335,6 +338,21 @@
             label_gfxZoom.Name = "label_gfxZoom";
             label_gfxZoom.Size = new System.Drawing.Size(35, 22);
             label_gfxZoom.Text = "100%";
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // button_editGfx
+            // 
+            button_editGfx.Image = Properties.Resources.toolbar_graphics;
+            button_editGfx.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_editGfx.Name = "button_editGfx";
+            button_editGfx.Size = new System.Drawing.Size(71, 22);
+            button_editGfx.Text = "Edit GFX";
+            button_editGfx.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            button_editGfx.Click += button_editGfx_Click;
             // 
             // panel_select
             // 
@@ -859,30 +877,29 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(580, 17);
+            spring.Size = new System.Drawing.Size(531, 17);
             spring.Spring = true;
             // 
             // statusButton_import
             // 
             statusButton_import.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            statusButton_import.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { bnt_importTT });
             statusButton_import.Image = (System.Drawing.Image)resources.GetObject("statusButton_import.Image");
             statusButton_import.ImageTransparentColor = System.Drawing.Color.Magenta;
             statusButton_import.Name = "statusButton_import";
-            statusButton_import.ShowDropDownArrow = false;
-            statusButton_import.Size = new System.Drawing.Size(47, 20);
+            statusButton_import.Size = new System.Drawing.Size(56, 20);
             statusButton_import.Text = "Import";
             statusButton_import.Click += statusButton_import_Click;
             // 
             // statusButton_export
             // 
             statusButton_export.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            statusButton_export.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_exportImg, btn_exportTT });
             statusButton_export.Image = (System.Drawing.Image)resources.GetObject("statusButton_export.Image");
             statusButton_export.ImageTransparentColor = System.Drawing.Color.Magenta;
             statusButton_export.Name = "statusButton_export";
-            statusButton_export.ShowDropDownArrow = false;
-            statusButton_export.Size = new System.Drawing.Size(45, 20);
+            statusButton_export.Size = new System.Drawing.Size(54, 20);
             statusButton_export.Text = "Export";
-            statusButton_export.Click += statusButton_export_Click;
             // 
             // button_apply
             // 
@@ -895,20 +912,26 @@
             button_apply.Text = "Apply";
             button_apply.Click += button_apply_Click;
             // 
-            // toolStripSeparator4
+            // btn_exportTT
             // 
-            toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            btn_exportTT.Name = "btn_exportTT";
+            btn_exportTT.Size = new System.Drawing.Size(180, 22);
+            btn_exportTT.Text = "Tile Table...";
+            btn_exportTT.Click += statusButton_export_Click;
             // 
-            // button_editGfx
+            // btn_exportImg
             // 
-            button_editGfx.Image = Properties.Resources.toolbar_graphics;
-            button_editGfx.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_editGfx.Name = "button_editGfx";
-            button_editGfx.Size = new System.Drawing.Size(71, 22);
-            button_editGfx.Text = "Edit GFX";
-            button_editGfx.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            button_editGfx.Click += button_editGfx_Click;
+            btn_exportImg.Name = "btn_exportImg";
+            btn_exportImg.Size = new System.Drawing.Size(180, 22);
+            btn_exportImg.Text = "Image...";
+            btn_exportImg.Click += btn_exportImg_Click;
+            // 
+            // bnt_importTT
+            // 
+            bnt_importTT.Name = "bnt_importTT";
+            bnt_importTT.Size = new System.Drawing.Size(180, 22);
+            bnt_importTT.Text = "Tile Table...";
+            bnt_importTT.Click += statusButton_import_Click;
             // 
             // FormTileTableNew
             // 
@@ -1026,5 +1049,8 @@
         private Controls.ExtendedPanel panel_tableView;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton button_editGfx;
+        private System.Windows.Forms.ToolStripMenuItem btn_exportImg;
+        private System.Windows.Forms.ToolStripMenuItem btn_exportTT;
+        private System.Windows.Forms.ToolStripMenuItem bnt_importTT;
     }
 }

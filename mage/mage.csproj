@@ -90,6 +90,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="RoomView.cs" />
+    <Compile Update="Tweaks\ParameterControls\TweakParameterSelection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Tweaks\ParameterControls\TweakParameterToggle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Icons\button_bg_color.png" />
@@ -173,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FuzzySharp" Version="2.0.2" />
+    <PackageReference Include="NCalcSync" Version="5.11.0" />
     <PackageReference Include="System.Reactive" Version="6.0.1" />
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
