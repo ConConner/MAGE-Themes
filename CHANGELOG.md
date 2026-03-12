@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/ConConner/MAGE-Themes/compare/v1.14.0...v1.14.1) (2026-03-12)
+
+
+### Bug Fixes
+
+* OAM export as assembly missing "OAM_" prefix ([8bba2f8](https://github.com/ConConner/MAGE-Themes/commit/8bba2f83f613a561fb71d1a9942531aee862f046))
+
 # [1.14.0](https://github.com/ConConner/MAGE-Themes/compare/v1.13.0...v1.14.0) (2026-02-27)
 
 
