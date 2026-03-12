@@ -416,7 +416,7 @@ namespace mage
             for (int i = 0; i < NumFrames; i++)
             {
                 Frame frame = Frames[i];
-                sb.AppendLine($"\t.dw @{animationName}_Frame{Hex.ToPrefixedPaddedString(i)}, {Hex.ToPrefixedPaddedString(frame.duration)}");
+                sb.AppendLine($"\t.dw @OAM_{animationName}_Frame{Hex.ToPrefixedPaddedString(i)}, {Hex.ToPrefixedPaddedString(frame.duration)}");
             }
             sb.AppendLine("\t.dw 0,0");
 
