@@ -105,6 +105,7 @@
             label_spring = new System.Windows.Forms.ToolStripStatusLabel();
             button_import = new System.Windows.Forms.ToolStripDropDownButton();
             button_importOam = new System.Windows.Forms.ToolStripMenuItem();
+            button_importAssembly = new System.Windows.Forms.ToolStripMenuItem();
             button_export = new System.Windows.Forms.ToolStripDropDownButton();
             button_exportAnimation = new System.Windows.Forms.ToolStripMenuItem();
             button_exportAssembly = new System.Windows.Forms.ToolStripMenuItem();
@@ -194,7 +195,7 @@
             checkBox_compressed.Location = new System.Drawing.Point(150, 24);
             checkBox_compressed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             checkBox_compressed.Name = "checkBox_compressed";
-            checkBox_compressed.Size = new System.Drawing.Size(92, 19);
+            checkBox_compressed.Size = new System.Drawing.Size(101, 21);
             checkBox_compressed.TabIndex = 1;
             checkBox_compressed.Text = "Compressed";
             checkBox_compressed.UseVisualStyleBackColor = true;
@@ -217,7 +218,7 @@
             label_paletteOffset.Location = new System.Drawing.Point(8, 54);
             label_paletteOffset.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_paletteOffset.Name = "label_paletteOffset";
-            label_paletteOffset.Size = new System.Drawing.Size(46, 15);
+            label_paletteOffset.Size = new System.Drawing.Size(50, 17);
             label_paletteOffset.TabIndex = 0;
             label_paletteOffset.Text = "Palette:";
             // 
@@ -248,7 +249,7 @@
             label_imageOffset.Location = new System.Drawing.Point(8, 25);
             label_imageOffset.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_imageOffset.Name = "label_imageOffset";
-            label_imageOffset.Size = new System.Drawing.Size(56, 15);
+            label_imageOffset.Size = new System.Drawing.Size(62, 17);
             label_imageOffset.TabIndex = 0;
             label_imageOffset.Text = "Graphics:";
             // 
@@ -258,7 +259,7 @@
             label_OAMOffset.Location = new System.Drawing.Point(8, 85);
             label_OAMOffset.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_OAMOffset.Name = "label_OAMOffset";
-            label_OAMOffset.Size = new System.Drawing.Size(38, 15);
+            label_OAMOffset.Size = new System.Drawing.Size(41, 17);
             label_OAMOffset.TabIndex = 0;
             label_OAMOffset.Text = "OAM:";
             // 
@@ -324,10 +325,10 @@
             panel_gfx.AutoScroll = true;
             panel_gfx.Controls.Add(gfxView_gfx);
             panel_gfx.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel_gfx.Location = new System.Drawing.Point(4, 44);
+            panel_gfx.Location = new System.Drawing.Point(4, 46);
             panel_gfx.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_gfx.Name = "panel_gfx";
-            panel_gfx.Size = new System.Drawing.Size(529, 229);
+            panel_gfx.Size = new System.Drawing.Size(529, 227);
             panel_gfx.TabIndex = 0;
             // 
             // gfxView_gfx
@@ -345,6 +346,7 @@
             gfxView_gfx.TabStop = false;
             gfxView_gfx.Tag = "unthemed";
             gfxView_gfx.Text = "tileDisplay1";
+            gfxView_gfx.TileGridOrigin = new System.Drawing.Point(0, 0);
             gfxView_gfx.TileImage = null;
             gfxView_gfx.TileSize = 8;
             gfxView_gfx.Zoom = 0;
@@ -378,7 +380,7 @@
             // 
             toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_viewPalette, button_viewVram, button_loadCommonGraphics, toolStripSeparator1, button_gfxZoomIn, button_gfxZoomOut, label_gfxZoom });
-            toolStrip1.Location = new System.Drawing.Point(4, 19);
+            toolStrip1.Location = new System.Drawing.Point(4, 21);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new System.Drawing.Size(529, 25);
             toolStrip1.TabIndex = 0;
@@ -442,7 +444,7 @@
             // label_gfxZoom
             // 
             label_gfxZoom.Name = "label_gfxZoom";
-            label_gfxZoom.Size = new System.Drawing.Size(35, 22);
+            label_gfxZoom.Size = new System.Drawing.Size(40, 22);
             label_gfxZoom.Text = "100%";
             // 
             // groupBox_oam
@@ -554,7 +556,7 @@
             label_frameDuration.AutoSize = true;
             label_frameDuration.Location = new System.Drawing.Point(9, 85);
             label_frameDuration.Name = "label_frameDuration";
-            label_frameDuration.Size = new System.Drawing.Size(56, 15);
+            label_frameDuration.Size = new System.Drawing.Size(61, 17);
             label_frameDuration.TabIndex = 5;
             label_frameDuration.Text = "Duration:";
             // 
@@ -564,7 +566,7 @@
             comboBox_Frame.FormattingEnabled = true;
             comboBox_Frame.Location = new System.Drawing.Point(72, 22);
             comboBox_Frame.Name = "comboBox_Frame";
-            comboBox_Frame.Size = new System.Drawing.Size(70, 23);
+            comboBox_Frame.Size = new System.Drawing.Size(70, 25);
             comboBox_Frame.TabIndex = 0;
             comboBox_Frame.SelectedIndexChanged += comboBox_Frame_SelectedIndexChanged;
             // 
@@ -573,7 +575,7 @@
             label_OAMFrame.AutoSize = true;
             label_OAMFrame.Location = new System.Drawing.Point(8, 25);
             label_OAMFrame.Name = "label_OAMFrame";
-            label_OAMFrame.Size = new System.Drawing.Size(43, 15);
+            label_OAMFrame.Size = new System.Drawing.Size(47, 17);
             label_OAMFrame.TabIndex = 3;
             label_OAMFrame.Text = "Frame:";
             // 
@@ -586,7 +588,7 @@
             groupBox_part.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_part.Name = "groupBox_part";
             groupBox_part.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_part.Size = new System.Drawing.Size(250, 508);
+            groupBox_part.Size = new System.Drawing.Size(250, 445);
             groupBox_part.TabIndex = 2;
             groupBox_part.TabStop = false;
             groupBox_part.Text = "Part Details";
@@ -607,9 +609,9 @@
             panel_partEditing.Controls.Add(label_y);
             panel_partEditing.Controls.Add(label_x);
             panel_partEditing.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel_partEditing.Location = new System.Drawing.Point(4, 48);
+            panel_partEditing.Location = new System.Drawing.Point(4, 50);
             panel_partEditing.Name = "panel_partEditing";
-            panel_partEditing.Size = new System.Drawing.Size(242, 457);
+            panel_partEditing.Size = new System.Drawing.Size(242, 392);
             panel_partEditing.TabIndex = 11;
             // 
             // label_error
@@ -617,7 +619,7 @@
             label_error.AutoSize = true;
             label_error.Location = new System.Drawing.Point(4, 11);
             label_error.Name = "label_error";
-            label_error.Size = new System.Drawing.Size(183, 15);
+            label_error.Size = new System.Drawing.Size(203, 17);
             label_error.TabIndex = 18;
             label_error.Text = "One of the values below is invalid";
             label_error.Visible = false;
@@ -629,7 +631,7 @@
             comboBox_size.Items.AddRange(new object[] { "1x1 Tiles", "2x2 Tiles", "4x4 Tiles", "8x8 Tiles", "2x1 Tiles", "4x1 Tiles", "4x2 Tiles", "8x4 Tiles", "1x2 Tiles", "1x4 Tiles", "2x4 Tiles", "4x8 Tiles" });
             comboBox_size.Location = new System.Drawing.Point(68, 151);
             comboBox_size.Name = "comboBox_size";
-            comboBox_size.Size = new System.Drawing.Size(70, 23);
+            comboBox_size.Size = new System.Drawing.Size(70, 25);
             comboBox_size.TabIndex = 17;
             comboBox_size.SelectedIndexChanged += controlElements_changeMade;
             // 
@@ -640,7 +642,7 @@
             comboBox_palette.Items.AddRange(new object[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" });
             comboBox_palette.Location = new System.Drawing.Point(68, 64);
             comboBox_palette.Name = "comboBox_palette";
-            comboBox_palette.Size = new System.Drawing.Size(70, 23);
+            comboBox_palette.Size = new System.Drawing.Size(70, 25);
             comboBox_palette.TabIndex = 16;
             comboBox_palette.SelectedIndexChanged += controlElements_changeMade;
             // 
@@ -649,7 +651,7 @@
             label_size.AutoSize = true;
             label_size.Location = new System.Drawing.Point(4, 154);
             label_size.Name = "label_size";
-            label_size.Size = new System.Drawing.Size(30, 15);
+            label_size.Size = new System.Drawing.Size(34, 17);
             label_size.TabIndex = 15;
             label_size.Text = "Size:";
             // 
@@ -679,7 +681,7 @@
             label_palette.AutoSize = true;
             label_palette.Location = new System.Drawing.Point(4, 67);
             label_palette.Name = "label_palette";
-            label_palette.Size = new System.Drawing.Size(46, 15);
+            label_palette.Size = new System.Drawing.Size(50, 17);
             label_palette.TabIndex = 10;
             label_palette.Text = "Palette:";
             // 
@@ -688,7 +690,7 @@
             label_tile.AutoSize = true;
             label_tile.Location = new System.Drawing.Point(4, 39);
             label_tile.Name = "label_tile";
-            label_tile.Size = new System.Drawing.Size(28, 15);
+            label_tile.Size = new System.Drawing.Size(31, 17);
             label_tile.TabIndex = 9;
             label_tile.Text = "Tile:";
             // 
@@ -697,7 +699,7 @@
             checkBox_yFlip.AutoSize = true;
             checkBox_yFlip.Location = new System.Drawing.Point(146, 123);
             checkBox_yFlip.Name = "checkBox_yFlip";
-            checkBox_yFlip.Size = new System.Drawing.Size(72, 19);
+            checkBox_yFlip.Size = new System.Drawing.Size(77, 21);
             checkBox_yFlip.TabIndex = 5;
             checkBox_yFlip.Text = "Flip on Y";
             checkBox_yFlip.UseVisualStyleBackColor = true;
@@ -708,7 +710,7 @@
             checkBox_xFlip.AutoSize = true;
             checkBox_xFlip.Location = new System.Drawing.Point(146, 94);
             checkBox_xFlip.Name = "checkBox_xFlip";
-            checkBox_xFlip.Size = new System.Drawing.Size(72, 19);
+            checkBox_xFlip.Size = new System.Drawing.Size(78, 21);
             checkBox_xFlip.TabIndex = 3;
             checkBox_xFlip.Text = "Flip on X";
             checkBox_xFlip.UseVisualStyleBackColor = true;
@@ -761,7 +763,7 @@
             label_y.AutoSize = true;
             label_y.Location = new System.Drawing.Point(4, 124);
             label_y.Name = "label_y";
-            label_y.Size = new System.Drawing.Size(17, 15);
+            label_y.Size = new System.Drawing.Size(18, 17);
             label_y.TabIndex = 1;
             label_y.Text = "Y:";
             // 
@@ -770,7 +772,7 @@
             label_x.AutoSize = true;
             label_x.Location = new System.Drawing.Point(4, 95);
             label_x.Name = "label_x";
-            label_x.Size = new System.Drawing.Size(17, 15);
+            label_x.Size = new System.Drawing.Size(19, 17);
             label_x.TabIndex = 0;
             label_x.Text = "X:";
             // 
@@ -781,7 +783,7 @@
             panel_partControl.Controls.Add(button_removePart);
             panel_partControl.Controls.Add(button_addPart);
             panel_partControl.Dock = System.Windows.Forms.DockStyle.Top;
-            panel_partControl.Location = new System.Drawing.Point(4, 19);
+            panel_partControl.Location = new System.Drawing.Point(4, 21);
             panel_partControl.Name = "panel_partControl";
             panel_partControl.Size = new System.Drawing.Size(242, 29);
             panel_partControl.TabIndex = 12;
@@ -792,7 +794,7 @@
             comboBox_part.FormattingEnabled = true;
             comboBox_part.Location = new System.Drawing.Point(68, 3);
             comboBox_part.Name = "comboBox_part";
-            comboBox_part.Size = new System.Drawing.Size(70, 23);
+            comboBox_part.Size = new System.Drawing.Size(70, 25);
             comboBox_part.TabIndex = 0;
             comboBox_part.SelectedIndexChanged += comboBox_part_SelectedIndexChanged;
             // 
@@ -801,7 +803,7 @@
             label_part.AutoSize = true;
             label_part.Location = new System.Drawing.Point(4, 6);
             label_part.Name = "label_part";
-            label_part.Size = new System.Drawing.Size(31, 15);
+            label_part.Size = new System.Drawing.Size(34, 17);
             label_part.TabIndex = 10;
             label_part.Text = "Part:";
             // 
@@ -834,7 +836,7 @@
             groupBox_oamDisplay.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_oamDisplay.Name = "groupBox_oamDisplay";
             groupBox_oamDisplay.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_oamDisplay.Size = new System.Drawing.Size(828, 422);
+            groupBox_oamDisplay.Size = new System.Drawing.Size(828, 359);
             groupBox_oamDisplay.TabIndex = 4;
             groupBox_oamDisplay.TabStop = false;
             groupBox_oamDisplay.Text = "OAM Frame";
@@ -844,10 +846,10 @@
             panel_oam.AutoScroll = true;
             panel_oam.Controls.Add(oamView_oam);
             panel_oam.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel_oam.Location = new System.Drawing.Point(4, 44);
+            panel_oam.Location = new System.Drawing.Point(4, 46);
             panel_oam.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_oam.Name = "panel_oam";
-            panel_oam.Size = new System.Drawing.Size(820, 375);
+            panel_oam.Size = new System.Drawing.Size(820, 310);
             panel_oam.TabIndex = 0;
             // 
             // oamView_oam
@@ -865,6 +867,7 @@
             oamView_oam.TabStop = false;
             oamView_oam.Tag = "unthemed";
             oamView_oam.Text = "tileDisplay1";
+            oamView_oam.TileGridOrigin = new System.Drawing.Point(0, 0);
             oamView_oam.TileImage = null;
             oamView_oam.TileSize = 16;
             oamView_oam.Zoom = 0;
@@ -877,7 +880,7 @@
             // 
             toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_viewOrigin, button_viewOutline, toolStripSeparator2, button_oamZoomIn, button_oamZoomOut, label_oamZoom });
-            toolStrip2.Location = new System.Drawing.Point(4, 19);
+            toolStrip2.Location = new System.Drawing.Point(4, 21);
             toolStrip2.Name = "toolStrip2";
             toolStrip2.Size = new System.Drawing.Size(820, 25);
             toolStrip2.TabIndex = 0;
@@ -931,7 +934,7 @@
             // label_oamZoom
             // 
             label_oamZoom.Name = "label_oamZoom";
-            label_oamZoom.Size = new System.Drawing.Size(35, 22);
+            label_oamZoom.Size = new System.Drawing.Size(40, 22);
             label_oamZoom.Text = "100%";
             // 
             // splitContainer_views
@@ -952,7 +955,7 @@
             // 
             splitContainer_views.Panel2.Controls.Add(groupBox_oamDisplay);
             splitContainer_views.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 6);
-            splitContainer_views.Size = new System.Drawing.Size(834, 741);
+            splitContainer_views.Size = new System.Drawing.Size(834, 678);
             splitContainer_views.SplitterDistance = 307;
             splitContainer_views.SplitterWidth = 3;
             splitContainer_views.TabIndex = 6;
@@ -992,9 +995,12 @@
             paletteView.TabIndex = 0;
             paletteView.TabStop = false;
             paletteView.Text = "tileDisplay1";
+            paletteView.TileGridOrigin = new System.Drawing.Point(0, 0);
             paletteView.TileImage = null;
-            paletteView.TileSize = 16;
+            paletteView.TileSize = 17;
             paletteView.Zoom = 0;
+            paletteView.TileMouseDown += paletteView_TileMouseDown;
+            paletteView.TileMouseMove += paletteView_TileMouseMove;
             // 
             // splitContainer_controls
             // 
@@ -1014,47 +1020,54 @@
             // splitContainer_controls.Panel2
             // 
             splitContainer_controls.Panel2.Controls.Add(splitContainer_views);
-            splitContainer_controls.Size = new System.Drawing.Size(1097, 741);
+            splitContainer_controls.Size = new System.Drawing.Size(1097, 678);
             splitContainer_controls.SplitterDistance = 259;
             splitContainer_controls.TabIndex = 7;
             // 
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { label_Status, label_spring, button_import, button_export, button_save });
-            statusStrip1.Location = new System.Drawing.Point(0, 741);
+            statusStrip1.Location = new System.Drawing.Point(0, 678);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(1097, 22);
+            statusStrip1.Size = new System.Drawing.Size(1097, 23);
             statusStrip1.TabIndex = 8;
             statusStrip1.Text = "statusStrip1";
             // 
             // label_Status
             // 
             label_Status.Name = "label_Status";
-            label_Status.Size = new System.Drawing.Size(12, 17);
+            label_Status.Size = new System.Drawing.Size(13, 18);
             label_Status.Text = "-";
             // 
             // label_spring
             // 
             label_spring.Name = "label_spring";
-            label_spring.Size = new System.Drawing.Size(902, 17);
+            label_spring.Size = new System.Drawing.Size(889, 18);
             label_spring.Spring = true;
             // 
             // button_import
             // 
             button_import.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            button_import.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_importOam });
+            button_import.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_importOam, button_importAssembly });
             button_import.Image = (System.Drawing.Image)resources.GetObject("button_import.Image");
             button_import.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_import.Name = "button_import";
-            button_import.Size = new System.Drawing.Size(56, 20);
+            button_import.Size = new System.Drawing.Size(60, 21);
             button_import.Text = "Import";
             // 
             // button_importOam
             // 
             button_importOam.Name = "button_importOam";
-            button_importOam.Size = new System.Drawing.Size(111, 22);
+            button_importOam.Size = new System.Drawing.Size(140, 22);
             button_importOam.Text = "OAM...";
             button_importOam.Click += button_importOam_Click;
+            // 
+            // button_importAssembly
+            // 
+            button_importAssembly.Name = "button_importAssembly";
+            button_importAssembly.Size = new System.Drawing.Size(140, 22);
+            button_importAssembly.Text = "Assembly...";
+            button_importAssembly.Click += button_importAssembly_Click;
             // 
             // button_export
             // 
@@ -1063,27 +1076,27 @@
             button_export.Image = (System.Drawing.Image)resources.GetObject("button_export.Image");
             button_export.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_export.Name = "button_export";
-            button_export.Size = new System.Drawing.Size(54, 20);
+            button_export.Size = new System.Drawing.Size(59, 21);
             button_export.Text = "Export";
             // 
             // button_exportAnimation
             // 
             button_exportAnimation.Name = "button_exportAnimation";
-            button_exportAnimation.Size = new System.Drawing.Size(139, 22);
+            button_exportAnimation.Size = new System.Drawing.Size(143, 22);
             button_exportAnimation.Text = "Animation...";
             button_exportAnimation.Click += button_exportAnimation_Click;
             // 
             // button_exportAssembly
             // 
             button_exportAssembly.Name = "button_exportAssembly";
-            button_exportAssembly.Size = new System.Drawing.Size(139, 22);
+            button_exportAssembly.Size = new System.Drawing.Size(143, 22);
             button_exportAssembly.Text = "Assembly...";
             button_exportAssembly.Click += button_exportAssembly_Click;
             // 
             // button_exportOam
             // 
             button_exportOam.Name = "button_exportOam";
-            button_exportOam.Size = new System.Drawing.Size(139, 22);
+            button_exportOam.Size = new System.Drawing.Size(143, 22);
             button_exportOam.Text = "OAM...";
             button_exportOam.Click += button_exportOam_Click;
             // 
@@ -1094,7 +1107,7 @@
             button_save.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_save.Name = "button_save";
             button_save.ShowDropDownArrow = false;
-            button_save.Size = new System.Drawing.Size(58, 20);
+            button_save.Size = new System.Drawing.Size(61, 21);
             button_save.Text = "Apply";
             button_save.Click += button_save_Click;
             // 
@@ -1102,14 +1115,14 @@
             // 
             contextMenu_oam.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_toFront, button_layerUp, button_layerDown, button_toBack, toolStripSeparator3, button_removePartCtx });
             contextMenu_oam.Name = "contextMenu_oam";
-            contextMenu_oam.Size = new System.Drawing.Size(164, 120);
+            contextMenu_oam.Size = new System.Drawing.Size(176, 120);
             contextMenu_oam.Opening += contextMenu_oam_Opening;
             // 
             // button_toFront
             // 
             button_toFront.Image = (System.Drawing.Image)resources.GetObject("button_toFront.Image");
             button_toFront.Name = "button_toFront";
-            button_toFront.Size = new System.Drawing.Size(163, 22);
+            button_toFront.Size = new System.Drawing.Size(175, 22);
             button_toFront.Text = "Bring to Front";
             button_toFront.Click += button_toFront_Click;
             // 
@@ -1117,7 +1130,7 @@
             // 
             button_layerUp.Image = (System.Drawing.Image)resources.GetObject("button_layerUp.Image");
             button_layerUp.Name = "button_layerUp";
-            button_layerUp.Size = new System.Drawing.Size(163, 22);
+            button_layerUp.Size = new System.Drawing.Size(175, 22);
             button_layerUp.Text = "Move forwards";
             button_layerUp.Click += button_layerUp_Click;
             // 
@@ -1125,7 +1138,7 @@
             // 
             button_layerDown.Image = (System.Drawing.Image)resources.GetObject("button_layerDown.Image");
             button_layerDown.Name = "button_layerDown";
-            button_layerDown.Size = new System.Drawing.Size(163, 22);
+            button_layerDown.Size = new System.Drawing.Size(175, 22);
             button_layerDown.Text = "Move backwards";
             button_layerDown.Click += button_layerDown_Click;
             // 
@@ -1133,20 +1146,20 @@
             // 
             button_toBack.Image = (System.Drawing.Image)resources.GetObject("button_toBack.Image");
             button_toBack.Name = "button_toBack";
-            button_toBack.Size = new System.Drawing.Size(163, 22);
+            button_toBack.Size = new System.Drawing.Size(175, 22);
             button_toBack.Text = "Send to Back";
             button_toBack.Click += button_toBack_Click;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new System.Drawing.Size(160, 6);
+            toolStripSeparator3.Size = new System.Drawing.Size(172, 6);
             // 
             // button_removePartCtx
             // 
             button_removePartCtx.Image = Properties.Resources.delete;
             button_removePartCtx.Name = "button_removePartCtx";
-            button_removePartCtx.Size = new System.Drawing.Size(163, 22);
+            button_removePartCtx.Size = new System.Drawing.Size(175, 22);
             button_removePartCtx.Text = "Delete";
             button_removePartCtx.Click += button_removePart_Click;
             // 
@@ -1154,26 +1167,26 @@
             // 
             contextMenu_oamNoSelection.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_addPartHere });
             contextMenu_oamNoSelection.Name = "contextMenu_oamNoSelection";
-            contextMenu_oamNoSelection.Size = new System.Drawing.Size(146, 26);
+            contextMenu_oamNoSelection.Size = new System.Drawing.Size(155, 26);
             // 
             // button_addPartHere
             // 
             button_addPartHere.Image = Properties.Resources.toolbar_add;
             button_addPartHere.Name = "button_addPartHere";
-            button_addPartHere.Size = new System.Drawing.Size(145, 22);
+            button_addPartHere.Size = new System.Drawing.Size(154, 22);
             button_addPartHere.Text = "Add new Part";
             button_addPartHere.Click += button_addPartHere_Click;
             // 
             // FormOam
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(1097, 763);
+            ClientSize = new System.Drawing.Size(1097, 701);
             Controls.Add(splitContainer_controls);
             Controls.Add(statusStrip1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            MinimumSize = new System.Drawing.Size(822, 802);
+            MinimumSize = new System.Drawing.Size(822, 670);
             Name = "FormOam";
             Text = "OAM Editor";
             FormClosing += FormOam_FormClosing;
@@ -1308,5 +1321,6 @@
         private System.Windows.Forms.ToolStripMenuItem button_importOam;
         private System.Windows.Forms.ToolStripMenuItem button_exportAssembly;
         private System.Windows.Forms.ToolStripButton button_loadCommonGraphics;
+        private System.Windows.Forms.ToolStripMenuItem button_importAssembly;
     }
 }
