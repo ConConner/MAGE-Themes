@@ -5,6 +5,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+
 namespace mage
 {
     public partial class FormHeader : Form
@@ -295,6 +296,18 @@ namespace mage
             if (d.ShowDialog() != DialogResult.OK) return;
             textBox_tileset.Text = Hex.ToString(d.SelectedTileset);
         }
+
+        private void btn_transparency_preset_Click(object sender, EventArgs e)
+        {
+            byte oldTransparency = Hex.ToByte(textBox_transparency.Text);
+
+            TransparencyDialog d = new TransparencyDialog(oldTransparency);
+            if (d.ShowDialog() != DialogResult.OK) return;
+            textBox_transparency.Text = Hex.ToString(d.Value);
+        }
+
         #endregion
+
+
     }
 }
