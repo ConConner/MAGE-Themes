@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NCalc;
+using System;
 
 namespace mage
 {
@@ -51,6 +52,12 @@ namespace mage
         public static int ToInt(string text)
         {
             return Convert.ToInt32(text, radix);
+        }
+
+        public static int ToIntNcalc(string expression)
+        {
+            Expression ex = new Expression(expression);
+            return Convert.ToInt32(ex.Evaluate());
         }
     }
 }
