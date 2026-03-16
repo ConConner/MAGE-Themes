@@ -1333,7 +1333,7 @@ public partial class FormOam : Form
             return;
         }
 
-        File.WriteAllText(saveOAM.FileName, oam.Serialize());
+        File.WriteAllText(saveOAM.FileName, OamSerializer.Serialize(oam));
     }
 
     private void button_exportAssembly_Click(object sender, EventArgs e)
@@ -1348,7 +1348,7 @@ public partial class FormOam : Form
         }
         string animationName = Path.GetFileName(saveASM.FileName);
         animationName = Path.GetFileNameWithoutExtension(animationName);
-        File.WriteAllText(saveASM.FileName, oam.ToASM(animationName));
+        File.WriteAllText(saveASM.FileName, OamSerializer.ToASM(oam, animationName));
     }
 
     void button_importOam_Click(object sender, EventArgs e)
@@ -1363,7 +1363,7 @@ public partial class FormOam : Form
         }
 
         string json = File.ReadAllText(openOAM.FileName);
-        OAM? imported = OAM.Deserialize(json);
+        OAM? imported = OamSerializer.Deserialize(json);
         if (imported == null) return;
 
         oam = imported;
@@ -1383,7 +1383,7 @@ public partial class FormOam : Form
         }
 
         string assembly = File.ReadAllText(openASM.FileName);
-        OAM? imported = OAM.FromASM(assembly);
+        OAM? imported = OamSerializer.FromASM(assembly);
         if (imported == null) return;
 
         oam = imported;
@@ -1406,6 +1406,6 @@ public partial class FormOam : Form
     {
         PaletteCursor.Visible = false;
         SelectedPaletteRow = e.TilePixelPosition.Y / 17;
-        
+
     }
 }
