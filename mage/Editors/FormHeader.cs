@@ -299,7 +299,9 @@ namespace mage
 
         private void btn_transparency_preset_Click(object sender, EventArgs e)
         {
-            byte oldTransparency = Hex.ToByte(textBox_transparency.Text);
+            byte oldTransparency;
+            try { oldTransparency = Hex.ToByte(textBox_transparency.Text); }
+            catch { oldTransparency = 0; }
 
             TransparencyDialog d = new TransparencyDialog(oldTransparency);
             if (d.ShowDialog() != DialogResult.OK) return;
