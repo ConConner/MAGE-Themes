@@ -39,11 +39,6 @@ namespace mage.Dialogs
             // After InitializeComponent, but before showing the form
             this.Load += TransparencyDialog_Load;
 
-
-            //Theming
-            ThemeSwitcher.ChangeTheme(Controls, this);
-            ThemeSwitcher.InjectPaintOverrides(Controls);
-
             DialogResult = DialogResult.Cancel;
         }
 
@@ -57,6 +52,10 @@ namespace mage.Dialogs
                 };
 
             UpdateUI();
+
+            //Theming
+            ThemeSwitcher.ChangeTheme(Controls, this);
+            ThemeSwitcher.InjectPaintOverrides(Controls);
         }
 
         private void textChanged(object sender, EventArgs e)
@@ -81,15 +80,17 @@ namespace mage.Dialogs
             combineValues();
             textBox_Value_Dialog.Text = Hex.ToString(Value);
             foreach (var b in positionButtons)
-                b.BackColor = SystemColors.Control;
+                b.BackColor = ThemeSwitcher.ProjectTheme.BackgroundColor;
 
             foreach (var b in transparencyButtons)
-                b.BackColor = SystemColors.Control;
+                b.BackColor = ThemeSwitcher.ProjectTheme.BackgroundColor;
 
-            positionButtons[PositionValue].BackColor = SystemColors.ActiveCaption; //try .Highlight
+            positionButtons[PositionValue].BackColor = ThemeSwitcher.ProjectTheme.AccentColor;
+            positionButtons[PositionValue].ForeColor = ThemeSwitcher.ProjectTheme.TextColorHighlight;
 
             int buttonIndex = GetButtonIndexForGroup(TransparencyValue);
-            transparencyButtons[buttonIndex].BackColor = SystemColors.ActiveCaption; //try .Highlight
+            transparencyButtons[buttonIndex].BackColor = ThemeSwitcher.ProjectTheme.AccentColor;
+            transparencyButtons[buttonIndex].ForeColor = ThemeSwitcher.ProjectTheme.TextColorHighlight;
         }
 
         private byte combineValues()

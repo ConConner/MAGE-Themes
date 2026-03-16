@@ -124,12 +124,13 @@
             // 
             // button0
             // 
+            button0.Font = new System.Drawing.Font("Noto Mono", 9F);
             button0.Location = new System.Drawing.Point(12, 213);
             button0.Name = "button0";
             button0.Size = new System.Drawing.Size(352, 23);
             button0.TabIndex = 6;
             button0.Tag = "0";
-            button0.Text = "EVA = 16                                                        EVB = 0";
+            button0.Text = "EVA = 16                         EVB = 0";
             button0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             button0.UseVisualStyleBackColor = true;
             button0.Click += buttonTransparencyClicked;
@@ -156,120 +157,130 @@
             // 
             // button1
             // 
+            button1.Font = new System.Drawing.Font("Noto Mono", 9F);
             button1.Location = new System.Drawing.Point(12, 242);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(352, 23);
             button1.TabIndex = 15;
             button1.Tag = "1";
-            button1.Text = "EVA = 16                                                        EVB = 7";
+            button1.Text = "EVA = 16                         EVB = 7";
             button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             button1.UseVisualStyleBackColor = true;
             button1.Click += buttonTransparencyClicked;
             // 
             // button2
             // 
+            button2.Font = new System.Drawing.Font("Noto Mono", 9F);
             button2.Location = new System.Drawing.Point(12, 271);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(352, 23);
             button2.TabIndex = 16;
             button2.Tag = "2";
-            button2.Text = "EVA = 16                                                        EVB = 10";
+            button2.Text = "EVA = 16                         EVB = 10";
             button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             button2.UseVisualStyleBackColor = true;
             button2.Click += buttonTransparencyClicked;
             // 
             // button3
             // 
+            button3.Font = new System.Drawing.Font("Noto Mono", 9F);
             button3.Location = new System.Drawing.Point(12, 300);
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(352, 23);
             button3.TabIndex = 17;
             button3.Tag = "3";
-            button3.Text = "EVA = 16                                                        EVB = 13";
+            button3.Text = "EVA = 16                         EVB = 13";
             button3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             button3.UseVisualStyleBackColor = true;
             button3.Click += buttonTransparencyClicked;
             // 
             // button4
             // 
+            button4.Font = new System.Drawing.Font("Noto Mono", 9F);
             button4.Location = new System.Drawing.Point(12, 329);
             button4.Name = "button4";
             button4.Size = new System.Drawing.Size(352, 23);
             button4.TabIndex = 18;
             button4.Tag = "4";
-            button4.Text = "EVA = 16                                                        EVB = 16\r\n";
+            button4.Text = "EVA = 16                         EVB = 16\r\n";
             button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             button4.UseVisualStyleBackColor = true;
             button4.Click += buttonTransparencyClicked;
             // 
             // button5
             // 
+            button5.Font = new System.Drawing.Font("Noto Mono", 9F);
             button5.Location = new System.Drawing.Point(12, 358);
             button5.Name = "button5";
             button5.Size = new System.Drawing.Size(352, 23);
             button5.TabIndex = 19;
             button5.Tag = "5";
-            button5.Text = "EVA = 0                                                          EVB = 16";
+            button5.Text = "EVA = 0                          EVB = 16";
             button5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             button5.UseVisualStyleBackColor = true;
             button5.Click += buttonTransparencyClicked;
             // 
             // button6
             // 
+            button6.Font = new System.Drawing.Font("Noto Mono", 9F);
             button6.Location = new System.Drawing.Point(12, 387);
             button6.Name = "button6";
             button6.Size = new System.Drawing.Size(352, 23);
             button6.TabIndex = 20;
             button6.Tag = "6";
-            button6.Text = "EVA = 3                                                         EVB = 13";
+            button6.Text = "EVA = 3                          EVB = 13";
             button6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             button6.UseVisualStyleBackColor = true;
             button6.Click += buttonTransparencyClicked;
             // 
             // button7
             // 
+            button7.Font = new System.Drawing.Font("Noto Mono", 9F);
             button7.Location = new System.Drawing.Point(12, 416);
             button7.Name = "button7";
             button7.Size = new System.Drawing.Size(352, 23);
             button7.TabIndex = 21;
             button7.Tag = "7";
-            button7.Text = "EVA = 6                                                          EVB = 10";
+            button7.Text = "EVA = 6                          EVB = 10";
             button7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             button7.UseVisualStyleBackColor = true;
             button7.Click += buttonTransparencyClicked;
             // 
             // button8
             // 
+            button8.Font = new System.Drawing.Font("Noto Mono", 9F);
             button8.Location = new System.Drawing.Point(12, 445);
             button8.Name = "button8";
             button8.Size = new System.Drawing.Size(352, 23);
             button8.TabIndex = 22;
             button8.Tag = "8";
-            button8.Text = "EVA = 9                                                        EVB = 7";
+            button8.Text = "EVA = 9                          EVB = 7";
             button8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             button8.UseVisualStyleBackColor = true;
             button8.Click += buttonTransparencyClicked;
             // 
             // button9
             // 
+            button9.Font = new System.Drawing.Font("Noto Mono", 9F);
             button9.Location = new System.Drawing.Point(12, 474);
             button9.Name = "button9";
             button9.Size = new System.Drawing.Size(352, 23);
             button9.TabIndex = 23;
             button9.Tag = "9";
-            button9.Text = "EVA = 11                                                        EVB = 5";
+            button9.Text = "EVA = 11                         EVB = 5";
             button9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             button9.UseVisualStyleBackColor = true;
             button9.Click += buttonTransparencyClicked;
             // 
             // button10
             // 
+            button10.Font = new System.Drawing.Font("Noto Mono", 9F);
             button10.Location = new System.Drawing.Point(12, 503);
             button10.Name = "button10";
             button10.Size = new System.Drawing.Size(352, 23);
             button10.TabIndex = 24;
             button10.Tag = "10";
-            button10.Text = "EVA = 13                                                        EVB = 3";
+            button10.Text = "EVA = 13                         EVB = 3";
             button10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             button10.UseVisualStyleBackColor = true;
             button10.Click += buttonTransparencyClicked;
@@ -315,8 +326,7 @@
             // 
             // TransparencyDialog
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             ClientSize = new System.Drawing.Size(376, 534);
             Controls.Add(btn_apply);
             Controls.Add(button10);
