@@ -76,6 +76,7 @@
             toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             button_decreasePalette = new System.Windows.Forms.ToolStripButton();
             button_increasePalette = new System.Windows.Forms.ToolStripButton();
+            button_editPal = new System.Windows.Forms.ToolStripButton();
             panel_shapeSettings = new System.Windows.Forms.Panel();
             panel_fillSettings = new System.Windows.Forms.Panel();
             checkBox_gridFill = new System.Windows.Forms.CheckBox();
@@ -101,6 +102,7 @@
             button_imageZoomOut = new System.Windows.Forms.ToolStripButton();
             label_imageZoom = new System.Windows.Forms.ToolStripLabel();
             panel_imageContainer = new mage.Controls.ExtendedPanel();
+            toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             groupBox_imageControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_height).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_width).BeginInit();
@@ -162,6 +164,8 @@
             // 
             textBox_palOffset.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_palOffset.DisplayBorder = true;
+            textBox_palOffset.HexSanitized = false;
+            textBox_palOffset.HexSanitizedMaxValue = -1;
             textBox_palOffset.Location = new System.Drawing.Point(72, 51);
             textBox_palOffset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_palOffset.MaxLength = 32767;
@@ -193,6 +197,8 @@
             // 
             textBox_imageOffset.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_imageOffset.DisplayBorder = true;
+            textBox_imageOffset.HexSanitized = false;
+            textBox_imageOffset.HexSanitizedMaxValue = -1;
             textBox_imageOffset.Location = new System.Drawing.Point(72, 22);
             textBox_imageOffset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_imageOffset.MaxLength = 32767;
@@ -323,7 +329,7 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(452, 17);
+            spring.Size = new System.Drawing.Size(484, 17);
             spring.Spring = true;
             // 
             // statusButton_import
@@ -341,7 +347,7 @@
             // 
             statusButton_graphicsImport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_importGraphicsRaw, button_importGraphicsImage });
             statusButton_graphicsImport.Name = "statusButton_graphicsImport";
-            statusButton_graphicsImport.Size = new System.Drawing.Size(180, 22);
+            statusButton_graphicsImport.Size = new System.Drawing.Size(120, 22);
             statusButton_graphicsImport.Text = "Graphics";
             // 
             // button_importGraphicsRaw
@@ -362,27 +368,27 @@
             // 
             statusButton_paletteImport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_importPaletteRaw, button_importPaletteTLP, button_importPaletteYYCHR });
             statusButton_paletteImport.Name = "statusButton_paletteImport";
-            statusButton_paletteImport.Size = new System.Drawing.Size(180, 22);
+            statusButton_paletteImport.Size = new System.Drawing.Size(120, 22);
             statusButton_paletteImport.Text = "Palette";
             // 
             // button_importPaletteRaw
             // 
             button_importPaletteRaw.Name = "button_importPaletteRaw";
-            button_importPaletteRaw.Size = new System.Drawing.Size(153, 22);
+            button_importPaletteRaw.Size = new System.Drawing.Size(154, 22);
             button_importPaletteRaw.Text = "Raw...";
             button_importPaletteRaw.Click += button_importPaletteRaw_Click;
             // 
             // button_importPaletteTLP
             // 
             button_importPaletteTLP.Name = "button_importPaletteTLP";
-            button_importPaletteTLP.Size = new System.Drawing.Size(153, 22);
+            button_importPaletteTLP.Size = new System.Drawing.Size(154, 22);
             button_importPaletteTLP.Text = "Tile Layer Pro...";
             button_importPaletteTLP.Click += button_importPaletteTLP_Click;
             // 
             // button_importPaletteYYCHR
             // 
             button_importPaletteYYCHR.Name = "button_importPaletteYYCHR";
-            button_importPaletteYYCHR.Size = new System.Drawing.Size(153, 22);
+            button_importPaletteYYCHR.Size = new System.Drawing.Size(154, 22);
             button_importPaletteYYCHR.Text = "YY-CHR...";
             button_importPaletteYYCHR.Click += button_importPaletteYYCHR_Click;
             // 
@@ -394,32 +400,32 @@
             statusButton_export.ImageTransparentColor = System.Drawing.Color.Magenta;
             statusButton_export.Name = "statusButton_export";
             statusButton_export.ShowDropDownArrow = false;
-            statusButton_export.Size = new System.Drawing.Size(45, 20);
+            statusButton_export.Size = new System.Drawing.Size(44, 20);
             statusButton_export.Text = "Export";
             // 
             // statusButton_graphicsExport
             // 
             statusButton_graphicsExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { button_exportGraphicsRaw, toolStripSeparator2, button_exportGraphicsImage, menuItem_pixelFormat });
             statusButton_graphicsExport.Name = "statusButton_graphicsExport";
-            statusButton_graphicsExport.Size = new System.Drawing.Size(180, 22);
+            statusButton_graphicsExport.Size = new System.Drawing.Size(120, 22);
             statusButton_graphicsExport.Text = "Graphics";
             // 
             // button_exportGraphicsRaw
             // 
             button_exportGraphicsRaw.Name = "button_exportGraphicsRaw";
-            button_exportGraphicsRaw.Size = new System.Drawing.Size(180, 22);
+            button_exportGraphicsRaw.Size = new System.Drawing.Size(139, 22);
             button_exportGraphicsRaw.Text = "Raw...";
             button_exportGraphicsRaw.Click += button_exportGraphicsRaw_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator2.Size = new System.Drawing.Size(136, 6);
             // 
             // button_exportGraphicsImage
             // 
             button_exportGraphicsImage.Name = "button_exportGraphicsImage";
-            button_exportGraphicsImage.Size = new System.Drawing.Size(180, 22);
+            button_exportGraphicsImage.Size = new System.Drawing.Size(139, 22);
             button_exportGraphicsImage.Text = "Image...";
             button_exportGraphicsImage.Click += button_exportGraphicsImage_Click;
             // 
@@ -427,14 +433,14 @@
             // 
             menuItem_pixelFormat.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_4bitIndexed, menuItem_24bitRGB, menuItem_32bitARGB });
             menuItem_pixelFormat.Name = "menuItem_pixelFormat";
-            menuItem_pixelFormat.Size = new System.Drawing.Size(180, 22);
+            menuItem_pixelFormat.Size = new System.Drawing.Size(139, 22);
             menuItem_pixelFormat.Text = "Pixel Format";
             // 
             // menuItem_4bitIndexed
             // 
             menuItem_4bitIndexed.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             menuItem_4bitIndexed.Name = "menuItem_4bitIndexed";
-            menuItem_4bitIndexed.Size = new System.Drawing.Size(180, 22);
+            menuItem_4bitIndexed.Size = new System.Drawing.Size(143, 22);
             menuItem_4bitIndexed.Text = "4-bit Indexed";
             menuItem_4bitIndexed.Click += menuItem_pixelFormat_Click;
             // 
@@ -444,7 +450,7 @@
             menuItem_24bitRGB.CheckState = System.Windows.Forms.CheckState.Checked;
             menuItem_24bitRGB.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             menuItem_24bitRGB.Name = "menuItem_24bitRGB";
-            menuItem_24bitRGB.Size = new System.Drawing.Size(180, 22);
+            menuItem_24bitRGB.Size = new System.Drawing.Size(143, 22);
             menuItem_24bitRGB.Text = "24-bit RGB";
             menuItem_24bitRGB.Click += menuItem_pixelFormat_Click;
             // 
@@ -452,7 +458,7 @@
             // 
             menuItem_32bitARGB.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             menuItem_32bitARGB.Name = "menuItem_32bitARGB";
-            menuItem_32bitARGB.Size = new System.Drawing.Size(180, 22);
+            menuItem_32bitARGB.Size = new System.Drawing.Size(143, 22);
             menuItem_32bitARGB.Text = "32-bit ARGB";
             menuItem_32bitARGB.Click += menuItem_pixelFormat_Click;
             // 
@@ -460,27 +466,27 @@
             // 
             statusButton_paletteExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_palExport_raw, menuItem_palExport_tlp, menuItem_palExport_yychr });
             statusButton_paletteExport.Name = "statusButton_paletteExport";
-            statusButton_paletteExport.Size = new System.Drawing.Size(180, 22);
+            statusButton_paletteExport.Size = new System.Drawing.Size(120, 22);
             statusButton_paletteExport.Text = "Palette";
             // 
             // menuItem_palExport_raw
             // 
             menuItem_palExport_raw.Name = "menuItem_palExport_raw";
-            menuItem_palExport_raw.Size = new System.Drawing.Size(153, 22);
+            menuItem_palExport_raw.Size = new System.Drawing.Size(154, 22);
             menuItem_palExport_raw.Text = "Raw...";
             menuItem_palExport_raw.Click += menuItem_palExport_raw_Click;
             // 
             // menuItem_palExport_tlp
             // 
             menuItem_palExport_tlp.Name = "menuItem_palExport_tlp";
-            menuItem_palExport_tlp.Size = new System.Drawing.Size(153, 22);
+            menuItem_palExport_tlp.Size = new System.Drawing.Size(154, 22);
             menuItem_palExport_tlp.Text = "Tile Layer Pro...";
             menuItem_palExport_tlp.Click += menuItem_palExport_tlp_Click;
             // 
             // menuItem_palExport_yychr
             // 
             menuItem_palExport_yychr.Name = "menuItem_palExport_yychr";
-            menuItem_palExport_yychr.Size = new System.Drawing.Size(153, 22);
+            menuItem_palExport_yychr.Size = new System.Drawing.Size(154, 22);
             menuItem_palExport_yychr.Text = "YY-CHR...";
             menuItem_palExport_yychr.Click += menuItem_palExport_yychr_Click;
             // 
@@ -546,7 +552,7 @@
             // toolStrip_palette
             // 
             toolStrip_palette.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripSeparator5, button_decreasePalette, button_increasePalette });
+            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripSeparator5, button_decreasePalette, button_increasePalette, toolStripSeparator7, button_editPal });
             toolStrip_palette.Location = new System.Drawing.Point(3, 94);
             toolStrip_palette.Name = "toolStrip_palette";
             toolStrip_palette.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -579,6 +585,15 @@
             button_increasePalette.Text = "Next Palette Row";
             button_increasePalette.Click += button_increasePalette_Click;
             // 
+            // button_editPal
+            // 
+            button_editPal.Image = Properties.Resources.toolbar_palette;
+            button_editPal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_editPal.Name = "button_editPal";
+            button_editPal.Size = new System.Drawing.Size(47, 22);
+            button_editPal.Text = "Edit";
+            button_editPal.Click += button_editPal_Click;
+            // 
             // panel_shapeSettings
             // 
             panel_shapeSettings.Dock = System.Windows.Forms.DockStyle.Top;
@@ -604,7 +619,7 @@
             checkBox_gridFill.AutoSize = true;
             checkBox_gridFill.Location = new System.Drawing.Point(109, 4);
             checkBox_gridFill.Name = "checkBox_gridFill";
-            checkBox_gridFill.Size = new System.Drawing.Size(113, 19);
+            checkBox_gridFill.Size = new System.Drawing.Size(114, 19);
             checkBox_gridFill.TabIndex = 1;
             checkBox_gridFill.Text = "Stop on Tile Grid";
             checkBox_gridFill.UseVisualStyleBackColor = true;
@@ -764,14 +779,14 @@
             button_tileGrid.Checked = true;
             button_tileGrid.CheckState = System.Windows.Forms.CheckState.Checked;
             button_tileGrid.Name = "button_tileGrid";
-            button_tileGrid.Size = new System.Drawing.Size(124, 22);
+            button_tileGrid.Size = new System.Drawing.Size(123, 22);
             button_tileGrid.Text = "Tile Grid";
             button_tileGrid.Click += button_tileGrid_Click;
             // 
             // button_pixelGrid
             // 
             button_pixelGrid.Name = "button_pixelGrid";
-            button_pixelGrid.Size = new System.Drawing.Size(124, 22);
+            button_pixelGrid.Size = new System.Drawing.Size(123, 22);
             button_pixelGrid.Text = "Pixel Grid";
             button_pixelGrid.Click += button_pixelGrid_Click;
             // 
@@ -817,6 +832,11 @@
             panel_imageContainer.Padding = new System.Windows.Forms.Padding(3, 3, 6, 6);
             panel_imageContainer.Size = new System.Drawing.Size(621, 428);
             panel_imageContainer.TabIndex = 6;
+            // 
+            // toolStripSeparator7
+            // 
+            toolStripSeparator7.Name = "toolStripSeparator7";
+            toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
             // 
             // FormGraphicsNew
             // 
@@ -925,5 +945,7 @@
         private System.Windows.Forms.Panel panel_shapeSettings;
         private System.Windows.Forms.CheckBox checkBox_gridFill;
         private System.Windows.Forms.CheckBox checkBox_neighbouring;
+        private System.Windows.Forms.ToolStripButton button_editPal;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     }
 }
