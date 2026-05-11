@@ -121,7 +121,7 @@
 			<li class="toc1"><a href="#tileset-editor">Tileset Editor</a></li>
 			<li class="toc1"><a href="#graphics-editor">Graphics Editor</a></li>
 			<li class="toc1"><a href="#palette-editor">Palette Editor</a></li>
-			<li class="toc1"><a href="#tile-table-editor">Tile Table Editor</a></li>
+			<li class="toc1"><a href="#tile-table-editor">Tile Table Editor</a> (<a href="legacy.html#tile-table-editor">Legacy</a>)</li>
 			<li class="toc1"><a href="#animation-editor">Animation Editor</a></li>
 			<li class="toc1"><a href="#sprite-editor">Sprite Editor</a></li>
 			<li class="toc1"><a href="#spriteset-editor">Spriteset Editor</a></li>
@@ -131,7 +131,7 @@
 			<li class="toc2"><a href="#event-based-connections">Event Based Connections</a></li>
 			<li class="toc2"><a href="#location-names">Location Names</a></li>
 			<li class="toc2"><a href="#hatch-lock-events">Hatch Lock Events</a></li>
-			<li class="toc1"><a href="#minimap-editor">Minimap Editor</a></li>
+			<li class="toc1"><a href="#map-editor">Map Editor (Minimap Editor)</a> (<a href="legacy.html#minimap-editor">Legacy</a>)</li>
 			<li class="toc1"><a href="#text-editor">Text Editor</a></li>
 			<li class="toc1"><a href="#demo-editor">Demo Editor</a></li>
 			<li class="toc1"><a href="#physics-editor">Physics Editor</a></li>
@@ -442,12 +442,15 @@
 		</p>
 		<span class="smallLink">(<a href="#top">top</a>)</span>
 
-		<h2 id="minimap-editor">Minimap Editor</h2>
+		<h2 id="map-editor">Map Editor (Minimap Editor)</h2>
 		<p>
-			The minimap editor is used for editing the map shown on the pause screen and in the upper-right corner during gameplay. In Fusion, there are two types of map tiles: normal and hidden. Normal tiles will show up when the area map is downloaded. Hidden tiles will only show up once that tile has been explored. You can view the downloaded map and the explored map to see the difference. In Zero Mission, there are additional types of map tiles: start, heated, and hidden heated. Start tiles will be on the map when you first enter an area, without having to download map data. Heated tiles and hidden heated tiles are the same as normal tiles and hidden tiles, except they appear orange on the map. There's also an additional viewing option to see the start tiles.
+			The map editor (formerly known as minimap editor) is used for editing the map shown on the pause screen and in the upper-right corner during gameplay. In Fusion, there are two types of map tiles: normal and hidden. Normal tiles will show up when the area map is downloaded. Hidden tiles will only show up once that tile has been explored. You can view the downloaded map and the explored map to see the difference. In Zero Mission, there are additional types of map tiles: start, heated, and hidden heated. Start tiles will be on the map when you first enter an area, without having to download map data. Heated tiles and hidden heated tiles are the same as normal tiles and hidden tiles, except they appear orange on the map. There's also an additional viewing option to see the start tiles.
 		</p>
 		<p>
-			Before selecting a tile, you can select a palette to make choosing a tile easier. Once a tile is selected, you can change the type and flip it horizontally or vertically. You can also select an existing tile on the map by right-clicking on it.
+			When selecting tiles, you can select the tile type and flip them horizontally or vertically. In Fusion, you can select a special type called "Unexplored (Visual)", which acts like the normal type and only exists to check the look of unexplored map tiles without placing them. You may select a region of tiles by dragging with either left or right click. You can select existing tiles from the map section by clicking and dragging with right click. After selecting a region of tiles you can place them in the map section with left click. Adjusting the type and flip after selecting tiles also adjusts your selection. You can change the type and flip of tiles in the map section by selecting them and using the controls in the header of the map section. If a selection contains tiles of different types, changing the tile type will set all selected tiles to that type.
+		</p>
+		<p>
+			You can zoom in and out on both the tile and map sections. In the map section, you are able to show an overlay grid above the map tiles. You may use this if your base map tile graphic does not use a regular grid pattern. Furthermore, you can enable a room overlay, which displays the positions of each room and their size on the map.
 		</p>
 		<p>
 			When modifying a map, there are a few things to keep in mind. Map coordinates for each room can be changed using the <a href="#header-editor">Header Editor</a>. The coordinates determine where the top-left corner of the room is on the map. Map tiles containing items come in pairs. The first tile is for when the item hasn't been obtained yet, and the second tile is for when the item has been obtained. Whenever an item is obtained, the current tile's number is incremented by one, so the second tile must immediately follow the first tile. This also means that you shouldn't place more than one item within the same map tile (unless you add the appropriate additional tiles after the first two). You can have multiple items in the same room, but they should be spaced out so that each one occupies its own map tile. You can view the map tile boundaries in a room by selecting "View > Screen Outlines" in the main window.
