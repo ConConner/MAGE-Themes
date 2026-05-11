@@ -913,7 +913,7 @@ namespace mage
 
         private void menuItem_minimapEditor_Click(object sender, EventArgs e)
         {
-            if (Program.ExperimentalFeaturesEnabled)
+            if (!Program.LegacyEditors)
             {
                 if (!FindOpenForm(typeof(FormMinimapNew), false))
                 {

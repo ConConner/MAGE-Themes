@@ -109,13 +109,14 @@
 		<ul>
 			<li class="toc1"><a href="#introduction">Introduction</a></li>
             <li class="toc1"><a href="#tile-table-editor">Tile Table Editor</a></li>
+			<li class="toc1"><a href="#minimap-editor">Minimap Editor</a></li>
 		</ul>
 
 
 		<h2 id="introduction">Introduction</h2>
 
 		<p>
-		    MAGE Themes introduces redesigned editors to improve usability, but the originals remain available for users who prefer them. Enable “Options > Use Legacy Editors” to open the legacy version of any editor that has been replaced. The documentation that follows describes the legacy editors exactly as they existed before replacement.
+		    MAGE Themes introduces redesigned editors to improve usability, but the originals remain available for users who prefer them. Enable "Preferences > Advanced > Use Legacy Editors if they exist" to open the legacy version of any editor that has been replaced. The documentation that follows describes the legacy editors exactly as they existed before replacement.
 		</p>
 		<span class="smallLink">(<a href="#top">top</a>)</span>
 
@@ -130,6 +131,24 @@
 			You can also import and export tile tables. Keep in mind that graphics and palettes are separate from tile tables. If you're trying to copy an image, you'll need all three pieces of data.
 		</p>
 
+		<span class="smallLink">(<a href="#top">top</a>)</span>
+
+		<h2 id="minimap-editor">Minimap Editor</h2>
+		<p>
+			The minimap editor is used for editing the map shown on the pause screen and in the upper-right corner during gameplay. In Fusion, there are two types of map tiles: normal and hidden. Normal tiles will show up when the area map is downloaded. Hidden tiles will only show up once that tile has been explored. You can view the downloaded map and the explored map to see the difference. In Zero Mission, there are additional types of map tiles: start, heated, and hidden heated. Start tiles will be on the map when you first enter an area, without having to download map data. Heated tiles and hidden heated tiles are the same as normal tiles and hidden tiles, except they appear orange on the map. There's also an additional viewing option to see the start tiles.
+		</p>
+		<p>
+			Before selecting a tile, you can select a palette to make choosing a tile easier. Once a tile is selected, you can change the type and flip it horizontally or vertically. You can also select an existing tile on the map by right-clicking on it.
+		</p>
+		<p>
+			When modifying a map, there are a few things to keep in mind. Map coordinates for each room can be changed using the <a href="doc.html#header-editor">Header Editor</a>. The coordinates determine where the top-left corner of the room is on the map. Map tiles containing items come in pairs. The first tile is for when the item hasn't been obtained yet, and the second tile is for when the item has been obtained. Whenever an item is obtained, the current tile's number is incremented by one, so the second tile must immediately follow the first tile. This also means that you shouldn't place more than one item within the same map tile (unless you add the appropriate additional tiles after the first two). You can have multiple items in the same room, but they should be spaced out so that each one occupies its own map tile. You can view the map tile boundaries in a room by selecting "View > Screen Outlines" in the main window.
+		</p>
+		<p>
+			You can add new minimap tiles if necessary. To do so, open the minimap editor, click "Edit GFX", and export as raw. Use a hex editor to make the file 16 KB (0x4000 bytes). Import the modified file, then apply the "Add minimap tiles" patch. When you open the minimap editor, it will show you the extra rows that were added.
+		</p>
+		<p>
+			You can use the keyboard shortcut 'G' to load the room under the cursor. This only works if the rooms coordinates are properly set in its header. If multiple rooms boundaries overlap on the selected coordinate, pressing 'G' repeatedly will cycle through the rooms.
+		</p>
 		<span class="smallLink">(<a href="#top">top</a>)</span>
 
 	</div>
