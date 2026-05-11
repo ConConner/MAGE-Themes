@@ -1,3 +1,20 @@
+# [1.15.0](https://github.com/ConConner/MAGE-Themes/compare/v1.14.1...v1.15.0) (2026-05-11)
+
+
+### Bug Fixes
+
+* add edit palette button to experimental graphics editor ([0c4f459](https://github.com/ConConner/MAGE-Themes/commit/0c4f45932af912074b298670f2f848057ff6a340)), closes [#90](https://github.com/ConConner/MAGE-Themes/issues/90)
+* hybrid compilation crashes if no lines are written to stdout ([5aed32d](https://github.com/ConConner/MAGE-Themes/commit/5aed32db9ffb48bf0b5b30faefe01b63e75bd95b))
+* tile table import dialog opens on wrong button ([4dc854a](https://github.com/ConConner/MAGE-Themes/commit/4dc854a2f7923ba1bc38c22eda7a84915a88007a))
+
+
+### Features
+
+* [#82](https://github.com/ConConner/MAGE-Themes/issues/82) added transparency dialog and button to header editor. ([798dab0](https://github.com/ConConner/MAGE-Themes/commit/798dab08f9a826ef6379099be7a63f81ee40281c))
+* added hexsanitized and hexsanitizedmaxvalue properties to customcontrols flattextbox ([aba257d](https://github.com/ConConner/MAGE-Themes/commit/aba257dcdb4eda320e4d26da8b897ac73ef6bb06))
+* import oam as assembly ([6d45261](https://github.com/ConConner/MAGE-Themes/commit/6d452618c65b8e4caae703c0ed2958cefaf4aa17))
+* select palette row for oam editor gfx preview ([90db9b1](https://github.com/ConConner/MAGE-Themes/commit/90db9b185e11072fcb7ee09cc049494237b568dd))
+
 ## [1.14.1](https://github.com/ConConner/MAGE-Themes/compare/v1.14.0...v1.14.1) (2026-03-12)
 
 
