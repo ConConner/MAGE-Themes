@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/ConConner/MAGE-Themes/compare/v1.15.0...v1.16.0) (2026-05-11)
+
+
+### Features
+
+* moved new map editor out of experimental ([a223ec8](https://github.com/ConConner/MAGE-Themes/commit/a223ec8a1f6d4e86a2c5486d0e6fd1063f622728))
+
 # [1.15.0](https://github.com/ConConner/MAGE-Themes/compare/v1.14.1...v1.15.0) (2026-05-11)
 
 
