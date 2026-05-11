@@ -142,7 +142,12 @@ internal class ScriptExecutor : IScriptRunner
 
     private static string? ParseOutputRomPath(List<string> lines)
     {
-        for (int i = lines.Count - 1; i >= lines.Count - 40; i--)
+        if (lines.Count == 0) return null;
+
+        int startSearch = lines.Count - 1;
+        int endSearch = Math.Max(lines.Count - 40, 0);
+
+        for (int i = startSearch; i >= endSearch; i--)
         {
             var trimmed = lines[i].Trim();
             if (trimmed.Length == 0) continue;
