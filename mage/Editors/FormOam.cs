@@ -1,22 +1,23 @@
-﻿using mage.Properties;
+﻿using mage.Bookmarks;
+using mage.Controls;
+using mage.Properties;
 using mage.Theming;
+using mage.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using mage.Controls;
-using mage.Utility;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Text.Json;
+using System.Reflection;
 using System.Runtime.InteropServices;
-using mage.Bookmarks;
+using System.Text;
+using System.Text.Json;
+using System.Windows.Forms;
 
 namespace mage;
 
@@ -52,6 +53,8 @@ public partial class FormOam : Form
     Drawable hoveredDrawable;
     Drawable gfxSelection;
     Drawable gfxCursor;
+    private Drawable PaletteCursor;
+    private Drawable PaletteSelection;
 
     // Data for saving
     int originalOamOffset;
@@ -155,6 +158,7 @@ public partial class FormOam : Form
         get => loadCommonGraphics;
         set
         {
+            bool old = loadCommonGraphics == value;
             loadCommonGraphics = value;
             Program.Config.OamEditorLoadCommonGraphics = value;
             button_loadCommonGraphics.Checked = value;
@@ -164,6 +168,10 @@ public partial class FormOam : Form
                 DrawNewGFX();
                 LoadPalette(0);
             }
+
+            if (old) return;
+            SelectedPaletteRow = Math.Clamp(SelectedPaletteRow + (value == true ? 8 : -8), 0, 15);
+
         }
     }
     private bool loadCommonGraphics = true;
@@ -190,6 +198,18 @@ public partial class FormOam : Form
         set
         {
             selectedPaletteRow = value;
+            if (value == -1)
+            {
+                PaletteSelection.Visible = false;
+                return;
+            }
+
+            PaletteSelection.Visible = true;
+            PaletteSelection.Rectangle = new Rectangle(0, value * 17, 16 * 16 + 17, 17);
+            if (!loading)
+            {
+                DrawImage();
+            }
         }
     }
     private int selectedPaletteRow = 8;
@@ -231,8 +251,6 @@ public partial class FormOam : Form
 
         loading = true;
 
-        LoadCommonGraphics = true; // We don't want to draw/reload graphics during initalization so this must come after `loading = true`
-
         textBox_imageOffset.Text = Hex.ToString(gfxOffset);
         textBox_palOffset.Text = Hex.ToString(palOffset);
         textBox_oamOffset.Text = Hex.ToString(oamOffset);
@@ -253,6 +271,15 @@ public partial class FormOam : Form
         gfxCursor = new Drawable(Rectangle.Empty, CursorPen, 1) { Visible = false };
         gfxView_gfx.AddDrawable(gfxSelection);
         gfxView_gfx.AddDrawable(gfxCursor);
+
+        //Palette Drawables
+        PaletteCursor = new Drawable(Rectangle.Empty, CursorPen, 1) { Visible = true };
+        PaletteSelection = new Drawable(Rectangle.Empty, SelectionPenWhite, 1) { Visible = true };
+        PaletteSelection.DrawPens.Add(SelectionPenBlack);
+        paletteView.AddDrawable(PaletteCursor);
+        paletteView.AddDrawable(PaletteSelection);
+
+        LoadCommonGraphics = true; // We don't want to draw/reload graphics during initalization so this must come after `loading = true`
 
         Status = new Status(label_Status, button_save);
 
@@ -488,9 +515,10 @@ public partial class FormOam : Form
 
     private void DrawImage()
     {
-        if (!ViewVram) gfxImage = gfxObject.Draw4bpp(palette, 0, true);
-        else if (ViewVram && !LoadCommonGraphics) gfxImage = gfxObject.Draw4bpp(palette, 0, true); // A weird edge-case where this condition would render a blank Vram Viewer
-        else gfxImage = vram.VramGFX.Draw15bpp(vram.palette, selectedPaletteRow, true);
+        if (!ViewVram && LoadCommonGraphics) gfxImage = gfxObject.Draw4bpp(vram.palette, SelectedPaletteRow, true);
+        else if (!ViewVram && !LoadCommonGraphics) gfxImage = gfxObject.Draw4bpp(vram.palette, SelectedPaletteRow, true);
+        else if (ViewVram && !LoadCommonGraphics) gfxImage = gfxObject.Draw4bpp(vram.palette, SelectedPaletteRow, true); // A weird edge-case where this condition would render a blank Vram Viewer
+        else gfxImage = vram.VramGFX.Draw15bpp(vram.palette, SelectedPaletteRow, true);
         gfxView_gfx.TileImage = gfxImage;
     }
 
@@ -621,6 +649,8 @@ public partial class FormOam : Form
                     + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
+
+
     #endregion
 
     #region OAM
@@ -1303,7 +1333,7 @@ public partial class FormOam : Form
             return;
         }
 
-        File.WriteAllText(saveOAM.FileName, oam.Serialize());
+        File.WriteAllText(saveOAM.FileName, OamSerializer.Serialize(oam));
     }
 
     private void button_exportAssembly_Click(object sender, EventArgs e)
@@ -1318,7 +1348,7 @@ public partial class FormOam : Form
         }
         string animationName = Path.GetFileName(saveASM.FileName);
         animationName = Path.GetFileNameWithoutExtension(animationName);
-        File.WriteAllText(saveASM.FileName, oam.ToASM(animationName));
+        File.WriteAllText(saveASM.FileName, OamSerializer.ToASM(oam, animationName));
     }
 
     void button_importOam_Click(object sender, EventArgs e)
@@ -1333,12 +1363,49 @@ public partial class FormOam : Form
         }
 
         string json = File.ReadAllText(openOAM.FileName);
-        OAM? imported = OAM.Deserialize(json);
+        OAM? imported = OamSerializer.Deserialize(json);
         if (imported == null) return;
 
         oam = imported;
         Save();
         SetOAM();
     }
+
+    private void button_importAssembly_Click(object sender, EventArgs e)
+    {
+        OpenFileDialog openASM = new OpenFileDialog();
+        openASM.Filter = "Assembly files (*.asm)|*.asm";
+        if (openASM.ShowDialog() != DialogResult.OK) return;
+        if (oam == null)
+        {
+            MessageBox.Show("No OAM loaded. Please load the OAM that you want to replace.", "OAM Required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        string assembly = File.ReadAllText(openASM.FileName);
+        OAM? imported = OamSerializer.FromASM(assembly);
+        if (imported == null) return;
+
+        oam = imported;
+        Save();
+        SetOAM();
+
+    }
+
     #endregion
+
+    private void paletteView_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        if (PaletteCursor.Y == e.TilePixelPosition.Y) return;
+        PaletteCursor.Visible = true;
+        PaletteCursor.Rectangle = new Rectangle(0, Math.Min(e.TilePixelPosition.Y, 17 * 15), 16 * 16 + 17, 17);
+
+    }
+
+    private void paletteView_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        PaletteCursor.Visible = false;
+        SelectedPaletteRow = e.TilePixelPosition.Y / 17;
+
+    }
 }

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
 
@@ -91,6 +92,36 @@ public partial class FlatTextBox : UserControl
             if (valueBox) textBox.ContextMenuStrip = new ContextMenuStrip();
         }
     }
+
+    private bool hexSanitized = false;
+    [Browsable(true)]
+    [EditorBrowsable(EditorBrowsableState.Always)]
+    [Category("Behavior")]
+    [Description("Enables hex/decimal sanitization for this text box.")]
+    public bool HexSanitized
+    {
+        get => hexSanitized;
+        set
+        {
+            hexSanitized = value;
+            if (value)
+            {
+                textBox.KeyPress += textBoxKeyPress_HexSanitized;
+                textBox.TextChanged += textBoxTextChanged_HexSanitized;
+            }
+            else
+            {
+                textBox.KeyPress -= textBoxKeyPress_HexSanitized;
+                textBox.TextChanged -= textBoxTextChanged_HexSanitized;
+            }
+        }
+    }
+    [Browsable(true)]
+    [EditorBrowsable(EditorBrowsableState.Always)]
+    [Category("Behavior")]
+    [Description("Maximum allowed numeric value for sanitized input.")]
+    public int HexSanitizedMaxValue { get; set; } = -1;
+
     #endregion
 
     #region events
@@ -107,6 +138,92 @@ public partial class FlatTextBox : UserControl
 
     private void textBoxTextChanged(object sender, EventArgs e)
     {
+        OnTextChanged?.Invoke(this, e);
+    }
+
+
+    private void textBoxKeyPress_HexSanitized(object sender, KeyPressEventArgs e)
+    {   //sanitize input to only allow hex characters, and convert lowercase to uppercase on the fly
+        char c = e.KeyChar;
+
+        if (char.IsControl(c))
+            return;
+
+        if (char.IsDigit(c))
+            return;
+
+        if (c >= 'A' && c <= 'F')
+            return;
+
+        if (c >= 'a' && c <= 'f')
+        {
+            e.KeyChar = char.ToUpper(c);
+            return;
+        }
+
+        e.Handled = true;
+    }
+
+    private bool _sanitizing = false;
+
+    private void textBoxTextChanged_HexSanitized(object sender, EventArgs e)
+    {
+        if (_sanitizing)
+            return;
+
+        _sanitizing = true;
+
+        string raw = textBox.Text.ToUpper();
+
+        // Filter invalid characters
+        string filtered = new string(raw.Where(c =>
+            char.IsDigit(c) ||
+            (c >= 'A' && c <= 'F')
+        ).ToArray());
+
+        // If filtering changed the text, update it
+        if (filtered != raw)
+        {
+            int pos = textBox.SelectionStart;
+            textBox.Text = filtered;
+            textBox.SelectionStart = Math.Min(pos, textBox.Text.Length);
+            raw = filtered;
+        }
+
+        if (raw.Length > 0)
+        {
+            bool containsHexLetters = raw.Any(c => c >= 'A' && c <= 'F');
+            int value;
+
+            if (Hex.radix == 10 && !containsHexLetters)
+            {
+                if (int.TryParse(raw, out value))
+                {
+                    if (HexSanitizedMaxValue >= 0 && value > HexSanitizedMaxValue)
+                    {
+                        value = HexSanitizedMaxValue;
+                        textBox.Text = value.ToString("X");
+                        textBox.SelectionStart = textBox.Text.Length;
+                    }
+                }
+            }
+            else
+            {
+                if (int.TryParse(raw, System.Globalization.NumberStyles.HexNumber, null, out value))
+                {
+                    if (value > HexSanitizedMaxValue)
+                    {
+                        value = HexSanitizedMaxValue;
+                        textBox.Text = value.ToString("X");
+                        textBox.SelectionStart = textBox.Text.Length;
+                    }
+                }
+            }
+        }
+
+        _sanitizing = false;
+
+        // Fire the public TextChanged event
         OnTextChanged?.Invoke(this, e);
     }
     #endregion

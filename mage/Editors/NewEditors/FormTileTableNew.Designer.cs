@@ -93,11 +93,11 @@
             statusLabel_changes = new System.Windows.Forms.ToolStripStatusLabel();
             spring = new System.Windows.Forms.ToolStripStatusLabel();
             statusButton_import = new System.Windows.Forms.ToolStripDropDownButton();
-            statusButton_export = new System.Windows.Forms.ToolStripDropDownButton();
-            button_apply = new System.Windows.Forms.ToolStripDropDownButton();
-            btn_exportTT = new System.Windows.Forms.ToolStripMenuItem();
-            btn_exportImg = new System.Windows.Forms.ToolStripMenuItem();
             bnt_importTT = new System.Windows.Forms.ToolStripMenuItem();
+            statusButton_export = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_exportImg = new System.Windows.Forms.ToolStripMenuItem();
+            btn_exportTT = new System.Windows.Forms.ToolStripMenuItem();
+            button_apply = new System.Windows.Forms.ToolStripDropDownButton();
             panel_gfxView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)panel_Main).BeginInit();
             panel_Main.Panel1.SuspendLayout();
@@ -591,6 +591,8 @@
             // 
             textBox_pal.BorderColor = System.Drawing.Color.Black;
             textBox_pal.DisplayBorder = true;
+            textBox_pal.HexSanitized = false;
+            textBox_pal.HexSanitizedMaxValue = -1;
             textBox_pal.Location = new System.Drawing.Point(199, 9);
             textBox_pal.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_pal.MaxLength = 32767;
@@ -612,6 +614,8 @@
             // 
             textBox_gfx.BorderColor = System.Drawing.Color.Black;
             textBox_gfx.DisplayBorder = true;
+            textBox_gfx.HexSanitized = false;
+            textBox_gfx.HexSanitizedMaxValue = -1;
             textBox_gfx.Location = new System.Drawing.Point(69, 38);
             textBox_gfx.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_gfx.MaxLength = 32767;
@@ -633,6 +637,8 @@
             // 
             textBox_ttb.BorderColor = System.Drawing.Color.Black;
             textBox_ttb.DisplayBorder = true;
+            textBox_ttb.HexSanitized = false;
+            textBox_ttb.HexSanitizedMaxValue = -1;
             textBox_ttb.Location = new System.Drawing.Point(69, 9);
             textBox_ttb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_ttb.MaxLength = 32767;
@@ -889,7 +895,13 @@
             statusButton_import.Name = "statusButton_import";
             statusButton_import.Size = new System.Drawing.Size(56, 20);
             statusButton_import.Text = "Import";
-            statusButton_import.Click += statusButton_import_Click;
+            // 
+            // bnt_importTT
+            // 
+            bnt_importTT.Name = "bnt_importTT";
+            bnt_importTT.Size = new System.Drawing.Size(180, 22);
+            bnt_importTT.Text = "Tile Table...";
+            bnt_importTT.Click += statusButton_import_Click;
             // 
             // statusButton_export
             // 
@@ -901,6 +913,20 @@
             statusButton_export.Size = new System.Drawing.Size(54, 20);
             statusButton_export.Text = "Export";
             // 
+            // btn_exportImg
+            // 
+            btn_exportImg.Name = "btn_exportImg";
+            btn_exportImg.Size = new System.Drawing.Size(131, 22);
+            btn_exportImg.Text = "Image...";
+            btn_exportImg.Click += btn_exportImg_Click;
+            // 
+            // btn_exportTT
+            // 
+            btn_exportTT.Name = "btn_exportTT";
+            btn_exportTT.Size = new System.Drawing.Size(131, 22);
+            btn_exportTT.Text = "Tile Table...";
+            btn_exportTT.Click += statusButton_export_Click;
+            // 
             // button_apply
             // 
             button_apply.Enabled = false;
@@ -911,27 +937,6 @@
             button_apply.Size = new System.Drawing.Size(58, 20);
             button_apply.Text = "Apply";
             button_apply.Click += button_apply_Click;
-            // 
-            // btn_exportTT
-            // 
-            btn_exportTT.Name = "btn_exportTT";
-            btn_exportTT.Size = new System.Drawing.Size(180, 22);
-            btn_exportTT.Text = "Tile Table...";
-            btn_exportTT.Click += statusButton_export_Click;
-            // 
-            // btn_exportImg
-            // 
-            btn_exportImg.Name = "btn_exportImg";
-            btn_exportImg.Size = new System.Drawing.Size(180, 22);
-            btn_exportImg.Text = "Image...";
-            btn_exportImg.Click += btn_exportImg_Click;
-            // 
-            // bnt_importTT
-            // 
-            bnt_importTT.Name = "bnt_importTT";
-            bnt_importTT.Size = new System.Drawing.Size(180, 22);
-            bnt_importTT.Text = "Tile Table...";
-            bnt_importTT.Click += statusButton_import_Click;
             // 
             // FormTileTableNew
             // 

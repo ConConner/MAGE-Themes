@@ -1,10 +1,12 @@
-﻿using System;
+﻿using NCalc;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace mage
@@ -18,12 +20,6 @@ namespace mage
         public static int MaxHeight => YPosRange + MaxPartSize;
         public static int FrameOriginX => XPosRange / 2;
         public static int FrameOriginY => YPosRange / 2;
-
-        public static JsonSerializerOptions SerializerOptions { get; } = new()
-        {
-            IncludeFields = true,
-            WriteIndented = true,
-        };
 
         public struct Frame
         {
@@ -176,7 +172,7 @@ namespace mage
         private ByteStream romStream;
 
         [JsonConstructor]
-        public OAM() {}
+        public OAM() { }
 
         public OAM(int offset)
         {
@@ -379,7 +375,7 @@ namespace mage
             Rectangle dstRect = new Rectangle(0, 0, spriteImg.Width, spriteImg.Height);
 
             // The center/"origin" of the bitmap
-            Point originPos = new Point(XPosRange / 2, YPosRange/2);
+            Point originPos = new Point(XPosRange / 2, YPosRange / 2);
 
             // draw for each part
             BitmapData spriteData = spriteImg.LockBits(dstRect, ImageLockMode.WriteOnly, spriteImg.PixelFormat);
@@ -404,53 +400,6 @@ namespace mage
             return spriteImg;
         }
         #endregion
-
-        public string Serialize() => JsonSerializer.Serialize(this, SerializerOptions);
-
-        public string ToASM(string animationName = "oam")
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine(".align");
-            sb.AppendLine($"OAM_{animationName}_Animation:");
-            for (int i = 0; i < NumFrames; i++)
-            {
-                Frame frame = Frames[i];
-                sb.AppendLine($"\t.dw @OAM_{animationName}_Frame{Hex.ToPrefixedPaddedString(i)}, {Hex.ToPrefixedPaddedString(frame.duration)}");
-            }
-            sb.AppendLine("\t.dw 0,0");
-
-            sb.AppendLine();
-
-            for (int i = 0; i < NumFrames; i++)
-            {
-                Frame frame = Frames[i];
-                sb.AppendLine($"@OAM_{animationName}_Frame{Hex.ToPrefixedPaddedString(i)}:");
-                sb.AppendLine($"\t.dh {Hex.ToPrefixedPaddedString(frame.numParts)}");
-
-                foreach (Part p in frame.parts)
-                {
-                    ushort[] attributes = p.GetAttributes();
-                    sb.AppendLine($"\t.dh {Hex.ToPrefixedPaddedString(attributes[0])},{Hex.ToPrefixedPaddedString(attributes[1])},{Hex.ToPrefixedPaddedString(attributes[2])}");
-                }
-                sb.AppendLine();
-            }
-            return sb.ToString();
-        }
-
-        public static OAM? Deserialize(string json)
-        {
-            try 
-            { 
-                OAM? result = JsonSerializer.Deserialize<OAM>(json, SerializerOptions);
-                return result;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("File did not contain OAM Data or it was corrupted.", "Invalid OAM", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
-            }
-        }
 
         public static bool IsOAM(int offset)
         {

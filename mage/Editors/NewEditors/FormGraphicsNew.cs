@@ -837,6 +837,23 @@ public partial class FormGraphicsNew : Form
         DrawPalette();
         DrawGFX();
     }
+
+
+    private void button_editPal_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            int offset = Hex.ToInt(textBox_palOffset.Text);
+
+            FormPalette form = new FormPalette(main, offset, 1);
+            form.Show();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("The offset entered was not valid.\n\n" + ex.GetType().ToString() + '\n'
+                    + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
     #endregion
 
     #region Zoom

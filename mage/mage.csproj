@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0-windows</TargetFramework>
     <Version>1.14.1</Version>
@@ -42,6 +42,9 @@
     <None Remove="Resources\Bookmarks\ZM_U_OAM_Bookmarks.mbc" />
   </ItemGroup>
   <ItemGroup>
+	  <Compile Update="Dialogs\TransparencyDialog.cs">
+		  <SubType>Form</SubType>
+	  </Compile>
     <Compile Update="Dialogs\BackgroundPropertyDialog.cs" />
     <Compile Update="Options\PagesApplication\PageUpdates.cs">
       <SubType>UserControl</SubType>

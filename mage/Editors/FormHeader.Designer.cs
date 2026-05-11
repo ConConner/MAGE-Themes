@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHeader));
-            textBox_tileset = new Theming.CustomControls.FlatTextBox();
+            textBox_tileset = new mage.Theming.CustomControls.FlatTextBox();
             label_tileset = new System.Windows.Forms.Label();
-            textBox_BG0pointer = new Theming.CustomControls.FlatTextBox();
-            textBox_BG1pointer = new Theming.CustomControls.FlatTextBox();
-            textBox_BG2pointer = new Theming.CustomControls.FlatTextBox();
-            textBox_BG3pointer = new Theming.CustomControls.FlatTextBox();
-            textBox_CLPpointer = new Theming.CustomControls.FlatTextBox();
-            textBox_BG0prop = new Theming.CustomControls.FlatTextBox();
-            textBox_BG1prop = new Theming.CustomControls.FlatTextBox();
-            textBox_BG2prop = new Theming.CustomControls.FlatTextBox();
-            textBox_BG3prop = new Theming.CustomControls.FlatTextBox();
+            textBox_BG0pointer = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_BG1pointer = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_BG2pointer = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_BG3pointer = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_CLPpointer = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_BG0prop = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_BG1prop = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_BG2prop = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_BG3prop = new mage.Theming.CustomControls.FlatTextBox();
             label_BG0 = new System.Windows.Forms.Label();
             label_BG1 = new System.Windows.Forms.Label();
             label_BG2 = new System.Windows.Forms.Label();
@@ -47,8 +47,8 @@
             label_CLP = new System.Windows.Forms.Label();
             label_BGpointer = new System.Windows.Forms.Label();
             label_prop = new System.Windows.Forms.Label();
-            textBox_BG3scroll = new Theming.CustomControls.FlatTextBox();
-            textBox_transparency = new Theming.CustomControls.FlatTextBox();
+            textBox_BG3scroll = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_transparency = new mage.Theming.CustomControls.FlatTextBox();
             label_BG3scroll = new System.Windows.Forms.Label();
             label_transparency = new System.Windows.Forms.Label();
             groupBox_BGdata = new System.Windows.Forms.GroupBox();
@@ -58,10 +58,10 @@
             btn_bg1_prop = new System.Windows.Forms.Button();
             btn_bg2_prop = new System.Windows.Forms.Button();
             btn_bg3_presets = new System.Windows.Forms.Button();
-            textBox_effectYpos = new Theming.CustomControls.FlatTextBox();
+            textBox_effectYpos = new mage.Theming.CustomControls.FlatTextBox();
             label1 = new System.Windows.Forms.Label();
             label_effect = new System.Windows.Forms.Label();
-            textBox_effect = new Theming.CustomControls.FlatTextBox();
+            textBox_effect = new mage.Theming.CustomControls.FlatTextBox();
             groupBox_spritesetData = new System.Windows.Forms.GroupBox();
             label_second = new System.Windows.Forms.Label();
             label_first = new System.Windows.Forms.Label();
@@ -69,32 +69,33 @@
             label_event = new System.Windows.Forms.Label();
             label_spriteset = new System.Windows.Forms.Label();
             label_spritesetPointer = new System.Windows.Forms.Label();
-            textBox_defaultPointer = new Theming.CustomControls.FlatTextBox();
-            textBox_defaultSpriteset = new Theming.CustomControls.FlatTextBox();
-            textBox_secondEvent = new Theming.CustomControls.FlatTextBox();
-            textBox_secondPointer = new Theming.CustomControls.FlatTextBox();
-            textBox_secondSpriteset = new Theming.CustomControls.FlatTextBox();
-            textBox_firstEvent = new Theming.CustomControls.FlatTextBox();
-            textBox_firstPointer = new Theming.CustomControls.FlatTextBox();
-            textBox_firstSpriteset = new Theming.CustomControls.FlatTextBox();
+            textBox_defaultPointer = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_defaultSpriteset = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_secondEvent = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_secondPointer = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_secondSpriteset = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_firstEvent = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_firstPointer = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_firstSpriteset = new mage.Theming.CustomControls.FlatTextBox();
             groupBox_misc = new System.Windows.Forms.GroupBox();
             btn_open_map = new System.Windows.Forms.Button();
             label_music = new System.Windows.Forms.Label();
-            textBox_music = new Theming.CustomControls.FlatTextBox();
+            textBox_music = new mage.Theming.CustomControls.FlatTextBox();
             label_mapY = new System.Windows.Forms.Label();
             label_mapX = new System.Windows.Forms.Label();
-            textBox_mapX = new Theming.CustomControls.FlatTextBox();
-            textBox_mapY = new Theming.CustomControls.FlatTextBox();
+            textBox_mapX = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_mapY = new mage.Theming.CustomControls.FlatTextBox();
             button_apply = new System.Windows.Forms.Button();
             label_room = new System.Windows.Forms.Label();
             label_area = new System.Windows.Forms.Label();
-            comboBox_room = new Theming.CustomControls.FlatComboBox();
-            comboBox_area = new Theming.CustomControls.FlatComboBox();
+            comboBox_room = new mage.Theming.CustomControls.FlatComboBox();
+            comboBox_area = new mage.Theming.CustomControls.FlatComboBox();
             statusStrip = new System.Windows.Forms.StatusStrip();
             statusLabel_changes = new System.Windows.Forms.ToolStripStatusLabel();
             lbl_spring = new System.Windows.Forms.ToolStripStatusLabel();
             lbl_offset = new System.Windows.Forms.ToolStripStatusLabel();
             button_close = new System.Windows.Forms.Button();
+            btn_transparency_preset = new System.Windows.Forms.Button();
             groupBox_BGdata.SuspendLayout();
             groupBox_spritesetData.SuspendLayout();
             groupBox_misc.SuspendLayout();
@@ -129,7 +130,7 @@
             label_tileset.Location = new System.Drawing.Point(7, 44);
             label_tileset.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_tileset.Name = "label_tileset";
-            label_tileset.Size = new System.Drawing.Size(43, 15);
+            label_tileset.Size = new System.Drawing.Size(48, 17);
             label_tileset.TabIndex = 0;
             label_tileset.Text = "Tileset:";
             // 
@@ -337,7 +338,7 @@
             label_BG0.Location = new System.Drawing.Point(178, 44);
             label_BG0.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_BG0.Name = "label_BG0";
-            label_BG0.Size = new System.Drawing.Size(34, 15);
+            label_BG0.Size = new System.Drawing.Size(38, 17);
             label_BG0.TabIndex = 0;
             label_BG0.Text = "BG 0:";
             // 
@@ -347,7 +348,7 @@
             label_BG1.Location = new System.Drawing.Point(178, 74);
             label_BG1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_BG1.Name = "label_BG1";
-            label_BG1.Size = new System.Drawing.Size(34, 15);
+            label_BG1.Size = new System.Drawing.Size(38, 17);
             label_BG1.TabIndex = 0;
             label_BG1.Text = "BG 1:";
             // 
@@ -357,7 +358,7 @@
             label_BG2.Location = new System.Drawing.Point(178, 104);
             label_BG2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_BG2.Name = "label_BG2";
-            label_BG2.Size = new System.Drawing.Size(34, 15);
+            label_BG2.Size = new System.Drawing.Size(38, 17);
             label_BG2.TabIndex = 0;
             label_BG2.Text = "BG 2:";
             // 
@@ -367,7 +368,7 @@
             label_BG3.Location = new System.Drawing.Point(178, 134);
             label_BG3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_BG3.Name = "label_BG3";
-            label_BG3.Size = new System.Drawing.Size(34, 15);
+            label_BG3.Size = new System.Drawing.Size(38, 17);
             label_BG3.TabIndex = 0;
             label_BG3.Text = "BG 3:";
             // 
@@ -377,14 +378,14 @@
             label_CLP.Location = new System.Drawing.Point(178, 164);
             label_CLP.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_CLP.Name = "label_CLP";
-            label_CLP.Size = new System.Drawing.Size(31, 15);
+            label_CLP.Size = new System.Drawing.Size(33, 17);
             label_CLP.TabIndex = 0;
             label_CLP.Text = "Clip:";
             // 
             // label_BGpointer
             // 
             label_BGpointer.AutoSize = true;
-            label_BGpointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
+            label_BGpointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline);
             label_BGpointer.Location = new System.Drawing.Point(225, 18);
             label_BGpointer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_BGpointer.Name = "label_BGpointer";
@@ -395,7 +396,7 @@
             // label_prop
             // 
             label_prop.AutoSize = true;
-            label_prop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
+            label_prop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline);
             label_prop.Location = new System.Drawing.Point(287, 19);
             label_prop.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_prop.Name = "label_prop";
@@ -453,7 +454,7 @@
             label_BG3scroll.Location = new System.Drawing.Point(7, 104);
             label_BG3scroll.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_BG3scroll.Name = "label_BG3scroll";
-            label_BG3scroll.Size = new System.Drawing.Size(62, 15);
+            label_BG3scroll.Size = new System.Drawing.Size(69, 17);
             label_BG3scroll.TabIndex = 0;
             label_BG3scroll.Text = "BG3 scroll:";
             // 
@@ -463,12 +464,13 @@
             label_transparency.Location = new System.Drawing.Point(7, 74);
             label_transparency.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_transparency.Name = "label_transparency";
-            label_transparency.Size = new System.Drawing.Size(79, 15);
+            label_transparency.Size = new System.Drawing.Size(88, 17);
             label_transparency.TabIndex = 0;
             label_transparency.Text = "Transparency:";
             // 
             // groupBox_BGdata
             // 
+            groupBox_BGdata.Controls.Add(btn_transparency_preset);
             groupBox_BGdata.Controls.Add(btn_tileset_preset);
             groupBox_BGdata.Controls.Add(btn_bg3_prop);
             groupBox_BGdata.Controls.Add(btn_bg0_prop);
@@ -598,7 +600,7 @@
             label1.Location = new System.Drawing.Point(7, 164);
             label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(72, 15);
+            label1.Size = new System.Drawing.Size(80, 17);
             label1.TabIndex = 0;
             label1.Text = "Effect Y pos:";
             // 
@@ -608,7 +610,7 @@
             label_effect.Location = new System.Drawing.Point(7, 134);
             label_effect.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_effect.Name = "label_effect";
-            label_effect.Size = new System.Drawing.Size(40, 15);
+            label_effect.Size = new System.Drawing.Size(43, 17);
             label_effect.TabIndex = 0;
             label_effect.Text = "Effect:";
             // 
@@ -665,7 +667,7 @@
             label_second.Location = new System.Drawing.Point(7, 104);
             label_second.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_second.Name = "label_second";
-            label_second.Size = new System.Drawing.Size(49, 15);
+            label_second.Size = new System.Drawing.Size(54, 17);
             label_second.TabIndex = 0;
             label_second.Text = "Second:";
             // 
@@ -675,7 +677,7 @@
             label_first.Location = new System.Drawing.Point(7, 74);
             label_first.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_first.Name = "label_first";
-            label_first.Size = new System.Drawing.Size(32, 15);
+            label_first.Size = new System.Drawing.Size(35, 17);
             label_first.TabIndex = 0;
             label_first.Text = "First:";
             // 
@@ -685,14 +687,14 @@
             label_default.Location = new System.Drawing.Point(7, 44);
             label_default.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_default.Name = "label_default";
-            label_default.Size = new System.Drawing.Size(48, 15);
+            label_default.Size = new System.Drawing.Size(52, 17);
             label_default.TabIndex = 0;
             label_default.Text = "Default:";
             // 
             // label_event
             // 
             label_event.AutoSize = true;
-            label_event.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
+            label_event.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline);
             label_event.Location = new System.Drawing.Point(192, 18);
             label_event.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_event.Name = "label_event";
@@ -703,7 +705,7 @@
             // label_spriteset
             // 
             label_spriteset.AutoSize = true;
-            label_spriteset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
+            label_spriteset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline);
             label_spriteset.Location = new System.Drawing.Point(152, 18);
             label_spriteset.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_spriteset.Name = "label_spriteset";
@@ -714,7 +716,7 @@
             // label_spritesetPointer
             // 
             label_spritesetPointer.AutoSize = true;
-            label_spritesetPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
+            label_spritesetPointer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline);
             label_spritesetPointer.Location = new System.Drawing.Point(69, 18);
             label_spritesetPointer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_spritesetPointer.Name = "label_spritesetPointer";
@@ -933,7 +935,7 @@
             label_music.Location = new System.Drawing.Point(7, 138);
             label_music.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_music.Name = "label_music";
-            label_music.Size = new System.Drawing.Size(42, 15);
+            label_music.Size = new System.Drawing.Size(45, 17);
             label_music.TabIndex = 0;
             label_music.Text = "Music:";
             // 
@@ -965,7 +967,7 @@
             label_mapY.Location = new System.Drawing.Point(7, 67);
             label_mapY.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_mapY.Name = "label_mapY";
-            label_mapY.Size = new System.Drawing.Size(44, 15);
+            label_mapY.Size = new System.Drawing.Size(49, 17);
             label_mapY.TabIndex = 0;
             label_mapY.Text = "Map Y:";
             // 
@@ -975,7 +977,7 @@
             label_mapX.Location = new System.Drawing.Point(7, 30);
             label_mapX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_mapX.Name = "label_mapX";
-            label_mapX.Size = new System.Drawing.Size(44, 15);
+            label_mapX.Size = new System.Drawing.Size(50, 17);
             label_mapX.TabIndex = 0;
             label_mapX.Text = "Map X:";
             // 
@@ -1041,7 +1043,7 @@
             label_room.Location = new System.Drawing.Point(20, 421);
             label_room.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_room.Name = "label_room";
-            label_room.Size = new System.Drawing.Size(42, 15);
+            label_room.Size = new System.Drawing.Size(46, 17);
             label_room.TabIndex = 0;
             label_room.Text = "Room:";
             // 
@@ -1051,7 +1053,7 @@
             label_area.Location = new System.Drawing.Point(20, 392);
             label_area.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_area.Name = "label_area";
-            label_area.Size = new System.Drawing.Size(34, 15);
+            label_area.Size = new System.Drawing.Size(38, 17);
             label_area.TabIndex = 0;
             label_area.Text = "Area:";
             // 
@@ -1062,7 +1064,7 @@
             comboBox_room.Location = new System.Drawing.Point(70, 418);
             comboBox_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_room.Name = "comboBox_room";
-            comboBox_room.Size = new System.Drawing.Size(182, 23);
+            comboBox_room.Size = new System.Drawing.Size(182, 25);
             comboBox_room.TabIndex = 4;
             comboBox_room.SelectedIndexChanged += comboBox_room_SelectedIndexChanged;
             // 
@@ -1073,7 +1075,7 @@
             comboBox_area.Location = new System.Drawing.Point(70, 389);
             comboBox_area.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_area.Name = "comboBox_area";
-            comboBox_area.Size = new System.Drawing.Size(182, 23);
+            comboBox_area.Size = new System.Drawing.Size(182, 25);
             comboBox_area.TabIndex = 3;
             comboBox_area.SelectedIndexChanged += comboBox_area_SelectedIndexChanged;
             // 
@@ -1090,19 +1092,19 @@
             // 
             statusLabel_changes.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
             statusLabel_changes.Name = "statusLabel_changes";
-            statusLabel_changes.Size = new System.Drawing.Size(12, 17);
+            statusLabel_changes.Size = new System.Drawing.Size(13, 17);
             statusLabel_changes.Text = "-";
             // 
             // lbl_spring
             // 
             lbl_spring.Name = "lbl_spring";
-            lbl_spring.Size = new System.Drawing.Size(311, 17);
+            lbl_spring.Size = new System.Drawing.Size(306, 17);
             lbl_spring.Spring = true;
             // 
             // lbl_offset
             // 
             lbl_offset.Name = "lbl_offset";
-            lbl_offset.Size = new System.Drawing.Size(42, 17);
+            lbl_offset.Size = new System.Drawing.Size(46, 17);
             lbl_offset.Text = "Offset:";
             // 
             // button_close
@@ -1115,6 +1117,16 @@
             button_close.Text = "Close";
             button_close.UseVisualStyleBackColor = true;
             button_close.Click += button_close_Click;
+            // 
+            // btn_transparency_preset
+            // 
+            btn_transparency_preset.Image = Properties.Resources.toolbar_patches;
+            btn_transparency_preset.Location = new System.Drawing.Point(144, 70);
+            btn_transparency_preset.Name = "btn_transparency_preset";
+            btn_transparency_preset.Size = new System.Drawing.Size(23, 23);
+            btn_transparency_preset.TabIndex = 20;
+            btn_transparency_preset.UseVisualStyleBackColor = true;
+            btn_transparency_preset.Click += btn_transparency_preset_Click;
             // 
             // FormHeader
             // 
@@ -1216,5 +1228,6 @@
         private System.Windows.Forms.Button btn_bg0_prop;
         private System.Windows.Forms.Button btn_bg1_prop;
         private System.Windows.Forms.Button btn_tileset_preset;
+        private System.Windows.Forms.Button btn_transparency_preset;
     }
 }
