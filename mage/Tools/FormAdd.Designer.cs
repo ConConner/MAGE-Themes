@@ -29,45 +29,45 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAdd));
-            tabControl = new Theming.CustomControls.FlatTabControl();
+            tabControl = new mage.Theming.CustomControls.FlatTabControl();
             tabPage_bg = new System.Windows.Forms.TabPage();
             groupBox_bgOptions = new System.Windows.Forms.GroupBox();
             radioButton_bgBlank = new System.Windows.Forms.RadioButton();
             radioButton_bgCopy = new System.Windows.Forms.RadioButton();
-            textBox_bgOffset = new Theming.CustomControls.FlatTextBox();
+            textBox_bgOffset = new mage.Theming.CustomControls.FlatTextBox();
             groupBox_bgSelect = new System.Windows.Forms.GroupBox();
-            comboBox_bg = new Theming.CustomControls.FlatComboBox();
+            comboBox_bg = new mage.Theming.CustomControls.FlatComboBox();
             radioButton_bgLZ77 = new System.Windows.Forms.RadioButton();
             radioButton_bgRLE = new System.Windows.Forms.RadioButton();
             tabPage_roomSprites = new System.Windows.Forms.TabPage();
             label_enemySpriteset = new System.Windows.Forms.Label();
             radioButton_enemyBlank = new System.Windows.Forms.RadioButton();
             radioButton_enemyCopy = new System.Windows.Forms.RadioButton();
-            textBox_enemyOffset = new Theming.CustomControls.FlatTextBox();
-            comboBox_enemySet = new Theming.CustomControls.FlatComboBox();
+            textBox_enemyOffset = new mage.Theming.CustomControls.FlatTextBox();
+            comboBox_enemySet = new mage.Theming.CustomControls.FlatComboBox();
             tabPage_room = new System.Windows.Forms.TabPage();
             chb_screens = new System.Windows.Forms.CheckBox();
             label_roomArea = new System.Windows.Forms.Label();
             label_roomHeight = new System.Windows.Forms.Label();
             label_roomWidth = new System.Windows.Forms.Label();
-            comboBox_roomCopyRoom = new Theming.CustomControls.FlatComboBox();
-            textBox_roomHeight = new Theming.CustomControls.FlatTextBox();
-            textBox_roomWidth = new Theming.CustomControls.FlatTextBox();
-            comboBox_roomCopyArea = new Theming.CustomControls.FlatComboBox();
-            comboBox_roomArea = new Theming.CustomControls.FlatComboBox();
+            comboBox_roomCopyRoom = new mage.Theming.CustomControls.FlatComboBox();
+            textBox_roomHeight = new mage.Theming.CustomControls.FlatTextBox();
+            textBox_roomWidth = new mage.Theming.CustomControls.FlatTextBox();
+            comboBox_roomCopyArea = new mage.Theming.CustomControls.FlatComboBox();
+            comboBox_roomArea = new mage.Theming.CustomControls.FlatComboBox();
             radioButton_roomBlank = new System.Windows.Forms.RadioButton();
             radioButton_roomCopy = new System.Windows.Forms.RadioButton();
             tabPage_tileset = new System.Windows.Forms.TabPage();
-            comboBox_tileset = new Theming.CustomControls.FlatComboBox();
+            comboBox_tileset = new mage.Theming.CustomControls.FlatComboBox();
             radioButton_tilesetBlank = new System.Windows.Forms.RadioButton();
             radioButton_tilesetCopy = new System.Windows.Forms.RadioButton();
             tabPage_spriteset = new System.Windows.Forms.TabPage();
-            comboBox_spriteset = new Theming.CustomControls.FlatComboBox();
+            comboBox_spriteset = new mage.Theming.CustomControls.FlatComboBox();
             radioButton_spritesetBlank = new System.Windows.Forms.RadioButton();
             radioButton_spritesetCopy = new System.Windows.Forms.RadioButton();
             tabPage_anim = new System.Windows.Forms.TabPage();
             groupBox_animOptions = new System.Windows.Forms.GroupBox();
-            comboBox_animNum = new Theming.CustomControls.FlatComboBox();
+            comboBox_animNum = new mage.Theming.CustomControls.FlatComboBox();
             radioButton_animBlank = new System.Windows.Forms.RadioButton();
             radioButton_animCopy = new System.Windows.Forms.RadioButton();
             groupBox_animSelect = new System.Windows.Forms.GroupBox();
@@ -76,6 +76,8 @@
             radioButton_animPalette = new System.Windows.Forms.RadioButton();
             button_add = new System.Windows.Forms.Button();
             button_close = new System.Windows.Forms.Button();
+            textBox_animationState = new mage.Theming.CustomControls.FlatTextBox();
+            label_animationStates = new System.Windows.Forms.Label();
             tabControl.SuspendLayout();
             tabPage_bg.SuspendLayout();
             groupBox_bgOptions.SuspendLayout();
@@ -160,6 +162,8 @@
             // 
             textBox_bgOffset.BorderColor = System.Drawing.Color.Black;
             textBox_bgOffset.DisplayBorder = true;
+            textBox_bgOffset.HexSanitized = false;
+            textBox_bgOffset.HexSanitizedMaxValue = -1;
             textBox_bgOffset.Location = new System.Drawing.Point(71, 50);
             textBox_bgOffset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_bgOffset.MaxLength = 32767;
@@ -167,12 +171,14 @@
             textBox_bgOffset.Name = "textBox_bgOffset";
             textBox_bgOffset.OnTextChanged = null;
             textBox_bgOffset.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_bgOffset.PlaceholderText = "";
             textBox_bgOffset.ReadOnly = false;
             textBox_bgOffset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_bgOffset.SelectionStart = 0;
             textBox_bgOffset.Size = new System.Drawing.Size(70, 23);
             textBox_bgOffset.TabIndex = 5;
             textBox_bgOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_bgOffset.ValueBox = false;
             textBox_bgOffset.WordWrap = true;
             // 
             // groupBox_bgSelect
@@ -279,6 +285,8 @@
             // 
             textBox_enemyOffset.BorderColor = System.Drawing.Color.Black;
             textBox_enemyOffset.DisplayBorder = true;
+            textBox_enemyOffset.HexSanitized = false;
+            textBox_enemyOffset.HexSanitizedMaxValue = -1;
             textBox_enemyOffset.Location = new System.Drawing.Point(71, 68);
             textBox_enemyOffset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_enemyOffset.MaxLength = 32767;
@@ -286,12 +294,14 @@
             textBox_enemyOffset.Name = "textBox_enemyOffset";
             textBox_enemyOffset.OnTextChanged = null;
             textBox_enemyOffset.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_enemyOffset.PlaceholderText = "";
             textBox_enemyOffset.ReadOnly = false;
             textBox_enemyOffset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_enemyOffset.SelectionStart = 0;
             textBox_enemyOffset.Size = new System.Drawing.Size(70, 23);
             textBox_enemyOffset.TabIndex = 8;
             textBox_enemyOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_enemyOffset.ValueBox = false;
             textBox_enemyOffset.WordWrap = true;
             // 
             // comboBox_enemySet
@@ -323,7 +333,7 @@
             tabPage_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage_room.Name = "tabPage_room";
             tabPage_room.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage_room.Size = new System.Drawing.Size(278, 142);
+            tabPage_room.Size = new System.Drawing.Size(192, 71);
             tabPage_room.TabIndex = 1;
             tabPage_room.Text = "Room";
             // 
@@ -383,6 +393,8 @@
             // 
             textBox_roomHeight.BorderColor = System.Drawing.Color.Black;
             textBox_roomHeight.DisplayBorder = true;
+            textBox_roomHeight.HexSanitized = false;
+            textBox_roomHeight.HexSanitizedMaxValue = -1;
             textBox_roomHeight.Location = new System.Drawing.Point(230, 38);
             textBox_roomHeight.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_roomHeight.MaxLength = 32767;
@@ -390,18 +402,22 @@
             textBox_roomHeight.Name = "textBox_roomHeight";
             textBox_roomHeight.OnTextChanged = null;
             textBox_roomHeight.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_roomHeight.PlaceholderText = "";
             textBox_roomHeight.ReadOnly = false;
             textBox_roomHeight.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_roomHeight.SelectionStart = 0;
             textBox_roomHeight.Size = new System.Drawing.Size(35, 23);
             textBox_roomHeight.TabIndex = 13;
             textBox_roomHeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_roomHeight.ValueBox = false;
             textBox_roomHeight.WordWrap = true;
             // 
             // textBox_roomWidth
             // 
             textBox_roomWidth.BorderColor = System.Drawing.Color.Black;
             textBox_roomWidth.DisplayBorder = true;
+            textBox_roomWidth.HexSanitized = false;
+            textBox_roomWidth.HexSanitizedMaxValue = -1;
             textBox_roomWidth.Location = new System.Drawing.Point(124, 38);
             textBox_roomWidth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_roomWidth.MaxLength = 32767;
@@ -409,12 +425,14 @@
             textBox_roomWidth.Name = "textBox_roomWidth";
             textBox_roomWidth.OnTextChanged = null;
             textBox_roomWidth.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_roomWidth.PlaceholderText = "";
             textBox_roomWidth.ReadOnly = false;
             textBox_roomWidth.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_roomWidth.SelectionStart = 0;
             textBox_roomWidth.Size = new System.Drawing.Size(35, 23);
             textBox_roomWidth.TabIndex = 12;
             textBox_roomWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_roomWidth.ValueBox = false;
             textBox_roomWidth.WordWrap = true;
             // 
             // comboBox_roomCopyArea
@@ -567,12 +585,14 @@
             tabPage_anim.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             tabPage_anim.Name = "tabPage_anim";
             tabPage_anim.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            tabPage_anim.Size = new System.Drawing.Size(192, 71);
+            tabPage_anim.Size = new System.Drawing.Size(278, 142);
             tabPage_anim.TabIndex = 4;
             tabPage_anim.Text = "Animation";
             // 
             // groupBox_animOptions
             // 
+            groupBox_animOptions.Controls.Add(label_animationStates);
+            groupBox_animOptions.Controls.Add(textBox_animationState);
             groupBox_animOptions.Controls.Add(comboBox_animNum);
             groupBox_animOptions.Controls.Add(radioButton_animBlank);
             groupBox_animOptions.Controls.Add(radioButton_animCopy);
@@ -639,7 +659,7 @@
             radioButton_animTileset.Location = new System.Drawing.Point(7, 22);
             radioButton_animTileset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             radioButton_animTileset.Name = "radioButton_animTileset";
-            radioButton_animTileset.Size = new System.Drawing.Size(58, 19);
+            radioButton_animTileset.Size = new System.Drawing.Size(59, 19);
             radioButton_animTileset.TabIndex = 0;
             radioButton_animTileset.TabStop = true;
             radioButton_animTileset.Text = "Tileset";
@@ -694,6 +714,38 @@
             button_close.Text = "Close";
             button_close.UseVisualStyleBackColor = true;
             button_close.Click += button_close_Click;
+            // 
+            // textBox_animationState
+            // 
+            textBox_animationState.BorderColor = System.Drawing.Color.Black;
+            textBox_animationState.DisplayBorder = true;
+            textBox_animationState.HexSanitized = false;
+            textBox_animationState.HexSanitizedMaxValue = -1;
+            textBox_animationState.Location = new System.Drawing.Point(71, 79);
+            textBox_animationState.MaxLength = 32767;
+            textBox_animationState.Multiline = false;
+            textBox_animationState.Name = "textBox_animationState";
+            textBox_animationState.OnTextChanged = null;
+            textBox_animationState.Padding = new System.Windows.Forms.Padding(3, 3, 1, 2);
+            textBox_animationState.PlaceholderText = "";
+            textBox_animationState.ReadOnly = false;
+            textBox_animationState.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_animationState.SelectionStart = 0;
+            textBox_animationState.Size = new System.Drawing.Size(58, 23);
+            textBox_animationState.TabIndex = 13;
+            textBox_animationState.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_animationState.ValueBox = false;
+            textBox_animationState.Visible = false;
+            textBox_animationState.WordWrap = true;
+            // 
+            // label_animationStates
+            // 
+            label_animationStates.AutoSize = true;
+            label_animationStates.Location = new System.Drawing.Point(7, 82);
+            label_animationStates.Name = "label_animationStates";
+            label_animationStates.Size = new System.Drawing.Size(41, 15);
+            label_animationStates.TabIndex = 14;
+            label_animationStates.Text = "States:";
             // 
             // FormAdd
             // 
@@ -778,5 +830,7 @@
         private System.Windows.Forms.RadioButton radioButton_animCopy;
         private mage.Theming.CustomControls.FlatComboBox comboBox_animNum;
         private System.Windows.Forms.CheckBox chb_screens;
+        private System.Windows.Forms.Label label_animationStates;
+        private Theming.CustomControls.FlatTextBox textBox_animationState;
     }
 }

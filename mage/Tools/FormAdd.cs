@@ -316,6 +316,10 @@ namespace mage
         // animation
         private void radioButton_animation_CheckedChanged(object sender, EventArgs e)
         {
+            bool hasStates = !radioButton_animCopy.Checked && !radioButton_animTileset.Checked;
+            label_animationStates.Visible = textBox_animationState.Visible = hasStates;
+            textBox_animationState.Text = "1";
+
             if (radioButton_animTileset.Checked)
             {
                 AdjustNumOfItems(comboBox_animNum, Version.NumOfAnimTilesets);
@@ -367,7 +371,19 @@ namespace mage
 
                 if (radioButton_animBlank.Checked)
                 {
-                    Add.BlankAnimGfx();
+                    byte states = 1;
+                    try
+                    {
+                        states = Hex.ToByte(textBox_animationState.Text);
+                        states = Math.Max(Math.Min(states, (byte)0xFF), (byte)1);
+                    }
+                    catch
+                    {
+                        DisplayError("Input number of states is invalid.");
+                        return;
+                    }
+
+                    Add.BlankAnimGfx(states);
                 }
                 else if (radioButton_animCopy.Checked)
                 {
@@ -386,7 +402,19 @@ namespace mage
 
                 if (radioButton_animBlank.Checked)
                 {
-                    Add.BlankAnimPalette();
+                    byte states = 1;
+                    try
+                    {
+                        states = Hex.ToByte(textBox_animationState.Text);
+                        states = Math.Max(Math.Min(states, (byte)0xF), (byte)1);
+                    }
+                    catch
+                    {
+                        DisplayError("Input number of states is invalid.");
+                        return;
+                    }
+
+                    Add.BlankAnimPalette(states);
                 }
                 else if (radioButton_animCopy.Checked)
                 {
@@ -424,6 +452,9 @@ namespace mage
         private void radioButton_option_CheckedChanged(object sender, EventArgs e)
         {
             button_add.Enabled = true;
+
+            bool hasStates = !radioButton_animCopy.Checked && !radioButton_animTileset.Checked;
+            label_animationStates.Visible = textBox_animationState.Visible = hasStates;
         }
 
         private void DisplayError(string message)
