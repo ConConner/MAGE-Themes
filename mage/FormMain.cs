@@ -287,6 +287,10 @@ namespace mage
             Sound.SoundPacksPath = Settings.Default.soundPackPath;
             Sound.SoundPackName = Settings.Default.soundPackName;
 
+            //Music list paths
+            Muslist.MusiclistsPath = Settings.Default.musiclistsPath;
+            Muslist.MusiclistName = Settings.Default.musiclistName;
+
             // Bookmarks
             try { ZMGlobalBookmarks = BookmarkManager.DeserializeCollections(Settings.Default.ZMglobalBookmarks); }
             catch { ZMGlobalBookmarks = new(); }
@@ -340,6 +344,10 @@ namespace mage
             //Sound
             Settings.Default.soundPackPath = Sound.SoundPacksPath;
             Settings.Default.soundPackName = Sound.SoundPackName;
+
+            //Music lists
+            Settings.Default.musiclistsPath = Muslist.MusiclistsPath;
+            Settings.Default.musiclistName = Muslist.MusiclistName;
 
             //Bookmarks
             Settings.Default.ZMglobalBookmarks = BookmarkManager.SerializeCollections(ZMGlobalBookmarks);

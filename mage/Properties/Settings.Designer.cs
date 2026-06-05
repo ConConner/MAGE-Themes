@@ -380,5 +380,29 @@ namespace mage.Properties {
                 this["MFglobalBookmarks"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string musiclistsPath {
+            get {
+                return ((string)(this["musiclistsPath"]));
+            }
+            set {
+                this["musiclistsPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string musiclistName {
+            get {
+                return ((string)(this["musiclistName"]));
+            }
+            set {
+                this["musiclistName"] = value;
+            }
+        }
     }
 }

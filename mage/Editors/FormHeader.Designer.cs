@@ -52,6 +52,7 @@
             label_BG3scroll = new System.Windows.Forms.Label();
             label_transparency = new System.Windows.Forms.Label();
             groupBox_BGdata = new System.Windows.Forms.GroupBox();
+            btn_transparency_preset = new System.Windows.Forms.Button();
             btn_tileset_preset = new System.Windows.Forms.Button();
             btn_bg3_prop = new System.Windows.Forms.Button();
             btn_bg0_prop = new System.Windows.Forms.Button();
@@ -95,7 +96,7 @@
             lbl_spring = new System.Windows.Forms.ToolStripStatusLabel();
             lbl_offset = new System.Windows.Forms.ToolStripStatusLabel();
             button_close = new System.Windows.Forms.Button();
-            btn_transparency_preset = new System.Windows.Forms.Button();
+            comboBoxMuslist = new System.Windows.Forms.ComboBox();
             groupBox_BGdata.SuspendLayout();
             groupBox_spritesetData.SuspendLayout();
             groupBox_misc.SuspendLayout();
@@ -106,6 +107,8 @@
             // 
             textBox_tileset.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_tileset.DisplayBorder = true;
+            textBox_tileset.HexSanitized = false;
+            textBox_tileset.HexSanitizedMaxValue = -1;
             textBox_tileset.Location = new System.Drawing.Point(102, 40);
             textBox_tileset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_tileset.MaxLength = 32767;
@@ -130,7 +133,7 @@
             label_tileset.Location = new System.Drawing.Point(7, 44);
             label_tileset.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_tileset.Name = "label_tileset";
-            label_tileset.Size = new System.Drawing.Size(48, 17);
+            label_tileset.Size = new System.Drawing.Size(44, 15);
             label_tileset.TabIndex = 0;
             label_tileset.Text = "Tileset:";
             // 
@@ -138,6 +141,8 @@
             // 
             textBox_BG0pointer.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_BG0pointer.DisplayBorder = true;
+            textBox_BG0pointer.HexSanitized = false;
+            textBox_BG0pointer.HexSanitizedMaxValue = -1;
             textBox_BG0pointer.Location = new System.Drawing.Point(225, 40);
             textBox_BG0pointer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_BG0pointer.MaxLength = 32767;
@@ -160,6 +165,8 @@
             // 
             textBox_BG1pointer.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_BG1pointer.DisplayBorder = true;
+            textBox_BG1pointer.HexSanitized = false;
+            textBox_BG1pointer.HexSanitizedMaxValue = -1;
             textBox_BG1pointer.Location = new System.Drawing.Point(225, 70);
             textBox_BG1pointer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_BG1pointer.MaxLength = 32767;
@@ -182,6 +189,8 @@
             // 
             textBox_BG2pointer.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_BG2pointer.DisplayBorder = true;
+            textBox_BG2pointer.HexSanitized = false;
+            textBox_BG2pointer.HexSanitizedMaxValue = -1;
             textBox_BG2pointer.Location = new System.Drawing.Point(225, 100);
             textBox_BG2pointer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_BG2pointer.MaxLength = 32767;
@@ -204,6 +213,8 @@
             // 
             textBox_BG3pointer.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_BG3pointer.DisplayBorder = true;
+            textBox_BG3pointer.HexSanitized = false;
+            textBox_BG3pointer.HexSanitizedMaxValue = -1;
             textBox_BG3pointer.Location = new System.Drawing.Point(225, 130);
             textBox_BG3pointer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_BG3pointer.MaxLength = 32767;
@@ -226,6 +237,8 @@
             // 
             textBox_CLPpointer.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_CLPpointer.DisplayBorder = true;
+            textBox_CLPpointer.HexSanitized = false;
+            textBox_CLPpointer.HexSanitizedMaxValue = -1;
             textBox_CLPpointer.Location = new System.Drawing.Point(225, 160);
             textBox_CLPpointer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_CLPpointer.MaxLength = 32767;
@@ -248,6 +261,8 @@
             // 
             textBox_BG0prop.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_BG0prop.DisplayBorder = true;
+            textBox_BG0prop.HexSanitized = false;
+            textBox_BG0prop.HexSanitizedMaxValue = -1;
             textBox_BG0prop.Location = new System.Drawing.Point(287, 41);
             textBox_BG0prop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_BG0prop.MaxLength = 32767;
@@ -270,6 +285,8 @@
             // 
             textBox_BG1prop.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_BG1prop.DisplayBorder = true;
+            textBox_BG1prop.HexSanitized = false;
+            textBox_BG1prop.HexSanitizedMaxValue = -1;
             textBox_BG1prop.Location = new System.Drawing.Point(287, 71);
             textBox_BG1prop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_BG1prop.MaxLength = 32767;
@@ -292,6 +309,8 @@
             // 
             textBox_BG2prop.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_BG2prop.DisplayBorder = true;
+            textBox_BG2prop.HexSanitized = false;
+            textBox_BG2prop.HexSanitizedMaxValue = -1;
             textBox_BG2prop.Location = new System.Drawing.Point(287, 100);
             textBox_BG2prop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_BG2prop.MaxLength = 32767;
@@ -314,6 +333,8 @@
             // 
             textBox_BG3prop.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_BG3prop.DisplayBorder = true;
+            textBox_BG3prop.HexSanitized = false;
+            textBox_BG3prop.HexSanitizedMaxValue = -1;
             textBox_BG3prop.Location = new System.Drawing.Point(287, 130);
             textBox_BG3prop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_BG3prop.MaxLength = 32767;
@@ -338,7 +359,7 @@
             label_BG0.Location = new System.Drawing.Point(178, 44);
             label_BG0.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_BG0.Name = "label_BG0";
-            label_BG0.Size = new System.Drawing.Size(38, 17);
+            label_BG0.Size = new System.Drawing.Size(34, 15);
             label_BG0.TabIndex = 0;
             label_BG0.Text = "BG 0:";
             // 
@@ -348,7 +369,7 @@
             label_BG1.Location = new System.Drawing.Point(178, 74);
             label_BG1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_BG1.Name = "label_BG1";
-            label_BG1.Size = new System.Drawing.Size(38, 17);
+            label_BG1.Size = new System.Drawing.Size(34, 15);
             label_BG1.TabIndex = 0;
             label_BG1.Text = "BG 1:";
             // 
@@ -358,7 +379,7 @@
             label_BG2.Location = new System.Drawing.Point(178, 104);
             label_BG2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_BG2.Name = "label_BG2";
-            label_BG2.Size = new System.Drawing.Size(38, 17);
+            label_BG2.Size = new System.Drawing.Size(34, 15);
             label_BG2.TabIndex = 0;
             label_BG2.Text = "BG 2:";
             // 
@@ -368,7 +389,7 @@
             label_BG3.Location = new System.Drawing.Point(178, 134);
             label_BG3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_BG3.Name = "label_BG3";
-            label_BG3.Size = new System.Drawing.Size(38, 17);
+            label_BG3.Size = new System.Drawing.Size(34, 15);
             label_BG3.TabIndex = 0;
             label_BG3.Text = "BG 3:";
             // 
@@ -378,7 +399,7 @@
             label_CLP.Location = new System.Drawing.Point(178, 164);
             label_CLP.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_CLP.Name = "label_CLP";
-            label_CLP.Size = new System.Drawing.Size(33, 17);
+            label_CLP.Size = new System.Drawing.Size(31, 15);
             label_CLP.TabIndex = 0;
             label_CLP.Text = "Clip:";
             // 
@@ -408,6 +429,8 @@
             // 
             textBox_BG3scroll.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_BG3scroll.DisplayBorder = true;
+            textBox_BG3scroll.HexSanitized = false;
+            textBox_BG3scroll.HexSanitizedMaxValue = -1;
             textBox_BG3scroll.Location = new System.Drawing.Point(102, 100);
             textBox_BG3scroll.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_BG3scroll.MaxLength = 32767;
@@ -430,6 +453,8 @@
             // 
             textBox_transparency.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_transparency.DisplayBorder = true;
+            textBox_transparency.HexSanitized = false;
+            textBox_transparency.HexSanitizedMaxValue = -1;
             textBox_transparency.Location = new System.Drawing.Point(102, 70);
             textBox_transparency.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_transparency.MaxLength = 32767;
@@ -454,7 +479,7 @@
             label_BG3scroll.Location = new System.Drawing.Point(7, 104);
             label_BG3scroll.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_BG3scroll.Name = "label_BG3scroll";
-            label_BG3scroll.Size = new System.Drawing.Size(69, 17);
+            label_BG3scroll.Size = new System.Drawing.Size(62, 15);
             label_BG3scroll.TabIndex = 0;
             label_BG3scroll.Text = "BG3 scroll:";
             // 
@@ -464,7 +489,7 @@
             label_transparency.Location = new System.Drawing.Point(7, 74);
             label_transparency.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_transparency.Name = "label_transparency";
-            label_transparency.Size = new System.Drawing.Size(88, 17);
+            label_transparency.Size = new System.Drawing.Size(80, 15);
             label_transparency.TabIndex = 0;
             label_transparency.Text = "Transparency:";
             // 
@@ -511,6 +536,16 @@
             groupBox_BGdata.TabIndex = 0;
             groupBox_BGdata.TabStop = false;
             groupBox_BGdata.Text = "Background Data";
+            // 
+            // btn_transparency_preset
+            // 
+            btn_transparency_preset.Image = Properties.Resources.toolbar_patches;
+            btn_transparency_preset.Location = new System.Drawing.Point(144, 70);
+            btn_transparency_preset.Name = "btn_transparency_preset";
+            btn_transparency_preset.Size = new System.Drawing.Size(23, 23);
+            btn_transparency_preset.TabIndex = 20;
+            btn_transparency_preset.UseVisualStyleBackColor = true;
+            btn_transparency_preset.Click += btn_transparency_preset_Click;
             // 
             // btn_tileset_preset
             // 
@@ -576,6 +611,8 @@
             // 
             textBox_effectYpos.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_effectYpos.DisplayBorder = true;
+            textBox_effectYpos.HexSanitized = false;
+            textBox_effectYpos.HexSanitizedMaxValue = -1;
             textBox_effectYpos.Location = new System.Drawing.Point(102, 160);
             textBox_effectYpos.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_effectYpos.MaxLength = 32767;
@@ -600,7 +637,7 @@
             label1.Location = new System.Drawing.Point(7, 164);
             label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(80, 17);
+            label1.Size = new System.Drawing.Size(72, 15);
             label1.TabIndex = 0;
             label1.Text = "Effect Y pos:";
             // 
@@ -610,7 +647,7 @@
             label_effect.Location = new System.Drawing.Point(7, 134);
             label_effect.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_effect.Name = "label_effect";
-            label_effect.Size = new System.Drawing.Size(43, 17);
+            label_effect.Size = new System.Drawing.Size(40, 15);
             label_effect.TabIndex = 0;
             label_effect.Text = "Effect:";
             // 
@@ -618,6 +655,8 @@
             // 
             textBox_effect.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_effect.DisplayBorder = true;
+            textBox_effect.HexSanitized = false;
+            textBox_effect.HexSanitizedMaxValue = -1;
             textBox_effect.Location = new System.Drawing.Point(102, 130);
             textBox_effect.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_effect.MaxLength = 32767;
@@ -656,7 +695,7 @@
             groupBox_spritesetData.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_spritesetData.Name = "groupBox_spritesetData";
             groupBox_spritesetData.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_spritesetData.Size = new System.Drawing.Size(239, 168);
+            groupBox_spritesetData.Size = new System.Drawing.Size(239, 134);
             groupBox_spritesetData.TabIndex = 1;
             groupBox_spritesetData.TabStop = false;
             groupBox_spritesetData.Text = "Spriteset Data";
@@ -667,7 +706,7 @@
             label_second.Location = new System.Drawing.Point(7, 104);
             label_second.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_second.Name = "label_second";
-            label_second.Size = new System.Drawing.Size(54, 17);
+            label_second.Size = new System.Drawing.Size(49, 15);
             label_second.TabIndex = 0;
             label_second.Text = "Second:";
             // 
@@ -677,7 +716,7 @@
             label_first.Location = new System.Drawing.Point(7, 74);
             label_first.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_first.Name = "label_first";
-            label_first.Size = new System.Drawing.Size(35, 17);
+            label_first.Size = new System.Drawing.Size(32, 15);
             label_first.TabIndex = 0;
             label_first.Text = "First:";
             // 
@@ -687,7 +726,7 @@
             label_default.Location = new System.Drawing.Point(7, 44);
             label_default.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_default.Name = "label_default";
-            label_default.Size = new System.Drawing.Size(52, 17);
+            label_default.Size = new System.Drawing.Size(48, 15);
             label_default.TabIndex = 0;
             label_default.Text = "Default:";
             // 
@@ -728,6 +767,8 @@
             // 
             textBox_defaultPointer.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_defaultPointer.DisplayBorder = true;
+            textBox_defaultPointer.HexSanitized = false;
+            textBox_defaultPointer.HexSanitizedMaxValue = -1;
             textBox_defaultPointer.Location = new System.Drawing.Point(69, 40);
             textBox_defaultPointer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_defaultPointer.MaxLength = 32767;
@@ -750,6 +791,8 @@
             // 
             textBox_defaultSpriteset.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_defaultSpriteset.DisplayBorder = true;
+            textBox_defaultSpriteset.HexSanitized = false;
+            textBox_defaultSpriteset.HexSanitizedMaxValue = -1;
             textBox_defaultSpriteset.Location = new System.Drawing.Point(152, 40);
             textBox_defaultSpriteset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_defaultSpriteset.MaxLength = 32767;
@@ -772,6 +815,8 @@
             // 
             textBox_secondEvent.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_secondEvent.DisplayBorder = true;
+            textBox_secondEvent.HexSanitized = false;
+            textBox_secondEvent.HexSanitizedMaxValue = -1;
             textBox_secondEvent.Location = new System.Drawing.Point(194, 100);
             textBox_secondEvent.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_secondEvent.MaxLength = 32767;
@@ -794,6 +839,8 @@
             // 
             textBox_secondPointer.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_secondPointer.DisplayBorder = true;
+            textBox_secondPointer.HexSanitized = false;
+            textBox_secondPointer.HexSanitizedMaxValue = -1;
             textBox_secondPointer.Location = new System.Drawing.Point(69, 100);
             textBox_secondPointer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_secondPointer.MaxLength = 32767;
@@ -816,6 +863,8 @@
             // 
             textBox_secondSpriteset.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_secondSpriteset.DisplayBorder = true;
+            textBox_secondSpriteset.HexSanitized = false;
+            textBox_secondSpriteset.HexSanitizedMaxValue = -1;
             textBox_secondSpriteset.Location = new System.Drawing.Point(152, 100);
             textBox_secondSpriteset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_secondSpriteset.MaxLength = 32767;
@@ -838,6 +887,8 @@
             // 
             textBox_firstEvent.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_firstEvent.DisplayBorder = true;
+            textBox_firstEvent.HexSanitized = false;
+            textBox_firstEvent.HexSanitizedMaxValue = -1;
             textBox_firstEvent.Location = new System.Drawing.Point(194, 70);
             textBox_firstEvent.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_firstEvent.MaxLength = 32767;
@@ -860,6 +911,8 @@
             // 
             textBox_firstPointer.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_firstPointer.DisplayBorder = true;
+            textBox_firstPointer.HexSanitized = false;
+            textBox_firstPointer.HexSanitizedMaxValue = -1;
             textBox_firstPointer.Location = new System.Drawing.Point(69, 70);
             textBox_firstPointer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_firstPointer.MaxLength = 32767;
@@ -882,6 +935,8 @@
             // 
             textBox_firstSpriteset.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_firstSpriteset.DisplayBorder = true;
+            textBox_firstSpriteset.HexSanitized = false;
+            textBox_firstSpriteset.HexSanitizedMaxValue = -1;
             textBox_firstSpriteset.Location = new System.Drawing.Point(152, 70);
             textBox_firstSpriteset.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_firstSpriteset.MaxLength = 32767;
@@ -903,8 +958,6 @@
             // groupBox_misc
             // 
             groupBox_misc.Controls.Add(btn_open_map);
-            groupBox_misc.Controls.Add(label_music);
-            groupBox_misc.Controls.Add(textBox_music);
             groupBox_misc.Controls.Add(label_mapY);
             groupBox_misc.Controls.Add(label_mapX);
             groupBox_misc.Controls.Add(textBox_mapX);
@@ -913,7 +966,7 @@
             groupBox_misc.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_misc.Name = "groupBox_misc";
             groupBox_misc.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_misc.Size = new System.Drawing.Size(107, 168);
+            groupBox_misc.Size = new System.Drawing.Size(107, 134);
             groupBox_misc.TabIndex = 2;
             groupBox_misc.TabStop = false;
             groupBox_misc.Text = "Miscellaneous";
@@ -932,10 +985,10 @@
             // label_music
             // 
             label_music.AutoSize = true;
-            label_music.Location = new System.Drawing.Point(7, 138);
+            label_music.Location = new System.Drawing.Point(19, 360);
             label_music.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_music.Name = "label_music";
-            label_music.Size = new System.Drawing.Size(45, 17);
+            label_music.Size = new System.Drawing.Size(42, 15);
             label_music.TabIndex = 0;
             label_music.Text = "Music:";
             // 
@@ -943,7 +996,9 @@
             // 
             textBox_music.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_music.DisplayBorder = true;
-            textBox_music.Location = new System.Drawing.Point(62, 134);
+            textBox_music.HexSanitized = false;
+            textBox_music.HexSanitizedMaxValue = -1;
+            textBox_music.Location = new System.Drawing.Point(70, 356);
             textBox_music.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_music.MaxLength = 32767;
             textBox_music.Multiline = false;
@@ -967,7 +1022,7 @@
             label_mapY.Location = new System.Drawing.Point(7, 67);
             label_mapY.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_mapY.Name = "label_mapY";
-            label_mapY.Size = new System.Drawing.Size(49, 17);
+            label_mapY.Size = new System.Drawing.Size(44, 15);
             label_mapY.TabIndex = 0;
             label_mapY.Text = "Map Y:";
             // 
@@ -977,7 +1032,7 @@
             label_mapX.Location = new System.Drawing.Point(7, 30);
             label_mapX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_mapX.Name = "label_mapX";
-            label_mapX.Size = new System.Drawing.Size(50, 17);
+            label_mapX.Size = new System.Drawing.Size(44, 15);
             label_mapX.TabIndex = 0;
             label_mapX.Text = "Map X:";
             // 
@@ -985,6 +1040,8 @@
             // 
             textBox_mapX.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_mapX.DisplayBorder = true;
+            textBox_mapX.HexSanitized = false;
+            textBox_mapX.HexSanitizedMaxValue = -1;
             textBox_mapX.Location = new System.Drawing.Point(62, 27);
             textBox_mapX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_mapX.MaxLength = 32767;
@@ -1007,6 +1064,8 @@
             // 
             textBox_mapY.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_mapY.DisplayBorder = true;
+            textBox_mapY.HexSanitized = false;
+            textBox_mapY.HexSanitizedMaxValue = -1;
             textBox_mapY.Location = new System.Drawing.Point(62, 63);
             textBox_mapY.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_mapY.MaxLength = 32767;
@@ -1043,7 +1102,7 @@
             label_room.Location = new System.Drawing.Point(20, 421);
             label_room.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_room.Name = "label_room";
-            label_room.Size = new System.Drawing.Size(46, 17);
+            label_room.Size = new System.Drawing.Size(42, 15);
             label_room.TabIndex = 0;
             label_room.Text = "Room:";
             // 
@@ -1053,7 +1112,7 @@
             label_area.Location = new System.Drawing.Point(20, 392);
             label_area.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_area.Name = "label_area";
-            label_area.Size = new System.Drawing.Size(38, 17);
+            label_area.Size = new System.Drawing.Size(34, 15);
             label_area.TabIndex = 0;
             label_area.Text = "Area:";
             // 
@@ -1064,7 +1123,7 @@
             comboBox_room.Location = new System.Drawing.Point(70, 418);
             comboBox_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_room.Name = "comboBox_room";
-            comboBox_room.Size = new System.Drawing.Size(182, 25);
+            comboBox_room.Size = new System.Drawing.Size(182, 23);
             comboBox_room.TabIndex = 4;
             comboBox_room.SelectedIndexChanged += comboBox_room_SelectedIndexChanged;
             // 
@@ -1075,7 +1134,7 @@
             comboBox_area.Location = new System.Drawing.Point(70, 389);
             comboBox_area.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_area.Name = "comboBox_area";
-            comboBox_area.Size = new System.Drawing.Size(182, 25);
+            comboBox_area.Size = new System.Drawing.Size(182, 23);
             comboBox_area.TabIndex = 3;
             comboBox_area.SelectedIndexChanged += comboBox_area_SelectedIndexChanged;
             // 
@@ -1092,19 +1151,19 @@
             // 
             statusLabel_changes.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
             statusLabel_changes.Name = "statusLabel_changes";
-            statusLabel_changes.Size = new System.Drawing.Size(13, 17);
+            statusLabel_changes.Size = new System.Drawing.Size(12, 17);
             statusLabel_changes.Text = "-";
             // 
             // lbl_spring
             // 
             lbl_spring.Name = "lbl_spring";
-            lbl_spring.Size = new System.Drawing.Size(306, 17);
+            lbl_spring.Size = new System.Drawing.Size(311, 17);
             lbl_spring.Spring = true;
             // 
             // lbl_offset
             // 
             lbl_offset.Name = "lbl_offset";
-            lbl_offset.Size = new System.Drawing.Size(46, 17);
+            lbl_offset.Size = new System.Drawing.Size(42, 17);
             lbl_offset.Text = "Offset:";
             // 
             // button_close
@@ -1118,23 +1177,24 @@
             button_close.UseVisualStyleBackColor = true;
             button_close.Click += button_close_Click;
             // 
-            // btn_transparency_preset
+            // comboBoxMuslist
             // 
-            btn_transparency_preset.Image = Properties.Resources.toolbar_patches;
-            btn_transparency_preset.Location = new System.Drawing.Point(144, 70);
-            btn_transparency_preset.Name = "btn_transparency_preset";
-            btn_transparency_preset.Size = new System.Drawing.Size(23, 23);
-            btn_transparency_preset.TabIndex = 20;
-            btn_transparency_preset.UseVisualStyleBackColor = true;
-            btn_transparency_preset.Click += btn_transparency_preset_Click;
+            comboBoxMuslist.FormattingEnabled = true;
+            comboBoxMuslist.Location = new System.Drawing.Point(112, 356);
+            comboBoxMuslist.Name = "comboBoxMuslist";
+            comboBoxMuslist.Size = new System.Drawing.Size(255, 23);
+            comboBoxMuslist.TabIndex = 8;
             // 
             // FormHeader
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             ClientSize = new System.Drawing.Size(382, 473);
+            Controls.Add(comboBoxMuslist);
             Controls.Add(statusStrip);
+            Controls.Add(label_music);
             Controls.Add(label_room);
+            Controls.Add(textBox_music);
             Controls.Add(label_area);
             Controls.Add(comboBox_room);
             Controls.Add(comboBox_area);
@@ -1229,5 +1289,6 @@
         private System.Windows.Forms.Button btn_bg1_prop;
         private System.Windows.Forms.Button btn_tileset_preset;
         private System.Windows.Forms.Button btn_transparency_preset;
+        private System.Windows.Forms.ComboBox comboBoxMuslist;
     }
 }

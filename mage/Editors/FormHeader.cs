@@ -18,11 +18,17 @@ namespace mage
         private ByteStream romStream;
         private bool loading;
         private Status status;
+        private bool syncingMusic;
 
         // constructor
         public FormHeader(FormMain main)
         {
             InitializeComponent();
+
+            LoadMusicComboobox();
+
+            comboBoxMuslist.SelectedIndexChanged += comboBoxMuslist_SelectedIndexChanged;
+            textBox_music.TextChanged += textBox_music_TextChanged;
 
             //Theming
             ThemeSwitcher.ChangeTheme(Controls, this);
@@ -42,6 +48,85 @@ namespace mage
 
             comboBox_area.SelectedIndex = main.Room.AreaID;
             comboBox_room.SelectedIndex = main.Room.RoomID;
+
+        }
+
+        private void LoadMusicComboobox()
+        {
+            comboBoxMuslist.Items.Clear();
+
+            string text = Muslist.ReadSelectedMusiclist();
+
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+
+            string[] lines = text.Split(
+                new[] { "\r\n", "\n" },
+                StringSplitOptions.None
+            );
+
+            foreach (string rawLine in lines)
+            {
+                string name = rawLine.Trim();
+
+                if (name == "")
+                    name = "(blank)";
+
+                comboBoxMuslist.Items.Add(name);
+            }
+        }
+
+        private void UpdateMusicDropdownFromTextbox()
+        {
+            if (syncingMusic)
+                return;
+
+            syncingMusic = true;
+
+            try
+            {
+                ushort musicId = Hex.ToUshort(textBox_music.Text);
+                int index = musicId;
+
+                if (index >= 0 && index < comboBoxMuslist.Items.Count)
+                    comboBoxMuslist.SelectedIndex = index;
+                else
+                    comboBoxMuslist.SelectedIndex = -1;
+            }
+            catch
+            {
+                comboBoxMuslist.SelectedIndex = -1;
+            }
+
+            syncingMusic = false;
+        }
+
+        private void comboBoxMuslist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (syncingMusic)
+                return;
+
+            if (comboBoxMuslist.SelectedIndex == -1)
+                return;
+
+            syncingMusic = true;
+
+            textBox_music.Text = Hex.ToString((ushort)comboBoxMuslist.SelectedIndex);
+
+            syncingMusic = false;
+
+            if (!loading)
+                status.ChangeMade();
+        }
+
+        private void textBox_music_TextChanged(object sender, EventArgs e)
+        {
+            UpdateMusicDropdownFromTextbox();
+
+            if (loading)
+                return;
+
+            status.ChangeMade();
         }
 
         private void comboBox_area_SelectedIndexChanged(object sender, EventArgs e)
@@ -140,6 +225,7 @@ namespace mage
             textBox_effect.Text = Hex.ToString(effect);
             textBox_effectYpos.Text = Hex.ToString(effectY);
             textBox_music.Text = Hex.ToString(music);
+            UpdateMusicDropdownFromTextbox();
 
             lbl_offset.Text = $"Offset: {Hex.ToString(offset)}";
 
