@@ -518,18 +518,18 @@ namespace mage
             return addr;
         }
 
-        public static void BlankAnimGfx()
+        public static void BlankAnimGfx(byte numStates = 1)
         {
             // get gfx
             ByteStream romStream = ROM.Stream;
             int offset = romStream.ReadPtr(Version.AnimGfxOffset + 4);
-            int gfxPtr = GfxCopy(offset, 4);
+            int gfxPtr = GfxCopy(offset, numStates * 4);
 
             // write new data
             ByteStream blank = new ByteStream();
             blank.Write8(0);
             blank.Write8(0);
-            blank.Write8(1);
+            blank.Write8(numStates);
             blank.WritePtr(gfxPtr);
             AddAnimGfx(blank);
         }
@@ -577,16 +577,16 @@ namespace mage
             Version.UpdateProject();
         }
 
-        public static void BlankAnimPalette()
+        public static void BlankAnimPalette(byte numStates = 1)
         {
             // get palette
-            int palettePtr = BlankPalette(1);
+            int palettePtr = BlankPalette(numStates);
 
             // write new data
             ByteStream blank = new ByteStream();
             blank.Write8(0);
             blank.Write8(0);
-            blank.Write8(1);
+            blank.Write8(numStates);
             blank.WritePtr(palettePtr);
             AddAnimPalette(blank);
         }

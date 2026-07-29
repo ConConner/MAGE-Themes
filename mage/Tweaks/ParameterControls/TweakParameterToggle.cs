@@ -21,7 +21,8 @@ namespace mage.Tweaks.ParameterControls
             ThemeSwitcher.InjectPaintOverrides(Controls);
 
             Parameter = param;
-            bool check = (Parameter.Value ?? 0) > 0;
+            Parameter.Value = Parameter.Value ?? 0;
+            bool check = (Parameter.Value) > 0;
 
             chb_value.Checked = check;
             chb_value.Text = param.DisplayName ?? param.Name;
