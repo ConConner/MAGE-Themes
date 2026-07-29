@@ -70,9 +70,8 @@
             // 
             listBox_pages.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listBox_pages.Dock = System.Windows.Forms.DockStyle.Fill;
-            listBox_pages.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            listBox_pages.Font = new System.Drawing.Font("Segoe UI", 12F);
             listBox_pages.FormattingEnabled = true;
-            listBox_pages.ItemHeight = 21;
             listBox_pages.Location = new System.Drawing.Point(6, 3);
             listBox_pages.Name = "listBox_pages";
             listBox_pages.Size = new System.Drawing.Size(134, 355);
@@ -120,7 +119,7 @@
             // label_requiresRom
             // 
             label_requiresRom.AutoSize = true;
-            label_requiresRom.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            label_requiresRom.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             label_requiresRom.Location = new System.Drawing.Point(3, 3);
             label_requiresRom.Margin = new System.Windows.Forms.Padding(3);
             label_requiresRom.Name = "label_requiresRom";
@@ -137,6 +136,7 @@
             MinimumSize = new System.Drawing.Size(600, 400);
             Name = "FormOption";
             Text = "Options";
+            FormClosing += FormOption_FormClosing;
             panel_main.Panel1.ResumeLayout(false);
             panel_main.Panel2.ResumeLayout(false);
             panel_main.Panel2.PerformLayout();
