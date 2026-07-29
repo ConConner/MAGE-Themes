@@ -1,3 +1,18 @@
+# [1.17.0](https://github.com/ConConner/MAGE-Themes/compare/v1.16.0...v1.17.0) (2026-07-29)
+
+
+### Bug Fixes
+
+* mage crashes when flipping hidden map tiles in metroid fusion ([e884af7](https://github.com/ConConner/MAGE-Themes/commit/e884af7910b1ad00d5aa31c426f401876cf07595))
+* NCalcSync version has vulnerability ([7b4ca3d](https://github.com/ConConner/MAGE-Themes/commit/7b4ca3d4b2e2d7b3293b12c6b0bb81aaa1f249d8))
+* tweaks with toggle without a default value result in an error ([fc1f405](https://github.com/ConConner/MAGE-Themes/commit/fc1f405278c4fefcd328072dd46ac828fd979528)), closes [#104](https://github.com/ConConner/MAGE-Themes/issues/104)
+
+
+### Features
+
+* add a list of music names in preferences that will be displayed in header editor ([841609d](https://github.com/ConConner/MAGE-Themes/commit/841609d007e215dcfd8caa721aa76c396d63a213))
+* added states input when adding new animated graphics or palettes ([1eeeb0d](https://github.com/ConConner/MAGE-Themes/commit/1eeeb0db3c44b209bde2f0d31855d086c374b2f2)), closes [#78](https://github.com/ConConner/MAGE-Themes/issues/78)
+
 # [1.16.0](https://github.com/ConConner/MAGE-Themes/compare/v1.15.0...v1.16.0) (2026-05-11)
 
 
