@@ -340,7 +340,7 @@ public partial class FormMinimapNew : Form, Editor
         int height = numTiles / tilesWide;
         Bitmap tileImage = new Bitmap(tilesWide * 10 + 2, height * 10 + 2, PixelFormat.Format4bppIndexed);
 
-        int palRow = comboBox_tilesType.SelectedIndex + (Version.IsMF ? 1 : 0);
+        int palRow = comboBox_tilesType.SelectedIndex;
         palette.SetBitmapPalette(tileImage, palRow, 1);
         ColorPalette cp = tileImage.Palette;
         cp.Entries[0] = Color.Transparent;
