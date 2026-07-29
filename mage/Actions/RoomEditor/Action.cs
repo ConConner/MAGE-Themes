@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using mage.Actions.RoomEditor;
 
 namespace mage
 {
@@ -17,6 +19,9 @@ namespace mage
 
         public abstract string ActionText { get; }
 
+        public abstract ActionType Type { get; }
 
+        public abstract void Serialize(BinaryWriter writer);
+        public abstract void Deserialize(BinaryReader reader);
     }
 }

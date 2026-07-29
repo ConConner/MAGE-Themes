@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 
 namespace mage
 {
@@ -51,6 +52,32 @@ namespace mage
                 }
                 return new Rectangle(xStart * 16, yStart * 16, (xEnd - xStart + 1) * 16, (yEnd - yStart + 1) * 16);
             }
+        }
+
+        public override RoomObjectType ObjectType => RoomObjectType.Scroll;
+
+        public override void Serialize(BinaryWriter writer)
+        {
+            writer.Write(xStart);
+            writer.Write(xEnd);
+            writer.Write(yStart);
+            writer.Write(yEnd);
+            writer.Write(xBreak);
+            writer.Write(yBreak);
+            writer.Write(replace);
+            writer.Write(newBound);
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            xStart = reader.ReadByte();
+            xEnd = reader.ReadByte();
+            yStart = reader.ReadByte();
+            yEnd = reader.ReadByte();
+            xBreak = reader.ReadByte();
+            yBreak = reader.ReadByte();
+            replace = reader.ReadByte();
+            newBound = reader.ReadByte();
         }
 
         public override RoomObject Copy()

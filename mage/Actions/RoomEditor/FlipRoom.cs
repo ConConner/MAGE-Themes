@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,4 +35,11 @@ public class FlipRoom : RoomAction
     {
         Flip.FlipRoom(room, FlipHorizontal, FlipVertical);
     }
+
+    public override ActionType Type => ActionType.FlipRoom;
+
+    // Not yet synced over the network — coworking sessions don't route flips.
+    public override void Serialize(BinaryWriter writer) => throw new NotSupportedException("FlipRoom is not networked yet.");
+
+    public override void Deserialize(BinaryReader reader) => throw new NotSupportedException("FlipRoom is not networked yet.");
 }

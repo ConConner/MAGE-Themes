@@ -53,6 +53,18 @@ namespace mage.Actions.RoomEditor
             return a;
         }
 
+        /// <summary>
+        /// Moves the top of the undo stack to the redo stack without calling
+        /// Action.Undo — used on the coworking network path, where the actual
+        /// Room mutation happens via the received/echoed action instead.
+        /// </summary>
+        public Action DiscardTopUndo()
+        {
+            Action a = undoStack.Pop();
+            redoStack.Push(a);
+            return a;
+        }
+
         public void FinalizePreviousAction()
         {
             if (undoStack.Count > 0)

@@ -24,6 +24,11 @@ public class Config
     public bool OnlyNotifyOnMajor { get; set; } = false;
     #endregion
 
+    #region Coworking
+    public string VanillaZeroMissionRomPath { get; set; } = string.Empty;
+    public string VanillaFusionRomPath { get; set; } = string.Empty;
+    #endregion
+
     #region Pixel Image exporting
     public PixelImageColors PixelImageColors { get; set; } = new();
     #endregion

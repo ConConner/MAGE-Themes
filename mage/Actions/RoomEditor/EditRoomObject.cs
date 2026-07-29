@@ -1,29 +1,33 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 
 namespace mage.Actions.RoomEditor
 {
     public class EditRoomObject : RoomAction
     {
-        private enum ActionType { Edit, Move };
+        private enum EditType { Edit, Move };
 
         // fields
         private RoomObject obj;
-        private ActionType actionType;
+        private EditType actionType;
         private int objNum;
         private Rectangle region;
+
+        // constructor for network deserialization only
+        internal EditRoomObject() { }
 
         // constructor (edit)
         public EditRoomObject(RoomObject newObj, int objNum, bool move)
         {
             if (move)
             {
-                actionType = ActionType.Move;
+                actionType = EditType.Move;
                 combine = true;
             }
             else
             {
-                actionType = ActionType.Edit;
+                actionType = EditType.Edit;
                 combine = false;
             }
             this.objNum = objNum;
@@ -81,7 +85,7 @@ namespace mage.Actions.RoomEditor
             get
             {
                 string text;
-                if (actionType == ActionType.Edit) { text = "Edit "; }
+                if (actionType == EditType.Edit) { text = "Edit "; }
                 else { text = "Move "; }
 
                 if (obj is Enemy) { return text + "sprite"; }
@@ -94,14 +98,32 @@ namespace mage.Actions.RoomEditor
         public override bool TryCombine(Action a)
         {
             EditRoomObject newer = a as EditRoomObject;
-            if (newer != null && combine && this.actionType == ActionType.Move && 
-                newer.actionType == ActionType.Move && this.objNum == newer.objNum)
+            if (newer != null && combine && this.actionType == EditType.Move && 
+                newer.actionType == EditType.Move && this.objNum == newer.objNum)
             {
                 return true;
             }
             return false;
         }
 
+        public override ActionType Type => ActionType.EditRoomObjects;
+
+        public override void Serialize(BinaryWriter writer)
+        {
+            writer.Write((byte)actionType);
+            writer.Write(objNum);
+            writer.Write((byte)obj.ObjectType);
+            obj.Serialize(writer);
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            actionType = (EditType)reader.ReadByte();
+            combine = actionType == EditType.Move;
+            objNum = reader.ReadInt32();
+            RoomObjectType objType = (RoomObjectType)reader.ReadByte();
+            obj = RoomObject.FromNetwork(objType, reader);
+        }
 
     }
 }

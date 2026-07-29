@@ -1,9 +1,10 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio Version 18
+VisualStudioVersion = 18.7.12002.237 oobstable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mage", "mage\mage.csproj", "{3ACB7AC5-3905-45E1-ACDA-3A21A44256BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mage.Networking", "mage.Networking\mage.Networking.csproj", "{F940BBA5-3D39-46D4-A9F5-7DFFBD6587CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +16,15 @@ Global
 		{3ACB7AC5-3905-45E1-ACDA-3A21A44256BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ACB7AC5-3905-45E1-ACDA-3A21A44256BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ACB7AC5-3905-45E1-ACDA-3A21A44256BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F940BBA5-3D39-46D4-A9F5-7DFFBD6587CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F940BBA5-3D39-46D4-A9F5-7DFFBD6587CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F940BBA5-3D39-46D4-A9F5-7DFFBD6587CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F940BBA5-3D39-46D4-A9F5-7DFFBD6587CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE74EC03-43F2-4046-B8CB-9739F84B40ED}
 	EndGlobalSection
 EndGlobal

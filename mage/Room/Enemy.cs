@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 
 namespace mage
 {
@@ -24,6 +25,22 @@ namespace mage
         public override Rectangle DrawingBounds
         {
             get { return bounds; }
+        }
+
+        public override RoomObjectType ObjectType => RoomObjectType.Enemy;
+
+        public override void Serialize(BinaryWriter writer)
+        {
+            writer.Write(xPos);
+            writer.Write(yPos);
+            writer.Write(prop);
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            xPos = reader.ReadByte();
+            yPos = reader.ReadByte();
+            prop = reader.ReadByte();
         }
 
         public override RoomObject Copy()

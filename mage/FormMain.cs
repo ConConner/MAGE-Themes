@@ -162,6 +162,8 @@ namespace mage
             tileView.AddDrawable(TileCursor);
             tileView.AddDrawable(TileSelection);
             UpdateTilesetZoom(0);
+
+            InitCoworkingMenu();
         }
 
         #region opening/closing
@@ -416,8 +418,9 @@ namespace mage
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!CheckUnsaved()) { e.Cancel = true; }
+            if (!CheckUnsaved()) { e.Cancel = true; return; }
             SaveSettings();
+            coworkingSession?.Dispose();
         }
 
         public static bool FindOpenForm(Type t, bool close)
@@ -1788,6 +1791,8 @@ namespace mage
             }
 
             skipEvents = false;
+
+            SendCoworkingPresenceUpdate();
         }
 
         private void ResetTileView()
@@ -2166,6 +2171,20 @@ namespace mage
 
         public void PerformAction(Action a)
         {
+            if (coworkingSession != null)
+            {
+                if (a is FlipRoom)
+                {
+                    // not networked yet - disabled in the UI while a session is active,
+                    // but guard here too in case something else constructs one directly
+                    MessageBox.Show(this, "Flipping a room isn't synced yet - disconnect from the coworking session first.", "Coworking", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                SendCoworkingAction(a, isUndo: false);
+                return; // applied locally once the host echoes it back, see OnCoworkingActionReceived
+            }
+
             undoRedo.Do(a, room);
             UpdateUI(a);
             UpdateUndoRedo();
@@ -2173,6 +2192,15 @@ namespace mage
 
         private void Undo()
         {
+            if (coworkingSession != null)
+            {
+                if (!undoRedo.CanUndo || coworkingUndoRedoPending) { return; }
+                coworkingUndoRedoPending = true;
+                UpdateUndoRedo();
+                SendCoworkingAction(undoRedo.UndoStack.Peek(), isUndo: true);
+                return; // bookkeeping + room mutation happen once the host echoes it back
+            }
+
             Action a = undoRedo.Undo(room);
             UpdateUI(a);
             UpdateUndoRedo();
@@ -2182,6 +2210,15 @@ namespace mage
 
         private void Redo()
         {
+            if (coworkingSession != null)
+            {
+                if (!undoRedo.CanRedo || coworkingUndoRedoPending) { return; }
+                coworkingUndoRedoPending = true;
+                UpdateUndoRedo();
+                SendCoworkingAction(undoRedo.RedoStack.Peek(), isUndo: false); // redo is just re-applying a Do
+                return;
+            }
+
             Action a = undoRedo.Redo(room);
             UpdateUI(a);
             UpdateUndoRedo();
@@ -2233,7 +2270,7 @@ namespace mage
 
         private void UpdateUndoRedo()
         {
-            menuItem_undo.Enabled = toolStrip_undo.Enabled = undoRedo.CanUndo;
+            menuItem_undo.Enabled = toolStrip_undo.Enabled = undoRedo.CanUndo && !coworkingUndoRedoPending;
             if (toolStrip_undo.Enabled)
             {
                 Action a = undoRedo.UndoStack.Peek();
@@ -2244,7 +2281,7 @@ namespace mage
                 toolStrip_undo.ToolTipText = "";
             }
 
-            menuItem_redo.Enabled = toolStrip_redo.Enabled = undoRedo.CanRedo;
+            menuItem_redo.Enabled = toolStrip_redo.Enabled = undoRedo.CanRedo && !coworkingUndoRedoPending;
             if (toolStrip_redo.Enabled)
             {
                 Action a = undoRedo.RedoStack.Peek();

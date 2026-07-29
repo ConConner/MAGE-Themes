@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 
 namespace mage.Actions.RoomEditor
 {
@@ -9,6 +10,9 @@ namespace mage.Actions.RoomEditor
         // fields
         private Dictionary<Point, Block> blocks;
         private Rectangle region;
+
+        // constructor for network deserialization only
+        internal EditBlocks() { }
 
         // constructor
         public EditBlocks(Backgrounds backgrounds, Block[,] clipboard, Point ptDst, int bgNum, ushort clipVal, bool combine)
@@ -105,6 +109,36 @@ namespace mage.Actions.RoomEditor
             return true;
         }
 
+        public override ActionType Type => ActionType.EditBlocks;
+
+        public override void Serialize(BinaryWriter writer)
+        {
+            writer.Write(combine);
+            writer.Write(region.X);
+            writer.Write(region.Y);
+            writer.Write(region.Width);
+            writer.Write(region.Height);
+            writer.Write(blocks.Count);
+            foreach (KeyValuePair<Point, Block> kvp in blocks)
+            {
+                writer.Write(kvp.Key.X);
+                writer.Write(kvp.Key.Y);
+                kvp.Value.Serialize(writer);
+            }
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            combine = reader.ReadBoolean();
+            region = new Rectangle(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32());
+            int count = reader.ReadInt32();
+            blocks = new Dictionary<Point, Block>(count);
+            for (int i = 0; i < count; i++)
+            {
+                Point p = new Point(reader.ReadInt32(), reader.ReadInt32());
+                blocks.Add(p, Block.Deserialize(reader));
+            }
+        }
 
     }
 }

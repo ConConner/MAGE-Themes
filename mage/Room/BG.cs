@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace mage
 {
@@ -11,6 +12,25 @@ namespace mage
         public ushort BG1;
         public ushort BG2;
         public ushort CLP;
+
+        public readonly void Serialize(BinaryWriter writer)
+        {
+            writer.Write(BG0);
+            writer.Write(BG1);
+            writer.Write(BG2);
+            writer.Write(CLP);
+        }
+
+        public static Block Deserialize(BinaryReader reader)
+        {
+            return new Block
+            {
+                BG0 = reader.ReadUInt16(),
+                BG1 = reader.ReadUInt16(),
+                BG2 = reader.ReadUInt16(),
+                CLP = reader.ReadUInt16(),
+            };
+        }
 
         public ushort this[int index]
         {

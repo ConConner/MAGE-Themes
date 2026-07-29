@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 
 namespace mage.Actions.RoomEditor
 {
     public class AddRemoveRoomObject : RoomAction
     {
-        private enum ActionType { Add, Remove };
+        private enum OperationType { Add, Remove };
 
         // fields
         private RoomObject obj;
         private int objNum;
-        private ActionType actionType;
+        private OperationType actionType;
+
+        // constructor for network deserialization only
+        internal AddRemoveRoomObject() { }
 
         // constructor (add)
         public AddRemoveRoomObject(Room room, Type type, Point pos)
         {
-            actionType = ActionType.Add;
+            actionType = OperationType.Add;
             combine = false;
 
             if (type == typeof(Enemy))
@@ -40,7 +44,7 @@ namespace mage.Actions.RoomEditor
         // constructor (remove)
         public AddRemoveRoomObject(RoomObject prevObj, int objNum)
         {
-            actionType = ActionType.Remove;
+            actionType = OperationType.Remove;
             combine = false;
             this.objNum = objNum;
             this.obj = prevObj;
@@ -48,13 +52,13 @@ namespace mage.Actions.RoomEditor
 
         public override void Do(Room room)
         {
-            bool add = (actionType == ActionType.Add);
+            bool add = (actionType == OperationType.Add);
             DoAction(room, add);
         }
 
         public override void Undo(Room room)
         {
-            bool add = (actionType == ActionType.Remove);
+            bool add = (actionType == OperationType.Remove);
             DoAction(room, add);
         }
 
@@ -109,7 +113,7 @@ namespace mage.Actions.RoomEditor
             get
             {
                 string text;
-                if (actionType == ActionType.Add) { text = "Add "; }
+                if (actionType == OperationType.Add) { text = "Add "; }
                 else { text = "Remove "; }
 
                 if (obj is Enemy) { return text + "sprite"; }
@@ -119,6 +123,23 @@ namespace mage.Actions.RoomEditor
             }
         }
 
+        public override ActionType Type => ActionType.AddRemoveRoomObject;
+
+        public override void Serialize(BinaryWriter writer)
+        {
+            writer.Write((byte)actionType);
+            writer.Write(objNum);
+            writer.Write((byte)obj.ObjectType);
+            obj.Serialize(writer);
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            actionType = (OperationType)reader.ReadByte();
+            objNum = reader.ReadInt32();
+            RoomObjectType objType = (RoomObjectType)reader.ReadByte();
+            obj = RoomObject.FromNetwork(objType, reader);
+        }
 
     }
 }

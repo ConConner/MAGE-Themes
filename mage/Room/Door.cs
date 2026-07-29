@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 
 namespace mage
 {
@@ -39,6 +40,38 @@ namespace mage
                 Rectangle exitBounds = new Rectangle(exitPoint.X - 3, exitPoint.Y - 3, 6, 6);
                 return Rectangle.Union(doorBounds, exitBounds);
             }
+        }
+
+        public override RoomObjectType ObjectType => RoomObjectType.Door;
+
+        public override void Serialize(BinaryWriter writer)
+        {
+            writer.Write(doorNum);
+            writer.Write(areaID);
+            writer.Write(type);
+            writer.Write(srcRoom);
+            writer.Write(xStart);
+            writer.Write(xEnd);
+            writer.Write(yStart);
+            writer.Write(yEnd);
+            writer.Write(dstDoor);
+            writer.Write(xExitDistance);
+            writer.Write(yExitDistance);
+        }
+
+        public override void Deserialize(BinaryReader reader)
+        {
+            doorNum = reader.ReadByte();
+            areaID = reader.ReadByte();
+            type = reader.ReadByte();
+            srcRoom = reader.ReadByte();
+            xStart = reader.ReadByte();
+            xEnd = reader.ReadByte();
+            yStart = reader.ReadByte();
+            yEnd = reader.ReadByte();
+            dstDoor = reader.ReadByte();
+            xExitDistance = reader.ReadByte();
+            yExitDistance = reader.ReadByte();
         }
 
         public override RoomObject Copy()

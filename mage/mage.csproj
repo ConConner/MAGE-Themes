@@ -33,6 +33,9 @@
     <NoWarn>$(NoWarn);WFO1000</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\mage.Networking\mage.Networking.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Docs\doc.html" />
     <None Remove="Docs\legacy.html" />
     <None Remove="Docs\technical.html" />
