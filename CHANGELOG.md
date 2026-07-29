@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/alexman25/MAGE-Themes/compare/v1.0.0...v1.1.0) (2026-07-29)
+
+
+### Features
+
+* add a list of music names in preferences that will be displayed in header editor ([841609d](https://github.com/alexman25/MAGE-Themes/commit/841609d007e215dcfd8caa721aa76c396d63a213))
+
 # 1.0.0 (2026-06-05)
 
 
