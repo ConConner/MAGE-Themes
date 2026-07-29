@@ -55,7 +55,7 @@ namespace mage
         {
             comboBoxMuslist.Items.Clear();
 
-            string text = Muslist.ReadSelectedMusiclist();
+            string text = MusicList.ReadSelectedMusiclist();
 
             if (string.IsNullOrWhiteSpace(text))
                 return;

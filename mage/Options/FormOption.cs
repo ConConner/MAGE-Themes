@@ -25,6 +25,10 @@ public partial class FormOption : Form
         set
         {
             if (selectedPage == value) return;
+
+            // "close" old page
+            ClosePage(selectedPage);
+
             selectedPage = value;
 
             if (value == -1) return;
@@ -76,4 +80,16 @@ public partial class FormOption : Form
     }
 
     private void listBox_Pages_SelectedIndexChanged(object sender, EventArgs e) => SelectedPage = listBox_pages.SelectedIndex;
+
+    private void ClosePage(int pageId)
+    {
+        if (pageId < 0 || pageId >= Pages.Count) return;
+        OptionsPage oldPage = Pages[pageId];
+        if (oldPage.Page is IClosablePage closablePage) closablePage.ClosedPage();
+    }
+
+    private void FormOption_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        ClosePage(selectedPage);
+    }
 }

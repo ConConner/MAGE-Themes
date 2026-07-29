@@ -80,12 +80,12 @@
             textBox_firstSpriteset = new mage.Theming.CustomControls.FlatTextBox();
             groupBox_misc = new System.Windows.Forms.GroupBox();
             btn_open_map = new System.Windows.Forms.Button();
-            label_music = new System.Windows.Forms.Label();
-            textBox_music = new mage.Theming.CustomControls.FlatTextBox();
             label_mapY = new System.Windows.Forms.Label();
             label_mapX = new System.Windows.Forms.Label();
             textBox_mapX = new mage.Theming.CustomControls.FlatTextBox();
             textBox_mapY = new mage.Theming.CustomControls.FlatTextBox();
+            label_music = new System.Windows.Forms.Label();
+            textBox_music = new mage.Theming.CustomControls.FlatTextBox();
             button_apply = new System.Windows.Forms.Button();
             label_room = new System.Windows.Forms.Label();
             label_area = new System.Windows.Forms.Label();
@@ -96,7 +96,7 @@
             lbl_spring = new System.Windows.Forms.ToolStripStatusLabel();
             lbl_offset = new System.Windows.Forms.ToolStripStatusLabel();
             button_close = new System.Windows.Forms.Button();
-            comboBoxMuslist = new System.Windows.Forms.ComboBox();
+            comboBoxMuslist = new mage.Theming.CustomControls.FlatComboBox();
             groupBox_BGdata.SuspendLayout();
             groupBox_spritesetData.SuspendLayout();
             groupBox_misc.SuspendLayout();
@@ -982,40 +982,6 @@
             btn_open_map.UseVisualStyleBackColor = true;
             btn_open_map.Click += btn_open_map_Click;
             // 
-            // label_music
-            // 
-            label_music.AutoSize = true;
-            label_music.Location = new System.Drawing.Point(19, 360);
-            label_music.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label_music.Name = "label_music";
-            label_music.Size = new System.Drawing.Size(42, 15);
-            label_music.TabIndex = 0;
-            label_music.Text = "Music:";
-            // 
-            // textBox_music
-            // 
-            textBox_music.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
-            textBox_music.DisplayBorder = true;
-            textBox_music.HexSanitized = false;
-            textBox_music.HexSanitizedMaxValue = -1;
-            textBox_music.Location = new System.Drawing.Point(70, 356);
-            textBox_music.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            textBox_music.MaxLength = 32767;
-            textBox_music.Multiline = false;
-            textBox_music.Name = "textBox_music";
-            textBox_music.OnTextChanged = null;
-            textBox_music.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
-            textBox_music.PlaceholderText = "";
-            textBox_music.ReadOnly = false;
-            textBox_music.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            textBox_music.SelectionStart = 0;
-            textBox_music.Size = new System.Drawing.Size(35, 23);
-            textBox_music.TabIndex = 2;
-            textBox_music.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            textBox_music.ValueBox = false;
-            textBox_music.WordWrap = true;
-            textBox_music.TextChanged += textBox_TextChanged;
-            // 
             // label_mapY
             // 
             label_mapY.AutoSize = true;
@@ -1083,6 +1049,40 @@
             textBox_mapY.ValueBox = false;
             textBox_mapY.WordWrap = true;
             textBox_mapY.TextChanged += textBox_TextChanged;
+            // 
+            // label_music
+            // 
+            label_music.AutoSize = true;
+            label_music.Location = new System.Drawing.Point(19, 360);
+            label_music.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_music.Name = "label_music";
+            label_music.Size = new System.Drawing.Size(42, 15);
+            label_music.TabIndex = 0;
+            label_music.Text = "Music:";
+            // 
+            // textBox_music
+            // 
+            textBox_music.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            textBox_music.DisplayBorder = true;
+            textBox_music.HexSanitized = false;
+            textBox_music.HexSanitizedMaxValue = -1;
+            textBox_music.Location = new System.Drawing.Point(70, 356);
+            textBox_music.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_music.MaxLength = 32767;
+            textBox_music.Multiline = false;
+            textBox_music.Name = "textBox_music";
+            textBox_music.OnTextChanged = null;
+            textBox_music.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_music.PlaceholderText = "";
+            textBox_music.ReadOnly = false;
+            textBox_music.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_music.SelectionStart = 0;
+            textBox_music.Size = new System.Drawing.Size(35, 23);
+            textBox_music.TabIndex = 2;
+            textBox_music.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_music.ValueBox = false;
+            textBox_music.WordWrap = true;
+            textBox_music.TextChanged += textBox_TextChanged;
             // 
             // button_apply
             // 
@@ -1180,7 +1180,7 @@
             // comboBoxMuslist
             // 
             comboBoxMuslist.FormattingEnabled = true;
-            comboBoxMuslist.Location = new System.Drawing.Point(112, 356);
+            comboBoxMuslist.Location = new System.Drawing.Point(112, 357);
             comboBoxMuslist.Name = "comboBoxMuslist";
             comboBoxMuslist.Size = new System.Drawing.Size(255, 23);
             comboBoxMuslist.TabIndex = 8;
@@ -1289,6 +1289,6 @@
         private System.Windows.Forms.Button btn_bg1_prop;
         private System.Windows.Forms.Button btn_tileset_preset;
         private System.Windows.Forms.Button btn_transparency_preset;
-        private System.Windows.Forms.ComboBox comboBoxMuslist;
+        private Theming.CustomControls.FlatComboBox comboBoxMuslist;
     }
 }

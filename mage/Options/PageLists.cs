@@ -18,7 +18,7 @@ public static class PageLists
         new() { Name = "Soundpacks", Page = new PageSoundpacks(), RequiresROM = false },
         new() { Name = "Updates", Page = new PageUpdates(), RequiresROM = false },
         new() { Name = "Advanced", Page = new PageAdvanced(), RequiresROM=false },
-        new() { Name = "Music Lists", Page = new PageMusiclists(), RequiresROM=false },
+        new() { Name = "Music Names", Page = new PageMusiclists(), RequiresROM=false },
     };
 
     public static List<OptionsPage> ProjectOptionsPages = new()

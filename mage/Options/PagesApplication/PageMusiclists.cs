@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace mage.Options.Pages;
 
 [ToolboxItem(false)]
-public partial class PageMusiclists : UserControl
+public partial class PageMusiclists : UserControl, IClosablePage
 {
     private string currentFilePath = "";
 
@@ -29,22 +29,22 @@ public partial class PageMusiclists : UserControl
         lst_muslists.Items.Clear();
         txb_preview.Text = "";
 
-        textBox_path.Text = Muslist.MusiclistsPath;
+        textBox_path.Text = MusicList.ListsPath;
 
-        if (!Directory.Exists(Muslist.MusiclistsPath))
+        if (!Directory.Exists(MusicList.ListsPath))
             return;
 
         int selectIndex = -1;
         int count = -1;
 
-        foreach (string file in Directory.GetFiles(Muslist.MusiclistsPath, "*.txt"))
+        foreach (string file in Directory.GetFiles(MusicList.ListsPath, "*.txt"))
         {
             count++;
 
             string name = Path.GetFileName(file);
             lst_muslists.Items.Add(name);
 
-            if (name == Muslist.MusiclistName)
+            if (name == MusicList.SelectedListName)
                 selectIndex = count;
         }
 
@@ -60,7 +60,7 @@ public partial class PageMusiclists : UserControl
         if (dialog.ShowDialog() != DialogResult.OK)
             return;
 
-        Muslist.MusiclistsPath = dialog.SelectedPath;
+        MusicList.ListsPath = dialog.SelectedPath;
         textBox_path.Text = dialog.SelectedPath;
 
         currentFilePath = "";
@@ -76,15 +76,15 @@ public partial class PageMusiclists : UserControl
 
         if (index == -1)
         {
-            Muslist.MusiclistName = "";
+            MusicList.SelectedListName = "";
             currentFilePath = "";
             txb_preview.Text = "";
             return;
         }
 
-        Muslist.MusiclistName = lst_muslists.Items[index].ToString();
+        MusicList.SelectedListName = lst_muslists.Items[index].ToString();
 
-        currentFilePath = Path.Combine(Muslist.MusiclistsPath, Muslist.MusiclistName);
+        currentFilePath = Path.Combine(MusicList.ListsPath, MusicList.SelectedListName);
 
         if (!File.Exists(currentFilePath))
         {
@@ -107,6 +107,11 @@ public partial class PageMusiclists : UserControl
     }
 
     private void PageMusiclists_Disposed(object sender, EventArgs e)
+    {
+        SaveCurrentMusicList();
+    }
+
+    public void ClosedPage()
     {
         SaveCurrentMusicList();
     }

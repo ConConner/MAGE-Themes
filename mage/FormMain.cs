@@ -288,8 +288,8 @@ namespace mage
             Sound.SoundPackName = Settings.Default.soundPackName;
 
             //Music list paths
-            Muslist.MusiclistsPath = Settings.Default.musiclistsPath;
-            Muslist.MusiclistName = Settings.Default.musiclistName;
+            MusicList.ListsPath = Settings.Default.musiclistsPath;
+            MusicList.SelectedListName = Settings.Default.musiclistName;
 
             // Bookmarks
             try { ZMGlobalBookmarks = BookmarkManager.DeserializeCollections(Settings.Default.ZMglobalBookmarks); }
@@ -346,8 +346,8 @@ namespace mage
             Settings.Default.soundPackName = Sound.SoundPackName;
 
             //Music lists
-            Settings.Default.musiclistsPath = Muslist.MusiclistsPath;
-            Settings.Default.musiclistName = Muslist.MusiclistName;
+            Settings.Default.musiclistsPath = MusicList.ListsPath;
+            Settings.Default.musiclistName = MusicList.SelectedListName;
 
             //Bookmarks
             Settings.Default.ZMglobalBookmarks = BookmarkManager.SerializeCollections(ZMGlobalBookmarks);
