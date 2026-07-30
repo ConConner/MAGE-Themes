@@ -9,17 +9,23 @@ namespace mage.Actions.RoomEditor
         // fields
         private Dictionary<Point, Block> blocks;
         private Rectangle region;
+        private int _bgNum;
+        private bool _updateClip;
+        private Backgrounds _backgrounds;
 
         // constructor
         public EditBlocks(Backgrounds backgrounds, Block[,] clipboard, Point ptDst, int bgNum, ushort clipVal, bool combine)
         {
             this.combine = combine;
 
+            _bgNum = bgNum;
+            _backgrounds = backgrounds;
+
             int width = Math.Min(clipboard.GetLength(0), backgrounds.width - ptDst.X);
             int height = Math.Min(clipboard.GetLength(1), backgrounds.height - ptDst.Y);
             region = new Rectangle(ptDst.X * 16, ptDst.Y * 16, width * 16, height * 16);
 
-            bool updateClip = (clipVal != 0xFFFF);
+            _updateClip = (clipVal != 0xFFFF);
             blocks = new Dictionary<Point, Block>();
 
             for (int y = 0; y < height; y++)
@@ -34,24 +40,13 @@ namespace mage.Actions.RoomEditor
 
                     // give destination block new values
                     if (bgNum != -1) { dst[bgNum] = src[bgNum]; }
-                    if (updateClip)
+                    if (_updateClip)
                     {
                         if (clipVal == 0xFFFE) { dst.CLP = src.CLP; }
                         else { dst.CLP = clipVal; }
                     }
                     blocks.Add(new Point(u, v), dst);
                 }
-            }
-
-            // mark backgrounds edited
-            if (bgNum != -1)
-            {
-                backgrounds[bgNum].Edited = true;
-            }
-
-            if (updateClip)
-            {
-                backgrounds.clip.Edited = true;
             }
         }
 
@@ -68,6 +63,17 @@ namespace mage.Actions.RoomEditor
             }
 
             blocks = backup;
+
+            // mark backgrounds edited
+            if (_bgNum != -1)
+            {
+                _backgrounds[_bgNum].Edited = true;
+            }
+
+            if (_updateClip)
+            {
+                _backgrounds.clip.Edited = true;
+            }
         }
 
         public override void Undo(Room room)
