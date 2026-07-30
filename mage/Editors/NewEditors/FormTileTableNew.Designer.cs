@@ -76,6 +76,9 @@
             panel_tableView = new mage.Controls.ExtendedPanel();
             tableView = new mage.Controls.TileDisplay();
             toolStrip_table = new System.Windows.Forms.ToolStrip();
+            button_undo = new System.Windows.Forms.ToolStripSplitButton();
+            button_redo = new System.Windows.Forms.ToolStripSplitButton();
+            toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             button_flipH = new System.Windows.Forms.ToolStripButton();
             button_flipV = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -176,9 +179,9 @@
             panel_Main.Panel2.Controls.Add(group_table);
             panel_Main.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
             panel_Main.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            panel_Main.Panel2MinSize = 262;
+            panel_Main.Panel2MinSize = 315;
             panel_Main.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            panel_Main.Size = new System.Drawing.Size(837, 639);
+            panel_Main.Size = new System.Drawing.Size(881, 639);
             panel_Main.SplitterDistance = 544;
             panel_Main.SplitterWidth = 3;
             panel_Main.TabIndex = 1;
@@ -432,7 +435,7 @@
             label_tileset.Location = new System.Drawing.Point(4, 12);
             label_tileset.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_tileset.Name = "label_tileset";
-            label_tileset.Size = new System.Drawing.Size(43, 15);
+            label_tileset.Size = new System.Drawing.Size(44, 15);
             label_tileset.TabIndex = 10;
             label_tileset.Text = "Tileset:";
             // 
@@ -682,7 +685,7 @@
             label_tileTable.Location = new System.Drawing.Point(4, 12);
             label_tileTable.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_tileTable.Name = "label_tileTable";
-            label_tileTable.Size = new System.Drawing.Size(57, 15);
+            label_tileTable.Size = new System.Drawing.Size(58, 15);
             label_tileTable.TabIndex = 11;
             label_tileTable.Text = "Tile table:";
             // 
@@ -693,7 +696,7 @@
             group_table.Dock = System.Windows.Forms.DockStyle.Fill;
             group_table.Location = new System.Drawing.Point(3, 3);
             group_table.Name = "group_table";
-            group_table.Size = new System.Drawing.Size(281, 633);
+            group_table.Size = new System.Drawing.Size(325, 633);
             group_table.TabIndex = 0;
             group_table.TabStop = false;
             group_table.Text = "Tile Table";
@@ -705,7 +708,7 @@
             panel_tableView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_tableView.Location = new System.Drawing.Point(3, 44);
             panel_tableView.Name = "panel_tableView";
-            panel_tableView.Size = new System.Drawing.Size(275, 586);
+            panel_tableView.Size = new System.Drawing.Size(319, 586);
             panel_tableView.TabIndex = 1;
             panel_tableView.MouseLeave += panel_tableView_MouseLeave;
             // 
@@ -736,13 +739,44 @@
             // toolStrip_table
             // 
             toolStrip_table.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_table.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_flipH, button_flipV, toolStripSeparator1, button_paletteIncrease, button_paletteDecrease, button_setPalette, toolStripSeparator3, button_grid, toolStripSeparator2, button_tableZoomIn, button_tableZoomOut, label_tableZoom });
+            toolStrip_table.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator5, button_flipH, button_flipV, toolStripSeparator1, button_paletteIncrease, button_paletteDecrease, button_setPalette, toolStripSeparator3, button_grid, toolStripSeparator2, button_tableZoomIn, button_tableZoomOut, label_tableZoom });
             toolStrip_table.Location = new System.Drawing.Point(3, 19);
             toolStrip_table.Name = "toolStrip_table";
             toolStrip_table.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_table.Size = new System.Drawing.Size(275, 25);
+            toolStrip_table.Size = new System.Drawing.Size(319, 25);
             toolStrip_table.TabIndex = 0;
             toolStrip_table.Text = "toolStrip1";
+            // 
+            // button_undo
+            // 
+            button_undo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_undo.Enabled = false;
+            button_undo.Image = Properties.Resources.toolbar_undo;
+            button_undo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_undo.Name = "button_undo";
+            button_undo.Size = new System.Drawing.Size(32, 22);
+            button_undo.Text = "Undo";
+            button_undo.ButtonClick += button_undo_ButtonClick;
+            button_undo.DropDownOpening += button_undo_DropDownOpening;
+            button_undo.DropDownItemClicked += button_undo_DropDownItemClicked;
+            // 
+            // button_redo
+            // 
+            button_redo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_redo.Enabled = false;
+            button_redo.Image = Properties.Resources.toolbar_redo;
+            button_redo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_redo.Name = "button_redo";
+            button_redo.Size = new System.Drawing.Size(32, 22);
+            button_redo.Text = "Redo";
+            button_redo.ButtonClick += button_redo_ButtonClick;
+            button_redo.DropDownOpening += button_redo_DropDownOpening;
+            button_redo.DropDownItemClicked += button_redo_DropDownItemClicked;
+            // 
+            // toolStripSeparator5
+            // 
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // button_flipH
             // 
@@ -860,7 +894,7 @@
             statusStrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_tile, statusLabel_changes, spring, statusButton_import, statusButton_export, button_apply });
             statusStrip_main.Location = new System.Drawing.Point(0, 639);
             statusStrip_main.Name = "statusStrip_main";
-            statusStrip_main.Size = new System.Drawing.Size(837, 22);
+            statusStrip_main.Size = new System.Drawing.Size(881, 22);
             statusStrip_main.TabIndex = 2;
             statusStrip_main.Text = "statusStrip1";
             // 
@@ -883,7 +917,7 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(531, 17);
+            spring.Size = new System.Drawing.Size(607, 17);
             spring.Spring = true;
             // 
             // statusButton_import
@@ -899,7 +933,7 @@
             // bnt_importTT
             // 
             bnt_importTT.Name = "bnt_importTT";
-            bnt_importTT.Size = new System.Drawing.Size(180, 22);
+            bnt_importTT.Size = new System.Drawing.Size(133, 22);
             bnt_importTT.Text = "Tile Table...";
             bnt_importTT.Click += statusButton_import_Click;
             // 
@@ -910,20 +944,20 @@
             statusButton_export.Image = (System.Drawing.Image)resources.GetObject("statusButton_export.Image");
             statusButton_export.ImageTransparentColor = System.Drawing.Color.Magenta;
             statusButton_export.Name = "statusButton_export";
-            statusButton_export.Size = new System.Drawing.Size(54, 20);
+            statusButton_export.Size = new System.Drawing.Size(53, 20);
             statusButton_export.Text = "Export";
             // 
             // btn_exportImg
             // 
             btn_exportImg.Name = "btn_exportImg";
-            btn_exportImg.Size = new System.Drawing.Size(131, 22);
+            btn_exportImg.Size = new System.Drawing.Size(133, 22);
             btn_exportImg.Text = "Image...";
             btn_exportImg.Click += btn_exportImg_Click;
             // 
             // btn_exportTT
             // 
             btn_exportTT.Name = "btn_exportTT";
-            btn_exportTT.Size = new System.Drawing.Size(131, 22);
+            btn_exportTT.Size = new System.Drawing.Size(133, 22);
             btn_exportTT.Text = "Tile Table...";
             btn_exportTT.Click += statusButton_export_Click;
             // 
@@ -941,7 +975,7 @@
             // FormTileTableNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(837, 661);
+            ClientSize = new System.Drawing.Size(881, 661);
             Controls.Add(panel_Main);
             Controls.Add(statusStrip_main);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
@@ -1057,5 +1091,8 @@
         private System.Windows.Forms.ToolStripMenuItem btn_exportImg;
         private System.Windows.Forms.ToolStripMenuItem btn_exportTT;
         private System.Windows.Forms.ToolStripMenuItem bnt_importTT;
+        private System.Windows.Forms.ToolStripSplitButton button_undo;
+        private System.Windows.Forms.ToolStripSplitButton button_redo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
