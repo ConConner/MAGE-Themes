@@ -130,9 +130,8 @@
   <data name="button_grid.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABVSURBVDhPpYxBDgAgCMP4/6d1GgksXAY2IbMeausDO7xH
-        +0ogozqWAxOnD0d1bAS6VwIZ1bEcmDh9OKpjI9C9EsiojuXAxOnDUR0bge5RYMoN/GG2AVTKVceqYG35
-        AAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABISURBVDhPrY7RCgAgDAL3/z9dFL2Ug6VTEHYvN2M0Eivn
+        oAuCx/zFIFDYt4AtCLIPFYNAYd8CtiDIPlQMAoV9C9heAjVb0M0EVMpVx0hEkwkAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

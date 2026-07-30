@@ -35,7 +35,7 @@ namespace mage
         public Backgrounds backgrounds;
         public VramBG vram;
         public VramObj vramObj;
-        public UndoRedo undoRedo;
+        public RoomUndoRedo undoRedo;
 
         // constructor
         public Room(int areaID, int roomID)

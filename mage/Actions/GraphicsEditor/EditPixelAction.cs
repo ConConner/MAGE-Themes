@@ -5,7 +5,7 @@ using System.Text;
 
 namespace mage.Actions.GraphicsEditor;
 
-public class EditPixelAction : GraphicsAction
+public class EditPixelAction : EditorGridAction
 {
     private int _palIndex;
     private Point _point;

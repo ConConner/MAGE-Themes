@@ -1,4 +1,5 @@
-﻿using mage.Actions.GraphicsEditor;
+﻿using mage.Actions;
+using mage.Actions.GraphicsEditor;
 using mage.Bookmarks;
 using mage.Controls;
 using mage.Theming;
@@ -58,12 +59,12 @@ public partial class FormGraphicsNew : Form
     private FormMain main;
     private GFX loadedGFX;
     private Palette loadedPalette;
-    private GraphicsUndoRedo UndoRedo = new GraphicsUndoRedo();
+    private GenericUndoRedo UndoRedo = new GenericUndoRedo();
 
     private TileDisplay tileDisplay_palette;
     private DualColorBox colorDisplay;
 
-    private GraphicsActionGroup? latestActionGroup;
+    private EditorGridActionGroup? latestActionGroup;
 
     private Point LastPixel = Point.Empty;
     private Point? SelectionPivot = null;
@@ -442,7 +443,7 @@ public partial class FormGraphicsNew : Form
     #endregion
 
     #region Undo Redo
-    public void AddAction(GraphicsAction a)
+    public void AddAction(EditorGridAction a)
     {
         UndoRedo.AddActionWithoutDo(a);
         setUndoRedoButtons();
@@ -464,7 +465,7 @@ public partial class FormGraphicsNew : Form
         Status.ChangeMade();
     }
 
-    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GraphicsAction> stack)
+    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<EditorGridAction> stack)
     {
         int count = Math.Min(16, stack.Count);
         int lastIndex = stack.Count - 1;
@@ -674,7 +675,7 @@ public partial class FormGraphicsNew : Form
             case Tool.Pen:
 
                 // Place Pixels
-                latestActionGroup = new GraphicsActionGroup();
+                latestActionGroup = new EditorGridActionGroup();
                 HandlePen(e);
                 break;
 

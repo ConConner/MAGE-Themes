@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace mage.Actions.GraphicsEditor;
+namespace mage.Actions;
 
-public abstract class GraphicsAction
+public abstract class EditorGridAction
 {
     public abstract Rectangle AffectedRegion { get; }
 

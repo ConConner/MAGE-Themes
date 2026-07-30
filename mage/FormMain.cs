@@ -102,7 +102,7 @@ namespace mage
         private Room room;
         private bool skipEvents;
         private int enemySet;
-        private UndoRedo undoRedo;
+        private RoomUndoRedo undoRedo;
         private int zoom;
         private bool contextMenuOpen
         {
