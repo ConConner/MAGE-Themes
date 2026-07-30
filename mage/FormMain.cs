@@ -51,6 +51,7 @@ namespace mage
             get { return room; }
             set { room = value; }
         }
+        public Rectangle Selection { get { return selection; } }
         public int EnemySet { get { return enemySet; } }
         public int SpritesetNum { get { return room.spritesets[enemySet].number; } }
 
@@ -1220,6 +1221,15 @@ namespace mage
             if (!FindOpenForm(typeof(FormTileBuilder), false))
             {
                 FormTileBuilder form = new FormTileBuilder(this);
+                form.Show();
+            }
+        }
+
+        private void menuItem_wfcFill_Click(object sender, EventArgs e)
+        {
+            if (!FindOpenForm(typeof(FormWaveFunctionFill), false))
+            {
+                FormWaveFunctionFill form = new FormWaveFunctionFill(this);
                 form.Show();
             }
         }

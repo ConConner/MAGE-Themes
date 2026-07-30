@@ -144,6 +144,7 @@
             menuItem_LZ77decomp = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator23 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_tileBuilder = new System.Windows.Forms.ToolStripMenuItem();
+            menuItem_wfcFill = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_add = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_addBG = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_addEnemyset = new System.Windows.Forms.ToolStripMenuItem();
@@ -865,7 +866,7 @@
             // 
             // menuStrip_tools
             // 
-            menuStrip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_roomOptions, menuItem_testRoom, menuItem_clipShortcuts, toolStripSeparator28, menuItem_bookmarks, toolStripSeparator2, menuItem_import, menuItem_export, bulkToolStripMenuItem, menuItem_compression, toolStripSeparator23, menuItem_tileBuilder, menuItem_add, tweaksToolStripMenuItem, menuItem_patches, seperator_flip, menuItem_flip_h, menuItem_flip_v });
+            menuStrip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_roomOptions, menuItem_testRoom, menuItem_clipShortcuts, toolStripSeparator28, menuItem_bookmarks, toolStripSeparator2, menuItem_import, menuItem_export, bulkToolStripMenuItem, menuItem_compression, toolStripSeparator23, menuItem_tileBuilder, menuItem_wfcFill, menuItem_add, tweaksToolStripMenuItem, menuItem_patches, seperator_flip, menuItem_flip_h, menuItem_flip_v });
             menuStrip_tools.Enabled = false;
             menuStrip_tools.Name = "menuStrip_tools";
             menuStrip_tools.Size = new System.Drawing.Size(46, 20);
@@ -1138,7 +1139,14 @@
             menuItem_tileBuilder.Size = new System.Drawing.Size(180, 22);
             menuItem_tileBuilder.Text = "Map Tile Builder";
             menuItem_tileBuilder.Click += menuItem_tileBuilder_Click;
-            // 
+            //
+            // menuItem_wfcFill
+            //
+            menuItem_wfcFill.Name = "menuItem_wfcFill";
+            menuItem_wfcFill.Size = new System.Drawing.Size(180, 22);
+            menuItem_wfcFill.Text = "Wave Function Fill";
+            menuItem_wfcFill.Click += menuItem_wfcFill_Click;
+            //
             // menuItem_add
             // 
             menuItem_add.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_addBG, menuItem_addEnemyset, menuItem_addRoom, menuItem_addTileset, menuItem_addSpriteset, menuItem_addAnim });
@@ -2660,6 +2668,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuItem_physicsEditor;
         private System.Windows.Forms.ToolStripButton toolStrip_physics;
         private System.Windows.Forms.ToolStripMenuItem menuItem_tileBuilder;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_wfcFill;
         private System.Windows.Forms.ToolStripButton toolStrip_tileBuilder;
         private System.Windows.Forms.ToolStripMenuItem menuItem_motherShipHatches;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator27;
