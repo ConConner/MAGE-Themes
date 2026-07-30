@@ -862,6 +862,18 @@ namespace mage.Editors
 
         private void button_apply_Click(object sender, EventArgs e) => Save();
 
+        private void SelectAll()
+        {
+            TableSelection.Rectangle = new(
+                0, 0,
+                tableView.TileImage.Width, tableView.TileImage.Height
+            );
+            TableSelectionVisible = true;
+
+            SelectTilesFromTable();
+            TableCursor.Rectangle = new Rectangle(0, 0, tableView.TileImage.Width, tableView.TileImage.Height);
+        }
+
         private void KeyPressed(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -907,6 +919,10 @@ namespace mage.Editors
                         Undo();
                         break;
                     }
+                    break;
+
+                case Keys.A:
+                    if (ModifierKeys == Keys.Control) SelectAll();
                     break;
 
                 default:
