@@ -34,10 +34,6 @@
             checkBox_bg1 = new System.Windows.Forms.CheckBox();
             checkBox_bg0 = new System.Windows.Forms.CheckBox();
             group_clipdata = new System.Windows.Forms.GroupBox();
-            checkBox_none = new System.Windows.Forms.RadioButton();
-            checkBox_values = new System.Windows.Forms.RadioButton();
-            checkBox_collision = new System.Windows.Forms.RadioButton();
-            checkBox_breakable = new System.Windows.Forms.RadioButton();
             label_defaultValues = new System.Windows.Forms.Label();
             group_roomObjects = new System.Windows.Forms.GroupBox();
             checkBox_screenOutlines = new System.Windows.Forms.CheckBox();
@@ -51,6 +47,9 @@
             radio_dec = new System.Windows.Forms.RadioButton();
             seperator2 = new mage.Controls.Seperator();
             checkBox_hideTooltips = new System.Windows.Forms.CheckBox();
+            checkBox_collision = new System.Windows.Forms.CheckBox();
+            checkBox_breakable = new System.Windows.Forms.CheckBox();
+            checkBox_values = new System.Windows.Forms.CheckBox();
             group_background.SuspendLayout();
             group_clipdata.SuspendLayout();
             group_roomObjects.SuspendLayout();
@@ -115,64 +114,15 @@
             // 
             // group_clipdata
             // 
-            group_clipdata.Controls.Add(checkBox_none);
             group_clipdata.Controls.Add(checkBox_values);
-            group_clipdata.Controls.Add(checkBox_collision);
             group_clipdata.Controls.Add(checkBox_breakable);
+            group_clipdata.Controls.Add(checkBox_collision);
             group_clipdata.Location = new System.Drawing.Point(107, 27);
             group_clipdata.Name = "group_clipdata";
             group_clipdata.Size = new System.Drawing.Size(153, 150);
             group_clipdata.TabIndex = 1;
             group_clipdata.TabStop = false;
             group_clipdata.Text = "Clipdata";
-            // 
-            // checkBox_none
-            // 
-            checkBox_none.AutoSize = true;
-            checkBox_none.Location = new System.Drawing.Point(6, 22);
-            checkBox_none.Name = "checkBox_none";
-            checkBox_none.Size = new System.Drawing.Size(54, 19);
-            checkBox_none.TabIndex = 3;
-            checkBox_none.TabStop = true;
-            checkBox_none.Text = "None";
-            checkBox_none.UseVisualStyleBackColor = true;
-            checkBox_none.CheckedChanged += checkBox_ValueChanged;
-            // 
-            // checkBox_values
-            // 
-            checkBox_values.AutoSize = true;
-            checkBox_values.Location = new System.Drawing.Point(6, 97);
-            checkBox_values.Name = "checkBox_values";
-            checkBox_values.Size = new System.Drawing.Size(118, 19);
-            checkBox_values.TabIndex = 2;
-            checkBox_values.TabStop = true;
-            checkBox_values.Text = "View block values";
-            checkBox_values.UseVisualStyleBackColor = true;
-            checkBox_values.CheckedChanged += checkBox_ValueChanged;
-            // 
-            // checkBox_collision
-            // 
-            checkBox_collision.AutoSize = true;
-            checkBox_collision.Location = new System.Drawing.Point(6, 47);
-            checkBox_collision.Name = "checkBox_collision";
-            checkBox_collision.Size = new System.Drawing.Size(142, 19);
-            checkBox_collision.TabIndex = 0;
-            checkBox_collision.TabStop = true;
-            checkBox_collision.Text = "View collision outlines";
-            checkBox_collision.UseVisualStyleBackColor = true;
-            checkBox_collision.CheckedChanged += checkBox_ValueChanged;
-            // 
-            // checkBox_breakable
-            // 
-            checkBox_breakable.AutoSize = true;
-            checkBox_breakable.Location = new System.Drawing.Point(6, 72);
-            checkBox_breakable.Name = "checkBox_breakable";
-            checkBox_breakable.Size = new System.Drawing.Size(141, 19);
-            checkBox_breakable.TabIndex = 1;
-            checkBox_breakable.TabStop = true;
-            checkBox_breakable.Text = "View breakable blocks";
-            checkBox_breakable.UseVisualStyleBackColor = true;
-            checkBox_breakable.CheckedChanged += checkBox_ValueChanged;
             // 
             // label_defaultValues
             // 
@@ -278,7 +228,7 @@
             radio_hex.AutoSize = true;
             radio_hex.Location = new System.Drawing.Point(6, 211);
             radio_hex.Name = "radio_hex";
-            radio_hex.Size = new System.Drawing.Size(246, 19);
+            radio_hex.Size = new System.Drawing.Size(245, 19);
             radio_hex.TabIndex = 6;
             radio_hex.TabStop = true;
             radio_hex.Text = "(HEX) Represent numbers as Hexadecimal";
@@ -312,11 +262,44 @@
             checkBox_hideTooltips.AutoSize = true;
             checkBox_hideTooltips.Location = new System.Drawing.Point(6, 268);
             checkBox_hideTooltips.Name = "checkBox_hideTooltips";
-            checkBox_hideTooltips.Size = new System.Drawing.Size(108, 19);
+            checkBox_hideTooltips.Size = new System.Drawing.Size(109, 19);
             checkBox_hideTooltips.TabIndex = 9;
             checkBox_hideTooltips.Text = "Disable Tooltips";
             checkBox_hideTooltips.UseVisualStyleBackColor = true;
             checkBox_hideTooltips.CheckedChanged += checkBox_hideTooltips_CheckedChanged;
+            // 
+            // checkBox_collision
+            // 
+            checkBox_collision.AutoSize = true;
+            checkBox_collision.Location = new System.Drawing.Point(6, 22);
+            checkBox_collision.Name = "checkBox_collision";
+            checkBox_collision.Size = new System.Drawing.Size(143, 19);
+            checkBox_collision.TabIndex = 6;
+            checkBox_collision.Text = "View collision outlines";
+            checkBox_collision.UseVisualStyleBackColor = true;
+            checkBox_collision.CheckedChanged += checkBox_ValueChanged;
+            // 
+            // checkBox_breakable
+            // 
+            checkBox_breakable.AutoSize = true;
+            checkBox_breakable.Location = new System.Drawing.Point(6, 47);
+            checkBox_breakable.Name = "checkBox_breakable";
+            checkBox_breakable.Size = new System.Drawing.Size(142, 19);
+            checkBox_breakable.TabIndex = 7;
+            checkBox_breakable.Text = "View breakable blocks";
+            checkBox_breakable.UseVisualStyleBackColor = true;
+            checkBox_breakable.CheckedChanged += checkBox_breakable_CheckedChanged;
+            // 
+            // checkBox_values
+            // 
+            checkBox_values.AutoSize = true;
+            checkBox_values.Location = new System.Drawing.Point(6, 72);
+            checkBox_values.Name = "checkBox_values";
+            checkBox_values.Size = new System.Drawing.Size(119, 19);
+            checkBox_values.TabIndex = 8;
+            checkBox_values.Text = "View block values";
+            checkBox_values.UseVisualStyleBackColor = true;
+            checkBox_values.CheckedChanged += checkBox_values_CheckedChanged;
             // 
             // PageDefaults
             // 
@@ -353,9 +336,6 @@
         private System.Windows.Forms.CheckBox checkBox_bg2;
         private System.Windows.Forms.CheckBox checkBox_bg1;
         private System.Windows.Forms.GroupBox group_clipdata;
-        private System.Windows.Forms.RadioButton checkBox_collision;
-        private System.Windows.Forms.RadioButton checkBox_breakable;
-        private System.Windows.Forms.RadioButton checkBox_values;
         private System.Windows.Forms.Label label_defaultValues;
         private System.Windows.Forms.GroupBox group_roomObjects;
         private System.Windows.Forms.CheckBox checkBox_screenOutlines;
@@ -363,12 +343,14 @@
         private System.Windows.Forms.CheckBox checkBox_doors;
         private System.Windows.Forms.CheckBox checkBox_spriteOutlines;
         private System.Windows.Forms.CheckBox checkBox_sprites;
-        private System.Windows.Forms.RadioButton checkBox_none;
         private Controls.Seperator seperator1;
         private System.Windows.Forms.Label label_numberBase;
         private System.Windows.Forms.RadioButton radio_hex;
         private System.Windows.Forms.RadioButton radio_dec;
         private Controls.Seperator seperator2;
         private System.Windows.Forms.CheckBox checkBox_hideTooltips;
+        private System.Windows.Forms.CheckBox checkBox_values;
+        private System.Windows.Forms.CheckBox checkBox_breakable;
+        private System.Windows.Forms.CheckBox checkBox_collision;
     }
 }

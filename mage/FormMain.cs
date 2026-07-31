@@ -690,18 +690,31 @@ namespace mage
             checkBox_viewBG3.Checked = !checkBox_viewBG3.Checked;
         }
 
-        private void menuItem_viewClipToggle_Click(object sender, EventArgs e)
+        private void menuItem_viewClipCollision_Click(object sender, EventArgs e)
         {
-            var item = (ToolStripMenuItem)sender;
-            if (!item.Checked)
-            {
-                var parent = (ToolStripMenuItem)item.OwnerItem;
-                foreach (ToolStripMenuItem child in parent.DropDownItems)
-                {
-                    child.Checked = false;
-                }
-            }
+            var item = sender as ToolStripMenuItem;
             item.Checked = !item.Checked;
+
+            roomView.RedrawAll();
+        }
+
+        private void menuItem_viewClipBreakable_Click(object sender, EventArgs e)
+        {
+            var item = sender as ToolStripMenuItem;
+            item.Checked = !item.Checked;
+
+            menuItem_viewClipValues.Checked = false;
+
+            roomView.RedrawAll();
+        }
+
+        private void menuItem_viewClipValues_Click(object sender, EventArgs e)
+        {
+            var item = sender as ToolStripMenuItem;
+            item.Checked = !item.Checked;
+
+            menuItem_viewClipBreakable.Checked = false;
+
             roomView.RedrawAll();
         }
 
@@ -1243,10 +1256,6 @@ namespace mage
         }
 
         // options
-        private void menuItem_backgroundColor_Click(object sender, EventArgs e)
-        {
-            new RoomViewSettings(this).ShowDialog();
-        }
 
         private void menuItem_defaultView_Click(object sender, EventArgs e)
         {
@@ -1254,18 +1263,26 @@ namespace mage
             item.Checked = !item.Checked;
         }
 
-        private void menuItem_defaultClipToggle_Click(object sender, EventArgs e)
+        private void menuItem_defaultClipCollision_Click(object sender, EventArgs e)
         {
             var item = (ToolStripMenuItem)sender;
-            if (!item.Checked)
-            {
-                var parent = (ToolStripMenuItem)item.OwnerItem;
-                foreach (ToolStripMenuItem child in parent.DropDownItems)
-                {
-                    child.Checked = false;
-                }
-            }
             item.Checked = !item.Checked;
+        }
+
+        private void menuItem_defaultClipBreakable_Click(object sender, EventArgs e)
+        {
+            var item = (ToolStripMenuItem)sender;
+            item.Checked = !item.Checked;
+
+            menuItem_defaultClipValues.Checked = false;
+        }
+
+        private void menuItem_defaultClipValues_Click(object sender, EventArgs e)
+        {
+            var item = (ToolStripMenuItem)sender;
+            item.Checked = !item.Checked;
+
+            menuItem_defaultClipBreakable.Checked = false;
         }
 
         private void menuItem_tooltips_Click(object sender, EventArgs e)

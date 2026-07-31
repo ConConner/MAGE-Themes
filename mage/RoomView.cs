@@ -181,17 +181,17 @@ namespace mage
                 {
                     room.scrollList.Draw(g, rect);
                 }
-                if (main.ViewCollision)
+                if (main.ViewValues)
                 {
-                    room.backgrounds.clipTypes.DrawCollision(g, rect);
+                    room.backgrounds.clipTypes.DrawValues(g, rect);
                 }
-                else if (main.ViewBreakable)
+                if (main.ViewBreakable)
                 {
                     room.backgrounds.clipTypes.DrawBreakable(g, rect);
                 }
-                else if (main.ViewValues)
+                if (main.ViewCollision)
                 {
-                    room.backgrounds.clipTypes.DrawValues(g, rect);
+                    room.backgrounds.clipTypes.DrawCollision(g, rect);
                 }
                 if (main.OutlineEffect)
                 {

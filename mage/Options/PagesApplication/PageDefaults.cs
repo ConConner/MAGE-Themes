@@ -42,7 +42,6 @@ public partial class PageDefaults : UserControl, IReloadablePage
         checkBox_collision.Checked = Parent.menuItem_defaultClipCollision.Checked;
         checkBox_breakable.Checked = Parent.menuItem_defaultClipBreakable.Checked;
         checkBox_values.Checked = Parent.menuItem_defaultClipValues.Checked;
-        checkBox_none.Checked = !checkBox_collision.Checked && !checkBox_breakable.Checked && !checkBox_values.Checked;
 
         checkBox_sprites.Checked = Parent.menuItem_defaultSprites.Checked;
         checkBox_spriteOutlines.Checked = Parent.menuItem_defaultSpriteOutlines.Checked;
@@ -92,5 +91,23 @@ public partial class PageDefaults : UserControl, IReloadablePage
     {
         Parent.menuItem_tooltips.Checked = checkBox_hideTooltips.Checked;
         Parent.HideTooltips(checkBox_hideTooltips.Checked);
+    }
+
+    private void checkBox_breakable_CheckedChanged(object sender, EventArgs e)
+    {
+        if (init) return;
+        init = true;
+        checkBox_values.Checked = false;
+        init = false;
+        checkBox_ValueChanged(sender, e);
+    }
+
+    private void checkBox_values_CheckedChanged(object sender, EventArgs e)
+    {
+        if (init) return;
+        init = true;
+        checkBox_breakable.Checked = false;
+        init = false;
+        checkBox_ValueChanged(sender, e);
     }
 }
