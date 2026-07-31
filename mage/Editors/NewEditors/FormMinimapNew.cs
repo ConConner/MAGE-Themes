@@ -1034,6 +1034,17 @@ public partial class FormMinimapNew : Form, Editor
         if (!CheckUnsaved()) e.Cancel = true;
     }
 
+    private void SelectAll()
+    {
+        MapSelection.Rectangle = new(
+                0, 0,
+                tileDisplay_map.TileImage.Width, tileDisplay_map.TileImage.Height
+            );
+        MapSelectionVisible = true;
+
+        SelectFromMap();
+        MapCursor.Rectangle = new Rectangle(0, 0, tileDisplay_map.TileImage.Width, tileDisplay_map.TileImage.Height);
+    }
     private void FormMinimapNew_KeyDown(object sender, KeyEventArgs e)
     {
         switch (e.KeyCode)
@@ -1070,6 +1081,10 @@ public partial class FormMinimapNew : Form, Editor
                     Undo();
                     break;
                 }
+                break;
+
+            case Keys.A:
+                if (ModifierKeys == Keys.Control) SelectAll();
                 break;
         }
     }

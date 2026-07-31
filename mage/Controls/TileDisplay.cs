@@ -253,4 +253,10 @@ public partial class TileDisplay : Control
         Scrolled?.Invoke(this, e);
         base.OnMouseWheel(e);
     }
+
+    protected override void OnMouseDown(MouseEventArgs e)
+    {
+        base.OnMouseDown(e);
+        if (!this.Focused) this.Focus();
+    }
 }
