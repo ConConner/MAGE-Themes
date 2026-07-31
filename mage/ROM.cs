@@ -77,7 +77,7 @@ namespace mage
         private static Dictionary<int, ScrollList> editedScrollLists;  // key = AreaID * 0x100 + RoomID
         private static Dictionary<int, Minimap> editedMinimaps;        // key = AreaID
         private static Dictionary<int, Demo> editedDemos;              // key < 0xFF
-        private static Dictionary<int, UndoRedo> undoRedoStacks;       // key = AreaID * 0x100 + RoomID
+        private static Dictionary<int, RoomUndoRedo> undoRedoStacks;       // key = AreaID * 0x100 + RoomID
 
         #region get and set methods
 
@@ -193,16 +193,16 @@ namespace mage
             editedDemos[demo.number] = demo;
         }
 
-        public static UndoRedo LoadUndoRedo(byte areaID, byte roomID)
+        public static RoomUndoRedo LoadUndoRedo(byte areaID, byte roomID)
         {
             int key = areaID * 0x100 + roomID;
             if (undoRedoStacks.ContainsKey(key))
             {
                 return undoRedoStacks[key];
             }
-            return new UndoRedo();
+            return new RoomUndoRedo();
         }
-        public static void SaveUndoRedo(UndoRedo ur, Room room)
+        public static void SaveUndoRedo(RoomUndoRedo ur, Room room)
         {
             int key = room.AreaID * 0x100 + room.RoomID;
             if (undoRedoStacks.ContainsKey(key))
@@ -341,7 +341,7 @@ namespace mage
             editedScrollLists = new Dictionary<int, ScrollList>();
             editedMinimaps = new Dictionary<int, Minimap>();
             editedDemos = new Dictionary<int, Demo>();
-            undoRedoStacks = new Dictionary<int, UndoRedo>();
+            undoRedoStacks = new Dictionary<int, RoomUndoRedo>();
         }
 
 

@@ -2,7 +2,7 @@
 
 namespace mage.Actions.RoomEditor
 {
-    public class UndoRedo
+    public class RoomUndoRedo
     {
         public DropOutStack<Action> UndoStack { get { return undoStack; } }
         public DropOutStack<Action> RedoStack { get { return redoStack; } }
@@ -14,7 +14,7 @@ namespace mage.Actions.RoomEditor
         private DropOutStack<Action> redoStack;
 
         // constructor
-        public UndoRedo()
+        public RoomUndoRedo()
         {
             undoStack = new DropOutStack<Action>();
             redoStack = new DropOutStack<Action>();

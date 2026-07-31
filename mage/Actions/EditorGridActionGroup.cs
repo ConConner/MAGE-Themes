@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace mage.Actions.GraphicsEditor;
+namespace mage.Actions;
 
-internal class GraphicsActionGroup : GraphicsAction
+internal class EditorGridActionGroup : EditorGridAction
 {
-    private List<GraphicsAction> actions = new List<GraphicsAction>();
+    private List<EditorGridAction> actions = new List<EditorGridAction>();
 
     public override Rectangle AffectedRegion
     {
@@ -31,7 +31,7 @@ internal class GraphicsActionGroup : GraphicsAction
         }
     }
 
-    public void AddAction(GraphicsAction action)
+    public void AddAction(EditorGridAction action)
     {
         actions.Add(action);
     }

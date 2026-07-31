@@ -5,7 +5,7 @@ using System.Text;
 
 namespace mage.Actions.GraphicsEditor;
 
-internal class FillAreaAction : GraphicsAction
+internal class FillAreaAction : EditorGridAction
 {
     private GFX _gfx;
     private Dictionary<Point, int> _pixels;

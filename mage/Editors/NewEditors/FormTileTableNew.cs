@@ -1,23 +1,25 @@
-﻿using mage.Controls;
+﻿using mage.Actions;
+using mage.Actions.TileTableEditor;
+using mage.Bookmarks;
+using mage.Controls;
+using mage.Dialogs;
+using mage.Editors.NewEditors;
 using mage.Theming;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Drawing.Imaging;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using mage.Dialogs;
 using System.Xml;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using mage.Bookmarks;
-using mage.Editors.NewEditors;
 
 namespace mage.Editors
 {
@@ -98,6 +100,8 @@ namespace mage.Editors
 
         private Room? openedInRoom;
         private Status Status;
+        private GenericUndoRedo UndoRedo;
+        private EditorGridActionGroup? latestActionGroup = null;
         private int gfxSourceOffset;
         private int palSourceOffset;
 
@@ -287,6 +291,8 @@ namespace mage.Editors
             int canvasWidth = tableView.TileImage.Width / 8;
             int canvasHeight = tableView.TileImage.Height / 8;
 
+            Dictionary<int, ushort> tilesToPlace = new();
+
             for (int x = 0; x < selectedTilesSize.Width; x++)
                 for (int y = 0; y < selectedTilesSize.Height; y++)
                 {
@@ -296,32 +302,34 @@ namespace mage.Editors
                     ushort tile = selectedTiles[x, y];
                     if (!CopyPalette) tile = (ushort)(tile & 0xFFF | tileTable[index] & 0xF000);
 
-                    tileTable[index] = tile;
+                    tilesToPlace.Add(index, tile);
                 }
 
-            DrawTileTable((Bitmap)tableView.TileImage);
-            Status.ChangeMade();
+            DrawTileTableTileAction a = new(tileTable, tilesToPlace);
+            a.Do();
+            ChangeMade();
+
+            if (latestActionGroup is not null) latestActionGroup.AddAction(a);
+            else AddActionNoDo(a);
         }
 
-        private void TransformSelection(Func<ushort, ushort> transformation)
+        private void TransformSelection(Func<ushort, ushort> transformation, string actionText)
         {
             if (!TableSelectionVisible) return;
 
-            int xPos = TableSelection.X / 8;
-            int yPos = TableSelection.Y / 8;
+            Rectangle r = new(
+                TableSelection.X / 8,
+                TableSelection.Y / 8,
+                selectedTilesSize.Width,
+                selectedTilesSize.Height
+            );
 
-            for (int x = 0; x < selectedTilesSize.Width; x++)
-                for (int y = 0; y < selectedTilesSize.Height; y++)
-                {
-                    int index = GetIndexFromLocation(xPos + x, yPos + y);
-                    ushort tile = tileTable[index];
-                    ushort newTile = transformation(tile);
-                    tileTable[index] = newTile;
-                }
+            TransformationTileTableAction a = new(transformation, GetIndexFromLocation, tileTable, r, actionText);
+            a.Do();
+            AddActionNoDo(a);
+            ChangeMade();
 
-            DrawTileTable((Bitmap)tableView.TileImage);
             TableSelection.InvalidateDrawable(TableSelection);
-            Status.ChangeMade();
         }
 
         private bool PreserveExistingData(int offset)
@@ -506,6 +514,7 @@ namespace mage.Editors
         {
             init = true;
             Status.LoadNew();
+            ClearUndoRedo();
 
             // get tileset and vram
             Tileset tileset = new Tileset(ROM.Stream, (byte)comboBox_tileset.SelectedIndex);
@@ -544,6 +553,7 @@ namespace mage.Editors
         private void InitializeWithBackground()
         {
             init = true;
+            ClearUndoRedo();
 
             int room = comboBox_room.SelectedIndex;
             if (room == -1)
@@ -629,6 +639,7 @@ namespace mage.Editors
         {
             try
             {
+                ClearUndoRedo();
                 init = true;
 
                 ttbOffset = Hex.ToInt(textBox_ttb.Text);
@@ -851,6 +862,18 @@ namespace mage.Editors
 
         private void button_apply_Click(object sender, EventArgs e) => Save();
 
+        private void SelectAll()
+        {
+            TableSelection.Rectangle = new(
+                0, 0,
+                tableView.TileImage.Width, tableView.TileImage.Height
+            );
+            TableSelectionVisible = true;
+
+            SelectTilesFromTable();
+            TableCursor.Rectangle = new Rectangle(0, 0, tableView.TileImage.Width, tableView.TileImage.Height);
+        }
+
         private void KeyPressed(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -883,6 +906,25 @@ namespace mage.Editors
                     button_setPalette_Click(sender, e);
                     break;
 
+                case Keys.Z:
+                    if (ModifierKeys == (Keys.Control | Keys.Shift))
+                    {
+                        if (!UndoRedo.CanRedo) break;
+                        Redo();
+                        break;
+                    }
+                    else if (ModifierKeys == Keys.Control)
+                    {
+                        if (!UndoRedo.CanUndo) break;
+                        Undo();
+                        break;
+                    }
+                    break;
+
+                case Keys.A:
+                    if (ModifierKeys == Keys.Control) SelectAll();
+                    break;
+
                 default:
                     break;
             }
@@ -900,7 +942,7 @@ namespace mage.Editors
             if (GfxSelection.Visible) SelectTilesFromGFX();
         }
 
-        private void button_flipH_Click(object sender, EventArgs e)
+        private void flipSelection(bool isVertical)
         {
             if (!TableSelectionVisible) return;
 
@@ -909,72 +951,17 @@ namespace mage.Editors
             int width = selectedTilesSize.Width;
             int height = selectedTilesSize.Height;
 
-            ushort[,] flippedTiles = new ushort[width, height];
+            FlipTileTableAction a = new(tileTable, new(xPos, yPos, width, height), GetIndexFromLocation, isVertical);
+            a.Do();
+            AddActionNoDo(a);
+            ChangeMade();
 
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                {
-                    int realPosX = xPos + x;
-                    int realPosY = yPos + y;
-                    int index = GetIndexFromLocation(realPosX, realPosY);
-                    ushort tile = tileTable[index];
-
-                    tile = (ushort)(tile ^ 0x400); // flip x
-                    flippedTiles[width - x - 1, y] = tile;
-                }
-
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                {
-                    int realPosX = xPos + x;
-                    int realPosY = yPos + y;
-                    int index = GetIndexFromLocation(realPosX, realPosY);
-                    ushort tile = flippedTiles[x, y];
-                    tileTable[index] = tile;
-                }
-
-            DrawTileTable((Bitmap)tableView.TileImage);
             TableSelection.InvalidateDrawable(TableSelection);
-            Status.ChangeMade();
         }
 
-        private void button_flipV_Click(object sender, EventArgs e)
-        {
-            if (!TableSelectionVisible) return;
+        private void button_flipH_Click(object sender, EventArgs e) => flipSelection(false);
 
-            int xPos = TableSelection.X / 8;
-            int yPos = TableSelection.Y / 8;
-            int width = selectedTilesSize.Width;
-            int height = selectedTilesSize.Height;
-
-            ushort[,] flippedTiles = new ushort[width, height];
-
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                {
-                    int realPosX = xPos + x;
-                    int realPosY = yPos + y;
-                    int index = GetIndexFromLocation(realPosX, realPosY);
-                    ushort tile = tileTable[index];
-
-                    tile = (ushort)(tile ^ 0x800); // flip y
-                    flippedTiles[x, height - y - 1] = tile;
-                }
-
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                {
-                    int realPosX = xPos + x;
-                    int realPosY = yPos + y;
-                    int index = GetIndexFromLocation(realPosX, realPosY);
-                    ushort tile = flippedTiles[x, y];
-                    tileTable[index] = tile;
-                }
-
-            DrawTileTable((Bitmap)tableView.TileImage);
-            TableSelection.InvalidateDrawable(TableSelection);
-            Status.ChangeMade();
-        }
+        private void button_flipV_Click(object sender, EventArgs e) => flipSelection(true);
 
         private void button_paletteIncrease_Click(object sender, EventArgs e)
             => TransformSelection((ushort tile) =>
@@ -983,7 +970,7 @@ namespace mage.Editors
                 palette = (palette + 1) % 16;
                 tile = (ushort)((tile & 0x0FFF) | (palette << 12));
                 return tile;
-            });
+            }, "Increase Palette");
 
         private void button_paletteDecrease_Click(object sender, EventArgs e)
             => TransformSelection((ushort tile) =>
@@ -992,7 +979,7 @@ namespace mage.Editors
                 palette = (palette + 16 - 1) % 16;
                 tile = (ushort)((tile & 0x0FFF) | (palette << 12));
                 return tile;
-            });
+            }, "Decrease Palette");
 
         private void button_setPalette_Click(object sender, EventArgs e)
         {
@@ -1002,7 +989,7 @@ namespace mage.Editors
             if (dialog.ShowDialog() != DialogResult.OK) return;
 
             int pal = dialog.SelectedIndex;
-            TransformSelection((ushort tile) => (ushort)((tile & 0x0FFF) | (pal << 12)));
+            TransformSelection((ushort tile) => (ushort)((tile & 0x0FFF) | (pal << 12)), "Set Palette");
         }
 
         private void button_grid_CheckStateChanged(object sender, EventArgs e) => tableView.ShowGrid = button_grid.Checked;
@@ -1040,6 +1027,11 @@ namespace mage.Editors
                 comboBox_bg.SelectedIndex = 1;
                 InitializeWithBackground();
             }
+        }
+
+        private void button_editGfx_Click(object sender, EventArgs e)
+        {
+            FormGraphicsNew.OpenGraphicsEditor(gfxSourceOffset, 32, 0, palSourceOffset);
         }
 
         #region Tileset Tab
@@ -1236,6 +1228,7 @@ namespace mage.Editors
 
             if (e.Button == MouseButtons.Left)
             {
+                latestActionGroup = new();
                 PlaceTiles(e.TileIndexPosition);
                 TableCursor.InvalidateDrawable(TableCursor);
                 return;
@@ -1296,6 +1289,12 @@ namespace mage.Editors
             if (tableView.TileImage == null) return;
 
             TableCursor.Visible = true;
+
+            if (latestActionGroup is not null)
+            {
+                AddActionNoDo(latestActionGroup);
+                latestActionGroup = null;
+            }
 
             if (TableSelectionVisible)
             {
@@ -1377,14 +1376,6 @@ namespace mage.Editors
             output.Export(saveRaw.FileName);
         }
 
-        #endregion
-        #endregion
-
-        private void button_editGfx_Click(object sender, EventArgs e)
-        {
-            FormGraphicsNew.OpenGraphicsEditor(gfxSourceOffset, 32, 0, palSourceOffset);
-        }
-
         private void btn_exportImg_Click(object sender, EventArgs e)
         {
             if (tableView.TileImage is null)
@@ -1399,5 +1390,94 @@ namespace mage.Editors
 
             tableView.TileImage.Save(saveTileset.FileName);
         }
+        #endregion
+        #endregion
+
+        #region Undo/Redo
+        public void ClearUndoRedo()
+        {
+            UndoRedo = new();
+            setUndoRedoButtons();
+        }
+
+        private void ChangeMade()
+        {
+            DrawTileTable((Bitmap)tableView.TileImage);
+            Status.ChangeMade();
+        }
+
+        public void AddActionNoDo(EditorGridAction a)
+        {
+            UndoRedo.AddActionWithoutDo(a);
+            setUndoRedoButtons();
+        }
+
+        private void Undo(bool bulk = false)
+        {
+            UndoRedo.Undo();
+            setUndoRedoButtons();
+
+            if (bulk) return;
+
+            ChangeMade();
+            tableView.Invalidate();
+        }
+
+        private void Redo(bool bulk = false)
+        {
+            UndoRedo.Redo();
+            setUndoRedoButtons();
+
+            if (bulk) return;
+
+            ChangeMade();
+            tableView.Invalidate();
+        }
+
+        private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<EditorGridAction> stack)
+        {
+            int count = Math.Min(16, stack.Count);
+            int lastIndex = stack.Count - 1;
+
+            button.DropDownItems.Clear();
+            for (int i = 0; i < count; i++)
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem();
+                item.Tag = i + 1;
+                item.Text = stack[lastIndex - i].ActionText;
+                button.DropDownItems.Add(item);
+            }
+        }
+
+        private void setUndoRedoButtons()
+        {
+            button_undo.Enabled = UndoRedo.CanUndo;
+            button_redo.Enabled = UndoRedo.CanRedo;
+        }
+
+        private void button_undo_ButtonClick(object sender, EventArgs e) => Undo();
+
+        private void button_redo_ButtonClick(object sender, EventArgs e) => Redo();
+
+        private void button_redo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_redo, UndoRedo.RedoStack);
+
+        private void button_undo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_undo, UndoRedo.UndoStack);
+
+        private void button_undo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            int num = (int)e.ClickedItem.Tag;
+            for (int i = 0; i < num; i++) Undo(bulk: true);
+            ChangeMade();
+            tableView.Invalidate();
+        }
+
+        private void button_redo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            int num = (int)e.ClickedItem.Tag;
+            for (int i = 0; i < num; i++) Redo(bulk: true);
+            ChangeMade();
+            tableView.Invalidate();
+        }
+        #endregion
     }
 }

@@ -1,4 +1,8 @@
-﻿using mage.Dialogs;
+﻿using mage.Actions;
+using mage.Actions.MapEditor;
+using mage.Bookmarks;
+using mage.Controls;
+using mage.Dialogs;
 using mage.Theming;
 using mage.Theming.CustomControls;
 using System;
@@ -6,20 +10,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Security.Cryptography.Pkcs;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing.Imaging;
-using mage.Controls;
-using System.Drawing.Drawing2D;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace mage.Editors.NewEditors;
 
 public partial class FormMinimapNew : Form, Editor
 {
-    private struct MapTile
+    public struct MapTile
     {
         public MapTile(ushort value)
         {
@@ -139,6 +143,7 @@ public partial class FormMinimapNew : Form, Editor
     private bool init = false;
     private const int maxZoom = 4;
 
+
     private FlatComboBox comboBox_tilesType;
     private FlatComboBox comboBox_mapType;
 
@@ -146,6 +151,8 @@ public partial class FormMinimapNew : Form, Editor
     private Palette palette;
     private int numTiles;
     private Status status;
+    private GenericUndoRedo UndoRedo = new GenericUndoRedo();
+    private EditorGridActionGroup? latestActionGroup = null;
 
     private FormMain main;
     private ByteStream romStream;
@@ -184,7 +191,7 @@ public partial class FormMinimapNew : Form, Editor
     {
         InitializeComponent();
 
-        splitContainer_main.SplitterDistance = 386; // Theres a WinForms Designer bug that resizes this splitter after every build
+        splitContainer_main.SplitterDistance = 443; // Theres a WinForms Designer bug that resizes this splitter after every build
 
         ThemeSwitcher.ChangeTheme(Controls, this);
         ThemeSwitcher.InjectPaintOverrides(Controls);
@@ -208,6 +215,8 @@ public partial class FormMinimapNew : Form, Editor
         DrawTiles();
         tileDisplay_tiles.BackColor = Color.Black;
         comboBox_tilesType.SelectedIndex = 1;
+
+        button_expandTiles.Visible = !ExpandTilesPatchApplied();
     }
 
 
@@ -217,6 +226,7 @@ public partial class FormMinimapNew : Form, Editor
         palette = new Palette(romStream, paletteOffset, numOfPalettes);
         palette.SetARGB(1, 0, 0);
 
+        SetValuesBasedOnGame();
         DrawTiles();
         DrawMap();
         roomListReloadRequired = true;
@@ -281,21 +291,23 @@ public partial class FormMinimapNew : Form, Editor
         var tilesHost = new ToolStripControlHost(comboBox_tilesType);
         toolStrip_tiles.Items.Insert(0, tilesHost);
         var mapHost = new ToolStripControlHost(comboBox_mapType);
-        toolStrip_map.Items.Insert(0, mapHost);
+        toolStrip_map.Items.Insert(3, mapHost);
+    }
+
+    private bool ExpandTilesPatchApplied()
+    {
+        if (Version.IsMF) return new Patch(Properties.Resources.MF_U_addMinimapTiles).IsApplied();
+        return new Patch(Properties.Resources.ZM_U_addMinimapTiles).IsApplied();
     }
 
     private void SetValuesBasedOnGame()
     {
         numTiles = 0x200;
-        if (Version.IsMF)
-        {
-            Patch mfP = new Patch(Properties.Resources.MF_U_addMinimapTiles);
-            if (!mfP.IsApplied()) numTiles = 0x1C0;
-            return;
-        }
 
-        Patch zmP = new Patch(Properties.Resources.ZM_U_addMinimapTiles);
-        if (!zmP.IsApplied()) numTiles = 0x180;
+        if (ExpandTilesPatchApplied()) return;
+
+        if (Version.IsMF) numTiles = 0x1C0;
+        else numTiles = 0x180;
     }
 
     private void PopulateBoxesBasedOnGame()
@@ -486,6 +498,84 @@ public partial class FormMinimapNew : Form, Editor
     }
     #endregion
 
+    #region Undo/Redo
+    public void ClearUndoRedo()
+    {
+        UndoRedo = new();
+        setUndoRedoButtons();
+    }
+
+    private void ChangeMade()
+    {
+        LoadedMap.Edited = true;
+        DrawMap();
+        status.ChangeMade();
+    }
+
+    public void AddActionNoDo(EditorGridAction a)
+    {
+        UndoRedo.AddActionWithoutDo(a);
+        setUndoRedoButtons();
+    }
+
+    private void Undo()
+    {
+        UndoRedo.Undo();
+        setUndoRedoButtons();
+
+        ChangeMade();
+    }
+
+    private void Redo()
+    {
+        UndoRedo.Redo();
+        setUndoRedoButtons();
+
+        ChangeMade();
+    }
+
+    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<EditorGridAction> stack)
+    {
+        int count = Math.Min(16, stack.Count);
+        int lastIndex = stack.Count - 1;
+
+        button.DropDownItems.Clear();
+        for (int i = 0; i < count; i++)
+        {
+            ToolStripMenuItem item = new ToolStripMenuItem();
+            item.Tag = i + 1;
+            item.Text = stack[lastIndex - i].ActionText;
+            button.DropDownItems.Add(item);
+        }
+    }
+
+    private void setUndoRedoButtons()
+    {
+        button_undo.Enabled = UndoRedo.CanUndo;
+        button_redo.Enabled = UndoRedo.CanRedo;
+    }
+
+    private void button_undo_ButtonClick(object sender, EventArgs e) => Undo();
+
+    private void button_redo_ButtonClick(object sender, EventArgs e) => Redo();
+
+    private void button_redo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_redo, UndoRedo.RedoStack);
+
+    private void button_undo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_undo, UndoRedo.UndoStack);
+
+    private void button_undo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    {
+        int num = (int)e.ClickedItem.Tag;
+        for (int i = 0; i < num; i++) Undo();
+    }
+
+    private void button_redo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    {
+        int num = (int)e.ClickedItem.Tag;
+        for (int i = 0; i < num; i++) Redo();
+    }
+    #endregion
+
     #region Map
     private void LoadMap()
     {
@@ -515,6 +605,7 @@ public partial class FormMinimapNew : Form, Editor
         MapCursor.Visible = false;
         selectedTiles = null;
 
+        ClearUndoRedo();
         status.LoadNew();
     }
 
@@ -546,9 +637,9 @@ public partial class FormMinimapNew : Form, Editor
             }
 
         selectedTiles = flippedTiles;
-        PasteSelectedTiles(new(xPos, yPos));
+        var action = PasteSelectedTiles(new(xPos, yPos), "Flip Horizontal");
+        if (action is not null) AddActionNoDo(action);
         MapSelection.InvalidateDrawable(MapSelection);
-        status.ChangeMade();
     }
 
     private void button_flipMapV_Click(object sender, EventArgs e)
@@ -574,9 +665,9 @@ public partial class FormMinimapNew : Form, Editor
             }
 
         selectedTiles = flippedTiles;
-        PasteSelectedTiles(new(xPos, yPos));
+        var action = PasteSelectedTiles(new(xPos, yPos), "Flip Vertical");
+        if (action is not null) AddActionNoDo(action);
         MapSelection.InvalidateDrawable(MapSelection);
-        status.ChangeMade();
     }
 
     private void ComboBox_mapType_SelectedIndexChanged(object? sender, EventArgs e)
@@ -604,9 +695,9 @@ public partial class FormMinimapNew : Form, Editor
             }
 
         selectedTiles = modifiedTiles;
-        PasteSelectedTiles(new(xPos, yPos));
+        var action = PasteSelectedTiles(new(xPos, yPos), "Change Type");
+        if (action is not null) AddActionNoDo(action);
         MapSelection.InvalidateDrawable(MapSelection);
-        status.ChangeMade();
     }
 
     private void comboBox_area_SelectedIndexChanged(object sender, EventArgs e)
@@ -621,12 +712,14 @@ public partial class FormMinimapNew : Form, Editor
 
     private void button_grid_CheckStateChanged(object sender, EventArgs e) => tileDisplay_map.ShowGrid = button_grid.Checked;
 
-    private void PasteSelectedTiles(Point location)
+    private EditorGridAction? PasteSelectedTiles(Point location, string actionText)
     {
-        if (selectedTiles == null) return;
+        if (selectedTiles == null) return null;
 
         int widthTiles = tileDisplay_map.TileImage.Width / tileDisplay_map.TileSize;
         int heightTiles = tileDisplay_map.TileImage.Height / tileDisplay_map.TileSize;
+
+        Dictionary<Point, MapTile> tilesToPlace = new();
 
         for (int x = 0; x < selectedTilesSize.Width; x++)
             for (int y = 0; y < selectedTilesSize.Height; y++)
@@ -634,31 +727,24 @@ public partial class FormMinimapNew : Form, Editor
                 if (location.X + x >= widthTiles || location.Y + y >= heightTiles || location.X + x < 0 || location.Y + y < 0) continue;
 
                 MapTile tile = selectedTiles[x, y];
-                LoadedMap.SetSquare(new(location.X + x, location.Y + y), tile);
-                LoadedMap.Edited = true;
-
-                // Draw New Square (Copied code so might be bad)
-                int pal = tile.Palette;
-                int tileId = tile.TileID;
-                Minimap.GetSquareDisplayInfo(comboBox_state.SelectedIndex, ref pal, ref tileId, Version.IsMF);
-
-                GFX gfx = new GFX(romStream, Version.MinimapGfxOffset + tileId * 0x20, 1, 1);
-                Bitmap square = gfx.Draw4bpp(palette, pal, true);
-                ColorPalette cp = square.Palette;
-                cp.Entries[0] = Color.Black;
-                square.Palette = cp;
-
-                if (tile.Flip != 0) Draw.Flip4bpp(square, tile.Flip);
-                using (Graphics g = Graphics.FromImage(tileDisplay_map.TileImage))
-                {
-                    Point p = new((location.X + x) * tileDisplay_map.TileSize, (location.Y + y) * tileDisplay_map.TileSize);
-                    g.DrawImage(square, p.X, p.Y);
-                }
-
+                tilesToPlace.Add(new(location.X + x, location.Y + y), tile);
             }
 
         Sound.PlaySound("map.wav");
-        status.ChangeMade();
+
+        DrawMapTileAction a = new(LoadedMap, tilesToPlace, actionText);
+        a.Do();
+        ChangeMade();
+
+        return a;
+    }
+
+    private void DrawMapTiles(Point location)
+    {
+        var drawAction = PasteSelectedTiles(location, "Draw");
+        if (drawAction is null) return;
+        if (latestActionGroup is not null) latestActionGroup.AddAction(drawAction);
+        else AddActionNoDo(drawAction);
     }
 
     private void SelectFromMap()
@@ -705,7 +791,8 @@ public partial class FormMinimapNew : Form, Editor
 
         if (e.Button == MouseButtons.Left)
         {
-            PasteSelectedTiles(e.TileIndexPosition);
+            latestActionGroup = new();
+            DrawMapTiles(e.TileIndexPosition);
             MapCursor.InvalidateDrawable(MapCursor);
             return;
         }
@@ -730,7 +817,7 @@ public partial class FormMinimapNew : Form, Editor
         MapCursor.Rectangle = new Rectangle(e.TilePixelPosition.X, e.TilePixelPosition.Y, selectedTilesSize.Width * e.TileSize, selectedTilesSize.Height * e.TileSize);
         statusLabel_coor.Text = $"({Hex.ToString(e.TileIndexPosition.X)}, {Hex.ToString(e.TileIndexPosition.Y)})";
 
-        if (e.Button == MouseButtons.Left) PasteSelectedTiles(e.TileIndexPosition);
+        if (e.Button == MouseButtons.Left) DrawMapTiles(e.TileIndexPosition);
         else if (e.Button == MouseButtons.Right)
         {
             MapCursor.Visible = false;
@@ -756,6 +843,12 @@ public partial class FormMinimapNew : Form, Editor
         if (tileDisplay_map.TileImage == null) return;
 
         MapCursor.Visible = true;
+
+        if (latestActionGroup is not null)
+        {
+            AddActionNoDo(latestActionGroup);
+            latestActionGroup = null;
+        }
 
         if (MapSelectionVisible)
         {
@@ -948,6 +1041,17 @@ public partial class FormMinimapNew : Form, Editor
         if (!CheckUnsaved()) e.Cancel = true;
     }
 
+    private void SelectAll()
+    {
+        MapSelection.Rectangle = new(
+                0, 0,
+                tileDisplay_map.TileImage.Width, tileDisplay_map.TileImage.Height
+            );
+        MapSelectionVisible = true;
+
+        SelectFromMap();
+        MapCursor.Rectangle = new Rectangle(0, 0, tileDisplay_map.TileImage.Width, tileDisplay_map.TileImage.Height);
+    }
     private void FormMinimapNew_KeyDown(object sender, KeyEventArgs e)
     {
         switch (e.KeyCode)
@@ -970,6 +1074,25 @@ public partial class FormMinimapNew : Form, Editor
 
             default:
                 break;
+
+            case Keys.Z:
+                if (ModifierKeys == (Keys.Control | Keys.Shift))
+                {
+                    if (!UndoRedo.CanRedo) break;
+                    Redo();
+                    break;
+                }
+                else if (ModifierKeys == Keys.Control)
+                {
+                    if (!UndoRedo.CanUndo) break;
+                    Undo();
+                    break;
+                }
+                break;
+
+            case Keys.A:
+                if (ModifierKeys == Keys.Control) SelectAll();
+                break;
         }
     }
 
@@ -977,6 +1100,53 @@ public partial class FormMinimapNew : Form, Editor
     {
         int height = numTiles / 32;
         FormGraphicsNew.OpenGraphicsEditor(Version.MinimapGfxOffset, 32, height, Version.MinimapPaletteOffset);
+    }
+
+    private void button_expandTiles_Click(object sender, EventArgs e)
+    {
+        if (ExpandTilesPatchApplied())
+        {
+            MessageBox.Show("Expanded Map Tiles Patch is already applied. You may not apply it a second time.", "Already applied", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        if (MessageBox.Show("Map Tiles can only be expanded once per ROM. This modification is permanent and cannot be undone.\n\n" +
+                "Do you want to continue?",
+                "Expand Minimap Tiles",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question
+            ) != DialogResult.Yes) return;
+
+
+        // Old GFX
+        GFX tileGfx = new(ROM.Stream, Version.MinimapGfxOffset, 32, numTiles / 32);
+        int prevOffset = tileGfx.Offset;
+
+        // Create expanded GFX
+        byte[] newTilesData = new byte[0x4000];
+        romStream.CopyToArray(Version.MinimapGfxOffset, newTilesData, 0, numTiles * 32);
+        GFX newGfx = new(tileGfx, newTilesData);
+
+        // Repoint
+        newGfx.Write(ROM.Stream, false);
+        int newOffset = newGfx.Offset;
+
+        // Ask if user wants Bookmark
+        if (MessageBox.Show(
+            "The map tile graphics need to be repointed.\n\nDo you want to save the new location as a Bookmark?",
+            "Repointing required", MessageBoxButtons.YesNo, MessageBoxIcon.Information
+        )
+        == DialogResult.Yes) BookmarkManager.RepointedDataCreateBookmark(prevOffset, newOffset);
+
+        // Apply add minimap tiles patch
+        if (Version.IsMF) new Patch(Properties.Resources.MF_U_addMinimapTiles).Apply();
+        else new Patch(Properties.Resources.ZM_U_addMinimapTiles).Apply();
+        MessageBox.Show("Successfully expanded Map Tiles", "Expanded Map Tiles", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        // Update UI
+        button_expandTiles.Visible = false;
+        UpdateEditor();
+
+        return;
     }
     #endregion
 }
