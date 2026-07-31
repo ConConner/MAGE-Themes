@@ -1,3 +1,20 @@
+# [1.18.0](https://github.com/ConConner/MAGE-Themes/compare/v1.17.0...v1.18.0) (2026-07-31)
+
+
+### Bug Fixes
+
+* "save, undo then save again" does not save the undone changes in room editor ([b9bbace](https://github.com/ConConner/MAGE-Themes/commit/b9bbace849039963e577d3c5659b7211a245eab9))
+
+
+### Features
+
+* "add minimap tiles" patch removed. Minimap tiles can now be expanded in the map editor ([5fded4b](https://github.com/ConConner/MAGE-Themes/commit/5fded4b91c9b21e742f331197842043b31aa4457))
+* add undo & redo buttons to map editor ([3dd54ee](https://github.com/ConConner/MAGE-Themes/commit/3dd54eead2254e7fa557a1aedfca330abf07483c))
+* add undo & redo buttons to tile table editor ([d58dc8e](https://github.com/ConConner/MAGE-Themes/commit/d58dc8e26a3d6f5aceb17f69942da5398e9c7d43)), closes [#103](https://github.com/ConConner/MAGE-Themes/issues/103)
+* collision outlines can be combined with either breakable or value view ([78f1940](https://github.com/ConConner/MAGE-Themes/commit/78f1940dbf2dee7543ecb8daea4c1e71de2a482b)), closes [#65](https://github.com/ConConner/MAGE-Themes/issues/65)
+* press ctrl + A in map editor to select all map tiles from the map ([2a09baa](https://github.com/ConConner/MAGE-Themes/commit/2a09baa3cba38a3a6ebd24284a53a09b82ad9ebe))
+* press ctrl + A in tile table editor to select all tiles from the table view ([54e72ef](https://github.com/ConConner/MAGE-Themes/commit/54e72ef84ccce30d2d3cccf3529ba1e7be0d0390)), closes [#94](https://github.com/ConConner/MAGE-Themes/issues/94)
+
 # [1.17.0](https://github.com/ConConner/MAGE-Themes/compare/v1.16.0...v1.17.0) (2026-07-29)
 
 
