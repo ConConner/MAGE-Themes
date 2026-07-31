@@ -1,5 +1,6 @@
 ﻿using mage.Actions;
 using mage.Actions.MapEditor;
+using mage.Bookmarks;
 using mage.Controls;
 using mage.Dialogs;
 using mage.Theming;
@@ -16,6 +17,7 @@ using System.Security.Cryptography.Pkcs;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace mage.Editors.NewEditors;
 
@@ -189,7 +191,7 @@ public partial class FormMinimapNew : Form, Editor
     {
         InitializeComponent();
 
-        splitContainer_main.SplitterDistance = 386; // Theres a WinForms Designer bug that resizes this splitter after every build
+        splitContainer_main.SplitterDistance = 443; // Theres a WinForms Designer bug that resizes this splitter after every build
 
         ThemeSwitcher.ChangeTheme(Controls, this);
         ThemeSwitcher.InjectPaintOverrides(Controls);
@@ -213,6 +215,8 @@ public partial class FormMinimapNew : Form, Editor
         DrawTiles();
         tileDisplay_tiles.BackColor = Color.Black;
         comboBox_tilesType.SelectedIndex = 1;
+
+        button_expandTiles.Visible = !ExpandTilesPatchApplied();
     }
 
 
@@ -222,6 +226,7 @@ public partial class FormMinimapNew : Form, Editor
         palette = new Palette(romStream, paletteOffset, numOfPalettes);
         palette.SetARGB(1, 0, 0);
 
+        SetValuesBasedOnGame();
         DrawTiles();
         DrawMap();
         roomListReloadRequired = true;
@@ -289,18 +294,20 @@ public partial class FormMinimapNew : Form, Editor
         toolStrip_map.Items.Insert(3, mapHost);
     }
 
+    private bool ExpandTilesPatchApplied()
+    {
+        if (Version.IsMF) return new Patch(Properties.Resources.MF_U_addMinimapTiles).IsApplied();
+        return new Patch(Properties.Resources.ZM_U_addMinimapTiles).IsApplied();
+    }
+
     private void SetValuesBasedOnGame()
     {
         numTiles = 0x200;
-        if (Version.IsMF)
-        {
-            Patch mfP = new Patch(Properties.Resources.MF_U_addMinimapTiles);
-            if (!mfP.IsApplied()) numTiles = 0x1C0;
-            return;
-        }
 
-        Patch zmP = new Patch(Properties.Resources.ZM_U_addMinimapTiles);
-        if (!zmP.IsApplied()) numTiles = 0x180;
+        if (ExpandTilesPatchApplied()) return;
+
+        if (Version.IsMF) numTiles = 0x1C0;
+        else numTiles = 0x180;
     }
 
     private void PopulateBoxesBasedOnGame()
@@ -1094,7 +1101,52 @@ public partial class FormMinimapNew : Form, Editor
         int height = numTiles / 32;
         FormGraphicsNew.OpenGraphicsEditor(Version.MinimapGfxOffset, 32, height, Version.MinimapPaletteOffset);
     }
+
+    private void button_expandTiles_Click(object sender, EventArgs e)
+    {
+        if (ExpandTilesPatchApplied())
+        {
+            MessageBox.Show("Expanded Map Tiles Patch is already applied. You may not apply it a second time.", "Already applied", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        if (MessageBox.Show("Map Tiles can only be expanded once per ROM. This modification is permanent and cannot be undone.\n\n" +
+                "Do you want to continue?",
+                "Expand Minimap Tiles",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question
+            ) != DialogResult.Yes) return;
+
+
+        // Old GFX
+        GFX tileGfx = new(ROM.Stream, Version.MinimapGfxOffset, 32, numTiles / 32);
+        int prevOffset = tileGfx.Offset;
+
+        // Create expanded GFX
+        byte[] newTilesData = new byte[0x4000];
+        romStream.CopyToArray(Version.MinimapGfxOffset, newTilesData, 0, numTiles * 32);
+        GFX newGfx = new(tileGfx, newTilesData);
+
+        // Repoint
+        newGfx.Write(ROM.Stream, false);
+        int newOffset = newGfx.Offset;
+
+        // Ask if user wants Bookmark
+        if (MessageBox.Show(
+            "The map tile graphics need to be repointed.\n\nDo you want to save the new location as a Bookmark?",
+            "Repointing required", MessageBoxButtons.YesNo, MessageBoxIcon.Information
+        )
+        == DialogResult.Yes) BookmarkManager.RepointedDataCreateBookmark(prevOffset, newOffset);
+
+        // Apply add minimap tiles patch
+        if (Version.IsMF) new Patch(Properties.Resources.MF_U_addMinimapTiles).Apply();
+        else new Patch(Properties.Resources.ZM_U_addMinimapTiles).Apply();
+        MessageBox.Show("Successfully expanded Map Tiles", "Expanded Map Tiles", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        // Update UI
+        button_expandTiles.Visible = false;
+        UpdateEditor();
+
+        return;
+    }
     #endregion
-
-
 }
