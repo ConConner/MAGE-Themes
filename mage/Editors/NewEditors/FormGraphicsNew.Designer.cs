@@ -76,6 +76,7 @@
             toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             button_decreasePalette = new System.Windows.Forms.ToolStripButton();
             button_increasePalette = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             button_editPal = new System.Windows.Forms.ToolStripButton();
             panel_shapeSettings = new System.Windows.Forms.Panel();
             panel_fillSettings = new System.Windows.Forms.Panel();
@@ -84,6 +85,9 @@
             toolStrip_gfx = new System.Windows.Forms.ToolStrip();
             button_undo = new System.Windows.Forms.ToolStripSplitButton();
             button_redo = new System.Windows.Forms.ToolStripSplitButton();
+            toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            button_copy = new System.Windows.Forms.ToolStripButton();
+            button_paste = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             button_toolSelect = new System.Windows.Forms.ToolStripButton();
             button_toolPen = new System.Windows.Forms.ToolStripButton();
@@ -102,7 +106,6 @@
             button_imageZoomOut = new System.Windows.Forms.ToolStripButton();
             label_imageZoom = new System.Windows.Forms.ToolStripLabel();
             panel_imageContainer = new mage.Controls.ExtendedPanel();
-            toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             groupBox_imageControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_height).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_width).BeginInit();
@@ -585,6 +588,11 @@
             button_increasePalette.Text = "Next Palette Row";
             button_increasePalette.Click += button_increasePalette_Click;
             // 
+            // toolStripSeparator7
+            // 
+            toolStripSeparator7.Name = "toolStripSeparator7";
+            toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
             // button_editPal
             // 
             button_editPal.Image = Properties.Resources.toolbar_palette;
@@ -641,7 +649,7 @@
             // toolStrip_gfx
             // 
             toolStrip_gfx.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator6, button_toolSelect, button_toolPen, button_toolFill, button_toolShape, button_eyeDropper, toolStripSeparator1, button_flipH, button_flipV, toolStripSeparator3, button_grid, toolStripSeparator4, button_imageZoomIn, button_imageZoomOut, label_imageZoom });
+            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator8, button_copy, button_paste, toolStripSeparator6, button_toolSelect, button_toolPen, button_toolFill, button_toolShape, button_eyeDropper, toolStripSeparator1, button_flipH, button_flipV, toolStripSeparator3, button_grid, toolStripSeparator4, button_imageZoomIn, button_imageZoomOut, label_imageZoom });
             toolStrip_gfx.Location = new System.Drawing.Point(3, 19);
             toolStrip_gfx.Name = "toolStrip_gfx";
             toolStrip_gfx.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -675,6 +683,32 @@
             button_redo.DropDownOpening += button_redo_DropDownOpening;
             button_redo.DropDownItemClicked += button_redo_DropDownItemClicked;
             // 
+            // toolStripSeparator8
+            // 
+            toolStripSeparator8.Name = "toolStripSeparator8";
+            toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+            // 
+            // button_copy
+            // 
+            button_copy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_copy.Enabled = false;
+            button_copy.Image = Properties.Resources.copy;
+            button_copy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_copy.Name = "button_copy";
+            button_copy.Size = new System.Drawing.Size(23, 22);
+            button_copy.Text = "Copy";
+            button_copy.Click += button_copy_Click;
+            // 
+            // button_paste
+            // 
+            button_paste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_paste.Image = Properties.Resources.paste;
+            button_paste.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_paste.Name = "button_paste";
+            button_paste.Size = new System.Drawing.Size(23, 22);
+            button_paste.Text = "Paste";
+            button_paste.Click += button_paste_Click;
+            // 
             // toolStripSeparator6
             // 
             toolStripSeparator6.Name = "toolStripSeparator6";
@@ -687,7 +721,7 @@
             button_toolSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_toolSelect.Name = "button_toolSelect";
             button_toolSelect.Size = new System.Drawing.Size(23, 22);
-            button_toolSelect.Text = "Select";
+            button_toolSelect.Text = "Select (M)";
             button_toolSelect.Click += button_toolSelect_Click;
             // 
             // button_toolPen
@@ -697,7 +731,7 @@
             button_toolPen.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_toolPen.Name = "button_toolPen";
             button_toolPen.Size = new System.Drawing.Size(23, 22);
-            button_toolPen.Text = "Pen";
+            button_toolPen.Text = "Pen (B)";
             button_toolPen.Click += button_toolPen_Click;
             // 
             // button_toolFill
@@ -707,7 +741,7 @@
             button_toolFill.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_toolFill.Name = "button_toolFill";
             button_toolFill.Size = new System.Drawing.Size(23, 22);
-            button_toolFill.Text = "Fill";
+            button_toolFill.Text = "Fill (F)";
             button_toolFill.Click += button_toolFill_Click;
             // 
             // button_toolShape
@@ -717,7 +751,7 @@
             button_toolShape.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_toolShape.Name = "button_toolShape";
             button_toolShape.Size = new System.Drawing.Size(23, 22);
-            button_toolShape.Text = "Shape";
+            button_toolShape.Text = "Shape (S)";
             button_toolShape.Click += button_toolShape_Click;
             // 
             // button_eyeDropper
@@ -727,7 +761,7 @@
             button_eyeDropper.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_eyeDropper.Name = "button_eyeDropper";
             button_eyeDropper.Size = new System.Drawing.Size(23, 22);
-            button_eyeDropper.Text = "Eyedropper";
+            button_eyeDropper.Text = "Eyedropper (C, Alt + Click)";
             button_eyeDropper.Click += button_eyeDropper_Click;
             // 
             // toolStripSeparator1
@@ -832,11 +866,6 @@
             panel_imageContainer.Padding = new System.Windows.Forms.Padding(3, 3, 6, 6);
             panel_imageContainer.Size = new System.Drawing.Size(621, 428);
             panel_imageContainer.TabIndex = 6;
-            // 
-            // toolStripSeparator7
-            // 
-            toolStripSeparator7.Name = "toolStripSeparator7";
-            toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
             // 
             // FormGraphicsNew
             // 
@@ -947,5 +976,8 @@
         private System.Windows.Forms.CheckBox checkBox_neighbouring;
         private System.Windows.Forms.ToolStripButton button_editPal;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripButton button_copy;
+        private System.Windows.Forms.ToolStripButton button_paste;
     }
 }
