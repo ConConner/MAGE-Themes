@@ -68,6 +68,21 @@ public partial class FormGraphicsNew : Form
 
     private Point LastPixel = Point.Empty;
     private Point? SelectionPivot = null;
+    private Point? MovingPivot = null;
+    private bool MovingSelection = false;
+    private bool ReachedMovingThreshold = false;
+    private int MovingThreshold
+    {
+        get
+        {
+            if (tileDisplay_gfx.Zoom == 4) return 2;
+            if (tileDisplay_gfx.Zoom == 3) return 4;
+            if (tileDisplay_gfx.Zoom == 2) return 5;
+            if (tileDisplay_gfx.Zoom == 1) return 6;
+            return 7;
+        }
+    }
+    private int[,]? SelectedPixels = null;
 
     private Status Status;
 
@@ -78,6 +93,7 @@ public partial class FormGraphicsNew : Form
     private Pen DottedPenWhite = new Pen(Color.White, 1) { DashPattern = DashPattern };
     private Pen DottedPenBlack = new Pen(Color.Black, 1) { DashPattern = DashPattern, DashOffset = 2 };
     private Drawable Selection;
+
 
     private Pen ShapePen = new Pen(Color.Aqua, 1) { DashPattern = DashPattern };
     private Drawable ShapeDrawable;
@@ -115,6 +131,9 @@ public partial class FormGraphicsNew : Form
                     button_eyeDropper.Checked = true;
                     break;
             }
+
+            // Paste selection if still there
+            if (SelectedPixels is not null) PasteSelectedPixels();
 
             FinishToolAction();
         }
@@ -451,8 +470,17 @@ public partial class FormGraphicsNew : Form
         Status.ChangeMade();
     }
 
+    private void UndoRedoWithSelection()
+    {
+        if (SelectedPixels is null) return;
+        PasteSelectedPixels();
+        Selection.Visible = false;
+    }
+
     private void Undo()
     {
+        UndoRedoWithSelection();
+        FinishToolAction();
         UndoRedo.Undo();
         setUndoRedoButtons();
         Status.ChangeMade();
@@ -460,6 +488,8 @@ public partial class FormGraphicsNew : Form
 
     private void Redo()
     {
+        UndoRedoWithSelection();
+        FinishToolAction();
         UndoRedo.Redo();
         setUndoRedoButtons();
         Status.ChangeMade();
@@ -558,7 +588,10 @@ public partial class FormGraphicsNew : Form
 
     private void DrawGFX()
     {
-        tileDisplay_gfx.TileImage = loadedGFX.Draw4bpp(loadedPalette, 0, true);
+        Bitmap gfxBitmap = loadedGFX.Draw4bpp(loadedPalette, 0, true);
+        if (SelectedPixels is not null) Draw.Draw4bppOntoBitmap(gfxBitmap, Selection.Location, SelectedPixels);
+
+        tileDisplay_gfx.TileImage = gfxBitmap;
         statusLabel_size.Text = tileDisplay_gfx.TileImage.Width + " x " + tileDisplay_gfx.TileImage.Height;
     }
 
@@ -591,14 +624,20 @@ public partial class FormGraphicsNew : Form
         if (e.Button == MouseButtons.Right) DoDrawPixel(e.PixelPosition, ColorRight);
     }
 
-    private void FinishToolAction()
+    private void CloseActionGroup()
     {
         // Finalise Action Group
         if (latestActionGroup != null && latestActionGroup.ActionCount > 0) AddAction(latestActionGroup);
         latestActionGroup = null;
+    }
 
+    private void FinishToolAction()
+    {
         // Clear variables
         SelectionPivot = null;
+        MovingPivot = null;
+        MovingSelection = false;
+        ReachedMovingThreshold = false;
     }
 
     private void HandleFill(TileDisplay.TileDisplayArgs e)
@@ -657,6 +696,33 @@ public partial class FormGraphicsNew : Form
         }
     }
 
+    private int[,] EjectPixels(Rectangle region)
+    {
+        DrawAreaAction clearAreaAction = new(loadedGFX, region, 0); // Fills the region with pal0 (placeholder for transparent color)
+        clearAreaAction.Do();
+        if (latestActionGroup is not null) latestActionGroup.AddAction(clearAreaAction);
+        DrawGFX();
+        return clearAreaAction.GetOldData(); // The fill replaces the data in the action with the old pixels
+    }
+
+    private DrawAreaAction PastePixels(Point point, int[,] pixels)
+    {
+        DrawAreaAction pasteAreaAction = new(loadedGFX, point, pixels);
+        pasteAreaAction.Do();
+        if (latestActionGroup is not null) latestActionGroup.AddAction(pasteAreaAction);
+        CloseActionGroup();
+        DrawGFX();
+        return pasteAreaAction;
+    }
+
+    private void PasteSelectedPixels()
+    {
+        if (SelectedPixels is null) return;
+        PastePixels(Selection.Location, (int[,])SelectedPixels.Clone());
+        SelectedPixels = null;
+        //DrawGFX();
+    }
+
 
     // Editing Events
     private void tileDisplay_gfx_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
@@ -682,9 +748,22 @@ public partial class FormGraphicsNew : Form
             case Tool.Select:
 
                 SelectionPivot = e.PixelPosition;
-                if (Selection.Visible) Selection.Visible = false; // Deselct Selection
-                else Selection.Visible = true;
-                Selection.Rectangle = new Rectangle(e.PixelPosition, new Size(1, 1));
+
+                // Check if pressing in already existing selection to start a move
+                if (Selection.Visible && Selection.Rectangle.Contains(e.PixelPosition))
+                {
+                    MovingSelection = true;
+                    MovingPivot = Selection.Location;
+                }
+                // Clicking outside of existing selection or creating new one
+                else
+                {
+                    // Placing moved selection if moved
+                    if (SelectedPixels is not null) PasteSelectedPixels();
+
+                    Selection.Visible = !Selection.Visible; // Deselct Selection or start new
+                    Selection.Rectangle = new Rectangle(e.PixelPosition, new Size(1, 1));
+                }
                 break;
 
             case Tool.Fill:
@@ -720,10 +799,34 @@ public partial class FormGraphicsNew : Form
                 break;
 
             case Tool.Select:
-
                 if (SelectionPivot == null) break;
-                Selection.Visible = true;
-                Selection.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition);
+
+                // Moving Selection
+                if (MovingSelection && MovingPivot is not null)
+                {
+                    Size movingDiff = new(e.PixelPosition.X - SelectionPivot.Value.X, e.PixelPosition.Y - SelectionPivot.Value.Y);
+                    bool pastThreshold = (Math.Abs(movingDiff.Width) > MovingThreshold || Math.Abs(movingDiff.Height) > MovingThreshold);
+
+                    if (!ReachedMovingThreshold && pastThreshold && SelectedPixels is null) // This should ideally only trigger once
+                    {
+                        ReachedMovingThreshold = true;
+                        latestActionGroup = new("Move");
+                        SelectedPixels = EjectPixels(Selection.Rectangle);
+                    }
+                    if (ReachedMovingThreshold || SelectedPixels is not null)
+                    {
+                        ReachedMovingThreshold = true;
+                        Selection.Rectangle = new(MovingPivot.Value + movingDiff, Selection.Rectangle.Size);
+
+                        DrawGFX(); // Redrawing to show Preview
+                    }
+                }
+                // Selecting
+                else
+                {
+                    Selection.Visible = true;
+                    Selection.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition);
+                }
                 break;
 
             case Tool.Fill:
@@ -742,9 +845,16 @@ public partial class FormGraphicsNew : Form
         switch (SelectedTool)
         {
             case Tool.Pen:
+                CloseActionGroup();
                 break;
             case Tool.Select:
+                // Check if we want to deselect if clicked in selection but not moved
+                if (!MovingSelection || ReachedMovingThreshold) break;
+                if (SelectedPixels is not null) PasteSelectedPixels();
+
+                Selection.Visible = false;
                 break;
+
             case Tool.Fill:
                 break;
             case Tool.Shape:
