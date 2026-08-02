@@ -163,6 +163,16 @@ namespace mage.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap copy {
+            get {
+                object obj = ResourceManager.GetObject("copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap delete {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);
@@ -798,7 +808,6 @@ namespace mage.Properties {
         ///MF_U_getPowerBombs,Obtain power bombs from expansion,P.JBoy
         ///MF_U_singleWallJump,Single wall jump,biospark
         ///MF_U_infiniteBombJump,Mid-air bomb jump,biospark
-        ///MF_U_addMinimapTiles,Add minimap tiles,biospark
         ///MF_U_noMinimap,No minimap,biospark.
         /// </summary>
         public static string MF_U_patches {
@@ -1123,6 +1132,16 @@ namespace mage.Properties {
         public static System.Drawing.Bitmap paintcan {
             get {
                 object obj = ResourceManager.GetObject("paintcan", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap paste {
+            get {
+                object obj = ResourceManager.GetObject("paste", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2530,7 +2549,6 @@ namespace mage.Properties {
         ///   Looks up a localized string similar to ZM_U_itemToggle,Item toggle menu,Trunaur68
         ///ZM_U_addElevators1,Add elevators (keep cutscenes),biospark
         ///ZM_U_addElevators2,Add elevators (remove cutscenes),biospark
-        ///ZM_U_addMinimapTiles,Add minimap tiles,biospark
         ///ZM_U_noMinimap,No minimap,biospark
         ///ZM_U_disableChozoHints,Disable Chozo statue hints,biospark
         ///ZM_U_removeCloseup,Remove Samus closeup,biospark.

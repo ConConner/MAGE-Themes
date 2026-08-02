@@ -56,4 +56,6 @@ public class DrawAreaAction : EditorGridAction
     {
         Do();
     }
+
+    public int[,] GetOldData() => _data;
 }

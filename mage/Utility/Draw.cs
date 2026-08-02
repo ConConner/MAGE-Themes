@@ -353,6 +353,48 @@ namespace mage
             return b;
         }
 
+        public static unsafe void Draw4bppOntoBitmap(Bitmap dest, Point pos, int[,] pixels)
+        {
+            if (dest.PixelFormat != PixelFormat.Format4bppIndexed)
+                throw new ArgumentException("Destination must be 4bpp indexed.");
+
+            int srcW = pixels.GetLength(0);
+            int srcH = pixels.GetLength(1);
+
+            // Clip to destination bounds
+            int x0 = Math.Max(0, -pos.X);
+            int y0 = Math.Max(0, -pos.Y);
+            int x1 = Math.Min(srcW, dest.Width - pos.X);
+            int y1 = Math.Min(srcH, dest.Height - pos.Y);
+            if (x0 >= x1 || y0 >= y1) return;
+
+            BitmapData data = dest.LockBits(
+                new Rectangle(0, 0, dest.Width, dest.Height),
+                ImageLockMode.ReadWrite,
+                dest.PixelFormat);
+
+            byte* scan0 = (byte*)data.Scan0;
+            int stride = data.Stride;
+
+            for (int y = y0; y < y1; y++)
+            {
+                byte* line = scan0 + (pos.Y + y) * stride;
+
+                for (int x = x0; x < x1; x++)
+                {
+                    int dx = pos.X + x;
+                    byte val = (byte)(pixels[x, y] & 0xF);
+
+                    if ((dx & 1) == 0)
+                        line[dx >> 1] = (byte)((line[dx >> 1] & 0x0F) | (val << 4));
+                    else
+                        line[dx >> 1] = (byte)((line[dx >> 1] & 0xF0) | val);
+                }
+            }
+
+            dest.UnlockBits(data);
+        }
+
         public enum ArrowDirection : int
         {
             Right = 0,

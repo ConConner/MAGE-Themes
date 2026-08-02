@@ -3,6 +3,7 @@ using mage.Actions.GraphicsEditor;
 using mage.Bookmarks;
 using mage.Controls;
 using mage.Theming;
+using mage.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,8 +13,10 @@ using System.Drawing.Design;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.IO;
+using System.Numerics;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -68,16 +71,47 @@ public partial class FormGraphicsNew : Form
 
     private Point LastPixel = Point.Empty;
     private Point? SelectionPivot = null;
+    private Point? MovingPivot = null;
+    private bool MovingSelection = false;
+    private bool ReachedMovingThreshold = false;
+    private int MovingThreshold
+    {
+        get
+        {
+            if (tileDisplay_gfx.Zoom == 4) return 2;
+            if (tileDisplay_gfx.Zoom == 3) return 4;
+            if (tileDisplay_gfx.Zoom == 2) return 5;
+            if (tileDisplay_gfx.Zoom == 1) return 6;
+            return 7;
+        }
+    }
+    private int[,]? SelectedPixels = null;
 
     private Status Status;
 
     private FillRestrictions FillToolRestrictions = FillRestrictions.Neighbouring;
+
+    private const string ClipboardFormat = "MageGraphicsEditor_Pixels";
 
     // Drawables
     private static float[] DashPattern = new float[] { 2, 3 };
     private Pen DottedPenWhite = new Pen(Color.White, 1) { DashPattern = DashPattern };
     private Pen DottedPenBlack = new Pen(Color.Black, 1) { DashPattern = DashPattern, DashOffset = 2 };
     private Drawable Selection;
+    private bool SelectionVisible
+    {
+        get => Selection.Visible;
+        set
+        {
+            if (Selection.Visible == value) return;
+            Selection.Visible = value;
+
+            button_copy.Enabled = value;
+            button_flipH.Enabled = value;
+            button_flipV.Enabled = value;
+        }
+    }
+
 
     private Pen ShapePen = new Pen(Color.Aqua, 1) { DashPattern = DashPattern };
     private Drawable ShapeDrawable;
@@ -115,6 +149,9 @@ public partial class FormGraphicsNew : Form
                     button_eyeDropper.Checked = true;
                     break;
             }
+
+            // Paste selection if still there
+            if (SelectedPixels is not null) PasteSelectedPixels();
 
             FinishToolAction();
         }
@@ -218,7 +255,7 @@ public partial class FormGraphicsNew : Form
         dashAnimationTimer.Tick += (_, _) =>
         {
             SelectionDashOffset += 1;
-            if (Selection.Visible) Selection.InvalidateDrawable(Selection);
+            if (SelectionVisible) Selection.InvalidateDrawable(Selection);
             if (ShapeDrawable.Visible) ShapeDrawable.InvalidateDrawable(ShapeDrawable);
         };
         dashAnimationTimer.Start();
@@ -239,6 +276,10 @@ public partial class FormGraphicsNew : Form
     private void LoadData()
     {
         if (Status.UnsavedChanges && !CheckUnsaved()) return;
+        Status.LoadNew();
+        UndoRedo = new();
+        setUndoRedoButtons();
+
         if (!LoadPalette(0)) return;
         if (!LoadNewGFX()) return;
         DrawPalette();
@@ -304,19 +345,29 @@ public partial class FormGraphicsNew : Form
         toolStrip_palette.Items.Insert(0, colorHost);
     }
 
-    private Rectangle GetRectangleFromPoints(Point p1, Point p2)
+    private Rectangle GetRectangleFromPoints(Point p1, Point p2, bool alignToGrid = false)
     {
-        int x = Math.Min(p1.X, p2.X);
-        int y = Math.Min(p1.Y, p2.Y);
-        int width = Math.Abs(p1.X - p2.X) + 1;
-        int height = Math.Abs(p1.Y - p2.Y) + 1;
-        return new Rectangle(x, y, width, height);
+        int left = Math.Min(p1.X, p2.X);
+        int top = Math.Min(p1.Y, p2.Y);
+        int right = Math.Max(p1.X, p2.X) + 1;
+        int bottom = Math.Max(p1.Y, p2.Y) + 1;
+
+        if (alignToGrid)
+        {
+            const int grid = 8;
+            left = MathFunctions.FloorTo(left, grid);
+            top = MathFunctions.FloorTo(top, grid);
+            right = MathFunctions.CeilTo(right, grid);
+            bottom = MathFunctions.CeilTo(bottom, grid);
+        }
+
+        return new Rectangle(left, top, right - left, bottom - top);
     }
 
     private bool IsInSelection(Point p)
     {
         // Return true if no selection, since everything is "in" the selection
-        if (!Selection.Visible) return true;
+        if (!SelectionVisible) return true;
         return Selection.Rectangle.Contains(p);
     }
 
@@ -356,7 +407,20 @@ public partial class FormGraphicsNew : Form
                 break;
 
             case Keys.C:
+                if (ModifierKeys == Keys.Control)
+                {
+                    Copy();
+                    break;
+                }
                 button_eyeDropper_Click(this, e);
+                break;
+
+            case Keys.V:
+                if (ModifierKeys == Keys.Control)
+                {
+                    Paste(true);
+                    break;
+                }
                 break;
 
             case Keys.M:
@@ -381,7 +445,14 @@ public partial class FormGraphicsNew : Form
                     break;
                 }
                 break;
+
         }
+    }
+
+    private void FormGraphicsNew_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (!Status.UnsavedChanges || CheckUnsaved()) return;
+        e.Cancel = true;
     }
     #endregion
 
@@ -451,8 +522,19 @@ public partial class FormGraphicsNew : Form
         Status.ChangeMade();
     }
 
+    private void DiscardSelection()
+    {
+        if (SelectedPixels is null) return;
+        if (latestActionGroup?.ActionCount == 1) latestActionGroup.Undo();
+        latestActionGroup = null;
+        SelectedPixels = null;
+        SelectionVisible = false;
+    }
+
     private void Undo()
     {
+        DiscardSelection();
+        FinishToolAction();
         UndoRedo.Undo();
         setUndoRedoButtons();
         Status.ChangeMade();
@@ -460,6 +542,8 @@ public partial class FormGraphicsNew : Form
 
     private void Redo()
     {
+        DiscardSelection();
+        FinishToolAction();
         UndoRedo.Redo();
         setUndoRedoButtons();
         Status.ChangeMade();
@@ -484,7 +568,7 @@ public partial class FormGraphicsNew : Form
     {
         button_undo.Enabled = UndoRedo.CanUndo;
         button_redo.Enabled = UndoRedo.CanRedo;
-        DrawGFX();
+        if (loadedGFX is not null) DrawGFX();
     }
 
     private void button_undo_ButtonClick(object sender, EventArgs e) => Undo();
@@ -558,7 +642,10 @@ public partial class FormGraphicsNew : Form
 
     private void DrawGFX()
     {
-        tileDisplay_gfx.TileImage = loadedGFX.Draw4bpp(loadedPalette, 0, true);
+        Bitmap gfxBitmap = loadedGFX.Draw4bpp(loadedPalette, 0, true);
+        if (SelectedPixels is not null) Draw.Draw4bppOntoBitmap(gfxBitmap, Selection.Location, SelectedPixels);
+
+        tileDisplay_gfx.TileImage = gfxBitmap;
         statusLabel_size.Text = tileDisplay_gfx.TileImage.Width + " x " + tileDisplay_gfx.TileImage.Height;
     }
 
@@ -591,14 +678,20 @@ public partial class FormGraphicsNew : Form
         if (e.Button == MouseButtons.Right) DoDrawPixel(e.PixelPosition, ColorRight);
     }
 
-    private void FinishToolAction()
+    private void CloseActionGroup()
     {
         // Finalise Action Group
         if (latestActionGroup != null && latestActionGroup.ActionCount > 0) AddAction(latestActionGroup);
         latestActionGroup = null;
+    }
 
+    private void FinishToolAction()
+    {
         // Clear variables
         SelectionPivot = null;
+        MovingPivot = null;
+        MovingSelection = false;
+        ReachedMovingThreshold = false;
     }
 
     private void HandleFill(TileDisplay.TileDisplayArgs e)
@@ -657,11 +750,40 @@ public partial class FormGraphicsNew : Form
         }
     }
 
+    private int[,] EjectPixels(Rectangle region)
+    {
+        DrawAreaAction clearAreaAction = new(loadedGFX, region, 0); // Fills the region with pal0 (placeholder for transparent color)
+        clearAreaAction.Do();
+        if (latestActionGroup is not null) latestActionGroup.AddAction(clearAreaAction);
+        DrawGFX();
+        return clearAreaAction.GetOldData(); // The fill replaces the data in the action with the old pixels
+    }
+
+    private DrawAreaAction PastePixels(Point point, int[,] pixels)
+    {
+        DrawAreaAction pasteAreaAction = new(loadedGFX, point, pixels);
+        pasteAreaAction.Do();
+        if (latestActionGroup is not null) latestActionGroup.AddAction(pasteAreaAction);
+        CloseActionGroup();
+        DrawGFX();
+        return pasteAreaAction;
+    }
+
+    private void PasteSelectedPixels()
+    {
+        if (SelectedPixels is null) return;
+        PastePixels(Selection.Location, (int[,])SelectedPixels.Clone());
+        SelectedPixels = null;
+        //DrawGFX();
+    }
+
 
     // Editing Events
     private void tileDisplay_gfx_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
         if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
+
+        bool shift = ModifierKeys == Keys.Shift;
 
         // Eyedropper quick pick
         if (ModifierKeys == Keys.Alt)
@@ -681,10 +803,24 @@ public partial class FormGraphicsNew : Form
 
             case Tool.Select:
 
-                SelectionPivot = e.PixelPosition;
-                if (Selection.Visible) Selection.Visible = false; // Deselct Selection
-                else Selection.Visible = true;
-                Selection.Rectangle = new Rectangle(e.PixelPosition, new Size(1, 1));
+                SelectionPivot = shift ? e.TilePixelPosition : e.PixelPosition;
+
+                // Check if pressing in already existing selection to start a move
+                if (SelectionVisible && Selection.Rectangle.Contains(e.PixelPosition))
+                {
+                    MovingSelection = true;
+                    MovingPivot = Selection.Location;
+                }
+                // Clicking outside of existing selection or creating new one
+                else
+                {
+                    // Placing moved selection if moved
+                    if (SelectedPixels is not null) PasteSelectedPixels();
+
+                    SelectionVisible = !SelectionVisible; // Deselct Selection or start new
+                    Rectangle r = shift ? new(e.TilePixelPosition, new(8, 8)) : new(e.PixelPosition, new(1, 1));
+                    Selection.Rectangle = r;
+                }
                 break;
 
             case Tool.Fill:
@@ -707,8 +843,11 @@ public partial class FormGraphicsNew : Form
     private void tileDisplay_gfx_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
         // Only Update if moved to a new pixel
-        if (e.PixelPosition == LastPixel) return;
+        Rectangle bounds = new(0, 0, tileDisplay_gfx.TileImage.Width, tileDisplay_gfx.TileImage.Height);
+        if (e.PixelPosition == LastPixel || !bounds.Contains(e.PixelPosition)) return;
         LastPixel = e.PixelPosition;
+
+        bool shift = ModifierKeys == Keys.Shift;
 
         if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
         if (ModifierKeys == Keys.Alt) return;
@@ -720,10 +859,38 @@ public partial class FormGraphicsNew : Form
                 break;
 
             case Tool.Select:
-
                 if (SelectionPivot == null) break;
-                Selection.Visible = true;
-                Selection.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition);
+
+                // Moving Selection
+                if (MovingSelection && MovingPivot is not null)
+                {
+                    Size movingDiff = new(e.PixelPosition.X - SelectionPivot.Value.X, e.PixelPosition.Y - SelectionPivot.Value.Y);
+                    bool pastThreshold = (Math.Abs(movingDiff.Width) > MovingThreshold || Math.Abs(movingDiff.Height) > MovingThreshold);
+
+                    if (!ReachedMovingThreshold && pastThreshold && SelectedPixels is null) // This should ideally only trigger once
+                    {
+                        ReachedMovingThreshold = true;
+                        latestActionGroup = new("Move");
+                        SelectedPixels = EjectPixels(Selection.Rectangle);
+                    }
+                    if (ReachedMovingThreshold || SelectedPixels is not null)
+                    {
+                        ReachedMovingThreshold = true;
+
+                        // Align to grid if shifting
+                        Point moved = MovingPivot.Value + movingDiff;
+                        Point final = shift ? new(moved.X / 8 * 8, moved.Y / 8 * 8) : moved;
+
+                        Selection.Rectangle = new(final, Selection.Rectangle.Size);
+                        DrawGFX(); // Redrawing to show Preview
+                    }
+                }
+                // Selecting
+                else
+                {
+                    SelectionVisible = true;
+                    Selection.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition, shift);
+                }
                 break;
 
             case Tool.Fill:
@@ -732,7 +899,7 @@ public partial class FormGraphicsNew : Form
             case Tool.Shape:
 
                 if (SelectionPivot == null) break;
-                ShapeDrawable.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition);
+                ShapeDrawable.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition, shift);
                 break;
         }
     }
@@ -742,9 +909,16 @@ public partial class FormGraphicsNew : Form
         switch (SelectedTool)
         {
             case Tool.Pen:
+                CloseActionGroup();
                 break;
             case Tool.Select:
+                // Check if we want to deselect if clicked in selection but not moved
+                if (!MovingSelection || ReachedMovingThreshold) break;
+                if (SelectedPixels is not null) PasteSelectedPixels();
+
+                SelectionVisible = false;
                 break;
+
             case Tool.Fill:
                 break;
             case Tool.Shape:
@@ -757,7 +931,7 @@ public partial class FormGraphicsNew : Form
 
                         // Get intersecting area with selection
                         Rectangle area = ShapeDrawable.Rectangle;
-                        if (Selection.Visible) area = Rectangle.Intersect(area, Selection.Rectangle);
+                        if (SelectionVisible) area = Rectangle.Intersect(area, Selection.Rectangle);
                         if (area.IsEmpty) break;
 
                         var rectangleAction = new DrawAreaAction(loadedGFX, area, _color);
@@ -990,5 +1164,143 @@ public partial class FormGraphicsNew : Form
     private void menuItem_palExport_tlp_Click(object sender, EventArgs e) => ExportPalette(PalFileType.TLP);
 
     private void menuItem_palExport_yychr_Click(object sender, EventArgs e) => ExportPalette(PalFileType.YYCHR);
+    #endregion
+
+    #region Copy/Paste
+
+    internal class FlatIntArray
+    {
+        public FlatIntArray() { }
+        public FlatIntArray(int[,] input)
+        {
+            Rows = input.GetLength(0);
+            Cols = input.GetLength(1);
+            Values = new int[Rows * Cols];
+
+            int index = 0;
+            for (int r = 0; r < Rows; r++)
+                for (int c = 0; c < Cols; c++)
+                    Values[index++] = input[r, c];
+        }
+
+        public int Rows { get; set; }
+        public int Cols { get; set; }
+        public int[] Values { get; set; }
+
+        public int[,] Unpack()
+        {
+            int[,] result = new int[Rows, Cols];
+            int index = 0;
+
+            for (int r = 0; r < Rows; r++)
+                for (int c = 0; c < Cols; c++)
+                    result[r, c] = Values[index++];
+
+            return result;
+        }
+
+        public static explicit operator FlatIntArray(int[,] input) => new FlatIntArray(input);
+        public static implicit operator int[,](FlatIntArray input) => input.Unpack();
+    }
+
+    private int[,] CopyPixels()
+    {
+        int[,] pixels = new int[Selection.Width, Selection.Height];
+        for (int x = 0; x < Selection.Width; x++)
+            for (int y = 0; y < Selection.Height; y++)
+            {
+                pixels[x, y] = loadedGFX.GetPixel(Selection.Location.X + x, Selection.Location.Y + y);
+            }
+        return pixels;
+    }
+
+    private void CopyArrayToClipboard(int[,] pixels)
+    {
+        try { Clipboard.SetDataAsJson(ClipboardFormat, (FlatIntArray)pixels); }
+        catch (ExternalException)
+        {
+            MessageBox.Show("Clipboard is busy. Please try copying again.");
+        }
+    }
+
+    private int[,]? PixelsFromClipboard()
+    {
+        if (!Clipboard.ContainsData(ClipboardFormat)) return null;
+
+        try
+        {
+            if (Clipboard.TryGetData(ClipboardFormat, out FlatIntArray pastedArray)) return pastedArray;
+        }
+        catch (ExternalException)
+        {
+            MessageBox.Show("Clipboard is busy. Please try pasting again.");
+        }
+
+        return null;
+    }
+
+    private Point FindIdealPasteLocation(bool pressedButton, int width, int height)
+    {
+        Point mouseToTileDisplay = tileDisplay_gfx.PointToClient(Cursor.Position);
+
+        if (!pressedButton) return new Point((mouseToTileDisplay.X >> tileDisplay_gfx.Zoom) - width / 2, (mouseToTileDisplay.Y >> tileDisplay_gfx.Zoom) - height / 2);
+
+        int xOffset = Math.Abs(panel_imageDisplay.AutoScrollPosition.X >> tileDisplay_gfx.Zoom);
+        int yOffset = Math.Abs(panel_imageDisplay.AutoScrollPosition.Y >> tileDisplay_gfx.Zoom);
+
+        return new Point(3 + xOffset, 3 + yOffset);
+    }
+
+    private void Copy()
+    {
+        if (!SelectionVisible) return;
+        if (SelectedPixels is not null) PasteSelectedPixels();
+        int[,] copiedPixels = CopyPixels();
+        CopyArrayToClipboard(copiedPixels);
+    }
+
+    private void Paste(bool throughShortcut = false)
+    {
+        int[,]? pastePixels = PixelsFromClipboard();
+        if (pastePixels is null) return;
+
+        if (SelectedPixels is not null) PasteSelectedPixels();
+
+        Point pastePoint = FindIdealPasteLocation(!throughShortcut, pastePixels.GetLength(0), pastePixels.GetLength(1));
+
+        SelectedTool = Tool.Select;
+        SelectionVisible = true;
+        Selection.Rectangle = new Rectangle(pastePoint.X, pastePoint.Y, pastePixels.GetLength(0), pastePixels.GetLength(1));
+        SelectedPixels = pastePixels;
+        latestActionGroup = new("Paste");
+
+        DrawGFX();
+    }
+
+    private void button_copy_Click(object sender, EventArgs e) => Copy();
+
+    private void button_paste_Click(object sender, EventArgs e) => Paste();
+    #endregion
+
+    #region Flipping
+    private void FlipH()
+    {
+        if (!SelectionVisible) return;
+        FlipGraphicsAction a = new(loadedGFX, Selection.Rectangle, isVertical: false);
+        a.Do();
+        AddAction(a);
+    }
+
+    private void FlipV()
+    {
+        if (!SelectionVisible) return;
+        FlipGraphicsAction a = new(loadedGFX, Selection.Rectangle, isVertical: true);
+        a.Do();
+        AddAction(a);
+    }
+
+    private void button_flipH_Click(object sender, EventArgs e) => FlipH();
+
+    private void button_flipV_Click(object sender, EventArgs e) => FlipV();
     #endregion
 }

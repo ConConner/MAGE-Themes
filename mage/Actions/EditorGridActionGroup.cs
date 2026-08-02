@@ -8,6 +8,12 @@ namespace mage.Actions;
 internal class EditorGridActionGroup : EditorGridAction
 {
     private List<EditorGridAction> actions = new List<EditorGridAction>();
+    private string? _actionText;
+
+    public EditorGridActionGroup(string? actionText = null)
+    {
+        _actionText = actionText;
+    }
 
     public override Rectangle AffectedRegion
     {
@@ -22,14 +28,7 @@ internal class EditorGridActionGroup : EditorGridAction
         }
     }
 
-    public override string ActionText
-    {
-        get
-        {
-            string text = actions[actions.Count - 1].ActionText;
-            return text;
-        }
-    }
+    public override string ActionText => _actionText ?? actions[actions.Count - 1].ActionText;
 
     public void AddAction(EditorGridAction action)
     {

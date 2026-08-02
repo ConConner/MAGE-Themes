@@ -284,10 +284,13 @@ public partial class FlatTextBox : UserControl
     private void textBox_Leave(object sender, EventArgs e)
     {
         if (!ValueBox || Text == "") return;
-        int value = Hex.ToInt(Text);
-
-        //TODO: Check here if value is a bookmark
-        Config.AddRecentOffset(Program.Config, Text, value);
+        try
+        {
+            int value = Hex.ToInt(Text);
+            //TODO: Check here if value is a bookmark
+            Config.AddRecentOffset(Program.Config, Text, value);
+        }
+        catch { }
     }
 
 
