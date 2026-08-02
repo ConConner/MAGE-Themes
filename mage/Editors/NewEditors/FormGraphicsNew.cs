@@ -1286,6 +1286,7 @@ public partial class FormGraphicsNew : Form
     private void FlipH()
     {
         if (!SelectionVisible) return;
+        if (SelectedPixels is not null) PasteSelectedPixels();
         FlipGraphicsAction a = new(loadedGFX, Selection.Rectangle, isVertical: false);
         a.Do();
         AddAction(a);
@@ -1294,6 +1295,7 @@ public partial class FormGraphicsNew : Form
     private void FlipV()
     {
         if (!SelectionVisible) return;
+        if (SelectedPixels is not null) PasteSelectedPixels();
         FlipGraphicsAction a = new(loadedGFX, Selection.Rectangle, isVertical: true);
         a.Do();
         AddAction(a);
