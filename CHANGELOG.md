@@ -1,3 +1,10 @@
+## [1.19.1](https://github.com/ConConner/MAGE-Themes/compare/v1.19.0...v1.19.1) (2026-08-02)
+
+
+### Bug Fixes
+
+* flipping in graphics editor while moving a selection does not flip the selection ([79522aa](https://github.com/ConConner/MAGE-Themes/commit/79522aaae5c776f22d6df0c43b91089383fccb0e))
+
 # [1.19.0](https://github.com/ConConner/MAGE-Themes/compare/v1.18.0...v1.19.0) (2026-08-02)
 
 
