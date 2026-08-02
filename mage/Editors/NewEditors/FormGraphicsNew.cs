@@ -3,6 +3,7 @@ using mage.Actions.GraphicsEditor;
 using mage.Bookmarks;
 using mage.Controls;
 using mage.Theming;
+using mage.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using System.Drawing.Design;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.IO;
+using System.Numerics;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -274,6 +276,10 @@ public partial class FormGraphicsNew : Form
     private void LoadData()
     {
         if (Status.UnsavedChanges && !CheckUnsaved()) return;
+        Status.LoadNew();
+        UndoRedo = new();
+        setUndoRedoButtons();
+
         if (!LoadPalette(0)) return;
         if (!LoadNewGFX()) return;
         DrawPalette();
@@ -339,13 +345,23 @@ public partial class FormGraphicsNew : Form
         toolStrip_palette.Items.Insert(0, colorHost);
     }
 
-    private Rectangle GetRectangleFromPoints(Point p1, Point p2)
+    private Rectangle GetRectangleFromPoints(Point p1, Point p2, bool alignToGrid = false)
     {
-        int x = Math.Min(p1.X, p2.X);
-        int y = Math.Min(p1.Y, p2.Y);
-        int width = Math.Abs(p1.X - p2.X) + 1;
-        int height = Math.Abs(p1.Y - p2.Y) + 1;
-        return new Rectangle(x, y, width, height);
+        int left = Math.Min(p1.X, p2.X);
+        int top = Math.Min(p1.Y, p2.Y);
+        int right = Math.Max(p1.X, p2.X) + 1;
+        int bottom = Math.Max(p1.Y, p2.Y) + 1;
+
+        if (alignToGrid)
+        {
+            const int grid = 8;
+            left = MathFunctions.FloorTo(left, grid);
+            top = MathFunctions.FloorTo(top, grid);
+            right = MathFunctions.CeilTo(right, grid);
+            bottom = MathFunctions.CeilTo(bottom, grid);
+        }
+
+        return new Rectangle(left, top, right - left, bottom - top);
     }
 
     private bool IsInSelection(Point p)
@@ -432,6 +448,12 @@ public partial class FormGraphicsNew : Form
 
         }
     }
+
+    private void FormGraphicsNew_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (!Status.UnsavedChanges || CheckUnsaved()) return;
+        e.Cancel = true;
+    }
     #endregion
 
     #region Tools
@@ -500,16 +522,18 @@ public partial class FormGraphicsNew : Form
         Status.ChangeMade();
     }
 
-    private void ForceFinishSelection()
+    private void DiscardSelection()
     {
         if (SelectedPixels is null) return;
-        PasteSelectedPixels();
+        if (latestActionGroup?.ActionCount == 1) latestActionGroup.Undo();
+        latestActionGroup = null;
+        SelectedPixels = null;
         SelectionVisible = false;
     }
 
     private void Undo()
     {
-        ForceFinishSelection();
+        DiscardSelection();
         FinishToolAction();
         UndoRedo.Undo();
         setUndoRedoButtons();
@@ -518,7 +542,7 @@ public partial class FormGraphicsNew : Form
 
     private void Redo()
     {
-        ForceFinishSelection();
+        DiscardSelection();
         FinishToolAction();
         UndoRedo.Redo();
         setUndoRedoButtons();
@@ -544,7 +568,7 @@ public partial class FormGraphicsNew : Form
     {
         button_undo.Enabled = UndoRedo.CanUndo;
         button_redo.Enabled = UndoRedo.CanRedo;
-        DrawGFX();
+        if (loadedGFX is not null) DrawGFX();
     }
 
     private void button_undo_ButtonClick(object sender, EventArgs e) => Undo();
@@ -759,6 +783,8 @@ public partial class FormGraphicsNew : Form
     {
         if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
 
+        bool shift = ModifierKeys == Keys.Shift;
+
         // Eyedropper quick pick
         if (ModifierKeys == Keys.Alt)
         {
@@ -777,7 +803,7 @@ public partial class FormGraphicsNew : Form
 
             case Tool.Select:
 
-                SelectionPivot = e.PixelPosition;
+                SelectionPivot = shift ? e.TilePixelPosition : e.PixelPosition;
 
                 // Check if pressing in already existing selection to start a move
                 if (SelectionVisible && Selection.Rectangle.Contains(e.PixelPosition))
@@ -792,7 +818,8 @@ public partial class FormGraphicsNew : Form
                     if (SelectedPixels is not null) PasteSelectedPixels();
 
                     SelectionVisible = !SelectionVisible; // Deselct Selection or start new
-                    Selection.Rectangle = new Rectangle(e.PixelPosition, new Size(1, 1));
+                    Rectangle r = shift ? new(e.TilePixelPosition, new(8, 8)) : new(e.PixelPosition, new(1, 1));
+                    Selection.Rectangle = r;
                 }
                 break;
 
@@ -818,6 +845,8 @@ public partial class FormGraphicsNew : Form
         // Only Update if moved to a new pixel
         if (e.PixelPosition == LastPixel) return;
         LastPixel = e.PixelPosition;
+
+        bool shift = ModifierKeys == Keys.Shift;
 
         if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
         if (ModifierKeys == Keys.Alt) return;
@@ -846,8 +875,12 @@ public partial class FormGraphicsNew : Form
                     if (ReachedMovingThreshold || SelectedPixels is not null)
                     {
                         ReachedMovingThreshold = true;
-                        Selection.Rectangle = new(MovingPivot.Value + movingDiff, Selection.Rectangle.Size);
 
+                        // Align to grid if shifting
+                        Point moved = MovingPivot.Value + movingDiff;
+                        Point final = shift ? new(moved.X / 8 * 8, moved.Y / 8 * 8) : moved;
+
+                        Selection.Rectangle = new(final, Selection.Rectangle.Size);
                         DrawGFX(); // Redrawing to show Preview
                     }
                 }
@@ -855,7 +888,7 @@ public partial class FormGraphicsNew : Form
                 else
                 {
                     SelectionVisible = true;
-                    Selection.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition);
+                    Selection.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition, shift);
                 }
                 break;
 
@@ -865,7 +898,7 @@ public partial class FormGraphicsNew : Form
             case Tool.Shape:
 
                 if (SelectionPivot == null) break;
-                ShapeDrawable.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition);
+                ShapeDrawable.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition, shift);
                 break;
         }
     }
@@ -1248,4 +1281,19 @@ public partial class FormGraphicsNew : Form
     private void button_paste_Click(object sender, EventArgs e) => Paste();
     #endregion
 
+    #region Flipping
+    private void FlipH()
+    {
+
+    }
+
+    private void FlipV()
+    {
+
+    }
+
+    private void button_flipH_Click(object sender, EventArgs e) => FlipH();
+
+    private void button_flipV_Click(object sender, EventArgs e) => FlipV();
+    #endregion
 }

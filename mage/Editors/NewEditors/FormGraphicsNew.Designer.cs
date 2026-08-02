@@ -768,7 +768,6 @@
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            toolStripSeparator1.Visible = false;
             // 
             // button_flipH
             // 
@@ -779,7 +778,7 @@
             button_flipH.Name = "button_flipH";
             button_flipH.Size = new System.Drawing.Size(23, 22);
             button_flipH.Text = "Flip Horizontally (H, X)";
-            button_flipH.Visible = false;
+            button_flipH.Click += button_flipH_Click;
             // 
             // button_flipV
             // 
@@ -790,7 +789,7 @@
             button_flipV.Name = "button_flipV";
             button_flipV.Size = new System.Drawing.Size(23, 22);
             button_flipV.Text = "Flip Vertically (V, Y)";
-            button_flipV.Visible = false;
+            button_flipV.Click += button_flipV_Click;
             // 
             // toolStripSeparator3
             // 
@@ -878,6 +877,7 @@
             KeyPreview = true;
             Name = "FormGraphicsNew";
             Text = "Graphics Editor";
+            FormClosing += FormGraphicsNew_FormClosing;
             KeyDown += FormGraphicsNew_KeyDown;
             groupBox_imageControl.ResumeLayout(false);
             groupBox_imageControl.PerformLayout();
