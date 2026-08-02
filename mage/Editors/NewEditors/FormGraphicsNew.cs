@@ -843,7 +843,8 @@ public partial class FormGraphicsNew : Form
     private void tileDisplay_gfx_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
         // Only Update if moved to a new pixel
-        if (e.PixelPosition == LastPixel) return;
+        Rectangle bounds = new(0, 0, tileDisplay_gfx.TileImage.Width, tileDisplay_gfx.TileImage.Height);
+        if (e.PixelPosition == LastPixel || !bounds.Contains(e.PixelPosition)) return;
         LastPixel = e.PixelPosition;
 
         bool shift = ModifierKeys == Keys.Shift;
@@ -1284,12 +1285,18 @@ public partial class FormGraphicsNew : Form
     #region Flipping
     private void FlipH()
     {
-
+        if (!SelectionVisible) return;
+        FlipGraphicsAction a = new(loadedGFX, Selection.Rectangle, isVertical: false);
+        a.Do();
+        AddAction(a);
     }
 
     private void FlipV()
     {
-
+        if (!SelectionVisible) return;
+        FlipGraphicsAction a = new(loadedGFX, Selection.Rectangle, isVertical: true);
+        a.Do();
+        AddAction(a);
     }
 
     private void button_flipH_Click(object sender, EventArgs e) => FlipH();
