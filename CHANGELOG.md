@@ -1,3 +1,18 @@
+# [1.19.0](https://github.com/ConConner/MAGE-Themes/compare/v1.18.0...v1.19.0) (2026-08-02)
+
+
+### Bug Fixes
+
+* mage crashes if any offset input box looses focus while containing an invalid HEX-number ([32bcee8](https://github.com/ConConner/MAGE-Themes/commit/32bcee8e775fb79a16c6d7c9e8b616b00afd5323))
+
+
+### Features
+
+* added copy & paste functionality to graphics editor [experimental] ([fc2161b](https://github.com/ConConner/MAGE-Themes/commit/fc2161b9550a5a932f0eae70e84e8c5dea08ad4a))
+* added flip to graphics editor [experimental] ([b5fb592](https://github.com/ConConner/MAGE-Themes/commit/b5fb59221e0d0d9c22bbe4cb5b33a34a45ffb4a0)), closes [#95](https://github.com/ConConner/MAGE-Themes/issues/95)
+* hold shift to snap to grid in graphics editor [experimental] ([e42ef47](https://github.com/ConConner/MAGE-Themes/commit/e42ef47b7e8db988a33eb29b39f235772161f7e2))
+* selections can be moved in graphics editor [experimental] ([8a25de4](https://github.com/ConConner/MAGE-Themes/commit/8a25de42aee5df9a9e95b43a25d108c4b1e3c4dd))
+
 # [1.18.0](https://github.com/ConConner/MAGE-Themes/compare/v1.17.0...v1.18.0) (2026-07-31)
 
 
