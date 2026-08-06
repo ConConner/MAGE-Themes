@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPaletteNew));
             panel_main = new System.Windows.Forms.SplitContainer();
             groupBox_color = new System.Windows.Forms.GroupBox();
+            seperator1 = new mage.Controls.Seperator();
+            colorPicker = new mage.Controls.HsvColorPicker();
             colorBar_blue = new mage.Controls.ColorBar();
             colorBar_green = new mage.Controls.ColorBar();
             colorBar_red = new mage.Controls.ColorBar();
@@ -56,6 +58,18 @@
             button_plus = new System.Windows.Forms.Button();
             button_load = new System.Windows.Forms.Button();
             textBox_offset = new mage.Theming.CustomControls.FlatTextBox();
+            groupBox_map = new System.Windows.Forms.GroupBox();
+            panel_palView = new mage.Controls.ExtendedPanel();
+            tileDisplay_pal = new mage.Controls.TileDisplay();
+            toolStrip_palette = new System.Windows.Forms.ToolStrip();
+            button_undo = new System.Windows.Forms.ToolStripSplitButton();
+            button_redo = new System.Windows.Forms.ToolStripSplitButton();
+            toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            button_grid = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            button_ZoomIn = new System.Windows.Forms.ToolStripButton();
+            button_ZoomOut = new System.Windows.Forms.ToolStripButton();
+            label_Zoom = new System.Windows.Forms.ToolStripLabel();
             statusStrip_main = new System.Windows.Forms.StatusStrip();
             statusLabel_tile = new System.Windows.Forms.ToolStripStatusLabel();
             statusLabel_changes = new System.Windows.Forms.ToolStripStatusLabel();
@@ -69,21 +83,6 @@
             statusStrip_exportTLP = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip_exportYY = new System.Windows.Forms.ToolStripMenuItem();
             button_apply = new System.Windows.Forms.ToolStripDropDownButton();
-            groupBox_map = new System.Windows.Forms.GroupBox();
-            panel_palView = new mage.Controls.ExtendedPanel();
-            tileDisplay_pal = new mage.Controls.TileDisplay();
-            toolStrip_palette = new System.Windows.Forms.ToolStrip();
-            button_undo = new System.Windows.Forms.ToolStripSplitButton();
-            button_redo = new System.Windows.Forms.ToolStripSplitButton();
-            toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            button_flipMapH = new System.Windows.Forms.ToolStripButton();
-            button_flipMapV = new System.Windows.Forms.ToolStripButton();
-            toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            button_grid = new System.Windows.Forms.ToolStripButton();
-            toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            button_mapZoomIn = new System.Windows.Forms.ToolStripButton();
-            button_mapZoomOut = new System.Windows.Forms.ToolStripButton();
-            label_mapZoom = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)panel_main).BeginInit();
             panel_main.Panel1.SuspendLayout();
             panel_main.Panel2.SuspendLayout();
@@ -96,10 +95,10 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox_chosenColor).BeginInit();
             group_selection.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_rows).BeginInit();
-            statusStrip_main.SuspendLayout();
             groupBox_map.SuspendLayout();
             panel_palView.SuspendLayout();
             toolStrip_palette.SuspendLayout();
+            statusStrip_main.SuspendLayout();
             SuspendLayout();
             // 
             // panel_main
@@ -119,12 +118,14 @@
             // 
             panel_main.Panel2.Controls.Add(groupBox_map);
             panel_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
-            panel_main.Size = new System.Drawing.Size(974, 483);
+            panel_main.Size = new System.Drawing.Size(974, 595);
             panel_main.SplitterDistance = 288;
             panel_main.TabIndex = 0;
             // 
             // groupBox_color
             // 
+            groupBox_color.Controls.Add(seperator1);
+            groupBox_color.Controls.Add(colorPicker);
             groupBox_color.Controls.Add(colorBar_blue);
             groupBox_color.Controls.Add(colorBar_green);
             groupBox_color.Controls.Add(colorBar_red);
@@ -136,63 +137,85 @@
             groupBox_color.Controls.Add(numericUpDown_red);
             groupBox_color.Controls.Add(numericUpDown_green);
             groupBox_color.Controls.Add(numericUpDown_blue);
-            groupBox_color.Dock = System.Windows.Forms.DockStyle.Top;
-            groupBox_color.Location = new System.Drawing.Point(6, 189);
+            groupBox_color.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupBox_color.Location = new System.Drawing.Point(6, 123);
             groupBox_color.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_color.Name = "groupBox_color";
             groupBox_color.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_color.Size = new System.Drawing.Size(279, 155);
+            groupBox_color.Size = new System.Drawing.Size(279, 403);
             groupBox_color.TabIndex = 3;
             groupBox_color.TabStop = false;
             groupBox_color.Text = "Color Selector";
+            // 
+            // seperator1
+            // 
+            seperator1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            seperator1.Location = new System.Drawing.Point(8, 206);
+            seperator1.Name = "seperator1";
+            seperator1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            seperator1.Size = new System.Drawing.Size(264, 1);
+            seperator1.TabIndex = 29;
+            seperator1.Text = "seperator1";
+            // 
+            // colorPicker
+            // 
+            colorPicker.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            colorPicker.BorderColor = System.Drawing.Color.Black;
+            colorPicker.Location = new System.Drawing.Point(7, 22);
+            colorPicker.MarkerColor = System.Drawing.Color.White;
+            colorPicker.Name = "colorPicker";
+            colorPicker.Size = new System.Drawing.Size(265, 178);
+            colorPicker.TabIndex = 4;
+            colorPicker.Text = "hsvColorPicker1";
+            colorPicker.ColorChanged += colorPicker_ColorChanged;
             // 
             // colorBar_blue
             // 
             colorBar_blue.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             colorBar_blue.BorderColor = System.Drawing.Color.Black;
             colorBar_blue.Channel = mage.Controls.ColorChannel.Blue;
-            colorBar_blue.Location = new System.Drawing.Point(111, 89);
+            colorBar_blue.Location = new System.Drawing.Point(105, 271);
             colorBar_blue.MarkerColor = System.Drawing.Color.White;
             colorBar_blue.Name = "colorBar_blue";
-            colorBar_blue.Size = new System.Drawing.Size(161, 23);
+            colorBar_blue.Size = new System.Drawing.Size(167, 23);
             colorBar_blue.TabIndex = 28;
             colorBar_blue.Text = "colorBar3";
-            colorBar_blue.ValueChanged += colorBar_red_ValueChanged;
+            colorBar_blue.ValueChanged += colorBars_ValueChanged;
             // 
             // colorBar_green
             // 
             colorBar_green.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             colorBar_green.BorderColor = System.Drawing.Color.Black;
             colorBar_green.Channel = mage.Controls.ColorChannel.Green;
-            colorBar_green.Location = new System.Drawing.Point(111, 55);
+            colorBar_green.Location = new System.Drawing.Point(105, 242);
             colorBar_green.MarkerColor = System.Drawing.Color.White;
             colorBar_green.Name = "colorBar_green";
-            colorBar_green.Size = new System.Drawing.Size(161, 23);
+            colorBar_green.Size = new System.Drawing.Size(167, 23);
             colorBar_green.TabIndex = 27;
             colorBar_green.Text = "colorBar2";
-            colorBar_green.ValueChanged += colorBar_red_ValueChanged;
+            colorBar_green.ValueChanged += colorBars_ValueChanged;
             // 
             // colorBar_red
             // 
             colorBar_red.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             colorBar_red.BorderColor = System.Drawing.Color.Black;
             colorBar_red.Channel = mage.Controls.ColorChannel.Red;
-            colorBar_red.Location = new System.Drawing.Point(111, 22);
+            colorBar_red.Location = new System.Drawing.Point(105, 213);
             colorBar_red.MarkerColor = System.Drawing.Color.White;
             colorBar_red.Name = "colorBar_red";
-            colorBar_red.Size = new System.Drawing.Size(161, 23);
+            colorBar_red.Size = new System.Drawing.Size(167, 23);
             colorBar_red.TabIndex = 26;
             colorBar_red.Text = "colorBar1";
-            colorBar_red.ValueChanged += colorBar_red_ValueChanged;
+            colorBar_red.ValueChanged += colorBars_ValueChanged;
             // 
             // label_hex_color
             // 
             label_hex_color.AutoSize = true;
-            label_hex_color.Location = new System.Drawing.Point(8, 127);
+            label_hex_color.Location = new System.Drawing.Point(6, 304);
             label_hex_color.Name = "label_hex_color";
-            label_hex_color.Size = new System.Drawing.Size(32, 15);
+            label_hex_color.Size = new System.Drawing.Size(52, 15);
             label_hex_color.TabIndex = 25;
-            label_hex_color.Text = "HEX:";
+            label_hex_color.Text = "24b Hex:";
             // 
             // textBox_hex_color
             // 
@@ -201,7 +224,7 @@
             textBox_hex_color.DisplayBorder = true;
             textBox_hex_color.HexSanitized = false;
             textBox_hex_color.HexSanitizedMaxValue = -1;
-            textBox_hex_color.Location = new System.Drawing.Point(57, 122);
+            textBox_hex_color.Location = new System.Drawing.Point(64, 300);
             textBox_hex_color.MaxLength = 32767;
             textBox_hex_color.Multiline = false;
             textBox_hex_color.Name = "textBox_hex_color";
@@ -211,7 +234,7 @@
             textBox_hex_color.ReadOnly = false;
             textBox_hex_color.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_hex_color.SelectionStart = 0;
-            textBox_hex_color.Size = new System.Drawing.Size(215, 23);
+            textBox_hex_color.Size = new System.Drawing.Size(208, 23);
             textBox_hex_color.TabIndex = 24;
             textBox_hex_color.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_hex_color.ValueBox = false;
@@ -220,7 +243,7 @@
             // label_red
             // 
             label_red.AutoSize = true;
-            label_red.Location = new System.Drawing.Point(8, 24);
+            label_red.Location = new System.Drawing.Point(7, 215);
             label_red.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_red.Name = "label_red";
             label_red.Size = new System.Drawing.Size(30, 15);
@@ -230,7 +253,7 @@
             // label_green
             // 
             label_green.AutoSize = true;
-            label_green.Location = new System.Drawing.Point(8, 58);
+            label_green.Location = new System.Drawing.Point(6, 244);
             label_green.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_green.Name = "label_green";
             label_green.Size = new System.Drawing.Size(41, 15);
@@ -240,7 +263,7 @@
             // label_blue
             // 
             label_blue.AutoSize = true;
-            label_blue.Location = new System.Drawing.Point(8, 91);
+            label_blue.Location = new System.Drawing.Point(6, 273);
             label_blue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label_blue.Name = "label_blue";
             label_blue.Size = new System.Drawing.Size(33, 15);
@@ -250,32 +273,36 @@
             // numericUpDown_red
             // 
             numericUpDown_red.Hexadecimal = true;
-            numericUpDown_red.Location = new System.Drawing.Point(57, 22);
+            numericUpDown_red.Location = new System.Drawing.Point(64, 213);
             numericUpDown_red.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             numericUpDown_red.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
             numericUpDown_red.Name = "numericUpDown_red";
-            numericUpDown_red.Size = new System.Drawing.Size(47, 23);
+            numericUpDown_red.Size = new System.Drawing.Size(32, 23);
             numericUpDown_red.TabIndex = 0;
+            numericUpDown_red.Value = new decimal(new int[] { 31, 0, 0, 0 });
+            numericUpDown_red.ValueChanged += numericUpDown_red_ValueChanged;
             // 
             // numericUpDown_green
             // 
             numericUpDown_green.Hexadecimal = true;
-            numericUpDown_green.Location = new System.Drawing.Point(57, 55);
+            numericUpDown_green.Location = new System.Drawing.Point(64, 242);
             numericUpDown_green.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             numericUpDown_green.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
             numericUpDown_green.Name = "numericUpDown_green";
-            numericUpDown_green.Size = new System.Drawing.Size(47, 23);
+            numericUpDown_green.Size = new System.Drawing.Size(32, 23);
             numericUpDown_green.TabIndex = 1;
+            numericUpDown_green.ValueChanged += numericUpDown_red_ValueChanged;
             // 
             // numericUpDown_blue
             // 
             numericUpDown_blue.Hexadecimal = true;
-            numericUpDown_blue.Location = new System.Drawing.Point(57, 89);
+            numericUpDown_blue.Location = new System.Drawing.Point(64, 271);
             numericUpDown_blue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             numericUpDown_blue.Maximum = new decimal(new int[] { 31, 0, 0, 0 });
             numericUpDown_blue.Name = "numericUpDown_blue";
-            numericUpDown_blue.Size = new System.Drawing.Size(47, 23);
+            numericUpDown_blue.Size = new System.Drawing.Size(32, 23);
             numericUpDown_blue.TabIndex = 2;
+            numericUpDown_blue.ValueChanged += numericUpDown_red_ValueChanged;
             // 
             // groupBox_currentColor
             // 
@@ -284,8 +311,8 @@
             groupBox_currentColor.Controls.Add(label_15bit);
             groupBox_currentColor.Controls.Add(label_24bit);
             groupBox_currentColor.Controls.Add(label_15bitVal);
-            groupBox_currentColor.Dock = System.Windows.Forms.DockStyle.Top;
-            groupBox_currentColor.Location = new System.Drawing.Point(6, 123);
+            groupBox_currentColor.Dock = System.Windows.Forms.DockStyle.Bottom;
+            groupBox_currentColor.Location = new System.Drawing.Point(6, 526);
             groupBox_currentColor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_currentColor.Name = "groupBox_currentColor";
             groupBox_currentColor.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -362,14 +389,13 @@
             // 
             // numericUpDown_rows
             // 
-            numericUpDown_rows.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             numericUpDown_rows.Hexadecimal = true;
             numericUpDown_rows.Location = new System.Drawing.Point(55, 51);
             numericUpDown_rows.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             numericUpDown_rows.Maximum = new decimal(new int[] { 16, 0, 0, 0 });
             numericUpDown_rows.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericUpDown_rows.Name = "numericUpDown_rows";
-            numericUpDown_rows.Size = new System.Drawing.Size(149, 23);
+            numericUpDown_rows.Size = new System.Drawing.Size(41, 23);
             numericUpDown_rows.TabIndex = 8;
             numericUpDown_rows.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -451,10 +477,132 @@
             textBox_offset.ValueBox = true;
             textBox_offset.WordWrap = true;
             // 
+            // groupBox_map
+            // 
+            groupBox_map.Controls.Add(panel_palView);
+            groupBox_map.Controls.Add(toolStrip_palette);
+            groupBox_map.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupBox_map.Location = new System.Drawing.Point(3, 3);
+            groupBox_map.Name = "groupBox_map";
+            groupBox_map.Size = new System.Drawing.Size(673, 589);
+            groupBox_map.TabIndex = 1;
+            groupBox_map.TabStop = false;
+            groupBox_map.Text = "Palette";
+            // 
+            // panel_palView
+            // 
+            panel_palView.AutoScroll = true;
+            panel_palView.Controls.Add(tileDisplay_pal);
+            panel_palView.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel_palView.Location = new System.Drawing.Point(3, 44);
+            panel_palView.Name = "panel_palView";
+            panel_palView.Size = new System.Drawing.Size(667, 542);
+            panel_palView.TabIndex = 2;
+            // 
+            // tileDisplay_pal
+            // 
+            tileDisplay_pal.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
+            tileDisplay_pal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            tileDisplay_pal.GridCellHeight = 8;
+            tileDisplay_pal.GridCellWidth = 8;
+            tileDisplay_pal.Location = new System.Drawing.Point(0, 6);
+            tileDisplay_pal.Name = "tileDisplay_pal";
+            tileDisplay_pal.ShowGrid = false;
+            tileDisplay_pal.ShowOamOrigin = false;
+            tileDisplay_pal.Size = new System.Drawing.Size(0, 0);
+            tileDisplay_pal.TabIndex = 0;
+            tileDisplay_pal.TabStop = false;
+            tileDisplay_pal.Tag = "unthemed";
+            tileDisplay_pal.Text = "tileDisplay1";
+            tileDisplay_pal.TileGridOrigin = new System.Drawing.Point(0, 0);
+            tileDisplay_pal.TileImage = null;
+            tileDisplay_pal.TileSize = 8;
+            tileDisplay_pal.Zoom = 1;
+            tileDisplay_pal.Scrolled += tileDisplay_pal_Scrolled;
+            // 
+            // toolStrip_palette
+            // 
+            toolStrip_palette.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator8, button_grid, toolStripSeparator5, button_ZoomIn, button_ZoomOut, label_Zoom });
+            toolStrip_palette.Location = new System.Drawing.Point(3, 19);
+            toolStrip_palette.Name = "toolStrip_palette";
+            toolStrip_palette.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            toolStrip_palette.Size = new System.Drawing.Size(667, 25);
+            toolStrip_palette.TabIndex = 1;
+            toolStrip_palette.Text = "toolStrip1";
+            // 
+            // button_undo
+            // 
+            button_undo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_undo.Enabled = false;
+            button_undo.Image = Properties.Resources.toolbar_undo;
+            button_undo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_undo.Name = "button_undo";
+            button_undo.Size = new System.Drawing.Size(32, 22);
+            button_undo.Text = "Undo";
+            // 
+            // button_redo
+            // 
+            button_redo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_redo.Enabled = false;
+            button_redo.Image = Properties.Resources.toolbar_redo;
+            button_redo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_redo.Name = "button_redo";
+            button_redo.Size = new System.Drawing.Size(32, 22);
+            button_redo.Text = "Redo";
+            // 
+            // toolStripSeparator8
+            // 
+            toolStripSeparator8.Name = "toolStripSeparator8";
+            toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+            // 
+            // button_grid
+            // 
+            button_grid.CheckOnClick = true;
+            button_grid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_grid.Image = (System.Drawing.Image)resources.GetObject("button_grid.Image");
+            button_grid.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_grid.Name = "button_grid";
+            button_grid.Size = new System.Drawing.Size(23, 22);
+            button_grid.Text = "Grid";
+            // 
+            // toolStripSeparator5
+            // 
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // button_ZoomIn
+            // 
+            button_ZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_ZoomIn.Image = Properties.Resources.zoom_in;
+            button_ZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_ZoomIn.Name = "button_ZoomIn";
+            button_ZoomIn.Size = new System.Drawing.Size(23, 22);
+            button_ZoomIn.Text = "Zoom In";
+            button_ZoomIn.Click += button_imageZoomIn_Click;
+            // 
+            // button_ZoomOut
+            // 
+            button_ZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_ZoomOut.Image = Properties.Resources.zoom_out;
+            button_ZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_ZoomOut.Name = "button_ZoomOut";
+            button_ZoomOut.Size = new System.Drawing.Size(23, 22);
+            button_ZoomOut.Text = "Zoom Out";
+            button_ZoomOut.Click += button_imageZoomOut_Click;
+            // 
+            // label_Zoom
+            // 
+            label_Zoom.AutoSize = false;
+            label_Zoom.Name = "label_Zoom";
+            label_Zoom.Size = new System.Drawing.Size(42, 22);
+            label_Zoom.Text = "1600%";
+            label_Zoom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // statusStrip_main
             // 
             statusStrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_tile, statusLabel_changes, spring, statusStrip_import, statusStrip_export, button_apply });
-            statusStrip_main.Location = new System.Drawing.Point(0, 483);
+            statusStrip_main.Location = new System.Drawing.Point(0, 595);
             statusStrip_main.Name = "statusStrip_main";
             statusStrip_main.Size = new System.Drawing.Size(974, 22);
             statusStrip_main.TabIndex = 3;
@@ -544,154 +692,10 @@
             button_apply.Size = new System.Drawing.Size(58, 20);
             button_apply.Text = "Apply";
             // 
-            // groupBox_map
-            // 
-            groupBox_map.Controls.Add(panel_palView);
-            groupBox_map.Controls.Add(toolStrip_palette);
-            groupBox_map.Dock = System.Windows.Forms.DockStyle.Fill;
-            groupBox_map.Location = new System.Drawing.Point(3, 3);
-            groupBox_map.Name = "groupBox_map";
-            groupBox_map.Size = new System.Drawing.Size(673, 477);
-            groupBox_map.TabIndex = 1;
-            groupBox_map.TabStop = false;
-            groupBox_map.Text = "Palette";
-            // 
-            // panel_palView
-            // 
-            panel_palView.AutoScroll = true;
-            panel_palView.Controls.Add(tileDisplay_pal);
-            panel_palView.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel_palView.Location = new System.Drawing.Point(3, 44);
-            panel_palView.Name = "panel_palView";
-            panel_palView.Size = new System.Drawing.Size(667, 430);
-            panel_palView.TabIndex = 2;
-            // 
-            // tileDisplay_pal
-            // 
-            tileDisplay_pal.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
-            tileDisplay_pal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            tileDisplay_pal.GridCellHeight = 8;
-            tileDisplay_pal.GridCellWidth = 8;
-            tileDisplay_pal.Location = new System.Drawing.Point(0, 6);
-            tileDisplay_pal.Name = "tileDisplay_pal";
-            tileDisplay_pal.ShowGrid = false;
-            tileDisplay_pal.ShowOamOrigin = false;
-            tileDisplay_pal.Size = new System.Drawing.Size(0, 0);
-            tileDisplay_pal.TabIndex = 0;
-            tileDisplay_pal.TabStop = false;
-            tileDisplay_pal.Tag = "unthemed";
-            tileDisplay_pal.Text = "tileDisplay1";
-            tileDisplay_pal.TileGridOrigin = new System.Drawing.Point(0, 0);
-            tileDisplay_pal.TileImage = null;
-            tileDisplay_pal.TileSize = 8;
-            tileDisplay_pal.Zoom = 1;
-            // 
-            // toolStrip_palette
-            // 
-            toolStrip_palette.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator8, button_flipMapH, button_flipMapV, toolStripSeparator4, button_grid, toolStripSeparator5, button_mapZoomIn, button_mapZoomOut, label_mapZoom });
-            toolStrip_palette.Location = new System.Drawing.Point(3, 19);
-            toolStrip_palette.Name = "toolStrip_palette";
-            toolStrip_palette.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_palette.Size = new System.Drawing.Size(667, 25);
-            toolStrip_palette.TabIndex = 1;
-            toolStrip_palette.Text = "toolStrip1";
-            // 
-            // button_undo
-            // 
-            button_undo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_undo.Enabled = false;
-            button_undo.Image = Properties.Resources.toolbar_undo;
-            button_undo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_undo.Name = "button_undo";
-            button_undo.Size = new System.Drawing.Size(32, 22);
-            button_undo.Text = "Undo";
-            // 
-            // button_redo
-            // 
-            button_redo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_redo.Enabled = false;
-            button_redo.Image = Properties.Resources.toolbar_redo;
-            button_redo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_redo.Name = "button_redo";
-            button_redo.Size = new System.Drawing.Size(32, 22);
-            button_redo.Text = "Redo";
-            // 
-            // toolStripSeparator8
-            // 
-            toolStripSeparator8.Name = "toolStripSeparator8";
-            toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
-            // 
-            // button_flipMapH
-            // 
-            button_flipMapH.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_flipMapH.Enabled = false;
-            button_flipMapH.Image = Properties.Resources.shape_flip_horizontal;
-            button_flipMapH.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_flipMapH.Name = "button_flipMapH";
-            button_flipMapH.Size = new System.Drawing.Size(23, 22);
-            button_flipMapH.Text = "Flip Horizontally (H, X)";
-            // 
-            // button_flipMapV
-            // 
-            button_flipMapV.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_flipMapV.Enabled = false;
-            button_flipMapV.Image = Properties.Resources.shape_flip_vertical;
-            button_flipMapV.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_flipMapV.Name = "button_flipMapV";
-            button_flipMapV.Size = new System.Drawing.Size(23, 22);
-            button_flipMapV.Text = "Flip Vertically (V, Y)";
-            // 
-            // toolStripSeparator4
-            // 
-            toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
-            // button_grid
-            // 
-            button_grid.CheckOnClick = true;
-            button_grid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_grid.Image = (System.Drawing.Image)resources.GetObject("button_grid.Image");
-            button_grid.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_grid.Name = "button_grid";
-            button_grid.Size = new System.Drawing.Size(23, 22);
-            button_grid.Text = "Grid";
-            // 
-            // toolStripSeparator5
-            // 
-            toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-            // 
-            // button_mapZoomIn
-            // 
-            button_mapZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_mapZoomIn.Image = Properties.Resources.zoom_in;
-            button_mapZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_mapZoomIn.Name = "button_mapZoomIn";
-            button_mapZoomIn.Size = new System.Drawing.Size(23, 22);
-            button_mapZoomIn.Text = "Zoom In";
-            // 
-            // button_mapZoomOut
-            // 
-            button_mapZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_mapZoomOut.Image = Properties.Resources.zoom_out;
-            button_mapZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
-            button_mapZoomOut.Name = "button_mapZoomOut";
-            button_mapZoomOut.Size = new System.Drawing.Size(23, 22);
-            button_mapZoomOut.Text = "Zoom Out";
-            // 
-            // label_mapZoom
-            // 
-            label_mapZoom.AutoSize = false;
-            label_mapZoom.Name = "label_mapZoom";
-            label_mapZoom.Size = new System.Drawing.Size(42, 22);
-            label_mapZoom.Text = "1600%";
-            label_mapZoom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // FormPaletteNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(974, 505);
+            ClientSize = new System.Drawing.Size(974, 617);
             Controls.Add(panel_main);
             Controls.Add(statusStrip_main);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
@@ -712,13 +716,13 @@
             group_selection.ResumeLayout(false);
             group_selection.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_rows).EndInit();
-            statusStrip_main.ResumeLayout(false);
-            statusStrip_main.PerformLayout();
             groupBox_map.ResumeLayout(false);
             groupBox_map.PerformLayout();
             panel_palView.ResumeLayout(false);
             toolStrip_palette.ResumeLayout(false);
             toolStrip_palette.PerformLayout();
+            statusStrip_main.ResumeLayout(false);
+            statusStrip_main.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -772,13 +776,12 @@
         private System.Windows.Forms.ToolStripSplitButton button_undo;
         private System.Windows.Forms.ToolStripSplitButton button_redo;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripButton button_flipMapH;
-        private System.Windows.Forms.ToolStripButton button_flipMapV;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton button_grid;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripButton button_mapZoomIn;
-        private System.Windows.Forms.ToolStripButton button_mapZoomOut;
-        private System.Windows.Forms.ToolStripLabel label_mapZoom;
+        private System.Windows.Forms.ToolStripButton button_ZoomIn;
+        private System.Windows.Forms.ToolStripButton button_ZoomOut;
+        private System.Windows.Forms.ToolStripLabel label_Zoom;
+        private Controls.HsvColorPicker colorPicker;
+        private Controls.Seperator seperator1;
     }
 }

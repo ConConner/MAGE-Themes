@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
@@ -273,9 +274,9 @@ public unsafe class ColorBar : Control
     /// <summary>Maps a pixel x to a value using segment centers.</summary>
     private void ValueFromX(int x)
     {
-        int w = Math.Max(1, Width);
-        x = Math.Clamp(x, 0, w - 1);
-        Value = x * Levels / w;
+        int travel = Math.Max(1, Width - _markerWidth);
+        x = Math.Clamp(x - _markerWidth / 2, 0, travel);
+        Value = (x * MaxValue + travel / 2) / travel;
     }
 
     // --- rendering ----------------------------------------------------
@@ -330,8 +331,9 @@ public unsafe class ColorBar : Control
 
         for (int x = 0; x < width; x++)
         {
-            int level = x * Levels / width; // 0..31, no wrap
-            row0[x] = baseColor | (Expand5To8(level) << shift);
+            // continuous 0..255 ramp, no visible banding
+            int c8 = width == 1 ? 255 : x * 255 / (width - 1);
+            row0[x] = baseColor | (c8 << shift);
         }
 
         long rowBytes = (long)width * 4;
@@ -355,15 +357,9 @@ public unsafe class ColorBar : Control
     {
         int value = GetChannel(_channel);
 
-        // center marker on the middle of the value's segment
-        int segStart = value * width / Levels;
-        int segEnd = (value + 1) * width / Levels;
-        int center = (segStart + segEnd) / 2;
-        int start = Math.Clamp(
-            center - _markerWidth / 2,
-            0,
-            Math.Max(0, width - _markerWidth)
-        );
+        // distribute over full travel so 0 is flush left and Max flush right
+        int travel = Math.Max(0, width - _markerWidth);
+        int start = (value * travel + MaxValue / 2) / MaxValue;
         int end = Math.Min(width, start + _markerWidth);
 
         int border = _borderColor.ToArgb() & 0xFFFFFF;
