@@ -452,8 +452,7 @@ namespace mage
 
         private void button_editPalette_Click(object sender, EventArgs e)
         {
-            FormPalette form = new FormPalette(main, false, (byte)comboBox_sprite.SelectedIndex);
-            form.Show();
+            FormPaletteNew.OpenPaletteEditor(false, (byte)comboBox_sprite.SelectedIndex);
         }
 
         private void button_apply_Click(object sender, EventArgs e)

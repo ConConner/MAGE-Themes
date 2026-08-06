@@ -400,8 +400,7 @@ namespace mage
 
         private void button_editPalette_Click(object sender, EventArgs e)
         {
-            FormPalette form = new FormPalette(main, Version.TextPaletteOffset, 1);
-            form.Show();
+            FormPaletteNew.OpenPaletteEditor(Version.TextPaletteOffset, 1);
         }
 
         private void button_editGfx_Click(object sender, EventArgs e)

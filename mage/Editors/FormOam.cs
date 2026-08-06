@@ -1,5 +1,6 @@
 ﻿using mage.Bookmarks;
 using mage.Controls;
+using mage.Editors.NewEditors;
 using mage.Properties;
 using mage.Theming;
 using mage.Utility;
@@ -640,8 +641,7 @@ public partial class FormOam : Form
         {
             int offset = Hex.ToInt(textBox_palOffset.Text);
 
-            FormPalette form = new FormPalette(main, offset, 1);
-            form.Show();
+            FormPaletteNew.OpenPaletteEditor(offset, 1);
         }
         catch (Exception ex)
         {

@@ -498,8 +498,7 @@ namespace mage
 
         private void button_palEdit_Click(object sender, EventArgs e)
         {
-            FormPalette form = new FormPalette(main, animPalette.palette.Offset, animPalette.rows);
-            form.Show();
+            FormPaletteNew.OpenPaletteEditor(animPalette.palette.Offset, animPalette.rows);
         }
 
         private void button_palApply_Click(object sender, EventArgs e)

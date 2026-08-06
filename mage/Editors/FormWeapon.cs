@@ -177,8 +177,7 @@ namespace mage
 
         private void button_palette_Click(object sender, EventArgs e)
         {
-            FormPalette form = new FormPalette(main, palOffset, 1);
-            form.Show();
+            FormPaletteNew.OpenPaletteEditor(palOffset, 1);
         }
 
         private void textBox_value_TextChanged(object sender, EventArgs e)

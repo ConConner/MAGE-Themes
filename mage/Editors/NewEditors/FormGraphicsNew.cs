@@ -847,6 +847,11 @@ public partial class FormGraphicsNew : Form
         if (e.PixelPosition == LastPixel || !bounds.Contains(e.PixelPosition)) return;
         LastPixel = e.PixelPosition;
 
+        // Update coords label
+        string coordX = Hex.ToString(e.PixelPosition.X);
+        string coordY = Hex.ToString(e.PixelPosition.Y);
+        statusLabel_coor.Text = $"({coordX}, {coordY})";
+
         bool shift = ModifierKeys == Keys.Shift;
 
         if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
@@ -1020,8 +1025,7 @@ public partial class FormGraphicsNew : Form
         {
             int offset = Hex.ToInt(textBox_palOffset.Text);
 
-            FormPalette form = new FormPalette(main, offset, 1);
-            form.Show();
+            FormPaletteNew.OpenPaletteEditor(offset, 1);
         }
         catch (Exception ex)
         {

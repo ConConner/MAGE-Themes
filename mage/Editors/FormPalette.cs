@@ -61,10 +61,9 @@ namespace mage
         {
             InitializeComponent();
 
-
-
             ThemeSwitcher.ChangeTheme(Controls, this);
             ThemeSwitcher.InjectPaintOverrides(Controls);
+            ThemeSwitcher.ThemeChanged += ThemeSwitcherChangedTheme;
 
             this.main = main;
 
