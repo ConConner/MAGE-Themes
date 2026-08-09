@@ -30,6 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPaletteNew));
             panel_main = new System.Windows.Forms.SplitContainer();
+            group_recentColors = new System.Windows.Forms.GroupBox();
+            flowPanel_recentColors = new System.Windows.Forms.FlowLayoutPanel();
+            groupBox_currentColor = new System.Windows.Forms.GroupBox();
+            colorSwatch = new mage.Controls.DualColorSwatch();
+            label_24bitVal = new System.Windows.Forms.Label();
+            label_15bitVal = new System.Windows.Forms.Label();
+            label_24bit = new System.Windows.Forms.Label();
+            label_15bit = new System.Windows.Forms.Label();
             groupBox_color = new System.Windows.Forms.GroupBox();
             seperator1 = new mage.Controls.Seperator();
             colorPicker = new mage.Controls.HsvColorPicker();
@@ -44,12 +52,6 @@
             numericUpDown_red = new mage.Theming.CustomControls.FlatNumericUpDown();
             numericUpDown_green = new mage.Theming.CustomControls.FlatNumericUpDown();
             numericUpDown_blue = new mage.Theming.CustomControls.FlatNumericUpDown();
-            groupBox_currentColor = new System.Windows.Forms.GroupBox();
-            pictureBox_chosenColor = new System.Windows.Forms.PictureBox();
-            label_24bitVal = new System.Windows.Forms.Label();
-            label_15bit = new System.Windows.Forms.Label();
-            label_24bit = new System.Windows.Forms.Label();
-            label_15bitVal = new System.Windows.Forms.Label();
             group_selection = new System.Windows.Forms.GroupBox();
             numericUpDown_rows = new mage.Theming.CustomControls.FlatNumericUpDown();
             label_numOfRows = new System.Windows.Forms.Label();
@@ -87,12 +89,12 @@
             panel_main.Panel1.SuspendLayout();
             panel_main.Panel2.SuspendLayout();
             panel_main.SuspendLayout();
+            group_recentColors.SuspendLayout();
+            groupBox_currentColor.SuspendLayout();
             groupBox_color.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_red).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_green).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_blue).BeginInit();
-            groupBox_currentColor.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox_chosenColor).BeginInit();
             group_selection.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_rows).BeginInit();
             groupBox_map.SuspendLayout();
@@ -104,13 +106,15 @@
             // panel_main
             // 
             panel_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel_main.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             panel_main.Location = new System.Drawing.Point(0, 0);
             panel_main.Name = "panel_main";
             // 
             // panel_main.Panel1
             // 
-            panel_main.Panel1.Controls.Add(groupBox_color);
+            panel_main.Panel1.Controls.Add(group_recentColors);
             panel_main.Panel1.Controls.Add(groupBox_currentColor);
+            panel_main.Panel1.Controls.Add(groupBox_color);
             panel_main.Panel1.Controls.Add(group_selection);
             panel_main.Panel1.Padding = new System.Windows.Forms.Padding(6, 3, 3, 3);
             // 
@@ -118,9 +122,101 @@
             // 
             panel_main.Panel2.Controls.Add(groupBox_map);
             panel_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
-            panel_main.Size = new System.Drawing.Size(974, 595);
+            panel_main.Size = new System.Drawing.Size(974, 598);
             panel_main.SplitterDistance = 288;
             panel_main.TabIndex = 0;
+            // 
+            // group_recentColors
+            // 
+            group_recentColors.Controls.Add(flowPanel_recentColors);
+            group_recentColors.Dock = System.Windows.Forms.DockStyle.Fill;
+            group_recentColors.Location = new System.Drawing.Point(6, 529);
+            group_recentColors.Name = "group_recentColors";
+            group_recentColors.Size = new System.Drawing.Size(279, 66);
+            group_recentColors.TabIndex = 4;
+            group_recentColors.TabStop = false;
+            group_recentColors.Text = "Recent Colors";
+            // 
+            // flowPanel_recentColors
+            // 
+            flowPanel_recentColors.Dock = System.Windows.Forms.DockStyle.Fill;
+            flowPanel_recentColors.Location = new System.Drawing.Point(3, 19);
+            flowPanel_recentColors.Name = "flowPanel_recentColors";
+            flowPanel_recentColors.Padding = new System.Windows.Forms.Padding(3);
+            flowPanel_recentColors.Size = new System.Drawing.Size(273, 44);
+            flowPanel_recentColors.TabIndex = 0;
+            // 
+            // groupBox_currentColor
+            // 
+            groupBox_currentColor.Controls.Add(colorSwatch);
+            groupBox_currentColor.Controls.Add(label_24bitVal);
+            groupBox_currentColor.Controls.Add(label_15bitVal);
+            groupBox_currentColor.Controls.Add(label_24bit);
+            groupBox_currentColor.Controls.Add(label_15bit);
+            groupBox_currentColor.Dock = System.Windows.Forms.DockStyle.Top;
+            groupBox_currentColor.Location = new System.Drawing.Point(6, 451);
+            groupBox_currentColor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_currentColor.Name = "groupBox_currentColor";
+            groupBox_currentColor.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_currentColor.Size = new System.Drawing.Size(279, 78);
+            groupBox_currentColor.TabIndex = 1;
+            groupBox_currentColor.TabStop = false;
+            groupBox_currentColor.Text = "Current Color";
+            // 
+            // colorSwatch
+            // 
+            colorSwatch.BackColor = System.Drawing.Color.Transparent;
+            colorSwatch.Location = new System.Drawing.Point(8, 19);
+            colorSwatch.Name = "colorSwatch";
+            colorSwatch.PrimaryColor = System.Drawing.Color.Black;
+            colorSwatch.SecondaryColor = System.Drawing.Color.White;
+            colorSwatch.Size = new System.Drawing.Size(50, 50);
+            colorSwatch.SwapGlyphColor = System.Drawing.SystemColors.ControlDarkDark;
+            colorSwatch.SwapGlyphHotColor = System.Drawing.SystemColors.Highlight;
+            colorSwatch.SwatchOutlineColor = System.Drawing.SystemColors.ControlDarkDark;
+            colorSwatch.TabIndex = 28;
+            colorSwatch.Text = "dualColorSwatch1";
+            colorSwatch.ColorsChanged += colorSwatch_ColorsChanged;
+            // 
+            // label_24bitVal
+            // 
+            label_24bitVal.AutoSize = true;
+            label_24bitVal.Location = new System.Drawing.Point(107, 45);
+            label_24bitVal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_24bitVal.Name = "label_24bitVal";
+            label_24bitVal.Size = new System.Drawing.Size(37, 15);
+            label_24bitVal.TabIndex = 27;
+            label_24bitVal.Text = "0, 0, 0";
+            // 
+            // label_15bitVal
+            // 
+            label_15bitVal.AutoSize = true;
+            label_15bitVal.Location = new System.Drawing.Point(107, 28);
+            label_15bitVal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_15bitVal.Name = "label_15bitVal";
+            label_15bitVal.Size = new System.Drawing.Size(42, 15);
+            label_15bitVal.TabIndex = 19;
+            label_15bitVal.Text = "0x0000";
+            // 
+            // label_24bit
+            // 
+            label_24bit.AutoSize = true;
+            label_24bit.Location = new System.Drawing.Point(65, 45);
+            label_24bit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_24bit.Name = "label_24bit";
+            label_24bit.Size = new System.Drawing.Size(41, 15);
+            label_24bit.TabIndex = 26;
+            label_24bit.Text = "24-bit:";
+            // 
+            // label_15bit
+            // 
+            label_15bit.AutoSize = true;
+            label_15bit.Location = new System.Drawing.Point(65, 28);
+            label_15bit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_15bit.Name = "label_15bit";
+            label_15bit.Size = new System.Drawing.Size(41, 15);
+            label_15bit.TabIndex = 18;
+            label_15bit.Text = "15-bit:";
             // 
             // groupBox_color
             // 
@@ -137,15 +233,15 @@
             groupBox_color.Controls.Add(numericUpDown_red);
             groupBox_color.Controls.Add(numericUpDown_green);
             groupBox_color.Controls.Add(numericUpDown_blue);
-            groupBox_color.Dock = System.Windows.Forms.DockStyle.Fill;
-            groupBox_color.Location = new System.Drawing.Point(6, 123);
+            groupBox_color.Dock = System.Windows.Forms.DockStyle.Top;
+            groupBox_color.Location = new System.Drawing.Point(6, 117);
             groupBox_color.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_color.Name = "groupBox_color";
             groupBox_color.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_color.Size = new System.Drawing.Size(279, 403);
+            groupBox_color.Size = new System.Drawing.Size(279, 334);
             groupBox_color.TabIndex = 3;
             groupBox_color.TabStop = false;
-            groupBox_color.Text = "Color Selector";
+            groupBox_color.Text = "Color Selection";
             // 
             // seperator1
             // 
@@ -304,72 +400,6 @@
             numericUpDown_blue.TabIndex = 2;
             numericUpDown_blue.ValueChanged += numericUpDown_red_ValueChanged;
             // 
-            // groupBox_currentColor
-            // 
-            groupBox_currentColor.Controls.Add(pictureBox_chosenColor);
-            groupBox_currentColor.Controls.Add(label_24bitVal);
-            groupBox_currentColor.Controls.Add(label_15bit);
-            groupBox_currentColor.Controls.Add(label_24bit);
-            groupBox_currentColor.Controls.Add(label_15bitVal);
-            groupBox_currentColor.Dock = System.Windows.Forms.DockStyle.Bottom;
-            groupBox_currentColor.Location = new System.Drawing.Point(6, 526);
-            groupBox_currentColor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_currentColor.Name = "groupBox_currentColor";
-            groupBox_currentColor.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_currentColor.Size = new System.Drawing.Size(279, 66);
-            groupBox_currentColor.TabIndex = 1;
-            groupBox_currentColor.TabStop = false;
-            groupBox_currentColor.Text = "Current Color";
-            // 
-            // pictureBox_chosenColor
-            // 
-            pictureBox_chosenColor.Location = new System.Drawing.Point(7, 21);
-            pictureBox_chosenColor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            pictureBox_chosenColor.Name = "pictureBox_chosenColor";
-            pictureBox_chosenColor.Size = new System.Drawing.Size(35, 35);
-            pictureBox_chosenColor.TabIndex = 2;
-            pictureBox_chosenColor.TabStop = false;
-            // 
-            // label_24bitVal
-            // 
-            label_24bitVal.AutoSize = true;
-            label_24bitVal.Location = new System.Drawing.Point(90, 38);
-            label_24bitVal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label_24bitVal.Name = "label_24bitVal";
-            label_24bitVal.Size = new System.Drawing.Size(37, 15);
-            label_24bitVal.TabIndex = 27;
-            label_24bitVal.Text = "0, 0, 0";
-            // 
-            // label_15bit
-            // 
-            label_15bit.AutoSize = true;
-            label_15bit.Location = new System.Drawing.Point(48, 21);
-            label_15bit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label_15bit.Name = "label_15bit";
-            label_15bit.Size = new System.Drawing.Size(41, 15);
-            label_15bit.TabIndex = 18;
-            label_15bit.Text = "15-bit:";
-            // 
-            // label_24bit
-            // 
-            label_24bit.AutoSize = true;
-            label_24bit.Location = new System.Drawing.Point(48, 38);
-            label_24bit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label_24bit.Name = "label_24bit";
-            label_24bit.Size = new System.Drawing.Size(41, 15);
-            label_24bit.TabIndex = 26;
-            label_24bit.Text = "24-bit:";
-            // 
-            // label_15bitVal
-            // 
-            label_15bitVal.AutoSize = true;
-            label_15bitVal.Location = new System.Drawing.Point(90, 21);
-            label_15bitVal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label_15bitVal.Name = "label_15bitVal";
-            label_15bitVal.Size = new System.Drawing.Size(42, 15);
-            label_15bitVal.TabIndex = 19;
-            label_15bitVal.Text = "0x0000";
-            // 
             // group_selection
             // 
             group_selection.Controls.Add(numericUpDown_rows);
@@ -382,7 +412,7 @@
             group_selection.Dock = System.Windows.Forms.DockStyle.Top;
             group_selection.Location = new System.Drawing.Point(6, 3);
             group_selection.Name = "group_selection";
-            group_selection.Size = new System.Drawing.Size(279, 120);
+            group_selection.Size = new System.Drawing.Size(279, 114);
             group_selection.TabIndex = 0;
             group_selection.TabStop = false;
             group_selection.Text = "Selection";
@@ -395,7 +425,7 @@
             numericUpDown_rows.Maximum = new decimal(new int[] { 16, 0, 0, 0 });
             numericUpDown_rows.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericUpDown_rows.Name = "numericUpDown_rows";
-            numericUpDown_rows.Size = new System.Drawing.Size(41, 23);
+            numericUpDown_rows.Size = new System.Drawing.Size(139, 23);
             numericUpDown_rows.TabIndex = 8;
             numericUpDown_rows.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -420,42 +450,41 @@
             // 
             // button_minus
             // 
-            button_minus.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             button_minus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            button_minus.Location = new System.Drawing.Point(212, 20);
+            button_minus.Location = new System.Drawing.Point(137, 21);
             button_minus.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_minus.Name = "button_minus";
             button_minus.Size = new System.Drawing.Size(26, 25);
             button_minus.TabIndex = 5;
             button_minus.Text = "-";
             button_minus.UseVisualStyleBackColor = true;
+            button_minus.Click += button_minus_Click;
             // 
             // button_plus
             // 
-            button_plus.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             button_plus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            button_plus.Location = new System.Drawing.Point(246, 20);
+            button_plus.Location = new System.Drawing.Point(168, 21);
             button_plus.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_plus.Name = "button_plus";
             button_plus.Size = new System.Drawing.Size(26, 25);
             button_plus.TabIndex = 4;
             button_plus.Text = "+";
             button_plus.UseVisualStyleBackColor = true;
+            button_plus.Click += button_plus_Click;
             // 
             // button_load
             // 
-            button_load.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            button_load.Location = new System.Drawing.Point(7, 89);
+            button_load.Location = new System.Drawing.Point(55, 80);
             button_load.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button_load.Name = "button_load";
-            button_load.Size = new System.Drawing.Size(265, 25);
+            button_load.Size = new System.Drawing.Size(139, 25);
             button_load.TabIndex = 2;
             button_load.Text = "Load";
             button_load.UseVisualStyleBackColor = true;
+            button_load.Click += button_load_Click;
             // 
             // textBox_offset
             // 
-            textBox_offset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBox_offset.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
             textBox_offset.DisplayBorder = true;
             textBox_offset.HexSanitized = false;
@@ -471,7 +500,7 @@
             textBox_offset.ReadOnly = false;
             textBox_offset.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_offset.SelectionStart = 0;
-            textBox_offset.Size = new System.Drawing.Size(149, 23);
+            textBox_offset.Size = new System.Drawing.Size(77, 23);
             textBox_offset.TabIndex = 1;
             textBox_offset.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_offset.ValueBox = true;
@@ -484,7 +513,7 @@
             groupBox_map.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_map.Location = new System.Drawing.Point(3, 3);
             groupBox_map.Name = "groupBox_map";
-            groupBox_map.Size = new System.Drawing.Size(673, 589);
+            groupBox_map.Size = new System.Drawing.Size(673, 592);
             groupBox_map.TabIndex = 1;
             groupBox_map.TabStop = false;
             groupBox_map.Text = "Palette";
@@ -496,15 +525,15 @@
             panel_palView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_palView.Location = new System.Drawing.Point(3, 44);
             panel_palView.Name = "panel_palView";
-            panel_palView.Size = new System.Drawing.Size(667, 542);
+            panel_palView.Size = new System.Drawing.Size(667, 545);
             panel_palView.TabIndex = 2;
             // 
             // tileDisplay_pal
             // 
             tileDisplay_pal.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
             tileDisplay_pal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            tileDisplay_pal.GridCellHeight = 8;
-            tileDisplay_pal.GridCellWidth = 8;
+            tileDisplay_pal.GridCellHeight = 16;
+            tileDisplay_pal.GridCellWidth = 16;
             tileDisplay_pal.Location = new System.Drawing.Point(0, 6);
             tileDisplay_pal.Name = "tileDisplay_pal";
             tileDisplay_pal.ShowGrid = false;
@@ -558,13 +587,16 @@
             // 
             // button_grid
             // 
+            button_grid.Checked = true;
             button_grid.CheckOnClick = true;
+            button_grid.CheckState = System.Windows.Forms.CheckState.Checked;
             button_grid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             button_grid.Image = (System.Drawing.Image)resources.GetObject("button_grid.Image");
             button_grid.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_grid.Name = "button_grid";
             button_grid.Size = new System.Drawing.Size(23, 22);
             button_grid.Text = "Grid";
+            button_grid.CheckStateChanged += button_grid_CheckStateChanged;
             // 
             // toolStripSeparator5
             // 
@@ -602,7 +634,7 @@
             // statusStrip_main
             // 
             statusStrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_tile, statusLabel_changes, spring, statusStrip_import, statusStrip_export, button_apply });
-            statusStrip_main.Location = new System.Drawing.Point(0, 595);
+            statusStrip_main.Location = new System.Drawing.Point(0, 598);
             statusStrip_main.Name = "statusStrip_main";
             statusStrip_main.Size = new System.Drawing.Size(974, 22);
             statusStrip_main.TabIndex = 3;
@@ -695,7 +727,7 @@
             // FormPaletteNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(974, 617);
+            ClientSize = new System.Drawing.Size(974, 620);
             Controls.Add(panel_main);
             Controls.Add(statusStrip_main);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
@@ -705,14 +737,14 @@
             panel_main.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)panel_main).EndInit();
             panel_main.ResumeLayout(false);
+            group_recentColors.ResumeLayout(false);
+            groupBox_currentColor.ResumeLayout(false);
+            groupBox_currentColor.PerformLayout();
             groupBox_color.ResumeLayout(false);
             groupBox_color.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_red).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_green).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_blue).EndInit();
-            groupBox_currentColor.ResumeLayout(false);
-            groupBox_currentColor.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox_chosenColor).EndInit();
             group_selection.ResumeLayout(false);
             group_selection.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_rows).EndInit();
@@ -739,7 +771,6 @@
         private Theming.CustomControls.FlatNumericUpDown numericUpDown_rows;
         private System.Windows.Forms.Label label_numOfRows;
         private System.Windows.Forms.GroupBox groupBox_currentColor;
-        private System.Windows.Forms.PictureBox pictureBox_chosenColor;
         private System.Windows.Forms.Label label_24bitVal;
         private System.Windows.Forms.Label label_15bit;
         private System.Windows.Forms.Label label_24bit;
@@ -783,5 +814,8 @@
         private System.Windows.Forms.ToolStripLabel label_Zoom;
         private Controls.HsvColorPicker colorPicker;
         private Controls.Seperator seperator1;
+        private System.Windows.Forms.GroupBox group_recentColors;
+        private System.Windows.Forms.FlowLayoutPanel flowPanel_recentColors;
+        private Controls.DualColorSwatch colorSwatch;
     }
 }

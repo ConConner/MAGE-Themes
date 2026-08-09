@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -28,6 +29,8 @@ public partial class FormPaletteNew : Form
     #region Fields
     // State
     private bool init = false;
+    private bool ignoreColorSwatchUpdate = false;
+    private Palette palette;
     private Status status;
 
     // Undo Redo
@@ -49,14 +52,23 @@ public partial class FormPaletteNew : Form
         textBox_hex_color.TextChanged += TextBox_hex_color_TextChanged;
 
         status = new(statusLabel_changes, button_apply);
+
+        updateZoom(1);
+        tileDisplay_pal.ShowGrid = true;
     }
 
     public FormPaletteNew(bool tileset, byte value) : this()
     {
+        if (tileset) LoadPaletteFromTileset(value);
+        else LoadPaletteFromSprite(value);
     }
 
     public FormPaletteNew(int offset, int rows) : this()
     {
+        textBox_offset.Text = Hex.ToString(offset);
+        numericUpDown_rows.Value = rows;
+
+        LoadPalette();
     }
     #endregion
 
@@ -68,9 +80,70 @@ public partial class FormPaletteNew : Form
 
         colorPicker.MarkerColor = ThemeSwitcher.ProjectTheme.BackgroundColor;
         colorPicker.BorderColor = ThemeSwitcher.ProjectTheme.PrimaryOutline;
+
+        colorSwatch.SwatchOutlineColor = ThemeSwitcher.ProjectTheme.SecondaryOutline;
+        colorSwatch.SwapGlyphColor = ThemeSwitcher.ProjectTheme.PrimaryOutline;
+        colorSwatch.SwapGlyphHotColor = ThemeSwitcher.ProjectTheme.AccentColor;
     }
 
-    private Color Rgb5ToColor(int r, int g, int b) => Color.FromArgb(r * 8, g * 8, b * 8);
+    private void LoadPalette()
+    {
+        try
+        {
+            int offset = Hex.ToInt(textBox_offset.Text);
+            int rows = (int)numericUpDown_rows.Value;
+
+            palette = new Palette(ROM.Stream, offset, rows);
+            DrawPalette();
+            status.LoadNew();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("The offset entered was not valid.\n\n" + ex.GetType().ToString() + '\n'
+                    + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void LoadPaletteFromTileset(byte tileset)
+    {
+        int headerOffset = Version.TilesetOffset + tileset * 0x14;
+        int BGpaletteOffset = ROM.Stream.ReadPtr(headerOffset + 0x4);
+
+        textBox_offset.Text = Hex.ToString(BGpaletteOffset);
+        numericUpDown_rows.Value = 14;
+        LoadPalette();
+    }
+
+    private void LoadPaletteFromSprite(byte sprite)
+    {
+        if (sprite < 0x10) { return; }
+
+        // TODO: reuse code
+        int addVal = (sprite - 0x10) * 4;
+
+        // get gfx rows
+        int numGfxRows;
+        if (Version.IsMF)
+        {
+            int offset = Version.SpriteGfxRowsOffset + addVal;
+            numGfxRows = ROM.Stream.Read16(offset) / 0x800;
+        }
+        else
+        {
+            int offset = Version.SpriteGfxOffset + addVal;
+            int gfxOffset = ROM.Stream.ReadPtr(offset);
+            numGfxRows = Math.Max(ROM.Stream.Read16(gfxOffset + 1) / 0x800, 1);
+        }
+
+        // get palette
+        int palPtr = Version.SpritePaletteOffset + addVal;
+        int palOffset = ROM.Stream.ReadPtr(palPtr);
+        // code to move ends here
+
+        textBox_offset.Text = Hex.ToString(palOffset);
+        numericUpDown_rows.Value = numGfxRows;
+        LoadPalette();
+    }
 
     private void Save()
     {
@@ -89,10 +162,34 @@ public partial class FormPaletteNew : Form
         if (result == DialogResult.Yes) Save();
         return true;
     }
+
+    private Color Rgb5ToColor(int r, int g, int b) => Color.FromArgb(r * 8, g * 8, b * 8);
+    private void ColorToRgb5(Color c, out int r, out int g, out int b)
+    {
+        r = c.R / 8;
+        g = c.G / 8;
+        b = c.B / 8;
+    }
     #endregion
 
     #region Generic Events
     private void ThemeSwitcher_ThemeChanged(object? sender, EventArgs e) => ThemeColorBar();
+
+    private void button_load_Click(object sender, EventArgs e) => LoadPalette();
+
+    private void button_minus_Click(object sender, EventArgs e)
+    {
+        textBox_offset.Text = Hex.ToString(Hex.ToInt(textBox_offset.Text) - 0x20);
+        LoadPalette();
+    }
+
+    private void button_plus_Click(object sender, EventArgs e)
+    {
+        textBox_offset.Text = Hex.ToString(Hex.ToInt(textBox_offset.Text) + 0x20);
+        LoadPalette();
+    }
+
+    private void button_grid_CheckStateChanged(object sender, EventArgs e) => tileDisplay_pal.ShowGrid = button_grid.Checked;
     #endregion
 
     #region Color Controls
@@ -113,7 +210,9 @@ public partial class FormPaletteNew : Form
         if (!preventTextBoxUpdate) textBox_hex_color.Text = ColorOperations.ToHexString(current);
         if (!preventColorPickerUpdate) colorPicker.SetRgb5(r, g, b);
 
-        pictureBox_chosenColor.BackColor = current;
+        ignoreColorSwatchUpdate = true;
+        colorSwatch.PrimaryColor = current;
+        ignoreColorSwatchUpdate = false;
 
         init = false;
     }
@@ -155,15 +254,26 @@ public partial class FormPaletteNew : Form
         text = text.Insert(0, "#");
         Color c = ColorTranslator.FromHtml(text);
 
-        int r = c.R / 8;
-        int g = c.G / 8;
-        int b = c.B / 8;
+        int r, g, b;
+        ColorToRgb5(c, out r, out g, out b);
 
         UpdateSelectedColor(r, g, b, false, true);
+    }
+
+    private void colorSwatch_ColorsChanged(object sender, EventArgs e)
+    {
+        if (ignoreColorSwatchUpdate) return;
+        int r, g, b;
+        ColorToRgb5(colorSwatch.PrimaryColor, out r, out g, out b);
+        UpdateSelectedColor(r, g, b);
     }
     #endregion
 
     #region Palette Display
+    private void DrawPalette()
+    {
+        tileDisplay_pal.TileImage = palette.Draw(16, 0, palette.Rows, noGrid: true);
+    }
     #endregion
 
     #region Zoom
@@ -189,6 +299,4 @@ public partial class FormPaletteNew : Form
         label_Zoom.Text = $"{1 << tileDisplay_pal.Zoom}00%";
     }
     #endregion
-
-
 }

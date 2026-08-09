@@ -485,7 +485,7 @@ namespace mage
         private void button_apply_Click(object sender, EventArgs e)
         {
             // write
-            palette.Write(romStream, modifiedColors);
+            palette.Write(romStream);
 
             // update editors
             FormMain.UpdateEditors();

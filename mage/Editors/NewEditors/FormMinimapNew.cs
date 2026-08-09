@@ -1148,5 +1148,6 @@ public partial class FormMinimapNew : Form, Editor
 
         return;
     }
+
     #endregion
 }
