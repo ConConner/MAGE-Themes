@@ -66,6 +66,13 @@
             toolStrip_palette = new System.Windows.Forms.ToolStrip();
             button_undo = new System.Windows.Forms.ToolStripSplitButton();
             button_redo = new System.Windows.Forms.ToolStripSplitButton();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            button_copy = new System.Windows.Forms.ToolStripButton();
+            button_paste = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            button_toolSelect = new System.Windows.Forms.ToolStripButton();
+            button_toolPen = new System.Windows.Forms.ToolStripButton();
+            button_eyeDropper = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             button_grid = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -545,14 +552,17 @@
             tileDisplay_pal.Text = "tileDisplay1";
             tileDisplay_pal.TileGridOrigin = new System.Drawing.Point(0, 0);
             tileDisplay_pal.TileImage = null;
-            tileDisplay_pal.TileSize = 8;
+            tileDisplay_pal.TileSize = 16;
             tileDisplay_pal.Zoom = 1;
+            tileDisplay_pal.TileMouseDown += tileDisplay_pal_TileMouseDown;
+            tileDisplay_pal.TileMouseUp += tileDisplay_pal_TileMouseUp;
+            tileDisplay_pal.TileMouseMove += tileDisplay_pal_TileMouseMove;
             tileDisplay_pal.Scrolled += tileDisplay_pal_Scrolled;
             // 
             // toolStrip_palette
             // 
             toolStrip_palette.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator8, button_grid, toolStripSeparator5, button_ZoomIn, button_ZoomOut, label_Zoom });
+            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator1, button_copy, button_paste, toolStripSeparator6, button_toolSelect, button_toolPen, button_eyeDropper, toolStripSeparator8, button_grid, toolStripSeparator5, button_ZoomIn, button_ZoomOut, label_Zoom });
             toolStrip_palette.Location = new System.Drawing.Point(3, 19);
             toolStrip_palette.Name = "toolStrip_palette";
             toolStrip_palette.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -569,6 +579,9 @@
             button_undo.Name = "button_undo";
             button_undo.Size = new System.Drawing.Size(32, 22);
             button_undo.Text = "Undo";
+            button_undo.ButtonClick += button_undo_ButtonClick;
+            button_undo.DropDownOpening += button_undo_DropDownOpening;
+            button_undo.DropDownItemClicked += button_undo_DropDownItemClicked;
             // 
             // button_redo
             // 
@@ -579,6 +592,70 @@
             button_redo.Name = "button_redo";
             button_redo.Size = new System.Drawing.Size(32, 22);
             button_redo.Text = "Redo";
+            button_redo.ButtonClick += button_redo_ButtonClick;
+            button_redo.DropDownOpening += button_redo_DropDownOpening;
+            button_redo.DropDownItemClicked += button_redo_DropDownItemClicked;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // button_copy
+            // 
+            button_copy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_copy.Enabled = false;
+            button_copy.Image = Properties.Resources.copy;
+            button_copy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_copy.Name = "button_copy";
+            button_copy.Size = new System.Drawing.Size(23, 22);
+            button_copy.Text = "Copy";
+            // 
+            // button_paste
+            // 
+            button_paste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_paste.Image = Properties.Resources.paste;
+            button_paste.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_paste.Name = "button_paste";
+            button_paste.Size = new System.Drawing.Size(23, 22);
+            button_paste.Text = "Paste";
+            // 
+            // toolStripSeparator6
+            // 
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
+            // button_toolSelect
+            // 
+            button_toolSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_toolSelect.Image = Properties.Resources.shape_group;
+            button_toolSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_toolSelect.Name = "button_toolSelect";
+            button_toolSelect.Size = new System.Drawing.Size(23, 22);
+            button_toolSelect.Text = "Select (M)";
+            button_toolSelect.Click += button_toolSelect_Click;
+            // 
+            // button_toolPen
+            // 
+            button_toolPen.Checked = true;
+            button_toolPen.CheckState = System.Windows.Forms.CheckState.Checked;
+            button_toolPen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_toolPen.Image = Properties.Resources.pencil;
+            button_toolPen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_toolPen.Name = "button_toolPen";
+            button_toolPen.Size = new System.Drawing.Size(23, 22);
+            button_toolPen.Text = "Pen (B)";
+            button_toolPen.Click += button_toolPen_Click;
+            // 
+            // button_eyeDropper
+            // 
+            button_eyeDropper.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_eyeDropper.Image = Properties.Resources.eyedropper;
+            button_eyeDropper.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_eyeDropper.Name = "button_eyeDropper";
+            button_eyeDropper.Size = new System.Drawing.Size(23, 22);
+            button_eyeDropper.Text = "Eyedropper (C, Alt + Click)";
+            button_eyeDropper.Click += button_eyeDropper_Click;
             // 
             // toolStripSeparator8
             // 
@@ -733,6 +810,7 @@
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Name = "FormPaletteNew";
             Text = "Palette Editor";
+            FormClosing += FormPaletteNew_FormClosing;
             panel_main.Panel1.ResumeLayout(false);
             panel_main.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)panel_main).EndInit();
@@ -817,5 +895,12 @@
         private System.Windows.Forms.GroupBox group_recentColors;
         private System.Windows.Forms.FlowLayoutPanel flowPanel_recentColors;
         private Controls.DualColorSwatch colorSwatch;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton button_copy;
+        private System.Windows.Forms.ToolStripButton button_paste;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripButton button_toolSelect;
+        private System.Windows.Forms.ToolStripButton button_toolPen;
+        private System.Windows.Forms.ToolStripButton button_eyeDropper;
     }
 }

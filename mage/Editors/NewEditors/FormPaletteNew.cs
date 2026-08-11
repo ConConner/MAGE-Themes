@@ -1,4 +1,5 @@
 ﻿using mage.Actions;
+using mage.Actions.PaletteEditor;
 using mage.Controls;
 using mage.Theming;
 using System;
@@ -26,17 +27,95 @@ public partial class FormPaletteNew : Form
         else new FormPalette(FormMain.Instance, offset, rows).Show();
     }
 
+    private enum Tool
+    {
+        Select,
+        Pen,
+        Eyedropper
+    }
+
     #region Fields
     // State
     private bool init = false;
     private bool ignoreColorSwatchUpdate = false;
     private Palette palette;
     private Status status;
+    private GenericUndoRedo UndoRedo = new();
+    private EditorGridActionGroup? latestActionGroup = null;
+    private Point? SelectionPivot = null;
+    private Point? MovingPivot = null;
+
+    // Colors
+    private ushort colorPrimary = 0;
+    private ushort colorSecondary = ushort.MaxValue;
 
     // Undo Redo
     private GenericUndoRedo undoRedo = new();
 
     // Drawables
+    private static float[] DashPattern = new float[] { 2, 3 };
+    private Pen DottedPenWhite = new Pen(Color.White, 1) { DashPattern = DashPattern };
+    private Pen DottedPenBlack = new Pen(Color.Black, 1) { DashPattern = DashPattern, DashOffset = 2 };
+    private Drawable Selection;
+    private int SelectionDashOffset
+    {
+        get => (int)DottedPenWhite.DashOffset;
+        set
+        {
+            DottedPenWhite.DashOffset = value;
+            DottedPenBlack.DashOffset = value + 2;
+        }
+    }
+    private bool SelectionVisible
+    {
+        get => Selection.Visible;
+        set
+        {
+            if (Selection.Visible == value) return;
+            Selection.Visible = value;
+        }
+    }
+
+    new private Drawable Cursor;
+    private Pen CursorPen = new Pen(Color.Red, 1);
+
+
+    // Selection
+    private ushort[,]? selectedColors = null;
+    private bool movingSelection = false;
+
+    // Tools
+    private Tool SelectedTool
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            field = value;
+
+            Cursor.Visible = false;
+            UntoggleAllTools();
+            switch (value)
+            {
+                case Tool.Select:
+                    button_toolSelect.Checked = true;
+                    break;
+                case Tool.Pen:
+                    Cursor.Visible = true;
+                    button_toolPen.Checked = true;
+                    break;
+                case Tool.Eyedropper:
+                    Cursor.Visible = true;
+                    button_eyeDropper.Checked = true;
+                    break;
+            }
+
+            // Paste selection if still there
+            if (selectedColors is not null) ; //PasteSelectedPixels()
+
+            FinishToolAction();
+        }
+    } = Tool.Pen;
     #endregion
 
     #region Constructor
@@ -55,6 +134,21 @@ public partial class FormPaletteNew : Form
 
         updateZoom(1);
         tileDisplay_pal.ShowGrid = true;
+
+        // Intialize Drawables
+        Selection = new Drawable(Rectangle.Empty, DottedPenWhite, 1) { Visible = false };
+        Selection.DrawPens.Add(DottedPenBlack);
+        tileDisplay_pal.AddDrawable(Selection);
+        Cursor = new Drawable(Rectangle.Empty, CursorPen, 0) { Visible = false };
+        tileDisplay_pal.AddDrawable(Cursor);
+
+        Timer dashAnimationTimer = new Timer { Interval = 100 };
+        dashAnimationTimer.Tick += (_, _) =>
+        {
+            SelectionDashOffset += 1;
+            if (SelectionVisible) Selection.InvalidateDrawable(Selection);
+        };
+        dashAnimationTimer.Start();
     }
 
     public FormPaletteNew(bool tileset, byte value) : this()
@@ -88,6 +182,8 @@ public partial class FormPaletteNew : Form
 
     private void LoadPalette()
     {
+        if (!CheckUnsaved()) return;
+
         try
         {
             int offset = Hex.ToInt(textBox_offset.Text);
@@ -96,6 +192,8 @@ public partial class FormPaletteNew : Form
             palette = new Palette(ROM.Stream, offset, rows);
             DrawPalette();
             status.LoadNew();
+            UndoRedo = new();
+            setUndoRedoButtons();
         }
         catch (Exception ex)
         {
@@ -147,7 +245,9 @@ public partial class FormPaletteNew : Form
 
     private void Save()
     {
-
+        palette.Write(ROM.Stream);
+        status.Save();
+        FormMain.UpdateEditors();
     }
 
     /// <summary>
@@ -156,6 +256,7 @@ public partial class FormPaletteNew : Form
     /// <returns>False if cancelled. True for other options. Saves if yes is clicked</returns>
     private bool CheckUnsaved()
     {
+        if (!status.UnsavedChanges) return true;
         DialogResult result = MessageBox.Show("Do you want to save changes to Palette?",
             "Unsaved Changes", MessageBoxButtons.YesNoCancel);
         if (result == DialogResult.Cancel) return false;
@@ -169,6 +270,12 @@ public partial class FormPaletteNew : Form
         r = c.R / 8;
         g = c.G / 8;
         b = c.B / 8;
+    }
+    private ushort Rgb5ToArgb(int r, int g, int b, bool transparent = false)
+    {
+        ushort argb = (ushort)((r << 10) | (g << 5) | b);
+        if (!transparent) argb |= 0x8000;
+        return argb;
     }
     #endregion
 
@@ -190,9 +297,37 @@ public partial class FormPaletteNew : Form
     }
 
     private void button_grid_CheckStateChanged(object sender, EventArgs e) => tileDisplay_pal.ShowGrid = button_grid.Checked;
+
+    private void FormPaletteNew_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (CheckUnsaved()) return;
+        e.Cancel = true;
+    }
+    #endregion
+
+    #region Tool Events
+    private void UntoggleAllTools()
+    {
+        button_toolSelect.Checked = false;
+        button_toolPen.Checked = false;
+        button_eyeDropper.Checked = false;
+    }
+
+    private void button_toolSelect_Click(object sender, EventArgs e) => SelectedTool = Tool.Select;
+    private void button_toolPen_Click(object sender, EventArgs e) => SelectedTool = Tool.Pen;
+    private void button_eyeDropper_Click(object sender, EventArgs e) => SelectedTool = Tool.Eyedropper;
     #endregion
 
     #region Color Controls
+    private void SetSelectedColors()
+    {
+        int r, g, b;
+        ColorToRgb5(colorSwatch.PrimaryColor, out r, out g, out b);
+        colorPrimary = Rgb5ToArgb(r, g, b);
+        ColorToRgb5(colorSwatch.SecondaryColor, out r, out g, out b);
+        colorSecondary = Rgb5ToArgb(r, g, b);
+    }
+
     private void UpdateSelectedColor(int r, int g, int b, bool preventColorPickerUpdate = false, bool preventTextBoxUpdate = false)
     {
         init = true;
@@ -213,6 +348,9 @@ public partial class FormPaletteNew : Form
         ignoreColorSwatchUpdate = true;
         colorSwatch.PrimaryColor = current;
         ignoreColorSwatchUpdate = false;
+
+        // Update actual color selection
+        SetSelectedColors();
 
         init = false;
     }
@@ -273,6 +411,187 @@ public partial class FormPaletteNew : Form
     private void DrawPalette()
     {
         tileDisplay_pal.TileImage = palette.Draw(16, 0, palette.Rows, noGrid: true);
+    }
+
+    private void PenDraw(ushort color, Point location)
+    {
+        EditPalettePixelAction a = new(palette, location, color);
+        a.Do();
+        if (latestActionGroup is not null) latestActionGroup.AddAction(a);
+        else AddAction(a);
+        DrawPalette();
+    }
+
+    private void FinishToolAction()
+    {
+        // Clear variables
+        SelectionPivot = null;
+        MovingPivot = null;
+        movingSelection = false;
+    }
+
+    private void PickColor(Point location, bool rightClick)
+    {
+        Color pick = palette.GetOpaqueColor(location.Y, location.X);
+        int r, g, b;
+        ColorToRgb5(pick, out r, out g, out b);
+        if (!rightClick) UpdateSelectedColor(r, g, b);
+        else
+        {
+            colorSwatch.SecondaryColor = pick;
+            SetSelectedColors();
+        }
+    }
+
+    private void tileDisplay_pal_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        if (e.TileIndexPosition.X < 0 || e.TileIndexPosition.Y < 0 || e.PixelPosition.X > tileDisplay_pal.TileImage.Width || e.PixelPosition.Y > tileDisplay_pal.TileImage.Height) return;
+
+        bool left = e.Button == MouseButtons.Left;
+        bool right = e.Button == MouseButtons.Right;
+        bool alt = ModifierKeys == Keys.Alt;
+
+        if (!left && !right) return;
+
+        switch (SelectedTool)
+        {
+            case Tool.Pen:
+                if (alt)
+                {
+                    PickColor(e.TileIndexPosition, right);
+                    break;
+                }
+
+                latestActionGroup = new();
+                ushort color = left ? colorPrimary : colorSecondary;
+                PenDraw(color, e.TileIndexPosition);
+                break;
+
+            case Tool.Select:
+                break;
+
+            case Tool.Eyedropper:
+                PickColor(e.TileIndexPosition, right);
+                break;
+        }
+    }
+
+    private void tileDisplay_pal_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        if (e.TileIndexPosition.X == Cursor.X && e.TileIndexPosition.Y == Cursor.Y) return;
+        if (e.TileIndexPosition.X < 0 || e.TileIndexPosition.Y < 0 || e.PixelPosition.X > tileDisplay_pal.TileImage.Width || e.PixelPosition.Y > tileDisplay_pal.TileImage.Height) return;
+        Cursor.Rectangle = new Rectangle(e.TilePixelPosition.X, e.TilePixelPosition.Y, 16, 16);
+
+        bool left = e.Button == MouseButtons.Left;
+        bool right = e.Button == MouseButtons.Right;
+
+        if (!left && !right) return;
+
+        switch (SelectedTool)
+        {
+            case Tool.Pen:
+                Cursor.Visible = true;
+                ushort color = left ? colorPrimary : colorSecondary;
+                PenDraw(color, e.TileIndexPosition);
+                break;
+
+            case Tool.Select:
+                break;
+        }
+    }
+
+    private void tileDisplay_pal_TileMouseUp(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        switch (SelectedTool)
+        {
+            case Tool.Pen:
+                if (latestActionGroup is null) break;
+                AddAction(latestActionGroup);
+                latestActionGroup = null;
+                break;
+
+            case Tool.Select:
+                break;
+        }
+    }
+    #endregion
+
+    #region Undo Redo
+    public void AddAction(EditorGridAction a)
+    {
+        UndoRedo.AddActionWithoutDo(a);
+        setUndoRedoButtons();
+
+        status.ChangeMade();
+    }
+
+    private void DiscardSelection()
+    {
+        if (selectedColors is null) return;
+        if (latestActionGroup?.ActionCount == 1) latestActionGroup.Undo();
+        latestActionGroup = null;
+        selectedColors = null;
+        SelectionVisible = false;
+    }
+
+    private void Undo()
+    {
+        DiscardSelection();
+        FinishToolAction();
+        UndoRedo.Undo();
+        setUndoRedoButtons();
+        status.ChangeMade();
+    }
+
+    private void Redo()
+    {
+        DiscardSelection();
+        FinishToolAction();
+        UndoRedo.Redo();
+        setUndoRedoButtons();
+        status.ChangeMade();
+    }
+
+    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<EditorGridAction> stack)
+    {
+        int count = Math.Min(16, stack.Count);
+        int lastIndex = stack.Count - 1;
+
+        button.DropDownItems.Clear();
+        for (int i = 0; i < count; i++)
+        {
+            ToolStripMenuItem item = new ToolStripMenuItem();
+            item.Tag = i + 1;
+            item.Text = stack[lastIndex - i].ActionText;
+            button.DropDownItems.Add(item);
+        }
+    }
+
+    private void setUndoRedoButtons()
+    {
+        button_undo.Enabled = UndoRedo.CanUndo;
+        button_redo.Enabled = UndoRedo.CanRedo;
+        if (palette is not null) DrawPalette();
+    }
+
+    private void button_undo_ButtonClick(object sender, EventArgs e) => Undo();
+
+    private void button_redo_ButtonClick(object sender, EventArgs e) => Redo();
+
+    private void button_undo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_undo, UndoRedo.UndoStack);
+
+    private void button_redo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_redo, UndoRedo.RedoStack);
+
+    private void button_undo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    {
+        int num = (int)e.ClickedItem.Tag;
+        for (int i = 0; i < num; i++) Undo();
+    }
+
+    private void button_redo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    {
+        int num = (int)e.ClickedItem.Tag;
+        for (int i = 0; i < num; i++) Redo();
     }
     #endregion
 

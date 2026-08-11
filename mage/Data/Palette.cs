@@ -52,6 +52,7 @@ namespace mage
 
         public ushort GetARGB(int r, int c)
         {
+            if (r >= Rows || c >= 16) return 0;
             return palette[r, c];
         }
 
@@ -62,6 +63,8 @@ namespace mage
 
         public Color GetOpaqueColor(int r, int c)
         {
+            if (r >= Rows || c >= 16) return Color.Black;
+
             ushort val = palette[r, c];
             int blue = (val & 0x1F) << 3;
             int green = (val & 0x3E0) >> 2;
@@ -72,6 +75,7 @@ namespace mage
 
         public void SetARGB(int r, int c, ushort argb)
         {
+            if (r >= Rows || c >= 16) return;
             palette[r, c] = argb;
         }
 
