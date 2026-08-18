@@ -2,6 +2,7 @@
 using mage.Actions.PaletteEditor;
 using mage.Controls;
 using mage.Theming;
+using mage.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -262,6 +263,22 @@ public partial class FormPaletteNew : Form
         if (result == DialogResult.Cancel) return false;
         if (result == DialogResult.Yes) Save();
         return true;
+    }
+
+    private Rectangle GetRectangleFromPoints(Point p1, Point p2)
+    {
+        int left = Math.Min(p1.X, p2.X);
+        int top = Math.Min(p1.Y, p2.Y);
+        int right = Math.Max(p1.X, p2.X) + 1;
+        int bottom = Math.Max(p1.Y, p2.Y) + 1;
+
+        const int grid = 16;
+        left = MathFunctions.FloorTo(left, grid);
+        top = MathFunctions.FloorTo(top, grid);
+        right = MathFunctions.CeilTo(right, grid);
+        bottom = MathFunctions.CeilTo(bottom, grid);
+
+        return new Rectangle(left, top, right - left, bottom - top);
     }
 
     private Color Rgb5ToColor(int r, int g, int b) => Color.FromArgb(r * 8, g * 8, b * 8);
