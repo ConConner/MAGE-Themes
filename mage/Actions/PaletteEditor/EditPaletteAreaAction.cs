@@ -46,7 +46,7 @@ internal class EditPaletteAreaAction : EditorGridAction
         {
             for (int r = 0; r < _area.Height; r++)
             {
-                ushort old = _palette.GetARGB(r, c);
+                ushort old = _palette.GetARGB(_location.Y + r, _location.X + c);
                 _palette.SetARGB(_location.Y + r, _location.X + c, _colors[c, r]);
                 _colors[c, r] = old;
             }
@@ -57,4 +57,6 @@ internal class EditPaletteAreaAction : EditorGridAction
     {
         Do();
     }
+
+    public ushort[,] GetOldColors() => _colors;
 }

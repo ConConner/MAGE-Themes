@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -45,6 +46,21 @@ public partial class FormPaletteNew : Form
     private EditorGridActionGroup? latestActionGroup = null;
     private Point? SelectionPivot = null;
     private Point? MovingPivot = null;
+    private bool ReachedMovingThreshold = false;
+    private int MovingThreshold
+    {
+        get
+        {
+            if (tileDisplay_pal.Zoom == 4) return 2;
+            if (tileDisplay_pal.Zoom == 3) return 4;
+            if (tileDisplay_pal.Zoom == 2) return 5;
+            if (tileDisplay_pal.Zoom == 1) return 6;
+            return 7;
+        }
+    }
+
+    private const int CellSize = 16;
+    private const string ClipboardFormat = "MagePaletteEditor_Colors";
 
     // Colors
     private ushort colorPrimary = 0;
@@ -74,8 +90,11 @@ public partial class FormPaletteNew : Form
         {
             if (Selection.Visible == value) return;
             Selection.Visible = value;
+
+            button_copy.Enabled = value;
         }
     }
+    private Rectangle SelectionCells => new(Selection.X / CellSize, Selection.Y / CellSize, Selection.Width / CellSize, Selection.Height / CellSize);
 
     new private Drawable Cursor;
     private Pen CursorPen = new Pen(Color.Red, 1);
@@ -112,7 +131,7 @@ public partial class FormPaletteNew : Form
             }
 
             // Paste selection if still there
-            if (selectedColors is not null) ; //PasteSelectedPixels()
+            if (selectedColors is not null) PasteSelectedColors();
 
             FinishToolAction();
         }
@@ -130,6 +149,13 @@ public partial class FormPaletteNew : Form
         ThemeColorBar();
 
         textBox_hex_color.TextChanged += TextBox_hex_color_TextChanged;
+
+        KeyPreview = true;
+        KeyDown += FormPaletteNew_KeyDown;
+
+        button_copy.Enabled = false;
+        button_copy.Click += (_, _) => Copy();
+        button_paste.Click += (_, _) => Paste();
 
         status = new(statusLabel_changes, button_apply);
 
@@ -320,6 +346,52 @@ public partial class FormPaletteNew : Form
         if (CheckUnsaved()) return;
         e.Cancel = true;
     }
+
+    private void FormPaletteNew_KeyDown(object sender, KeyEventArgs e)
+    {
+        switch (e.KeyCode)
+        {
+            case Keys.B:
+                button_toolPen_Click(this, e);
+                break;
+
+            case Keys.M:
+                button_toolSelect_Click(this, e);
+                break;
+
+            case Keys.C:
+                if (ModifierKeys == Keys.Control)
+                {
+                    Copy();
+                    break;
+                }
+                button_eyeDropper_Click(this, e);
+                break;
+
+            case Keys.V:
+                if (ModifierKeys == Keys.Control)
+                {
+                    Paste(true);
+                    break;
+                }
+                break;
+
+            case Keys.Z:
+                if (ModifierKeys == (Keys.Control | Keys.Shift))
+                {
+                    if (!UndoRedo.CanRedo) break;
+                    Redo();
+                    break;
+                }
+                else if (ModifierKeys == Keys.Control)
+                {
+                    if (!UndoRedo.CanUndo) break;
+                    Undo();
+                    break;
+                }
+                break;
+        }
+    }
     #endregion
 
     #region Tool Events
@@ -427,16 +499,54 @@ public partial class FormPaletteNew : Form
     #region Palette Display
     private void DrawPalette()
     {
-        tileDisplay_pal.TileImage = palette.Draw(16, 0, palette.Rows, noGrid: true);
+        Bitmap bmp = palette.Draw(16, 0, palette.Rows, noGrid: true);
+        if (selectedColors is not null) DrawColorsOntoBitmap(bmp, Selection.Location, selectedColors);
+        tileDisplay_pal.TileImage = bmp;
+    }
+
+    private static Color ArgbToColor(ushort val)
+    {
+        int blue = (val & 0x1F) << 3;
+        int green = (val & 0x3E0) >> 2;
+        int red = (val & 0x7C00) >> 7;
+        return Color.FromArgb(red, green, blue);
+    }
+
+    private static void DrawColorsOntoBitmap(Bitmap dest, Point pos, ushort[,] colors)
+    {
+        int width = colors.GetLength(0);
+        int height = colors.GetLength(1);
+
+        using Graphics g = Graphics.FromImage(dest);
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                using (SolidBrush sb = new(ArgbToColor(colors[x, y])))
+                    g.FillRectangle(sb, new Rectangle(pos.X + x * CellSize, pos.Y + y * CellSize, CellSize, CellSize));
+    }
+
+    private bool IsInSelection(Point p)
+    {
+        // Return true if no selection, since everything is "in" the selection
+        if (!SelectionVisible) return true;
+        return Selection.Rectangle.Contains(p);
     }
 
     private void PenDraw(ushort color, Point location)
     {
+        if (!IsInSelection(new Point(location.X * CellSize, location.Y * CellSize))) return;
+
         EditPalettePixelAction a = new(palette, location, color);
         a.Do();
         if (latestActionGroup is not null) latestActionGroup.AddAction(a);
         else AddAction(a);
         DrawPalette();
+    }
+
+    private void CloseActionGroup()
+    {
+        // Finalise Action Group
+        if (latestActionGroup != null && latestActionGroup.ActionCount > 0) AddAction(latestActionGroup);
+        latestActionGroup = null;
     }
 
     private void FinishToolAction()
@@ -445,6 +555,7 @@ public partial class FormPaletteNew : Form
         SelectionPivot = null;
         MovingPivot = null;
         movingSelection = false;
+        ReachedMovingThreshold = false;
     }
 
     private void PickColor(Point location, bool rightClick)
@@ -485,6 +596,24 @@ public partial class FormPaletteNew : Form
                 break;
 
             case Tool.Select:
+                SelectionPivot = e.TilePixelPosition;
+
+                // Check if pressing in already existing selection to start a move
+                if (SelectionVisible && Selection.Rectangle.Contains(e.PixelPosition))
+                {
+                    movingSelection = true;
+                    MovingPivot = Selection.Location;
+                }
+                // Clicking outside of existing selection or creating new one
+                else
+                {
+                    // Placing moved selection if moved
+                    if (selectedColors is not null) PasteSelectedColors();
+
+                    SelectionVisible = !SelectionVisible; // Deselect selection or start new
+                    Point cellOrigin = new(MathFunctions.FloorTo(e.PixelPosition.X, CellSize), MathFunctions.FloorTo(e.PixelPosition.Y, CellSize));
+                    Selection.Rectangle = new Rectangle(cellOrigin, new Size(CellSize, CellSize));
+                }
                 break;
 
             case Tool.Eyedropper:
@@ -513,6 +642,38 @@ public partial class FormPaletteNew : Form
                 break;
 
             case Tool.Select:
+                if (SelectionPivot == null) break;
+
+                // Moving Selection
+                if (movingSelection && MovingPivot is not null)
+                {
+                    Size movingDiff = new(e.PixelPosition.X - SelectionPivot.Value.X, e.PixelPosition.Y - SelectionPivot.Value.Y);
+                    bool pastThreshold = Math.Abs(movingDiff.Width) > MovingThreshold || Math.Abs(movingDiff.Height) > MovingThreshold;
+
+                    if (!ReachedMovingThreshold && pastThreshold && selectedColors is null) // This should ideally only trigger once
+                    {
+                        ReachedMovingThreshold = true;
+                        latestActionGroup = new("Move");
+                        selectedColors = EjectColors(Selection.Rectangle);
+                    }
+                    if (ReachedMovingThreshold || selectedColors is not null)
+                    {
+                        ReachedMovingThreshold = true;
+
+                        // Colors are edited in whole cells, so movement always snaps to the color grid
+                        Point moved = MovingPivot.Value + movingDiff;
+                        Point final = new(MathFunctions.FloorTo(moved.X, CellSize), MathFunctions.FloorTo(moved.Y, CellSize));
+
+                        Selection.Rectangle = new Rectangle(final, Selection.Rectangle.Size);
+                        DrawPalette(); // Redrawing to show Preview
+                    }
+                }
+                // Selecting
+                else
+                {
+                    SelectionVisible = true;
+                    Selection.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition);
+                }
                 break;
         }
     }
@@ -522,14 +683,162 @@ public partial class FormPaletteNew : Form
         switch (SelectedTool)
         {
             case Tool.Pen:
-                if (latestActionGroup is null) break;
-                AddAction(latestActionGroup);
-                latestActionGroup = null;
+                CloseActionGroup();
                 break;
 
             case Tool.Select:
+                // Check if we want to deselect if clicked in selection but not moved
+                if (!movingSelection || ReachedMovingThreshold) break;
+                if (selectedColors is not null) PasteSelectedColors();
+
+                SelectionVisible = false;
                 break;
         }
+
+        FinishToolAction();
+    }
+    #endregion
+
+    #region Copy/Paste
+    private class FlatUshortArray
+    {
+        public FlatUshortArray() { }
+        public FlatUshortArray(ushort[,] input)
+        {
+            Rows = input.GetLength(0);
+            Cols = input.GetLength(1);
+            Values = new ushort[Rows * Cols];
+
+            int index = 0;
+            for (int r = 0; r < Rows; r++)
+                for (int c = 0; c < Cols; c++)
+                    Values[index++] = input[r, c];
+        }
+
+        public int Rows { get; set; }
+        public int Cols { get; set; }
+        public ushort[] Values { get; set; }
+
+        public ushort[,] Unpack()
+        {
+            ushort[,] result = new ushort[Rows, Cols];
+            int index = 0;
+
+            for (int r = 0; r < Rows; r++)
+                for (int c = 0; c < Cols; c++)
+                    result[r, c] = Values[index++];
+
+            return result;
+        }
+
+        public static explicit operator FlatUshortArray(ushort[,] input) => new FlatUshortArray(input);
+        public static implicit operator ushort[,](FlatUshortArray input) => input.Unpack();
+    }
+
+    private ushort[,] CopyColors(Rectangle cells)
+    {
+        ushort[,] colors = new ushort[cells.Width, cells.Height];
+        for (int x = 0; x < cells.Width; x++)
+            for (int y = 0; y < cells.Height; y++)
+                colors[x, y] = palette.GetARGB(cells.Y + y, cells.X + x);
+        return colors;
+    }
+
+    private ushort[,] EjectColors(Rectangle region)
+    {
+        Rectangle cells = new(region.X / CellSize, region.Y / CellSize, region.Width / CellSize, region.Height / CellSize);
+        EditPaletteAreaAction clearAction = new(palette, cells, Rgb5ToArgb(0, 0, 0)); // Fills the region with black (placeholder for moved-out colors)
+        clearAction.Do();
+        if (latestActionGroup is not null) latestActionGroup.AddAction(clearAction);
+        DrawPalette();
+        return clearAction.GetOldColors(); // The fill replaces the data in the action with the old colors
+    }
+
+    private EditPaletteAreaAction PasteColors(Point cellLocation, ushort[,] colors)
+    {
+        EditPaletteAreaAction pasteAction = new(palette, cellLocation, colors, "Paste");
+        pasteAction.Do();
+        if (latestActionGroup is not null) latestActionGroup.AddAction(pasteAction);
+        CloseActionGroup();
+        DrawPalette();
+        return pasteAction;
+    }
+
+    private void PasteSelectedColors()
+    {
+        if (selectedColors is null) return;
+        PasteColors(new Point(Selection.X / CellSize, Selection.Y / CellSize), (ushort[,])selectedColors.Clone());
+        selectedColors = null;
+    }
+
+    private void CopyArrayToClipboard(ushort[,] colors)
+    {
+        try { Clipboard.SetDataAsJson(ClipboardFormat, (FlatUshortArray)colors); }
+        catch (ExternalException)
+        {
+            MessageBox.Show("Clipboard is busy. Please try copying again.");
+        }
+    }
+
+    private ushort[,]? ColorsFromClipboard()
+    {
+        if (!Clipboard.ContainsData(ClipboardFormat)) return null;
+
+        try
+        {
+            if (Clipboard.TryGetData(ClipboardFormat, out FlatUshortArray pastedArray)) return pastedArray;
+        }
+        catch (ExternalException)
+        {
+            MessageBox.Show("Clipboard is busy. Please try pasting again.");
+        }
+
+        return null;
+    }
+
+    private Point FindIdealPasteLocation(bool pressedButton, int width, int height)
+    {
+        Point mouseToTileDisplay = tileDisplay_pal.PointToClient(System.Windows.Forms.Cursor.Position);
+
+        if (!pressedButton)
+        {
+            int x = (mouseToTileDisplay.X >> tileDisplay_pal.Zoom) - width / 2;
+            int y = (mouseToTileDisplay.Y >> tileDisplay_pal.Zoom) - height / 2;
+            return new Point(MathFunctions.FloorTo(x, CellSize), MathFunctions.FloorTo(y, CellSize));
+        }
+
+        int xOffset = Math.Abs(panel_palView.AutoScrollPosition.X >> tileDisplay_pal.Zoom);
+        int yOffset = Math.Abs(panel_palView.AutoScrollPosition.Y >> tileDisplay_pal.Zoom);
+
+        return new Point(MathFunctions.FloorTo(xOffset, CellSize), MathFunctions.FloorTo(yOffset, CellSize));
+    }
+
+    private void Copy()
+    {
+        if (!SelectionVisible) return;
+        if (selectedColors is not null) PasteSelectedColors();
+        ushort[,] copiedColors = CopyColors(SelectionCells);
+        CopyArrayToClipboard(copiedColors);
+    }
+
+    private void Paste(bool throughShortcut = false)
+    {
+        ushort[,]? pasteColors = ColorsFromClipboard();
+        if (pasteColors is null) return;
+
+        if (selectedColors is not null) PasteSelectedColors();
+
+        int width = pasteColors.GetLength(0) * CellSize;
+        int height = pasteColors.GetLength(1) * CellSize;
+        Point pastePoint = FindIdealPasteLocation(!throughShortcut, width, height);
+
+        SelectedTool = Tool.Select;
+        SelectionVisible = true;
+        Selection.Rectangle = new Rectangle(pastePoint, new Size(width, height));
+        selectedColors = pasteColors;
+        latestActionGroup = new("Paste");
+
+        DrawPalette();
     }
     #endregion
 

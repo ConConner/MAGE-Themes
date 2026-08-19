@@ -52,7 +52,7 @@ namespace mage
 
         public ushort GetARGB(int r, int c)
         {
-            if (r >= Rows || c >= 16) return 0;
+            if (r < 0 || r >= Rows || c < 0 || c >= 16) return 0;
             return palette[r, c];
         }
 
@@ -75,7 +75,7 @@ namespace mage
 
         public void SetARGB(int r, int c, ushort argb)
         {
-            if (r >= Rows || c >= 16) return;
+            if (r < 0 || r >= Rows || c < 0 || c >= 16) return;
             palette[r, c] = argb;
         }
 
