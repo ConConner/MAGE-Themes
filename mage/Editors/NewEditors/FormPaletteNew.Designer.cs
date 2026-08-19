@@ -124,13 +124,14 @@
             panel_main.Panel1.Controls.Add(groupBox_color);
             panel_main.Panel1.Controls.Add(group_selection);
             panel_main.Panel1.Padding = new System.Windows.Forms.Padding(6, 3, 3, 3);
+            panel_main.Panel1MinSize = 280;
             // 
             // panel_main.Panel2
             // 
             panel_main.Panel2.Controls.Add(groupBox_map);
             panel_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
-            panel_main.Size = new System.Drawing.Size(974, 598);
-            panel_main.SplitterDistance = 288;
+            panel_main.Size = new System.Drawing.Size(909, 599);
+            panel_main.SplitterDistance = 280;
             panel_main.TabIndex = 0;
             // 
             // group_recentColors
@@ -139,7 +140,7 @@
             group_recentColors.Dock = System.Windows.Forms.DockStyle.Fill;
             group_recentColors.Location = new System.Drawing.Point(6, 529);
             group_recentColors.Name = "group_recentColors";
-            group_recentColors.Size = new System.Drawing.Size(279, 66);
+            group_recentColors.Size = new System.Drawing.Size(271, 67);
             group_recentColors.TabIndex = 4;
             group_recentColors.TabStop = false;
             group_recentColors.Text = "Recent Colors";
@@ -150,7 +151,7 @@
             flowPanel_recentColors.Location = new System.Drawing.Point(3, 19);
             flowPanel_recentColors.Name = "flowPanel_recentColors";
             flowPanel_recentColors.Padding = new System.Windows.Forms.Padding(3);
-            flowPanel_recentColors.Size = new System.Drawing.Size(273, 44);
+            flowPanel_recentColors.Size = new System.Drawing.Size(265, 45);
             flowPanel_recentColors.TabIndex = 0;
             // 
             // groupBox_currentColor
@@ -165,7 +166,7 @@
             groupBox_currentColor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_currentColor.Name = "groupBox_currentColor";
             groupBox_currentColor.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_currentColor.Size = new System.Drawing.Size(279, 78);
+            groupBox_currentColor.Size = new System.Drawing.Size(271, 78);
             groupBox_currentColor.TabIndex = 1;
             groupBox_currentColor.TabStop = false;
             groupBox_currentColor.Text = "Current Color";
@@ -245,7 +246,7 @@
             groupBox_color.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox_color.Name = "groupBox_color";
             groupBox_color.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBox_color.Size = new System.Drawing.Size(279, 334);
+            groupBox_color.Size = new System.Drawing.Size(271, 334);
             groupBox_color.TabIndex = 3;
             groupBox_color.TabStop = false;
             groupBox_color.Text = "Color Selection";
@@ -256,7 +257,7 @@
             seperator1.Location = new System.Drawing.Point(8, 206);
             seperator1.Name = "seperator1";
             seperator1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            seperator1.Size = new System.Drawing.Size(264, 1);
+            seperator1.Size = new System.Drawing.Size(256, 1);
             seperator1.TabIndex = 29;
             seperator1.Text = "seperator1";
             // 
@@ -267,7 +268,7 @@
             colorPicker.Location = new System.Drawing.Point(7, 22);
             colorPicker.MarkerColor = System.Drawing.Color.White;
             colorPicker.Name = "colorPicker";
-            colorPicker.Size = new System.Drawing.Size(265, 178);
+            colorPicker.Size = new System.Drawing.Size(257, 178);
             colorPicker.TabIndex = 4;
             colorPicker.Text = "hsvColorPicker1";
             colorPicker.ColorChanged += colorPicker_ColorChanged;
@@ -280,7 +281,7 @@
             colorBar_blue.Location = new System.Drawing.Point(105, 271);
             colorBar_blue.MarkerColor = System.Drawing.Color.White;
             colorBar_blue.Name = "colorBar_blue";
-            colorBar_blue.Size = new System.Drawing.Size(167, 23);
+            colorBar_blue.Size = new System.Drawing.Size(159, 23);
             colorBar_blue.TabIndex = 28;
             colorBar_blue.Text = "colorBar3";
             colorBar_blue.ValueChanged += colorBars_ValueChanged;
@@ -293,7 +294,7 @@
             colorBar_green.Location = new System.Drawing.Point(105, 242);
             colorBar_green.MarkerColor = System.Drawing.Color.White;
             colorBar_green.Name = "colorBar_green";
-            colorBar_green.Size = new System.Drawing.Size(167, 23);
+            colorBar_green.Size = new System.Drawing.Size(159, 23);
             colorBar_green.TabIndex = 27;
             colorBar_green.Text = "colorBar2";
             colorBar_green.ValueChanged += colorBars_ValueChanged;
@@ -306,7 +307,7 @@
             colorBar_red.Location = new System.Drawing.Point(105, 213);
             colorBar_red.MarkerColor = System.Drawing.Color.White;
             colorBar_red.Name = "colorBar_red";
-            colorBar_red.Size = new System.Drawing.Size(167, 23);
+            colorBar_red.Size = new System.Drawing.Size(159, 23);
             colorBar_red.TabIndex = 26;
             colorBar_red.Text = "colorBar1";
             colorBar_red.ValueChanged += colorBars_ValueChanged;
@@ -337,7 +338,7 @@
             textBox_hex_color.ReadOnly = false;
             textBox_hex_color.ScrollBars = System.Windows.Forms.ScrollBars.None;
             textBox_hex_color.SelectionStart = 0;
-            textBox_hex_color.Size = new System.Drawing.Size(208, 23);
+            textBox_hex_color.Size = new System.Drawing.Size(200, 23);
             textBox_hex_color.TabIndex = 24;
             textBox_hex_color.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             textBox_hex_color.ValueBox = false;
@@ -382,7 +383,6 @@
             numericUpDown_red.Name = "numericUpDown_red";
             numericUpDown_red.Size = new System.Drawing.Size(32, 23);
             numericUpDown_red.TabIndex = 0;
-            numericUpDown_red.Value = new decimal(new int[] { 31, 0, 0, 0 });
             numericUpDown_red.ValueChanged += numericUpDown_red_ValueChanged;
             // 
             // numericUpDown_green
@@ -419,7 +419,7 @@
             group_selection.Dock = System.Windows.Forms.DockStyle.Top;
             group_selection.Location = new System.Drawing.Point(6, 3);
             group_selection.Name = "group_selection";
-            group_selection.Size = new System.Drawing.Size(279, 114);
+            group_selection.Size = new System.Drawing.Size(271, 114);
             group_selection.TabIndex = 0;
             group_selection.TabStop = false;
             group_selection.Text = "Selection";
@@ -520,7 +520,7 @@
             groupBox_map.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_map.Location = new System.Drawing.Point(3, 3);
             groupBox_map.Name = "groupBox_map";
-            groupBox_map.Size = new System.Drawing.Size(673, 592);
+            groupBox_map.Size = new System.Drawing.Size(616, 593);
             groupBox_map.TabIndex = 1;
             groupBox_map.TabStop = false;
             groupBox_map.Text = "Palette";
@@ -532,7 +532,7 @@
             panel_palView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_palView.Location = new System.Drawing.Point(3, 44);
             panel_palView.Name = "panel_palView";
-            panel_palView.Size = new System.Drawing.Size(667, 545);
+            panel_palView.Size = new System.Drawing.Size(610, 546);
             panel_palView.TabIndex = 2;
             // 
             // tileDisplay_pal
@@ -566,7 +566,7 @@
             toolStrip_palette.Location = new System.Drawing.Point(3, 19);
             toolStrip_palette.Name = "toolStrip_palette";
             toolStrip_palette.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            toolStrip_palette.Size = new System.Drawing.Size(667, 25);
+            toolStrip_palette.Size = new System.Drawing.Size(610, 25);
             toolStrip_palette.TabIndex = 1;
             toolStrip_palette.Text = "toolStrip1";
             // 
@@ -711,9 +711,9 @@
             // statusStrip_main
             // 
             statusStrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_tile, statusLabel_changes, spring, statusStrip_import, statusStrip_export, button_apply });
-            statusStrip_main.Location = new System.Drawing.Point(0, 598);
+            statusStrip_main.Location = new System.Drawing.Point(0, 599);
             statusStrip_main.Name = "statusStrip_main";
-            statusStrip_main.Size = new System.Drawing.Size(974, 22);
+            statusStrip_main.Size = new System.Drawing.Size(909, 22);
             statusStrip_main.TabIndex = 3;
             statusStrip_main.Text = "statusStrip1";
             // 
@@ -736,7 +736,7 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(700, 17);
+            spring.Size = new System.Drawing.Size(604, 17);
             spring.Spring = true;
             // 
             // statusStrip_import
@@ -750,20 +750,23 @@
             // statusStrip_importRaw
             // 
             statusStrip_importRaw.Name = "statusStrip_importRaw";
-            statusStrip_importRaw.Size = new System.Drawing.Size(154, 22);
+            statusStrip_importRaw.Size = new System.Drawing.Size(180, 22);
             statusStrip_importRaw.Text = "Raw...";
+            statusStrip_importRaw.Click += statusStrip_importRaw_Click;
             // 
             // statusStrip_importTLP
             // 
             statusStrip_importTLP.Name = "statusStrip_importTLP";
-            statusStrip_importTLP.Size = new System.Drawing.Size(154, 22);
+            statusStrip_importTLP.Size = new System.Drawing.Size(180, 22);
             statusStrip_importTLP.Text = "Tile Layer Pro...";
+            statusStrip_importTLP.Click += statusStrip_importTLP_Click;
             // 
             // statusStrip_importYY
             // 
             statusStrip_importYY.Name = "statusStrip_importYY";
-            statusStrip_importYY.Size = new System.Drawing.Size(154, 22);
+            statusStrip_importYY.Size = new System.Drawing.Size(180, 22);
             statusStrip_importYY.Text = "YY-CHR...";
+            statusStrip_importYY.Click += statusStrip_importYY_Click;
             // 
             // statusStrip_export
             // 
@@ -776,20 +779,23 @@
             // statusStrip_exportRaw
             // 
             statusStrip_exportRaw.Name = "statusStrip_exportRaw";
-            statusStrip_exportRaw.Size = new System.Drawing.Size(154, 22);
+            statusStrip_exportRaw.Size = new System.Drawing.Size(180, 22);
             statusStrip_exportRaw.Text = "Raw...";
+            statusStrip_exportRaw.Click += statusStrip_exportRaw_Click;
             // 
             // statusStrip_exportTLP
             // 
             statusStrip_exportTLP.Name = "statusStrip_exportTLP";
-            statusStrip_exportTLP.Size = new System.Drawing.Size(154, 22);
+            statusStrip_exportTLP.Size = new System.Drawing.Size(180, 22);
             statusStrip_exportTLP.Text = "Tile Layer Pro...";
+            statusStrip_exportTLP.Click += statusStrip_exportTLP_Click;
             // 
             // statusStrip_exportYY
             // 
             statusStrip_exportYY.Name = "statusStrip_exportYY";
-            statusStrip_exportYY.Size = new System.Drawing.Size(154, 22);
+            statusStrip_exportYY.Size = new System.Drawing.Size(180, 22);
             statusStrip_exportYY.Text = "YY-CHR...";
+            statusStrip_exportYY.Click += statusStrip_exportYY_Click;
             // 
             // button_apply
             // 
@@ -804,10 +810,11 @@
             // FormPaletteNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(974, 620);
+            ClientSize = new System.Drawing.Size(909, 621);
             Controls.Add(panel_main);
             Controls.Add(statusStrip_main);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new System.Drawing.Size(925, 660);
             Name = "FormPaletteNew";
             Text = "Palette Editor";
             FormClosing += FormPaletteNew_FormClosing;

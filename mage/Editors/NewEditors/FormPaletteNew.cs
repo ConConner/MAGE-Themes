@@ -66,9 +66,6 @@ public partial class FormPaletteNew : Form
     private ushort colorPrimary = 0;
     private ushort colorSecondary = ushort.MaxValue;
 
-    // Undo Redo
-    private GenericUndoRedo undoRedo = new();
-
     // Drawables
     private static float[] DashPattern = new float[] { 2, 3 };
     private Pen DottedPenWhite = new Pen(Color.White, 1) { DashPattern = DashPattern };
@@ -943,5 +940,64 @@ public partial class FormPaletteNew : Form
         button_ZoomOut.Enabled = tileDisplay_pal.Zoom > 0;
         label_Zoom.Text = $"{1 << tileDisplay_pal.Zoom}00%";
     }
+
+    #endregion
+
+    #region import/export
+
+    private void statusStrip_importRaw_Click(object sender, EventArgs e) => Import(PalFileType.Raw);
+
+    private void statusStrip_importTLP_Click(object sender, EventArgs e) => Import(PalFileType.TLP);
+
+    private void statusStrip_importYY_Click(object sender, EventArgs e) => Import(PalFileType.YYCHR);
+
+    private void statusStrip_exportRaw_Click(object sender, EventArgs e) => Export(PalFileType.Raw);
+
+    private void statusStrip_exportTLP_Click(object sender, EventArgs e) => Export(PalFileType.TLP);
+
+    private void statusStrip_exportYY_Click(object sender, EventArgs e) => Export(PalFileType.YYCHR);
+
+    private void Import(PalFileType type)
+    {
+        OpenFileDialog import = new OpenFileDialog();
+        import.Filter = GetFileFilter(type);
+        if (import.ShowDialog() == DialogResult.OK)
+        {
+            palette.Import(import.FileName, type);
+            palette.Write(ROM.Stream);
+            DrawPalette();
+
+            UndoRedo = new();
+            setUndoRedoButtons();
+
+            status.Import();
+        }
+    }
+
+    private void Export(PalFileType type)
+    {
+        SaveFileDialog export = new SaveFileDialog();
+        export.Filter = GetFileFilter(type);
+        if (export.ShowDialog() == DialogResult.OK)
+        {
+            palette.Export(export.FileName, type);
+        }
+    }
+
+    public static string GetFileFilter(PalFileType type)
+    {
+        string allFiles = "All files (*.*)|*.*";
+        switch (type)
+        {
+            case PalFileType.Raw:
+                return allFiles;
+            case PalFileType.YYCHR:
+                return $"YY-CHR palette (*.pal)|*.pal|{allFiles}";
+            case PalFileType.TLP:
+                return $"Tile Layer Pro palette (*.tpl)|*.tpl|{allFiles}";
+        }
+        throw new FormatException();
+    }
+
     #endregion
 }
