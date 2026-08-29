@@ -69,6 +69,7 @@
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             button_copy = new System.Windows.Forms.ToolStripButton();
             button_paste = new System.Windows.Forms.ToolStripButton();
+            button_transform = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             button_toolSelect = new System.Windows.Forms.ToolStripButton();
             button_toolPen = new System.Windows.Forms.ToolStripButton();
@@ -562,7 +563,7 @@
             // toolStrip_palette
             // 
             toolStrip_palette.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator1, button_copy, button_paste, toolStripSeparator6, button_toolSelect, button_toolPen, button_eyeDropper, toolStripSeparator8, button_grid, toolStripSeparator5, button_ZoomIn, button_ZoomOut, label_Zoom });
+            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator1, button_copy, button_paste, button_transform, toolStripSeparator6, button_toolSelect, button_toolPen, button_eyeDropper, toolStripSeparator8, button_grid, toolStripSeparator5, button_ZoomIn, button_ZoomOut, label_Zoom });
             toolStrip_palette.Location = new System.Drawing.Point(3, 19);
             toolStrip_palette.Name = "toolStrip_palette";
             toolStrip_palette.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -619,6 +620,17 @@
             button_paste.Name = "button_paste";
             button_paste.Size = new System.Drawing.Size(23, 22);
             button_paste.Text = "Paste";
+            // 
+            // button_transform
+            // 
+            button_transform.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_transform.Enabled = false;
+            button_transform.Image = Properties.Resources.shape_square_edit;
+            button_transform.Name = "button_transform";
+            button_transform.Size = new System.Drawing.Size(23, 22);
+            button_transform.Text = "Transform (Ctrl + T)";
+            button_transform.ToolTipText = "Fill selection with a gradient";
+            button_transform.Click += button_gradient_Click;
             // 
             // toolStripSeparator6
             // 
@@ -750,21 +762,21 @@
             // statusStrip_importRaw
             // 
             statusStrip_importRaw.Name = "statusStrip_importRaw";
-            statusStrip_importRaw.Size = new System.Drawing.Size(180, 22);
+            statusStrip_importRaw.Size = new System.Drawing.Size(154, 22);
             statusStrip_importRaw.Text = "Raw...";
             statusStrip_importRaw.Click += statusStrip_importRaw_Click;
             // 
             // statusStrip_importTLP
             // 
             statusStrip_importTLP.Name = "statusStrip_importTLP";
-            statusStrip_importTLP.Size = new System.Drawing.Size(180, 22);
+            statusStrip_importTLP.Size = new System.Drawing.Size(154, 22);
             statusStrip_importTLP.Text = "Tile Layer Pro...";
             statusStrip_importTLP.Click += statusStrip_importTLP_Click;
             // 
             // statusStrip_importYY
             // 
             statusStrip_importYY.Name = "statusStrip_importYY";
-            statusStrip_importYY.Size = new System.Drawing.Size(180, 22);
+            statusStrip_importYY.Size = new System.Drawing.Size(154, 22);
             statusStrip_importYY.Text = "YY-CHR...";
             statusStrip_importYY.Click += statusStrip_importYY_Click;
             // 
@@ -779,21 +791,21 @@
             // statusStrip_exportRaw
             // 
             statusStrip_exportRaw.Name = "statusStrip_exportRaw";
-            statusStrip_exportRaw.Size = new System.Drawing.Size(180, 22);
+            statusStrip_exportRaw.Size = new System.Drawing.Size(154, 22);
             statusStrip_exportRaw.Text = "Raw...";
             statusStrip_exportRaw.Click += statusStrip_exportRaw_Click;
             // 
             // statusStrip_exportTLP
             // 
             statusStrip_exportTLP.Name = "statusStrip_exportTLP";
-            statusStrip_exportTLP.Size = new System.Drawing.Size(180, 22);
+            statusStrip_exportTLP.Size = new System.Drawing.Size(154, 22);
             statusStrip_exportTLP.Text = "Tile Layer Pro...";
             statusStrip_exportTLP.Click += statusStrip_exportTLP_Click;
             // 
             // statusStrip_exportYY
             // 
             statusStrip_exportYY.Name = "statusStrip_exportYY";
-            statusStrip_exportYY.Size = new System.Drawing.Size(180, 22);
+            statusStrip_exportYY.Size = new System.Drawing.Size(154, 22);
             statusStrip_exportYY.Text = "YY-CHR...";
             statusStrip_exportYY.Click += statusStrip_exportYY_Click;
             // 
@@ -806,6 +818,7 @@
             button_apply.ShowDropDownArrow = false;
             button_apply.Size = new System.Drawing.Size(58, 20);
             button_apply.Text = "Apply";
+            button_apply.Click += button_apply_Click;
             // 
             // FormPaletteNew
             // 
@@ -905,6 +918,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton button_copy;
         private System.Windows.Forms.ToolStripButton button_paste;
+        private System.Windows.Forms.ToolStripButton button_transform;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripButton button_toolSelect;
         private System.Windows.Forms.ToolStripButton button_toolPen;

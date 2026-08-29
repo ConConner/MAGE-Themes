@@ -1,6 +1,7 @@
 ﻿using mage.Actions;
 using mage.Actions.PaletteEditor;
 using mage.Controls;
+using mage.Dialogs;
 using mage.Theming;
 using mage.Utility;
 using System;
@@ -89,6 +90,7 @@ public partial class FormPaletteNew : Form
             Selection.Visible = value;
 
             button_copy.Enabled = value;
+            button_transform.Enabled = value;
         }
     }
     private Rectangle SelectionCells => new(Selection.X / CellSize, Selection.Y / CellSize, Selection.Width / CellSize, Selection.Height / CellSize);
@@ -100,6 +102,10 @@ public partial class FormPaletteNew : Form
     // Selection
     private ushort[,]? selectedColors = null;
     private bool movingSelection = false;
+
+    // Transformation Preview
+    private ushort[,]? transformationPreview = null;
+    private bool displayPreview = false;
 
     // Tools
     private Tool SelectedTool
@@ -304,19 +310,9 @@ public partial class FormPaletteNew : Form
         return new Rectangle(left, top, right - left, bottom - top);
     }
 
-    private Color Rgb5ToColor(int r, int g, int b) => Color.FromArgb(r * 8, g * 8, b * 8);
-    private void ColorToRgb5(Color c, out int r, out int g, out int b)
-    {
-        r = c.R / 8;
-        g = c.G / 8;
-        b = c.B / 8;
-    }
-    private ushort Rgb5ToArgb(int r, int g, int b, bool transparent = false)
-    {
-        ushort argb = (ushort)((r << 10) | (g << 5) | b);
-        if (!transparent) argb |= 0x8000;
-        return argb;
-    }
+    private Color Rgb5ToColor(int r, int g, int b) => PaletteColor.Rgb5ToColor(r, g, b);
+    private void ColorToRgb5(Color c, out int r, out int g, out int b) => PaletteColor.ColorToRgb5(c, out r, out g, out b);
+    private ushort Rgb5ToArgb(int r, int g, int b, bool transparent = false) => PaletteColor.Rgb5ToArgb(r, g, b, transparent);
     #endregion
 
     #region Generic Events
@@ -335,6 +331,8 @@ public partial class FormPaletteNew : Form
         textBox_offset.Text = Hex.ToString(Hex.ToInt(textBox_offset.Text) + 0x20);
         LoadPalette();
     }
+
+    private void button_apply_Click(object sender, EventArgs e) => Save();
 
     private void button_grid_CheckStateChanged(object sender, EventArgs e) => tileDisplay_pal.ShowGrid = button_grid.Checked;
 
@@ -498,16 +496,12 @@ public partial class FormPaletteNew : Form
     {
         Bitmap bmp = palette.Draw(16, 0, palette.Rows, noGrid: true);
         if (selectedColors is not null) DrawColorsOntoBitmap(bmp, Selection.Location, selectedColors);
+        if (displayPreview && transformationPreview is not null) DrawColorsOntoBitmap(bmp, Selection.Location, transformationPreview);
+
         tileDisplay_pal.TileImage = bmp;
     }
 
-    private static Color ArgbToColor(ushort val)
-    {
-        int blue = (val & 0x1F) << 3;
-        int green = (val & 0x3E0) >> 2;
-        int red = (val & 0x7C00) >> 7;
-        return Color.FromArgb(red, green, blue);
-    }
+    private static Color ArgbToColor(ushort val) => PaletteColor.ArgbToColor(val);
 
     private static void DrawColorsOntoBitmap(Bitmap dest, Point pos, ushort[,] colors)
     {
@@ -587,6 +581,7 @@ public partial class FormPaletteNew : Form
                     break;
                 }
 
+                CloseActionGroup();
                 latestActionGroup = new();
                 ushort color = left ? colorPrimary : colorSecondary;
                 PenDraw(color, e.TileIndexPosition);
@@ -635,6 +630,7 @@ public partial class FormPaletteNew : Form
             case Tool.Pen:
                 Cursor.Visible = true;
                 ushort color = left ? colorPrimary : colorSecondary;
+                if (latestActionGroup is null) latestActionGroup = new();
                 PenDraw(color, e.TileIndexPosition);
                 break;
 
@@ -839,6 +835,40 @@ public partial class FormPaletteNew : Form
     }
     #endregion
 
+    #region Color Transformations
+    private void dialog_previewChanged(ushort[,] colors, bool showPreview)
+    {
+        transformationPreview = colors;
+        displayPreview = showPreview;
+        DrawPalette();
+    }
+
+    private void button_gradient_Click(object sender, EventArgs e)
+    {
+        if (!SelectionVisible) return;
+        if (selectedColors is not null) PasteSelectedColors();
+
+        openTransformationDialog();
+
+        displayPreview = false;
+        transformationPreview = null;
+        DrawPalette();
+    }
+
+    private void openTransformationDialog()
+    {
+        Rectangle cells = SelectionCells;
+        ushort[,] colors = CopyColors(cells);
+
+        using PaletteTransformationDialog dialog = new(colors);
+        dialog.PreviewChanged += dialog_previewChanged;
+        if (dialog.ShowDialog(this) != DialogResult.OK) return;
+
+        latestActionGroup = new("Gradient");
+        PasteColors(cells.Location, dialog.TransformedColors);
+    }
+    #endregion
+
     #region Undo Redo
     public void AddAction(EditorGridAction a)
     {
@@ -1000,4 +1030,5 @@ public partial class FormPaletteNew : Form
     }
 
     #endregion
+
 }
