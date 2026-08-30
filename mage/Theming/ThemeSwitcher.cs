@@ -229,6 +229,31 @@ namespace mage.Theming
                 sep.Color = theme.SecondaryOutline;
             }
 
+            if (control is ColorBar cbar)
+            {
+                cbar.MarkerColor = theme.BackgroundColor;
+                cbar.BorderColor = theme.PrimaryOutline;
+            }
+
+            if (control is HsvColorPicker hsv)
+            {
+                hsv.MarkerColor = theme.BackgroundColor;
+                hsv.BorderColor = theme.PrimaryOutline;
+            }
+
+            if (control is DualColorSwatch sw)
+            {
+                sw.SwatchOutlineColor = theme.SecondaryOutline;
+                sw.SwapGlyphColor = theme.PrimaryOutline;
+                sw.SwapGlyphHotColor = theme.AccentColor;
+            }
+
+            if (control is RecentColorDisplay rcd)
+            {
+                rcd.OutlineColor = theme.SecondaryOutline;
+                rcd.HighlightColor = theme.AccentColor;
+            }
+
             if (control is DataGridView dgv)
             {
                 dgv.BackgroundColor = theme.BackgroundColor;

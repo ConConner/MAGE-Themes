@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPaletteNew));
             panel_main = new System.Windows.Forms.SplitContainer();
             group_recentColors = new System.Windows.Forms.GroupBox();
-            flowPanel_recentColors = new System.Windows.Forms.FlowLayoutPanel();
+            recentColors = new mage.Controls.RecentColorDisplay();
             groupBox_currentColor = new System.Windows.Forms.GroupBox();
             colorSwatch = new mage.Controls.DualColorSwatch();
             label_24bitVal = new System.Windows.Forms.Label();
@@ -133,29 +133,34 @@
             // 
             panel_main.Panel2.Controls.Add(groupBox_map);
             panel_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
-            panel_main.Size = new System.Drawing.Size(909, 599);
+            panel_main.Size = new System.Drawing.Size(909, 584);
             panel_main.SplitterDistance = 280;
             panel_main.TabIndex = 0;
             // 
             // group_recentColors
             // 
-            group_recentColors.Controls.Add(flowPanel_recentColors);
+            group_recentColors.Controls.Add(recentColors);
             group_recentColors.Dock = System.Windows.Forms.DockStyle.Fill;
             group_recentColors.Location = new System.Drawing.Point(6, 529);
             group_recentColors.Name = "group_recentColors";
-            group_recentColors.Size = new System.Drawing.Size(271, 67);
+            group_recentColors.Padding = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            group_recentColors.Size = new System.Drawing.Size(271, 52);
             group_recentColors.TabIndex = 4;
             group_recentColors.TabStop = false;
             group_recentColors.Text = "Recent Colors";
             // 
-            // flowPanel_recentColors
+            // recentColors
             // 
-            flowPanel_recentColors.Dock = System.Windows.Forms.DockStyle.Fill;
-            flowPanel_recentColors.Location = new System.Drawing.Point(3, 19);
-            flowPanel_recentColors.Name = "flowPanel_recentColors";
-            flowPanel_recentColors.Padding = new System.Windows.Forms.Padding(3);
-            flowPanel_recentColors.Size = new System.Drawing.Size(265, 45);
-            flowPanel_recentColors.TabIndex = 0;
+            recentColors.Capacity = 500;
+            recentColors.Dock = System.Windows.Forms.DockStyle.Fill;
+            recentColors.HighlightColor = System.Drawing.Color.White;
+            recentColors.Location = new System.Drawing.Point(6, 19);
+            recentColors.Name = "recentColors";
+            recentColors.OutlineColor = System.Drawing.Color.Black;
+            recentColors.Size = new System.Drawing.Size(259, 30);
+            recentColors.TabIndex = 0;
+            recentColors.Text = "recentColorDisplay1";
+            recentColors.ColorClicked += recentColors_ColorClicked;
             // 
             // groupBox_currentColor
             // 
@@ -386,7 +391,7 @@
             numericUpDown_red.Name = "numericUpDown_red";
             numericUpDown_red.Size = new System.Drawing.Size(32, 23);
             numericUpDown_red.TabIndex = 0;
-            numericUpDown_red.ValueChanged += numericUpDown_red_ValueChanged;
+            numericUpDown_red.ValueChanged += numericUpDown_rgb_ValueChanged;
             // 
             // numericUpDown_green
             // 
@@ -397,7 +402,7 @@
             numericUpDown_green.Name = "numericUpDown_green";
             numericUpDown_green.Size = new System.Drawing.Size(32, 23);
             numericUpDown_green.TabIndex = 1;
-            numericUpDown_green.ValueChanged += numericUpDown_red_ValueChanged;
+            numericUpDown_green.ValueChanged += numericUpDown_rgb_ValueChanged;
             // 
             // numericUpDown_blue
             // 
@@ -408,7 +413,7 @@
             numericUpDown_blue.Name = "numericUpDown_blue";
             numericUpDown_blue.Size = new System.Drawing.Size(32, 23);
             numericUpDown_blue.TabIndex = 2;
-            numericUpDown_blue.ValueChanged += numericUpDown_red_ValueChanged;
+            numericUpDown_blue.ValueChanged += numericUpDown_rgb_ValueChanged;
             // 
             // group_selection
             // 
@@ -523,7 +528,7 @@
             groupBox_map.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_map.Location = new System.Drawing.Point(3, 3);
             groupBox_map.Name = "groupBox_map";
-            groupBox_map.Size = new System.Drawing.Size(616, 593);
+            groupBox_map.Size = new System.Drawing.Size(616, 578);
             groupBox_map.TabIndex = 1;
             groupBox_map.TabStop = false;
             groupBox_map.Text = "Palette";
@@ -535,7 +540,7 @@
             panel_palView.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_palView.Location = new System.Drawing.Point(3, 44);
             panel_palView.Name = "panel_palView";
-            panel_palView.Size = new System.Drawing.Size(610, 546);
+            panel_palView.Size = new System.Drawing.Size(610, 531);
             panel_palView.TabIndex = 2;
             // 
             // tileDisplay_pal
@@ -740,7 +745,7 @@
             // statusStrip_main
             // 
             statusStrip_main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_tile, statusLabel_changes, spring, statusStrip_import, statusStrip_export, button_apply });
-            statusStrip_main.Location = new System.Drawing.Point(0, 599);
+            statusStrip_main.Location = new System.Drawing.Point(0, 584);
             statusStrip_main.Name = "statusStrip_main";
             statusStrip_main.Size = new System.Drawing.Size(909, 22);
             statusStrip_main.TabIndex = 3;
@@ -840,11 +845,11 @@
             // FormPaletteNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(909, 621);
+            ClientSize = new System.Drawing.Size(909, 606);
             Controls.Add(panel_main);
             Controls.Add(statusStrip_main);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new System.Drawing.Size(925, 660);
+            MinimumSize = new System.Drawing.Size(925, 640);
             Name = "FormPaletteNew";
             Text = "Palette Editor";
             FormClosing += FormPaletteNew_FormClosing;
@@ -930,7 +935,6 @@
         private Controls.HsvColorPicker colorPicker;
         private Controls.Seperator seperator1;
         private System.Windows.Forms.GroupBox group_recentColors;
-        private System.Windows.Forms.FlowLayoutPanel flowPanel_recentColors;
         private Controls.DualColorSwatch colorSwatch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton button_copy;
@@ -942,5 +946,6 @@
         private System.Windows.Forms.ToolStripButton button_eyeDropper;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton button_cut;
+        private Controls.RecentColorDisplay recentColors;
     }
 }

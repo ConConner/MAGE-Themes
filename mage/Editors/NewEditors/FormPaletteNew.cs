@@ -150,8 +150,6 @@ public partial class FormPaletteNew : Form
 
         ThemeSwitcher.ChangeTheme(Controls, this);
         ThemeSwitcher.InjectPaintOverrides(Controls);
-        ThemeSwitcher.ThemeChanged += ThemeSwitcher_ThemeChanged;
-        ThemeColorBar();
 
         textBox_hex_color.TextChanged += TextBox_hex_color_TextChanged;
 
@@ -199,19 +197,6 @@ public partial class FormPaletteNew : Form
     #endregion
 
     #region Generic Helpers
-    private void ThemeColorBar()
-    {
-        colorBar_blue.MarkerColor = colorBar_green.MarkerColor = colorBar_red.MarkerColor = ThemeSwitcher.ProjectTheme.BackgroundColor;
-        colorBar_blue.BorderColor = colorBar_green.BorderColor = colorBar_red.BorderColor = ThemeSwitcher.ProjectTheme.PrimaryOutline;
-
-        colorPicker.MarkerColor = ThemeSwitcher.ProjectTheme.BackgroundColor;
-        colorPicker.BorderColor = ThemeSwitcher.ProjectTheme.PrimaryOutline;
-
-        colorSwatch.SwatchOutlineColor = ThemeSwitcher.ProjectTheme.SecondaryOutline;
-        colorSwatch.SwapGlyphColor = ThemeSwitcher.ProjectTheme.PrimaryOutline;
-        colorSwatch.SwapGlyphHotColor = ThemeSwitcher.ProjectTheme.AccentColor;
-    }
-
     private void LoadPalette()
     {
         if (!CheckUnsaved()) return;
@@ -318,8 +303,6 @@ public partial class FormPaletteNew : Form
     #endregion
 
     #region Generic Events
-    private void ThemeSwitcher_ThemeChanged(object? sender, EventArgs e) => ThemeColorBar();
-
     private void button_load_Click(object sender, EventArgs e) => LoadPalette();
 
     private void button_minus_Click(object sender, EventArgs e)
@@ -473,7 +456,7 @@ public partial class FormPaletteNew : Form
         UpdateSelectedColor(red, green, blue, true);
     }
 
-    private void numericUpDown_red_ValueChanged(object sender, EventArgs e)
+    private void numericUpDown_rgb_ValueChanged(object sender, EventArgs e)
     {
         if (init) return;
         int r = (int)numericUpDown_red.Value;
@@ -602,6 +585,7 @@ public partial class FormPaletteNew : Form
                 latestActionGroup = new();
                 ushort color = left ? colorPrimary : colorSecondary;
                 PenDraw(color, e.TileIndexPosition);
+                AddRecentColor(color);
                 break;
 
             case Tool.Select:
@@ -706,6 +690,21 @@ public partial class FormPaletteNew : Form
         }
 
         FinishToolAction();
+    }
+    #endregion
+
+    #region Recent Colors
+    private void AddRecentColor(ushort color)
+    {
+        Color c = PaletteColor.ArgbToColor(color);
+        recentColors.AddColor(c);
+    }
+
+    private void recentColors_ColorClicked(object sender, RecentColorClickedEventArgs e)
+    {
+        if (e.IsLeftClick) colorSwatch.PrimaryColor = e.Color;
+        else if (e.IsRightClick) colorSwatch.SecondaryColor = e.Color;
+        recentColors.AddColor(e.Color);
     }
     #endregion
 
