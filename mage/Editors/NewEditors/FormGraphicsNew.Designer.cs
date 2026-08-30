@@ -106,6 +106,7 @@
             button_imageZoomOut = new System.Windows.Forms.ToolStripButton();
             label_imageZoom = new System.Windows.Forms.ToolStripLabel();
             panel_imageContainer = new mage.Controls.ExtendedPanel();
+            button_cut = new System.Windows.Forms.ToolStripButton();
             groupBox_imageControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_height).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown_width).BeginInit();
@@ -649,7 +650,7 @@
             // toolStrip_gfx
             // 
             toolStrip_gfx.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator8, button_copy, button_paste, toolStripSeparator6, button_toolSelect, button_toolPen, button_toolFill, button_toolShape, button_eyeDropper, toolStripSeparator1, button_flipH, button_flipV, toolStripSeparator3, button_grid, toolStripSeparator4, button_imageZoomIn, button_imageZoomOut, label_imageZoom });
+            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator8, button_cut, button_copy, button_paste, toolStripSeparator6, button_toolSelect, button_toolPen, button_toolFill, button_toolShape, button_eyeDropper, toolStripSeparator1, button_flipH, button_flipV, toolStripSeparator3, button_grid, toolStripSeparator4, button_imageZoomIn, button_imageZoomOut, label_imageZoom });
             toolStrip_gfx.Location = new System.Drawing.Point(3, 19);
             toolStrip_gfx.Name = "toolStrip_gfx";
             toolStrip_gfx.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -866,6 +867,17 @@
             panel_imageContainer.Size = new System.Drawing.Size(621, 428);
             panel_imageContainer.TabIndex = 6;
             // 
+            // button_cut
+            // 
+            button_cut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_cut.Enabled = false;
+            button_cut.Image = Properties.Resources.cut_red;
+            button_cut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_cut.Name = "button_cut";
+            button_cut.Size = new System.Drawing.Size(23, 22);
+            button_cut.Text = "Cut";
+            button_cut.Click += button_cut_Click;
+            // 
             // FormGraphicsNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -979,5 +991,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripButton button_copy;
         private System.Windows.Forms.ToolStripButton button_paste;
+        private System.Windows.Forms.ToolStripButton button_cut;
     }
 }

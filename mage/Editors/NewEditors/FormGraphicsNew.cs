@@ -109,6 +109,7 @@ public partial class FormGraphicsNew : Form
             button_copy.Enabled = value;
             button_flipH.Enabled = value;
             button_flipV.Enabled = value;
+            button_cut.Enabled = value;
         }
     }
 
@@ -444,6 +445,16 @@ public partial class FormGraphicsNew : Form
                     Undo();
                     break;
                 }
+                break;
+
+            case Keys.X:
+                if (ModifierKeys != Keys.Control) break;
+                Cut();
+                break;
+
+            case Keys.Back:
+            case Keys.Delete:
+                Delete();
                 break;
 
         }
@@ -1281,9 +1292,36 @@ public partial class FormGraphicsNew : Form
         DrawGFX();
     }
 
+    private void Cut()
+    {
+        if (!SelectionVisible) return;
+        if (SelectedPixels is not null) PasteSelectedPixels();
+        CloseActionGroup();
+        latestActionGroup = new("Cut");
+        int[,] cutPixels = EjectPixels(Selection.Rectangle);
+        CloseActionGroup();
+        CopyArrayToClipboard(cutPixels);
+    }
+
+    private void Delete()
+    {
+        if (!SelectionVisible) return;
+        if (SelectedPixels is not null)
+        {
+            DiscardSelection();
+            return;
+        }
+        CloseActionGroup();
+        latestActionGroup = new("Delete");
+        EjectPixels(Selection.Rectangle);
+        CloseActionGroup();
+    }
+
     private void button_copy_Click(object sender, EventArgs e) => Copy();
 
     private void button_paste_Click(object sender, EventArgs e) => Paste();
+
+    private void button_cut_Click(object sender, EventArgs e) => Cut();
     #endregion
 
     #region Flipping
