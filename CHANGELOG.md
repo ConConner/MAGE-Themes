@@ -1,3 +1,17 @@
+# [1.20.0](https://github.com/ConConner/MAGE-Themes/compare/v1.19.1...v1.20.0) (2026-08-30)
+
+
+### Bug Fixes
+
+* project file config persists when switching to a ROM without project file ([b83afd3](https://github.com/ConConner/MAGE-Themes/commit/b83afd3dee59445a44492d864832e1ac88db9509))
+* room options resize always displays screen amount as decimal ([60d5445](https://github.com/ConConner/MAGE-Themes/commit/60d5445ce0b4c7dc991b1ffb2ff89e1190cade64))
+
+
+### Features
+
+* cut and delete functionality in graphics editor [experimental] ([fb4d66c](https://github.com/ConConner/MAGE-Themes/commit/fb4d66ce5a8df10f42b56407496483eb69e64c31))
+* New Palette Editor [experimental] ([019322e](https://github.com/ConConner/MAGE-Themes/commit/019322ed033aa7c3965509fb6f726d9ca2be91ca)), closes [#66](https://github.com/ConConner/MAGE-Themes/issues/66)
+
 ## [1.19.1](https://github.com/ConConner/MAGE-Themes/compare/v1.19.0...v1.19.1) (2026-08-02)
 
 
