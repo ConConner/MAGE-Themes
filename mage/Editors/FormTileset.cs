@@ -87,8 +87,7 @@ namespace mage
 
         private void button_editPalette_Click(object sender, EventArgs e)
         {
-            FormPalette form = new FormPalette(main, true, (byte)comboBox_tileset.SelectedIndex);
-            form.Show();
+            FormPaletteNew.OpenPaletteEditor(true, (byte)comboBox_tileset.SelectedIndex);
         }
 
         private void button_editLZ77_Click(object sender, EventArgs e)

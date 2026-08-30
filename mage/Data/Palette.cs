@@ -52,6 +52,7 @@ namespace mage
 
         public ushort GetARGB(int r, int c)
         {
+            if (r < 0 || r >= Rows || c < 0 || c >= 16) return 0;
             return palette[r, c];
         }
 
@@ -62,6 +63,8 @@ namespace mage
 
         public Color GetOpaqueColor(int r, int c)
         {
+            if (r >= Rows || c >= 16) return Color.Black;
+
             ushort val = palette[r, c];
             int blue = (val & 0x1F) << 3;
             int green = (val & 0x3E0) >> 2;
@@ -72,6 +75,7 @@ namespace mage
 
         public void SetARGB(int r, int c, ushort argb)
         {
+            if (r < 0 || r >= Rows || c < 0 || c >= 16) return;
             palette[r, c] = argb;
         }
 
@@ -100,25 +104,33 @@ namespace mage
         /// <param name="row">Which row of the palette should be drawn</param>
         /// <param name="len">Amount of rows that get drawn after the selected row</param>
         /// <param name="gridColorArgb">Color of the grid around the colored squares</param>
+        /// <param name="noGrid">If the grid should be hidden</param>
         /// <returns>A Bitmap with the palette drawn onto it</returns>
-        public Bitmap Draw(int size, int row, int len, long gridColorArgb = 0xFFD8D8D8)
+        public Bitmap Draw(int size, int row, int len, long gridColorArgb = 0xFFD8D8D8, bool noGrid = false)
         {
-            Bitmap img = new Bitmap(16 * size + 17, len * size + len + 1, PixelFormat.Format16bppRgb555);
+            int gap = noGrid ? 0 : 1;
+            int imgWidth = 16 * size + (noGrid ? 0 : 17);
+            int imgHeight = len * size + (noGrid ? 0 : len + 1);
+            Bitmap img = new Bitmap(imgWidth, imgHeight, PixelFormat.Format16bppRgb555);
 
             using (Graphics g = Graphics.FromImage(img))
             {
-                // fill to make grid
-                SolidBrush b = new SolidBrush(Color.FromArgb((int)gridColorArgb));
-                g.FillRectangle(b, new Rectangle(0, 0, img.Width, img.Height));
+                if (!noGrid)
+                {
+                    using (SolidBrush b = new SolidBrush(Color.FromArgb((int)gridColorArgb)))
+                        g.FillRectangle(b, new Rectangle(0, 0, imgWidth, imgHeight));
+                }
 
-                // draw individual colors
                 for (int r = 0; r < len; r++)
                 {
                     for (int c = 0; c < 16; c++)
                     {
-                        Color bc = GetOpaqueColor(row, c);
-                        SolidBrush sb = new SolidBrush(bc);
-                        g.FillRectangle(sb, new Rectangle(c * size + c + 1, r * size + r + 1, size, size));
+                        using (SolidBrush sb = new SolidBrush(GetOpaqueColor(row, c)))
+                        {
+                            int x = c * size + (noGrid ? 0 : c + 1);
+                            int y = r * size + (noGrid ? 0 : r + 1);
+                            g.FillRectangle(sb, new Rectangle(x, y, size, size));
+                        }
                     }
                     row++;
                 }
@@ -151,31 +163,6 @@ namespace mage
 
                     ushort val = (ushort)(red | green | blue);
                     bs.Write16(val);
-                }
-            }
-        }
-
-        public void Write(ByteStream bs, bool[,] modifiedColors)
-        {
-            int offset = addr;
-            int len = Rows;
-
-            for (int r = 0; r < len; r++)  // for each entry
-            {
-                for (int c = 0; c < 16; c++)  // for each color
-                {
-                    if (modifiedColors[r, c])
-                    {
-                        ushort curr = palette[r, c];
-                        int blue = (curr & 0x1F) << 10;
-                        int green = curr & 0x3E0;
-                        int red = (curr & 0x7C00) >> 10;
-
-                        ushort val = (ushort)(red | green | blue);
-                        bs.Write16(offset, val);
-                    }
-
-                    offset += 2;
                 }
             }
         }

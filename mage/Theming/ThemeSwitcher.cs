@@ -198,6 +198,14 @@ namespace mage.Theming
                 tab.BorderColor = theme.SecondaryOutline;
             }
 
+            if (control is FlatTrackBar bar)
+            {
+                bar.TrackColor = theme.SecondaryOutline;
+                bar.FillColor = theme.AccentColor;
+                bar.ThumbColor = theme.AccentColor;
+                bar.BorderColor = theme.PrimaryOutline;
+            }
+
             if (control is LinkLabel)
             {
                 LinkLabel lbl = control as LinkLabel;
@@ -219,6 +227,31 @@ namespace mage.Theming
             if (control is Seperator sep)
             {
                 sep.Color = theme.SecondaryOutline;
+            }
+
+            if (control is ColorBar cbar)
+            {
+                cbar.MarkerColor = theme.BackgroundColor;
+                cbar.BorderColor = theme.PrimaryOutline;
+            }
+
+            if (control is HsvColorPicker hsv)
+            {
+                hsv.MarkerColor = theme.BackgroundColor;
+                hsv.BorderColor = theme.PrimaryOutline;
+            }
+
+            if (control is DualColorSwatch sw)
+            {
+                sw.SwatchOutlineColor = theme.SecondaryOutline;
+                sw.SwapGlyphColor = theme.PrimaryOutline;
+                sw.SwapGlyphHotColor = theme.AccentColor;
+            }
+
+            if (control is RecentColorDisplay rcd)
+            {
+                rcd.OutlineColor = theme.SecondaryOutline;
+                rcd.HighlightColor = theme.AccentColor;
             }
 
             if (control is DataGridView dgv)

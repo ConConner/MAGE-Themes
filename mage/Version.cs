@@ -27,6 +27,11 @@ namespace mage
 
         public static void LoadProject(string filename)
         {
+            // Reset objects that only exist though project file
+            ProjectConfig = new();
+            ProjectTweaks = null;
+            ProjectBookmarks = null;
+
             project = ProjectState.None;
             string path = Path.ChangeExtension(filename, ".proj");
             if (!File.Exists(path)) { return; }
@@ -62,8 +67,8 @@ namespace mage
             }
             catch { return; }
 
-            if (ProjectBookmarks != null) BookmarkManager.ProjectCollections = ProjectBookmarks;
-            if (ProjectTweaks != null) TweakManager.ProjectTweaks = ProjectTweaks;
+            if (ProjectBookmarks is not null) BookmarkManager.ProjectCollections = ProjectBookmarks;
+            if (ProjectTweaks is not null) TweakManager.ProjectTweaks = ProjectTweaks;
             project = ProjectState.Exists;
         }
 
@@ -143,8 +148,8 @@ namespace mage
         public static byte NumOfMinimaps { get; private set; }
         public static byte NumOfDemos { get; private set; }
         public static int MetroidOffset { get; private set; }
-        public static List<BookmarkFolder> ProjectBookmarks { get; private set; }
-        public static List<Tweak> ProjectTweaks { get; private set; }
+        public static List<BookmarkFolder>? ProjectBookmarks { get; private set; }
+        public static List<Tweak>? ProjectTweaks { get; private set; }
         public static ProjectConfig ProjectConfig { get; private set; } = ProjectConfig.DefaultConfig;
         public static BackupService? BackupService
         {

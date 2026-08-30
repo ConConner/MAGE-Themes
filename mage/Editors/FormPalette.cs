@@ -61,10 +61,9 @@ namespace mage
         {
             InitializeComponent();
 
-
-
             ThemeSwitcher.ChangeTheme(Controls, this);
             ThemeSwitcher.InjectPaintOverrides(Controls);
+            ThemeSwitcher.ThemeChanged += ThemeSwitcherChangedTheme;
 
             this.main = main;
 
@@ -486,7 +485,7 @@ namespace mage
         private void button_apply_Click(object sender, EventArgs e)
         {
             // write
-            palette.Write(romStream, modifiedColors);
+            palette.Write(romStream);
 
             // update editors
             FormMain.UpdateEditors();

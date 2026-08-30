@@ -47,7 +47,7 @@ namespace mage
             {
                 double screen = Hex.ToByte(textBox.Text);
                 screen = Math.Round((screen - 4) / size, 4);
-                label.Text = screen.ToString();
+                label.Text = Hex.ToString((int)screen);
                 if (screen % 1 == 0 & screen > 0)
                 {
                     label.ForeColor = ThemeSwitcher.ProjectTheme.TextColor;

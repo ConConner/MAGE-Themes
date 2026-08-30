@@ -42,7 +42,7 @@ public class ProjectConfig
     }
     public static ProjectConfig Deserialize(string json)
     {
-        return JsonSerializer.Deserialize<ProjectConfig>(json, jsonOptions);
+        return JsonSerializer.Deserialize<ProjectConfig>(json, jsonOptions) ?? new ProjectConfig();
     }
 
     // Function to check if the initial default config was ever changed

@@ -1,4 +1,5 @@
 ﻿using mage.Bookmarks;
+using mage.Editors.NewEditors;
 using mage.Theming;
 using System;
 using System.Drawing;
@@ -181,8 +182,7 @@ namespace mage
             {
                 int offset = Hex.ToInt(textBox_palOffset.Text);
 
-                FormPalette form = new FormPalette(main, offset, 1);
-                form.Show();
+                FormPaletteNew.OpenPaletteEditor(offset, 1);
             }
             catch (Exception ex)
             {
