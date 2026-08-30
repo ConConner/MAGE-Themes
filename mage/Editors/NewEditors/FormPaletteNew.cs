@@ -903,6 +903,7 @@ public partial class FormPaletteNew : Form
         ushort[,] colors = CopyColors(cells);
 
         using PaletteTransformationDialog dialog = new(colors, PaletteColor.ArgbToColor(colorPrimary));
+        dialog.StartPosition = FormStartPosition.CenterParent;
         dialog.PreviewChanged += dialog_previewChanged;
         if (dialog.ShowDialog(this) != DialogResult.OK) return;
 
