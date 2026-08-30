@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -91,6 +92,7 @@ public partial class FormPaletteNew : Form
 
             button_copy.Enabled = value;
             button_transform.Enabled = value;
+            button_cut.Enabled = value;
         }
     }
     private Rectangle SelectionCells => new(Selection.X / CellSize, Selection.Y / CellSize, Selection.Width / CellSize, Selection.Height / CellSize);
@@ -389,6 +391,16 @@ public partial class FormPaletteNew : Form
                     Undo();
                     break;
                 }
+                break;
+
+            case Keys.X:
+                if (ModifierKeys != Keys.Control) break;
+                Cut();
+                break;
+
+            case Keys.Back:
+            case Keys.Delete:
+                Delete();
                 break;
         }
     }
@@ -742,12 +754,13 @@ public partial class FormPaletteNew : Form
         return colors;
     }
 
-    private ushort[,] EjectColors(Rectangle region)
+    private ushort[,] EjectColors(Rectangle region, string actionText = "Cut")
     {
         Rectangle cells = new(region.X / CellSize, region.Y / CellSize, region.Width / CellSize, region.Height / CellSize);
-        EditPaletteAreaAction clearAction = new(palette, cells, Rgb5ToArgb(0, 0, 0)); // Fills the region with black (placeholder for moved-out colors)
+        EditPaletteAreaAction clearAction = new(palette, cells, Rgb5ToArgb(0, 0, 0), actionText); // Fills the region with black (placeholder for moved-out colors)
         clearAction.Do();
         if (latestActionGroup is not null) latestActionGroup.AddAction(clearAction);
+        else AddAction(clearAction);
         DrawPalette();
         return clearAction.GetOldColors(); // The fill replaces the data in the action with the old colors
     }
@@ -838,6 +851,31 @@ public partial class FormPaletteNew : Form
 
         DrawPalette();
     }
+
+    private void Cut()
+    {
+        if (!SelectionVisible) return;
+        if (selectedColors is not null) PasteSelectedColors();
+        CloseActionGroup();
+        ushort[,] cutColors = EjectColors(Selection.Rectangle, "Cut");
+        CopyArrayToClipboard(cutColors);
+        DrawPalette();
+    }
+
+    private void Delete()
+    {
+        if (!SelectionVisible) return;
+        if (selectedColors is not null)
+        {
+            DiscardSelection();
+            return;
+        }
+        CloseActionGroup();
+        EjectColors(Selection.Rectangle, "Delete");
+        DrawPalette();
+    }
+
+    private void button_cut_Click(object sender, EventArgs e) => Cut();
     #endregion
 
     #region Color Transformations
@@ -1035,5 +1073,4 @@ public partial class FormPaletteNew : Form
     }
 
     #endregion
-
 }

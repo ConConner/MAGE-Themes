@@ -67,13 +67,15 @@
             button_undo = new System.Windows.Forms.ToolStripSplitButton();
             button_redo = new System.Windows.Forms.ToolStripSplitButton();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            button_cut = new System.Windows.Forms.ToolStripButton();
             button_copy = new System.Windows.Forms.ToolStripButton();
             button_paste = new System.Windows.Forms.ToolStripButton();
-            button_transform = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             button_toolSelect = new System.Windows.Forms.ToolStripButton();
             button_toolPen = new System.Windows.Forms.ToolStripButton();
             button_eyeDropper = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            button_transform = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             button_grid = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -93,7 +95,6 @@
             statusStrip_exportTLP = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip_exportYY = new System.Windows.Forms.ToolStripMenuItem();
             button_apply = new System.Windows.Forms.ToolStripDropDownButton();
-            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)panel_main).BeginInit();
             panel_main.Panel1.SuspendLayout();
             panel_main.Panel2.SuspendLayout();
@@ -564,7 +565,7 @@
             // toolStrip_palette
             // 
             toolStrip_palette.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator1, button_copy, button_paste, toolStripSeparator6, button_toolSelect, button_toolPen, button_eyeDropper, toolStripSeparator2, button_transform, toolStripSeparator8, button_grid, toolStripSeparator5, button_ZoomIn, button_ZoomOut, label_Zoom });
+            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator1, button_cut, button_copy, button_paste, toolStripSeparator6, button_toolSelect, button_toolPen, button_eyeDropper, toolStripSeparator2, button_transform, toolStripSeparator8, button_grid, toolStripSeparator5, button_ZoomIn, button_ZoomOut, label_Zoom });
             toolStrip_palette.Location = new System.Drawing.Point(3, 19);
             toolStrip_palette.Name = "toolStrip_palette";
             toolStrip_palette.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -603,6 +604,17 @@
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
+            // button_cut
+            // 
+            button_cut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_cut.Enabled = false;
+            button_cut.Image = Properties.Resources.cut_red;
+            button_cut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_cut.Name = "button_cut";
+            button_cut.Size = new System.Drawing.Size(23, 22);
+            button_cut.Text = "Cut";
+            button_cut.Click += button_cut_Click;
+            // 
             // button_copy
             // 
             button_copy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -621,16 +633,6 @@
             button_paste.Name = "button_paste";
             button_paste.Size = new System.Drawing.Size(23, 22);
             button_paste.Text = "Paste";
-            // 
-            // button_transform
-            // 
-            button_transform.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            button_transform.Enabled = false;
-            button_transform.Image = Properties.Resources.shape_square_edit;
-            button_transform.Name = "button_transform";
-            button_transform.Size = new System.Drawing.Size(23, 22);
-            button_transform.Text = "Transform (Ctrl + T)";
-            button_transform.Click += button_gradient_Click;
             // 
             // toolStripSeparator6
             // 
@@ -668,6 +670,21 @@
             button_eyeDropper.Size = new System.Drawing.Size(23, 22);
             button_eyeDropper.Text = "Eyedropper (C, Alt + Click)";
             button_eyeDropper.Click += button_eyeDropper_Click;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // button_transform
+            // 
+            button_transform.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_transform.Enabled = false;
+            button_transform.Image = (System.Drawing.Image)resources.GetObject("button_transform.Image");
+            button_transform.Name = "button_transform";
+            button_transform.Size = new System.Drawing.Size(23, 22);
+            button_transform.Text = "Transform (Ctrl + T)";
+            button_transform.Click += button_gradient_Click;
             // 
             // toolStripSeparator8
             // 
@@ -820,11 +837,6 @@
             button_apply.Text = "Apply";
             button_apply.Click += button_apply_Click;
             // 
-            // toolStripSeparator2
-            // 
-            toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
             // FormPaletteNew
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -929,5 +941,6 @@
         private System.Windows.Forms.ToolStripButton button_toolPen;
         private System.Windows.Forms.ToolStripButton button_eyeDropper;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton button_cut;
     }
 }
