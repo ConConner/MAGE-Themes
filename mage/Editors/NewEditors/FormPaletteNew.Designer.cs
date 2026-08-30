@@ -93,6 +93,7 @@
             statusStrip_exportTLP = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip_exportYY = new System.Windows.Forms.ToolStripMenuItem();
             button_apply = new System.Windows.Forms.ToolStripDropDownButton();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)panel_main).BeginInit();
             panel_main.Panel1.SuspendLayout();
             panel_main.Panel2.SuspendLayout();
@@ -563,7 +564,7 @@
             // toolStrip_palette
             // 
             toolStrip_palette.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator1, button_copy, button_paste, button_transform, toolStripSeparator6, button_toolSelect, button_toolPen, button_eyeDropper, toolStripSeparator8, button_grid, toolStripSeparator5, button_ZoomIn, button_ZoomOut, label_Zoom });
+            toolStrip_palette.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator1, button_copy, button_paste, toolStripSeparator6, button_toolSelect, button_toolPen, button_eyeDropper, toolStripSeparator2, button_transform, toolStripSeparator8, button_grid, toolStripSeparator5, button_ZoomIn, button_ZoomOut, label_Zoom });
             toolStrip_palette.Location = new System.Drawing.Point(3, 19);
             toolStrip_palette.Name = "toolStrip_palette";
             toolStrip_palette.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -629,7 +630,6 @@
             button_transform.Name = "button_transform";
             button_transform.Size = new System.Drawing.Size(23, 22);
             button_transform.Text = "Transform (Ctrl + T)";
-            button_transform.ToolTipText = "Fill selection with a gradient";
             button_transform.Click += button_gradient_Click;
             // 
             // toolStripSeparator6
@@ -748,7 +748,7 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(604, 17);
+            spring.Size = new System.Drawing.Size(635, 17);
             spring.Spring = true;
             // 
             // statusStrip_import
@@ -819,6 +819,11 @@
             button_apply.Size = new System.Drawing.Size(58, 20);
             button_apply.Text = "Apply";
             button_apply.Click += button_apply_Click;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // FormPaletteNew
             // 
@@ -923,5 +928,6 @@
         private System.Windows.Forms.ToolStripButton button_toolSelect;
         private System.Windows.Forms.ToolStripButton button_toolPen;
         private System.Windows.Forms.ToolStripButton button_eyeDropper;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

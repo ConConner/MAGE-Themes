@@ -198,6 +198,14 @@ namespace mage.Theming
                 tab.BorderColor = theme.SecondaryOutline;
             }
 
+            if (control is FlatTrackBar bar)
+            {
+                bar.TrackColor = theme.SecondaryOutline;
+                bar.FillColor = theme.AccentColor;
+                bar.ThumbColor = theme.AccentColor;
+                bar.BorderColor = theme.PrimaryOutline;
+            }
+
             if (control is LinkLabel)
             {
                 LinkLabel lbl = control as LinkLabel;

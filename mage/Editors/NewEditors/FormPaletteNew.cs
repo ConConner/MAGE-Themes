@@ -354,6 +354,11 @@ public partial class FormPaletteNew : Form
                 button_toolSelect_Click(this, e);
                 break;
 
+            case Keys.T:
+                if (ModifierKeys != Keys.Control) break;
+                button_gradient_Click(this, e);
+                break;
+
             case Keys.C:
                 if (ModifierKeys == Keys.Control)
                 {
@@ -864,7 +869,7 @@ public partial class FormPaletteNew : Form
         dialog.PreviewChanged += dialog_previewChanged;
         if (dialog.ShowDialog(this) != DialogResult.OK) return;
 
-        latestActionGroup = new("Gradient");
+        latestActionGroup = new(dialog.ActionText);
         PasteColors(cells.Location, dialog.TransformedColors);
     }
     #endregion
