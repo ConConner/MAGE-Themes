@@ -15,6 +15,13 @@ public static class PaletteColor
         b = c.B / 8;
     }
 
+    public static ushort ColorToArgb(Color c)
+    {
+        ColorToRgb5(c, out int r, out int g, out int b);
+        bool isTransparent = c.A == 0;
+        return Rgb5ToArgb(r, g, b, transparent: isTransparent);
+    }
+
     public static ushort Rgb5ToArgb(int r, int g, int b, bool transparent = false)
     {
         ushort argb = (ushort)((r << 10) | (g << 5) | b);
