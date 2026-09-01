@@ -2022,6 +2022,7 @@ namespace mage
             roomRuleValidator = new(room.backgrounds);
             roomRuleValidator.ErrorsChanged += roomView.OnErrorsChanged;
             roomRuleValidator.ValidateRoom();
+            errorList.SetSource(roomRuleValidator);
         }
         #endregion
 

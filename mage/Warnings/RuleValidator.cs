@@ -24,6 +24,8 @@ public class RuleValidator
         _rules.Add(new SlopeBelowCeilingRule());
         _rules.Add(new SlopeFloatingRule());
         _rules.Add(new SlopeSupportRule());
+        _rules.Add(new SlopeWallRule());
+        _rules.Add(new CeilingSlopeRule());
 
         _maxRadius = _rules.Max(r => r.NeighborhoodRadius);
         _grid = grid;
