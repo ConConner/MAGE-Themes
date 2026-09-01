@@ -14,6 +14,7 @@ using mage.Tools;
 using mage.Tweaks;
 using mage.Updates;
 using mage.Utility;
+using mage.Warnings;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -100,6 +101,7 @@ namespace mage
 
         // related to current room
         private Room room;
+        private RuleValidator roomRuleValidator;
         private bool skipEvents;
         private int enemySet;
         private RoomUndoRedo undoRedo;
@@ -1812,6 +1814,7 @@ namespace mage
             {
                 SetViewOptions();
                 ResetValues();
+                ResetRoomRuleValidator();
             }
             else
             {
@@ -2014,6 +2017,12 @@ namespace mage
             LoadRoom(comboBox_area.SelectedIndex, newRoom, true);
         }
 
+        private void ResetRoomRuleValidator()
+        {
+            roomRuleValidator = new(room.backgrounds);
+            roomRuleValidator.ErrorsChanged += roomView.OnErrorsChanged;
+            roomRuleValidator.ValidateRoom();
+        }
         #endregion
 
 

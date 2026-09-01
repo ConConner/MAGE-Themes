@@ -1,4 +1,6 @@
-﻿using System;
+﻿using mage.Warnings;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -45,6 +47,13 @@ namespace mage
         private FormMain main;
         private Room room;
 
+        // rule warnings
+        private IReadOnlyDictionary<(int x, int y), List<ClipdataError>> _errors;
+        private readonly List<Rectangle> _errorRects = new();
+        private readonly Timer _pulseTimer;
+        private float _pulsePhase;
+        private readonly SolidBrush _pulseBrush = new(Color.Blue);
+
         public RoomView()
         {
             InitializeComponent();
@@ -74,6 +83,19 @@ namespace mage
                 }
             };
             dashAnimationTimer.Start();
+
+            _pulseTimer = new Timer { Interval = 33 };
+            _pulseTimer.Tick += OnPulseTick;
+        }
+
+        private void OnPulseTick(object? sender, EventArgs e)
+        {
+            _pulsePhase += 0.12f;
+            if (_pulsePhase > MathF.Tau)
+                _pulsePhase -= MathF.Tau;
+
+            foreach (var rect in _errorRects)
+                Invalidate(rect);
         }
 
         public bool UpdateZoom(int newZoom, bool resize)
@@ -81,6 +103,7 @@ namespace mage
             if (zoom == newZoom) { return false; }
 
             zoom = newZoom;
+            RebuildErrorRectangles();
 
             if (resize)
             {
@@ -245,6 +268,27 @@ namespace mage
             }
         }
 
+        public void OnErrorsChanged(RuleValidator rv)
+        {
+            _errors = rv.Errors;
+            RebuildErrorRectangles();
+
+            _pulseTimer.Enabled = _errorRects.Count > 0;
+        }
+
+        private void RebuildErrorRectangles()
+        {
+            if (_errors is null) return;
+            _errorRects.Clear();
+
+            foreach (var ((x, y), errList) in _errors)
+            {
+                if (errList.Count <= 0) continue;
+                Rectangle r = new((x * 16) << zoom, (y * 16) << zoom, 16 << zoom, 16 << zoom);
+                _errorRects.Add(r);
+            }
+        }
+
         protected override void OnPaint(PaintEventArgs pe)
         {
             if (room == null) { return; }
@@ -257,6 +301,20 @@ namespace mage
             {
                 pe.Graphics.DrawRectangle(bp, selRect);
                 pe.Graphics.DrawRectangle(wp, selRect);
+            }
+
+            // Errors
+            if (_errorRects.Count == 0) return;
+
+            float wave = (MathF.Sin(_pulsePhase) + 1f) * 0.5f;
+            int alpha = 10 + (int)(wave * 90);
+
+            _pulseBrush.Color = Color.FromArgb(alpha, Color.Gold);
+
+            foreach (var rect in _errorRects)
+            {
+                if (!pe.ClipRectangle.IntersectsWith(rect)) continue;
+                pe.Graphics.FillRectangle(_pulseBrush, rect);
             }
         }
 
