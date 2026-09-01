@@ -55,14 +55,12 @@ public class ErrorListPanel : UserControl
 
         _list.Dock = DockStyle.Fill;
         _list.View = View.Details;
-        _list.VirtualMode = true;
         _list.OwnerDraw = true;
         _list.FullRowSelect = true;
         _list.MultiSelect = false;
         _list.HideSelection = false;
         _list.HeaderStyle = ColumnHeaderStyle.Nonclickable;
         _list.BorderStyle = BorderStyle.None;
-        _list.VirtualListSize = 0;
 
         // The native ListView isn't double-buffered by default, so every Invalidate()
         // (e.g. on hover/selection change) erases then redraws visibly. Control.DoubleBuffered
@@ -77,7 +75,6 @@ public class ErrorListPanel : UserControl
         _list.Columns.Add("Rule", 160);
         _list.Columns.Add("Description", 400);
 
-        _list.RetrieveVirtualItem += OnRetrieveVirtualItem;
         _list.DrawColumnHeader += OnDrawColumnHeader;
         _list.DrawItem += OnDrawItem;
         _list.DrawSubItem += OnDrawSubItem;
@@ -152,6 +149,16 @@ public class ErrorListPanel : UserControl
             (int)(a.B + (b.B - a.B) * t));
     }
 
+    // The splitter that resizes this panel in the host form sets Height directly,
+    // bypassing the Collapsed property entirely. Without this, dragging it while
+    // collapsed leaves a stale _expandedHeight in place that silently overrides the
+    // drag the next time the panel expands. Clamp here so collapsed means fixed-size.
+    protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
+    {
+        if (_collapsed) height = HeaderHeight + 2;
+        base.SetBoundsCore(x, y, width, height, specified);
+    }
+
     protected override void OnPaint(PaintEventArgs e)
     {
         base.OnPaint(e);
@@ -193,8 +200,8 @@ public class ErrorListPanel : UserControl
         try
         {
             _list.BeginUpdate();
-            _list.SelectedIndices.Clear();
-            _list.VirtualListSize = _items.Length;
+            _list.Items.Clear();
+            _list.Items.AddRange(_items.Select(_ => new ListViewItem(new string[4])).ToArray());
             _list.EndUpdate();
             _list.Invalidate();
         }
@@ -204,11 +211,6 @@ public class ErrorListPanel : UserControl
         _list.Invalidate();
 
         UpdateTitle();
-    }
-
-    private void OnRetrieveVirtualItem(object? sender, RetrieveVirtualItemEventArgs e)
-    {
-        e.Item = new ListViewItem(new string[4]);
     }
 
     private void SetHovered(int index)
@@ -222,7 +224,7 @@ public class ErrorListPanel : UserControl
 
     private void InvalidateRow(int index)
     {
-        if (index < 0 || index >= _list.VirtualListSize) return;
+        if (index < 0 || index >= _list.Items.Count) return;
         _list.Invalidate(_list.GetItemRect(index));
     }
 
@@ -314,10 +316,8 @@ public class ErrorListPanel : UserControl
         bool selected = _list.SelectedIndices.Contains(e.ItemIndex);
         Color fore = selected ? SelectedRowForeColor : RowForeColor;
 
-        // e.Item.Bounds is unreliable in virtual mode (the item isn't actually
-        // attached to the control), so it resolves to an empty rect and text
-        // silently fails to draw. Use e.Bounds instead — but for column 0, WinForms
-        // reports the *entire row's* bounds rather than just that column's, so clamp it.
+        // For column 0, WinForms' owner-draw event reports the *entire row's* bounds
+        // rather than just that column's, so clamp it.
         Rectangle cellBounds = e.ColumnIndex == 0
             ? new Rectangle(e.Bounds.Left, e.Bounds.Top, _list.Columns[0].Width, e.Bounds.Height)
             : e.Bounds;
@@ -335,7 +335,7 @@ public class ErrorListPanel : UserControl
                 }
                 break;
             case 1:
-                DrawCell(e.Graphics, cellBounds, $"({err.X}, {err.Y})", fore);
+                DrawCell(e.Graphics, cellBounds, $"({Hex.ToString(err.X)}, {Hex.ToString(err.Y)})", fore);
                 break;
             case 2:
                 DrawCell(e.Graphics, cellBounds, err.Rule?.Name ?? string.Empty, fore);
@@ -363,9 +363,9 @@ public class ErrorListPanel : UserControl
             fixedWidth += _list.Columns[i].Width;
 
         // ClientSize already excludes the scrollbar once it appears,
-        // but it lags by one layout pass in virtual mode — compute it.
+        // but it lags by one layout pass — compute it ourselves.
         int avail = _list.ClientSize.Width;
-        bool scroll = _list.VirtualListSize * RowHeight > _list.ClientSize.Height;
+        bool scroll = _list.Items.Count * RowHeight > _list.ClientSize.Height;
         if (scroll && _list.ClientSize.Width == _list.Width)
             avail -= SystemInformation.VerticalScrollBarWidth;
 

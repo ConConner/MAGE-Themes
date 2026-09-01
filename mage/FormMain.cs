@@ -101,7 +101,7 @@ namespace mage
 
         // related to current room
         private Room room;
-        private RuleValidator roomRuleValidator;
+        public RuleValidator roomRuleValidator;
         private bool skipEvents;
         private int enemySet;
         private RoomUndoRedo undoRedo;
@@ -2023,6 +2023,7 @@ namespace mage
             roomRuleValidator.ErrorsChanged += roomView.OnErrorsChanged;
             roomRuleValidator.ValidateRoom();
             errorList.SetSource(roomRuleValidator);
+            roomView.HighlightedWarning = null;
         }
         #endregion
 
@@ -3240,6 +3241,11 @@ namespace mage
         private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
         {
             comboBox_clipdata.Invalidate();
+        }
+
+        private void errorList_ErrorActivated(ClipdataError obj)
+        {
+            roomView.HighlightedWarning = new(obj.X, obj.Y);
         }
     }
 }

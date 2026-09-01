@@ -219,6 +219,7 @@
             contextItem_removeEffectPos = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             contextItem_testRoom = new System.Windows.Forms.ToolStripMenuItem();
+            splitter_issues = new System.Windows.Forms.Splitter();
             errorList = new mage.Warnings.ErrorListPanel();
             groupBox_viewBG = new System.Windows.Forms.GroupBox();
             checkBox_viewBG3 = new System.Windows.Forms.CheckBox();
@@ -1615,6 +1616,7 @@
             // groupBox_room
             // 
             groupBox_room.Controls.Add(panel_room);
+            groupBox_room.Controls.Add(splitter_issues);
             groupBox_room.Controls.Add(errorList);
             groupBox_room.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox_room.Enabled = false;
@@ -1635,7 +1637,7 @@
             panel_room.Location = new System.Drawing.Point(4, 19);
             panel_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_room.Name = "panel_room";
-            panel_room.Size = new System.Drawing.Size(497, 364);
+            panel_room.Size = new System.Drawing.Size(497, 361);
             panel_room.TabIndex = 0;
             // 
             // roomView
@@ -1772,6 +1774,15 @@
             contextItem_testRoom.Text = "Test Room Here";
             contextItem_testRoom.Click += contextItem_testRoom_Click;
             // 
+            // splitter_issues
+            // 
+            splitter_issues.Dock = System.Windows.Forms.DockStyle.Bottom;
+            splitter_issues.Location = new System.Drawing.Point(4, 380);
+            splitter_issues.Name = "splitter_issues";
+            splitter_issues.Size = new System.Drawing.Size(497, 3);
+            splitter_issues.TabIndex = 1;
+            splitter_issues.TabStop = false;
+            // 
             // errorList
             // 
             errorList.AlternateRowBackColor = System.Drawing.Color.FromArgb(35, 35, 38);
@@ -1792,6 +1803,7 @@
             errorList.Size = new System.Drawing.Size(497, 26);
             errorList.TabIndex = 1;
             errorList.WarningIcon = Properties.Resources.error;
+            errorList.ErrorActivated += errorList_ErrorActivated;
             // 
             // groupBox_viewBG
             // 
@@ -2762,6 +2774,7 @@
         private System.Windows.Forms.ToolStripMenuItem button_exportAreaPixel;
         private System.Windows.Forms.ToolStripButton toolStripButton_tweaks;
         private Warnings.ErrorListPanel errorList;
+        private System.Windows.Forms.Splitter splitter_issues;
     }
 }
 

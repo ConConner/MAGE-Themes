@@ -50,9 +50,22 @@ namespace mage
         // rule warnings
         private IReadOnlyDictionary<(int x, int y), List<ClipdataError>> _errors;
         private readonly List<Rectangle> _errorRects = new();
+        public Point? HighlightedWarning = null;
+        private Rectangle HighlightedWarningRect
+        {
+            get
+            {
+                if (HighlightedWarning is null) return new(-1, -1, 0, 0);
+                Point highlightedPoint = new(HighlightedWarning.Value.X * 16 << zoom, HighlightedWarning.Value.Y * 16 << zoom);
+                Size s = new(16 << zoom, 16 << zoom);
+                Rectangle highlight = new(highlightedPoint, s);
+                return highlight;
+            }
+        }
         private readonly Timer _pulseTimer;
         private float _pulsePhase;
-        private readonly SolidBrush _pulseBrush = new(Color.Blue);
+        private readonly SolidBrush _pulseBrush = new(Color.Gold);
+        private readonly SolidBrush _pulseHighlightBrush = new(Color.Blue);
 
         public RoomView()
         {
@@ -96,6 +109,8 @@ namespace mage
 
             foreach (var rect in _errorRects)
                 Invalidate(rect);
+
+            if (HighlightedWarning is not null) Invalidate(HighlightedWarningRect);
         }
 
         public bool UpdateZoom(int newZoom, bool resize)
@@ -314,8 +329,17 @@ namespace mage
             foreach (var rect in _errorRects)
             {
                 if (!pe.ClipRectangle.IntersectsWith(rect)) continue;
+                if (rect.Location == HighlightedWarningRect.Location) continue;
                 pe.Graphics.FillRectangle(_pulseBrush, rect);
             }
+
+            if (HighlightedWarning is null) return;
+
+            wave = (MathF.Sin(_pulsePhase * 3) + 1f) * 0.5f;
+            alpha = 20 + (int)(wave * 90);
+            _pulseHighlightBrush.Color = Color.FromArgb(alpha, Color.Red);
+
+            pe.Graphics.FillRectangle(_pulseHighlightBrush, HighlightedWarningRect);
         }
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
