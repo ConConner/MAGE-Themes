@@ -26,6 +26,10 @@ public class RuleValidator
         _rules.Add(new SlopeSupportRule());
         _rules.Add(new SlopeWallRule());
         _rules.Add(new CeilingSlopeRule());
+        _rules.Add(new SlopeUnfinishedRule());
+        _rules.Add(new SlopeConnectionRule());
+        _rules.Add(new UnderwaterTankRule());
+        _rules.Add(new RegularTankUnderwaterRule());
 
         _maxRadius = _rules.Max(r => r.NeighborhoodRadius);
         _grid = grid;

@@ -7,10 +7,13 @@ namespace mage.Warnings.Rules;
 public class SlopeSupportRule : IClipdataRule
 {
     public string Name => "Slope lacking support";
-    public string Description => "A slope must have supporting solid blocks at the beginning and end of the slope.";
+    public string Description => "A slope must have supporting solid blocks or other slopes at the beginning and end of the slope.";
     public int NeighborhoodRadius => 1;
 
     private ClipdataError Error(TileContext ctx) => new(ctx.X, ctx.Y, this, Description);
+
+    private bool isValidSupport(Block b) => b.IsSolid() || b.IsSlope();
+
 
     public ClipdataError? Check(TileContext ctx)
     {
@@ -25,12 +28,12 @@ public class SlopeSupportRule : IClipdataRule
 
         if (self.IsSlightSlope())
         {
-            if ((self.CLP == 0x13 || self.CLP == 0x15) && !left.IsSolid()) return Error(ctx);
-            if ((self.CLP == 0x14 || self.CLP == 0x16) && !right.IsSolid()) return Error(ctx);
+            if ((self.CLP == 0x13 || self.CLP == 0x15) && !isValidSupport(left)) return Error(ctx);
+            if ((self.CLP == 0x14 || self.CLP == 0x16) && !isValidSupport(right)) return Error(ctx);
             return null;
         }
 
-        if (!left.IsSolid() || !right.IsSolid()) return Error(ctx);
+        if (!isValidSupport(left) || !isValidSupport(right)) return Error(ctx);
 
         return null;
     }

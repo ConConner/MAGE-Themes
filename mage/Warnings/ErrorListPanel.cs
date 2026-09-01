@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Linq;
+using System.Reflection;
+using mage.Theming;
 
 namespace mage.Warnings;
 
@@ -22,6 +24,7 @@ public class ErrorListPanel : UserControl
     private ClipdataError[] _items = Array.Empty<ClipdataError>();
     private bool _collapsed;
     private int _expandedHeight = 160;
+    private int _hoveredIndex = -1;
 
     public event Action<ClipdataError>? ErrorActivated;
 
@@ -30,13 +33,13 @@ public class ErrorListPanel : UserControl
         SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
         Height = _expandedHeight;
 
-        // ThemeSwitcher.ChangeTheme walks every control recursively and, for any
-        // ListView it finds (including this panel's internal _list), attaches its
-        // own DrawItem/DrawSubItem handlers on top of ours. Since it runs after
-        // InitializeComponent, its handlers fire last and paint blank subitem text
-        // over what we already drew. This panel fully owns its own theming, so
-        // opt the whole subtree out via the "unthemed" convention ThemeSwitcher checks for.
-        Tag = "unthemed";
+        // ThemeSwitcher special-cases ErrorListPanel (see ThemeSwitcher.ChangeTheme) and
+        // returns without recursing into its children, so it never re-visits _list.
+        // Tag it "unthemed" anyway as a defense-in-depth belt-and-suspenders: if that
+        // special-case is ever removed, ThemeSwitcher's generic ListView handling would
+        // stack its own DrawItem/DrawSubItem handlers on top of ours (since it runs after
+        // InitializeComponent) and silently paint blank subitem text over what we drew.
+        _list.Tag = "unthemed";
 
         _header.Dock = DockStyle.Top;
         _header.Height = HeaderHeight;
@@ -61,6 +64,14 @@ public class ErrorListPanel : UserControl
         _list.BorderStyle = BorderStyle.None;
         _list.VirtualListSize = 0;
 
+        // The native ListView isn't double-buffered by default, so every Invalidate()
+        // (e.g. on hover/selection change) erases then redraws visibly. Control.DoubleBuffered
+        // is protected; ListView also translates it into the LVS_EX_DOUBLEBUFFER extended
+        // style, which is what actually stops the native control itself from flickering.
+        typeof(Control).InvokeMember("DoubleBuffered",
+            BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+            null, _list, new object[] { true });
+
         _list.Columns.Add("", 24);
         _list.Columns.Add("Position", 90);
         _list.Columns.Add("Rule", 160);
@@ -75,6 +86,8 @@ public class ErrorListPanel : UserControl
         {
             if (e.KeyCode == Keys.Enter) ActivateSelected();
         };
+        _list.MouseMove += (_, e) => SetHovered(_list.HitTest(e.Location).Item?.Index ?? -1);
+        _list.MouseLeave += (_, _) => SetHovered(-1);
 
         _list.ClientSizeChanged += (_, _) => AutoSizeLastColumn();
         _list.ColumnWidthChanged += (_, e) =>
@@ -94,6 +107,7 @@ public class ErrorListPanel : UserControl
     [Category("Theme")] public Color ListBackColor { get; set; } = Color.FromArgb(30, 30, 30);
     [Category("Theme")] public Color RowForeColor { get; set; } = Color.Gainsboro;
     [Category("Theme")] public Color AlternateRowBackColor { get; set; } = Color.FromArgb(35, 35, 38);
+    [Category("Theme")] public Color HoverRowBackColor { get; set; } = Color.FromArgb(45, 45, 50);
     [Category("Theme")] public Color SelectedRowBackColor { get; set; } = Color.FromArgb(38, 79, 120);
     [Category("Theme")] public Color SelectedRowForeColor { get; set; } = Color.White;
     [Category("Theme")] public Color GridLineColor { get; set; } = Color.FromArgb(50, 50, 53);
@@ -111,6 +125,31 @@ public class ErrorListPanel : UserControl
         Padding = new Padding(1);
         Invalidate(true);
         _list.Invalidate();
+    }
+
+    /// <summary>Maps a project ColorTheme onto this panel's own theme properties. Called by ThemeSwitcher.</summary>
+    public void ApplyProjectTheme(ColorTheme theme)
+    {
+        HeaderBackColor = theme.BackgroundColor;
+        HeaderForeColor = theme.TextColor;
+        ListBackColor = theme.BackgroundColor;
+        RowForeColor = theme.TextColor;
+        AlternateRowBackColor = Blend(theme.BackgroundColor, theme.TextColor, 0.05);
+        HoverRowBackColor = Blend(theme.BackgroundColor, theme.AccentColor, 0.18);
+        SelectedRowBackColor = theme.AccentColor;
+        SelectedRowForeColor = theme.TextColorHighlight;
+        GridLineColor = theme.SecondaryOutline;
+        OutlineColor = theme.PrimaryOutline;
+        ApplyTheme();
+    }
+
+    private static Color Blend(Color a, Color b, double t)
+    {
+        t = Math.Clamp(t, 0, 1);
+        return Color.FromArgb(
+            (int)(a.R + (b.R - a.R) * t),
+            (int)(a.G + (b.G - a.G) * t),
+            (int)(a.B + (b.B - a.B) * t));
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -172,6 +211,21 @@ public class ErrorListPanel : UserControl
         e.Item = new ListViewItem(new string[4]);
     }
 
+    private void SetHovered(int index)
+    {
+        if (index == _hoveredIndex) return;
+        int old = _hoveredIndex;
+        _hoveredIndex = index;
+        InvalidateRow(old);
+        InvalidateRow(index);
+    }
+
+    private void InvalidateRow(int index)
+    {
+        if (index < 0 || index >= _list.VirtualListSize) return;
+        _list.Invalidate(_list.GetItemRect(index));
+    }
+
     private void ActivateSelected()
     {
         if (_suppressActivate) return;
@@ -230,11 +284,19 @@ public class ErrorListPanel : UserControl
     private void OnDrawItem(object? sender, DrawListViewItemEventArgs e)
     {
         if (e.ItemIndex < 0 || e.ItemIndex >= _items.Length) return;
-        bool selected = (e.State & ListViewItemStates.Selected) != 0;
+
+        // Not e.State: with HideSelection = false, the native ListView has a documented
+        // bug where the raw custom-draw item state reports Selected for every row. It
+        // patches that up internally for its own default-draw fallback, but never for
+        // the state it hands to owner-draw event args, so we have to query it ourselves.
+        bool selected = _list.SelectedIndices.Contains(e.ItemIndex);
+        bool hovered = e.ItemIndex == _hoveredIndex;
 
         Color back = selected
             ? SelectedRowBackColor
-            : (e.ItemIndex % 2 == 0 ? ListBackColor : AlternateRowBackColor);
+            : hovered
+                ? HoverRowBackColor
+                : (e.ItemIndex % 2 == 0 ? ListBackColor : AlternateRowBackColor);
 
         using (var bg = new SolidBrush(back))
             e.Graphics.FillRectangle(bg, e.Bounds);
@@ -249,7 +311,7 @@ public class ErrorListPanel : UserControl
         if (e.ItemIndex < 0 || e.ItemIndex >= _items.Length) return;
         var err = _items[e.ItemIndex];
 
-        bool selected = (e.ItemState & ListViewItemStates.Selected) != 0;
+        bool selected = _list.SelectedIndices.Contains(e.ItemIndex);
         Color fore = selected ? SelectedRowForeColor : RowForeColor;
 
         // e.Item.Bounds is unreliable in virtual mode (the item isn't actually

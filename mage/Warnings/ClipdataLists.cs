@@ -25,6 +25,7 @@ public static class ClipdataLists
     private static readonly FrozenSet<int> slightSlopeClip =
         new[] { 0x13, 0x14, 0x15, 0x16 }.ToFrozenSet();
     public static bool IsSlightSlope(this Block b) => slightSlopeClip.Contains(b.CLP);
+    public static bool IsSteepSlope(this Block b) => b.IsSlope() && !b.IsSlightSlope();
 
     private static readonly FrozenSet<int> leftFacingSlopeClip =
         new[] { 0x12, 0x15, 0x16 }.ToFrozenSet();
@@ -34,4 +35,25 @@ public static class ClipdataLists
     private static readonly FrozenSet<int> ceilingSlopeClip =
         new[] { 0x21, 0x22, 0x23, 0x24, 0x25, 0x26 }.ToFrozenSet();
     public static bool IsCeilingSlope(this Block b) => ceilingSlopeClip.Contains(b.CLP);
+
+    // TANKS
+    private static readonly FrozenSet<int> zmTanks =
+        new[] { 0x5C, 0x5D, 0x5E, 0x5F, 0x6C, 0x6D, 0x6E, 0x6F, 0x7C, 0x7D, 0x7E, 0x7F }.ToFrozenSet();
+    private static readonly FrozenSet<int> mfTanks =
+        new[] { 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6A }.ToFrozenSet();
+    private static readonly FrozenSet<int> zmHiddenTanks =
+        new[] { 0x6C, 0x6D, 0x6E, 0x6F }.ToFrozenSet();
+    private static readonly FrozenSet<int> mfHiddenTanks =
+        new[] { 0x64, 0x65, 0x69 }.ToFrozenSet();
+    private static readonly FrozenSet<int> zmUnderwaterTanks =
+        new[] { 0x7C, 0x7D, 0x7E, 0x7F }.ToFrozenSet();
+    private static readonly FrozenSet<int> mfUnderwaterTanks =
+        new[] { 0x66, 0x67, 0x6A }.ToFrozenSet();
+    public static bool IsTank(this Block b) => mf ? mfTanks.Contains(b.CLP) : zmTanks.Contains(b.CLP);
+    public static bool IsHiddenTank(this Block b) => mf ? mfHiddenTanks.Contains(b.CLP) : zmHiddenTanks.Contains(b.CLP);
+    public static bool IsUnderwaterTank(this Block b) => mf ? mfUnderwaterTanks.Contains(b.CLP) : zmUnderwaterTanks.Contains(b.CLP);
+    public static bool IsRegularTank(this Block b) => b.IsTank() && !b.IsHiddenTank() && !b.IsUnderwaterTank();
+
+    // OTHER CLIPDATA
+    public static bool IsWater(this Block b) => b.CLP == 0x1B;
 }

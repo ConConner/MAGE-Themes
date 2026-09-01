@@ -1,5 +1,6 @@
 ﻿using mage.Controls;
 using mage.Theming.CustomControls;
+using mage.Warnings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -143,6 +144,17 @@ namespace mage.Theming
         public static void ChangeTheme(Control control)
         {
             ColorTheme theme = ProjectTheme;
+
+            // ErrorListPanel fully owns its own painting (it's an owner-drawn, virtual-mode
+            // ListView under the hood). Map the project theme onto its own theme properties
+            // and stop: don't fall through to the generic per-control/ListView handling below,
+            // which would attach a second, conflicting set of Draw* handlers to its internal
+            // ListView and paint blank text over what it already drew (see ErrorListPanel.cs).
+            if (control is ErrorListPanel errorListPanel)
+            {
+                errorListPanel.ApplyProjectTheme(theme);
+                return;
+            }
 
             //base change
             control.BackColor = theme.BackgroundColor;

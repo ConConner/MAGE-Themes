@@ -7,7 +7,7 @@ namespace mage.Warnings.Rules;
 public class CeilingSlopeRule : IClipdataRule
 {
     public string Name => "Ceiling slope used";
-    public string Description => "Ceiling slopes are not implemented clipdata and should be replaced with air.";
+    public string Description => "Ceiling slopes are unused clipdata and should be replaced with air.";
     public int NeighborhoodRadius => 0;
 
     public ClipdataError? Check(TileContext ctx)

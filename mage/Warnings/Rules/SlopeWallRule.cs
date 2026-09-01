@@ -6,8 +6,8 @@ namespace mage.Warnings.Rules;
 
 public class SlopeWallRule : IClipdataRule
 {
-    public string Name => "Slope next to wall";
-    public string Description => "A slope must not be placed directly next to a solid wall.";
+    public string Name => "Slope leads into wall";
+    public string Description => "A slope must not lead directly into a wall.";
     public int NeighborhoodRadius => 1;
 
     private ClipdataError Error(TileContext ctx) => new(ctx.X, ctx.Y, this, Description);

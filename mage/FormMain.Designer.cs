@@ -219,6 +219,7 @@
             contextItem_removeEffectPos = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             contextItem_testRoom = new System.Windows.Forms.ToolStripMenuItem();
+            errorList = new mage.Warnings.ErrorListPanel();
             groupBox_viewBG = new System.Windows.Forms.GroupBox();
             checkBox_viewBG3 = new System.Windows.Forms.CheckBox();
             checkBox_viewBG2 = new System.Windows.Forms.CheckBox();
@@ -284,7 +285,6 @@
             comboBox_spriteset = new mage.Theming.CustomControls.FlatComboBox();
             ToolTip = new System.Windows.Forms.ToolTip(components);
             splitContainer1 = new System.Windows.Forms.SplitContainer();
-            errorList = new mage.Warnings.ErrorListPanel();
             menuStrip.SuspendLayout();
             groupBox_location.SuspendLayout();
             groupBox_tileset.SuspendLayout();
@@ -1635,7 +1635,7 @@
             panel_room.Location = new System.Drawing.Point(4, 19);
             panel_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_room.Name = "panel_room";
-            panel_room.Size = new System.Drawing.Size(497, 192);
+            panel_room.Size = new System.Drawing.Size(497, 364);
             panel_room.TabIndex = 0;
             // 
             // roomView
@@ -1771,6 +1771,27 @@
             contextItem_testRoom.Size = new System.Drawing.Size(196, 22);
             contextItem_testRoom.Text = "Test Room Here";
             contextItem_testRoom.Click += contextItem_testRoom_Click;
+            // 
+            // errorList
+            // 
+            errorList.AlternateRowBackColor = System.Drawing.Color.FromArgb(35, 35, 38);
+            errorList.Collapsed = true;
+            errorList.Dock = System.Windows.Forms.DockStyle.Bottom;
+            errorList.GridLineColor = System.Drawing.Color.FromArgb(50, 50, 53);
+            errorList.HeaderBackColor = System.Drawing.Color.FromArgb(45, 45, 48);
+            errorList.HeaderForeColor = System.Drawing.Color.Gainsboro;
+            errorList.HoverRowBackColor = System.Drawing.Color.FromArgb(45, 45, 50);
+            errorList.ListBackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            errorList.Location = new System.Drawing.Point(4, 383);
+            errorList.Name = "errorList";
+            errorList.OutlineColor = System.Drawing.Color.FromArgb(63, 63, 70);
+            errorList.Padding = new System.Windows.Forms.Padding(1);
+            errorList.RowForeColor = System.Drawing.Color.Gainsboro;
+            errorList.SelectedRowBackColor = System.Drawing.Color.FromArgb(38, 79, 120);
+            errorList.SelectedRowForeColor = System.Drawing.Color.White;
+            errorList.Size = new System.Drawing.Size(497, 26);
+            errorList.TabIndex = 1;
+            errorList.WarningIcon = Properties.Resources.error;
             // 
             // groupBox_viewBG
             // 
@@ -2431,26 +2452,6 @@
             splitContainer1.SplitterWidth = 3;
             splitContainer1.TabIndex = 0;
             splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
-            // 
-            // errorList
-            // 
-            errorList.AlternateRowBackColor = System.Drawing.Color.FromArgb(35, 35, 38);
-            errorList.Collapsed = false;
-            errorList.Dock = System.Windows.Forms.DockStyle.Bottom;
-            errorList.GridLineColor = System.Drawing.Color.FromArgb(50, 50, 53);
-            errorList.HeaderBackColor = System.Drawing.Color.FromArgb(45, 45, 48);
-            errorList.HeaderForeColor = System.Drawing.Color.Gainsboro;
-            errorList.ListBackColor = System.Drawing.Color.FromArgb(30, 30, 30);
-            errorList.Location = new System.Drawing.Point(4, 211);
-            errorList.Name = "errorList";
-            errorList.OutlineColor = System.Drawing.Color.FromArgb(63, 63, 70);
-            errorList.Padding = new System.Windows.Forms.Padding(1);
-            errorList.RowForeColor = System.Drawing.Color.Gainsboro;
-            errorList.SelectedRowBackColor = System.Drawing.Color.FromArgb(38, 79, 120);
-            errorList.SelectedRowForeColor = System.Drawing.Color.White;
-            errorList.Size = new System.Drawing.Size(497, 198);
-            errorList.TabIndex = 1;
-            errorList.WarningIcon = Properties.Resources.error;
             // 
             // FormMain
             // 
