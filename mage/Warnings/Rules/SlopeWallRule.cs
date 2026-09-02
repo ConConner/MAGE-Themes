@@ -10,6 +10,9 @@ public class SlopeWallRule : IClipdataRule
     public string Description => "A slope must not lead directly into a wall.";
     public int NeighborhoodRadius => 1;
 
+    public bool MfExclusive { get; } = false;
+    public bool ZmExclusive { get; } = false;
+
     private ClipdataError Error(TileContext ctx) => new(ctx.X, ctx.Y, this, Description);
 
     public ClipdataError? Check(TileContext ctx)

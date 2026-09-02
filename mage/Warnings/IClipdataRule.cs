@@ -14,5 +14,8 @@ public interface IClipdataRule
     /// </summary>
     int NeighborhoodRadius { get; }
 
+    bool MfExclusive { get; }
+    bool ZmExclusive { get; }
+
     ClipdataError? Check(TileContext ctx);
 }

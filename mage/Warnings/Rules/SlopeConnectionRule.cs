@@ -10,6 +10,9 @@ public class SlopeConnectionRule : IClipdataRule
     public string Description => "A slope may not connect into a misaligned slope.";
     public int NeighborhoodRadius => 1;
 
+    public bool MfExclusive { get; } = false;
+    public bool ZmExclusive { get; } = false;
+
     private ClipdataError Error(TileContext ctx) => new(ctx.X, ctx.Y, this, Description);
 
     private bool isValidSupport(Block b) => b.IsSolid() || b.IsSlope();

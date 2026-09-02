@@ -10,6 +10,9 @@ public class SlopeSupportRule : IClipdataRule
     public string Description => "A slope must have supporting solid blocks or other slopes at the beginning and end of the slope.";
     public int NeighborhoodRadius => 1;
 
+    public bool MfExclusive { get; } = false;
+    public bool ZmExclusive { get; } = false;
+
     private ClipdataError Error(TileContext ctx) => new(ctx.X, ctx.Y, this, Description);
 
     private bool isValidSupport(Block b) => b.IsSolid() || b.IsSlope();

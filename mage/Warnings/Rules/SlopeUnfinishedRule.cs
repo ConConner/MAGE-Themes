@@ -10,6 +10,9 @@ public class SlopeUnfinishedRule : IClipdataRule
     public string Description => "A slight slope must have both the lower and upper part.";
     public int NeighborhoodRadius => 1;
 
+    public bool MfExclusive { get; } = false;
+    public bool ZmExclusive { get; } = false;
+
     private ClipdataError Error(TileContext ctx) => new(ctx.X, ctx.Y, this, Description);
 
     public ClipdataError? Check(TileContext ctx)

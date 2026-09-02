@@ -10,6 +10,9 @@ public class UnderwaterTankRule : IClipdataRule
     public string Description => "Underwarter Tanks should only be placed inside water.";
     public int NeighborhoodRadius => 1;
 
+    public bool MfExclusive { get; } = false;
+    public bool ZmExclusive { get; } = false;
+
     public ClipdataError? Check(TileContext ctx)
     {
         var self = ctx.Get(0, 0);
