@@ -137,7 +137,7 @@
             // 
             pbx_Background.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             pbx_Background.Checked = false;
-            pbx_Background.Image = Properties.Resources.status_screen_fusion1;
+            pbx_Background.Image = Properties.Resources.status_screen_fusion;
             pbx_Background.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             pbx_Background.Location = new System.Drawing.Point(0, 0);
             pbx_Background.Margin = new System.Windows.Forms.Padding(0);

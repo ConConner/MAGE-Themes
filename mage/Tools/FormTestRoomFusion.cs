@@ -1,6 +1,7 @@
 ﻿using mage.Data;
 using mage.Theming;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -215,6 +216,7 @@ public partial class FormTestRoomFusion : Form
     {
         if (sender is not PictureBoxInterpolation pb) return;
         ItemToggle(pb);
+        save.DebugMenu = chb_debug.Checked;
     }
 
     private void cbb_suit_type_SelectedIndexChanged(object sender, EventArgs e)

@@ -205,7 +205,7 @@
   <data name="shortcut_power_water" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\shortcut_power_water.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="status_screen_fusion1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="status_screen_fusion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\status_screen_fusion1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ZM_U_tileTables" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -459,9 +459,6 @@
   </data>
   <data name="toolbar_header" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\toolbar_header.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="status_screen_fusion" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\status_screen_fusion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="toolbar_minimap" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\toolbar_minimap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
