@@ -1,3 +1,10 @@
+## [1.21.1](https://github.com/ConConner/MAGE-Themes/compare/v1.21.0...v1.21.1) (2026-09-15)
+
+
+### Bug Fixes
+
+* debug toggle resets between tests in fusion test room settings ([7f7f638](https://github.com/ConConner/MAGE-Themes/commit/7f7f6381c2b98458bca0ce4feb6a5319379dbcc8))
+
 # [1.21.0](https://github.com/ConConner/MAGE-Themes/compare/v1.20.0...v1.21.0) (2026-09-15)
 
 
