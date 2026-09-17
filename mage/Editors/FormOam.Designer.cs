@@ -87,7 +87,7 @@
             button_addPart = new System.Windows.Forms.Button();
             groupBox_oamDisplay = new System.Windows.Forms.GroupBox();
             panel_oam = new mage.Controls.ExtendedPanel();
-            oamView_oam = new mage.Controls.TileDisplay();
+            tileDisplay_oam = new mage.Controls.TileDisplay();
             toolStrip2 = new System.Windows.Forms.ToolStrip();
             button_viewOrigin = new System.Windows.Forms.ToolStripButton();
             button_viewOutline = new System.Windows.Forms.ToolStripButton();
@@ -858,7 +858,7 @@
             // panel_oam
             // 
             panel_oam.AutoScroll = true;
-            panel_oam.Controls.Add(oamView_oam);
+            panel_oam.Controls.Add(tileDisplay_oam);
             panel_oam.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_oam.Location = new System.Drawing.Point(4, 44);
             panel_oam.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -868,28 +868,28 @@
             // 
             // oamView_oam
             // 
-            oamView_oam.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
-            oamView_oam.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            oamView_oam.GridCellHeight = 16;
-            oamView_oam.GridCellWidth = 16;
-            oamView_oam.Location = new System.Drawing.Point(0, 0);
-            oamView_oam.Name = "oamView_oam";
-            oamView_oam.ShowGrid = false;
-            oamView_oam.ShowOamOrigin = false;
-            oamView_oam.Size = new System.Drawing.Size(0, 0);
-            oamView_oam.TabIndex = 0;
-            oamView_oam.TabStop = false;
-            oamView_oam.Tag = "unthemed";
-            oamView_oam.Text = "tileDisplay1";
-            oamView_oam.TileGridOrigin = new System.Drawing.Point(0, 0);
-            oamView_oam.TileImage = null;
-            oamView_oam.TileSize = 16;
-            oamView_oam.Zoom = 0;
-            oamView_oam.TileMouseDown += oamView_oam_TileMouseDown;
-            oamView_oam.TileMouseUp += oamView_oam_TileMouseUp;
-            oamView_oam.TileMouseMove += oamView_oam_TileMouseMove;
-            oamView_oam.Scrolled += oamView_oam_Scrolled;
-            oamView_oam.KeyDown += KeyPressed;
+            tileDisplay_oam.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
+            tileDisplay_oam.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            tileDisplay_oam.GridCellHeight = 16;
+            tileDisplay_oam.GridCellWidth = 16;
+            tileDisplay_oam.Location = new System.Drawing.Point(0, 0);
+            tileDisplay_oam.Name = "oamView_oam";
+            tileDisplay_oam.ShowGrid = false;
+            tileDisplay_oam.ShowOamOrigin = false;
+            tileDisplay_oam.Size = new System.Drawing.Size(0, 0);
+            tileDisplay_oam.TabIndex = 0;
+            tileDisplay_oam.TabStop = false;
+            tileDisplay_oam.Tag = "unthemed";
+            tileDisplay_oam.Text = "tileDisplay1";
+            tileDisplay_oam.TileGridOrigin = new System.Drawing.Point(0, 0);
+            tileDisplay_oam.TileImage = null;
+            tileDisplay_oam.TileSize = 16;
+            tileDisplay_oam.Zoom = 0;
+            tileDisplay_oam.TileMouseDown += oamView_oam_TileMouseDown;
+            tileDisplay_oam.TileMouseUp += oamView_oam_TileMouseUp;
+            tileDisplay_oam.TileMouseMove += oamView_oam_TileMouseMove;
+            tileDisplay_oam.Scrolled += oamView_oam_Scrolled;
+            tileDisplay_oam.KeyDown += KeyPressed;
             // 
             // toolStrip2
             // 
@@ -1268,7 +1268,7 @@
         private Theming.CustomControls.FlatTextBox textBox_duration;
         private System.Windows.Forms.Button button_playAnimation;
         private Controls.TileDisplay gfxView_gfx;
-        private Controls.TileDisplay oamView_oam;
+        private Controls.TileDisplay tileDisplay_oam;
         private System.Windows.Forms.Button button_removeFrame;
         private System.Windows.Forms.Button button_addFrame;
         private System.Windows.Forms.SplitContainer splitContainer_controls;
