@@ -1328,10 +1328,15 @@ namespace mage.Editors
         {
             TableTimer.Stop();
             if (tableView == null || tableView.IsDisposed) return;
-            Point clientMousePos = tableView.PointToClient(Cursor.Position);
-            if (!tableView.ClientRectangle.Contains(clientMousePos) || Control.MouseButtons != MouseButtons.None) return;
+            if (Control.MouseButtons != MouseButtons.None) return;
 
-            TileTip.Show("Dummy", tableView, clientMousePos);
+            Point clientMousePosOnTileDisplay = tableView.PointToClient(Cursor.Position);
+            if (!tableView.ClientRectangle.Contains(clientMousePosOnTileDisplay)) return;
+
+            Point clientMousePositionInPanel = panel_tableView.PointToClient(Cursor.Position);
+            if (!panel_tableView.ClientRectangle.Contains(clientMousePositionInPanel)) return;
+
+            TileTip.Show("Dummy", tableView, clientMousePosOnTileDisplay);
         }
         #endregion
 
