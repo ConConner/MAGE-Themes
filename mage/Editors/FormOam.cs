@@ -1,4 +1,6 @@
-﻿using mage.Bookmarks;
+﻿using mage.Actions;
+using mage.Actions.OamEditor;
+using mage.Bookmarks;
 using mage.Controls;
 using mage.Editors.NewEditors;
 using mage.Properties;
@@ -22,6 +24,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace mage;
 
@@ -34,7 +37,9 @@ public partial class FormOam : Form
     private Bitmap gfxImage;
     private VramObj vram;
 
+    private GenericUndoRedo UndoRedo = new();
     private Status Status;
+    private List<GenericEditorAction>? GroupedActions;
 
     private bool loading;
     private bool loadingPart;
@@ -692,6 +697,19 @@ public partial class FormOam : Form
         }
     }
 
+    private void paletteView_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        if (PaletteCursor.Y == e.TilePixelPosition.Y) return;
+        PaletteCursor.Visible = true;
+        PaletteCursor.Rectangle = new Rectangle(0, Math.Min(e.TilePixelPosition.Y, 17 * 15), 16 * 16 + 17, 17);
+
+    }
+
+    private void paletteView_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        PaletteCursor.Visible = false;
+        SelectedPaletteRow = e.TilePixelPosition.Y / 17;
+    }
 
     #endregion
 
@@ -740,6 +758,7 @@ public partial class FormOam : Form
             return;
         }
 
+        UndoRedo = new();
         Status.LoadNew();
         DrawNewGFX();
         LoadPalette(0);
@@ -1141,6 +1160,28 @@ public partial class FormOam : Form
         comboBox_size.SelectedIndex = -1;
     }
 
+    private Rectangle GetMultiPartArea()
+    {
+        Rectangle? area = null;
+        foreach (int index in SelectedPartIndices)
+        {
+            OAM.Part p = SelectedFrame.parts[index];
+            if (area is null) area = p.Area;
+            area = Rectangle.Union(area.Value, p.Area);
+        }
+        if (area is null) return Rectangle.Empty;
+        return area.Value;
+    }
+
+    private int FindCommonPalette()
+    {
+        if (SelectedPartIndices.Count < 1) return -1;
+        int common = SelectedFrame.parts[SelectedPartIndices[0]].palRow;
+        foreach (int index in SelectedPartIndices)
+            if (SelectedFrame.parts[index].palRow != common) return -1;
+        return common;
+    }
+
     private void DisplayPartData(OAM.Part p)
     {
         textBox_tile.Text = Hex.ToString(p.tileNum);
@@ -1154,6 +1195,20 @@ public partial class FormOam : Form
         checkBox_xFlip.Checked = p.Xflip;
         checkBox_yFlip.Checked = p.Yflip;
         comboBox_size.SelectedIndex = p.shape * 4 + p.size;
+    }
+
+    private void DisplayMultiplePartData()
+    {
+        textBox_tile.Text = string.Empty;
+        comboBox_palette.SelectedIndex = FindCommonPalette();
+        Point pos = GetMultiPartArea().Location;
+        if (pos.X < 0) pos.X += 512;
+        if (pos.Y < 0) pos.Y += 256;
+        textBox_x.Text = Hex.ToString(pos.X);
+        textBox_y.Text = Hex.ToString(pos.Y);
+        checkBox_xFlip.Checked = false;
+        checkBox_yFlip.Checked = false;
+        comboBox_size.SelectedIndex = -1;
     }
 
     private void HighlightPartInGfx(OAM.Part part)
@@ -1176,21 +1231,25 @@ public partial class FormOam : Form
             return;
         }
 
-        // Only for single selected
-        if (partIndices.Count == 1)
+        // Setting input enabled
+        bool multiPart = partIndices.Count > 1;
+        textBox_tile.Enabled =
+        checkBox_xFlip.Enabled =
+        checkBox_yFlip.Enabled =
+        comboBox_size.Enabled =
+            !multiPart;
+
+        loadingPart = true;
+        if (!multiPart)
         {
             OAM.Part part = SelectedFrame.parts[partIndices[0]];
             HighlightPartInGfx(part);
 
-            // Load Part data
-            loadingPart = true;
             DisplayPartData(part);
-            loadingPart = false;
         }
-        else
-        {
-            // TODO: handle multiple part selection
-        }
+        else DisplayMultiplePartData();
+
+        loadingPart = false;
     }
 
     private void comboBox_part_SelectedIndexChanged(object sender, EventArgs e)
@@ -1199,46 +1258,101 @@ public partial class FormOam : Form
         SelectedPartIndex = comboBox_part.SelectedIndex;
     }
 
+
+    #region Part Data Modification
+    private void AddActionToGroup(GenericEditorAction a)
+    {
+        if (GroupedActions is null)
+        {
+            AddAction(a);
+            return;
+        }
+        GroupedActions.Add(a);
+    }
+
+    private Point PointToSignedPosition(Point pos) => new Point(
+        pos.X < 256 ? pos.X : pos.X - 512,
+        pos.Y < 128 ? pos.Y : pos.Y - 256
+    );
+
+    private void ModifySinglePart(int partIndex, Point position, int tileNum, int palRow, bool xFlip, bool yFlip, byte shape, byte size)
+    {
+        OAM.Part part = SelectedFrame.parts[partIndex];
+
+        // Update Part
+        part.tileNum = tileNum;
+        part.xPos = position.X;
+        part.yPos = position.Y;
+        part.palRow = palRow;
+        part.flip = (byte)((xFlip ? 0b01 : 0) | (yFlip ? 0b10 : 0));
+        part.shape = shape;
+        part.size = size;
+
+        ModifyOamPartAction a = new(SelectedFrame, SelectedPartIndex, part);
+        a.Do();
+        AddActionToGroup(a);
+
+        HighlightPartInGfx(part);
+    }
+
+    private void ModifyMultiPart(Point position, int palRow)
+    {
+        Point oldPos = GetMultiPartArea().Location;
+        Point diff = new(position.X - oldPos.X, position.Y - oldPos.Y);
+
+        GenericEditorActionGroup multiModifyAction = new();
+
+        foreach (int index in SelectedPartIndices)
+        {
+            OAM.Part p = SelectedFrame.parts[index];
+            p.xPos += diff.X;
+            p.yPos += diff.Y;
+            if (palRow != -1) p.palRow = palRow;
+
+            ModifyOamPartAction a = new(SelectedFrame, index, p);
+            multiModifyAction.AddAction(a);
+        }
+
+        multiModifyAction.Do();
+        AddActionToGroup(multiModifyAction);
+    }
+
     private void controlElements_changeMade(object? sender, EventArgs e)
     {
-        if (loadingPart || SelectedPartIndex == -1) return;
-        OAM.Part part = SelectedFrame.parts[SelectedPartIndex];
+        if (loadingPart || !SelectedParts) return;
 
         //Validate values or throw error
         try
         {
-            int tileNum = Hex.ToInt(textBox_tile.Text);
-            if (tileNum < 0 || tileNum > 0x3FF) throw new ArgumentOutOfRangeException(nameof(tileNum), "Tile number must be between 0 and 0x3FF.");
             int temp_xPos = Hex.ToUshort(textBox_x.Text);
             if (temp_xPos < 0 || temp_xPos > 0x1FF) throw new ArgumentOutOfRangeException(nameof(temp_xPos), "X position must be between 0 and 0x1FF.");
             int temp_yPos = Hex.ToByte(textBox_y.Text);
 
             // Convert to signed int
-            int xPos = temp_xPos < 256 ? temp_xPos : temp_xPos - 512;
-            int yPos = temp_yPos < 128 ? temp_yPos : temp_yPos - 256;
+            Point newPos = PointToSignedPosition(new(temp_xPos, temp_yPos));
 
-            byte palRow = (byte)comboBox_palette.SelectedIndex;
+            int palRow = comboBox_palette.SelectedIndex;
             bool xFlip = checkBox_xFlip.Checked;
             bool yFlip = checkBox_yFlip.Checked;
             byte shape = (byte)(comboBox_size.SelectedIndex / 4);
             byte size = (byte)(comboBox_size.SelectedIndex % 4);
 
-            // Update Part
-            part.tileNum = tileNum;
-            part.xPos = xPos;
-            part.yPos = yPos;
-            part.palRow = palRow;
-            part.flip = (byte)((xFlip ? 0b01 : 0) | (yFlip ? 0b10 : 0));
-            part.shape = shape;
-            part.size = size;
+            if (SelectedPartIndices.Count == 1)
+            {
+                int tileNum = Hex.ToInt(textBox_tile.Text);
+                if (tileNum < 0 || tileNum > 0x3FF) throw new ArgumentOutOfRangeException(nameof(tileNum), "Tile number must be between 0 and 0x3FF.");
 
-            SelectedFrame.parts[SelectedPartIndex] = part;
+                ModifySinglePart(SelectedPartIndex, newPos, tileNum, palRow, xFlip, yFlip, shape, size);
+            }
+            else ModifyMultiPart(newPos, palRow);
+
+            // Finishing change
             DrawFrame(SelectedFrameIndex);
-            HighlightPartInGfx(part);
             Status.ChangeMade();
         }
         catch (Exception exc) { }
     }
+    #endregion
     #endregion
 
 
@@ -1290,6 +1404,29 @@ public partial class FormOam : Form
         return false;
     }
 
+    private void StartModifyingActionGroup()
+    {
+        if (GroupedActions is null || GroupedActions?.Count <= 0) GroupedActions = new();
+    }
+
+    private void FinishModifyingActionGroup()
+    {
+        if (GroupedActions is null || GroupedActions.Count < 1) return;
+
+        if (GroupedActions.Count == 1)
+        {
+            AddAction(GroupedActions[0]);
+            GroupedActions = null;
+            return;
+        }
+
+        GenericEditorActionGroup group = new();
+        group.AddAction(GroupedActions[0]);
+        group.AddAction(GroupedActions[GroupedActions.Count - 1]);
+        AddAction(group);
+        GroupedActions = null;
+    }
+
     private void oamView_oam_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
         if (oam == null) return;
@@ -1331,14 +1468,9 @@ public partial class FormOam : Form
 
 
         // SPECIFIC EDITING CODE
-        if (SelectedPartIndex == -1) return;
-        OAM.Part part = SelectedFrame.parts[SelectedPartIndex];
-
+        if (!SelectedParts) return;
         MouseStartLocation = e.PixelPosition;
-        PartsStartLocation = new Point(
-            part.xPos,
-            part.yPos
-        );
+        PartsStartLocation = GetMultiPartArea().Location;
     }
 
     private void oamView_oam_TileMouseMove(object sender, TileDisplay.TileDisplayArgs e)
@@ -1379,9 +1511,9 @@ public partial class FormOam : Form
 
 
         // SPECIFIC EDITING CODE
-        if (SelectedPartIndex == -1) return;
-        OAM.Part part = SelectedFrame.parts[SelectedPartIndex];
+        if (!SelectedParts) return;
 
+        StartModifyingActionGroup();
         if (MouseStartLocation is null || PartsStartLocation is null || e.Button != MouseButtons.Left) return;
         Point diff = new Point(
             e.PixelPosition.X - MouseStartLocation.Value.X,
@@ -1408,6 +1540,7 @@ public partial class FormOam : Form
         MultiPartSelection.Visible = false;
         MouseStartLocation = null;
         PartsStartLocation = null;
+        FinishModifyingActionGroup();
     }
 
     #endregion
@@ -1495,6 +1628,7 @@ public partial class FormOam : Form
         oam = imported;
         Save();
         SetOAM();
+        UndoRedo = new();
     }
 
     private void button_importAssembly_Click(object sender, EventArgs e)
@@ -1515,23 +1649,73 @@ public partial class FormOam : Form
         oam = imported;
         Save();
         SetOAM();
-
+        UndoRedo = new();
     }
 
     #endregion
-
-    private void paletteView_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    #region Undo / Redo
+    public void AddAction(GenericEditorAction a)
     {
-        if (PaletteCursor.Y == e.TilePixelPosition.Y) return;
-        PaletteCursor.Visible = true;
-        PaletteCursor.Rectangle = new Rectangle(0, Math.Min(e.TilePixelPosition.Y, 17 * 15), 16 * 16 + 17, 17);
+        UndoRedo.AddActionWithoutDo(a);
+        setUndoRedoButtons();
 
+        Status.ChangeMade();
     }
 
-    private void paletteView_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    private void Undo()
     {
-        PaletteCursor.Visible = false;
-        SelectedPaletteRow = e.TilePixelPosition.Y / 17;
-
+        UndoRedo.Undo();
+        setUndoRedoButtons();
+        Status.ChangeMade();
     }
+
+    private void Redo()
+    {
+        UndoRedo.Redo();
+        setUndoRedoButtons();
+        Status.ChangeMade();
+    }
+
+    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GenericEditorAction> stack)
+    {
+        int count = Math.Min(16, stack.Count);
+        int lastIndex = stack.Count - 1;
+
+        button.DropDownItems.Clear();
+        for (int i = 0; i < count; i++)
+        {
+            ToolStripMenuItem item = new ToolStripMenuItem();
+            item.Tag = i + 1;
+            item.Text = stack[lastIndex - i].ActionText;
+            button.DropDownItems.Add(item);
+        }
+    }
+
+    private void setUndoRedoButtons()
+    {
+        button_undo.Enabled = UndoRedo.CanUndo;
+        button_redo.Enabled = UndoRedo.CanRedo;
+        if (palette is not null) DrawPalette();
+    }
+
+    private void button_undo_ButtonClick(object sender, EventArgs e) => Undo();
+
+    private void button_redo_ButtonClick(object sender, EventArgs e) => Redo();
+
+    private void button_undo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_undo, UndoRedo.UndoStack);
+
+    private void button_redo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_redo, UndoRedo.RedoStack);
+
+    private void button_undo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    {
+        int num = (int)e.ClickedItem.Tag;
+        for (int i = 0; i < num; i++) Undo();
+    }
+
+    private void button_redo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    {
+        int num = (int)e.ClickedItem.Tag;
+        for (int i = 0; i < num; i++) Redo();
+    }
+    #endregion
 }

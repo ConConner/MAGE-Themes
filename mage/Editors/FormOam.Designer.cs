@@ -89,6 +89,9 @@
             panel_oam = new mage.Controls.ExtendedPanel();
             tileDisplay_oam = new mage.Controls.TileDisplay();
             toolStrip2 = new System.Windows.Forms.ToolStrip();
+            button_undo = new System.Windows.Forms.ToolStripSplitButton();
+            button_redo = new System.Windows.Forms.ToolStripSplitButton();
+            toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             button_viewOrigin = new System.Windows.Forms.ToolStripButton();
             button_viewOutline = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -866,14 +869,14 @@
             panel_oam.Size = new System.Drawing.Size(820, 313);
             panel_oam.TabIndex = 0;
             // 
-            // oamView_oam
+            // tileDisplay_oam
             // 
             tileDisplay_oam.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
             tileDisplay_oam.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             tileDisplay_oam.GridCellHeight = 16;
             tileDisplay_oam.GridCellWidth = 16;
             tileDisplay_oam.Location = new System.Drawing.Point(0, 0);
-            tileDisplay_oam.Name = "oamView_oam";
+            tileDisplay_oam.Name = "tileDisplay_oam";
             tileDisplay_oam.ShowGrid = false;
             tileDisplay_oam.ShowOamOrigin = false;
             tileDisplay_oam.Size = new System.Drawing.Size(0, 0);
@@ -894,12 +897,43 @@
             // toolStrip2
             // 
             toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_viewOrigin, button_viewOutline, toolStripSeparator2, button_oamZoomIn, button_oamZoomOut, label_oamZoom });
+            toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator4, button_viewOrigin, button_viewOutline, toolStripSeparator2, button_oamZoomIn, button_oamZoomOut, label_oamZoom });
             toolStrip2.Location = new System.Drawing.Point(4, 19);
             toolStrip2.Name = "toolStrip2";
             toolStrip2.Size = new System.Drawing.Size(820, 25);
             toolStrip2.TabIndex = 0;
             toolStrip2.Text = "toolStrip2";
+            // 
+            // button_undo
+            // 
+            button_undo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_undo.Enabled = false;
+            button_undo.Image = Properties.Resources.toolbar_undo;
+            button_undo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_undo.Name = "button_undo";
+            button_undo.Size = new System.Drawing.Size(32, 22);
+            button_undo.Text = "Undo";
+            button_undo.ButtonClick += button_undo_ButtonClick;
+            button_undo.DropDownOpening += button_undo_DropDownOpening;
+            button_undo.DropDownItemClicked += button_undo_DropDownItemClicked;
+            // 
+            // button_redo
+            // 
+            button_redo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_redo.Enabled = false;
+            button_redo.Image = Properties.Resources.toolbar_redo;
+            button_redo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_redo.Name = "button_redo";
+            button_redo.Size = new System.Drawing.Size(32, 22);
+            button_redo.Text = "Redo";
+            button_redo.ButtonClick += button_redo_ButtonClick;
+            button_redo.DropDownOpening += button_redo_DropDownOpening;
+            button_redo.DropDownItemClicked += button_redo_DropDownItemClicked;
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
             // button_viewOrigin
             // 
@@ -1336,5 +1370,8 @@
         private System.Windows.Forms.ToolStripMenuItem button_exportAssembly;
         private System.Windows.Forms.ToolStripButton button_loadCommonGraphics;
         private System.Windows.Forms.ToolStripMenuItem button_importAssembly;
+        private System.Windows.Forms.ToolStripSplitButton button_undo;
+        private System.Windows.Forms.ToolStripSplitButton button_redo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }

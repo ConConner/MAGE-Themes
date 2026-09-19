@@ -45,7 +45,7 @@ public partial class FormPaletteNew : Form
     private Palette palette;
     private Status status;
     private GenericUndoRedo UndoRedo = new();
-    private EditorGridActionGroup? latestActionGroup = null;
+    private GenericEditorActionGroup? latestActionGroup = null;
     private Point? SelectionPivot = null;
     private Point? MovingPivot = null;
     private bool ReachedMovingThreshold = false;
@@ -913,7 +913,7 @@ public partial class FormPaletteNew : Form
     #endregion
 
     #region Undo Redo
-    public void AddAction(EditorGridAction a)
+    public void AddAction(GenericEditorAction a)
     {
         UndoRedo.AddActionWithoutDo(a);
         setUndoRedoButtons();
@@ -948,7 +948,7 @@ public partial class FormPaletteNew : Form
         status.ChangeMade();
     }
 
-    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<EditorGridAction> stack)
+    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GenericEditorAction> stack)
     {
         int count = Math.Min(16, stack.Count);
         int lastIndex = stack.Count - 1;

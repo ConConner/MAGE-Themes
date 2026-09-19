@@ -5,7 +5,7 @@ using System.Text;
 
 namespace mage.Actions.GraphicsEditor;
 
-public class FlipGraphicsAction : EditorGridAction
+public class FlipGraphicsAction : GenericEditorAction
 {
     private GFX _gfx;
     private Rectangle _region;

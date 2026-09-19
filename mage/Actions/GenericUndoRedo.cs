@@ -6,39 +6,39 @@ namespace mage.Actions;
 
 public class GenericUndoRedo
 {
-    public DropOutStack<EditorGridAction> UndoStack { get { return undoStack; } }
-    public DropOutStack<EditorGridAction> RedoStack { get { return redoStack; } }
+    public DropOutStack<GenericEditorAction> UndoStack { get { return undoStack; } }
+    public DropOutStack<GenericEditorAction> RedoStack { get { return redoStack; } }
     public bool CanUndo { get { return undoStack.Count > 0; } }
     public bool CanRedo { get { return redoStack.Count > 0; } }
 
     // fields
-    private DropOutStack<EditorGridAction> undoStack;
-    private DropOutStack<EditorGridAction> redoStack;
+    private DropOutStack<GenericEditorAction> undoStack;
+    private DropOutStack<GenericEditorAction> redoStack;
 
     // constructor
     public GenericUndoRedo()
     {
-        undoStack = new DropOutStack<EditorGridAction>();
-        redoStack = new DropOutStack<EditorGridAction>();
+        undoStack = new DropOutStack<GenericEditorAction>();
+        redoStack = new DropOutStack<GenericEditorAction>();
     }
 
-    public void AddActionWithoutDo(EditorGridAction a)
+    public void AddActionWithoutDo(GenericEditorAction a)
     {
         redoStack.Clear();
         undoStack.Push(a);
     }
 
-    public EditorGridAction Undo()
+    public GenericEditorAction Undo()
     {
-        EditorGridAction a = undoStack.Pop();
+        GenericEditorAction a = undoStack.Pop();
         a.Undo();
         redoStack.Push(a);
         return a;
     }
 
-    public EditorGridAction Redo()
+    public GenericEditorAction Redo()
     {
-        EditorGridAction a = redoStack.Pop();
+        GenericEditorAction a = redoStack.Pop();
         a.Do();
         undoStack.Push(a);
         return a;

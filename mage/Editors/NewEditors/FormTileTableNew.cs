@@ -101,7 +101,7 @@ namespace mage.Editors
         private Room? openedInRoom;
         private Status Status;
         private GenericUndoRedo UndoRedo;
-        private EditorGridActionGroup? latestActionGroup = null;
+        private GenericEditorActionGroup? latestActionGroup = null;
         private int gfxSourceOffset;
         private int palSourceOffset;
 
@@ -1411,7 +1411,7 @@ namespace mage.Editors
             Status.ChangeMade();
         }
 
-        public void AddActionNoDo(EditorGridAction a)
+        public void AddActionNoDo(GenericEditorAction a)
         {
             UndoRedo.AddActionWithoutDo(a);
             setUndoRedoButtons();
@@ -1439,7 +1439,7 @@ namespace mage.Editors
             tableView.Invalidate();
         }
 
-        private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<EditorGridAction> stack)
+        private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GenericEditorAction> stack)
         {
             int count = Math.Min(16, stack.Count);
             int lastIndex = stack.Count - 1;

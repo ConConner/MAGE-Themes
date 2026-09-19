@@ -5,7 +5,7 @@ using System.Text;
 
 namespace mage.Actions;
 
-public abstract class EditorGridAction
+public abstract class GenericEditorAction
 {
     public abstract Rectangle AffectedRegion { get; }
 
