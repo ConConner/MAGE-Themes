@@ -37,7 +37,8 @@ public partial class FormOam : Form
     private Bitmap gfxImage;
     private VramObj vram;
 
-    private GenericUndoRedo UndoRedo = new();
+    private List<GenericUndoRedo> UndoRedos = new();
+    private GenericUndoRedo UndoRedo => UndoRedos[SelectedFrameIndex];
     private Status Status;
     private List<GenericEditorAction>? GroupedActions;
 
@@ -336,6 +337,7 @@ public partial class FormOam : Form
         LoadPalette(0);
         DrawPalette();
         SetOAM();
+        PopulateUndoRedoForFrames();
     }
 
 
@@ -484,6 +486,26 @@ public partial class FormOam : Form
 
             case Keys.O:
                 ViewOrigin = !ViewOrigin;
+                break;
+
+            case Keys.Z:
+                if (ModifierKeys == (Keys.Control | Keys.Shift))
+                {
+                    if (!UndoRedo.CanRedo) break;
+                    Redo();
+                    break;
+                }
+                else if (ModifierKeys == Keys.Control)
+                {
+                    if (!UndoRedo.CanUndo) break;
+                    Undo();
+                    break;
+                }
+                break;
+
+            case Keys.Delete:
+            case Keys.Back:
+                DeletePart();
                 break;
 
             default:
@@ -758,11 +780,12 @@ public partial class FormOam : Form
             return;
         }
 
-        UndoRedo = new();
         Status.LoadNew();
         DrawNewGFX();
         LoadPalette(0);
         SetOAM();
+        PopulateUndoRedoForFrames();
+        setUndoRedoButtons();
     }
 
     private void SetOAM()
@@ -874,6 +897,15 @@ public partial class FormOam : Form
         else comboBox_Frame.SelectedIndex = oam.NumFrames - 1;
     }
 
+    private void PopulateUndoRedoForFrames()
+    {
+        UndoRedos.Clear();
+        for (int i = 0; i < oam.NumFrames; i++)
+        {
+            UndoRedos.Add(new());
+        }
+    }
+
     private void SetPartSelectionCombobox()
     {
         int old = SelectedPartIndex;
@@ -901,11 +933,15 @@ public partial class FormOam : Form
 
         //if (playingAnimation) return;
         SetPartSelectionCombobox();
+
+        if (UndoRedos.Count <= 0) return;
+        setUndoRedoButtons();
     }
 
     private void button_playAnimation_Click(object sender, EventArgs e)
     {
         PlayingAnimation = !PlayingAnimation;
+        setUndoRedoButtons();
         if (!PlayingAnimation) return;
 
         SetTimerInterval(comboBox_Frame.SelectedIndex);
@@ -924,13 +960,18 @@ public partial class FormOam : Form
 
 
     #region FRAME EDITING
-    private void button_addFrame_Click(object sender, EventArgs e)
+    private void AddFrame(OAM.Frame frame)
     {
-        oam.Frames.Add(OAM.Frame.Empty);
+        oam.Frames.Add(frame);
         oam.NumFrames++;
+        UndoRedos.Add(new());
         SetFrameSelectionCombobox();
         comboBox_Frame.SelectedIndex = oam.NumFrames - 1;
         Status.ChangeMade();
+    }
+    private void button_addFrame_Click(object sender, EventArgs e)
+    {
+        AddFrame(OAM.Frame.Empty);
     }
     private void button_duplicate_Click(object sender, EventArgs e)
     {
@@ -940,11 +981,7 @@ public partial class FormOam : Form
         copy.numParts = SelectedFrame.numParts;
         foreach (OAM.Part part in SelectedFrame.parts) copy.parts.Add(part);
 
-        oam.Frames.Add(copy);
-        oam.NumFrames++;
-        SetFrameSelectionCombobox();
-        comboBox_Frame.SelectedIndex = oam.NumFrames - 1;
-        Status.ChangeMade();
+        AddFrame(copy);
     }
     private void button_removeFrame_Click(object sender, EventArgs e)
     {
@@ -956,6 +993,7 @@ public partial class FormOam : Form
         }
         oam.Frames.RemoveAt(SelectedFrameIndex);
         oam.NumFrames--;
+        UndoRedos.RemoveAt(SelectedFrameIndex);
         SetFrameSelectionCombobox();
         Status.ChangeMade();
     }
@@ -981,13 +1019,32 @@ public partial class FormOam : Form
         catch { }
     }
 
+    private void SwapFrames(int oldIndex, int newIndex)
+    {
+        // Swap frames
+        OAM.Frame frameTemp = oam.Frames[oldIndex];
+        oam.Frames[oldIndex] = oam.Frames[newIndex];
+        oam.Frames[newIndex] = frameTemp;
+
+        // Swap UndoRedos
+        var undoNew = UndoRedos[oldIndex];
+        var undoOld = UndoRedos[newIndex];
+        UndoRedos[oldIndex] = undoOld;
+        UndoRedos[newIndex] = undoNew;
+
+        // Update UndoRedo frame indices
+        UpdateActionStackFrameIndex(undoNew.UndoStack, newIndex);
+        UpdateActionStackFrameIndex(undoNew.RedoStack, newIndex);
+        UpdateActionStackFrameIndex(undoOld.UndoStack, oldIndex);
+        UpdateActionStackFrameIndex(undoOld.RedoStack, oldIndex);
+
+    }
     private void button_frameUp_Click(object sender, EventArgs e)
     {
         if (SelectedFrameIndex <= 0) return;
-        // Swap frames
-        OAM.Frame temp = oam.Frames[SelectedFrameIndex];
-        oam.Frames[SelectedFrameIndex] = oam.Frames[SelectedFrameIndex - 1];
-        oam.Frames[SelectedFrameIndex - 1] = temp;
+
+        SwapFrames(SelectedFrameIndex, SelectedFrameIndex - 1);
+
         // Update selection
         comboBox_Frame.SelectedIndex--;
         Status.ChangeMade();
@@ -995,10 +1052,9 @@ public partial class FormOam : Form
     private void button_frameDown_Click(object sender, EventArgs e)
     {
         if (SelectedFrameIndex >= oam.NumFrames - 1) return;
-        // Swap frames
-        OAM.Frame temp = oam.Frames[SelectedFrameIndex];
-        oam.Frames[SelectedFrameIndex] = oam.Frames[SelectedFrameIndex + 1];
-        oam.Frames[SelectedFrameIndex + 1] = temp;
+
+        SwapFrames(SelectedFrameIndex, SelectedFrameIndex + 1);
+
         // Update selection
         comboBox_Frame.SelectedIndex++;
         Status.ChangeMade();
@@ -1125,27 +1181,56 @@ public partial class FormOam : Form
         p.xPos = x;
         p.yPos = y;
 
-        newFrame.parts.Insert(0, p);
-        newFrame.numParts++;
+        AddOamPartAction a = new(oam, SelectedFrameIndex, p, 0)
+        {
+            DoUndoRun = AddedPart
+        };
+        a.Do();
+        AddAction(a);
 
-        oam.Frames[SelectedFrameIndex] = newFrame;
-        SetPartSelectionCombobox();
         DrawFrame(SelectedFrameIndex);
         SelectedPartIndex = 0;
-        Status.ChangeMade();
+    }
+    private void AddedPart()
+    {
+        SelectedPartIndex = -1;
+        SetPartSelectionCombobox();
     }
 
-    private void button_removePart_Click(object sender, EventArgs e)
+    private void button_removePart_Click(object sender, EventArgs e) => DeletePart();
+    private void DeletePart()
     {
-        if (SelectedPartIndex == -1) return;
-        OAM.Frame newFrame = SelectedFrame;
-        newFrame.parts.RemoveAt(SelectedPartIndex);
-        newFrame.numParts--;
-        oam.Frames[SelectedFrameIndex] = newFrame;
-        SetPartSelectionCombobox();
-        DrawFrame(SelectedFrameIndex);
+        if (!SelectedParts) return;
+
+        // Single
+        if (SelectedPartIndices.Count == 1)
+        {
+            RemoveOamPartAction a = new(oam, SelectedFrameIndex, SelectedPartIndex)
+            {
+                DoUndoRun = DeletedPart
+            };
+            a.Do();
+            AddAction(a);
+            return;
+        }
+
+        // Multi
+        OamActionGroup group = new()
+        {
+            DoUndoRun = DeletedPart
+        };
+        foreach (int index in SelectedPartIndices.OrderByDescending(i => i))
+        {
+            RemoveOamPartAction a = new(oam, SelectedFrameIndex, index);
+            group.AddAction(a);
+        }
+        group.Do();
+        AddAction(group);
+    }
+    private void DeletedPart()
+    {
         SelectedPartIndex = -1;
-        Status.ChangeMade();
+        SetPartSelectionCombobox();
     }
     #endregion
 
@@ -1288,7 +1373,7 @@ public partial class FormOam : Form
         part.shape = shape;
         part.size = size;
 
-        ModifyOamPartAction a = new(SelectedFrame, SelectedPartIndex, part);
+        ModifyOamPartAction a = new(oam, SelectedFrameIndex, SelectedPartIndex, part);
         a.Do();
         AddActionToGroup(a);
 
@@ -1300,7 +1385,7 @@ public partial class FormOam : Form
         Point oldPos = GetMultiPartArea().Location;
         Point diff = new(position.X - oldPos.X, position.Y - oldPos.Y);
 
-        GenericEditorActionGroup multiModifyAction = new();
+        OamActionGroup multiModifyAction = new();
 
         foreach (int index in SelectedPartIndices)
         {
@@ -1309,7 +1394,7 @@ public partial class FormOam : Form
             p.yPos += diff.Y;
             if (palRow != -1) p.palRow = palRow;
 
-            ModifyOamPartAction a = new(SelectedFrame, index, p);
+            ModifyOamPartAction a = new(oam, SelectedFrameIndex, index, p);
             multiModifyAction.AddAction(a);
         }
 
@@ -1353,8 +1438,8 @@ public partial class FormOam : Form
         catch (Exception exc) { }
     }
     #endregion
-    #endregion
 
+    #endregion
 
     private void oamView_oam_Scrolled(object sender, MouseEventArgs e)
     {
@@ -1364,7 +1449,6 @@ public partial class FormOam : Form
             if (e.Delta < 0) UpdateOamZoom(tileDisplay_oam.Zoom - 1);
         }
     }
-
 
     private void SetOamCursor(int hoveredIndex, bool hoveringSelection)
     {
@@ -1384,7 +1468,7 @@ public partial class FormOam : Form
         return new Rectangle(left, top, right - left + 1, bottom - top + 1);
     }
 
-    private bool ButtonDown(TileDisplay.TileDisplayArgs e)
+    private bool IsMouseButtonPressed(TileDisplay.TileDisplayArgs e)
     {
         return e.Button == MouseButtons.Left || e.Button == MouseButtons.Right;
     }
@@ -1411,7 +1495,11 @@ public partial class FormOam : Form
 
     private void FinishModifyingActionGroup()
     {
-        if (GroupedActions is null || GroupedActions.Count < 1) return;
+        if (GroupedActions is null || GroupedActions.Count < 1)
+        {
+            GroupedActions = null;
+            return;
+        }
 
         if (GroupedActions.Count == 1)
         {
@@ -1420,7 +1508,7 @@ public partial class FormOam : Form
             return;
         }
 
-        GenericEditorActionGroup group = new();
+        OamActionGroup group = new();
         group.AddAction(GroupedActions[0]);
         group.AddAction(GroupedActions[GroupedActions.Count - 1]);
         AddAction(group);
@@ -1430,7 +1518,7 @@ public partial class FormOam : Form
     private void oamView_oam_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
         if (oam == null) return;
-        if (!ButtonDown(e)) return;
+        if (!IsMouseButtonPressed(e)) return;
         if (PlayingAnimation) return;
 
         // General Part selection code
@@ -1444,7 +1532,6 @@ public partial class FormOam : Form
         {
             SelectedPartIndex = -1;
             MultiSelectPivot = e.PixelPosition;
-            return;
         }
         // Select hovered, if it isnt already
         else if (!hoveringOverSelection)
@@ -1462,7 +1549,7 @@ public partial class FormOam : Form
         if (e.Button == MouseButtons.Right)
         {
             ContextMenuOpenedAt = e.PixelPosition;
-            if (SelectedPartIndex != -1) tileDisplay_oam.ContextMenuStrip = contextMenu_oam;
+            if (SelectedParts) tileDisplay_oam.ContextMenuStrip = contextMenu_oam;
             else tileDisplay_oam.ContextMenuStrip = contextMenu_oamNoSelection;
         }
 
@@ -1481,7 +1568,7 @@ public partial class FormOam : Form
         if (PlayingAnimation) return;
 
         // Multi Select
-        if (MultiSelectPivot is not null && ButtonDown(e))
+        if (MultiSelectPivot is not null && IsMouseButtonPressed(e))
         {
             MultiPartSelection.Rectangle = GetSelectionRectangle(MultiSelectPivot.Value, e.PixelPosition);
             MultiPartSelection.Visible = true;
@@ -1512,9 +1599,9 @@ public partial class FormOam : Form
 
         // SPECIFIC EDITING CODE
         if (!SelectedParts) return;
+        if (MouseStartLocation is null || PartsStartLocation is null || e.Button != MouseButtons.Left) return;
 
         StartModifyingActionGroup();
-        if (MouseStartLocation is null || PartsStartLocation is null || e.Button != MouseButtons.Left) return;
         Point diff = new Point(
             e.PixelPosition.X - MouseStartLocation.Value.X,
             e.PixelPosition.Y - MouseStartLocation.Value.Y
@@ -1542,7 +1629,6 @@ public partial class FormOam : Form
         PartsStartLocation = null;
         FinishModifyingActionGroup();
     }
-
     #endregion
 
     #region Export / Import
@@ -1610,6 +1696,14 @@ public partial class FormOam : Form
         File.WriteAllText(saveASM.FileName, OamSerializer.ToASM(oam, animationName));
     }
 
+    private void FinishImport(OAM oam)
+    {
+        this.oam = oam;
+        Save();
+        SetOAM();
+        PopulateUndoRedoForFrames();
+    }
+
     void button_importOam_Click(object sender, EventArgs e)
     {
         OpenFileDialog openOAM = new OpenFileDialog();
@@ -1625,10 +1719,7 @@ public partial class FormOam : Form
         OAM? imported = OamSerializer.Deserialize(json);
         if (imported == null) return;
 
-        oam = imported;
-        Save();
-        SetOAM();
-        UndoRedo = new();
+        FinishImport(imported);
     }
 
     private void button_importAssembly_Click(object sender, EventArgs e)
@@ -1646,13 +1737,11 @@ public partial class FormOam : Form
         OAM? imported = OamSerializer.FromASM(assembly);
         if (imported == null) return;
 
-        oam = imported;
-        Save();
-        SetOAM();
-        UndoRedo = new();
+        FinishImport(imported);
     }
 
     #endregion
+
     #region Undo / Redo
     public void AddAction(GenericEditorAction a)
     {
@@ -1662,11 +1751,27 @@ public partial class FormOam : Form
         Status.ChangeMade();
     }
 
+    private void UpdateActionStackFrameIndex(DropOutStack<GenericEditorAction> stack, int newIndex)
+    {
+        for (int i = 0; i < stack.Count; i++)
+        {
+            var action = stack[i];
+            if (action is OamActionGroup group)
+            {
+                group.UpadteIndicesOfActions(newIndex);
+                continue;
+            }
+            if (action is not OamAction a) continue;
+            a.FrameIndex = newIndex;
+        }
+    }
+
     private void Undo()
     {
         UndoRedo.Undo();
         setUndoRedoButtons();
         Status.ChangeMade();
+        DrawFrame(SelectedFrameIndex);
     }
 
     private void Redo()
@@ -1674,6 +1779,7 @@ public partial class FormOam : Form
         UndoRedo.Redo();
         setUndoRedoButtons();
         Status.ChangeMade();
+        DrawFrame(SelectedFrameIndex);
     }
 
     private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GenericEditorAction> stack)
@@ -1693,8 +1799,8 @@ public partial class FormOam : Form
 
     private void setUndoRedoButtons()
     {
-        button_undo.Enabled = UndoRedo.CanUndo;
-        button_redo.Enabled = UndoRedo.CanRedo;
+        button_undo.Enabled = UndoRedo.CanUndo && !playingAnimation;
+        button_redo.Enabled = UndoRedo.CanRedo && !playingAnimation;
         if (palette is not null) DrawPalette();
     }
 

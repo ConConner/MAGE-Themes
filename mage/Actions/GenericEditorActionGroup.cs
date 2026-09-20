@@ -5,9 +5,9 @@ using System.Text;
 
 namespace mage.Actions;
 
-internal class GenericEditorActionGroup : GenericEditorAction
+public class GenericEditorActionGroup : GenericEditorAction
 {
-    private List<GenericEditorAction> actions = new List<GenericEditorAction>();
+    protected List<GenericEditorAction> actions = new List<GenericEditorAction>();
     private string? _actionText;
 
     public GenericEditorActionGroup(string? actionText = null)

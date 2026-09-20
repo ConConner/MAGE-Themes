@@ -2232,7 +2232,7 @@ namespace mage
 
         #region undo/redo actions
 
-        public void PerformAction(Action a)
+        public void PerformAction(RoomAction a)
         {
             undoRedo.Do(a, room);
             UpdateUI(a);
@@ -2241,7 +2241,7 @@ namespace mage
 
         private void Undo()
         {
-            Action a = undoRedo.Undo(room);
+            RoomAction a = undoRedo.Undo(room);
             UpdateUI(a);
             UpdateUndoRedo();
 
@@ -2250,14 +2250,14 @@ namespace mage
 
         private void Redo()
         {
-            Action a = undoRedo.Redo(room);
+            RoomAction a = undoRedo.Redo(room);
             UpdateUI(a);
             UpdateUndoRedo();
 
             Sound.PlaySound("redo.wav");
         }
 
-        private void UpdateUI(Action a)
+        private void UpdateUI(RoomAction a)
         {
             if (a is AddRemoveRoomObject)
             {
@@ -2304,7 +2304,7 @@ namespace mage
             menuItem_undo.Enabled = toolStrip_undo.Enabled = undoRedo.CanUndo;
             if (toolStrip_undo.Enabled)
             {
-                Action a = undoRedo.UndoStack.Peek();
+                RoomAction a = undoRedo.UndoStack.Peek();
                 toolStrip_undo.ToolTipText = "Undo \"" + a.ActionText + "\"";
             }
             else
@@ -2315,7 +2315,7 @@ namespace mage
             menuItem_redo.Enabled = toolStrip_redo.Enabled = undoRedo.CanRedo;
             if (toolStrip_redo.Enabled)
             {
-                Action a = undoRedo.RedoStack.Peek();
+                RoomAction a = undoRedo.RedoStack.Peek();
                 toolStrip_redo.ToolTipText = "Redo \"" + a.ActionText + "\"";
             }
             else
@@ -2324,7 +2324,7 @@ namespace mage
             }
         }
 
-        private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<Action> stack)
+        private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<RoomAction> stack)
         {
             int count = Math.Min(16, stack.Count);
             int lastIndex = stack.Count - 1;

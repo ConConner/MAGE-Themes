@@ -5,36 +5,42 @@ using System.Text;
 
 namespace mage.Actions.OamEditor;
 
-public class ModifyOamPartAction : GenericEditorAction
+public class ModifyOamPartAction : OamAction
 {
-    private OAM.Frame frame;
+    private OAM oam;
+    public override int FrameIndex { get; set; }
     private int partIndex;
     private OAM.Part oldPart;
     private OAM.Part newPart;
     private string? actionText;
 
-    public ModifyOamPartAction(OAM.Frame frame, int partIndex, OAM.Part part, string? actionText = null)
+    public ModifyOamPartAction(OAM oam, int frameIndex, int partIndex, OAM.Part part, string? actionText = null)
     {
-        this.frame = frame;
+        this.oam = oam;
+        this.FrameIndex = frameIndex;
         this.partIndex = partIndex;
         this.newPart = part;
 
         this.actionText = actionText;
 
-        oldPart = frame.parts[partIndex];
+        oldPart = oam.Frames[frameIndex].parts[partIndex];
     }
 
     public override Rectangle AffectedRegion => throw new NotImplementedException();
 
     public override string ActionText => actionText ?? "Modified Part";
 
+    public override Action? DoUndoRun { get; set; } = null;
+
     public override void Do()
     {
-        frame.parts[partIndex] = newPart;
+        oam.Frames[FrameIndex].parts[partIndex] = newPart;
+        DoUndoRun?.Invoke();
     }
 
     public override void Undo()
     {
-        frame.parts[partIndex] = oldPart;
+        oam.Frames[FrameIndex].parts[partIndex] = oldPart;
+        DoUndoRun?.Invoke();
     }
 }
