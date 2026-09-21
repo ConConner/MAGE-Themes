@@ -1,3 +1,20 @@
+# [1.22.0](https://github.com/ConConner/MAGE-Themes/compare/v1.21.1...v1.22.0) (2026-09-21)
+
+
+### Bug Fixes
+
+* import oam through asm ignores y flip ([41a9a3f](https://github.com/ConConner/MAGE-Themes/commit/41a9a3fcb44d53614bb649c35bbfca62e986f6fc)), closes [#115](https://github.com/ConConner/MAGE-Themes/issues/115)
+* tooltip in tile table editor appears when not hovering over tile table view ([6c65ef0](https://github.com/ConConner/MAGE-Themes/commit/6c65ef071eafce11aa1bd8368efc394bb203ae93))
+
+
+### Features
+
+* cut, copy & paste parts in the oam editor ([f4514e3](https://github.com/ConConner/MAGE-Themes/commit/f4514e38fa7d773f62173475fe4b639d2137de71))
+* move parts with arrow keys in oam editor ([59bae8a](https://github.com/ConConner/MAGE-Themes/commit/59bae8ae38f6554f9deb267f6cbf7f30a28be244)), closes [#114](https://github.com/ConConner/MAGE-Themes/issues/114)
+* select multiple parts at once in oam editor ([4cc1e19](https://github.com/ConConner/MAGE-Themes/commit/4cc1e19535930d54ca50e235ff1674048c499d59))
+* snap parts to a grid or other parts in oam editor ([95d49bb](https://github.com/ConConner/MAGE-Themes/commit/95d49bba4aaa16d59bad1b37c71515280b8caaee))
+* undo/redo changes in oam editor ([b250e5e](https://github.com/ConConner/MAGE-Themes/commit/b250e5e1d97ddc657c9b7653d5603fb157ed7a5a))
+
 ## [1.21.1](https://github.com/ConConner/MAGE-Themes/compare/v1.21.0...v1.21.1) (2026-09-15)
 
 
