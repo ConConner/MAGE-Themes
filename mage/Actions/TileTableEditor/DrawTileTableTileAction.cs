@@ -5,7 +5,7 @@ using System.Text;
 
 namespace mage.Actions.TileTableEditor;
 
-public class DrawTileTableTileAction : EditorGridAction
+public class DrawTileTableTileAction : GenericEditorAction
 {
     private ushort[] _tiletable;
     private Dictionary<int, ushort> _tiles;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace mage.Actions.TileTableEditor;
 
-public class FlipTileTableAction : EditorGridAction
+public class FlipTileTableAction : GenericEditorAction
 {
     private Func<int, int, int> _getIndex;
     private ushort[] _tileTable;

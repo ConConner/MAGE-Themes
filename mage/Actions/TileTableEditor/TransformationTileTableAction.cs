@@ -5,7 +5,7 @@ using System.Text;
 
 namespace mage.Actions.TileTableEditor;
 
-public class TransformationTileTableAction : EditorGridAction
+public class TransformationTileTableAction : GenericEditorAction
 {
     private Func<ushort, ushort> _transformation;
     private Func<int, int, int> _getIndex;

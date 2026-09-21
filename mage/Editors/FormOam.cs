@@ -1,13 +1,17 @@
-﻿using mage.Bookmarks;
+﻿using mage.Actions;
+using mage.Actions.OamEditor;
+using mage.Bookmarks;
 using mage.Controls;
 using mage.Editors.NewEditors;
 using mage.Properties;
 using mage.Theming;
 using mage.Utility;
+using Parlot.Fluent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -15,10 +19,13 @@ using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace mage;
 
@@ -28,11 +35,13 @@ public partial class FormOam : Form
     private GFX gfxObject;
     private Palette palette;
     private OAM oam;
-    private int hoveredPartIndex = -1;
     private Bitmap gfxImage;
     private VramObj vram;
 
+    private List<GenericUndoRedo> UndoRedos = new();
+    private GenericUndoRedo UndoRedo => UndoRedos[SelectedFrameIndex];
     private Status Status;
+    private List<GenericEditorAction>? GroupedActions;
 
     private bool loading;
     private bool loadingPart;
@@ -50,12 +59,11 @@ public partial class FormOam : Form
     Pen SelectionPenWhite = new Pen(Color.White, 1) { DashPattern = new float[] { 2, 3 } };
     Pen SelectionPenBlack = new Pen(Color.Black, 1) { DashPattern = new float[] { 2, 3 }, DashOffset = 2 };
     List<Drawable> partOutlines = new List<Drawable>();
-    Drawable selectedDrawable;
-    Drawable hoveredDrawable;
+    Drawable MultiPartSelection;
     Drawable gfxSelection;
     Drawable gfxCursor;
-    private Drawable PaletteCursor;
-    private Drawable PaletteSelection;
+    Drawable PaletteCursor;
+    Drawable PaletteSelection;
 
     // Data for saving
     int originalOamOffset;
@@ -65,7 +73,7 @@ public partial class FormOam : Form
     Point ContextMenuOpenedAt = Point.Empty;
 
     // Moving related
-    Point? PartStartLocation = null;
+    Point? PartsStartLocation = null;
     Point? MouseStartLocation = null;
 
     // properties
@@ -88,6 +96,7 @@ public partial class FormOam : Form
             button_frameDown.Enabled = !playingAnimation;
             button_frameUp.Enabled = !playingAnimation;
             button_duplicate.Enabled = !playingAnimation;
+            UpdateClipboardButtons();
 
             // Stop timer if needed
             if (playingAnimation) return;
@@ -106,8 +115,8 @@ public partial class FormOam : Form
             button_viewOrigin.Checked = value;
             Program.Config.OamEditorViewOrigin = value;
 
-            oamView_oam.ShowOamOrigin = value;
-            oamView_oam.Invalidate();
+            tileDisplay_oam.ShowOamOrigin = value;
+            tileDisplay_oam.Invalidate();
         }
     }
     private bool viewOrigin = true;
@@ -122,10 +131,21 @@ public partial class FormOam : Form
             Program.Config.OamEditorViewPartOutlines = value;
 
             foreach (Drawable d in partOutlines) d.Visible = value;
-            oamView_oam.Invalidate();
+            tileDisplay_oam.Invalidate();
         }
     }
     private bool viewPartOutline = false;
+
+    private bool SnapParts
+    {
+        get => field;
+        set
+        {
+            field = value;
+            button_snap.Checked = value;
+            Program.Config.OamEditorSnapParts = value;
+        }
+    }
 
     private bool ViewPalette
     {
@@ -177,21 +197,72 @@ public partial class FormOam : Form
     }
     private bool loadCommonGraphics = true;
 
-    private int SelectedPartIndex
+    private int HoveredPartIndex
     {
-        get => selectedPartIndex;
+        get => HoveredPartIndices.Count == 1 ? HoveredPartIndices[0] : -1;
         set
         {
-            selectedPartIndex = value;
-            comboBox_part.SelectedIndex = value;
-            SetPartOutlines(oam.Frames[comboBox_Frame.SelectedIndex]);
-
-            button_removePart.Enabled = value != -1;
-            panel_partEditing.Enabled = selectedPartIndex != -1;
-            HandleChangedPart(value);
+            if (value < 0)
+            {
+                HoveredPartIndices = new();
+                return;
+            }
+            HoveredPartIndices = new() { value };
         }
     }
-    private int selectedPartIndex = -1;
+    private List<int> HoveredPartIndices
+    {
+        get => field;
+        set
+        {
+            field = value;
+            SetPartOutlines(SelectedFrame);
+        }
+    } = new();
+    private bool HoveredParts => HoveredPartIndices?.Count > 0;
+
+    private int SelectedPartIndex
+    {
+        get => SelectedPartIndices.Count == 1 ? SelectedPartIndices[0] : -1;
+        set
+        {
+            if (value < 0)
+            {
+                SelectedPartIndices = new();
+                return;
+            }
+            SelectedPartIndices = new() { value };
+        }
+    }
+    private List<int> SelectedPartIndices
+    {
+        get => field;
+        set
+        {
+            field = value;
+            SelectedPartIndicesChanged();
+        }
+    } = new();
+    private bool SelectedParts => SelectedPartIndices?.Count > 0;
+    private void AddSelectedPart(int val)
+    {
+        if (SelectedPartIndices is null) return;
+        SelectedPartIndices.Add(val);
+        SelectedPartIndicesChanged();
+    }
+    private void SelectedPartIndicesChanged()
+    {
+        comboBox_part.SelectedIndex = SelectedPartIndices.Count == 1 ? SelectedPartIndices[0] : -1; // Set part selection combobox depending on amount of selected parts
+        SetPartOutlines(SelectedFrame);
+
+        button_removePart.Enabled = SelectedPartIndices.Count > 0;
+        panel_partEditing.Enabled = SelectedPartIndices.Count > 0;
+        UpdateClipboardButtons();
+        HandleSelectedPartChanged(SelectedPartIndices);
+    }
+
+    private Point? MultiSelectPivot { get; set; } = null;
+    private Point? OldMultiSelectPosition { get; set; } = null;
 
     private int SelectedPaletteRow
     {
@@ -215,20 +286,11 @@ public partial class FormOam : Form
     }
     private int selectedPaletteRow = 8;
 
-    private string PartErrorText
-    {
-        get => partErrorText;
-        set
-        {
-            partErrorText = value;
-            label_error.Visible = value != string.Empty;
-        }
-    }
-    private string partErrorText;
-
     private int SelectedFrameIndex => comboBox_Frame.SelectedIndex;
     private OAM.Frame SelectedFrame => oam.Frames[comboBox_Frame.SelectedIndex];
 
+    private Timer KeyMovementDebounceTimer;
+    private bool KeyDebounceWindowActive => KeyMovementDebounceTimer.Enabled;
 
     // constructor
     public FormOam(FormMain main, int gfxOffset, int palOffset, int oamOffset, bool compressed = true)
@@ -247,6 +309,7 @@ public partial class FormOam : Form
         ViewOrigin = Program.Config.OamEditorViewOrigin;
         ViewPartOutline = Program.Config.OamEditorViewPartOutlines;
         ViewPalette = Program.Config.OamEditorViewPalette;
+        SnapParts = Program.Config.OamEditorSnapParts;
         UpdateGfxZoom(Program.Config.OamEditorGfxZoom);
         UpdateOamZoom(Program.Config.OamEditorOamZoom);
 
@@ -267,6 +330,8 @@ public partial class FormOam : Form
         animationTimer.Tick += AnimationTimer_Tick;
 
         //Creating Drawables
+        MultiPartSelection = new Drawable(Rectangle.Empty, SelectionPenWhite) { Visible = false };
+        MultiPartSelection.DrawPens.Add(SelectionPenBlack);
         gfxSelection = new Drawable(Rectangle.Empty, SelectionPenWhite, 1) { Visible = false };
         gfxSelection.DrawPens.Add(SelectionPenBlack);
         gfxCursor = new Drawable(Rectangle.Empty, CursorPen, 1) { Visible = false };
@@ -280,6 +345,10 @@ public partial class FormOam : Form
         paletteView.AddDrawable(PaletteCursor);
         paletteView.AddDrawable(PaletteSelection);
 
+        //Arrow key movement debounce timer
+        KeyMovementDebounceTimer = new() { Interval = 600 };
+        KeyMovementDebounceTimer.Tick += KeyMovementDebounceTimer_Tick;
+
         LoadCommonGraphics = true; // We don't want to draw/reload graphics during initalization so this must come after `loading = true`
 
         Status = new Status(label_Status, button_save);
@@ -289,8 +358,8 @@ public partial class FormOam : Form
         LoadPalette(0);
         DrawPalette();
         SetOAM();
+        PopulateUndoRedoForFrames();
     }
-
 
     #region general
     private void ChangePen(Drawable drawable, Pen pen)
@@ -415,17 +484,61 @@ public partial class FormOam : Form
         return true;
     }
 
+    private void KeyboardMoved(Keys key)
+    {
+        StartModifyingActionGroup();
+
+        if (key == Keys.Left) MoveSelectedParts(-1, 0);
+        if (key == Keys.Right) MoveSelectedParts(1, 0);
+        if (key == Keys.Up) MoveSelectedParts(0, -1);
+        if (key == Keys.Down) MoveSelectedParts(0, 1);
+
+        KeyMovementDebounceTimer.Stop();
+        KeyMovementDebounceTimer.Start();
+    }
+
+    private void KeyMovementDebounceTimer_Tick(object? sender, EventArgs e)
+    {
+        FinishModifyingActionGroup();
+    }
+
     private void KeyPressed(object sender, KeyEventArgs e)
     {
         switch (e.KeyCode)
         {
-            case Keys.H:
+            case Keys.Left:
+            case Keys.Right:
+            case Keys.Up:
+            case Keys.Down:
+                KeyboardMoved(e.KeyCode);
+                break;
+
             case Keys.X:
+                if (ModifierKeys == Keys.Control)
+                {
+                    Cut();
+                    break;
+                }
+                goto case Keys.H;
+
+            case Keys.H:
                 if (SelectedPartIndex == -1) break;
                 checkBox_xFlip.Checked = !checkBox_xFlip.Checked;
                 break;
 
+            case Keys.C:
+                if (ModifierKeys != Keys.Control) break;
+                Copy();
+                break;
+
             case Keys.V:
+                if (ModifierKeys == Keys.Control)
+                {
+                    Paste(true);
+                    break;
+                }
+                goto case Keys.Y;
+
             case Keys.Y:
                 if (SelectedPartIndex == -1) break;
                 checkBox_yFlip.Checked = !checkBox_yFlip.Checked;
@@ -437,6 +550,26 @@ public partial class FormOam : Form
 
             case Keys.O:
                 ViewOrigin = !ViewOrigin;
+                break;
+
+            case Keys.Z:
+                if (ModifierKeys == (Keys.Control | Keys.Shift))
+                {
+                    if (!UndoRedo.CanRedo) break;
+                    Redo();
+                    break;
+                }
+                else if (ModifierKeys == Keys.Control)
+                {
+                    if (!UndoRedo.CanUndo) break;
+                    Undo();
+                    break;
+                }
+                break;
+
+            case Keys.Delete:
+            case Keys.Back:
+                DeletePart();
                 break;
 
             default:
@@ -459,8 +592,8 @@ public partial class FormOam : Form
     private void button_gfxZoomIn_Click(object sender, EventArgs e) => UpdateGfxZoom(gfxView_gfx.Zoom + 1);
     private void button_gfxZoomOut_Click(object sender, EventArgs e) => UpdateGfxZoom(gfxView_gfx.Zoom - 1);
 
-    private void button_oamZoomIn_Click(object sender, EventArgs e) => UpdateOamZoom(oamView_oam.Zoom + 1);
-    private void button_oamZoomOut_Click(object sender, EventArgs e) => UpdateOamZoom(oamView_oam.Zoom - 1);
+    private void button_oamZoomIn_Click(object sender, EventArgs e) => UpdateOamZoom(tileDisplay_oam.Zoom + 1);
+    private void button_oamZoomOut_Click(object sender, EventArgs e) => UpdateOamZoom(tileDisplay_oam.Zoom - 1);
 
     #endregion
 
@@ -650,6 +783,19 @@ public partial class FormOam : Form
         }
     }
 
+    private void paletteView_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        if (PaletteCursor.Y == e.TilePixelPosition.Y) return;
+        PaletteCursor.Visible = true;
+        PaletteCursor.Rectangle = new Rectangle(0, Math.Min(e.TilePixelPosition.Y, 17 * 15), 16 * 16 + 17, 17);
+
+    }
+
+    private void paletteView_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    {
+        PaletteCursor.Visible = false;
+        SelectedPaletteRow = e.TilePixelPosition.Y / 17;
+    }
 
     #endregion
 
@@ -657,9 +803,9 @@ public partial class FormOam : Form
     private void UpdateOamZoom(int zoom)
     {
         zoom = Math.Clamp(zoom, 0, 4);
-        if (zoom == oamView_oam.Zoom) return;
+        if (zoom == tileDisplay_oam.Zoom) return;
 
-        oamView_oam.Zoom = zoom;
+        tileDisplay_oam.Zoom = zoom;
         Program.Config.OamEditorOamZoom = zoom;
         button_oamZoomIn.Enabled = zoom < maxZoom;
         button_oamZoomOut.Enabled = zoom > 0;
@@ -702,6 +848,8 @@ public partial class FormOam : Form
         DrawNewGFX();
         LoadPalette(0);
         SetOAM();
+        PopulateUndoRedoForFrames();
+        setUndoRedoButtons();
     }
 
     private void SetOAM()
@@ -726,7 +874,7 @@ public partial class FormOam : Form
         }
     }
 
-    private void CreateVram(Boolean loadCommonGraphics)
+    private void CreateVram(bool loadCommonGraphics)
     {
         vram = new VramObj(gfxObject, palette, loadCommonGraphics);
     }
@@ -735,7 +883,7 @@ public partial class FormOam : Form
     {
         if (oam == null || vram == null) return;
         Bitmap frame = oam.DrawReal(vram.objTiles, vram.palette, 0, frameNumber);
-        oamView_oam.TileImage = frame;
+        tileDisplay_oam.TileImage = frame;
 
         // Display Part boxes
         SetPartOutlines(SelectedFrame);
@@ -744,54 +892,56 @@ public partial class FormOam : Form
     private void SetPartOutlines(OAM.Frame frame)
     {
         partOutlines.Clear();
-        oamView_oam.ResetDrawables();
-        selectedDrawable = null;
-        hoveredDrawable = null;
+        tileDisplay_oam.ResetDrawables();
 
+        List<Drawable> hovered = new();
+        List<Drawable> selected = new();
+
+        // Register 
         for (int i = frame.parts.Count - 1; i >= 0; i--)
         {
             OAM.Part p = frame.parts[i];
-            bool hovered = hoveredPartIndex == i;
-            bool selected = SelectedPartIndex == i;
-
             Size s = p.Dimensions;
             Rectangle r = new Rectangle(p.xPos + OAM.FrameOriginX, p.yPos + OAM.FrameOriginY, s.Width, s.Height);
+
             Drawable outline = new(r, partOutline)
             {
                 Visible = ViewPartOutline,
             };
 
-            if (selected)
+            if (SelectedPartIndices.Contains(i))
             {
                 ChangePen(outline, partOutlineSelected);
-                selectedDrawable = outline;
-                selectedDrawable.Visible = true;
+                outline.Visible = true;
+                selected.Add(outline);
                 continue;
             }
-            if (hovered)
+            if (HoveredPartIndices.Contains(i))
             {
                 ChangePen(outline, partOutlineHovered);
-                hoveredDrawable = outline;
-                hoveredDrawable.Visible = true;
+                outline.Visible = true;
+                hovered.Add(outline);
                 continue;
             }
 
             partOutlines.Add(outline);
-            oamView_oam.AddDrawable(outline);
+            tileDisplay_oam.AddDrawable(outline);
         }
 
-        if (selectedDrawable != null)
+        // Add hovered and selected now for proper Z ordering
+        foreach (var d in hovered)
         {
-            partOutlines.Add(selectedDrawable);
-            oamView_oam.AddDrawable(selectedDrawable);
+            partOutlines.Add(d);
+            tileDisplay_oam.AddDrawable(d);
         }
-        if (hoveredDrawable != null)
+        foreach (var d in selected)
         {
-            partOutlines.Add(hoveredDrawable);
-            oamView_oam.AddDrawable(hoveredDrawable);
+            partOutlines.Add(d);
+            tileDisplay_oam.AddDrawable(d);
         }
 
-        oamView_oam.Invalidate();
+        tileDisplay_oam.AddDrawable(MultiPartSelection);
+        tileDisplay_oam.Invalidate();
     }
 
     private void SetTimerInterval(int frame)
@@ -809,6 +959,15 @@ public partial class FormOam : Form
         for (int i = 0; i < oam.NumFrames; i++) comboBox_Frame.Items.Add(i);
         if (old >= 0 && old < comboBox_Frame.Items.Count) comboBox_Frame.SelectedIndex = old;
         else comboBox_Frame.SelectedIndex = oam.NumFrames - 1;
+    }
+
+    private void PopulateUndoRedoForFrames()
+    {
+        UndoRedos.Clear();
+        for (int i = 0; i < oam.NumFrames; i++)
+        {
+            UndoRedos.Add(new());
+        }
     }
 
     private void SetPartSelectionCombobox()
@@ -838,11 +997,15 @@ public partial class FormOam : Form
 
         //if (playingAnimation) return;
         SetPartSelectionCombobox();
+
+        if (UndoRedos.Count <= 0) return;
+        setUndoRedoButtons();
     }
 
     private void button_playAnimation_Click(object sender, EventArgs e)
     {
         PlayingAnimation = !PlayingAnimation;
+        setUndoRedoButtons();
         if (!PlayingAnimation) return;
 
         SetTimerInterval(comboBox_Frame.SelectedIndex);
@@ -859,15 +1022,21 @@ public partial class FormOam : Form
 
     private void button_viewOutline_Click(object sender, EventArgs e) => ViewPartOutline = !button_viewOutline.Checked;
 
+    private void button_snap_Click(object sender, EventArgs e) => SnapParts = !button_snap.Checked;
 
     #region FRAME EDITING
-    private void button_addFrame_Click(object sender, EventArgs e)
+    private void AddFrame(OAM.Frame frame)
     {
-        oam.Frames.Add(OAM.Frame.Empty);
+        oam.Frames.Add(frame);
         oam.NumFrames++;
+        UndoRedos.Add(new());
         SetFrameSelectionCombobox();
         comboBox_Frame.SelectedIndex = oam.NumFrames - 1;
         Status.ChangeMade();
+    }
+    private void button_addFrame_Click(object sender, EventArgs e)
+    {
+        AddFrame(OAM.Frame.Empty);
     }
     private void button_duplicate_Click(object sender, EventArgs e)
     {
@@ -877,11 +1046,7 @@ public partial class FormOam : Form
         copy.numParts = SelectedFrame.numParts;
         foreach (OAM.Part part in SelectedFrame.parts) copy.parts.Add(part);
 
-        oam.Frames.Add(copy);
-        oam.NumFrames++;
-        SetFrameSelectionCombobox();
-        comboBox_Frame.SelectedIndex = oam.NumFrames - 1;
-        Status.ChangeMade();
+        AddFrame(copy);
     }
     private void button_removeFrame_Click(object sender, EventArgs e)
     {
@@ -893,6 +1058,7 @@ public partial class FormOam : Form
         }
         oam.Frames.RemoveAt(SelectedFrameIndex);
         oam.NumFrames--;
+        UndoRedos.RemoveAt(SelectedFrameIndex);
         SetFrameSelectionCombobox();
         Status.ChangeMade();
     }
@@ -918,13 +1084,32 @@ public partial class FormOam : Form
         catch { }
     }
 
+    private void SwapFrames(int oldIndex, int newIndex)
+    {
+        // Swap frames
+        OAM.Frame frameTemp = oam.Frames[oldIndex];
+        oam.Frames[oldIndex] = oam.Frames[newIndex];
+        oam.Frames[newIndex] = frameTemp;
+
+        // Swap UndoRedos
+        var undoNew = UndoRedos[oldIndex];
+        var undoOld = UndoRedos[newIndex];
+        UndoRedos[oldIndex] = undoOld;
+        UndoRedos[newIndex] = undoNew;
+
+        // Update UndoRedo frame indices
+        UpdateActionStackFrameIndex(undoNew.UndoStack, newIndex);
+        UpdateActionStackFrameIndex(undoNew.RedoStack, newIndex);
+        UpdateActionStackFrameIndex(undoOld.UndoStack, oldIndex);
+        UpdateActionStackFrameIndex(undoOld.RedoStack, oldIndex);
+
+    }
     private void button_frameUp_Click(object sender, EventArgs e)
     {
         if (SelectedFrameIndex <= 0) return;
-        // Swap frames
-        OAM.Frame temp = oam.Frames[SelectedFrameIndex];
-        oam.Frames[SelectedFrameIndex] = oam.Frames[SelectedFrameIndex - 1];
-        oam.Frames[SelectedFrameIndex - 1] = temp;
+
+        SwapFrames(SelectedFrameIndex, SelectedFrameIndex - 1);
+
         // Update selection
         comboBox_Frame.SelectedIndex--;
         Status.ChangeMade();
@@ -932,10 +1117,9 @@ public partial class FormOam : Form
     private void button_frameDown_Click(object sender, EventArgs e)
     {
         if (SelectedFrameIndex >= oam.NumFrames - 1) return;
-        // Swap frames
-        OAM.Frame temp = oam.Frames[SelectedFrameIndex];
-        oam.Frames[SelectedFrameIndex] = oam.Frames[SelectedFrameIndex + 1];
-        oam.Frames[SelectedFrameIndex + 1] = temp;
+
+        SwapFrames(SelectedFrameIndex, SelectedFrameIndex + 1);
+
         // Update selection
         comboBox_Frame.SelectedIndex++;
         Status.ChangeMade();
@@ -959,6 +1143,25 @@ public partial class FormOam : Form
         return -1;
     }
 
+    private List<int> FindParts(OAM.Frame frame, Rectangle region)
+    {
+        // Normalize rectangle
+        region = new(
+            region.X - OAM.FrameOriginX,
+            region.Y - OAM.FrameOriginY,
+            region.Width,
+            region.Height
+        );
+
+        List<int> parts = new();
+        for (int i = 0; i < frame.parts.Count; i++)
+        {
+            var p = frame.parts[i];
+            if (region.Contains(p.Area)) parts.Add(i);
+        }
+        return parts;
+    }
+
     private bool CheckPartHovered(OAM.Part part, int pixelX, int pixelY)
     {
         Point position = new Point(
@@ -968,18 +1171,20 @@ public partial class FormOam : Form
         return part.Area.Contains(position);
     }
 
-    #region Moving Parts
-    private void MovePart(int oldIndex, int newIndex)
+    #region Z-Ordering Parts
+    private void ReorderPart(int oldIndex, int newIndex)
     {
         if (oldIndex < 0 || oldIndex >= SelectedFrame.parts.Count || newIndex < 0 || newIndex >= SelectedFrame.parts.Count)
             return;
 
-        OAM.Part temp = SelectedFrame.parts[oldIndex];
-        SelectedFrame.parts.RemoveAt(oldIndex);
-        if (newIndex == SelectedFrame.parts.Count)
-            SelectedFrame.parts.Add(temp);
-        else
-            SelectedFrame.parts.Insert(newIndex, temp);
+        OAM.Part oldPart = SelectedFrame.parts[newIndex];
+        OAM.Part newPart = SelectedFrame.parts[oldIndex];
+
+        OamActionGroup group = new();
+        group.AddAction(new ModifyOamPartAction(oam, SelectedFrameIndex, newIndex, newPart, "Reordered Part"));
+        group.AddAction(new ModifyOamPartAction(oam, SelectedFrameIndex, oldIndex, oldPart, "Reordered Part"));
+        group.Do();
+        AddAction(group);
 
         SelectedPartIndex = newIndex;
 
@@ -989,38 +1194,41 @@ public partial class FormOam : Form
 
     private void contextMenu_oam_Opening(object sender, CancelEventArgs e)
     {
-        if (SelectedPartIndex == -1)
+        if (!SelectedParts)
         {
-            contextMenu_oam.Close();
+            e.Cancel = true;
             return;
         }
 
+        button_pasteCtx.Enabled = Clipboard.ContainsData(ClipboardFormat);
+
         // Enable/disable context menu items based on selected part
         int parts = SelectedFrame.parts.Count;
-        button_toFront.Enabled = SelectedPartIndex != 0;
-        button_toBack.Enabled = SelectedPartIndex != parts - 1;
-        button_layerDown.Enabled = SelectedPartIndex != parts - 1 && parts > 1;
-        button_layerUp.Enabled = SelectedPartIndex != 0 && parts > 1;
+        bool multi = SelectedPartIndices.Count > 1;
+        button_toFront.Enabled = SelectedPartIndex != 0 && !multi;
+        button_toBack.Enabled = SelectedPartIndex != parts - 1 && !multi;
+        button_layerDown.Enabled = SelectedPartIndex != parts - 1 && parts > 1 && !multi;
+        button_layerUp.Enabled = SelectedPartIndex != 0 && parts > 1 && !multi;
     }
     private void button_toFront_Click(object sender, EventArgs e)
     {
         if (SelectedPartIndex == -1) return;
-        MovePart(SelectedPartIndex, 0);
+        ReorderPart(SelectedPartIndex, 0);
     }
     private void button_layerUp_Click(object sender, EventArgs e)
     {
         if (SelectedPartIndex == -1) return;
-        MovePart(SelectedPartIndex, SelectedPartIndex - 1);
+        ReorderPart(SelectedPartIndex, SelectedPartIndex - 1);
     }
     private void button_layerDown_Click(object sender, EventArgs e)
     {
         if (SelectedPartIndex == -1) return;
-        MovePart(SelectedPartIndex, SelectedPartIndex + 1);
+        ReorderPart(SelectedPartIndex, SelectedPartIndex + 1);
     }
     private void button_toBack_Click(object sender, EventArgs e)
     {
         if (SelectedPartIndex == -1) return;
-        MovePart(SelectedPartIndex, SelectedFrame.parts.Count - 1);
+        ReorderPart(SelectedPartIndex, SelectedFrame.parts.Count - 1);
     }
     #endregion
 
@@ -1043,27 +1251,265 @@ public partial class FormOam : Form
         p.xPos = x;
         p.yPos = y;
 
-        newFrame.parts.Insert(0, p);
-        newFrame.numParts++;
+        AddOamPartAction a = new(oam, SelectedFrameIndex, p, 0)
+        {
+            DoUndoRun = AddedPart
+        };
+        a.Do();
+        AddAction(a);
 
-        oam.Frames[SelectedFrameIndex] = newFrame;
-        SetPartSelectionCombobox();
         DrawFrame(SelectedFrameIndex);
         SelectedPartIndex = 0;
-        Status.ChangeMade();
+    }
+    private void AddedPart()
+    {
+        SelectedPartIndex = -1;
+        SetPartSelectionCombobox();
     }
 
-    private void button_removePart_Click(object sender, EventArgs e)
+    private void button_removePart_Click(object sender, EventArgs e) => DeletePart();
+    private void DeletePart(string? actionText = null)
     {
-        if (SelectedPartIndex == -1) return;
-        OAM.Frame newFrame = SelectedFrame;
-        newFrame.parts.RemoveAt(SelectedPartIndex);
-        newFrame.numParts--;
-        oam.Frames[SelectedFrameIndex] = newFrame;
-        SetPartSelectionCombobox();
-        DrawFrame(SelectedFrameIndex);
+        if (!SelectedParts) return;
+
+        // Single
+        if (SelectedPartIndices.Count == 1 && actionText is null)
+        {
+            RemoveOamPartAction a = new(oam, SelectedFrameIndex, SelectedPartIndex)
+            {
+                DoUndoRun = DeletedPart
+            };
+            a.Do();
+            AddAction(a);
+            return;
+        }
+
+        // Multi
+        OamActionGroup group = new(actionText)
+        {
+            DoUndoRun = DeletedPart
+        };
+        foreach (int index in SelectedPartIndices.OrderByDescending(i => i))
+        {
+            RemoveOamPartAction a = new(oam, SelectedFrameIndex, index);
+            group.AddAction(a);
+        }
+        group.Do();
+        AddAction(group);
+    }
+    private void DeletedPart()
+    {
         SelectedPartIndex = -1;
-        Status.ChangeMade();
+        SetPartSelectionCombobox();
+    }
+    #endregion
+
+    #region Copy/Paste
+    private const string ClipboardFormat = "MageOamEditor_Parts";
+
+    // OAM.Part uses public fields, which System.Text.Json ignores, so parts are wrapped for the clipboard
+    private class ClipboardPart
+    {
+        public ClipboardPart() { }
+        public ClipboardPart(OAM.Part part)
+        {
+            XPos = part.xPos;
+            YPos = part.yPos;
+            Shape = part.shape;
+            Flip = part.flip;
+            Size = part.size;
+            TileNum = part.tileNum;
+            PalRow = part.palRow;
+        }
+
+        public int XPos { get; set; }
+        public int YPos { get; set; }
+        public int Shape { get; set; }
+        public int Flip { get; set; }
+        public int Size { get; set; }
+        public int TileNum { get; set; }
+        public int PalRow { get; set; }
+
+        public OAM.Part Unpack()
+        {
+            OAM.Part part = OAM.Part.Empty;
+            part.xPos = XPos;
+            part.yPos = YPos;
+            part.shape = Shape;
+            part.flip = Flip;
+            part.size = Size;
+            part.tileNum = TileNum;
+            part.palRow = PalRow;
+            return part;
+        }
+    }
+
+    private class ClipboardParts
+    {
+        public ClipboardParts() { }
+        public ClipboardParts(List<OAM.Part> input) => Parts = input.Select(p => new ClipboardPart(p)).ToArray();
+
+        public ClipboardPart[] Parts { get; set; } = [];
+
+        public List<OAM.Part> Unpack() => Parts.Select(p => p.Unpack()).ToList();
+
+        public static explicit operator ClipboardParts(List<OAM.Part> input) => new ClipboardParts(input);
+        public static implicit operator List<OAM.Part>(ClipboardParts input) => input.Unpack();
+    }
+
+    private List<OAM.Part> CopyParts()
+    {
+        // Ascending index order keeps the Z order of the copied parts
+        return SelectedPartIndices.Distinct().OrderBy(i => i).Select(i => SelectedFrame.parts[i]).ToList();
+    }
+
+    private void CopyPartsToClipboard(List<OAM.Part> parts)
+    {
+        try { Clipboard.SetDataAsJson(ClipboardFormat, (ClipboardParts)parts); }
+        catch (ExternalException)
+        {
+            MessageBox.Show("Clipboard is busy. Please try copying again.");
+        }
+    }
+
+    private List<OAM.Part>? PartsFromClipboard()
+    {
+        if (!Clipboard.ContainsData(ClipboardFormat)) return null;
+
+        try
+        {
+            if (Clipboard.TryGetData(ClipboardFormat, out ClipboardParts pastedParts)) return pastedParts;
+        }
+        catch (ExternalException)
+        {
+            MessageBox.Show("Clipboard is busy. Please try pasting again.");
+        }
+
+        return null;
+    }
+
+    private static Rectangle GetPartsArea(List<OAM.Part> parts)
+    {
+        Rectangle area = parts[0].Area;
+        foreach (OAM.Part p in parts) area = Rectangle.Union(area, p.Area);
+        return area;
+    }
+
+    // Returns the top left of the pasted parts' area, in frame coordinates
+    // `centerAt` is a position in the OAM view (as given by TileDisplayArgs.PixelPosition), which takes priority over the mouse
+    private Point FindIdealPasteLocation(bool pressedButton, Size size, Point? centerAt = null)
+    {
+        if (centerAt is not null)
+        {
+            return new Point(
+                centerAt.Value.X - OAM.FrameOriginX - size.Width / 2,
+                centerAt.Value.Y - OAM.FrameOriginY - size.Height / 2
+            );
+        }
+
+        Point mouseToPanel = panel_oam.PointToClient(System.Windows.Forms.Cursor.Position);
+
+        // Center on the mouse if it is hovering over the view
+        if (!pressedButton && panel_oam.ClientRectangle.Contains(mouseToPanel))
+        {
+            Point mouseToTileDisplay = tileDisplay_oam.PointToClient(System.Windows.Forms.Cursor.Position);
+            return new Point(
+                (mouseToTileDisplay.X >> tileDisplay_oam.Zoom) - OAM.FrameOriginX - size.Width / 2,
+                (mouseToTileDisplay.Y >> tileDisplay_oam.Zoom) - OAM.FrameOriginY - size.Height / 2
+            );
+        }
+
+        // Otherwise center in the visible part of the view
+        int xCenter = (-panel_oam.AutoScrollPosition.X + panel_oam.ClientSize.Width / 2) >> tileDisplay_oam.Zoom;
+        int yCenter = (-panel_oam.AutoScrollPosition.Y + panel_oam.ClientSize.Height / 2) >> tileDisplay_oam.Zoom;
+        return new Point(
+            xCenter - OAM.FrameOriginX - size.Width / 2,
+            yCenter - OAM.FrameOriginY - size.Height / 2
+        );
+    }
+
+    // Moves the parts by the offset, as far as the position ranges of OAM allow
+    private static List<OAM.Part> OffsetParts(List<OAM.Part> parts, Point offset)
+    {
+        int xMin = parts.Min(p => p.xPos), xMax = parts.Max(p => p.xPos);
+        int yMin = parts.Min(p => p.yPos), yMax = parts.Max(p => p.yPos);
+        int dx = Math.Clamp(offset.X, -OAM.FrameOriginX - xMin, OAM.FrameOriginX - 1 - xMax);
+        int dy = Math.Clamp(offset.Y, -OAM.FrameOriginY - yMin, OAM.FrameOriginY - 1 - yMax);
+
+        List<OAM.Part> moved = new(parts.Count);
+        foreach (OAM.Part p in parts)
+        {
+            OAM.Part part = p;
+            part.xPos += dx;
+            part.yPos += dy;
+            moved.Add(part);
+        }
+        return moved;
+    }
+
+    private void Copy()
+    {
+        if (oam is null || PlayingAnimation || !SelectedParts) return;
+        CopyPartsToClipboard(CopyParts());
+    }
+
+    private void Cut()
+    {
+        if (oam is null || PlayingAnimation || !SelectedParts) return;
+        CopyPartsToClipboard(CopyParts());
+        FinishModifyingActionGroup();
+        DeletePart("Cut Parts");
+    }
+
+    private void Paste(bool throughShortcut = false, Point? at = null)
+    {
+        if (oam is null || PlayingAnimation) return;
+
+        List<OAM.Part>? pasteParts = PartsFromClipboard();
+        if (pasteParts is null || pasteParts.Count == 0) return;
+
+        if (SelectedFrame.parts.Count + pasteParts.Count > 0xFF)
+        {
+            MessageBox.Show("Cannot paste, this would exceed the maximum amount of parts in a frame (0xFF).", "Maximum Parts Reached", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        Rectangle area = GetPartsArea(pasteParts);
+        Point pastePoint = FindIdealPasteLocation(!throughShortcut, area.Size, at);
+        pasteParts = OffsetParts(pasteParts, new Point(pastePoint.X - area.X, pastePoint.Y - area.Y));
+
+        FinishModifyingActionGroup();
+
+        // Insert at the front, keeping the copied Z order
+        OamActionGroup group = new("Paste Parts") { DoUndoRun = AddedPart };
+        for (int i = 0; i < pasteParts.Count; i++)
+            group.AddAction(new AddOamPartAction(oam, SelectedFrameIndex, pasteParts[i], i));
+        group.Do();
+        AddAction(group);
+
+        DrawFrame(SelectedFrameIndex);
+        SelectedPartIndices = Enumerable.Range(0, pasteParts.Count).ToList();
+    }
+
+    private void UpdateClipboardButtons()
+    {
+        button_cut.Enabled = SelectedParts && !PlayingAnimation;
+        button_copy.Enabled = SelectedParts && !PlayingAnimation;
+        button_paste.Enabled = !PlayingAnimation;
+    }
+
+    private void button_cut_Click(object sender, EventArgs e) => Cut();
+
+    private void button_copy_Click(object sender, EventArgs e) => Copy();
+
+    private void button_paste_Click(object sender, EventArgs e) => Paste();
+
+    // Context menu paste, places the parts where the menu was opened
+    private void button_pasteHere_Click(object sender, EventArgs e) => Paste(at: ContextMenuOpenedAt);
+
+    private void contextMenu_oamNoSelection_Opening(object sender, CancelEventArgs e)
+    {
+        button_pasteHere.Enabled = Clipboard.ContainsData(ClipboardFormat);
     }
     #endregion
 
@@ -1076,6 +1522,120 @@ public partial class FormOam : Form
         checkBox_xFlip.Checked = false;
         checkBox_yFlip.Checked = false;
         comboBox_size.SelectedIndex = -1;
+    }
+
+    private Rectangle GetMultiPartArea()
+    {
+        Rectangle? area = null;
+        foreach (int index in SelectedPartIndices)
+        {
+            OAM.Part p = SelectedFrame.parts[index];
+            if (area is null) area = p.Area;
+            area = Rectangle.Union(area.Value, p.Area);
+        }
+        if (area is null) return Rectangle.Empty;
+        return area.Value;
+    }
+
+    private List<Rectangle> UnselectedPartsAreas()
+    {
+        List<Rectangle> result = new();
+        for (int i = 0; i < SelectedFrame.numParts; i++)
+        {
+            if (SelectedPartIndices.Contains(i)) continue;
+            result.Add(SelectedFrame.parts[i].Area);
+        }
+        return result;
+    }
+
+    private Rectangle SnapRectangle(Rectangle current, IEnumerable<Rectangle> otherRectangles, int snapThreshold = 2, int proximityRadius = 5)
+    {
+        if (otherRectangles == null)
+        {
+            return current;
+        }
+
+        int? bestDeltaX = null;
+        int? bestDeltaY = null;
+
+        int currentCenterX = current.X + (current.Width / 2);
+        int currentCenterY = current.Y + (current.Height / 2);
+
+        int radiusSquared = proximityRadius * proximityRadius;
+
+        foreach (var other in otherRectangles)
+        {
+            // 1. Proximity Check: Calculate squared edge-to-edge distance between the two boxes
+            if (GetSquaredDistance(current, other) > radiusSquared)
+            {
+                continue; // Too far away — ignore this rectangle
+            }
+
+            int otherCenterX = other.X + (other.Width / 2);
+            int otherCenterY = other.Y + (other.Height / 2);
+
+            // 2. Evaluate X-axis alignment options
+            int[] xOffsets = {
+                other.Left - current.Left,       // Outer Left to Left
+                other.Right - current.Right,     // Outer Right to Right
+                other.Right - current.Left,      // Abut: Left to Right
+                other.Left - current.Right,      // Abut: Right to Left
+                otherCenterX - currentCenterX    // Center to Center
+            };
+
+            foreach (int dx in xOffsets)
+            {
+                if (Math.Abs(dx) <= snapThreshold)
+                {
+                    if (!bestDeltaX.HasValue || Math.Abs(dx) < Math.Abs(bestDeltaX.Value))
+                    {
+                        bestDeltaX = dx;
+                    }
+                }
+            }
+
+            // 3. Evaluate Y-axis alignment options
+            int[] yOffsets = {
+                other.Top - current.Top,         // Outer Top to Top
+                other.Bottom - current.Bottom,   // Outer Bottom to Bottom
+                other.Bottom - current.Top,      // Abut: Top to Bottom
+                other.Top - current.Bottom,      // Abut: Bottom to Top
+                otherCenterY - currentCenterY    // Center to Center
+            };
+
+            foreach (int dy in yOffsets)
+            {
+                if (Math.Abs(dy) <= snapThreshold)
+                {
+                    if (!bestDeltaY.HasValue || Math.Abs(dy) < Math.Abs(bestDeltaY.Value))
+                    {
+                        bestDeltaY = dy;
+                    }
+                }
+            }
+        }
+
+        int snappedX = current.X + (bestDeltaX ?? 0);
+        int snappedY = current.Y + (bestDeltaY ?? 0);
+
+        return new Rectangle(snappedX, snappedY, current.Width, current.Height);
+    }
+
+    private int GetSquaredDistance(Rectangle a, Rectangle b)
+    {
+        int dx = Math.Max(0, Math.Max(b.Left - a.Right, a.Left - b.Right));
+        int dy = Math.Max(0, Math.Max(b.Top - a.Bottom, a.Top - b.Bottom));
+
+        return (dx * dx) + (dy * dy);
+    }
+
+    private int FindCommonPalette()
+    {
+        if (SelectedPartIndices.Count < 1) return -1;
+        int common = SelectedFrame.parts[SelectedPartIndices[0]].palRow;
+        foreach (int index in SelectedPartIndices)
+            if (SelectedFrame.parts[index].palRow != common) return -1;
+        return common;
     }
 
     private void DisplayPartData(OAM.Part p)
@@ -1093,6 +1653,20 @@ public partial class FormOam : Form
         comboBox_size.SelectedIndex = p.shape * 4 + p.size;
     }
 
+    private void DisplayMultiplePartData()
+    {
+        textBox_tile.Text = string.Empty;
+        comboBox_palette.SelectedIndex = FindCommonPalette();
+        Point pos = GetMultiPartArea().Location;
+        if (pos.X < 0) pos.X += 512;
+        if (pos.Y < 0) pos.Y += 256;
+        textBox_x.Text = Hex.ToString(pos.X);
+        textBox_y.Text = Hex.ToString(pos.Y);
+        checkBox_xFlip.Checked = false;
+        checkBox_yFlip.Checked = false;
+        comboBox_size.SelectedIndex = -1;
+    }
+
     private void HighlightPartInGfx(OAM.Part part)
     {
         // Display Part on GFX View
@@ -1102,135 +1676,284 @@ public partial class FormOam : Form
         gfxSelection.Visible = true;
     }
 
-    private void HandleChangedPart(int partIndex)
+    private void HandleSelectedPartChanged(List<int> partIndices)
     {
-        if (partIndex == -1)
+        if (partIndices.Count <= 0)
         {
             loadingPart = false;
             ResetPartData();
             gfxSelection.Visible = false;
             gfxCursor.Visible = false;
-            partErrorText = string.Empty;
             return;
         }
 
-        OAM.Part part = SelectedFrame.parts[partIndex];
+        // Setting input enabled
+        bool multiPart = partIndices.Count > 1;
+        textBox_tile.Enabled =
+        checkBox_xFlip.Enabled =
+        checkBox_yFlip.Enabled =
+        comboBox_size.Enabled =
+            !multiPart;
 
-        HighlightPartInGfx(part);
-
-        // Load Part data
         loadingPart = true;
-        DisplayPartData(part);
+        if (!multiPart)
+        {
+            OAM.Part part = SelectedFrame.parts[partIndices[0]];
+            HighlightPartInGfx(part);
+
+            DisplayPartData(part);
+        }
+        else DisplayMultiplePartData();
+
         loadingPart = false;
     }
 
     private void comboBox_part_SelectedIndexChanged(object sender, EventArgs e)
     {
+        if (comboBox_part.SelectedIndex == -1) return;
         SelectedPartIndex = comboBox_part.SelectedIndex;
+    }
+
+
+    #region Part Data Modification
+    private void AddActionToGroup(GenericEditorAction a)
+    {
+        if (GroupedActions is null)
+        {
+            AddAction(a);
+            return;
+        }
+        GroupedActions.Add(a);
+    }
+
+    private Point PointToSignedPosition(Point pos) =>
+        new Point(
+        pos.X < 256 ? pos.X : pos.X - 512,
+        pos.Y < 128 ? pos.Y : pos.Y - 256
+    );
+
+    private void ModifySinglePart(int partIndex, Point position, int tileNum, int palRow, bool xFlip, bool yFlip, byte shape, byte size)
+    {
+        OAM.Part part = SelectedFrame.parts[partIndex];
+
+        // Update Part
+        part.tileNum = tileNum;
+        part.xPos = position.X;
+        part.yPos = position.Y;
+        part.palRow = palRow;
+        part.flip = (byte)((xFlip ? 0b01 : 0) | (yFlip ? 0b10 : 0));
+        part.shape = shape;
+        part.size = size;
+
+        ModifyOamPartAction a = new(oam, SelectedFrameIndex, SelectedPartIndex, part);
+        a.Do();
+        AddActionToGroup(a);
+
+        HighlightPartInGfx(part);
+    }
+
+    private void ModifyMultiPart(Point position, int palRow)
+    {
+        Point oldPos = GetMultiPartArea().Location;
+        Point diff = new(position.X - oldPos.X, position.Y - oldPos.Y);
+
+        OamActionGroup multiModifyAction = new();
+
+        foreach (int index in SelectedPartIndices)
+        {
+            OAM.Part p = SelectedFrame.parts[index];
+            p.xPos += diff.X;
+            p.yPos += diff.Y;
+            if (palRow != -1) p.palRow = palRow;
+
+            ModifyOamPartAction a = new(oam, SelectedFrameIndex, index, p);
+            multiModifyAction.AddAction(a);
+        }
+
+        multiModifyAction.Do();
+        AddActionToGroup(multiModifyAction);
+    }
+
+    private void MoveSelectedParts(int diffX, int diffY)
+    {
+        if (!SelectedParts) return;
+        try
+        {
+            int xPos = Hex.ToInt(textBox_x.Text);
+            int yPos = Hex.ToInt(textBox_y.Text);
+
+            // Convert to signed coordinates
+            Point normalized = PointToSignedPosition(new(xPos, yPos));
+            int newX = Math.Clamp(normalized.X + diffX, -256, 255);
+            int newY = Math.Clamp(normalized.Y + diffY, -128, 127);
+
+            // Convert back to unsigned 
+            int rawX = newX & 0x1FF;
+            int rawY = newY & 0xFF;
+
+            textBox_x.Text = Hex.ToString(rawX);
+            textBox_y.Text = Hex.ToString(rawY);
+        }
+        catch { }
     }
 
     private void controlElements_changeMade(object? sender, EventArgs e)
     {
-        if (loadingPart || SelectedPartIndex == -1) return;
-        OAM.Part part = SelectedFrame.parts[SelectedPartIndex];
+        if (loadingPart || !SelectedParts) return;
 
         //Validate values or throw error
         try
         {
-            int tileNum = Hex.ToInt(textBox_tile.Text);
-            if (tileNum < 0 || tileNum > 0x3FF) throw new ArgumentOutOfRangeException(nameof(tileNum), "Tile number must be between 0 and 0x3FF.");
             int temp_xPos = Hex.ToUshort(textBox_x.Text);
             if (temp_xPos < 0 || temp_xPos > 0x1FF) throw new ArgumentOutOfRangeException(nameof(temp_xPos), "X position must be between 0 and 0x1FF.");
             int temp_yPos = Hex.ToByte(textBox_y.Text);
 
             // Convert to signed int
-            int xPos = temp_xPos < 256 ? temp_xPos : temp_xPos - 512;
-            int yPos = temp_yPos < 128 ? temp_yPos : temp_yPos - 256;
+            Point newPos = PointToSignedPosition(new(temp_xPos, temp_yPos));
 
-            byte palRow = (byte)comboBox_palette.SelectedIndex;
+            int palRow = comboBox_palette.SelectedIndex;
             bool xFlip = checkBox_xFlip.Checked;
             bool yFlip = checkBox_yFlip.Checked;
             byte shape = (byte)(comboBox_size.SelectedIndex / 4);
             byte size = (byte)(comboBox_size.SelectedIndex % 4);
 
-            // Update Part
-            part.tileNum = tileNum;
-            part.xPos = xPos;
-            part.yPos = yPos;
-            part.palRow = palRow;
-            part.flip = (byte)((xFlip ? 0b01 : 0) | (yFlip ? 0b10 : 0));
-            part.shape = shape;
-            part.size = size;
+            if (SelectedPartIndices.Count == 1)
+            {
+                int tileNum = Hex.ToInt(textBox_tile.Text);
+                if (tileNum < 0 || tileNum > 0x3FF) throw new ArgumentOutOfRangeException(nameof(tileNum), "Tile number must be between 0 and 0x3FF.");
 
-            SelectedFrame.parts[SelectedPartIndex] = part;
+                ModifySinglePart(SelectedPartIndex, newPos, tileNum, palRow, xFlip, yFlip, shape, size);
+            }
+            else ModifyMultiPart(newPos, palRow);
+
+            // Finishing change
             DrawFrame(SelectedFrameIndex);
-            HighlightPartInGfx(part);
-            PartErrorText = string.Empty;
             Status.ChangeMade();
         }
-        catch (Exception exc)
-        {
-            PartErrorText = exc.Message;
-        }
+        catch (Exception exc) { }
     }
     #endregion
 
+    #endregion
 
     private void oamView_oam_Scrolled(object sender, MouseEventArgs e)
     {
         if ((ModifierKeys & Keys.Control) == Keys.Control)
         {
-            if (e.Delta > 0) UpdateOamZoom(oamView_oam.Zoom + 1);
-            if (e.Delta < 0) UpdateOamZoom(oamView_oam.Zoom - 1);
+            if (e.Delta > 0) UpdateOamZoom(tileDisplay_oam.Zoom + 1);
+            if (e.Delta < 0) UpdateOamZoom(tileDisplay_oam.Zoom - 1);
         }
+    }
+
+    private void SetOamCursor(int hoveredIndex, bool hoveringSelection)
+    {
+        if (hoveringSelection) Cursor = Cursors.SizeAll;
+        else if (hoveredIndex == -1) Cursor = Cursors.Default;
+        else Cursor = Cursors.Hand;
+    }
+
+    public static Rectangle GetSelectionRectangle(Point pivot, Point current)
+    {
+        int left = Math.Min(pivot.X, current.X);
+        int top = Math.Min(pivot.Y, current.Y);
+        int right = Math.Max(pivot.X, current.X);
+        int bottom = Math.Max(pivot.Y, current.Y);
+
+        // +1 ensures the end pixel cell is fully contained
+        return new Rectangle(left, top, right - left + 1, bottom - top + 1);
+    }
+
+    private bool IsMouseButtonPressed(TileDisplay.TileDisplayArgs e)
+    {
+        return e.Button == MouseButtons.Left || e.Button == MouseButtons.Right;
+    }
+
+    private bool HoveringOverSelection(Point point)
+    {
+        point = new Point(
+            point.X - OAM.FrameOriginX,
+            point.Y - OAM.FrameOriginY
+        );
+
+        foreach (int index in SelectedPartIndices)
+        {
+            var p = SelectedFrame.parts[index];
+            if (p.Area.Contains(point)) return true;
+        }
+        return false;
+    }
+
+    private void StartModifyingActionGroup()
+    {
+        if (GroupedActions is null || GroupedActions?.Count <= 0) GroupedActions = new();
+    }
+
+    private void FinishModifyingActionGroup()
+    {
+        if (KeyDebounceWindowActive) KeyMovementDebounceTimer.Stop();
+        if (GroupedActions is null || GroupedActions.Count < 1)
+        {
+            GroupedActions = null;
+            return;
+        }
+
+        if (GroupedActions.Count == 1)
+        {
+            AddAction(GroupedActions[0]);
+            GroupedActions = null;
+            return;
+        }
+
+        OamActionGroup group = new();
+        group.AddAction(GroupedActions[0]);
+        group.AddAction(GroupedActions[GroupedActions.Count - 1]);
+        AddAction(group);
+        GroupedActions = null;
     }
 
     private void oamView_oam_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
         if (oam == null) return;
+        if (!IsMouseButtonPressed(e)) return;
+        if (PlayingAnimation) return;
 
         // General Part selection code
-        if (PlayingAnimation) return;
-        OAM.Frame selectedFrame = oam.Frames[comboBox_Frame.SelectedIndex];
-        int hovered = FindPart(selectedFrame, e.PixelPosition.X, e.PixelPosition.Y);
+        int hoveredPart = FindPart(SelectedFrame, e.PixelPosition.X, e.PixelPosition.Y);
+        bool hoveringOverSelection = HoveringOverSelection(e.PixelPosition);
 
-        // Check if hovered part overlaps with selected
-        if (SelectedPartIndex != -1 && hovered != SelectedPartIndex)
-        {
-            if (CheckPartHovered(selectedFrame.parts[SelectedPartIndex], e.PixelPosition.X, e.PixelPosition.Y))
-                hovered = SelectedPartIndex;
-        }
+        SetOamCursor(hoveredPart, hoveringOverSelection);
 
-        // Set Cursor
-        if (hovered == -1) Cursor = Cursors.Default;
-        else if (hovered == SelectedPartIndex) Cursor = Cursors.SizeAll;
-        else if (hovered != -1) Cursor = Cursors.Hand;
-
-        // Deselect old selection
-        if (SelectedPartIndex != -1 && hovered == -1)
+        // Deselect old selection if not hovering over anything and start multi-select
+        if (hoveredPart == -1)
         {
             SelectedPartIndex = -1;
-            return;
+            MultiSelectPivot = e.PixelPosition;
         }
-        else if (hovered != -1 && SelectedPartIndex != hovered) SelectedPartIndex = hovered;
+        // Select hovered, if it isnt already
+        else if (!hoveringOverSelection)
+        {
+            // Check if new select or or additive select
+            if (ModifierKeys == Keys.Control && !SelectedPartIndices.Contains(hoveredPart))
+            {
+                AddSelectedPart(hoveredPart);
+                SetPartOutlines(SelectedFrame);
+            }
+            else SelectedPartIndex = hoveredPart;
+        }
 
         // Context Menu
         if (e.Button == MouseButtons.Right)
         {
             ContextMenuOpenedAt = e.PixelPosition;
-            if (SelectedPartIndex != -1) oamView_oam.ContextMenuStrip = contextMenu_oam;
-            else oamView_oam.ContextMenuStrip = contextMenu_oamNoSelection;
+            if (SelectedParts) tileDisplay_oam.ContextMenuStrip = contextMenu_oam;
+            else tileDisplay_oam.ContextMenuStrip = contextMenu_oamNoSelection;
         }
 
-        // SPECIFIC EDITING CODE
-        if (SelectedPartIndex == -1) return;
-        OAM.Part part = selectedFrame.parts[SelectedPartIndex];
 
+        // SPECIFIC EDITING CODE
+        if (!SelectedParts) return;
         MouseStartLocation = e.PixelPosition;
-        PartStartLocation = new Point(
-            part.xPos,
-            part.yPos
-        );
+        PartsStartLocation = GetMultiPartArea().Location;
     }
 
     private void oamView_oam_TileMouseMove(object sender, TileDisplay.TileDisplayArgs e)
@@ -1239,51 +1962,89 @@ public partial class FormOam : Form
 
         // General Part selection code
         if (PlayingAnimation) return;
-        OAM.Frame selectedFrame = oam.Frames[comboBox_Frame.SelectedIndex];
-        int hovered = FindPart(selectedFrame, e.PixelPosition.X, e.PixelPosition.Y);
 
-        // Check if hovered part overlaps with selected
-        if (SelectedPartIndex != -1 && hovered != SelectedPartIndex)
+        // Multi Select
+        if (MultiSelectPivot is not null && IsMouseButtonPressed(e))
         {
-            if (CheckPartHovered(selectedFrame.parts[SelectedPartIndex], e.PixelPosition.X, e.PixelPosition.Y))
-                hovered = SelectedPartIndex;
+            MultiPartSelection.Rectangle = GetSelectionRectangle(MultiSelectPivot.Value, e.PixelPosition);
+            MultiPartSelection.Visible = true;
+
+            if (OldMultiSelectPosition is null || OldMultiSelectPosition.Value != e.PixelPosition)
+            {
+                OldMultiSelectPosition = e.PixelPosition;
+                HoveredPartIndices = FindParts(SelectedFrame, MultiPartSelection.Rectangle);
+            }
         }
 
-        // Set Cursor
-        if (hovered == -1) Cursor = Cursors.Default;
-        else if (hovered == SelectedPartIndex) Cursor = Cursors.SizeAll;
-        else if (hovered != -1) Cursor = Cursors.Hand;
-
-        if (hovered != hoveredPartIndex && MouseStartLocation == null)
+        // Regular Moving
+        else
         {
-            hoveredPartIndex = hovered;
-            SetPartOutlines(selectedFrame);
+            int hovered = FindPart(SelectedFrame, e.PixelPosition.X, e.PixelPosition.Y);
+
+            // Check if hovered part overlaps with selected
+            bool hoveringOverSelection = HoveringOverSelection(e.PixelPosition);
+
+            SetOamCursor(hovered, hoveringOverSelection);
+
+            // Update hovered part
+            if (hoveringOverSelection) HoveredPartIndex = -1;
+            else if (hovered != HoveredPartIndex && MouseStartLocation is null) HoveredPartIndex = hovered;
+
         }
 
 
         // SPECIFIC EDITING CODE
-        if (SelectedPartIndex == -1) return;
-        OAM.Part part = selectedFrame.parts[SelectedPartIndex];
+        if (!SelectedParts) return;
+        if (MouseStartLocation is null || PartsStartLocation is null || e.Button != MouseButtons.Left) return;
 
-        if (MouseStartLocation == null || PartStartLocation == null || e.Button != MouseButtons.Left) return;
+        // Check if arrow keys were used to move and finish that action group, if its still in debounce window
+        if (KeyDebounceWindowActive) FinishModifyingActionGroup();
+
+        // Initiates a new modifying action group, if it doesnt exist yet or has been finished before
+        StartModifyingActionGroup();
+
         Point diff = new Point(
             e.PixelPosition.X - MouseStartLocation.Value.X,
             e.PixelPosition.Y - MouseStartLocation.Value.Y
         );
         Point newPartLocation = new Point(
-            Math.Clamp(PartStartLocation.Value.X + diff.X, -256, 255),
-            Math.Clamp(PartStartLocation.Value.Y + diff.Y, -128, 127)
+            Math.Clamp(PartsStartLocation.Value.X + diff.X, -256, 255),
+            Math.Clamp(PartsStartLocation.Value.Y + diff.Y, -128, 127)
         );
+
+        // Snap to nearest unselected part
+        if (ModifierKeys == Keys.Shift)
+        {
+            int roundX = newPartLocation.X / 8 * 8;
+            int roundY = newPartLocation.Y / 8 * 8;
+            newPartLocation = new(roundX, roundY);
+        }
+        else if (SnapParts && ModifierKeys != Keys.Alt)
+        {
+            Rectangle current = GetMultiPartArea();
+            current.Location = newPartLocation;
+            newPartLocation = SnapRectangle(current, UnselectedPartsAreas()).Location;
+        }
+
         textBox_x.Text = Hex.ToString(newPartLocation.X < 0 ? newPartLocation.X + 512 : newPartLocation.X);
         textBox_y.Text = Hex.ToString(newPartLocation.Y < 0 ? newPartLocation.Y + 256 : newPartLocation.Y);
     }
 
     private void oamView_oam_TileMouseUp(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
-        MouseStartLocation = null;
-        PartStartLocation = null;
-    }
+        // Select multiselect parts
+        if (MultiSelectPivot is not null && HoveredPartIndices.Count > 0)
+        {
+            SelectedPartIndices = HoveredPartIndices;
+            HoveredPartIndices = new();
+        }
 
+        MultiSelectPivot = null;
+        MultiPartSelection.Visible = false;
+        MouseStartLocation = null;
+        PartsStartLocation = null;
+        FinishModifyingActionGroup();
+    }
     #endregion
 
     #region Export / Import
@@ -1351,6 +2112,14 @@ public partial class FormOam : Form
         File.WriteAllText(saveASM.FileName, OamSerializer.ToASM(oam, animationName));
     }
 
+    private void FinishImport(OAM oam)
+    {
+        this.oam = oam;
+        Save();
+        SetOAM();
+        PopulateUndoRedoForFrames();
+    }
+
     void button_importOam_Click(object sender, EventArgs e)
     {
         OpenFileDialog openOAM = new OpenFileDialog();
@@ -1366,9 +2135,7 @@ public partial class FormOam : Form
         OAM? imported = OamSerializer.Deserialize(json);
         if (imported == null) return;
 
-        oam = imported;
-        Save();
-        SetOAM();
+        FinishImport(imported);
     }
 
     private void button_importAssembly_Click(object sender, EventArgs e)
@@ -1386,26 +2153,95 @@ public partial class FormOam : Form
         OAM? imported = OamSerializer.FromASM(assembly);
         if (imported == null) return;
 
-        oam = imported;
-        Save();
-        SetOAM();
-
+        FinishImport(imported);
     }
 
     #endregion
 
-    private void paletteView_TileMouseMove(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    #region Undo / Redo
+    public void AddAction(GenericEditorAction a)
     {
-        if (PaletteCursor.Y == e.TilePixelPosition.Y) return;
-        PaletteCursor.Visible = true;
-        PaletteCursor.Rectangle = new Rectangle(0, Math.Min(e.TilePixelPosition.Y, 17 * 15), 16 * 16 + 17, 17);
+        UndoRedo.AddActionWithoutDo(a);
+        setUndoRedoButtons();
 
+        Status.ChangeMade();
     }
 
-    private void paletteView_TileMouseDown(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
+    private void UpdateActionStackFrameIndex(DropOutStack<GenericEditorAction> stack, int newIndex)
     {
-        PaletteCursor.Visible = false;
-        SelectedPaletteRow = e.TilePixelPosition.Y / 17;
-
+        for (int i = 0; i < stack.Count; i++)
+        {
+            var action = stack[i];
+            if (action is OamActionGroup group)
+            {
+                group.UpadteIndicesOfActions(newIndex);
+                continue;
+            }
+            if (action is not OamAction a) continue;
+            a.FrameIndex = newIndex;
+        }
     }
+
+    private void Undo()
+    {
+        FinishModifyingActionGroup();
+        UndoRedo.Undo();
+        setUndoRedoButtons();
+        Status.ChangeMade();
+        DrawFrame(SelectedFrameIndex);
+        HandleSelectedPartChanged(SelectedPartIndices);
+    }
+
+    private void Redo()
+    {
+        FinishModifyingActionGroup();
+        UndoRedo.Redo();
+        setUndoRedoButtons();
+        Status.ChangeMade();
+        DrawFrame(SelectedFrameIndex);
+        HandleSelectedPartChanged(SelectedPartIndices);
+    }
+
+    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GenericEditorAction> stack)
+    {
+        int count = Math.Min(16, stack.Count);
+        int lastIndex = stack.Count - 1;
+
+        button.DropDownItems.Clear();
+        for (int i = 0; i < count; i++)
+        {
+            ToolStripMenuItem item = new ToolStripMenuItem();
+            item.Tag = i + 1;
+            item.Text = stack[lastIndex - i].ActionText;
+            button.DropDownItems.Add(item);
+        }
+    }
+
+    private void setUndoRedoButtons()
+    {
+        button_undo.Enabled = UndoRedo.CanUndo && !playingAnimation;
+        button_redo.Enabled = UndoRedo.CanRedo && !playingAnimation;
+        if (palette is not null) DrawPalette();
+    }
+
+    private void button_undo_ButtonClick(object sender, EventArgs e) => Undo();
+
+    private void button_redo_ButtonClick(object sender, EventArgs e) => Redo();
+
+    private void button_undo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_undo, UndoRedo.UndoStack);
+
+    private void button_redo_DropDownOpening(object sender, EventArgs e) => PopulateUndoRedoList(button_redo, UndoRedo.RedoStack);
+
+    private void button_undo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    {
+        int num = (int)e.ClickedItem.Tag;
+        for (int i = 0; i < num; i++) Undo();
+    }
+
+    private void button_redo_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    {
+        int num = (int)e.ClickedItem.Tag;
+        for (int i = 0; i < num; i++) Redo();
+    }
+    #endregion
 }

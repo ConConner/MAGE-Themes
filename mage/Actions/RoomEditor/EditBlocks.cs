@@ -96,7 +96,7 @@ namespace mage.Actions.RoomEditor
             get { return "Edit blocks"; }
         }
 
-        public override bool TryCombine(Action a)
+        public override bool TryCombine(RoomAction a)
         {
             EditBlocks newer = a as EditBlocks;
             if (newer == null) { return false; }

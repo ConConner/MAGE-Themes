@@ -138,7 +138,7 @@ public static class OamSerializer
         if (xPos >= 256)
             xPos -= 512;
 
-        int hflip = (x >> 12) & 1;
+        int flip = (x >> 12) & 0b11;
         int size = (x >> 14) & 0x3;
 
         int tileNum = tile & 0x3FF;
@@ -150,7 +150,7 @@ public static class OamSerializer
             yPos = yPos,
             shape = shape,
             size = size,
-            flip = hflip,
+            flip = flip,
             tileNum = tileNum,
             palRow = palRow
         };

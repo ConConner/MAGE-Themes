@@ -216,6 +216,24 @@ public partial class TileDisplay : Control
         Size = new Size(BackgroundImage.Width << Zoom, BackgroundImage.Height << Zoom);
     }
 
+    /// <summary>
+    /// Tells WinForms that arrow keys and navigation keys belong to this control
+    /// instead of shifting focus to another control on the Form.
+    /// </summary>
+    protected override bool IsInputKey(Keys keyData)
+    {
+        switch (keyData & Keys.KeyCode)
+        {
+            case Keys.Left:
+            case Keys.Right:
+            case Keys.Up:
+            case Keys.Down:
+                return true;
+            default:
+                return base.IsInputKey(keyData);
+        }
+    }
+
     protected override void OnPaint(PaintEventArgs pe)
     {
         if (ShowGrid)

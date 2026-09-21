@@ -101,7 +101,7 @@ namespace mage.Editors
         private Room? openedInRoom;
         private Status Status;
         private GenericUndoRedo UndoRedo;
-        private EditorGridActionGroup? latestActionGroup = null;
+        private GenericEditorActionGroup? latestActionGroup = null;
         private int gfxSourceOffset;
         private int palSourceOffset;
 
@@ -1328,10 +1328,15 @@ namespace mage.Editors
         {
             TableTimer.Stop();
             if (tableView == null || tableView.IsDisposed) return;
-            Point clientMousePos = tableView.PointToClient(Cursor.Position);
-            if (!tableView.ClientRectangle.Contains(clientMousePos) || Control.MouseButtons != MouseButtons.None) return;
+            if (Control.MouseButtons != MouseButtons.None) return;
 
-            TileTip.Show("Dummy", tableView, clientMousePos);
+            Point clientMousePosOnTileDisplay = tableView.PointToClient(Cursor.Position);
+            if (!tableView.ClientRectangle.Contains(clientMousePosOnTileDisplay)) return;
+
+            Point clientMousePositionInPanel = panel_tableView.PointToClient(Cursor.Position);
+            if (!panel_tableView.ClientRectangle.Contains(clientMousePositionInPanel)) return;
+
+            TileTip.Show("Dummy", tableView, clientMousePosOnTileDisplay);
         }
         #endregion
 
@@ -1406,7 +1411,7 @@ namespace mage.Editors
             Status.ChangeMade();
         }
 
-        public void AddActionNoDo(EditorGridAction a)
+        public void AddActionNoDo(GenericEditorAction a)
         {
             UndoRedo.AddActionWithoutDo(a);
             setUndoRedoButtons();
@@ -1434,7 +1439,7 @@ namespace mage.Editors
             tableView.Invalidate();
         }
 
-        private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<EditorGridAction> stack)
+        private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GenericEditorAction> stack)
         {
             int count = Math.Min(16, stack.Count);
             int lastIndex = stack.Count - 1;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace mage.Actions.PaletteEditor;
 
-internal class EditPaletteAreaAction : EditorGridAction
+internal class EditPaletteAreaAction : GenericEditorAction
 {
     private string _actionText;
     private Palette _palette;

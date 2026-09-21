@@ -67,7 +67,7 @@ public partial class FormGraphicsNew : Form
     private TileDisplay tileDisplay_palette;
     private DualColorBox colorDisplay;
 
-    private EditorGridActionGroup? latestActionGroup;
+    private GenericEditorActionGroup? latestActionGroup;
 
     private Point LastPixel = Point.Empty;
     private Point? SelectionPivot = null;
@@ -525,7 +525,7 @@ public partial class FormGraphicsNew : Form
     #endregion
 
     #region Undo Redo
-    public void AddAction(EditorGridAction a)
+    public void AddAction(GenericEditorAction a)
     {
         UndoRedo.AddActionWithoutDo(a);
         setUndoRedoButtons();
@@ -560,7 +560,7 @@ public partial class FormGraphicsNew : Form
         Status.ChangeMade();
     }
 
-    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<EditorGridAction> stack)
+    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GenericEditorAction> stack)
     {
         int count = Math.Min(16, stack.Count);
         int lastIndex = stack.Count - 1;
@@ -808,7 +808,7 @@ public partial class FormGraphicsNew : Form
             case Tool.Pen:
 
                 // Place Pixels
-                latestActionGroup = new EditorGridActionGroup();
+                latestActionGroup = new GenericEditorActionGroup();
                 HandlePen(e);
                 break;
 

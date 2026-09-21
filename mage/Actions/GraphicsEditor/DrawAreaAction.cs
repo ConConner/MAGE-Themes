@@ -5,7 +5,7 @@ using System.Text;
 
 namespace mage.Actions.GraphicsEditor;
 
-public class DrawAreaAction : EditorGridAction
+public class DrawAreaAction : GenericEditorAction
 {
     private Rectangle _area;
     private GFX _gfx;

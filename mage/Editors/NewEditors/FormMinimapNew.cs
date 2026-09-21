@@ -152,7 +152,7 @@ public partial class FormMinimapNew : Form, Editor
     private int numTiles;
     private Status status;
     private GenericUndoRedo UndoRedo = new GenericUndoRedo();
-    private EditorGridActionGroup? latestActionGroup = null;
+    private GenericEditorActionGroup? latestActionGroup = null;
 
     private FormMain main;
     private ByteStream romStream;
@@ -512,7 +512,7 @@ public partial class FormMinimapNew : Form, Editor
         status.ChangeMade();
     }
 
-    public void AddActionNoDo(EditorGridAction a)
+    public void AddActionNoDo(GenericEditorAction a)
     {
         UndoRedo.AddActionWithoutDo(a);
         setUndoRedoButtons();
@@ -534,7 +534,7 @@ public partial class FormMinimapNew : Form, Editor
         ChangeMade();
     }
 
-    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<EditorGridAction> stack)
+    private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GenericEditorAction> stack)
     {
         int count = Math.Min(16, stack.Count);
         int lastIndex = stack.Count - 1;
@@ -712,7 +712,7 @@ public partial class FormMinimapNew : Form, Editor
 
     private void button_grid_CheckStateChanged(object sender, EventArgs e) => tileDisplay_map.ShowGrid = button_grid.Checked;
 
-    private EditorGridAction? PasteSelectedTiles(Point location, string actionText)
+    private GenericEditorAction? PasteSelectedTiles(Point location, string actionText)
     {
         if (selectedTiles == null) return null;
 

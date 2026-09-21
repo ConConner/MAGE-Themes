@@ -6,7 +6,7 @@ using System.Text;
 
 namespace mage.Actions.MapEditor;
 
-public class DrawMapTileAction : EditorGridAction
+public class DrawMapTileAction : GenericEditorAction
 {
     private Minimap _map;
     private Dictionary<Point, FormMinimapNew.MapTile> _tiles;

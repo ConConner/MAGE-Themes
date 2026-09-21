@@ -91,7 +91,7 @@ namespace mage.Actions.RoomEditor
             }
         }
 
-        public override bool TryCombine(Action a)
+        public override bool TryCombine(RoomAction a)
         {
             EditRoomObject newer = a as EditRoomObject;
             if (newer != null && combine && this.actionType == ActionType.Move && 

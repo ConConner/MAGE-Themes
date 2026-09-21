@@ -5,12 +5,12 @@ using System.Text;
 
 namespace mage.Actions;
 
-internal class EditorGridActionGroup : EditorGridAction
+public class GenericEditorActionGroup : GenericEditorAction
 {
-    private List<EditorGridAction> actions = new List<EditorGridAction>();
+    protected List<GenericEditorAction> actions = new List<GenericEditorAction>();
     private string? _actionText;
 
-    public EditorGridActionGroup(string? actionText = null)
+    public GenericEditorActionGroup(string? actionText = null)
     {
         _actionText = actionText;
     }
@@ -30,9 +30,14 @@ internal class EditorGridActionGroup : EditorGridAction
 
     public override string ActionText => _actionText ?? actions[actions.Count - 1].ActionText;
 
-    public void AddAction(EditorGridAction action)
+    public void AddAction(GenericEditorAction action)
     {
         actions.Add(action);
+    }
+
+    public void SetActions(List<GenericEditorAction> actions)
+    {
+        this.actions = actions ?? new List<GenericEditorAction>();
     }
 
     public int ActionCount => actions.Count;
