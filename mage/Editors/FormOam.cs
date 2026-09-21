@@ -277,6 +277,8 @@ public partial class FormOam : Form
     private int SelectedFrameIndex => comboBox_Frame.SelectedIndex;
     private OAM.Frame SelectedFrame => oam.Frames[comboBox_Frame.SelectedIndex];
 
+    private Timer KeyMovementDebounceTimer;
+    private bool KeyDebounceWindowActive => KeyMovementDebounceTimer.Enabled;
 
     // constructor
     public FormOam(FormMain main, int gfxOffset, int palOffset, int oamOffset, bool compressed = true)
@@ -330,6 +332,11 @@ public partial class FormOam : Form
         paletteView.AddDrawable(PaletteCursor);
         paletteView.AddDrawable(PaletteSelection);
 
+        //Arrow key movement debounce timer
+        KeyMovementDebounceTimer = new();
+        KeyMovementDebounceTimer.Interval = 500;
+        KeyMovementDebounceTimer.Tick += KeyMovementDebounceTimer_Tick;
+
         LoadCommonGraphics = true; // We don't want to draw/reload graphics during initalization so this must come after `loading = true`
 
         Status = new Status(label_Status, button_save);
@@ -341,7 +348,6 @@ public partial class FormOam : Form
         SetOAM();
         PopulateUndoRedoForFrames();
     }
-
 
     #region general
     private void ChangePen(Drawable drawable, Pen pen)
@@ -466,10 +472,35 @@ public partial class FormOam : Form
         return true;
     }
 
+    private void KeyboardMoved(Keys key)
+    {
+        StartModifyingActionGroup();
+
+        if (key == Keys.Left) MoveSelectedParts(-1, 0);
+        if (key == Keys.Right) MoveSelectedParts(1, 0);
+        if (key == Keys.Up) MoveSelectedParts(0, -1);
+        if (key == Keys.Down) MoveSelectedParts(0, 1);
+
+        KeyMovementDebounceTimer.Stop();
+        KeyMovementDebounceTimer.Start();
+    }
+
+    private void KeyMovementDebounceTimer_Tick(object? sender, EventArgs e)
+    {
+        FinishModifyingActionGroup();
+    }
+
     private void KeyPressed(object sender, KeyEventArgs e)
     {
         switch (e.KeyCode)
         {
+            case Keys.Left:
+            case Keys.Right:
+            case Keys.Up:
+            case Keys.Down:
+                KeyboardMoved(e.KeyCode);
+                break;
+
             case Keys.X:
                 if (ModifierKeys == Keys.Control)
                 {
@@ -1413,6 +1444,7 @@ public partial class FormOam : Form
     {
         if (oam is null || PlayingAnimation || !SelectedParts) return;
         CopyPartsToClipboard(CopyParts());
+        FinishModifyingActionGroup();
         DeletePart("Cut Parts");
     }
 
@@ -1432,6 +1464,8 @@ public partial class FormOam : Form
         Rectangle area = GetPartsArea(pasteParts);
         Point pastePoint = FindIdealPasteLocation(!throughShortcut, area.Size, at);
         pasteParts = OffsetParts(pasteParts, new Point(pastePoint.X - area.X, pastePoint.Y - area.Y));
+
+        FinishModifyingActionGroup();
 
         // Insert at the front, keeping the copied Z order
         OamActionGroup group = new("Paste Parts") { DoUndoRun = AddedPart };
@@ -1587,7 +1621,8 @@ public partial class FormOam : Form
         GroupedActions.Add(a);
     }
 
-    private Point PointToSignedPosition(Point pos) => new Point(
+    private Point PointToSignedPosition(Point pos) =>
+        new Point(
         pos.X < 256 ? pos.X : pos.X - 512,
         pos.Y < 128 ? pos.Y : pos.Y - 256
     );
@@ -1632,6 +1667,29 @@ public partial class FormOam : Form
 
         multiModifyAction.Do();
         AddActionToGroup(multiModifyAction);
+    }
+
+    private void MoveSelectedParts(int diffX, int diffY)
+    {
+        if (!SelectedParts) return;
+        try
+        {
+            int xPos = Hex.ToInt(textBox_x.Text);
+            int yPos = Hex.ToInt(textBox_y.Text);
+
+            // Convert to signed coordinates
+            Point normalized = PointToSignedPosition(new(xPos, yPos));
+            int newX = Math.Clamp(normalized.X + diffX, -256, 255);
+            int newY = Math.Clamp(normalized.Y + diffY, -128, 127);
+
+            // Convert back to unsigned 
+            int rawX = newX & 0x1FF;
+            int rawY = newY & 0xFF;
+
+            textBox_x.Text = Hex.ToString(rawX);
+            textBox_y.Text = Hex.ToString(rawY);
+        }
+        catch { }
     }
 
     private void controlElements_changeMade(object? sender, EventArgs e)
@@ -1727,6 +1785,7 @@ public partial class FormOam : Form
 
     private void FinishModifyingActionGroup()
     {
+        if (KeyDebounceWindowActive) KeyMovementDebounceTimer.Stop();
         if (GroupedActions is null || GroupedActions.Count < 1)
         {
             GroupedActions = null;
@@ -1833,7 +1892,12 @@ public partial class FormOam : Form
         if (!SelectedParts) return;
         if (MouseStartLocation is null || PartsStartLocation is null || e.Button != MouseButtons.Left) return;
 
+        // Check if arrow keys were used to move and finish that action group, if its still in debounce window
+        if (KeyDebounceWindowActive) FinishModifyingActionGroup();
+
+        // Initiates a new modifying action group, if it doesnt exist yet or has been finished before
         StartModifyingActionGroup();
+
         Point diff = new Point(
             e.PixelPosition.X - MouseStartLocation.Value.X,
             e.PixelPosition.Y - MouseStartLocation.Value.Y
@@ -2000,18 +2064,22 @@ public partial class FormOam : Form
 
     private void Undo()
     {
+        FinishModifyingActionGroup();
         UndoRedo.Undo();
         setUndoRedoButtons();
         Status.ChangeMade();
         DrawFrame(SelectedFrameIndex);
+        HandleSelectedPartChanged(SelectedPartIndices);
     }
 
     private void Redo()
     {
+        FinishModifyingActionGroup();
         UndoRedo.Redo();
         setUndoRedoButtons();
         Status.ChangeMade();
         DrawFrame(SelectedFrameIndex);
+        HandleSelectedPartChanged(SelectedPartIndices);
     }
 
     private void PopulateUndoRedoList(ToolStripSplitButton button, DropOutStack<GenericEditorAction> stack)
