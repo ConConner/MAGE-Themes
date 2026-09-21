@@ -8,6 +8,8 @@ public class OamActionGroup : GenericEditorActionGroup
 {
     public Action? DoUndoRun { get; set; } = null;
 
+    public OamActionGroup(string? actionText = null) : base(actionText) { }
+
     public void UpadteIndicesOfActions(int newIndex)
     {
         foreach (var action in actions)

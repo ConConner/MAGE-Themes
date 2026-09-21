@@ -95,6 +95,7 @@ public partial class FormOam : Form
             button_frameDown.Enabled = !playingAnimation;
             button_frameUp.Enabled = !playingAnimation;
             button_duplicate.Enabled = !playingAnimation;
+            UpdateClipboardButtons();
 
             // Stop timer if needed
             if (playingAnimation) return;
@@ -244,6 +245,7 @@ public partial class FormOam : Form
 
         button_removePart.Enabled = SelectedPartIndices.Count > 0;
         panel_partEditing.Enabled = SelectedPartIndices.Count > 0;
+        UpdateClipboardButtons();
         HandleSelectedPartChanged(SelectedPartIndices);
     }
 
@@ -468,13 +470,32 @@ public partial class FormOam : Form
     {
         switch (e.KeyCode)
         {
-            case Keys.H:
             case Keys.X:
+                if (ModifierKeys == Keys.Control)
+                {
+                    Cut();
+                    break;
+                }
+                goto case Keys.H;
+
+            case Keys.H:
                 if (SelectedPartIndex == -1) break;
                 checkBox_xFlip.Checked = !checkBox_xFlip.Checked;
                 break;
 
+            case Keys.C:
+                if (ModifierKeys != Keys.Control) break;
+                Copy();
+                break;
+
             case Keys.V:
+                if (ModifierKeys == Keys.Control)
+                {
+                    Paste(true);
+                    break;
+                }
+                goto case Keys.Y;
+
             case Keys.Y:
                 if (SelectedPartIndex == -1) break;
                 checkBox_yFlip.Checked = !checkBox_yFlip.Checked;
@@ -1106,18 +1127,20 @@ public partial class FormOam : Form
         return part.Area.Contains(position);
     }
 
-    #region Reordering Parts
+    #region Z-Ordering Parts
     private void ReorderPart(int oldIndex, int newIndex)
     {
         if (oldIndex < 0 || oldIndex >= SelectedFrame.parts.Count || newIndex < 0 || newIndex >= SelectedFrame.parts.Count)
             return;
 
-        OAM.Part temp = SelectedFrame.parts[oldIndex];
-        SelectedFrame.parts.RemoveAt(oldIndex);
-        if (newIndex == SelectedFrame.parts.Count)
-            SelectedFrame.parts.Add(temp);
-        else
-            SelectedFrame.parts.Insert(newIndex, temp);
+        OAM.Part oldPart = SelectedFrame.parts[newIndex];
+        OAM.Part newPart = SelectedFrame.parts[oldIndex];
+
+        OamActionGroup group = new();
+        group.AddAction(new ModifyOamPartAction(oam, SelectedFrameIndex, newIndex, newPart, "Reordered Part"));
+        group.AddAction(new ModifyOamPartAction(oam, SelectedFrameIndex, oldIndex, oldPart, "Reordered Part"));
+        group.Do();
+        AddAction(group);
 
         SelectedPartIndex = newIndex;
 
@@ -1127,18 +1150,21 @@ public partial class FormOam : Form
 
     private void contextMenu_oam_Opening(object sender, CancelEventArgs e)
     {
-        if (SelectedPartIndex == -1)
+        if (!SelectedParts)
         {
-            contextMenu_oam.Close();
+            e.Cancel = true;
             return;
         }
 
+        button_pasteCtx.Enabled = Clipboard.ContainsData(ClipboardFormat);
+
         // Enable/disable context menu items based on selected part
         int parts = SelectedFrame.parts.Count;
-        button_toFront.Enabled = SelectedPartIndex != 0;
-        button_toBack.Enabled = SelectedPartIndex != parts - 1;
-        button_layerDown.Enabled = SelectedPartIndex != parts - 1 && parts > 1;
-        button_layerUp.Enabled = SelectedPartIndex != 0 && parts > 1;
+        bool multi = SelectedPartIndices.Count > 1;
+        button_toFront.Enabled = SelectedPartIndex != 0 && !multi;
+        button_toBack.Enabled = SelectedPartIndex != parts - 1 && !multi;
+        button_layerDown.Enabled = SelectedPartIndex != parts - 1 && parts > 1 && !multi;
+        button_layerUp.Enabled = SelectedPartIndex != 0 && parts > 1 && !multi;
     }
     private void button_toFront_Click(object sender, EventArgs e)
     {
@@ -1198,12 +1224,12 @@ public partial class FormOam : Form
     }
 
     private void button_removePart_Click(object sender, EventArgs e) => DeletePart();
-    private void DeletePart()
+    private void DeletePart(string? actionText = null)
     {
         if (!SelectedParts) return;
 
         // Single
-        if (SelectedPartIndices.Count == 1)
+        if (SelectedPartIndices.Count == 1 && actionText is null)
         {
             RemoveOamPartAction a = new(oam, SelectedFrameIndex, SelectedPartIndex)
             {
@@ -1215,7 +1241,7 @@ public partial class FormOam : Form
         }
 
         // Multi
-        OamActionGroup group = new()
+        OamActionGroup group = new(actionText)
         {
             DoUndoRun = DeletedPart
         };
@@ -1231,6 +1257,212 @@ public partial class FormOam : Form
     {
         SelectedPartIndex = -1;
         SetPartSelectionCombobox();
+    }
+    #endregion
+
+    #region Copy/Paste
+    private const string ClipboardFormat = "MageOamEditor_Parts";
+
+    // OAM.Part uses public fields, which System.Text.Json ignores, so parts are wrapped for the clipboard
+    private class ClipboardPart
+    {
+        public ClipboardPart() { }
+        public ClipboardPart(OAM.Part part)
+        {
+            XPos = part.xPos;
+            YPos = part.yPos;
+            Shape = part.shape;
+            Flip = part.flip;
+            Size = part.size;
+            TileNum = part.tileNum;
+            PalRow = part.palRow;
+        }
+
+        public int XPos { get; set; }
+        public int YPos { get; set; }
+        public int Shape { get; set; }
+        public int Flip { get; set; }
+        public int Size { get; set; }
+        public int TileNum { get; set; }
+        public int PalRow { get; set; }
+
+        public OAM.Part Unpack()
+        {
+            OAM.Part part = OAM.Part.Empty;
+            part.xPos = XPos;
+            part.yPos = YPos;
+            part.shape = Shape;
+            part.flip = Flip;
+            part.size = Size;
+            part.tileNum = TileNum;
+            part.palRow = PalRow;
+            return part;
+        }
+    }
+
+    private class ClipboardParts
+    {
+        public ClipboardParts() { }
+        public ClipboardParts(List<OAM.Part> input) => Parts = input.Select(p => new ClipboardPart(p)).ToArray();
+
+        public ClipboardPart[] Parts { get; set; } = [];
+
+        public List<OAM.Part> Unpack() => Parts.Select(p => p.Unpack()).ToList();
+
+        public static explicit operator ClipboardParts(List<OAM.Part> input) => new ClipboardParts(input);
+        public static implicit operator List<OAM.Part>(ClipboardParts input) => input.Unpack();
+    }
+
+    private List<OAM.Part> CopyParts()
+    {
+        // Ascending index order keeps the Z order of the copied parts
+        return SelectedPartIndices.Distinct().OrderBy(i => i).Select(i => SelectedFrame.parts[i]).ToList();
+    }
+
+    private void CopyPartsToClipboard(List<OAM.Part> parts)
+    {
+        try { Clipboard.SetDataAsJson(ClipboardFormat, (ClipboardParts)parts); }
+        catch (ExternalException)
+        {
+            MessageBox.Show("Clipboard is busy. Please try copying again.");
+        }
+    }
+
+    private List<OAM.Part>? PartsFromClipboard()
+    {
+        if (!Clipboard.ContainsData(ClipboardFormat)) return null;
+
+        try
+        {
+            if (Clipboard.TryGetData(ClipboardFormat, out ClipboardParts pastedParts)) return pastedParts;
+        }
+        catch (ExternalException)
+        {
+            MessageBox.Show("Clipboard is busy. Please try pasting again.");
+        }
+
+        return null;
+    }
+
+    private static Rectangle GetPartsArea(List<OAM.Part> parts)
+    {
+        Rectangle area = parts[0].Area;
+        foreach (OAM.Part p in parts) area = Rectangle.Union(area, p.Area);
+        return area;
+    }
+
+    // Returns the top left of the pasted parts' area, in frame coordinates
+    // `centerAt` is a position in the OAM view (as given by TileDisplayArgs.PixelPosition), which takes priority over the mouse
+    private Point FindIdealPasteLocation(bool pressedButton, Size size, Point? centerAt = null)
+    {
+        if (centerAt is not null)
+        {
+            return new Point(
+                centerAt.Value.X - OAM.FrameOriginX - size.Width / 2,
+                centerAt.Value.Y - OAM.FrameOriginY - size.Height / 2
+            );
+        }
+
+        Point mouseToPanel = panel_oam.PointToClient(System.Windows.Forms.Cursor.Position);
+
+        // Center on the mouse if it is hovering over the view
+        if (!pressedButton && panel_oam.ClientRectangle.Contains(mouseToPanel))
+        {
+            Point mouseToTileDisplay = tileDisplay_oam.PointToClient(System.Windows.Forms.Cursor.Position);
+            return new Point(
+                (mouseToTileDisplay.X >> tileDisplay_oam.Zoom) - OAM.FrameOriginX - size.Width / 2,
+                (mouseToTileDisplay.Y >> tileDisplay_oam.Zoom) - OAM.FrameOriginY - size.Height / 2
+            );
+        }
+
+        // Otherwise center in the visible part of the view
+        int xCenter = (-panel_oam.AutoScrollPosition.X + panel_oam.ClientSize.Width / 2) >> tileDisplay_oam.Zoom;
+        int yCenter = (-panel_oam.AutoScrollPosition.Y + panel_oam.ClientSize.Height / 2) >> tileDisplay_oam.Zoom;
+        return new Point(
+            xCenter - OAM.FrameOriginX - size.Width / 2,
+            yCenter - OAM.FrameOriginY - size.Height / 2
+        );
+    }
+
+    // Moves the parts by the offset, as far as the position ranges of OAM allow
+    private static List<OAM.Part> OffsetParts(List<OAM.Part> parts, Point offset)
+    {
+        int xMin = parts.Min(p => p.xPos), xMax = parts.Max(p => p.xPos);
+        int yMin = parts.Min(p => p.yPos), yMax = parts.Max(p => p.yPos);
+        int dx = Math.Clamp(offset.X, -OAM.FrameOriginX - xMin, OAM.FrameOriginX - 1 - xMax);
+        int dy = Math.Clamp(offset.Y, -OAM.FrameOriginY - yMin, OAM.FrameOriginY - 1 - yMax);
+
+        List<OAM.Part> moved = new(parts.Count);
+        foreach (OAM.Part p in parts)
+        {
+            OAM.Part part = p;
+            part.xPos += dx;
+            part.yPos += dy;
+            moved.Add(part);
+        }
+        return moved;
+    }
+
+    private void Copy()
+    {
+        if (oam is null || PlayingAnimation || !SelectedParts) return;
+        CopyPartsToClipboard(CopyParts());
+    }
+
+    private void Cut()
+    {
+        if (oam is null || PlayingAnimation || !SelectedParts) return;
+        CopyPartsToClipboard(CopyParts());
+        DeletePart("Cut Parts");
+    }
+
+    private void Paste(bool throughShortcut = false, Point? at = null)
+    {
+        if (oam is null || PlayingAnimation) return;
+
+        List<OAM.Part>? pasteParts = PartsFromClipboard();
+        if (pasteParts is null || pasteParts.Count == 0) return;
+
+        if (SelectedFrame.parts.Count + pasteParts.Count > 0xFF)
+        {
+            MessageBox.Show("Cannot paste, this would exceed the maximum amount of parts in a frame (0xFF).", "Maximum Parts Reached", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        Rectangle area = GetPartsArea(pasteParts);
+        Point pastePoint = FindIdealPasteLocation(!throughShortcut, area.Size, at);
+        pasteParts = OffsetParts(pasteParts, new Point(pastePoint.X - area.X, pastePoint.Y - area.Y));
+
+        // Insert at the front, keeping the copied Z order
+        OamActionGroup group = new("Paste Parts") { DoUndoRun = AddedPart };
+        for (int i = 0; i < pasteParts.Count; i++)
+            group.AddAction(new AddOamPartAction(oam, SelectedFrameIndex, pasteParts[i], i));
+        group.Do();
+        AddAction(group);
+
+        DrawFrame(SelectedFrameIndex);
+        SelectedPartIndices = Enumerable.Range(0, pasteParts.Count).ToList();
+    }
+
+    private void UpdateClipboardButtons()
+    {
+        button_cut.Enabled = SelectedParts && !PlayingAnimation;
+        button_copy.Enabled = SelectedParts && !PlayingAnimation;
+        button_paste.Enabled = !PlayingAnimation;
+    }
+
+    private void button_cut_Click(object sender, EventArgs e) => Cut();
+
+    private void button_copy_Click(object sender, EventArgs e) => Copy();
+
+    private void button_paste_Click(object sender, EventArgs e) => Paste();
+
+    // Context menu paste, places the parts where the menu was opened
+    private void button_pasteHere_Click(object sender, EventArgs e) => Paste(at: ContextMenuOpenedAt);
+
+    private void contextMenu_oamNoSelection_Opening(object sender, CancelEventArgs e)
+    {
+        button_pasteHere.Enabled = Clipboard.ContainsData(ClipboardFormat);
     }
     #endregion
 

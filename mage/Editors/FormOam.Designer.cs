@@ -92,6 +92,10 @@
             button_undo = new System.Windows.Forms.ToolStripSplitButton();
             button_redo = new System.Windows.Forms.ToolStripSplitButton();
             toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            button_cut = new System.Windows.Forms.ToolStripButton();
+            button_copy = new System.Windows.Forms.ToolStripButton();
+            button_paste = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             button_viewOrigin = new System.Windows.Forms.ToolStripButton();
             button_viewOutline = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -115,6 +119,10 @@
             button_exportOam = new System.Windows.Forms.ToolStripMenuItem();
             button_save = new System.Windows.Forms.ToolStripDropDownButton();
             contextMenu_oam = new System.Windows.Forms.ContextMenuStrip(components);
+            button_cutCtx = new System.Windows.Forms.ToolStripMenuItem();
+            button_copyCtx = new System.Windows.Forms.ToolStripMenuItem();
+            button_pasteCtx = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             button_toFront = new System.Windows.Forms.ToolStripMenuItem();
             button_layerUp = new System.Windows.Forms.ToolStripMenuItem();
             button_layerDown = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,6 +131,7 @@
             button_removePartCtx = new System.Windows.Forms.ToolStripMenuItem();
             contextMenu_oamNoSelection = new System.Windows.Forms.ContextMenuStrip(components);
             button_addPartHere = new System.Windows.Forms.ToolStripMenuItem();
+            button_pasteHere = new System.Windows.Forms.ToolStripMenuItem();
             groupBox_imageControl.SuspendLayout();
             groupBox_image.SuspendLayout();
             panel_gfx.SuspendLayout();
@@ -897,7 +906,7 @@
             // toolStrip2
             // 
             toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator4, button_viewOrigin, button_viewOutline, toolStripSeparator2, button_oamZoomIn, button_oamZoomOut, label_oamZoom });
+            toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator4, button_cut, button_copy, button_paste, toolStripSeparator5, button_viewOrigin, button_viewOutline, toolStripSeparator2, button_oamZoomIn, button_oamZoomOut, label_oamZoom });
             toolStrip2.Location = new System.Drawing.Point(4, 19);
             toolStrip2.Name = "toolStrip2";
             toolStrip2.Size = new System.Drawing.Size(820, 25);
@@ -934,6 +943,43 @@
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
             toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            //
+            // button_cut
+            //
+            button_cut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_cut.Enabled = false;
+            button_cut.Image = Properties.Resources.cut_red;
+            button_cut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_cut.Name = "button_cut";
+            button_cut.Size = new System.Drawing.Size(23, 22);
+            button_cut.Text = "Cut";
+            button_cut.Click += button_cut_Click;
+            //
+            // button_copy
+            //
+            button_copy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_copy.Enabled = false;
+            button_copy.Image = Properties.Resources.copy;
+            button_copy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_copy.Name = "button_copy";
+            button_copy.Size = new System.Drawing.Size(23, 22);
+            button_copy.Text = "Copy";
+            button_copy.Click += button_copy_Click;
+            //
+            // button_paste
+            //
+            button_paste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_paste.Image = Properties.Resources.paste;
+            button_paste.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_paste.Name = "button_paste";
+            button_paste.Size = new System.Drawing.Size(23, 22);
+            button_paste.Text = "Paste";
+            button_paste.Click += button_paste_Click;
+            //
+            // toolStripSeparator5
+            //
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // button_viewOrigin
             // 
@@ -1162,11 +1208,43 @@
             // 
             // contextMenu_oam
             // 
-            contextMenu_oam.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_toFront, button_layerUp, button_layerDown, button_toBack, toolStripSeparator3, button_removePartCtx });
+            contextMenu_oam.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_cutCtx, button_copyCtx, button_pasteCtx, toolStripSeparator6, button_toFront, button_layerUp, button_layerDown, button_toBack, toolStripSeparator3, button_removePartCtx });
             contextMenu_oam.Name = "contextMenu_oam";
-            contextMenu_oam.Size = new System.Drawing.Size(164, 120);
+            contextMenu_oam.Size = new System.Drawing.Size(164, 192);
             contextMenu_oam.Opening += contextMenu_oam_Opening;
-            // 
+            //
+            // button_cutCtx
+            //
+            button_cutCtx.Image = Properties.Resources.cut_red;
+            button_cutCtx.Name = "button_cutCtx";
+            button_cutCtx.ShortcutKeyDisplayString = "Ctrl+X";
+            button_cutCtx.Size = new System.Drawing.Size(163, 22);
+            button_cutCtx.Text = "Cut";
+            button_cutCtx.Click += button_cut_Click;
+            //
+            // button_copyCtx
+            //
+            button_copyCtx.Image = Properties.Resources.copy;
+            button_copyCtx.Name = "button_copyCtx";
+            button_copyCtx.ShortcutKeyDisplayString = "Ctrl+C";
+            button_copyCtx.Size = new System.Drawing.Size(163, 22);
+            button_copyCtx.Text = "Copy";
+            button_copyCtx.Click += button_copy_Click;
+            //
+            // button_pasteCtx
+            //
+            button_pasteCtx.Image = Properties.Resources.paste;
+            button_pasteCtx.Name = "button_pasteCtx";
+            button_pasteCtx.ShortcutKeyDisplayString = "Ctrl+V";
+            button_pasteCtx.Size = new System.Drawing.Size(163, 22);
+            button_pasteCtx.Text = "Paste";
+            button_pasteCtx.Click += button_pasteHere_Click;
+            //
+            // toolStripSeparator6
+            //
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            toolStripSeparator6.Size = new System.Drawing.Size(160, 6);
+            //
             // button_toFront
             // 
             button_toFront.Image = (System.Drawing.Image)resources.GetObject("button_toFront.Image");
@@ -1214,9 +1292,10 @@
             // 
             // contextMenu_oamNoSelection
             // 
-            contextMenu_oamNoSelection.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_addPartHere });
+            contextMenu_oamNoSelection.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_addPartHere, button_pasteHere });
             contextMenu_oamNoSelection.Name = "contextMenu_oamNoSelection";
-            contextMenu_oamNoSelection.Size = new System.Drawing.Size(146, 26);
+            contextMenu_oamNoSelection.Size = new System.Drawing.Size(146, 48);
+            contextMenu_oamNoSelection.Opening += contextMenu_oamNoSelection_Opening;
             // 
             // button_addPartHere
             // 
@@ -1225,6 +1304,15 @@
             button_addPartHere.Size = new System.Drawing.Size(145, 22);
             button_addPartHere.Text = "Add new Part";
             button_addPartHere.Click += button_addPartHere_Click;
+            //
+            // button_pasteHere
+            //
+            button_pasteHere.Image = Properties.Resources.paste;
+            button_pasteHere.Name = "button_pasteHere";
+            button_pasteHere.ShortcutKeyDisplayString = "Ctrl+V";
+            button_pasteHere.Size = new System.Drawing.Size(145, 22);
+            button_pasteHere.Text = "Paste";
+            button_pasteHere.Click += button_pasteHere_Click;
             // 
             // FormOam
             // 
@@ -1352,6 +1440,15 @@
         private System.Windows.Forms.ToolStripMenuItem button_layerUp;
         private System.Windows.Forms.ContextMenuStrip contextMenu_oamNoSelection;
         private System.Windows.Forms.ToolStripMenuItem button_addPartHere;
+        private System.Windows.Forms.ToolStripMenuItem button_pasteHere;
+        private System.Windows.Forms.ToolStripMenuItem button_cutCtx;
+        private System.Windows.Forms.ToolStripMenuItem button_copyCtx;
+        private System.Windows.Forms.ToolStripMenuItem button_pasteCtx;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripButton button_cut;
+        private System.Windows.Forms.ToolStripButton button_copy;
+        private System.Windows.Forms.ToolStripButton button_paste;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem button_removePartCtx;
         private System.Windows.Forms.Button button_frameUp;
