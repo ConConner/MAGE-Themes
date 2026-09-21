@@ -19,6 +19,7 @@ using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
@@ -134,6 +135,17 @@ public partial class FormOam : Form
         }
     }
     private bool viewPartOutline = false;
+
+    private bool SnapParts
+    {
+        get => field;
+        set
+        {
+            field = value;
+            button_snap.Checked = value;
+            Program.Config.OamEditorSnapParts = value;
+        }
+    }
 
     private bool ViewPalette
     {
@@ -297,6 +309,7 @@ public partial class FormOam : Form
         ViewOrigin = Program.Config.OamEditorViewOrigin;
         ViewPartOutline = Program.Config.OamEditorViewPartOutlines;
         ViewPalette = Program.Config.OamEditorViewPalette;
+        SnapParts = Program.Config.OamEditorSnapParts;
         UpdateGfxZoom(Program.Config.OamEditorGfxZoom);
         UpdateOamZoom(Program.Config.OamEditorOamZoom);
 
@@ -333,8 +346,7 @@ public partial class FormOam : Form
         paletteView.AddDrawable(PaletteSelection);
 
         //Arrow key movement debounce timer
-        KeyMovementDebounceTimer = new();
-        KeyMovementDebounceTimer.Interval = 500;
+        KeyMovementDebounceTimer = new() { Interval = 600 };
         KeyMovementDebounceTimer.Tick += KeyMovementDebounceTimer_Tick;
 
         LoadCommonGraphics = true; // We don't want to draw/reload graphics during initalization so this must come after `loading = true`
@@ -1010,6 +1022,7 @@ public partial class FormOam : Form
 
     private void button_viewOutline_Click(object sender, EventArgs e) => ViewPartOutline = !button_viewOutline.Checked;
 
+    private void button_snap_Click(object sender, EventArgs e) => SnapParts = !button_snap.Checked;
 
     #region FRAME EDITING
     private void AddFrame(OAM.Frame frame)
@@ -1524,6 +1537,98 @@ public partial class FormOam : Form
         return area.Value;
     }
 
+    private List<Rectangle> UnselectedPartsAreas()
+    {
+        List<Rectangle> result = new();
+        for (int i = 0; i < SelectedFrame.numParts; i++)
+        {
+            if (SelectedPartIndices.Contains(i)) continue;
+            result.Add(SelectedFrame.parts[i].Area);
+        }
+        return result;
+    }
+
+    private Rectangle SnapRectangle(Rectangle current, IEnumerable<Rectangle> otherRectangles, int snapThreshold = 2, int proximityRadius = 5)
+    {
+        if (otherRectangles == null)
+        {
+            return current;
+        }
+
+        int? bestDeltaX = null;
+        int? bestDeltaY = null;
+
+        int currentCenterX = current.X + (current.Width / 2);
+        int currentCenterY = current.Y + (current.Height / 2);
+
+        int radiusSquared = proximityRadius * proximityRadius;
+
+        foreach (var other in otherRectangles)
+        {
+            // 1. Proximity Check: Calculate squared edge-to-edge distance between the two boxes
+            if (GetSquaredDistance(current, other) > radiusSquared)
+            {
+                continue; // Too far away — ignore this rectangle
+            }
+
+            int otherCenterX = other.X + (other.Width / 2);
+            int otherCenterY = other.Y + (other.Height / 2);
+
+            // 2. Evaluate X-axis alignment options
+            int[] xOffsets = {
+                other.Left - current.Left,       // Outer Left to Left
+                other.Right - current.Right,     // Outer Right to Right
+                other.Right - current.Left,      // Abut: Left to Right
+                other.Left - current.Right,      // Abut: Right to Left
+                otherCenterX - currentCenterX    // Center to Center
+            };
+
+            foreach (int dx in xOffsets)
+            {
+                if (Math.Abs(dx) <= snapThreshold)
+                {
+                    if (!bestDeltaX.HasValue || Math.Abs(dx) < Math.Abs(bestDeltaX.Value))
+                    {
+                        bestDeltaX = dx;
+                    }
+                }
+            }
+
+            // 3. Evaluate Y-axis alignment options
+            int[] yOffsets = {
+                other.Top - current.Top,         // Outer Top to Top
+                other.Bottom - current.Bottom,   // Outer Bottom to Bottom
+                other.Bottom - current.Top,      // Abut: Top to Bottom
+                other.Top - current.Bottom,      // Abut: Bottom to Top
+                otherCenterY - currentCenterY    // Center to Center
+            };
+
+            foreach (int dy in yOffsets)
+            {
+                if (Math.Abs(dy) <= snapThreshold)
+                {
+                    if (!bestDeltaY.HasValue || Math.Abs(dy) < Math.Abs(bestDeltaY.Value))
+                    {
+                        bestDeltaY = dy;
+                    }
+                }
+            }
+        }
+
+        int snappedX = current.X + (bestDeltaX ?? 0);
+        int snappedY = current.Y + (bestDeltaY ?? 0);
+
+        return new Rectangle(snappedX, snappedY, current.Width, current.Height);
+    }
+
+    private int GetSquaredDistance(Rectangle a, Rectangle b)
+    {
+        int dx = Math.Max(0, Math.Max(b.Left - a.Right, a.Left - b.Right));
+        int dy = Math.Max(0, Math.Max(b.Top - a.Bottom, a.Top - b.Bottom));
+
+        return (dx * dx) + (dy * dy);
+    }
+
     private int FindCommonPalette()
     {
         if (SelectedPartIndices.Count < 1) return -1;
@@ -1906,6 +2011,21 @@ public partial class FormOam : Form
             Math.Clamp(PartsStartLocation.Value.X + diff.X, -256, 255),
             Math.Clamp(PartsStartLocation.Value.Y + diff.Y, -128, 127)
         );
+
+        // Snap to nearest unselected part
+        if (ModifierKeys == Keys.Shift)
+        {
+            int roundX = newPartLocation.X / 8 * 8;
+            int roundY = newPartLocation.Y / 8 * 8;
+            newPartLocation = new(roundX, roundY);
+        }
+        else if (SnapParts && ModifierKeys != Keys.Alt)
+        {
+            Rectangle current = GetMultiPartArea();
+            current.Location = newPartLocation;
+            newPartLocation = SnapRectangle(current, UnselectedPartsAreas()).Location;
+        }
+
         textBox_x.Text = Hex.ToString(newPartLocation.X < 0 ? newPartLocation.X + 512 : newPartLocation.X);
         textBox_y.Text = Hex.ToString(newPartLocation.Y < 0 ? newPartLocation.Y + 256 : newPartLocation.Y);
     }
