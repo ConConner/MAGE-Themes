@@ -845,19 +845,19 @@ namespace mage
             int gfxOffset = room.tileset.RLEgfx.Offset;
             int palOffset = room.tileset.palette.Offset + 0x20;
 
-            if (Program.ExperimentalFeaturesEnabled)
+            if (Program.LegacyEditors)
             {
-                if (!FindOpenForm(typeof(FormGraphicsNew), false))
+                if (!FindOpenForm(typeof(FormGraphics), false))
                 {
-                    var form = new FormGraphicsNew(this, gfxOffset, 32, 0, palOffset);
+                    FormGraphics form = new FormGraphics(this, gfxOffset, 32, 0, palOffset);
                     form.Show();
                 }
                 return;
             }
 
-            if (!FindOpenForm(typeof(FormGraphics), false))
+            if (!FindOpenForm(typeof(FormGraphicsNew), false))
             {
-                FormGraphics form = new FormGraphics(this, gfxOffset, 32, 0, palOffset);
+                var form = new FormGraphicsNew(this, gfxOffset, 32, 0, palOffset);
                 form.Show();
             }
         }

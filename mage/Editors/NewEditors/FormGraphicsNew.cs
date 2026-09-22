@@ -29,8 +29,8 @@ public partial class FormGraphicsNew : Form
 {
     public static void OpenGraphicsEditor(int gfxOffset, int width, int height, int palOffset)
     {
-        if (Program.ExperimentalFeaturesEnabled) new FormGraphicsNew(FormMain.Instance, gfxOffset, width, height, palOffset).Show();
-        else new FormGraphics(FormMain.Instance, gfxOffset, width, height, palOffset).Show();
+        if (Program.LegacyEditors) new FormGraphics(FormMain.Instance, gfxOffset, width, height, palOffset).Show();
+        else new FormGraphicsNew(FormMain.Instance, gfxOffset, width, height, palOffset).Show();
     }
 
     private enum Tool

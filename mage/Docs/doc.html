@@ -119,7 +119,7 @@
 			<li class="toc2"><a href="#effect-position">Effect Position</a></li>
 			<li class="toc1"><a href="#header-editor">Header Editor</a></li>
 			<li class="toc1"><a href="#tileset-editor">Tileset Editor</a></li>
-			<li class="toc1"><a href="#graphics-editor">Graphics Editor</a></li>
+			<li class="toc1"><a href="#graphics-editor">Graphics Editor</a> (<a href="legacy.html#graphics-editor">Legacy</a>)</li>
 			<li class="toc1"><a href="#palette-editor">Palette Editor</a></li>
 			<li class="toc1"><a href="#tile-table-editor">Tile Table Editor</a> (<a href="legacy.html#tile-table-editor">Legacy</a>)</li>
 			<li class="toc1"><a href="#animation-editor">Animation Editor</a></li>
@@ -324,10 +324,19 @@
 
 		<h2 id="graphics-editor">Graphics Editor</h2>
 		<p>
-			The graphics editor is used for viewing, importing, and exporting graphics. When opening, it will automatically provide graphics and palette offsets depending on where it was opened from. There are several options for viewing the graphics, including image width, height, and zoom level. There is also a compressed option, which will display LZ77 compressed graphics if they are present at the provided offset.
+			The graphics editor is used for viewing, drawing, importing, and exporting graphics. Under "Image Control" you can change the graphics offset, palette offset, and size, then click "Load" to load the data at those offsets. Check "Compressed Graphics" if the graphics at that offset are LZ77 compressed; otherwise, set a width and height for uncompressed graphics.
 		</p>
 		<p>
-			The main function of this editor is importing and exporting graphics. There are two different file formats: image and raw. Image is simply a PNG image, while raw contains the same data stored in the ROM for the graphics. Use the image format if you plan to edit the graphics using an external graphics editor. Use the raw format if you're copying graphics from one ROM to another or want to use a program such as Tile Layer Pro. When importing graphics, make sure you select only the graphics you want to replace, adjusting the offset and height as necessary. If you import an image, it will match each pixel to the closest color in the currently selected palette. If you import raw, the palette is ignored. If the imported graphics are larger than the original, the editor will automatically allocate new space and fix pointers. Make sure you write down the new offset if you need it later.
+			The graphics editor lets you draw directly onto the tiles. The palette bar shows the currently loaded palette. Left-clicking a color sets the primary (left mouse button) color, and right-clicking sets the secondary (right mouse button) color; the two selected colors are shown to the left of the palette. The "+"/"-" buttons shift the palette by one row, and "Edit" opens the <a href="#palette-editor">Palette Editor</a> for the current offset.
+		</p>
+		<p>
+			The toolbar provides several drawing tools: "Pen" draws with the primary or secondary color depending on which mouse button is held. "Fill" flood-fills an area; uncheck "Neighbouring" to replace every pixel of that color in the image instead of just the connected area, and check "Stop on Tile Grid" to keep the fill within the current 8x8 tile. "Shape" draws a rectangle between where you click and release (holding Shift aligns it to the tile grid). "Eyedropper" picks a color from the image into the primary or secondary color; you can also quickly eyedrop with Alt+Click regardless of the active tool.
+		</p>
+		<p>
+			"Select" lets you drag a rectangular selection (hold Shift to snap the selection to whole tiles). With an active selection, most tools are constrained to drawing within it. Dragging inside a selection moves it; the pixels underneath are picked up and can be dropped back down at any position. Selections can be cut, copied, pasted, and flipped horizontally or vertically with the toolbar buttons. The "Grid" dropdown toggles a "Tile Grid" (every 8x8 tiles) or "Pixel Grid" overlay to help line up your edits.
+		</p>
+		<p>
+			Graphics and palettes can each be imported and exported independently under "Import"/"Export". For graphics, "Image" imports/exports a PNG (matching each pixel to the closest color in the currently selected palette on import), while "Raw" imports/exports the same data format stored in the ROM, ignoring the palette. For palettes, you can import/export in Raw, Tile Layer Pro, or YY-CHR formats.
 		</p>
 		<span class="smallLink">(<a href="#top">top</a>)</span>
 
