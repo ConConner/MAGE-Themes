@@ -409,7 +409,28 @@
 
 		<h2 id="oam-editor">OAM Editor</h2>
 		<p>
-			<b>TODO</b>
+			OAM (Object Attribute Memory) data describes how a sprite's graphics are assembled out of individual parts to form a single frame. Each part is a rectangular block of tiles (ranging from 1x1 to 8x8 tiles) with its own tile number, palette row, position, and flip. A sprite's animations play through a series of these OAM frames. This is a more low-level editor than most, so it's a good idea to look at the OAM of some existing sprites before making changes of your own.
+		</p>
+		<p>
+			To edit a sprite (or any other OAM data), enter its graphics, palette, and OAM offsets under "Data Control" and click "Go". Check "Compressed" if the graphics at that offset are LZ77 compressed; leave it unchecked for uncompressed raw graphics. The "+" and "-" buttons next to the palette offset shift it by one row (0x20 bytes) at a time.
+		</p>
+		<p>
+			The "Graphics" panel on the top right shows the raw tiles available to use for parts. "Load Common Graphics" additionally loads the <a href="technical.html#generic-sprite-graphics">generic sprite graphics</a> that are always present in VRAM, which many parts reference. "View entire VRAM" shows everything currently loaded into VRAM as it would appear in game and is only really needed if you want to access tiles from the common graphics. Selecting a part and then clicking a tile here sets that part's tile number. You can also change which palette row is used for display by clicking a row in the "Palette" panel.
+		</p>
+		<p>
+			The "OAM Frame" panel on the bottom right shows the currently selected frame, with each part's position relative to the sprite's origin (marked with "View Origin"). Click a part to select it, or drag a box over empty space to select multiple parts at once; hold Ctrl while clicking to add individual parts from the selection. Drag a selected part (or group of parts) to move it, or nudge it with the arrow keys. "Snap to Parts" aligns a part's edges and center to nearby parts as you drag it, making it easier to line parts up. "View Part Outlines" draws a box around every part in the frame, which helps when parts overlap or share the same graphics. Right-clicking a part (or the empty frame) opens a context menu with layering options ("Bring to Front", "Send to Back", "Move forwards"/"Move backwards") as well as add, delete, and paste options.
+		</p>
+		<p>
+			Selecting a part fills in the "Part Details" panel, where you can edit its tile number, palette row, X/Y position, horizontal/vertical flip, and size. Frames are managed in the panel on the left: add a new blank frame, duplicate the selected frame, remove it, or reorder it with the up/down buttons. "Duration" sets how many frames (at 60 FPS) the frame is displayed for before advancing to the next one in an animation. Click the play button to preview the frames in sequence using their durations.
+		</p>
+		<p>
+			Parts can be cut, copied, and pasted, including between different frames or different instances of the OAM editor.
+		</p>
+		<p>
+			OAM data can be imported and exported under "Import"/"Export" in two formats: MAGE's own OAM format (.mgo), meant for moving OAM data between ROMs or backing it up, and Assembly (.asm), which is useful if you're building sprites through a separate assembly project. You can also export the current frames as an animated GIF for previewing outside of MAGE.
+		</p>
+		<p>
+			Hit "Apply" to write your changes back to the ROM. Because adding frames or parts can grow the data past the space it originally occupied, MAGE may need to repoint the OAM data elsewhere, in which case it will prompt you to save a bookmark to the new location.
 		</p>
 		<span class="smallLink">(<a href="#top">top</a>)</span>
 
