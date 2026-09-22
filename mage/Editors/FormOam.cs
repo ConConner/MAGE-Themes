@@ -383,6 +383,20 @@ public partial class FormOam : Form
             originalFramePointers.Add(ROM.Stream.ReadPtr(originalOamOffset + 8 * i));
         }
 
+        /// STEP 0: Mark unused frame lists as freespace
+        for (int i = oam.NumFrames; i < originalNumOfFrames; i++)
+        {
+            int unusedFramePtr = originalFramePointers[i];
+            if (ROM.Stream.GetPointers(unusedFramePtr).Count <= 1)
+            {
+                int unusedNumOfParts = ROM.Stream.Read16(unusedFramePtr);
+                int unusedLength = 2 + unusedNumOfParts * 6;
+                ROM.Stream.MarkFreeSpace(unusedFramePtr, unusedLength, 0);
+            }
+            // else: frame is still owned by different OAM
+        }
+        if (oam.NumFrames < originalNumOfFrames) originalNumOfFrames = oam.NumFrames;
+
         ByteStream BuildFrameData(OAM.Frame frame)
         {
             ByteStream frameData = new ByteStream();
@@ -396,17 +410,6 @@ public partial class FormOam : Form
             }
             return frameData;
         }
-
-        /// STEP 0: Mark unused frame lists as freespace
-        for (int i = oam.NumFrames; i < originalNumOfFrames; i++)
-        {
-            int unusedFramePtr = originalFramePointers[i];
-            int unusedNumOfParts = ROM.Stream.Read16(unusedFramePtr);
-            int unusedLength = 2 + unusedNumOfParts * 6;
-
-            ROM.Stream.MarkFreeSpace(unusedFramePtr, unusedLength, 0);
-        }
-        if (oam.NumFrames < originalNumOfFrames) originalNumOfFrames = oam.NumFrames;
 
         /// STEP 1: SAVE FRAME DATA
         // Overlapping/old frame data
@@ -423,9 +426,18 @@ public partial class FormOam : Form
             // Build frame data up
             ByteStream frameData = BuildFrameData(frame);
 
-            //Write data to the ROM
-            ROM.Stream.Write2(frameData, oldLength, ref offset, false);
-            newFramePointers.Add(offset);
+            int newOffset;
+            if (ROM.Stream.GetPointers(offset).Count <= 1)
+            {
+                newOffset = offset;
+                ROM.Stream.Write2(frameData, oldLength, ref newOffset, false);
+            }
+            else
+            {
+                newOffset = ROM.Stream.WriteNewData(frameData);
+            }
+
+            newFramePointers.Add(newOffset);
         }
 
         // New frame data
@@ -2221,7 +2233,6 @@ public partial class FormOam : Form
     {
         button_undo.Enabled = UndoRedo.CanUndo && !playingAnimation;
         button_redo.Enabled = UndoRedo.CanRedo && !playingAnimation;
-        if (palette is not null) DrawPalette();
     }
 
     private void button_undo_ButtonClick(object sender, EventArgs e) => Undo();
