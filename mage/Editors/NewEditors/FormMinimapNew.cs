@@ -212,7 +212,7 @@ public partial class FormMinimapNew : Form, Editor
 
         ViewRoomOutlines = Program.Config.MapEditorViewRoomOutlines;
 
-        DrawTiles();
+        DrawTiles(TilesFlippedH, TilesFlippedV);
         tileDisplay_tiles.BackColor = Color.Black;
         comboBox_tilesType.SelectedIndex = 1;
 
@@ -227,7 +227,7 @@ public partial class FormMinimapNew : Form, Editor
         palette.SetARGB(1, 0, 0);
 
         SetValuesBasedOnGame();
-        DrawTiles();
+        DrawTiles(TilesFlippedH, TilesFlippedV);
         DrawMap();
         roomListReloadRequired = true;
     }
