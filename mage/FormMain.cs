@@ -256,7 +256,7 @@ namespace mage
             else if (zoom == 2) { menuItem_zoom400.Checked = true; }
             else if (zoom == 3) { menuItem_zoom800.Checked = true; }
             roomView.UpdateZoom(zoom, false);
-            statusStrip_zoom.Text = $"{1 << zoom}00%";
+            UpdateRoomZoomControls();
 
             // Config object
             var configOptions = new JsonSerializerOptions()
@@ -1682,7 +1682,6 @@ namespace mage
             // handle each status strip item seperately
             statusLabel_clip.Enabled = val;
             statusLabel_coor.Enabled = val;
-            statusStrip_zoom.Enabled = val;
             lbl_spring.Enabled = val;
         }
 
@@ -1870,6 +1869,8 @@ namespace mage
             statusLabel_coor.Text = "(0, 0)";
             statusLabel_sel.Text = "0 x 0";
             statusLabel_clip.Text = "";
+
+            UpdateLayerMoveControls();
         }
 
         private void SetViewOptions()
@@ -1920,6 +1921,8 @@ namespace mage
 
             // enemy sets
             SetSpritesetOptions();
+
+            UpdateLayerMoveControls();
         }
 
         private void UpdateViewOptions()
@@ -1973,6 +1976,8 @@ namespace mage
                 comboBox_spriteset.SelectedIndex = 0;
                 enemySet = 0;
             }
+
+            UpdateLayerMoveControls();
         }
 
         public void SetSpritesetOptions()
@@ -2077,6 +2082,7 @@ namespace mage
                 roomView.ResizeRed(1, 1);
             }
             roomView.Invalidate(Draw.Union(prev, roomView.redRect));
+            UpdateLayerMoveControls();
         }
 
         public static void UpdateEditors()
@@ -2096,6 +2102,13 @@ namespace mage
             ReloadRoom(false);
         }
 
+        private void UpdateRoomZoomControls()
+        {
+            button_roomZoomIn.Enabled = zoom < 3;
+            button_roomZoomOut.Enabled = zoom > 0;
+            label_roomZoom.Text = $"{1 << zoom}00%";
+        }
+
         private void UpdateZoom(int newZoom)
         {
             if (newZoom < 0) { zoom = 0; }
@@ -2107,7 +2120,7 @@ namespace mage
             menuItem_zoom400.Checked = zoom == 2;
             menuItem_zoom800.Checked = zoom == 3;
 
-            statusStrip_zoom.Text = $"{1 << zoom}00%";
+            UpdateRoomZoomControls();
 
             if (!roomView.UpdateZoom(zoom, true)) { return; }
 
@@ -2172,6 +2185,7 @@ namespace mage
                 menuItem_editBG2.Checked = checkBox_editBG2.Checked = false;
                 menuItem_viewBG0.Checked = checkBox_viewBG0.Checked = true;
             }
+            UpdateLayerMoveControls();
         }
         private void checkBox_editBG1_CheckedChanged(object sender, EventArgs e)
         {
@@ -2182,6 +2196,7 @@ namespace mage
                 menuItem_editBG2.Checked = checkBox_editBG2.Checked = false;
                 menuItem_viewBG1.Checked = checkBox_viewBG1.Checked = true;
             }
+            UpdateLayerMoveControls();
         }
         private void checkBox_editBG2_CheckedChanged(object sender, EventArgs e)
         {
@@ -2192,6 +2207,7 @@ namespace mage
                 menuItem_editBG1.Checked = checkBox_editBG1.Checked = false;
                 menuItem_viewBG2.Checked = checkBox_viewBG2.Checked = true;
             }
+            UpdateLayerMoveControls();
         }
         private void checkBox_editCLP_CheckedChanged(object sender, EventArgs e)
         {
@@ -2622,6 +2638,29 @@ namespace mage
             PerformAction(a);
         }
 
+        private void toolStrip_moveToBg_Click(object sender, EventArgs e)
+        {
+            int dstBg = sender == toolStrip_moveToBg0 ? 0 : sender == toolStrip_moveToBg1 ? 1 : 2;
+            int srcBg = EditBG0 ? 0 : EditBG1 ? 1 : EditBG2 ? 2 : -1;
+            if (srcBg == -1 || srcBg == dstBg || !toolStrip_swapLayers.Enabled) { return; }
+
+            Sound.PlaySound($"bg{dstBg}.wav");
+            PerformAction(new MoveBlocksToLayer(room, selection, srcBg, dstBg));
+        }
+
+        // Layer moving needs a finished room selection and exactly one BG being edited.
+        // Destinations must be editable (RLE) and different from the BG being edited.
+        private void UpdateLayerMoveControls()
+        {
+            if (room == null) { return; }
+
+            toolStrip_swapLayers.Enabled = EditBGs && (EditBG0 || EditBG1 || EditBG2)
+                && roomView.HasSelection && pivot.X == -1;
+            toolStrip_moveToBg0.Enabled = checkBox_editBG0.Enabled && !EditBG0;
+            toolStrip_moveToBg1.Enabled = checkBox_editBG1.Enabled && !EditBG1;
+            toolStrip_moveToBg2.Enabled = checkBox_editBG2.Enabled && !EditBG2;
+        }
+
         private void UpdateClipboard()
         {
             if (clipboard == null || !clipboard.Visible) { return; }
@@ -2776,6 +2815,7 @@ namespace mage
                 TileSelection.Rectangle = rect2;
                 TileSelection.Visible = true;
                 UpdateStatusSel();
+                UpdateLayerMoveControls();
             }
         }
 
@@ -2880,6 +2920,7 @@ namespace mage
                     roomView.ResizeRed(1, 1);
                     roomView.Invalidate(rect2);
                     UpdateStatusSel();
+                    UpdateLayerMoveControls();
                 }
                 else
                 {
@@ -3065,6 +3106,7 @@ namespace mage
                     roomView.ResizeRed(selection.Width, selection.Height);
                     rect = Draw.Union(rect, roomView.redRect);
                     roomView.Invalidate(rect);
+                    UpdateLayerMoveControls();
                 }
             }
         }
