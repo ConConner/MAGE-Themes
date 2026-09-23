@@ -120,7 +120,7 @@
 			<li class="toc1"><a href="#header-editor">Header Editor</a></li>
 			<li class="toc1"><a href="#tileset-editor">Tileset Editor</a></li>
 			<li class="toc1"><a href="#graphics-editor">Graphics Editor</a> (<a href="legacy.html#graphics-editor">Legacy</a>)</li>
-			<li class="toc1"><a href="#palette-editor">Palette Editor</a></li>
+			<li class="toc1"><a href="#palette-editor">Palette Editor</a> (<a href="legacy.html#palette-editor">Legacy</a>)</li>
 			<li class="toc1"><a href="#tile-table-editor">Tile Table Editor</a> (<a href="legacy.html#tile-table-editor">Legacy</a>)</li>
 			<li class="toc1"><a href="#animation-editor">Animation Editor</a></li>
 			<li class="toc1"><a href="#sprite-editor">Sprite Editor</a></li>
@@ -342,7 +342,19 @@
 
 		<h2 id="palette-editor">Palette Editor</h2>
 		<p>
-			The palette editor is used for modifying individual colors. You can also import or export palettes. After selecting a color, you can modify it by changing each of the three color components. Under "HTML" you can also input a 24-bit color in HEX Format. This will automatically select the closest 15-bit color. The resulting color is shown along with its 15-bit value (the format used by GBA games) and its 24-bit value (the format used by most computers). Any changes made to the palette will only be kept if you hit "Apply". If you change the offset or number of rows, the changes will be discarded. You can also import and export palettes in a few different formats.
+			The palette editor is used for viewing, drawing, and transforming palettes. Under "Selection" you can change the offset and number of rows and click "Load" to load different data; the "+"/"-" buttons shift the offset by one row. If you have unsaved changes, you'll be asked whether to save them first.
+		</p>
+		<p>
+			The "Current Color" panel lets you edit whichever color is selected. You can drag the R/G/B bars, type exact values into the numeric fields, or type a 24-bit hex code. The color's 15-bit value (the format used by GBA games) and 24-bit value (the format used by most computers) are shown below. The color picker lets you pick a shade visually instead. Colors are set as either the primary (left mouse button) or secondary (right mouse button) color, shown in the swatch above; previously used colors are also kept in "Recent Colors" for quick reuse.
+		</p>
+		<p>
+			"Pen" paints the primary or secondary color onto a cell depending on which mouse button is held. "Eyedropper" picks a color from the palette into the primary or secondary color; you can also quickly eyedrop with Alt+Click regardless of the active tool. "Select" lets you drag a rectangular selection over one or more colors; dragging inside a selection moves it. Selected colors can be cut, copied, and pasted, including between different offsets or instances of the editor.
+		</p>
+		<p>
+			With a selection active, "Transform" opens a dialog for altering every color in it at once, with a live preview. Its tabs are: "Gradient", which interpolates between the colors on each edge of the selection, horizontally or vertically; "Hue", which shifts hue, chroma (saturation), and lightness; "Inversion", which inverts chosen color channels (or inverts perceptually while preserving lightness); "Swap", which reorders the red/green/blue channels; "Posterize", which reduces the color depth; and "Tint", which blends the selection toward a chosen color by a given strength, in either simple RGB or perceptual blending.
+		</p>
+		<p>
+			Palettes can be imported and exported in Raw, Tile Layer Pro, or YY-CHR formats under "Import"/"Export".
 		</p>
 		<span class="smallLink">(<a href="#top">top</a>)</span>
 

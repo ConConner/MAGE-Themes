@@ -864,19 +864,19 @@ namespace mage
 
         private void menuItem_paletteEditor_Click(object sender, EventArgs e)
         {
-            if (Program.ExperimentalFeaturesEnabled)
+            if (Program.LegacyEditors)
             {
-                if (!FindOpenForm(typeof(FormPaletteNew), false))
+                if (!FindOpenForm(typeof(FormPalette), false))
                 {
-                    var form = new FormPaletteNew(true, room.tileset.number);
+                    FormPalette form = new FormPalette(this, true, room.tileset.number);
                     form.Show();
                 }
                 return;
             }
 
-            if (!FindOpenForm(typeof(FormPalette), false))
+            if (!FindOpenForm(typeof(FormPaletteNew), false))
             {
-                FormPalette form = new FormPalette(this, true, room.tileset.number);
+                var form = new FormPaletteNew(true, room.tileset.number);
                 form.Show();
             }
         }
