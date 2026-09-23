@@ -1,3 +1,11 @@
+# [1.24.0](https://github.com/ConConner/MAGE-Themes/compare/v1.23.0...v1.24.0) (2026-09-23)
+
+
+### Features
+
+* fill tool in room editor ([3e4aa0c](https://github.com/ConConner/MAGE-Themes/commit/3e4aa0c67aa100ee7972e8cc0bf435e3b98c626b)), closes [#87](https://github.com/ConConner/MAGE-Themes/issues/87)
+* swap backgrounds of current selection in room editor ([72bfa06](https://github.com/ConConner/MAGE-Themes/commit/72bfa067b7164a254057f480b6cbd14de5bc60db))
+
 # [1.23.0](https://github.com/ConConner/MAGE-Themes/compare/v1.22.0...v1.23.0) (2026-09-23)
 
 
