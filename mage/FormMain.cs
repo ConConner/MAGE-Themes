@@ -61,6 +61,7 @@ namespace mage
         private bool EditBG1 { get { return checkBox_editBG1.Checked; } }
         private bool EditBG2 { get { return checkBox_editBG2.Checked; } }
         private bool EditCLP { get { return checkBox_editCLP.Checked; } }
+        private bool FillMode { get { return EditBGs && toolStrip_fill.Checked; } }
         private bool EditAnyBG
         {
             get
@@ -2073,14 +2074,7 @@ namespace mage
             // redraw cursor if necessary
             ResetRoomTip(false);
             Rectangle prev = roomView.redRect;
-            if (EditBGs && selection.X != -1)
-            {
-                roomView.ResizeRed(selection.Width, selection.Height);
-            }
-            else
-            {
-                roomView.ResizeRed(1, 1);
-            }
+            ResizeRedCursor();
             roomView.Invalidate(Draw.Union(prev, roomView.redRect));
             UpdateLayerMoveControls();
         }
@@ -2133,14 +2127,7 @@ namespace mage
                     roomView.ResizeSelection(selection);
                 }
             }
-            if (selection.X != -1 && EditBGs)
-            {
-                roomView.ResizeRed(selection.Width, selection.Height);
-            }
-            else
-            {
-                roomView.ResizeRed(1, 1);
-            }
+            ResizeRedCursor();
         }
 
         private void UpdateBGs()
@@ -2386,6 +2373,10 @@ namespace mage
                     break;
                 case Keys.OemCloseBrackets:
                     ChangeEnemyProperty(false);
+                    break;
+                case Keys.F:
+                    if (!toolStrip_fill.Enabled) break;
+                    toolStrip_fill_Click(this, new());
                     break;
             }
         }
@@ -2638,6 +2629,60 @@ namespace mage
             PerformAction(a);
         }
 
+        private void ResizeRedCursor()
+        {
+            // fill mode uses `selection` as a pool of tiles, so the cursor stays a single block
+            if (EditBGs && !FillMode && selection.X != -1) { roomView.ResizeRed(selection.Width, selection.Height); }
+            else { roomView.ResizeRed(1, 1); }
+        }
+
+        private void toolStrip_fill_Click(object sender, EventArgs e)
+        {
+            toolStrip_fill.Checked = !toolStrip_fill.Checked;
+            menuItem_fill.Checked = toolStrip_fill.Checked;
+            UpdateLayerMoveControls();
+
+            Rectangle prev = roomView.redRect;
+            ResizeRedCursor();
+            roomView.Invalidate(Draw.Union(prev, roomView.redRect));
+        }
+
+        // Flood fills the area of identical blocks under the cursor. The selected tiles (or room selection)
+        // are a pool that each filled block picks from at random.
+        private void FillBlocks()
+        {
+            if (blocks == null || blocks.Length == 0 || selection.X == -1) { return; }
+
+            int bgNum = -1;
+            if (EditBG0) { bgNum = 0; Sound.PlaySound("bg0.wav"); }
+            else if (EditBG1) { bgNum = 1; Sound.PlaySound("bg1.wav"); }
+            else if (EditBG2) { bgNum = 2; Sound.PlaySound("bg2.wav"); }
+            if (bgNum == -1 && !EditCLP) { return; }
+
+            // pool tiles from the tileset don't carry clipdata, so give them the selected clipdata
+            List<Block> pool = new();
+            foreach (Block b in blocks)
+            {
+                Block poolBlock = b;
+                if (TileSelection.Visible) { poolBlock.CLP = Clipdata; }
+                pool.Add(poolBlock);
+            }
+
+            // match on the edited BG, or on clipdata if only that is edited
+            int matchLayer = bgNum != -1 ? bgNum : 3;
+            if (!BlockFill.TryFill(room.backgrounds, roomCursor, matchLayer, pool, checkBox_fillNeighbouring.Checked, Random.Shared,
+                out Block[,] filled, out Point origin)) { return; }
+
+            ushort clip = 0xFFFF;
+            if (EditCLP)
+            {
+                clip = 0xFFFE;
+                Sound.PlaySound("clip.wav");
+            }
+
+            PerformAction(new EditBlocks(room.backgrounds, filled, origin, bgNum, clip, false, "Fill blocks"));
+        }
+
         private void toolStrip_moveToBg_Click(object sender, EventArgs e)
         {
             int dstBg = sender == toolStrip_moveToBg0 ? 0 : sender == toolStrip_moveToBg1 ? 1 : 2;
@@ -2654,6 +2699,9 @@ namespace mage
         {
             if (room == null) { return; }
 
+            toolStrip_fill.Enabled = EditBGs;
+            menuItem_fill.Enabled = EditBGs;
+            panel_fillSettings.Visible = FillMode;
             toolStrip_swapLayers.Enabled = EditBGs && (EditBG0 || EditBG1 || EditBG2)
                 && roomView.HasSelection && pivot.X == -1;
             toolStrip_moveToBg0.Enabled = checkBox_editBG0.Enabled && !EditBG0;
@@ -2865,7 +2913,7 @@ namespace mage
                     {
                         // redraw room's red rectangle
                         Rectangle rect = roomView.redRect;
-                        roomView.ResizeRed(selection.Width, selection.Height);
+                        ResizeRedCursor();
                         rect = Draw.Union(rect, roomView.redRect);
                         roomView.Invalidate(rect);
                     }
@@ -2885,7 +2933,12 @@ namespace mage
             {
                 if (EditBGs)
                 {
-                    if (selection.X != -1 || editOnlyClip)
+                    if (FillMode)
+                    {
+                        FillBlocks();
+                        UpdateStatusCoor();
+                    }
+                    else if (selection.X != -1 || editOnlyClip)
                     {
                         PasteBlocks(false);
                         UpdateStatusCoor();
@@ -2976,7 +3029,7 @@ namespace mage
                 bool editOnlyClip = EditCLP && !EditBG0 && !EditBG1 && !EditBG2;
                 if (EditBGs)
                 {
-                    if (selection.X != -1 && EditAnyBG || editOnlyClip)
+                    if (!FillMode && (selection.X != -1 && EditAnyBG || editOnlyClip))
                     {
                         Rectangle rect = roomView.redRect;
                         rect.Width++; rect.Height++;
@@ -3103,7 +3156,7 @@ namespace mage
                     pivot = new Point(-1, -1);
 
                     Rectangle rect = roomView.redRect;
-                    roomView.ResizeRed(selection.Width, selection.Height);
+                    ResizeRedCursor();
                     rect = Draw.Union(rect, roomView.redRect);
                     roomView.Invalidate(rect);
                     UpdateLayerMoveControls();

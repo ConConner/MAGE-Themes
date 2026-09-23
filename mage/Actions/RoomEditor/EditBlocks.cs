@@ -13,12 +13,14 @@ namespace mage.Actions.RoomEditor
         private int _bgNum;
         private bool _updateClip;
         private Backgrounds _backgrounds;
+        private string _actionText;
 
 
         // constructor
-        public EditBlocks(Backgrounds backgrounds, Block[,] clipboard, Point ptDst, int bgNum, ushort clipVal, bool combine)
+        public EditBlocks(Backgrounds backgrounds, Block[,] clipboard, Point ptDst, int bgNum, ushort clipVal, bool combine, string actionText = "Edit blocks")
         {
             this.combine = combine;
+            _actionText = actionText;
 
             _bgNum = bgNum;
             _backgrounds = backgrounds;
@@ -93,7 +95,7 @@ namespace mage.Actions.RoomEditor
 
         public override string ActionText
         {
-            get { return "Edit blocks"; }
+            get { return _actionText; }
         }
 
         public override bool TryCombine(RoomAction a)

@@ -45,6 +45,7 @@
             menuStrip_edit = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_editBGs = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_editObjects = new System.Windows.Forms.ToolStripMenuItem();
+            menuItem_fill = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_forceClipdata = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
@@ -219,6 +220,8 @@
             contextItem_removeEffectPos = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             contextItem_testRoom = new System.Windows.Forms.ToolStripMenuItem();
+            panel_fillSettings = new System.Windows.Forms.Panel();
+            checkBox_fillNeighbouring = new System.Windows.Forms.CheckBox();
             toolStrip_room = new System.Windows.Forms.ToolStrip();
             toolStrip_undo = new System.Windows.Forms.ToolStripSplitButton();
             toolStrip_redo = new System.Windows.Forms.ToolStripSplitButton();
@@ -300,6 +303,7 @@
             groupBox_room.SuspendLayout();
             panel_room.SuspendLayout();
             contextMenu.SuspendLayout();
+            panel_fillSettings.SuspendLayout();
             toolStrip_room.SuspendLayout();
             groupBox_viewBG.SuspendLayout();
             groupBox_editBG.SuspendLayout();
@@ -408,7 +412,7 @@
             // 
             // menuStrip_edit
             // 
-            menuStrip_edit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_editBGs, menuItem_editObjects, toolStripSeparator17, menuItem_forceClipdata, toolStripSeparator19, menuItem_undo, menuItem_redo, toolStripSeparator4, menuItem_editBG0, menuItem_editBG1, menuItem_editBG2, menuItem_editCLP });
+            menuStrip_edit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_editBGs, menuItem_editObjects, menuItem_fill, toolStripSeparator17, menuItem_forceClipdata, toolStripSeparator19, menuItem_undo, menuItem_redo, toolStripSeparator4, menuItem_editBG0, menuItem_editBG1, menuItem_editBG2, menuItem_editCLP });
             menuStrip_edit.Enabled = false;
             menuStrip_edit.Name = "menuStrip_edit";
             menuStrip_edit.Size = new System.Drawing.Size(39, 20);
@@ -429,6 +433,14 @@
             menuItem_editObjects.Size = new System.Drawing.Size(187, 22);
             menuItem_editObjects.Text = "Object Editing Mode";
             menuItem_editObjects.Click += menuItem_editMode_Click;
+            // 
+            // menuItem_fill
+            // 
+            menuItem_fill.Image = Properties.Resources.fill_bucket;
+            menuItem_fill.Name = "menuItem_fill";
+            menuItem_fill.Size = new System.Drawing.Size(187, 22);
+            menuItem_fill.Text = "Fill Editing Mode";
+            menuItem_fill.Click += toolStrip_fill_Click;
             // 
             // toolStripSeparator17
             // 
@@ -1622,6 +1634,7 @@
             // groupBox_room
             // 
             groupBox_room.Controls.Add(panel_room);
+            groupBox_room.Controls.Add(panel_fillSettings);
             groupBox_room.Controls.Add(toolStrip_room);
             groupBox_room.Controls.Add(splitter_issues);
             groupBox_room.Controls.Add(errorList);
@@ -1641,17 +1654,17 @@
             panel_room.AutoScroll = true;
             panel_room.Controls.Add(roomView);
             panel_room.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel_room.Location = new System.Drawing.Point(4, 44);
+            panel_room.Location = new System.Drawing.Point(4, 69);
             panel_room.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panel_room.Name = "panel_room";
-            panel_room.Size = new System.Drawing.Size(497, 336);
+            panel_room.Size = new System.Drawing.Size(497, 311);
             panel_room.TabIndex = 0;
             // 
             // roomView
             // 
             roomView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             roomView.ContextMenuStrip = contextMenu;
-            roomView.Location = new System.Drawing.Point(6, 3);
+            roomView.Location = new System.Drawing.Point(0, 3);
             roomView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             roomView.Name = "roomView";
             roomView.Size = new System.Drawing.Size(129, 123);
@@ -1781,6 +1794,29 @@
             contextItem_testRoom.Text = "Test Room Here";
             contextItem_testRoom.Click += contextItem_testRoom_Click;
             // 
+            // panel_fillSettings
+            // 
+            panel_fillSettings.Controls.Add(checkBox_fillNeighbouring);
+            panel_fillSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            panel_fillSettings.Location = new System.Drawing.Point(4, 44);
+            panel_fillSettings.Name = "panel_fillSettings";
+            panel_fillSettings.Size = new System.Drawing.Size(497, 25);
+            panel_fillSettings.TabIndex = 3;
+            panel_fillSettings.Visible = false;
+            // 
+            // checkBox_fillNeighbouring
+            // 
+            checkBox_fillNeighbouring.AutoSize = true;
+            checkBox_fillNeighbouring.Checked = true;
+            checkBox_fillNeighbouring.CheckState = System.Windows.Forms.CheckState.Checked;
+            checkBox_fillNeighbouring.Location = new System.Drawing.Point(3, 4);
+            checkBox_fillNeighbouring.Name = "checkBox_fillNeighbouring";
+            checkBox_fillNeighbouring.Size = new System.Drawing.Size(100, 19);
+            checkBox_fillNeighbouring.TabIndex = 0;
+            checkBox_fillNeighbouring.Text = "Neighbouring";
+            ToolTip.SetToolTip(checkBox_fillNeighbouring, "Only fill tiles connected to the clicked tile. Otherwise every matching tile in the room is filled.");
+            checkBox_fillNeighbouring.UseVisualStyleBackColor = true;
+            // 
             // toolStrip_room
             // 
             toolStrip_room.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -1845,6 +1881,7 @@
             toolStrip_fill.Name = "toolStrip_fill";
             toolStrip_fill.Size = new System.Drawing.Size(23, 22);
             toolStrip_fill.Text = "Fill editing mode";
+            toolStrip_fill.Click += toolStrip_fill_Click;
             // 
             // toolStripSeparator32
             // 
@@ -1865,22 +1902,22 @@
             // toolStrip_moveToBg0
             // 
             toolStrip_moveToBg0.Name = "toolStrip_moveToBg0";
-            toolStrip_moveToBg0.Size = new System.Drawing.Size(180, 22);
-            toolStrip_moveToBg0.Text = "BG 0";
+            toolStrip_moveToBg0.Size = new System.Drawing.Size(141, 22);
+            toolStrip_moveToBg0.Text = "Send to BG 0";
             toolStrip_moveToBg0.Click += toolStrip_moveToBg_Click;
             // 
             // toolStrip_moveToBg1
             // 
             toolStrip_moveToBg1.Name = "toolStrip_moveToBg1";
-            toolStrip_moveToBg1.Size = new System.Drawing.Size(180, 22);
-            toolStrip_moveToBg1.Text = "BG 1";
+            toolStrip_moveToBg1.Size = new System.Drawing.Size(141, 22);
+            toolStrip_moveToBg1.Text = "Send to BG 1";
             toolStrip_moveToBg1.Click += toolStrip_moveToBg_Click;
             // 
             // toolStrip_moveToBg2
             // 
             toolStrip_moveToBg2.Name = "toolStrip_moveToBg2";
-            toolStrip_moveToBg2.Size = new System.Drawing.Size(180, 22);
-            toolStrip_moveToBg2.Text = "BG 2";
+            toolStrip_moveToBg2.Size = new System.Drawing.Size(141, 22);
+            toolStrip_moveToBg2.Text = "Send to BG 2";
             toolStrip_moveToBg2.Click += toolStrip_moveToBg_Click;
             // 
             // toolStripSeparator15
@@ -2542,6 +2579,8 @@
             groupBox_room.PerformLayout();
             panel_room.ResumeLayout(false);
             contextMenu.ResumeLayout(false);
+            panel_fillSettings.ResumeLayout(false);
+            panel_fillSettings.PerformLayout();
             toolStrip_room.ResumeLayout(false);
             toolStrip_room.PerformLayout();
             groupBox_viewBG.ResumeLayout(false);
@@ -2819,11 +2858,14 @@
         private System.Windows.Forms.ToolStripButton button_roomZoomOut;
         private System.Windows.Forms.ToolStripLabel label_roomZoom;
         private System.Windows.Forms.ToolStripButton toolStrip_fill;
+        private System.Windows.Forms.Panel panel_fillSettings;
+        private System.Windows.Forms.CheckBox checkBox_fillNeighbouring;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator32;
         private System.Windows.Forms.ToolStripDropDownButton toolStrip_swapLayers;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_moveToBg0;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_moveToBg1;
         private System.Windows.Forms.ToolStripMenuItem toolStrip_moveToBg2;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_fill;
     }
 }
 
