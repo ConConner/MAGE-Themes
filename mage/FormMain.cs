@@ -61,6 +61,7 @@ namespace mage
         private bool EditBG1 { get { return checkBox_editBG1.Checked; } }
         private bool EditBG2 { get { return checkBox_editBG2.Checked; } }
         private bool EditCLP { get { return checkBox_editCLP.Checked; } }
+        private bool FillMode { get { return EditBGs && toolStrip_fill.Checked; } }
         private bool EditAnyBG
         {
             get
@@ -256,7 +257,7 @@ namespace mage
             else if (zoom == 2) { menuItem_zoom400.Checked = true; }
             else if (zoom == 3) { menuItem_zoom800.Checked = true; }
             roomView.UpdateZoom(zoom, false);
-            statusStrip_zoom.Text = $"{1 << zoom}00%";
+            UpdateRoomZoomControls();
 
             // Config object
             var configOptions = new JsonSerializerOptions()
@@ -1682,7 +1683,6 @@ namespace mage
             // handle each status strip item seperately
             statusLabel_clip.Enabled = val;
             statusLabel_coor.Enabled = val;
-            statusStrip_zoom.Enabled = val;
             lbl_spring.Enabled = val;
         }
 
@@ -1870,6 +1870,8 @@ namespace mage
             statusLabel_coor.Text = "(0, 0)";
             statusLabel_sel.Text = "0 x 0";
             statusLabel_clip.Text = "";
+
+            UpdateLayerMoveControls();
         }
 
         private void SetViewOptions()
@@ -1920,6 +1922,8 @@ namespace mage
 
             // enemy sets
             SetSpritesetOptions();
+
+            UpdateLayerMoveControls();
         }
 
         private void UpdateViewOptions()
@@ -1973,6 +1977,8 @@ namespace mage
                 comboBox_spriteset.SelectedIndex = 0;
                 enemySet = 0;
             }
+
+            UpdateLayerMoveControls();
         }
 
         public void SetSpritesetOptions()
@@ -2068,15 +2074,9 @@ namespace mage
             // redraw cursor if necessary
             ResetRoomTip(false);
             Rectangle prev = roomView.redRect;
-            if (EditBGs && selection.X != -1)
-            {
-                roomView.ResizeRed(selection.Width, selection.Height);
-            }
-            else
-            {
-                roomView.ResizeRed(1, 1);
-            }
+            ResizeRedCursor();
             roomView.Invalidate(Draw.Union(prev, roomView.redRect));
+            UpdateLayerMoveControls();
         }
 
         public static void UpdateEditors()
@@ -2096,6 +2096,13 @@ namespace mage
             ReloadRoom(false);
         }
 
+        private void UpdateRoomZoomControls()
+        {
+            button_roomZoomIn.Enabled = zoom < 3;
+            button_roomZoomOut.Enabled = zoom > 0;
+            label_roomZoom.Text = $"{1 << zoom}00%";
+        }
+
         private void UpdateZoom(int newZoom)
         {
             if (newZoom < 0) { zoom = 0; }
@@ -2107,7 +2114,7 @@ namespace mage
             menuItem_zoom400.Checked = zoom == 2;
             menuItem_zoom800.Checked = zoom == 3;
 
-            statusStrip_zoom.Text = $"{1 << zoom}00%";
+            UpdateRoomZoomControls();
 
             if (!roomView.UpdateZoom(zoom, true)) { return; }
 
@@ -2120,14 +2127,7 @@ namespace mage
                     roomView.ResizeSelection(selection);
                 }
             }
-            if (selection.X != -1 && EditBGs)
-            {
-                roomView.ResizeRed(selection.Width, selection.Height);
-            }
-            else
-            {
-                roomView.ResizeRed(1, 1);
-            }
+            ResizeRedCursor();
         }
 
         private void UpdateBGs()
@@ -2172,6 +2172,7 @@ namespace mage
                 menuItem_editBG2.Checked = checkBox_editBG2.Checked = false;
                 menuItem_viewBG0.Checked = checkBox_viewBG0.Checked = true;
             }
+            UpdateLayerMoveControls();
         }
         private void checkBox_editBG1_CheckedChanged(object sender, EventArgs e)
         {
@@ -2182,6 +2183,7 @@ namespace mage
                 menuItem_editBG2.Checked = checkBox_editBG2.Checked = false;
                 menuItem_viewBG1.Checked = checkBox_viewBG1.Checked = true;
             }
+            UpdateLayerMoveControls();
         }
         private void checkBox_editBG2_CheckedChanged(object sender, EventArgs e)
         {
@@ -2192,6 +2194,7 @@ namespace mage
                 menuItem_editBG1.Checked = checkBox_editBG1.Checked = false;
                 menuItem_viewBG2.Checked = checkBox_viewBG2.Checked = true;
             }
+            UpdateLayerMoveControls();
         }
         private void checkBox_editCLP_CheckedChanged(object sender, EventArgs e)
         {
@@ -2370,6 +2373,10 @@ namespace mage
                     break;
                 case Keys.OemCloseBrackets:
                     ChangeEnemyProperty(false);
+                    break;
+                case Keys.F:
+                    if (!toolStrip_fill.Enabled) break;
+                    toolStrip_fill_Click(this, new());
                     break;
             }
         }
@@ -2622,6 +2629,86 @@ namespace mage
             PerformAction(a);
         }
 
+        private void ResizeRedCursor()
+        {
+            // fill mode uses `selection` as a pool of tiles, so the cursor stays a single block
+            if (EditBGs && !FillMode && selection.X != -1) { roomView.ResizeRed(selection.Width, selection.Height); }
+            else { roomView.ResizeRed(1, 1); }
+        }
+
+        private void toolStrip_fill_Click(object sender, EventArgs e)
+        {
+            toolStrip_fill.Checked = !toolStrip_fill.Checked;
+            menuItem_fill.Checked = toolStrip_fill.Checked;
+            UpdateLayerMoveControls();
+
+            Rectangle prev = roomView.redRect;
+            ResizeRedCursor();
+            roomView.Invalidate(Draw.Union(prev, roomView.redRect));
+        }
+
+        // Flood fills the area of identical blocks under the cursor. The selected tiles (or room selection)
+        // are a pool that each filled block picks from at random.
+        private void FillBlocks()
+        {
+            if (blocks == null || blocks.Length == 0 || selection.X == -1) { return; }
+
+            int bgNum = -1;
+            if (EditBG0) { bgNum = 0; Sound.PlaySound("bg0.wav"); }
+            else if (EditBG1) { bgNum = 1; Sound.PlaySound("bg1.wav"); }
+            else if (EditBG2) { bgNum = 2; Sound.PlaySound("bg2.wav"); }
+            if (bgNum == -1 && !EditCLP) { return; }
+
+            // pool tiles from the tileset don't carry clipdata, so give them the selected clipdata
+            List<Block> pool = new();
+            foreach (Block b in blocks)
+            {
+                Block poolBlock = b;
+                if (TileSelection.Visible) { poolBlock.CLP = Clipdata; }
+                pool.Add(poolBlock);
+            }
+
+            // match on the edited BG, or on clipdata if only that is edited
+            int matchLayer = bgNum != -1 ? bgNum : 3;
+            if (!BlockFill.TryFill(room.backgrounds, roomCursor, matchLayer, pool, checkBox_fillNeighbouring.Checked, Random.Shared,
+                out Block[,] filled, out Point origin)) { return; }
+
+            ushort clip = 0xFFFF;
+            if (EditCLP)
+            {
+                clip = 0xFFFE;
+                Sound.PlaySound("clip.wav");
+            }
+
+            PerformAction(new EditBlocks(room.backgrounds, filled, origin, bgNum, clip, false, "Fill blocks"));
+        }
+
+        private void toolStrip_moveToBg_Click(object sender, EventArgs e)
+        {
+            int dstBg = sender == toolStrip_moveToBg0 ? 0 : sender == toolStrip_moveToBg1 ? 1 : 2;
+            int srcBg = EditBG0 ? 0 : EditBG1 ? 1 : EditBG2 ? 2 : -1;
+            if (srcBg == -1 || srcBg == dstBg || !toolStrip_swapLayers.Enabled) { return; }
+
+            Sound.PlaySound($"bg{dstBg}.wav");
+            PerformAction(new MoveBlocksToLayer(room, selection, srcBg, dstBg));
+        }
+
+        // Layer moving needs a finished room selection and exactly one BG being edited.
+        // Destinations must be editable (RLE) and different from the BG being edited.
+        private void UpdateLayerMoveControls()
+        {
+            if (room == null) { return; }
+
+            toolStrip_fill.Enabled = EditBGs;
+            menuItem_fill.Enabled = EditBGs;
+            panel_fillSettings.Visible = FillMode;
+            toolStrip_swapLayers.Enabled = EditBGs && (EditBG0 || EditBG1 || EditBG2)
+                && roomView.HasSelection && pivot.X == -1;
+            toolStrip_moveToBg0.Enabled = checkBox_editBG0.Enabled && !EditBG0;
+            toolStrip_moveToBg1.Enabled = checkBox_editBG1.Enabled && !EditBG1;
+            toolStrip_moveToBg2.Enabled = checkBox_editBG2.Enabled && !EditBG2;
+        }
+
         private void UpdateClipboard()
         {
             if (clipboard == null || !clipboard.Visible) { return; }
@@ -2776,6 +2863,7 @@ namespace mage
                 TileSelection.Rectangle = rect2;
                 TileSelection.Visible = true;
                 UpdateStatusSel();
+                UpdateLayerMoveControls();
             }
         }
 
@@ -2825,7 +2913,7 @@ namespace mage
                     {
                         // redraw room's red rectangle
                         Rectangle rect = roomView.redRect;
-                        roomView.ResizeRed(selection.Width, selection.Height);
+                        ResizeRedCursor();
                         rect = Draw.Union(rect, roomView.redRect);
                         roomView.Invalidate(rect);
                     }
@@ -2845,7 +2933,12 @@ namespace mage
             {
                 if (EditBGs)
                 {
-                    if (selection.X != -1 || editOnlyClip)
+                    if (FillMode)
+                    {
+                        FillBlocks();
+                        UpdateStatusCoor();
+                    }
+                    else if (selection.X != -1 || editOnlyClip)
                     {
                         PasteBlocks(false);
                         UpdateStatusCoor();
@@ -2880,6 +2973,7 @@ namespace mage
                     roomView.ResizeRed(1, 1);
                     roomView.Invalidate(rect2);
                     UpdateStatusSel();
+                    UpdateLayerMoveControls();
                 }
                 else
                 {
@@ -2935,7 +3029,7 @@ namespace mage
                 bool editOnlyClip = EditCLP && !EditBG0 && !EditBG1 && !EditBG2;
                 if (EditBGs)
                 {
-                    if (selection.X != -1 && EditAnyBG || editOnlyClip)
+                    if (!FillMode && (selection.X != -1 && EditAnyBG || editOnlyClip))
                     {
                         Rectangle rect = roomView.redRect;
                         rect.Width++; rect.Height++;
@@ -3062,9 +3156,10 @@ namespace mage
                     pivot = new Point(-1, -1);
 
                     Rectangle rect = roomView.redRect;
-                    roomView.ResizeRed(selection.Width, selection.Height);
+                    ResizeRedCursor();
                     rect = Draw.Union(rect, roomView.redRect);
                     roomView.Invalidate(rect);
+                    UpdateLayerMoveControls();
                 }
             }
         }
