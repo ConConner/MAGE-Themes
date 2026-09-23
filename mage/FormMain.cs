@@ -156,8 +156,6 @@ namespace mage
 
             // Enable experimental features
             seperator_flip.Visible = menuItem_flip_h.Visible = menuItem_flip_v.Visible = Program.ExperimentalFeaturesEnabled;
-            toolStrip_oamEditor.Visible = Program.ExperimentalFeaturesEnabled;
-            menuItem_oamViewer.Visible = Program.ExperimentalFeaturesEnabled;
 
             // Add Drawables
             TileCursor = new(Rectangle.Empty, CursorPen, 1) { Visible = false };
@@ -847,38 +845,38 @@ namespace mage
             int gfxOffset = room.tileset.RLEgfx.Offset;
             int palOffset = room.tileset.palette.Offset + 0x20;
 
-            if (Program.ExperimentalFeaturesEnabled)
+            if (Program.LegacyEditors)
             {
-                if (!FindOpenForm(typeof(FormGraphicsNew), false))
+                if (!FindOpenForm(typeof(FormGraphics), false))
                 {
-                    var form = new FormGraphicsNew(this, gfxOffset, 32, 0, palOffset);
+                    FormGraphics form = new FormGraphics(this, gfxOffset, 32, 0, palOffset);
                     form.Show();
                 }
                 return;
             }
 
-            if (!FindOpenForm(typeof(FormGraphics), false))
+            if (!FindOpenForm(typeof(FormGraphicsNew), false))
             {
-                FormGraphics form = new FormGraphics(this, gfxOffset, 32, 0, palOffset);
+                var form = new FormGraphicsNew(this, gfxOffset, 32, 0, palOffset);
                 form.Show();
             }
         }
 
         private void menuItem_paletteEditor_Click(object sender, EventArgs e)
         {
-            if (Program.ExperimentalFeaturesEnabled)
+            if (Program.LegacyEditors)
             {
-                if (!FindOpenForm(typeof(FormPaletteNew), false))
+                if (!FindOpenForm(typeof(FormPalette), false))
                 {
-                    var form = new FormPaletteNew(true, room.tileset.number);
+                    FormPalette form = new FormPalette(this, true, room.tileset.number);
                     form.Show();
                 }
                 return;
             }
 
-            if (!FindOpenForm(typeof(FormPalette), false))
+            if (!FindOpenForm(typeof(FormPaletteNew), false))
             {
-                FormPalette form = new FormPalette(this, true, room.tileset.number);
+                var form = new FormPaletteNew(true, room.tileset.number);
                 form.Show();
             }
         }

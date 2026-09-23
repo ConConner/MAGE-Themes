@@ -326,6 +326,7 @@ namespace mage
         public void SetPixel(int x, int y, int palIndex)
         {
             if (x < 0 || x >= width * 8 || y < 0 || y >= height * 8) return;
+            if (palIndex < 0) return; // -1 (no pixel here) from GetPixel; ignore rather than writing garbage
             palIndex = palIndex % 16;
 
             // Calculate Array Offset

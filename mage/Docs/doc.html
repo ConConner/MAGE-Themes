@@ -119,8 +119,8 @@
 			<li class="toc2"><a href="#effect-position">Effect Position</a></li>
 			<li class="toc1"><a href="#header-editor">Header Editor</a></li>
 			<li class="toc1"><a href="#tileset-editor">Tileset Editor</a></li>
-			<li class="toc1"><a href="#graphics-editor">Graphics Editor</a></li>
-			<li class="toc1"><a href="#palette-editor">Palette Editor</a></li>
+			<li class="toc1"><a href="#graphics-editor">Graphics Editor</a> (<a href="legacy.html#graphics-editor">Legacy</a>)</li>
+			<li class="toc1"><a href="#palette-editor">Palette Editor</a> (<a href="legacy.html#palette-editor">Legacy</a>)</li>
 			<li class="toc1"><a href="#tile-table-editor">Tile Table Editor</a> (<a href="legacy.html#tile-table-editor">Legacy</a>)</li>
 			<li class="toc1"><a href="#animation-editor">Animation Editor</a></li>
 			<li class="toc1"><a href="#sprite-editor">Sprite Editor</a></li>
@@ -324,16 +324,37 @@
 
 		<h2 id="graphics-editor">Graphics Editor</h2>
 		<p>
-			The graphics editor is used for viewing, importing, and exporting graphics. When opening, it will automatically provide graphics and palette offsets depending on where it was opened from. There are several options for viewing the graphics, including image width, height, and zoom level. There is also a compressed option, which will display LZ77 compressed graphics if they are present at the provided offset.
+			The graphics editor is used for viewing, drawing, importing, and exporting graphics. Under "Image Control" you can change the graphics offset, palette offset, and size, then click "Load" to load the data at those offsets. Check "Compressed Graphics" if the graphics at that offset are LZ77 compressed; otherwise, set a width and height for uncompressed graphics.
 		</p>
 		<p>
-			The main function of this editor is importing and exporting graphics. There are two different file formats: image and raw. Image is simply a PNG image, while raw contains the same data stored in the ROM for the graphics. Use the image format if you plan to edit the graphics using an external graphics editor. Use the raw format if you're copying graphics from one ROM to another or want to use a program such as Tile Layer Pro. When importing graphics, make sure you select only the graphics you want to replace, adjusting the offset and height as necessary. If you import an image, it will match each pixel to the closest color in the currently selected palette. If you import raw, the palette is ignored. If the imported graphics are larger than the original, the editor will automatically allocate new space and fix pointers. Make sure you write down the new offset if you need it later.
+			The graphics editor lets you draw directly onto the tiles. The palette bar shows the currently loaded palette. Left-clicking a color sets the primary (left mouse button) color, and right-clicking sets the secondary (right mouse button) color; the two selected colors are shown to the left of the palette. The "+"/"-" buttons shift the palette by one row, and "Edit" opens the <a href="#palette-editor">Palette Editor</a> for the current offset.
+		</p>
+		<p>
+			The toolbar provides several drawing tools: "Pen" draws with the primary or secondary color depending on which mouse button is held. "Fill" flood-fills an area; uncheck "Neighbouring" to replace every pixel of that color in the image instead of just the connected area, and check "Stop on Tile Grid" to keep the fill within the current 8x8 tile. "Shape" draws a rectangle between where you click and release (holding Shift aligns it to the tile grid). "Eyedropper" picks a color from the image into the primary or secondary color; you can also quickly eyedrop with Alt+Click regardless of the active tool.
+		</p>
+		<p>
+			"Select" lets you drag a rectangular selection (hold Shift to snap the selection to whole tiles). With an active selection, most tools are constrained to drawing within it. Dragging inside a selection moves it; the pixels underneath are picked up and can be dropped back down at any position. Selections can be cut, copied, pasted, and flipped horizontally or vertically with the toolbar buttons. The "Grid" dropdown toggles a "Tile Grid" (every 8x8 tiles) or "Pixel Grid" overlay to help line up your edits.
+		</p>
+		<p>
+			Graphics and palettes can each be imported and exported independently under "Import"/"Export". For graphics, "Image" imports/exports a PNG (matching each pixel to the closest color in the currently selected palette on import), while "Raw" imports/exports the same data format stored in the ROM, ignoring the palette. For palettes, you can import/export in Raw, Tile Layer Pro, or YY-CHR formats.
 		</p>
 		<span class="smallLink">(<a href="#top">top</a>)</span>
 
 		<h2 id="palette-editor">Palette Editor</h2>
 		<p>
-			The palette editor is used for modifying individual colors. You can also import or export palettes. After selecting a color, you can modify it by changing each of the three color components. Under "HTML" you can also input a 24-bit color in HEX Format. This will automatically select the closest 15-bit color. The resulting color is shown along with its 15-bit value (the format used by GBA games) and its 24-bit value (the format used by most computers). Any changes made to the palette will only be kept if you hit "Apply". If you change the offset or number of rows, the changes will be discarded. You can also import and export palettes in a few different formats.
+			The palette editor is used for viewing, drawing, and transforming palettes. Under "Selection" you can change the offset and number of rows and click "Load" to load different data; the "+"/"-" buttons shift the offset by one row. If you have unsaved changes, you'll be asked whether to save them first.
+		</p>
+		<p>
+			The "Current Color" panel lets you edit whichever color is selected. You can drag the R/G/B bars, type exact values into the numeric fields, or type a 24-bit hex code. The color's 15-bit value (the format used by GBA games) and 24-bit value (the format used by most computers) are shown below. The color picker lets you pick a shade visually instead. Colors are set as either the primary (left mouse button) or secondary (right mouse button) color, shown in the swatch above; previously used colors are also kept in "Recent Colors" for quick reuse.
+		</p>
+		<p>
+			"Pen" paints the primary or secondary color onto a cell depending on which mouse button is held. "Eyedropper" picks a color from the palette into the primary or secondary color; you can also quickly eyedrop with Alt+Click regardless of the active tool. "Select" lets you drag a rectangular selection over one or more colors; dragging inside a selection moves it. Selected colors can be cut, copied, and pasted, including between different offsets or instances of the editor.
+		</p>
+		<p>
+			With a selection active, "Transform" opens a dialog for altering every color in it at once, with a live preview. Its tabs are: "Gradient", which interpolates between the colors on each edge of the selection, horizontally or vertically; "Hue", which shifts hue, chroma (saturation), and lightness; "Inversion", which inverts chosen color channels (or inverts perceptually while preserving lightness); "Swap", which reorders the red/green/blue channels; "Posterize", which reduces the color depth; and "Tint", which blends the selection toward a chosen color by a given strength, in either simple RGB or perceptual blending.
+		</p>
+		<p>
+			Palettes can be imported and exported in Raw, Tile Layer Pro, or YY-CHR formats under "Import"/"Export".
 		</p>
 		<span class="smallLink">(<a href="#top">top</a>)</span>
 
@@ -409,7 +430,28 @@
 
 		<h2 id="oam-editor">OAM Editor</h2>
 		<p>
-			<b>TODO</b>
+			OAM (Object Attribute Memory) data describes how a sprite's graphics are assembled out of individual parts to form a single frame. Each part is a rectangular block of tiles (ranging from 1x1 to 8x8 tiles) with its own tile number, palette row, position, and flip. A sprite's animations play through a series of these OAM frames. This is a more low-level editor than most, so it's a good idea to look at the OAM of some existing sprites before making changes of your own.
+		</p>
+		<p>
+			To edit a sprite (or any other OAM data), enter its graphics, palette, and OAM offsets under "Data Control" and click "Go". Check "Compressed" if the graphics at that offset are LZ77 compressed; leave it unchecked for uncompressed raw graphics. The "+" and "-" buttons next to the palette offset shift it by one row (0x20 bytes) at a time.
+		</p>
+		<p>
+			The "Graphics" panel on the top right shows the raw tiles available to use for parts. "Load Common Graphics" additionally loads the <a href="technical.html#generic-sprite-graphics">generic sprite graphics</a> that are always present in VRAM, which many parts reference. "View entire VRAM" shows everything currently loaded into VRAM as it would appear in game and is only really needed if you want to access tiles from the common graphics. Selecting a part and then clicking a tile here sets that part's tile number. You can also change which palette row is used for display by clicking a row in the "Palette" panel.
+		</p>
+		<p>
+			The "OAM Frame" panel on the bottom right shows the currently selected frame, with each part's position relative to the sprite's origin (marked with "View Origin"). Click a part to select it, or drag a box over empty space to select multiple parts at once; hold Ctrl while clicking to add individual parts from the selection. Drag a selected part (or group of parts) to move it, or nudge it with the arrow keys. "Snap to Parts" aligns a part's edges and center to nearby parts as you drag it, making it easier to line parts up. "View Part Outlines" draws a box around every part in the frame, which helps when parts overlap or share the same graphics. Right-clicking a part (or the empty frame) opens a context menu with layering options ("Bring to Front", "Send to Back", "Move forwards"/"Move backwards") as well as add, delete, and paste options.
+		</p>
+		<p>
+			Selecting a part fills in the "Part Details" panel, where you can edit its tile number, palette row, X/Y position, horizontal/vertical flip, and size. Frames are managed in the panel on the left: add a new blank frame, duplicate the selected frame, remove it, or reorder it with the up/down buttons. "Duration" sets how many frames (at 60 FPS) the frame is displayed for before advancing to the next one in an animation. Click the play button to preview the frames in sequence using their durations.
+		</p>
+		<p>
+			Parts can be cut, copied, and pasted, including between different frames or different instances of the OAM editor.
+		</p>
+		<p>
+			OAM data can be imported and exported under "Import"/"Export" in two formats: MAGE's own OAM format (.mgo), meant for moving OAM data between ROMs or backing it up, and Assembly (.asm), which is useful if you're building sprites through a separate assembly project. You can also export the current frames as an animated GIF for previewing outside of MAGE.
+		</p>
+		<p>
+			Hit "Apply" to write your changes back to the ROM. Because adding frames or parts can grow the data past the space it originally occupied, MAGE may need to repoint the OAM data elsewhere, in which case it will prompt you to save a bookmark to the new location.
 		</p>
 		<span class="smallLink">(<a href="#top">top</a>)</span>
 

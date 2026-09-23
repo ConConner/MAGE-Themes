@@ -22,13 +22,13 @@ public partial class FormPaletteNew : Form
 {
     public static void OpenPaletteEditor(bool tileset, byte value)
     {
-        if (Program.ExperimentalFeaturesEnabled) new FormPaletteNew(tileset, value).Show();
-        else new FormPalette(FormMain.Instance, tileset, value).Show();
+        if (Program.LegacyEditors) new FormPalette(FormMain.Instance, tileset, value).Show();
+        else new FormPaletteNew(tileset, value).Show();
     }
     public static void OpenPaletteEditor(int offset, int rows)
     {
-        if (Program.ExperimentalFeaturesEnabled) new FormPaletteNew(offset, rows).Show();
-        else new FormPalette(FormMain.Instance, offset, rows).Show();
+        if (Program.LegacyEditors) new FormPalette(FormMain.Instance, offset, rows).Show();
+        else new FormPaletteNew(offset, rows).Show();
     }
 
     private enum Tool

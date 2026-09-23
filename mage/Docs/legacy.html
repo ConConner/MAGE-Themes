@@ -108,6 +108,8 @@
 		<h2>Table of Contents</h2>
 		<ul>
 			<li class="toc1"><a href="#introduction">Introduction</a></li>
+			<li class="toc1"><a href="#graphics-editor">Graphics Editor</a></li>
+			<li class="toc1"><a href="#palette-editor">Palette Editor</a></li>
             <li class="toc1"><a href="#tile-table-editor">Tile Table Editor</a></li>
 			<li class="toc1"><a href="#minimap-editor">Minimap Editor</a></li>
 		</ul>
@@ -117,6 +119,21 @@
 
 		<p>
 		    MAGE Themes introduces redesigned editors to improve usability, but the originals remain available for users who prefer them. Enable "Preferences > Advanced > Use Legacy Editors if they exist" to open the legacy version of any editor that has been replaced. The documentation that follows describes the legacy editors exactly as they existed before replacement.
+		</p>
+		<span class="smallLink">(<a href="#top">top</a>)</span>
+
+		<h2 id="graphics-editor">Graphics Editor</h2>
+		<p>
+			The graphics editor is used for viewing, importing, and exporting graphics. When opening, it will automatically provide graphics and palette offsets depending on where it was opened from. There are several options for viewing the graphics, including image width, height, and zoom level. There is also a compressed option, which will display LZ77 compressed graphics if they are present at the provided offset.
+		</p>
+		<p>
+			The main function of this editor is importing and exporting graphics. There are two different file formats: image and raw. Image is simply a PNG image, while raw contains the same data stored in the ROM for the graphics. Use the image format if you plan to edit the graphics using an external graphics editor. Use the raw format if you're copying graphics from one ROM to another or want to use a program such as Tile Layer Pro. When importing graphics, make sure you select only the graphics you want to replace, adjusting the offset and height as necessary. If you import an image, it will match each pixel to the closest color in the currently selected palette. If you import raw, the palette is ignored. If the imported graphics are larger than the original, the editor will automatically allocate new space and fix pointers. Make sure you write down the new offset if you need it later.
+		</p>
+		<span class="smallLink">(<a href="#top">top</a>)</span>
+
+		<h2 id="palette-editor">Palette Editor</h2>
+		<p>
+			The palette editor is used for modifying individual colors. You can also import or export palettes. After selecting a color, you can modify it by changing each of the three color components. Under "HTML" you can also input a 24-bit color in HEX Format. This will automatically select the closest 15-bit color. The resulting color is shown along with its 15-bit value (the format used by GBA games) and its 24-bit value (the format used by most computers). Any changes made to the palette will only be kept if you hit "Apply". If you change the offset or number of rows, the changes will be discarded. You can also import and export palettes in a few different formats.
 		</p>
 		<span class="smallLink">(<a href="#top">top</a>)</span>
 
