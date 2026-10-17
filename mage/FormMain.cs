@@ -2520,7 +2520,7 @@ namespace mage
 
         private int selEnemy;
         private int selDoor;
-        private int exitLocationDoor;
+        private int exitLocationDoor = -1;
         private int selScroll;
         private bool selEffect;
 
