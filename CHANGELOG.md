@@ -1,3 +1,10 @@
+## [1.24.1](https://github.com/ConConner/MAGE-Themes/compare/v1.24.0...v1.24.1) (2026-10-17)
+
+
+### Bug Fixes
+
+* closing context menu in object editing mode with zero doors in the room can crash mage ([fe6ead8](https://github.com/ConConner/MAGE-Themes/commit/fe6ead890b1fc7e02010c32a40eb5534b4b75a61))
+
 # [1.24.0](https://github.com/ConConner/MAGE-Themes/compare/v1.23.0...v1.24.0) (2026-09-23)
 
 
