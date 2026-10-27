@@ -1,0 +1,874 @@
+[@Palettes]
+Power Suit;2376A8:0:2
+Varia Suit;237BE8:0:2
+Full Suit;237FA8:0:2
+Gravity Suit;2383C8:0:2
+Suitless;2387E8:0:2
+[Power Suit: Running]
+Right Running;238B74
+Left Running;238B78
+Right Forward Running;238D8C
+Left Forward Running;238D90
+Right Diagonal Up Running;238D94
+Left Diagonal Up Running;238D98
+Right Diagonal Down Running;238D9C
+Left Diagonal Down Running;238DA0
+[Power Suit: Standing]
+Right Standing;238B7C
+Left Standing;238B80
+Right Diagonal Up Standing;238DD4
+Left Diagonal Up Standing;238DD8
+Right Diagonal Down Standing;238DDC
+Left Diagonal Down Standing;238DE0
+Right Up Standing;238DE4
+Left Up Standing;238DE8
+[Power Suit: Turning Around]
+Right Turning Around;238B84
+Left Turning Around;238B88
+Right Diagonal Up Turning Around;238DF4
+Left Diagonal Up Turning Around;238DF8
+Right Diagonal Down Turning Around;238DFC
+Left Diagonal Down Turning Around;238E00
+Right Up Turning Around;238E04
+Left Up Turning Around;238E08
+[Power Suit: Shooting]
+Right Shooting;238B8C
+Left Shooting;238B90
+Right Diagonal Up Shooting;238E14
+Left Diagonal Up Shooting;238E18
+Right Diagonal Down Shooting;238E1C
+Left Diagonal Down Shooting;238E20
+Right Up Shooting;238E24
+Left Up Shooting;238E28
+[Power Suit: Crouching]
+Right Crouching;238B94
+Left Crouching;238B98
+Right Diagonal Up Crouching;238E34
+Left Diagonal Up Crouching;238E38
+Right Diagonal Down Crouching;238E3C
+Left Diagonal Down Crouching;238E40
+[Power Suit: Turning Around And Crouching]
+Right Turning Around And Crouching;238B9C
+Left Turning Around And Crouching;238BA0
+Right Diagonal Up Turning Around And Crouching;238E4C
+Left Diagonal Up Turning Around And Crouching;238E50
+Right Diagonal Down Turning Around And Crouching;238E54
+Left Diagonal Down Turning Around And Crouching;238E58
+[Power Suit: Shooting And Crouching]
+Right Shooting And Crouching;238BA4
+Left Shooting And Crouching;238BA8
+Right Diagonal Up Shooting And Crouching;238E64
+Left Diagonal Up Shooting And Crouching;238E68
+Right Diagonal Down Shooting And Crouching;238E6C
+Left Diagonal Down Shooting And Crouching;238E70
+[Power Suit: Skidding]
+Right Skidding;238BAC
+Left Skidding;238BB0
+Right Armed Skidding;238E7C
+Left Armed Skidding;238E80
+[Power Suit: Midair]
+Right Mid Air;238BB4
+Left Mid Air;238BB8
+Right Diagonal Up Mid Air;238E8C
+Left Diagonal Up Mid Air;238E90
+Right Diagonal Down Mid Air;238E94
+Left Diagonal Down Mid Air;238E98
+Right Up Mid Air;238E9C
+Left Up Mid Air;238EA0
+Right Down Mid Air;238EA4
+Left Down Mid Air;238EA8
+[Power Suit: Turning Around Midair]
+Right Turning Around Mid Air;238BBC
+Left Turning Around Mid Air;238BC0
+Right Diagonal Up Turning Around Mid Air;238EB4
+Left Diagonal Up Turning Around Mid Air;238EB8
+Right Diagonal Down Turning Around Mid Air;238EBC
+Left Diagonal Down Turning Around Mid Air;238EC0
+Right Up Turning Around Mid Air;238EC4
+Left Up Turning Around Mid Air;238EC8
+Right Down Turning Around Mid Air;238ECC
+Left Down Turning Around Mid Air;238ED0
+[Power Suit: Landing]
+Right Landing;238BC4
+Left Landing;238BC8
+Right Diagonal Up Landing;238EDC
+Left Diagonal Up Landing;238EE0
+Right Diagonal Down Landing;238EE4
+Left Diagonal Down Landing;238EE8
+Right Up Landing;238EEC
+Left Up Landing;238EF0
+[Power Suit: Starting Spin Jump]
+Right Starting Spin Jump;238BCC
+Left Starting Spin Jump;238BD0
+[Power Suit: Spinning]
+Right Spinning;238BD4
+Left Spinning;238BD8
+[Power Suit: Starting Wall Jump]
+Right Starting Wall Jump;238BDC
+Left Starting Wall Jump;238BE0
+[Power Suit: Space Jumping]
+Right Space Jumping;238BE4
+Left Space Jumping;238BE8
+[Power Suit: Screw Attacking]
+Right Screw Attacking;238BEC
+Left Screw Attacking;238BF0
+Right Space Jumping;238EFC
+Left Space Jumping;238F00
+[Power Suit: Morphing]
+Right Morphing;238BF4
+Left Morphing;238BF8
+[Power Suit: Morph Ball]
+Right Morphball;238BFC
+Left Morphball;238C00
+[Power Suit: Rolling]
+Right Morphball;238C04
+Left Morphball;238C08
+[Power Suit: Unmorphing]
+Right Unmorphing;238C0C
+Left Unmorphing;238C10
+[Power Suit: Morph Ball Midair]
+Right Morphball;238C14
+Left Morphball;238C18
+[Power Suit: Hanging On Ledge]
+Right Hanging On Ledge;238C1C
+Left Hanging On Ledge;238C20
+[Power Suit: Turning To Aim While Hanging]
+Right Turning To Aim While Hanging;238C24
+Left Turning To Aim While Hanging;238C28
+[Power Suit: Hiding Arm Cannon While Hanging]
+Right Turning To Aim While Hanging;238C2C
+Left Turning To Aim While Hanging;238C30
+[Power Suit: Aiming While Hanging]
+Right Aiming While Hanging;238C34
+Left Aiming While Hanging;238C38
+Right Diagonal Up Aiming While Hanging;238F0C
+Left Diagonal Up Aiming While Hanging;238F10
+Right Diagonal Down Aiming While Hanging;238F14
+Left Diagonal Down Aiming While Hanging;238F18
+Right Up Aiming While Hanging;238F1C
+Left Up Aiming While Hanging;238F20
+Right Down Aiming While Hanging;238F24
+Left Down Aiming While Hanging;238F28
+[Power Suit: Shooting While Hanging]
+Right Shooting While Hanging;238C3C
+Left Shooting While Hanging;238C40
+Right Diagonal Up Shooting While Hanging;238F34
+Left Diagonal Up Shooting While Hanging;238F38
+Right Diagonal Down Shooting While Hanging;238F3C
+Left Diagonal Down Shooting While Hanging;238F40
+Right Up Shooting While Hanging;238F44
+Left Up Shooting While Hanging;238F48
+Right Down Shooting While Hanging;238F4C
+Left Down Shooting While Hanging;238F50
+[Power Suit: Pulling Yourself Up From Hanging]
+Right Pulling Yourself Up From Hanging;238C44
+Left Pulling Yourself Up From Hanging;238C48
+[Power Suit: Pulling Yourself Forward From Hanging]
+Right Pulling Yourself Forward From Hanging;238C4C
+Left Pulling Yourself Forward From Hanging;238C50
+[Power Suit: Pulling Yourself Into A Morph Ball Tunnel]
+Right Pulling Yourself Up From Hanging;238C54
+Left Pulling Yourself Up From Hanging;238C58
+[Power Suit: Using An Elevator]
+Using An Elevator;238C5C
+Going Up Using An Elevator;238F5C
+[Power Suit: Facing The Foreground]
+Facing The Foreground;238C64
+[Power Suit: Turning From Facing The Foreground]
+Right Turning From Facing The Foreground;238C6C
+Left Turning From Facing The Foreground;238C70
+[Power Suit: Grabbed By Chozo Statue]
+Morphball Motionless;238C74
+[Power Suit: Delay Before Shinesparking]
+Right Delay Before Shinesparking;238C7C
+Left Delay Before Shinesparking;238C80
+[Power Suit: Shinesparking]
+Right Shinesparking;238C84
+Left Shinesparking;238C88
+Right Sidewards Shinesparking;238F6C
+Left Sidewards Shinesparking;238F70
+[Power Suit: Shinespark Collision]
+Right Shinesparking;238C8C
+Left Shinesparking;238C90
+[Power Suit: Delay After Shinesparking]
+Right Delay After Shinesparking;238C94
+Left Delay After Shinesparking;238C98
+[Power Suit: Delay Before Ballsparking]
+Morphball Motionless;238C9C
+[Power Suit: Ballsparking]
+Right Ballsparking;238CA4
+Left Ballsparking;238CA8
+[Power Suit: Ballspark Collision]
+Right Morphball;238CAC
+Left Morphball;238CB0
+[Power Suit: On Zipline]
+Right On Zipline;238CB4
+Left On Zipline;238CB8
+Right Diagonal Down On Zipline;238F8C
+Left Diagonal Down On Zipline;238F90
+Right Down On Zipline;238F9C
+Left Down On Zipline;238FA0
+[Power Suit: Shooting On Zipline]
+Right Shooting On Zipline;238CBC
+Left Shooting On Zipline;238CC0
+Right Diagonal Down Shooting On Zipline;238FB4
+Left Diagonal Down Shooting On Zipline;238FB8
+Right Down Shooting On Zipline;238FC4
+Left Down Shooting On Zipline;238FC8
+[Power Suit: Turning On Zipline]
+Right Turning On Zipline;238CC4
+Left Turning On Zipline;238CC8
+Right Diagonal Down Turning On Zipline;238FDC
+Left Diagonal Down Turning On Zipline;238FE0
+Right Down Turning On Zipline;238FEC
+Left Down Turning On Zipline;238FF0
+[Power Suit: Morph Ball On Zipline]
+Morphball Motionless;238CCC
+[Power Suit: Saving Loading Game]
+Saving Loading Game;238CD4
+[Power Suit: Downloading Map Data]
+Downloading Map Data;238CDC
+[Power Suit: Turning Around To Download Map Data]
+Right Turning Around;238CE4
+Left Turning Around;238CE8
+[Power Suit: Getting Hurt]
+Right Getting Knocked Back;238CEC
+Left Getting Knocked Back;238CF0
+[Power Suit: Getting Knocked Back]
+Right Getting Knocked Back;238CF4
+Left Getting Knocked Back;238CF8
+[Power Suit: Getting Hurt In Morph Ball]
+Right Morphball;238CFC
+Left Morphball;238D00
+[Power Suit: Getting Knocked Back In Morph Ball]
+Right Morphball;238D04
+Left Morphball;238D08
+[Power Suit: Dying]
+Right Dying;238D0C
+Left Dying;238D10
+[Power Suit: Crouching To Crawl]
+Right Crouching To Crawl;238D14
+Left Crouching To Crawl;238D18
+[Power Suit: Crawling Stopped]
+Right Crawling Stopped;238D1C
+Left Crawling Stopped;238D20
+[Power Suit: Starting To Crawl]
+Right Starting To Crawl;238D24
+Left Starting To Crawl;238D28
+[Power Suit: Crawling]
+Right Crawling;238D2C
+Left Crawling;238D30
+[Power Suit: Uncrouching From Crawling]
+Right Uncrouching From Crawling;238D34
+Left Uncrouching From Crawling;238D38
+[Power Suit: Turning Around While Crawling]
+Right Turning Around While Crawling;238D3C
+Left Turning Around While Crawling;238D40
+[Power Suit: Shooting While Crawling]
+Right Shooting While Crawling;238D44
+Left Shooting While Crawling;238D48
+[Power Suit: Uncrouching Suitless]
+Right Uncrouching Suitless;238D4C
+Left Uncrouching Suitless;238D50
+[Power Suit: Crouching Suitless]
+Right Crouching Suitless;238D54
+Left Crouching Suitless;238D58
+[Power Suit: Grabbing A Ledge Suitless]
+Right Hanging On Ledge Suitless;238D5C
+Left Hanging On Ledge Suitless;238D60
+[Power Suit: Facing The Background Suitless]
+Facing The Background;238D64
+[Power Suit: Turning From Facing The Background Suitless]
+Right Turning From Facing The Background;238D6C
+Left Turning From Facing The Background;238D70
+[Power Suit: Activating Ziplines]
+Morphball Motionless;238D74
+[Power Suit: In Escape Ship]
+Right Crouching;238D7C
+Left Crouching;238D80
+[Power Suit: Turning To Enter Escape Ship]
+Right Turning Around;238D84
+Left Turning Around;238D88
+[Power Suit: Running Speedboosting]
+Right Forward Running Speedboosting;238DAC
+Left Forward Running Speedboosting;238DB0
+Right Diagonal Up Running Speedboosting;238DB4
+Left Diagonal Up Running Speedboosting;238DB8
+Right Diagonal Down Running Speedboosting;238DBC
+Left Diagonal Down Running Speedboosting;238DC0
+Right Running Speedboosting;238DC4
+Left Running Speedboosting;238DC8
+[Full Suit: Running]
+Right Running;239530
+Left Running;239534
+Right Forward Running;239748
+Left Forward Running;23974C
+Right Diagonal Up Running;239750
+Left Diagonal Up Running;239754
+Right Diagonal Down Running;239758
+Left Diagonal Down Running;23975C
+[Full Suit: Standing]
+Right Standing;239538
+Left Standing;23953C
+Right Diagonal Up Standing;239790
+Left Diagonal Up Standing;239794
+Right Diagonal Down Standing;239798
+Left Diagonal Down Standing;23979C
+Right Up Standing;2397A0
+Left Up Standing;2397A4
+[Full Suit: Turning Around]
+Right Turning Around;239540
+Left Turning Around;239544
+Right Diagonal Up Turning Around;2397B0
+Left Diagonal Up Turning Around;2397B4
+Right Diagonal Down Turning Around;2397B8
+Left Diagonal Down Turning Around;2397BC
+Right Up Turning Around;2397C0
+Left Up Turning Around;2397C4
+[Full Suit: Shooting]
+Right Shooting;239548
+Left Shooting;23954C
+Right Diagonal Up Shooting;2397D0
+Left Diagonal Up Shooting;2397D4
+Right Diagonal Down Shooting;2397D8
+Left Diagonal Down Shooting;2397DC
+Right Up Shooting;2397E0
+Left Up Shooting;2397E4
+[Full Suit: Crouching]
+Right Crouching;239550
+Left Crouching;239554
+Right Diagonal Up Crouching;2397F0
+Left Diagonal Up Crouching;2397F4
+Right Diagonal Down Crouching;2397F8
+Left Diagonal Down Crouching;2397FC
+[Full Suit: Turning Around And Crouching]
+Right Turning Around And Crouching;239558
+Left Turning Around And Crouching;23955C
+Right Diagonal Up Turning Around And Crouching;239808
+Left Diagonal Up Turning Around And Crouching;23980C
+Right Diagonal Down Turning Around And Crouching;239810
+Left Diagonal Down Turning Around And Crouching;239814
+[Full Suit: Shooting And Crouching]
+Right Shooting And Crouching;239560
+Left Shooting And Crouching;239564
+Right Diagonal Up Shooting And Crouching;239820
+Left Diagonal Up Shooting And Crouching;239824
+Right Diagonal Down Shooting And Crouching;239828
+Left Diagonal Down Shooting And Crouching;23982C
+[Full Suit: Skidding]
+Right Skidding;239568
+Left Skidding;23956C
+Right Armed Skidding;239838
+Left Armed Skidding;23983C
+[Full Suit: Midair]
+Right Mid Air;239570
+Left Mid Air;239574
+Right Diagonal Up Mid Air;239848
+Left Diagonal Up Mid Air;23984C
+Right Diagonal Down Mid Air;239850
+Left Diagonal Down Mid Air;239854
+Right Up Mid Air;239858
+Left Up Mid Air;23985C
+Right Down Mid Air;239860
+Left Down Mid Air;239864
+[Full Suit: Turning Around Midair]
+Right Turning Around Mid Air;239578
+Left Turning Around Mid Air;23957C
+Right Diagonal Up Turning Around Mid Air;239870
+Left Diagonal Up Turning Around Mid Air;239874
+Right Diagonal Down Turning Around Mid Air;239878
+Left Diagonal Down Turning Around Mid Air;23987C
+Right Up Turning Around Mid Air;239880
+Left Up Turning Around Mid Air;239884
+Right Down Turning Around Mid Air;239888
+Left Down Turning Around Mid Air;23988C
+[Full Suit: Landing]
+Right Landing;239580
+Left Landing;239584
+Right Diagonal Up Landing;239898
+Left Diagonal Up Landing;23989C
+Right Diagonal Down Landing;2398A0
+Left Diagonal Down Landing;2398A4
+Right Up Landing;2398A8
+Left Up Landing;2398AC
+[Full Suit: Starting Spin Jump]
+Right Starting Spin Jump;239588
+Left Starting Spin Jump;23958C
+[Full Suit: Spinning]
+Right Spinning;239590
+Left Spinning;239594
+[Full Suit: Starting Wall Jump]
+Right Starting Wall Jump;239598
+Left Starting Wall Jump;23959C
+[Full Suit: Space Jumping]
+Right Space Jumping;2395A0
+Left Space Jumping;2395A4
+[Full Suit: Screw Attacking]
+Right Screw Attacking;2395A8
+Left Screw Attacking;2395AC
+Right Space Jumping;2398B8
+Left Space Jumping;2398BC
+[Full Suit: Morphing]
+Right Morphing;2395B0
+Left Morphing;2395B4
+[Full Suit: Morph Ball]
+Right Morphball;2395B8
+Left Morphball;2395BC
+[Full Suit: Rolling]
+Right Morphball;2395C0
+Left Morphball;2395C4
+[Full Suit: Unmorphing]
+Right Unmorphing;2395C8
+Left Unmorphing;2395CC
+[Full Suit: Morph Ball Midair]
+Right Morphball;2395D0
+Left Morphball;2395D4
+[Full Suit: Hanging On Ledge]
+Right Hanging On Ledge;2395D8
+Left Hanging On Ledge;2395DC
+[Full Suit: Turning To Aim While Hanging]
+Right Turning To Aim While Hanging;2395E0
+Left Turning To Aim While Hanging;2395E4
+[Full Suit: Hiding Arm Cannon While Hanging]
+Right Turning To Aim While Hanging;2395E8
+Left Turning To Aim While Hanging;2395EC
+[Full Suit: Aiming While Hanging]
+Right Aiming While Hanging;2395F0
+Left Aiming While Hanging;2395F4
+Right Diagonal Up Aiming While Hanging;2398C8
+Left Diagonal Up Aiming While Hanging;2398CC
+Right Diagonal Down Aiming While Hanging;2398D0
+Left Diagonal Down Aiming While Hanging;2398D4
+Right Up Aiming While Hanging;2398D8
+Left Up Aiming While Hanging;2398DC
+Right Down Aiming While Hanging;2398E0
+Left Down Aiming While Hanging;2398E4
+[Full Suit: Shooting While Hanging]
+Right Shooting While Hanging;2395F8
+Left Shooting While Hanging;2395FC
+Right Diagonal Up Shooting While Hanging;2398F0
+Left Diagonal Up Shooting While Hanging;2398F4
+Right Diagonal Down Shooting While Hanging;2398F8
+Left Diagonal Down Shooting While Hanging;2398FC
+Right Up Shooting While Hanging;239900
+Left Up Shooting While Hanging;239904
+Right Down Shooting While Hanging;239908
+Left Down Shooting While Hanging;23990C
+[Full Suit: Pulling Yourself Up From Hanging]
+Right Pulling Yourself Up From Hanging;239600
+Left Pulling Yourself Up From Hanging;239604
+[Full Suit: Pulling Yourself Forward From Hanging]
+Right Pulling Yourself Forward From Hanging;239608
+Left Pulling Yourself Forward From Hanging;23960C
+[Full Suit: Pulling Yourself Into A Morph Ball Tunnel]
+Right Pulling Yourself Up From Hanging;239610
+Left Pulling Yourself Up From Hanging;239614
+[Full Suit: Using An Elevator]
+Using An Elevator;239618
+Going Up Using An Elevator;239918
+[Full Suit: Facing The Foreground]
+Facing The Foreground;239620
+[Full Suit: Turning From Facing The Foreground]
+Right Turning From Facing The Foreground;239628
+Left Turning From Facing The Foreground;23962C
+[Full Suit: Grabbed By Chozo Statue]
+Morphball Motionless;239630
+[Full Suit: Delay Before Shinesparking]
+Right Delay Before Shinesparking;239638
+Left Delay Before Shinesparking;23963C
+[Full Suit: Shinesparking]
+Right Shinesparking;239640
+Left Shinesparking;239644
+Right Sidewards Shinesparking;239928
+Left Sidewards Shinesparking;23992C
+[Full Suit: Shinespark Collision]
+Right Shinesparking;239648
+Left Shinesparking;23964C
+[Full Suit: Delay After Shinesparking]
+Right Delay After Shinesparking;239650
+Left Delay After Shinesparking;239654
+[Full Suit: Delay Before Ballsparking]
+Morphball Motionless;239658
+[Full Suit: Ballsparking]
+Right Ballsparking;239660
+Left Ballsparking;239664
+[Full Suit: Ballspark Collision]
+Right Morphball;239668
+Left Morphball;23966C
+[Full Suit: On Zipline]
+Right On Zipline;239670
+Left On Zipline;239674
+Right Diagonal Down On Zipline;239948
+Left Diagonal Down On Zipline;23994C
+Right Down On Zipline;239958
+Left Down On Zipline;23995C
+[Full Suit: Shooting On Zipline]
+Right Shooting On Zipline;239678
+Left Shooting On Zipline;23967C
+Right Diagonal Down Shooting On Zipline;239970
+Left Diagonal Down Shooting On Zipline;239974
+Right Down Shooting On Zipline;239980
+Left Down Shooting On Zipline;239984
+[Full Suit: Turning On Zipline]
+Right Turning On Zipline;239680
+Left Turning On Zipline;239684
+Right Diagonal Down Turning On Zipline;239998
+Left Diagonal Down Turning On Zipline;23999C
+Right Down Turning On Zipline;2399A8
+Left Down Turning On Zipline;2399AC
+[Full Suit: Morph Ball On Zipline]
+Morphball Motionless;239688
+[Full Suit: Saving Loading Game]
+Saving Loading Game;239690
+[Full Suit: Downloading Map Data]
+Downloading Map Data;239698
+[Full Suit: Turning Around To Download Map Data]
+Right Turning Around;2396A0
+Left Turning Around;2396A4
+[Full Suit: Getting Hurt]
+Right Getting Knocked Back;2396A8
+Left Getting Knocked Back;2396AC
+[Full Suit: Getting Knocked Back]
+Right Getting Knocked Back;2396B0
+Left Getting Knocked Back;2396B4
+[Full Suit: Getting Hurt In Morph Ball]
+Right Morphball;2396B8
+Left Morphball;2396BC
+[Full Suit: Getting Knocked Back In Morph Ball]
+Right Morphball;2396C0
+Left Morphball;2396C4
+[Full Suit: Dying]
+Right Dying;2396C8
+Left Dying;2396CC
+[Full Suit: Crouching To Crawl]
+Right Crouching To Crawl;2396D0
+Left Crouching To Crawl;2396D4
+[Full Suit: Crawling Stopped]
+Right Crawling Stopped;2396D8
+Left Crawling Stopped;2396DC
+[Full Suit: Starting To Crawl]
+Right Starting To Crawl;2396E0
+Left Starting To Crawl;2396E4
+[Full Suit: Crawling]
+Right Crawling;2396E8
+Left Crawling;2396EC
+[Full Suit: Uncrouching From Crawling]
+Right Uncrouching From Crawling;2396F0
+Left Uncrouching From Crawling;2396F4
+[Full Suit: Turning Around While Crawling]
+Right Turning Around While Crawling;2396F8
+Left Turning Around While Crawling;2396FC
+[Full Suit: Shooting While Crawling]
+Right Shooting While Crawling;239700
+Left Shooting While Crawling;239704
+[Full Suit: Uncrouching Suitless]
+Right Uncrouching Suitless;239708
+Left Uncrouching Suitless;23970C
+[Full Suit: Crouching Suitless]
+Right Crouching Suitless;239710
+Left Crouching Suitless;239714
+[Full Suit: Grabbing A Ledge Suitless]
+Right Hanging On Ledge Suitless;239718
+Left Hanging On Ledge Suitless;23971C
+[Full Suit: Facing The Background Suitless]
+Facing The Background;239720
+[Full Suit: Turning From Facing The Background Suitless]
+Right Turning From Facing The Background;239728
+Left Turning From Facing The Background;23972C
+[Full Suit: Activating Ziplines]
+Morphball Motionless;239730
+[Full Suit: In Escape Ship]
+Right Crouching;239738
+Left Crouching;23973C
+[Full Suit: Turning To Enter Escape Ship]
+Right Turning Around;239740
+Left Turning Around;239744
+[Full Suit: Running Speedboosting]
+Right Forward Running Speedboosting;239768
+Left Forward Running Speedboosting;23976C
+Right Diagonal Up Running Speedboosting;239770
+Left Diagonal Up Running Speedboosting;239774
+Right Diagonal Down Running Speedboosting;239778
+Left Diagonal Down Running Speedboosting;23977C
+Right Running Speedboosting;239780
+Left Running Speedboosting;239784
+[Suitless: Running]
+Right Running;2399B0
+Left Running;2399B4
+Right Forward Running;239BC8
+Left Forward Running;239BCC
+Right Diagonal Up Running;239BD0
+Left Diagonal Up Running;239BD4
+Right Diagonal Down Running;239BD8
+Left Diagonal Down Running;239BDC
+[Suitless: Standing]
+Right Standing;2399B8
+Left Standing;2399BC
+Right Diagonal Up Standing;239BF0
+Left Diagonal Up Standing;239BF4
+Right Diagonal Down Standing;239BF8
+Left Diagonal Down Standing;239BFC
+Right Up Standing;239C00
+Left Up Standing;239C04
+[Suitless: Turning Around]
+Right Turning Around;2399C0
+Left Turning Around;2399C4
+Right Diagonal Up Turning Around;239C10
+Left Diagonal Up Turning Around;239C14
+Right Diagonal Down Turning Around;239C18
+Left Diagonal Down Turning Around;239C1C
+Right Up Turning Around;239C20
+Left Up Turning Around;239C24
+[Suitless: Shooting]
+Right Shooting;2399C8
+Left Shooting;2399CC
+Right Diagonal Up Shooting;239C30
+Left Diagonal Up Shooting;239C34
+Right Diagonal Down Shooting;239C38
+Left Diagonal Down Shooting;239C3C
+Right Up Shooting;239C40
+Left Up Shooting;239C44
+[Suitless: Crouching]
+Right Crouching;2399D0
+Left Crouching;2399D4
+Right Diagonal Up Crouching;239C50
+Left Diagonal Up Crouching;239C54
+Right Diagonal Down Crouching;239C58
+Left Diagonal Down Crouching;239C5C
+[Suitless: Turning Around And Crouching]
+Right Turning Around And Crouching;2399D8
+Left Turning Around And Crouching;2399DC
+Right Diagonal Up Turning Around And Crouching;239C68
+Left Diagonal Up Turning Around And Crouching;239C6C
+Right Diagonal Down Turning Around And Crouching;239C70
+Left Diagonal Down Turning Around And Crouching;239C74
+[Suitless: Shooting And Crouching]
+Right Shooting And Crouching;2399E0
+Left Shooting And Crouching;2399E4
+Right Diagonal Up Shooting And Crouching;239C80
+Left Diagonal Up Shooting And Crouching;239C84
+Right Diagonal Down Shooting And Crouching;239C88
+Left Diagonal Down Shooting And Crouching;239C8C
+[Suitless: Skidding]
+Right Skidding;2399E8
+Left Skidding;2399EC
+[Suitless: Midair]
+Right Mid Air;2399F0
+Left Mid Air;2399F4
+Right Diagonal Up Mid Air;239C98
+Left Diagonal Up Mid Air;239C9C
+Right Diagonal Down Mid Air;239CA0
+Left Diagonal Down Mid Air;239CA4
+Right Up Mid Air;239CA8
+Left Up Mid Air;239CAC
+Right Down Mid Air;239CB0
+Left Down Mid Air;239CB4
+[Suitless: Turning Around Midair]
+Right Turning Around Mid Air;2399F8
+Left Turning Around Mid Air;2399FC
+Right Turning Around Mid Air;239CB8
+Left Turning Around Mid Air;239CBC
+Right Diagonal Up Turning Around Mid Air;239CC0
+Left Diagonal Up Turning Around Mid Air;239CC4
+Right Diagonal Down Turning Around Mid Air;239CC8
+Left Diagonal Down Turning Around Mid Air;239CCC
+Right Up Turning Around Mid Air;239CD0
+Left Up Turning Around Mid Air;239CD4
+Right Down Turning Around Mid Air;239CD8
+Left Down Turning Around Mid Air;239CDC
+[Suitless: Landing]
+Right Landing;239A00
+Left Landing;239A04
+Right Diagonal Up Landing;239CE8
+Left Diagonal Up Landing;239CEC
+Right Diagonal Down Landing;239CF0
+Left Diagonal Down Landing;239CF4
+Right Up Landing;239CF8
+Left Up Landing;239CFC
+[Suitless: Starting Spin Jump]
+Right Starting Spin Jump;239A08
+Left Starting Spin Jump;239A0C
+[Suitless: Spinning]
+Right Spinning;239A10
+Left Spinning;239A14
+[Suitless: Starting Wall Jump]
+Left Starting Wall Jump;239A18
+Right Starting Wall Jump;239A1C
+[Suitless: Space Jumping]
+Right Space Jumping;239A20
+Left Space Jumping;239A24
+[Suitless: Screw Attacking]
+Right Screw Attacking;239A28
+Left Screw Attacking;239A2C
+[Suitless: Morphing]
+Right Morphing;239A30
+Left Morphing;239A34
+[Suitless: Morph Ball]
+Right Morphball;239A38
+Left Morphball;239A3C
+[Suitless: Rolling]
+Right Morphball;239A40
+Left Morphball;239A44
+[Suitless: Unmorphing]
+Right Unmorphing;239A48
+Left Unmorphing;239A4C
+[Suitless: Morph Ball Midair]
+Right Morphball;239A50
+Left Morphball;239A54
+[Suitless: Hanging On Ledge]
+Right Hanging On Ledge;239A58
+Left Hanging On Ledge;239A5C
+[Suitless: Turning To Aim While Hanging]
+Right Turning To Aim While Hanging;239A60
+Left Turning To Aim While Hanging;239A64
+[Suitless: Hiding Arm Cannon While Hanging]
+Right Turning To Aim While Hanging;239A68
+Left Turning To Aim While Hanging;239A6C
+[Suitless: Aiming While Hanging]
+Right Aiming While Hanging;239A70
+Left Aiming While Hanging;239A74
+Right Diagonal Up Aiming While Hanging;239D08
+Left Diagonal Up Aiming While Hanging;239D0C
+Right Diagonal Down Aiming While Hanging;239D10
+Left Diagonal Down Aiming While Hanging;239D14
+Right Up Aiming While Hanging;239D18
+Left Up Aiming While Hanging;239D1C
+Right Down Aiming While Hanging;239D20
+Left Down Aiming While Hanging;239D24
+[Suitless: Shooting While Hanging]
+Right Shooting While Hanging;239A78
+Left Shooting While Hanging;239A7C
+Right Diagonal Up Shooting While Hanging;239D30
+Left Diagonal Up Shooting While Hanging;239D34
+Right Diagonal Down Shooting While Hanging;239D38
+Left Diagonal Down Shooting While Hanging;239D3C
+Right Up Shooting While Hanging;239D40
+Left Up Shooting While Hanging;239D44
+Right Down Shooting While Hanging;239D48
+Left Down Shooting While Hanging;239D4C
+[Suitless: Pulling Yourself Up From Hanging]
+Right Pulling Yourself Up From Hanging;239A80
+Left Pulling Yourself Up From Hanging;239A84
+[Suitless: Pulling Yourself Forward From Hanging]
+Right Pulling Yourself Forward From Hanging;239A88
+Left Pulling Yourself Forward From Hanging;239A8C
+[Suitless: Pulling Yourself Into A Morph Ball Tunnel]
+Right Pulling Yourself Up From Hanging;239A90
+Left Pulling Yourself Up From Hanging;239A94
+[Suitless: Using An Elevator]
+Using An Elevator;239A98
+[Suitless: Facing The Foreground]
+Facing The Foreground;239AA0
+[Suitless: Turning From Facing The Foreground]
+Right Turning From Facing The Foreground;239AA8
+Left Turning From Facing The Foreground;239AAC
+[Suitless: Grabbed By Chozo Statue]
+Morphball Motionless;239AB0
+[Suitless: Delay Before Shinesparking]
+Right Delay Before Shinesparking;239AB8
+Left Delay Before Shinesparking;239ABC
+[Suitless: Shinesparking]
+Right Shinesparking;239AC0
+Left Shinesparking;239AC4
+[Suitless: Shinespark Collision]
+Right Shinesparking;239AC8
+Left Shinesparking;239ACC
+[Suitless: Delay After Shinesparking]
+Right Delay After Shinesparking;239AD0
+Left Delay After Shinesparking;239AD4
+[Suitless: Delay Before Ballsparking]
+Morphball Motionless;239AD8
+[Suitless: Ballsparking]
+Right Ballsparking;239AE0
+Left Ballsparking;239AE4
+[Suitless: Ballspark Collision]
+Right Morphball;239AE8
+Left Morphball;239AEC
+[Suitless: On Zipline]
+Right On Zipline;239AF0
+Left On Zipline;239AF4
+[Suitless: Shooting On Zipline]
+Right Shooting On Zipline;239AF8
+Left Shooting On Zipline;239AFC
+[Suitless: Turning On Zipline]
+Right Turning On Zipline;239B00
+Left Turning On Zipline;239B04
+[Suitless: Morph Ball On Zipline]
+Morphball Motionless;239B08
+[Suitless: Saving Loading Game]
+Saving Loading Game;239B10
+[Suitless: Downloading Map Data]
+Downloading Map Data;239B18
+[Suitless: Turning Around To Download Map Data]
+Right Turning Around;239B20
+Left Turning Around;239B24
+[Suitless: Getting Hurt]
+Right Getting Knocked Back;239B28
+Left Getting Knocked Back;239B2C
+[Suitless: Getting Knocked Back]
+Right Getting Knocked Back;239B30
+Left Getting Knocked Back;239B34
+[Suitless: Getting Hurt In Morph Ball]
+Right Morphball;239B38
+Left Morphball;239B3C
+[Suitless: Getting Knocked Back In Morph Ball]
+Right Morphball;239B40
+Left Morphball;239B44
+[Suitless: Dying]
+Right Dying;239B48
+Left Dying;239B4C
+[Suitless: Crouching To Crawl]
+Right Crouching To Crawl;239B50
+Left Crouching To Crawl;239B54
+[Suitless: Crawling Stopped]
+Right Crawling Stopped;239B58
+Left Crawling Stopped;239B5C
+Right Pistol Up Crawling Stopped;239D90
+Left Pistol Up Crawling Stopped;239D94
+[Suitless: Starting To Crawl]
+Right Starting To Crawl;239B60
+Left Starting To Crawl;239B64
+[Suitless: Crawling]
+Right Crawling;239B68
+Left Crawling;239B6C
+[Suitless: Uncrouching From Crawling]
+Right Uncrouching From Crawling;239B70
+Left Uncrouching From Crawling;239B74
+[Suitless: Turning Around While Crawling]
+Right Turning Around While Crawling;239B78
+Left Turning Around While Crawling;239B7C
+[Suitless: Shooting While Crawling]
+Right Shooting While Crawling;239B80
+Left Shooting While Crawling;239B84
+[Suitless: Uncrouching Suitless]
+Right Uncrouching Suitless;239B88
+Left Uncrouching Suitless;239B8C
+Right Diagonal Up Uncrouching Suitless;239D58
+Left Diagonal Up Uncrouching Suitless;239D5C
+Right Diagonal Down Uncrouching Suitless;239D60
+Left Diagonal Down Uncrouching Suitless;239D64
+Right Up Uncrouching Suitless;239D68
+Left Up Uncrouching Suitless;239D6C
+[Suitless: Crouching Suitless]
+Right Crouching Suitless;239B90
+Left Crouching Suitless;239B94
+Right Diagonal Up Crouching Suitless;239D78
+Left Diagonal Up Crouching Suitless;239D7C
+Right Diagonal Down Crouching Suitless;239D80
+Left Diagonal Down Crouching Suitless;239D84
+[Suitless: Grabbing A Ledge Suitless]
+Right Hanging On Ledge Suitless;239B98
+Left Hanging On Ledge Suitless;239B9C
+[Suitless: Facing The Background Suitless]
+Facing The Background;239BA0
+[Suitless: Turning From Facing The Background Suitless]
+Right Turning From Facing The Background;239BA8
+Left Turning From Facing The Background;239BAC
+[Suitless: Activating Ziplines]
+Morphball Motionless;239BB0
+[Suitless: In Escape Ship]
+Right Crouching;239BB8
+Left Crouching;239BBC
+[Suitless: Turning To Enter Escape Ship]
+Right Turning Around;239BC0
+Left Turning Around;239BC4

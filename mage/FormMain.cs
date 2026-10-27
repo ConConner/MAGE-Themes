@@ -923,6 +923,15 @@ namespace mage
             }
         }
 
+        private void menuItem_samusEditor_Click(object sender, EventArgs e)
+        {
+            if (!FindOpenForm(typeof(FormSamus), false))
+            {
+                FormSamus form = new FormSamus(this);
+                form.Show();
+            }
+        }
+
         private void menuItem_spriteEditor_Click(object sender, EventArgs e)
         {
             if (!FindOpenForm(typeof(FormSprite), false))

@@ -86,4 +86,13 @@ public class Config
     public int OamEditorGfxZoom { get; set; } = 2;
     public int OamEditorOamZoom { get; set; } = 2;
     #endregion
+
+    #region Samus Editor
+    public bool SamusEditorViewOrigin { get; set; } = true;
+    public bool SamusEditorViewPartOutlines { get; set; } = false;
+    public bool SamusEditorViewRegions { get; set; } = true;
+    public bool SamusEditorSnapParts { get; set; } = true;
+    public int SamusEditorGfxZoom { get; set; } = 2;
+    public int SamusEditorOamZoom { get; set; } = 3;
+    #endregion
 }

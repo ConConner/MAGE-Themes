@@ -1,0 +1,303 @@
+[@Palettes]
+Fusion Suit;28DD7C:0:1,28DE1C:1:1
+Varia Suit;28DD9C:0:1,28DE1C:1:1
+Gravity Suit;28DDBC:0:1,28DE1C:1:1
+SA-X;28DDDC:0:1,28DE1C:1:1
+[Standing]
+Standing Forward Right;28D2BC
+Standing Forward Left;28D2C0
+Standing Diagonal Up Right;28D4D4
+Standing Diagonal Up Left;28D4D8
+Standing Diagonal Down Right;28D4DC
+Standing Diagonal Down Left;28D4E0
+Standing Up Right;28D4E4
+Standing Up Left;28D4E8
+[Turning Around]
+Turning Forward Right;28D2C4
+Turning Forward Left;28D2C8
+Turning Diagonal Up Right;28D4FC
+Turning Diagonal Up Left;28D500
+Turning Diagonal Down Right;28D504
+Turning Diagonal Down Left;28D508
+Turning Up Right;28D50C
+Turning Up Left;28D510
+[Shooting]
+Shooting Forward Right;28D2CC
+Shooting Forward Left;28D2D0
+Shooting Diagonal Up Right;28D524
+Shooting Diagonal Up Left;28D528
+Shooting Diagonal Down Right;28D52C
+Shooting Diagonal Down Left;28D530
+Shooting Up Right;28D534
+Shooting Up Left;28D538
+[Running]
+Running None Right;28D2D4
+Running None Left;28D2D8
+Running Forward Right;28D544
+Running Forward Left;28D548
+Running Diagonal Up Right;28D54C
+Running Diagonal Up Left;28D550
+Running Diagonal Down Right;28D554
+Running Diagonal Down Left;28D558
+[Mid Air]
+Mid Air None Right;28D2DC
+Mid Air None Left;28D2E0
+Mid Air Forward Right;28D564
+Mid Air Forward Left;28D568
+Mid Air Diagonal Up Right;28D56C
+Mid Air Diagonal Up Left;28D570
+Mid Air Diagonal Down Right;28D574
+Mid Air Diagonal Down Left;28D578
+Mid Air Up Right;28D57C
+Mid Air Up Left;28D580
+Mid Air Down Right;28D584
+Mid Air Down Left;28D588
+[Turning Around Mid Air]
+Turning Mid Air Forward Right;28D2E4
+Turning Mid Air Forward Left;28D2E8
+Turning Mid Air Diagonal Up Right;28D59C
+Turning Mid Air Diagonal Up Left;28D5A0
+Turning Mid Air Down Right;28D5A4
+Turning Mid Air Down Left;28D5A8
+Turning Mid Air Up Right;28D5AC
+Turning Mid Air Up Left;28D5B0
+[Landing]
+Landing None Right;28D2EC
+Landing None Left;28D2F0
+Landing Forward Right;28D5C4
+Landing Forward Left;28D5C8
+Landing Diagonal Up Right;28D5CC
+Landing Diagonal Up Left;28D5D0
+Landing Diagonal Down Right;28D5D4
+Landing Diagonal Down Left;28D5D8
+Landing Up Right;28D5DC
+Landing Up Left;28D5E0
+[Crouching]
+Crouching Forward Right;28D2F4
+Crouching Forward Left;28D2F8
+Crouching Diagonal Up Right;28D5F4
+Crouching Diagonal Up Left;28D5F8
+Crouching Diagonal Down Right;28D5FC
+Crouching Diagonal Down Left;28D600
+Crouching Up Right;28D604
+Crouching Up Left;28D608
+[Turning Around And Crouching]
+Turning And Crouching Forward Right;28D2FC
+Turning And Crouching Forward Left;28D300
+Turning And Crouching Diagonal Up Right;28D61C
+Turning And Crouching Diagonal Up Left;28D620
+Turning And Crouching Diagonal Down Right;28D624
+Turning And Crouching Diagonal Down Left;28D628
+Turning And Crouching Up Right;28D62C
+Turning And Crouching Up Left;28D630
+[Shooting And Crouching]
+Shooting And Crouching Forward Right;28D304
+Shooting And Crouching Forward Left;28D308
+Shooting And Crouching Diagonal Up Right;28D644
+Shooting And Crouching Diagonal Up Left;28D648
+Shooting And Crouching Diagonal Down Right;28D64C
+Shooting And Crouching Diagonal Down Left;28D650
+Shooting And Crouching Up Right;28D654
+Shooting And Crouching Up Left;28D658
+[Starting Spin Jump]
+Starting Spin Jump Right;28D30C
+Starting Spin Jump Left;28D310
+[Spinning]
+Spinning Right;28D314
+Spinning Left;28D318
+[Morphing]
+Morphing Right;28D31C
+Morphing Left;28D320
+[Morph Ball]
+Morph Ball Right;28D324
+Morph Ball Left;28D328
+[Rolling]
+Morph Ball Right;28D32C
+Morph Ball Left;28D330
+[Unmorphing]
+Unmorphing Right;28D334
+Unmorphing Left;28D338
+[Morph Ball Mid Air]
+Morph Ball Right;28D33C
+Morph Ball Left;28D340
+[Getting Hurt]
+Mid Air None Right;28D344
+Mid Air None Left;28D348
+[Getting Hurt In Morph Ball]
+Morph Ball Right;28D34C
+Morph Ball Left;28D350
+[Getting Knocked Back]
+Mid Air None Right;28D354
+Mid Air None Left;28D358
+[Getting Knocked Back In Morph Ball]
+Morph Ball Right;28D35C
+Morph Ball Left;28D360
+[Starting Wall Jump]
+Starting Wall Jump Right;28D364
+Starting Wall Jump Left;28D368
+[Wall Jumping]
+Spinning Right;28D36C
+Spinning Left;28D370
+[Using Elevator]
+Using Elevator Right;28D374
+Using Elevator Left;28D378
+[Hanging On Ledge]
+Hanging On Ledge Default Right;28D37C
+Hanging On Ledge Default Left;28D380
+Hanging On Ledge Pushing Away Right;28D664
+Hanging On Ledge Pushing Away Left;28D668
+[Pulling Up From Hanging]
+Pulling Up From Hanging Right;28D384
+Pulling Up From Hanging Left;28D388
+[Pulling Forward From Hanging]
+Pulling Forward From Hanging Right;28D38C
+Pulling Forward From Hanging Left;28D390
+[Pulling Into Morph From Hanging]
+Pulling Into Morph From Hanging Right;28D394
+Pulling Into Morph From Hanging Left;28D398
+[Lowering Down To Start Hanging]
+Lowering Down To Start Hanging Right;28D39C
+Lowering Down To Start Hanging Left;28D3A0
+[Space Jumping]
+Space Jumping Right;28D3A4
+Space Jumping Left;28D3A8
+[Screw Attacking]
+Screw Attacking Right;28D3AC
+Screw Attacking Left;28D3B0
+[Skidding]
+Skidding Default Right;28D3B4
+Skidding Default Left;28D3B8
+Skidding Armed Right;28D67C
+Skidding Armed Left;28D680
+[On Save Pad]
+On Save Pad Right;28D3BC
+On Save Pad Left;28D3C0
+[On Recharge Or Security Pad]
+Standing Forward Right;28D3C4
+Standing Forward Left;28D3C8
+[Turning Around To Recharge Or Unlock Doors]
+Turning Forward Right;28D3CC
+Turning Forward Left;28D3D0
+[Delay Before Shinesparking]
+Delay Before Shinesparking Right;28D3D4
+Delay Before Shinesparking Left;28D3D8
+[Shinesparking]
+Shinesparking Upwards Right;28D3DC
+Shinesparking Upwards Left;28D3E0
+Shinesparking Sideways Right;28D68C
+Shinesparking Sideways Left;28D690
+[Delay After Shinesparking]
+Delay After Shinesparking Upwards Right;28D3E4
+Delay After Shinesparking Upwards Left;28D3E8
+Delay After Shinesparking Sideways Right;28D6A4
+Delay After Shinesparking Sideways Left;28D6A8
+[Hanging From Vertical Ladder]
+Hanging On Vertical Ladder Right;28D3EC
+Hanging On Vertical Ladder Left;28D3F0
+[Starting To Hold Arm Out On Vertical Ladder]
+Starting To Hold Arm Out On Vertical Ladder Right;28D3F4
+Starting To Hold Arm Out On Vertical Ladder Left;28D3F8
+[Holding Arm Out On Vertical Ladder]
+Arm Out On Vertical Ladder Forward Right;28D3FC
+Arm Out On Vertical Ladder Forward Left;28D400
+[Shooting On Vertical Ladder]
+Shooting On Vertical Ladder Forward Right;28D404
+Shooting On Vertical Ladder Forward Left;28D408
+Shooting On Vertical Ladder Diagonal Up Right;28D6F4
+Shooting On Vertical Ladder Diagonal Up Left;28D6F8
+Shooting On Vertical Ladder Diagonal Down Right;28D6FC
+Shooting On Vertical Ladder Diagonal Down Left;28D700
+Shooting On Vertical Ladder Up Right;28D704
+Shooting On Vertical Ladder Up Left;28D708
+Shooting On Vertical Ladder Down Right;28D70C
+Shooting On Vertical Ladder Down Left;28D710
+[Starting To Put Arm Away On Vertical Ladder]
+Starting To Put Arm Away On Vertical Ladder Right;28D40C
+Starting To Put Arm Away On Vertical Ladder Left;28D410
+[Hanging On Horizontal Ladder]
+After Shooting On Horizontal Ladder Default Right;28D414
+After Shooting On Horizontal Ladder Default Left;28D418
+[Moving On Horizontal Ladder]
+Moving On Horizontal Ladder Right;28D41C
+Moving On Horizontal Ladder Left;28D420
+[Turning Around On Horizontal Ladder]
+Turning On Horizontal Ladder Right;28D424
+Turning On Horizontal Ladder Left;28D428
+[Delay After Shooting On Horizontal Ladder]
+After Shooting On Horizontal Ladder Default Right;28D42C
+After Shooting On Horizontal Ladder Default Left;28D430
+[Shooting On Horizontal Ladder]
+Shooting On Horizontal Ladder Default Right;28D434
+Shooting On Horizontal Ladder Default Left;28D438
+Shooting On Horizontal Ladder Diagonal Down Right;28D75C
+Shooting On Horizontal Ladder Diagonal Down Left;28D760
+Shooting On Horizontal Ladder Down Right;28D76C
+Shooting On Horizontal Ladder Down Left;28D770
+[Frozen]
+Standing Forward Right;28D43C
+Standing Forward Left;28D440
+[Frozen And Falling]
+Mid Air None Right;28D444
+Mid Air None Left;28D448
+[Frozen In Morph Ball]
+Morph Ball Right;28D44C
+Morph Ball Left;28D450
+[Frozen In Morph Ball And Falling]
+Morph Ball Right;28D454
+Morph Ball Left;28D458
+[Unlocking Security]
+Unlocking Security Right;28D45C
+Unlocking Security Left;28D460
+[Saving]
+Saving;28D464
+[On Navigation Pad]
+On Navigation Pad Right;28D46C
+On Navigation Pad Left;28D470
+[Downloading Ability]
+Downloading Ability Right;28D474
+Downloading Ability Left;28D478
+[Being Recharged]
+Being Recharged Right;28D47C
+Being Recharged Left;28D480
+[Facing Foreground]
+Facing Foreground Right;28D484
+Facing Foreground Left;28D488
+[Facing Background]
+Facing Background Right;28D48C
+Facing Background Left;28D490
+[Unlocking Habitations Deck]
+Unlocking Habitations Deck;28D494
+[Grabbed By Zazabi]
+Morph Ball Right;28D49C
+Morph Ball Left;28D4A0
+[Loading Save]
+Loading Save;28D4A4
+[Dying]
+Dying Right;28D4AC
+Dying Left;28D4B0
+[Hit By Omega Metroid]
+Hit By Omega Metroid Default Right;28D4B4
+Hit By Omega Metroid Default Left;28D4B8
+Hit By Omega Metroid Looking Up Right;28D78C
+Hit By Omega Metroid Looking Up Left;28D790
+[Grabbed By Yakuza]
+Mid Air Down Right;28D4BC
+Mid Air Down Left;28D4C0
+[Arm Out On Vertical Ladder]
+Arm Out On Vertical Ladder Forward Right;28D6B4
+Arm Out On Vertical Ladder Forward Left;28D6B8
+Arm Out On Vertical Ladder Diagonal Up Right;28D6C4
+Arm Out On Vertical Ladder Diagonal Up Left;28D6C8
+Arm Out On Vertical Ladder Diagonal Down Right;28D6CC
+Arm Out On Vertical Ladder Diagonal Down Left;28D6D0
+Arm Out On Vertical Ladder Up Right;28D6D4
+Arm Out On Vertical Ladder Up Left;28D6D8
+Arm Out On Vertical Ladder Down Right;28D6DC
+Arm Out On Vertical Ladder Down Left;28D6E0
+[After Shooting On Horizontal Ladder]
+After Shooting On Horizontal Ladder Default Right;28D714
+After Shooting On Horizontal Ladder Default Left;28D718
+After Shooting On Horizontal Ladder Diagonal Down Right;28D72C
+After Shooting On Horizontal Ladder Diagonal Down Left;28D730
+After Shooting On Horizontal Ladder Down Right;28D73C
+After Shooting On Horizontal Ladder Down Left;28D740

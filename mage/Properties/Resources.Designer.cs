@@ -978,6 +978,24 @@ namespace mage.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to the Samus animation list.
+        /// </summary>
+        public static string MF_U_samusAnims {
+            get {
+                return ResourceManager.GetString("MF_U_samusAnims", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the Samus animation list.
+        /// </summary>
+        public static string ZM_U_samusAnims {
+            get {
+                return ResourceManager.GetString("ZM_U_samusAnims", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 10=2E6214
         ///11=2E7F70
         ///12=2EB6CC
