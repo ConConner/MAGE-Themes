@@ -914,12 +914,32 @@ namespace mage
         {
             if (!FindOpenForm(typeof(FormOam), false))
             {
-                FormOam form;
-                int OamOffset = 0;
-                Version.TryGetPrimarySpriteOAM(0x12, out OamOffset); // Funnily enough the first enemy in Fusion and Zm are both sprite ID 12
-                if (!Version.IsMF) form = new FormOam(this, 0x2C4194, 0x2C4780, OamOffset);
-                else form = new FormOam(this, 0x2E926C, 0x2EAA6C, OamOffset, false);
+                const byte defaultSprite = 0x12; // Funnily enough the first enemy in Fusion and Zm are both sprite ID 12
+
+                // Look up the default sprite's OAM, graphics and palette. Whatever can't be found is left blank for the user to fill in
+                int? oamOffset = Version.TryGetPrimarySpriteOAM(defaultSprite, out int oam) ? oam : null;
+
+                int tableOffset = (defaultSprite - 0x10) * 4;
+                int? gfxOffset = ReadSpriteTablePointer(Version.SpriteGfxOffset + tableOffset);
+                int? palOffset = ReadSpriteTablePointer(Version.SpritePaletteOffset + tableOffset);
+
+                FormOam form = new FormOam(this, gfxOffset, palOffset, oamOffset, !Version.IsMF);
                 form.Show();
+            }
+        }
+
+        // Reads a pointer from a sprite table, or returns null if the table entry or the pointer is not valid
+        private static int? ReadSpriteTablePointer(int tableEntryOffset)
+        {
+            try
+            {
+                int pointer = ROM.Stream.ReadPtr(tableEntryOffset);
+                if (pointer <= 0 || pointer >= ROM.Stream.Length) return null;
+                return pointer;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return null;
             }
         }
 

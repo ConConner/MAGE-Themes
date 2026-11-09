@@ -218,7 +218,7 @@ public partial class FormOam : Form
         set
         {
             field = value;
-            SetPartOutlines(SelectedFrame);
+            if (oam != null) SetPartOutlines(SelectedFrame);
         }
     } = new();
     private bool HoveredParts => HoveredPartIndices?.Count > 0;
@@ -255,7 +255,7 @@ public partial class FormOam : Form
     private void SelectedPartIndicesChanged()
     {
         comboBox_part.SelectedIndex = SelectedPartIndices.Count == 1 ? SelectedPartIndices[0] : -1; // Set part selection combobox depending on amount of selected parts
-        SetPartOutlines(SelectedFrame);
+        if (oam != null) SetPartOutlines(SelectedFrame);
 
         button_removePart.Enabled = SelectedPartIndices.Count > 0;
         panel_partEditing.Enabled = SelectedPartIndices.Count > 0;
@@ -295,7 +295,8 @@ public partial class FormOam : Form
     private bool KeyDebounceWindowActive => KeyMovementDebounceTimer.Enabled;
 
     // constructor
-    public FormOam(FormMain main, int gfxOffset, int palOffset, int oamOffset, bool compressed = true)
+    // Offsets are null if no default could be found, in which case the user has to enter them
+    public FormOam(FormMain main, int? gfxOffset, int? palOffset, int? oamOffset, bool compressed = true)
     {
         InitializeComponent();
 
@@ -305,7 +306,6 @@ public partial class FormOam : Form
 
         this.main = main;
         this.romStream = ROM.Stream;
-        this.palette = new Palette(romStream, palOffset, 1);
 
         // Load Settings
         ViewOrigin = Program.Config.OamEditorViewOrigin;
@@ -317,9 +317,9 @@ public partial class FormOam : Form
 
         loading = true;
 
-        textBox_imageOffset.Text = Hex.ToString(gfxOffset);
-        textBox_palOffset.Text = Hex.ToString(palOffset);
-        textBox_oamOffset.Text = Hex.ToString(oamOffset);
+        textBox_imageOffset.Text = gfxOffset.HasValue ? Hex.ToString(gfxOffset.Value) : "";
+        textBox_palOffset.Text = palOffset.HasValue ? Hex.ToString(palOffset.Value) : "";
+        textBox_oamOffset.Text = oamOffset.HasValue ? Hex.ToString(oamOffset.Value) : "";
         checkBox_compressed.Checked = compressed;
 
         //Event based
@@ -356,10 +356,12 @@ public partial class FormOam : Form
         Status = new Status(label_Status, button_save);
 
         loading = false;
-        DrawNewGFX();
-        LoadPalette(0);
-        DrawPalette();
-        SetOAM();
+
+        // Load the defaults without showing errors. Anything that can't be loaded is cleared,
+        // so the editor opens empty and the user can enter their own values
+        if (!DrawNewGFX(false)) textBox_imageOffset.Text = "";
+        if (!LoadPalette(0, false)) textBox_palOffset.Text = "";
+        if (!SetOAM(false)) textBox_oamOffset.Text = "";
         PopulateUndoRedoForFrames();
     }
 
@@ -612,7 +614,10 @@ public partial class FormOam : Form
     #endregion
 
     #region GFX
-    private void DrawNewGFX()
+    /// <summary>
+    /// Loads the graphics at the entered offset. Returns false if they could not be loaded.
+    /// </summary>
+    private bool DrawNewGFX(bool showErrors = true)
     {
         int offset;
         try
@@ -621,12 +626,16 @@ public partial class FormOam : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show("The offset entered was not valid.\n\n" + ex.GetType().ToString() + '\n'
-                    + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
+            if (showErrors)
+            {
+                MessageBox.Show("The offset entered was not valid.\n\n" + ex.GetType().ToString() + '\n'
+                        + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return false;
         }
         int width = 32;
 
+        GFX newGfx;
         if (checkBox_compressed.Checked)
         {
             try
@@ -636,33 +645,52 @@ public partial class FormOam : Form
                 {
                     throw new FormatException();
                 }
-                gfxObject = new GFX(romStream, offset, width);
-                if (gfxObject.origLen == 0)
+                newGfx = new GFX(romStream, offset, width);
+                if (newGfx.origLen == 0)
                 {
                     throw new FormatException();
                 }
             }
             catch
             {
-                MessageBox.Show("There are no compressed graphics at the given offset.",
-                    "Compressed graphics error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                if (showErrors)
+                {
+                    MessageBox.Show("There are no compressed graphics at the given offset.",
+                        "Compressed graphics error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return false;
             }
         }
         else
         {
             int height = 16;
-            gfxObject = new GFX(romStream, offset, width, height);
+            try
+            {
+                newGfx = new GFX(romStream, offset, width, height);
+            }
+            catch
+            {
+                if (showErrors)
+                {
+                    MessageBox.Show("The graphics could not be loaded from the given offset.",
+                        "Graphics error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return false;
+            }
         }
+        gfxObject = newGfx;
 
         CreateVram(button_loadCommonGraphics.Checked);
         DrawFrame(comboBox_Frame.SelectedIndex);
         DrawImage();
         UpdateGfxZoom(gfxView_gfx.Zoom);
+        return true;
     }
 
     private void DrawImage()
     {
+        if (gfxObject == null || vram == null) return;
+
         if (!ViewVram && LoadCommonGraphics) gfxImage = gfxObject.Draw4bpp(vram.palette, SelectedPaletteRow, true);
         else if (!ViewVram && !LoadCommonGraphics) gfxImage = gfxObject.Draw4bpp(vram.palette, SelectedPaletteRow, true);
         else if (ViewVram && !LoadCommonGraphics) gfxImage = gfxObject.Draw4bpp(vram.palette, SelectedPaletteRow, true); // A weird edge-case where this condition would render a blank Vram Viewer
@@ -750,11 +778,16 @@ public partial class FormOam : Form
     private void DrawPalette()
     {
         CreateVram(button_loadCommonGraphics.Checked);
+        if (vram == null) return;
+
         paletteView.TileImage = vram.palette.Draw(16, 0, 16, 0);
         DrawFrame(comboBox_Frame.SelectedIndex);
     }
 
-    private void LoadPalette(int diff)
+    /// <summary>
+    /// Loads the palette at the entered offset. Returns false if it could not be loaded.
+    /// </summary>
+    private bool LoadPalette(int diff, bool showErrors = true)
     {
         try
         {
@@ -765,17 +798,23 @@ public partial class FormOam : Form
                 textBox_palOffset.Text = Hex.ToString(offset);
             }
 
-            int count = !checkBox_compressed.Checked ? 8 : (gfxObject.height / 2);
+            // The amount of rows depends on the graphics. Without any loaded, the palette still loads and is picked up once they are
+            int count = !checkBox_compressed.Checked || gfxObject == null ? 8 : (gfxObject.height / 2);
 
             palette = new Palette(romStream, offset, count);
             CreateVram(button_loadCommonGraphics.Checked);
             DrawImage();
             DrawPalette();
+            return true;
         }
         catch (Exception ex)
         {
-            MessageBox.Show("The offset entered was not valid.\n\n" + ex.GetType().ToString() + '\n'
-                    + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (showErrors)
+            {
+                MessageBox.Show("The offset entered was not valid.\n\n" + ex.GetType().ToString() + '\n'
+                        + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return false;
         }
     }
 
@@ -866,13 +905,18 @@ public partial class FormOam : Form
         setUndoRedoButtons();
     }
 
-    private void SetOAM()
+    /// <summary>
+    /// Loads the OAM at the entered offset. Returns false if there is no valid OAM there.
+    /// </summary>
+    private bool SetOAM(bool showErrors = true)
     {
         PlayingAnimation = false;
         try
         {
             int offset = Hex.ToInt(textBox_oamOffset.Text);
-            oam = new OAM(offset);
+            OAM newOam = new OAM(offset);
+            if (newOam.NumFrames <= 0) throw new FormatException();
+            oam = newOam;
 
             originalOamOffset = offset;
             originalNumOfFrames = oam.NumFrames;
@@ -880,16 +924,51 @@ public partial class FormOam : Form
             //Populate frame selection
             SetFrameSelectionCombobox();
             comboBox_Frame.SelectedIndex = 0;
+
+            UpdateOamControlsEnabled();
+            return true;
         }
         catch
         {
-            MessageBox.Show("No valid OAM found.", "Invalid OAM", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            oam = null;
+            if (showErrors)
+            {
+                MessageBox.Show("No valid OAM found.", "Invalid OAM", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            ClearOam();
+            return false;
         }
+    }
+
+    // Removes the loaded OAM, leaving the editor empty
+    private void ClearOam()
+    {
+        oam = null;
+
+        loading = true;
+        comboBox_Frame.Items.Clear();
+        comboBox_part.Items.Clear();
+        loading = false;
+
+        SelectedPartIndices = new();
+        tileDisplay_oam.ResetDrawables();
+        tileDisplay_oam.TileImage = null;
+        UpdateOamControlsEnabled();
+    }
+
+    // Everything that edits the OAM needs one to be loaded
+    private void UpdateOamControlsEnabled()
+    {
+        bool hasOam = oam != null;
+        groupBox_oam.Enabled = hasOam;
+        groupBox_part.Enabled = hasOam;
+        groupBox_oamDisplay.Enabled = hasOam;
     }
 
     private void CreateVram(bool loadCommonGraphics)
     {
+        // Nothing to show until both graphics and palette are loaded
+        if (gfxObject == null || palette == null) return;
+
         vram = new VramObj(gfxObject, palette, loadCommonGraphics);
     }
 
@@ -978,6 +1057,8 @@ public partial class FormOam : Form
     private void PopulateUndoRedoForFrames()
     {
         UndoRedos.Clear();
+        if (oam == null) return;
+
         for (int i = 0; i < oam.NumFrames; i++)
         {
             UndoRedos.Add(new());
