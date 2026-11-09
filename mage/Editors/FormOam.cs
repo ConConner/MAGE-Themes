@@ -1184,28 +1184,75 @@ public partial class FormOam : Form
     }
 
     #region Z-Ordering Parts
-    private void ReorderPart(int oldIndex, int newIndex)
+    private enum ReorderMode { ToFront, Forward, Backward, ToBack }
+
+    /// <summary>
+    /// Computes the new part order after moving the selected parts.
+    /// Index 0 is the front. Returns order[newIndex] = oldIndex, or null if nothing would change.
+    /// The selected parts keep their relative order, as do the unselected ones.
+    /// </summary>
+    private int[]? ComputeReorder(ReorderMode mode)
     {
-        if (oldIndex < 0 || oldIndex >= SelectedFrame.parts.Count || newIndex < 0 || newIndex >= SelectedFrame.parts.Count)
-            return;
+        int count = SelectedFrame.parts.Count;
+        HashSet<int> selected = new(SelectedPartIndices.Where(i => i >= 0 && i < count));
+        if (selected.Count == 0) return null;
 
-        if (oldIndex == newIndex) return;
-
-        // Move the part to its new position, shifting all parts in between
-        List<OAM.Part> reordered = new(SelectedFrame.parts);
-        OAM.Part moved = reordered[oldIndex];
-        reordered.RemoveAt(oldIndex);
-        reordered.Insert(newIndex, moved);
-
-        OamActionGroup group = new("Reordered Part");
-        for (int i = Math.Min(oldIndex, newIndex); i <= Math.Max(oldIndex, newIndex); i++)
+        List<int> order = Enumerable.Range(0, count).ToList();
+        switch (mode)
         {
-            group.AddAction(new ModifyOamPartAction(oam, SelectedFrameIndex, i, reordered[i], "Reordered Part"));
+            case ReorderMode.ToFront:
+                order = order.Where(selected.Contains).Concat(order.Where(i => !selected.Contains(i))).ToList();
+                break;
+            case ReorderMode.ToBack:
+                order = order.Where(i => !selected.Contains(i)).Concat(order.Where(selected.Contains)).ToList();
+                break;
+            case ReorderMode.Forward:
+                // Each selected part swaps with the unselected part in front of it.
+                // Parts already at the front (or stacked against it) stay in place.
+                for (int i = 1; i < count; i++)
+                {
+                    if (selected.Contains(order[i]) && !selected.Contains(order[i - 1]))
+                        (order[i], order[i - 1]) = (order[i - 1], order[i]);
+                }
+                break;
+            case ReorderMode.Backward:
+                for (int i = count - 2; i >= 0; i--)
+                {
+                    if (selected.Contains(order[i]) && !selected.Contains(order[i + 1]))
+                        (order[i], order[i + 1]) = (order[i + 1], order[i]);
+                }
+                break;
+        }
+
+        bool changed = false;
+        for (int i = 0; i < count; i++)
+        {
+            if (order[i] != i) { changed = true; break; }
+        }
+        return changed ? order.ToArray() : null;
+    }
+
+    private void ReorderParts(ReorderMode mode)
+    {
+        int[]? order = ComputeReorder(mode);
+        if (order is null) return;
+
+        List<OAM.Part> oldParts = new(SelectedFrame.parts);
+        HashSet<int> selected = new(SelectedPartIndices);
+
+        OamActionGroup group = new("Reordered Parts");
+        List<int> newSelection = new();
+        for (int i = 0; i < order.Length; i++)
+        {
+            if (selected.Contains(order[i])) newSelection.Add(i);
+            if (order[i] == i) continue;
+            group.AddAction(new ModifyOamPartAction(oam, SelectedFrameIndex, i, oldParts[order[i]], "Reordered Parts"));
         }
         group.Do();
         AddAction(group);
 
-        SelectedPartIndex = newIndex;
+        // Keep the same parts selected at their new positions
+        SelectedPartIndices = newSelection;
 
         DrawFrame(SelectedFrameIndex);
         Status.ChangeMade();
@@ -1221,34 +1268,16 @@ public partial class FormOam : Form
 
         button_pasteCtx.Enabled = Clipboard.ContainsData(ClipboardFormat);
 
-        // Enable/disable context menu items based on selected part
-        int parts = SelectedFrame.parts.Count;
-        bool multi = SelectedPartIndices.Count > 1;
-        button_toFront.Enabled = SelectedPartIndex != 0 && !multi;
-        button_toBack.Enabled = SelectedPartIndex != parts - 1 && !multi;
-        button_layerDown.Enabled = SelectedPartIndex != parts - 1 && parts > 1 && !multi;
-        button_layerUp.Enabled = SelectedPartIndex != 0 && parts > 1 && !multi;
+        // Only enable reordering options that would actually change the part order
+        button_toFront.Enabled = ComputeReorder(ReorderMode.ToFront) is not null;
+        button_toBack.Enabled = ComputeReorder(ReorderMode.ToBack) is not null;
+        button_layerDown.Enabled = ComputeReorder(ReorderMode.Backward) is not null;
+        button_layerUp.Enabled = ComputeReorder(ReorderMode.Forward) is not null;
     }
-    private void button_toFront_Click(object sender, EventArgs e)
-    {
-        if (SelectedPartIndex == -1) return;
-        ReorderPart(SelectedPartIndex, 0);
-    }
-    private void button_layerUp_Click(object sender, EventArgs e)
-    {
-        if (SelectedPartIndex == -1) return;
-        ReorderPart(SelectedPartIndex, SelectedPartIndex - 1);
-    }
-    private void button_layerDown_Click(object sender, EventArgs e)
-    {
-        if (SelectedPartIndex == -1) return;
-        ReorderPart(SelectedPartIndex, SelectedPartIndex + 1);
-    }
-    private void button_toBack_Click(object sender, EventArgs e)
-    {
-        if (SelectedPartIndex == -1) return;
-        ReorderPart(SelectedPartIndex, SelectedFrame.parts.Count - 1);
-    }
+    private void button_toFront_Click(object sender, EventArgs e) => ReorderParts(ReorderMode.ToFront);
+    private void button_layerUp_Click(object sender, EventArgs e) => ReorderParts(ReorderMode.Forward);
+    private void button_layerDown_Click(object sender, EventArgs e) => ReorderParts(ReorderMode.Backward);
+    private void button_toBack_Click(object sender, EventArgs e) => ReorderParts(ReorderMode.ToBack);
     #endregion
 
     #region Adding / Removing
