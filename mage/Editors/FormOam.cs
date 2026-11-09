@@ -1293,6 +1293,7 @@ public partial class FormOam : Form
             };
             a.Do();
             AddAction(a);
+            DrawFrame(SelectedFrameIndex);
             return;
         }
 
@@ -1308,6 +1309,7 @@ public partial class FormOam : Form
         }
         group.Do();
         AddAction(group);
+        DrawFrame(SelectedFrameIndex);
     }
     private void DeletedPart()
     {
