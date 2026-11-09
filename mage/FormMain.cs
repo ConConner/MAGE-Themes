@@ -2051,6 +2051,10 @@ namespace mage
 
         public void RoomRuleValidationSettingsChanged()
         {
+            // no room loaded (e.g. settings changed before opening a ROM);
+            // the validator is set up when a room is loaded
+            if (room == null) { return; }
+
             errorList.Visible = Program.Config.WarningsEnabled;
 
             if (!Program.Config.WarningsEnabled)
