@@ -16,16 +16,23 @@ namespace mage
         private ushort[,] palette;
         private int addr;
 
+        // Bit 15 of each color as it was read from the ROM. The editor only represents the 15 color bits
+        // (bit 15 is used internally as the "opaque" flag), so the original bit is kept here and written back
+        // as-is. Otherwise, loading non-palette data (e.g. code) and saving would silently modify it.
+        private ushort[,] originalBit15;
+
         // constructor
         public Palette(int len)
         {
             palette = new ushort[len, 16];
+            originalBit15 = new ushort[len, 16];
         }
 
         public Palette(ByteStream bs, int offset, int len)
         {
             this.addr = offset;
             palette = new ushort[len, 16];
+            originalBit15 = new ushort[len, 16];
             Load(bs, 0, len);
         }
 
@@ -44,6 +51,7 @@ namespace mage
 
                     ushort val = (ushort)(0x8000 | red | green | blue);
                     palette[dst, c] = val;
+                    originalBit15[dst, c] = (ushort)(curr & 0x8000);
                 }
                 palette[dst, 0] &= 0x7FFF;
                 dst++;
@@ -161,7 +169,8 @@ namespace mage
                     int green = curr & 0x3E0;
                     int red = (curr & 0x7C00) >> 10;
 
-                    ushort val = (ushort)(red | green | blue);
+                    // keep the bit 15 that was originally in the ROM at this position
+                    ushort val = (ushort)(originalBit15[r, c] | red | green | blue);
                     bs.Write16(val);
                 }
             }
