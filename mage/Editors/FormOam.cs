@@ -1189,12 +1189,19 @@ public partial class FormOam : Form
         if (oldIndex < 0 || oldIndex >= SelectedFrame.parts.Count || newIndex < 0 || newIndex >= SelectedFrame.parts.Count)
             return;
 
-        OAM.Part oldPart = SelectedFrame.parts[newIndex];
-        OAM.Part newPart = SelectedFrame.parts[oldIndex];
+        if (oldIndex == newIndex) return;
 
-        OamActionGroup group = new();
-        group.AddAction(new ModifyOamPartAction(oam, SelectedFrameIndex, newIndex, newPart, "Reordered Part"));
-        group.AddAction(new ModifyOamPartAction(oam, SelectedFrameIndex, oldIndex, oldPart, "Reordered Part"));
+        // Move the part to its new position, shifting all parts in between
+        List<OAM.Part> reordered = new(SelectedFrame.parts);
+        OAM.Part moved = reordered[oldIndex];
+        reordered.RemoveAt(oldIndex);
+        reordered.Insert(newIndex, moved);
+
+        OamActionGroup group = new("Reordered Part");
+        for (int i = Math.Min(oldIndex, newIndex); i <= Math.Max(oldIndex, newIndex); i++)
+        {
+            group.AddAction(new ModifyOamPartAction(oam, SelectedFrameIndex, i, reordered[i], "Reordered Part"));
+        }
         group.Do();
         AddAction(group);
 
