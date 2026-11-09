@@ -109,6 +109,8 @@ public partial class FormGraphicsNew : Form
             button_copy.Enabled = value;
             button_flipH.Enabled = value;
             button_flipV.Enabled = value;
+            button_rotateCW.Enabled = value;
+            button_rotateCCW.Enabled = value;
             button_cut.Enabled = value;
         }
     }
@@ -1364,5 +1366,54 @@ public partial class FormGraphicsNew : Form
     private void button_flipH_Click(object sender, EventArgs e) => FlipH();
 
     private void button_flipV_Click(object sender, EventArgs e) => FlipV();
+    #endregion
+
+    #region Rotating
+    private void Rotate(bool clockwise)
+    {
+        if (!SelectionVisible) return;
+
+        // Rotating can change the footprint of the selection, so the pixels are lifted the same way as when moving
+        if (SelectedPixels is null)
+        {
+            CloseActionGroup();
+            latestActionGroup = new("Rotate " + (clockwise ? "Clockwise" : "Counter Clockwise"));
+            SelectedPixels = EjectPixels(Selection.Rectangle);
+        }
+
+        SelectedPixels = RotatePixels(SelectedPixels, clockwise);
+        Selection.Rectangle = GetRotatedRectangle(Selection.Rectangle);
+        DrawGFX(); // Redrawing to show Preview
+    }
+
+    private int[,] RotatePixels(int[,] pixels, bool clockwise)
+    {
+        int width = pixels.GetLength(0);
+        int height = pixels.GetLength(1);
+
+        int[,] rotated = new int[height, width];
+
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+            {
+                if (clockwise) rotated[height - y - 1, x] = pixels[x, y];
+                else rotated[y, width - x - 1] = pixels[x, y];
+            }
+
+        return rotated;
+    }
+
+    private Rectangle GetRotatedRectangle(Rectangle region)
+    {
+        // Rotate around the center of the selection
+        int x = region.X + (region.Width - region.Height) / 2;
+        int y = region.Y + (region.Height - region.Width) / 2;
+
+        return new Rectangle(x, y, region.Height, region.Width);
+    }
+
+    private void button_rotateCW_Click(object sender, EventArgs e) => Rotate(clockwise: true);
+
+    private void button_rotateCCW_Click(object sender, EventArgs e) => Rotate(clockwise: false);
     #endregion
 }
