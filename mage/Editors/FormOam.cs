@@ -75,6 +75,8 @@ public partial class FormOam : Form
     // Moving related
     Point? PartsStartLocation = null;
     Point? MouseStartLocation = null;
+    // Set once the mouse has actually moved after pressing on a part, so a plain click doesn't move (or snap) it
+    bool PartsDragStarted = false;
 
     // properties
     private bool PlayingAnimation
@@ -2004,6 +2006,7 @@ public partial class FormOam : Form
         if (!SelectedParts) return;
         MouseStartLocation = e.PixelPosition;
         PartsStartLocation = GetMultiPartArea().Location;
+        PartsDragStarted = false;
     }
 
     private void oamView_oam_TileMouseMove(object sender, TileDisplay.TileDisplayArgs e)
@@ -2046,6 +2049,13 @@ public partial class FormOam : Form
         // SPECIFIC EDITING CODE
         if (!SelectedParts) return;
         if (MouseStartLocation is null || PartsStartLocation is null || e.Button != MouseButtons.Left) return;
+
+        // Don't move or snap anything until the mouse has moved away from where it was pressed
+        if (!PartsDragStarted)
+        {
+            if (e.PixelPosition == MouseStartLocation.Value) return;
+            PartsDragStarted = true;
+        }
 
         // Check if arrow keys were used to move and finish that action group, if its still in debounce window
         if (KeyDebounceWindowActive) FinishModifyingActionGroup();
@@ -2093,6 +2103,7 @@ public partial class FormOam : Form
         MultiPartSelection.Visible = false;
         MouseStartLocation = null;
         PartsStartLocation = null;
+        PartsDragStarted = false;
         FinishModifyingActionGroup();
     }
     #endregion
