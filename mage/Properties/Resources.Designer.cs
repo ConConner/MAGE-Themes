@@ -978,6 +978,24 @@ namespace mage.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to the Samus animation list.
+        /// </summary>
+        public static string MF_U_samusAnims {
+            get {
+                return ResourceManager.GetString("MF_U_samusAnims", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the Samus animation list.
+        /// </summary>
+        public static string ZM_U_samusAnims {
+            get {
+                return ResourceManager.GetString("ZM_U_samusAnims", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 10=2E6214
         ///11=2E7F70
         ///12=2EB6CC
@@ -1342,6 +1360,26 @@ namespace mage.Properties {
         public static System.Drawing.Bitmap shape_group {
             get {
                 object obj = ResourceManager.GetObject("shape_group", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap shape_rotate_anticlockwise {
+            get {
+                object obj = ResourceManager.GetObject("shape_rotate_anticlockwise", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap shape_rotate_clockwise {
+            get {
+                object obj = ResourceManager.GetObject("shape_rotate_clockwise", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -98,6 +98,8 @@
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             button_flipH = new System.Windows.Forms.ToolStripButton();
             button_flipV = new System.Windows.Forms.ToolStripButton();
+            button_rotateCW = new System.Windows.Forms.ToolStripButton();
+            button_rotateCCW = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             button_grid = new System.Windows.Forms.ToolStripSplitButton();
             button_tileGrid = new System.Windows.Forms.ToolStripMenuItem();
@@ -651,7 +653,7 @@
             // toolStrip_gfx
             // 
             toolStrip_gfx.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator8, button_cut, button_copy, button_paste, toolStripSeparator6, button_toolSelect, button_toolPen, button_toolFill, button_toolShape, button_eyeDropper, toolStripSeparator1, button_flipH, button_flipV, toolStripSeparator3, button_grid, toolStripSeparator4, button_imageZoomIn, button_imageZoomOut, label_imageZoom });
+            toolStrip_gfx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_undo, button_redo, toolStripSeparator8, button_cut, button_copy, button_paste, toolStripSeparator6, button_toolSelect, button_toolPen, button_toolFill, button_toolShape, button_eyeDropper, toolStripSeparator1, button_flipH, button_flipV, button_rotateCW, button_rotateCCW, toolStripSeparator3, button_grid, toolStripSeparator4, button_imageZoomIn, button_imageZoomOut, label_imageZoom });
             toolStrip_gfx.Location = new System.Drawing.Point(3, 19);
             toolStrip_gfx.Name = "toolStrip_gfx";
             toolStrip_gfx.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -803,6 +805,30 @@
             button_flipV.Size = new System.Drawing.Size(23, 22);
             button_flipV.Text = "Flip Vertically (V, Y)";
             button_flipV.Click += button_flipV_Click;
+            // 
+            // button_rotateCW
+            // 
+            button_rotateCW.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_rotateCW.Enabled = false;
+            button_rotateCW.Image = Properties.Resources.shape_rotate_clockwise;
+            button_rotateCW.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_rotateCW.Name = "button_rotateCW";
+            button_rotateCW.Size = new System.Drawing.Size(23, 22);
+            button_rotateCW.Text = "Rotate Clockwise";
+            button_rotateCW.ToolTipText = "Rotate Clockwise";
+            button_rotateCW.Click += button_rotateCW_Click;
+            // 
+            // button_rotateCCW
+            // 
+            button_rotateCCW.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_rotateCCW.Enabled = false;
+            button_rotateCCW.Image = Properties.Resources.shape_rotate_anticlockwise;
+            button_rotateCCW.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_rotateCCW.Name = "button_rotateCCW";
+            button_rotateCCW.Size = new System.Drawing.Size(23, 22);
+            button_rotateCCW.Text = "Rotate Counter Clockwise";
+            button_rotateCCW.ToolTipText = "Rotate Counter Clockwise";
+            button_rotateCCW.Click += button_rotateCCW_Click;
             // 
             // toolStripSeparator3
             // 
@@ -956,6 +982,8 @@
         private System.Windows.Forms.ToolStrip toolStrip_gfx;
         private System.Windows.Forms.ToolStripButton button_flipH;
         private System.Windows.Forms.ToolStripButton button_flipV;
+        private System.Windows.Forms.ToolStripButton button_rotateCW;
+        private System.Windows.Forms.ToolStripButton button_rotateCCW;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;

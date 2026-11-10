@@ -21,6 +21,7 @@ public partial class PageAdvanced : UserControl, IReloadablePage
 
         checkBox_experimental.Checked = Program.ExperimentalFeaturesEnabled;
         checkBox_legacyEditors.Checked = Program.LegacyEditors;
+        checkBox_vibecoded.Checked = Program.VibecodedFeatures;
 
         LoadPage();
     }
@@ -35,5 +36,10 @@ public partial class PageAdvanced : UserControl, IReloadablePage
     private void checkBox_legacyEditors_CheckedChanged(object sender, EventArgs e)
     {
         Program.LegacyEditors = checkBox_legacyEditors.Checked;
+    }
+
+    private void checkBox_vibecoded_CheckedChanged(object sender, EventArgs e)
+    {
+        Program.VibecodedFeatures = checkBox_vibecoded.Checked;
     }
 }

@@ -94,6 +94,7 @@
             menuItem_tileTableEditor = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_animationEditor = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_oamViewer = new System.Windows.Forms.ToolStripMenuItem();
+            menuItem_samusEditor = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator25 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_spriteEditor = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_spritesetEditor = new System.Windows.Forms.ToolStripMenuItem();
@@ -734,7 +735,7 @@
             // 
             // menuStrip_editors
             // 
-            menuStrip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_headerEditor, menuItem_tilesetEditor, toolStripSeparator24, menuItem_graphicsEditor, menuItem_paletteEditor, menuItem_tileTableEditor, menuItem_animationEditor, menuItem_oamViewer, toolStripSeparator25, menuItem_spriteEditor, menuItem_spritesetEditor, menuItem_minimapEditor, menuItem_connectionEditor, toolStripSeparator26, menuItem_textEditor, menuItem_demoEditor, menuItem_physicsEditor, menuItem_weaponEditor, menuItem_creditsEditor });
+            menuStrip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_headerEditor, menuItem_tilesetEditor, toolStripSeparator24, menuItem_graphicsEditor, menuItem_paletteEditor, menuItem_tileTableEditor, menuItem_animationEditor, menuItem_oamViewer, menuItem_samusEditor, toolStripSeparator25, menuItem_spriteEditor, menuItem_spritesetEditor, menuItem_minimapEditor, menuItem_connectionEditor, toolStripSeparator26, menuItem_textEditor, menuItem_demoEditor, menuItem_physicsEditor, menuItem_weaponEditor, menuItem_creditsEditor });
             menuStrip_editors.Enabled = false;
             menuStrip_editors.Name = "menuStrip_editors";
             menuStrip_editors.Size = new System.Drawing.Size(55, 20);
@@ -744,7 +745,7 @@
             // 
             menuItem_headerEditor.Image = Properties.Resources.toolbar_header;
             menuItem_headerEditor.Name = "menuItem_headerEditor";
-            menuItem_headerEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_headerEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_headerEditor.Text = "Header Editor";
             menuItem_headerEditor.Click += menuItem_headerEditor_Click;
             // 
@@ -752,20 +753,20 @@
             // 
             menuItem_tilesetEditor.Image = Properties.Resources.shortcut_screw;
             menuItem_tilesetEditor.Name = "menuItem_tilesetEditor";
-            menuItem_tilesetEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_tilesetEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_tilesetEditor.Text = "Tileset Editor";
             menuItem_tilesetEditor.Click += menuItem_tilesetEditor_Click;
             // 
             // toolStripSeparator24
             // 
             toolStripSeparator24.Name = "toolStripSeparator24";
-            toolStripSeparator24.Size = new System.Drawing.Size(167, 6);
+            toolStripSeparator24.Size = new System.Drawing.Size(177, 6);
             // 
             // menuItem_graphicsEditor
             // 
             menuItem_graphicsEditor.Image = Properties.Resources.toolbar_graphics;
             menuItem_graphicsEditor.Name = "menuItem_graphicsEditor";
-            menuItem_graphicsEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_graphicsEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_graphicsEditor.Text = "Graphics Editor";
             menuItem_graphicsEditor.Click += menuItem_graphicsEditor_Click;
             // 
@@ -773,7 +774,7 @@
             // 
             menuItem_paletteEditor.Image = Properties.Resources.toolbar_palette;
             menuItem_paletteEditor.Name = "menuItem_paletteEditor";
-            menuItem_paletteEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_paletteEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_paletteEditor.Text = "Palette Editor";
             menuItem_paletteEditor.Click += menuItem_paletteEditor_Click;
             // 
@@ -781,7 +782,7 @@
             // 
             menuItem_tileTableEditor.Image = Properties.Resources.toolbar_tile_table;
             menuItem_tileTableEditor.Name = "menuItem_tileTableEditor";
-            menuItem_tileTableEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_tileTableEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_tileTableEditor.Text = "Tile Table Editor";
             menuItem_tileTableEditor.Click += menuItem_tileTableEditor_Click;
             // 
@@ -789,7 +790,7 @@
             // 
             menuItem_animationEditor.Image = Properties.Resources.toolbar_animation;
             menuItem_animationEditor.Name = "menuItem_animationEditor";
-            menuItem_animationEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_animationEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_animationEditor.Text = "Animation Editor";
             menuItem_animationEditor.Click += menuItem_animationEditor_Click;
             // 
@@ -797,20 +798,27 @@
             // 
             menuItem_oamViewer.Image = Properties.Resources.toolbar_oam;
             menuItem_oamViewer.Name = "menuItem_oamViewer";
-            menuItem_oamViewer.Size = new System.Drawing.Size(170, 22);
+            menuItem_oamViewer.Size = new System.Drawing.Size(180, 22);
             menuItem_oamViewer.Text = "OAM Editor";
             menuItem_oamViewer.Click += menuItem_oamViewer_Click;
+            // 
+            // menuItem_samusEditor
+            // 
+            menuItem_samusEditor.Name = "menuItem_samusEditor";
+            menuItem_samusEditor.Size = new System.Drawing.Size(180, 22);
+            menuItem_samusEditor.Text = "Samus Editor";
+            menuItem_samusEditor.Click += menuItem_samusEditor_Click;
             // 
             // toolStripSeparator25
             // 
             toolStripSeparator25.Name = "toolStripSeparator25";
-            toolStripSeparator25.Size = new System.Drawing.Size(167, 6);
+            toolStripSeparator25.Size = new System.Drawing.Size(177, 6);
             // 
             // menuItem_spriteEditor
             // 
             menuItem_spriteEditor.Image = Properties.Resources.toolbar_sprite;
             menuItem_spriteEditor.Name = "menuItem_spriteEditor";
-            menuItem_spriteEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_spriteEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_spriteEditor.Text = "Sprite Editor";
             menuItem_spriteEditor.Click += menuItem_spriteEditor_Click;
             // 
@@ -818,7 +826,7 @@
             // 
             menuItem_spritesetEditor.Image = Properties.Resources.toolbar_spriteset;
             menuItem_spritesetEditor.Name = "menuItem_spritesetEditor";
-            menuItem_spritesetEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_spritesetEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_spritesetEditor.Text = "Spriteset Editor";
             menuItem_spritesetEditor.Click += menuItem_spritesetEditor_Click;
             // 
@@ -826,7 +834,7 @@
             // 
             menuItem_minimapEditor.Image = Properties.Resources.toolbar_minimap;
             menuItem_minimapEditor.Name = "menuItem_minimapEditor";
-            menuItem_minimapEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_minimapEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_minimapEditor.Text = "Map Editor";
             menuItem_minimapEditor.Click += menuItem_minimapEditor_Click;
             // 
@@ -834,20 +842,20 @@
             // 
             menuItem_connectionEditor.Image = Properties.Resources.toolbar_connection;
             menuItem_connectionEditor.Name = "menuItem_connectionEditor";
-            menuItem_connectionEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_connectionEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_connectionEditor.Text = "Connection Editor";
             menuItem_connectionEditor.Click += menuItem_connectionEditor_Click;
             // 
             // toolStripSeparator26
             // 
             toolStripSeparator26.Name = "toolStripSeparator26";
-            toolStripSeparator26.Size = new System.Drawing.Size(167, 6);
+            toolStripSeparator26.Size = new System.Drawing.Size(177, 6);
             // 
             // menuItem_textEditor
             // 
             menuItem_textEditor.Image = Properties.Resources.toolbar_text;
             menuItem_textEditor.Name = "menuItem_textEditor";
-            menuItem_textEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_textEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_textEditor.Text = "Text Editor";
             menuItem_textEditor.Click += menuItem_textEditor_Click;
             // 
@@ -855,7 +863,7 @@
             // 
             menuItem_demoEditor.Image = Properties.Resources.toolbar_demo;
             menuItem_demoEditor.Name = "menuItem_demoEditor";
-            menuItem_demoEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_demoEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_demoEditor.Text = "Demo Editor";
             menuItem_demoEditor.Click += menuItem_demoEditor_Click;
             // 
@@ -863,7 +871,7 @@
             // 
             menuItem_physicsEditor.Image = Properties.Resources.toolbar_physics;
             menuItem_physicsEditor.Name = "menuItem_physicsEditor";
-            menuItem_physicsEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_physicsEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_physicsEditor.Text = "Physics Editor";
             menuItem_physicsEditor.Click += menuItem_physicsEditor_Click;
             // 
@@ -871,7 +879,7 @@
             // 
             menuItem_weaponEditor.Image = Properties.Resources.toolbar_weapon;
             menuItem_weaponEditor.Name = "menuItem_weaponEditor";
-            menuItem_weaponEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_weaponEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_weaponEditor.Text = "Weapon Editor";
             menuItem_weaponEditor.Click += menuItem_weaponEditor_Click;
             // 
@@ -879,7 +887,7 @@
             // 
             menuItem_creditsEditor.Image = Properties.Resources.toolbar_credits;
             menuItem_creditsEditor.Name = "menuItem_creditsEditor";
-            menuItem_creditsEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_creditsEditor.Size = new System.Drawing.Size(180, 22);
             menuItem_creditsEditor.Text = "Credits Editor";
             menuItem_creditsEditor.Click += menuItem_creditsEditor_Click;
             // 
@@ -2795,6 +2803,7 @@
         private System.Windows.Forms.ToolStripStatusLabel lbl_spring;
         private System.Windows.Forms.ToolStripDropDownButton statusStrip_theme;
         private System.Windows.Forms.ToolStripMenuItem menuItem_oamViewer;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_samusEditor;
         private System.Windows.Forms.ToolStripMenuItem menuItem_flip_h;
         private System.Windows.Forms.ToolStripMenuItem menuItem_flip_v;
         private System.Windows.Forms.ToolStripSeparator seperator_flip;

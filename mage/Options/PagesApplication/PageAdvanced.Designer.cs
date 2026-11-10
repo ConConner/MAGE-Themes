@@ -30,6 +30,7 @@
         {
             checkBox_experimental = new System.Windows.Forms.CheckBox();
             checkBox_legacyEditors = new System.Windows.Forms.CheckBox();
+            checkBox_vibecoded = new System.Windows.Forms.CheckBox();
             SuspendLayout();
             // 
             // checkBox_experimental
@@ -54,10 +55,22 @@
             checkBox_legacyEditors.UseVisualStyleBackColor = true;
             checkBox_legacyEditors.CheckedChanged += checkBox_legacyEditors_CheckedChanged;
             // 
+            // checkBox_vibecoded
+            // 
+            checkBox_vibecoded.AutoSize = true;
+            checkBox_vibecoded.Location = new System.Drawing.Point(6, 56);
+            checkBox_vibecoded.Name = "checkBox_vibecoded";
+            checkBox_vibecoded.Size = new System.Drawing.Size(178, 19);
+            checkBox_vibecoded.TabIndex = 13;
+            checkBox_vibecoded.Text = "Enable vibecoded features";
+            checkBox_vibecoded.UseVisualStyleBackColor = true;
+            checkBox_vibecoded.CheckedChanged += checkBox_vibecoded_CheckedChanged;
+            // 
             // PageAdvanced
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             AutoScroll = true;
+            Controls.Add(checkBox_vibecoded);
             Controls.Add(checkBox_legacyEditors);
             Controls.Add(checkBox_experimental);
             Name = "PageAdvanced";
@@ -70,5 +83,6 @@
         #endregion
         private System.Windows.Forms.CheckBox checkBox_experimental;
         private System.Windows.Forms.CheckBox checkBox_legacyEditors;
+        private System.Windows.Forms.CheckBox checkBox_vibecoded;
     }
 }

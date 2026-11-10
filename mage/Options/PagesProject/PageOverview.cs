@@ -36,8 +36,8 @@ public partial class PageOverview : UserControl, IReloadablePage
         group_rooms.Visible = true;
         group_resources.Visible = true;
 
-        label_createdValue.Text = $"{Version.DateCreated.ToString()} in {TransformVersionString(Version.VersionCreated)}";
-        label_lastModifiedValue.Text = $"{Version.DateModified.ToString()} in {TransformVersionString(Version.VersionModified)}";
+        label_createdValue.Text = FormatDateVersion(Version.DateCreated, Version.VersionCreated);
+        label_lastModifiedValue.Text = FormatDateVersion(Version.DateModified, Version.VersionModified);
 
         // Add num of rooms per area
         if (!createdRoomCounts)
@@ -95,10 +95,23 @@ public partial class PageOverview : UserControl, IReloadablePage
         createdRoomCounts = false;
     }
 
+    private string FormatDateVersion(DateTime date, string? version)
+    {
+        // A new project that hasn't been saved yet has no dates or versions
+        if (string.IsNullOrWhiteSpace(version) || date == default)
+        {
+            return "Not saved yet";
+        }
+        return $"{date} in {TransformVersionString(version)}";
+    }
+
     private string TransformVersionString(string version)
     {
+        if (!System.Version.TryParse(version, out System.Version? v))
+        {
+            return version;
+        }
         bool isMageThemes = version.Split('.').Length == 4;
-        System.Version v = new System.Version(version);
         string MAGE = isMageThemes ? "MAGE Themes" : "MAGE";
         return $"{MAGE} {v.Major}.{v.Minor}.{v.Build}";
     }

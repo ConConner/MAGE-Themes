@@ -167,6 +167,14 @@ namespace mage
             UpdateTilesetZoom(0);
         }
 
+        /// <summary>
+        /// Shows or hides the menu entries of vibecoded features depending on <see cref="Program.VibecodedFeatures"/>
+        /// </summary>
+        public void UpdateVibecodedFeatures()
+        {
+            menuItem_samusEditor.Visible = Program.VibecodedFeatures;
+        }
+
         #region opening/closing
 
         private void DisplayRecentFiles()
@@ -250,6 +258,7 @@ namespace mage
             menuItem_tooltips.Checked = Settings.Default.tooltips;
             Program.ExperimentalFeaturesEnabled = Settings.Default.experimentalFeatures;
             Program.LegacyEditors = Settings.Default.legacyEditors;
+            Program.VibecodedFeatures = Settings.Default.vibecodedFeatures;
 
             zoom = Settings.Default.zoom;
             if (zoom == 0) { menuItem_zoom100.Checked = true; }
@@ -326,6 +335,7 @@ namespace mage
             Settings.Default.zoom = zoom;
             Settings.Default.experimentalFeatures = Program.ExperimentalFeaturesEnabled;
             Settings.Default.legacyEditors = Program.LegacyEditors;
+            Settings.Default.vibecodedFeatures = Program.VibecodedFeatures;
 
             //Config
             var configOptions = new JsonSerializerOptions()
@@ -914,11 +924,40 @@ namespace mage
         {
             if (!FindOpenForm(typeof(FormOam), false))
             {
-                FormOam form;
-                int OamOffset = 0;
-                Version.TryGetPrimarySpriteOAM(0x12, out OamOffset); // Funnily enough the first enemy in Fusion and Zm are both sprite ID 12
-                if (!Version.IsMF) form = new FormOam(this, 0x2C4194, 0x2C4780, OamOffset);
-                else form = new FormOam(this, 0x2E926C, 0x2EAA6C, OamOffset, false);
+                const byte defaultSprite = 0x12; // Funnily enough the first enemy in Fusion and Zm are both sprite ID 12
+
+                // Look up the default sprite's OAM, graphics and palette. Whatever can't be found is left blank for the user to fill in
+                int? oamOffset = Version.TryGetPrimarySpriteOAM(defaultSprite, out int oam) ? oam : null;
+
+                int tableOffset = (defaultSprite - 0x10) * 4;
+                int? gfxOffset = ReadSpriteTablePointer(Version.SpriteGfxOffset + tableOffset);
+                int? palOffset = ReadSpriteTablePointer(Version.SpritePaletteOffset + tableOffset);
+
+                FormOam form = new FormOam(this, gfxOffset, palOffset, oamOffset, !Version.IsMF);
+                form.Show();
+            }
+        }
+
+        // Reads a pointer from a sprite table, or returns null if the table entry or the pointer is not valid
+        private static int? ReadSpriteTablePointer(int tableEntryOffset)
+        {
+            try
+            {
+                int pointer = ROM.Stream.ReadPtr(tableEntryOffset);
+                if (pointer <= 0 || pointer >= ROM.Stream.Length) return null;
+                return pointer;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return null;
+            }
+        }
+
+        private void menuItem_samusEditor_Click(object sender, EventArgs e)
+        {
+            if (!FindOpenForm(typeof(FormSamus), false))
+            {
+                FormSamus form = new FormSamus(this);
                 form.Show();
             }
         }
@@ -2031,6 +2070,10 @@ namespace mage
 
         public void RoomRuleValidationSettingsChanged()
         {
+            // no room loaded (e.g. settings changed before opening a ROM);
+            // the validator is set up when a room is loaded
+            if (room == null) { return; }
+
             errorList.Visible = Program.Config.WarningsEnabled;
 
             if (!Program.Config.WarningsEnabled)

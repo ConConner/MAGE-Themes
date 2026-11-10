@@ -109,6 +109,8 @@ public partial class FormGraphicsNew : Form
             button_copy.Enabled = value;
             button_flipH.Enabled = value;
             button_flipV.Enabled = value;
+            button_rotateCW.Enabled = value;
+            button_rotateCCW.Enabled = value;
             button_cut.Enabled = value;
         }
     }
@@ -116,6 +118,7 @@ public partial class FormGraphicsNew : Form
 
     private Pen ShapePen = new Pen(Color.Aqua, 1) { DashPattern = DashPattern };
     private Drawable ShapeDrawable;
+    private Tool? ActiveStrokeTool; // Tool that received the current mouse down, null if no stroke in progress
 
     private Pen GridPen = new Pen(Color.White, 1);
     private Pen PixelGridPen = new Pen(Color.Gray, 1);
@@ -154,6 +157,8 @@ public partial class FormGraphicsNew : Form
             // Paste selection if still there
             if (SelectedPixels is not null) PasteSelectedPixels();
 
+            // Close any stroke still in progress (e.g. tool switched via hotkey while mouse is held)
+            CloseActionGroup();
             FinishToolAction();
         }
     }
@@ -703,6 +708,8 @@ public partial class FormGraphicsNew : Form
         MovingPivot = null;
         MovingSelection = false;
         ReachedMovingThreshold = false;
+        ActiveStrokeTool = null;
+        ShapeDrawable.Visible = false;
     }
 
     private void HandleFill(TileDisplay.TileDisplayArgs e)
@@ -803,6 +810,7 @@ public partial class FormGraphicsNew : Form
             return;
         }
 
+        ActiveStrokeTool = SelectedTool;
         switch (SelectedTool)
         {
             case Tool.Pen:
@@ -868,6 +876,9 @@ public partial class FormGraphicsNew : Form
         if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
         if (ModifierKeys == Keys.Alt) return;
 
+        // Ignore movement that didn't start with a mouse down on the current tool
+        if (ActiveStrokeTool != SelectedTool) return;
+
         switch (SelectedTool)
         {
             case Tool.Pen:
@@ -922,6 +933,14 @@ public partial class FormGraphicsNew : Form
 
     private void tileDisplay_gfx_TileMouseUp(object sender, mage.Controls.TileDisplay.TileDisplayArgs e)
     {
+        // Only finish an action if the mouse down started it with the current tool.
+        // Otherwise (alt-click, tool switched mid-drag, stray mouse up) stale state could be committed.
+        if (ActiveStrokeTool != SelectedTool)
+        {
+            FinishToolAction();
+            return;
+        }
+
         switch (SelectedTool)
         {
             case Tool.Pen:
@@ -938,6 +957,7 @@ public partial class FormGraphicsNew : Form
             case Tool.Fill:
                 break;
             case Tool.Shape:
+                if (SelectionPivot is null || !ShapeDrawable.Visible) break;
                 ShapeDrawable.Visible = false;
 
                 switch (SelectedShape)
@@ -1346,5 +1366,54 @@ public partial class FormGraphicsNew : Form
     private void button_flipH_Click(object sender, EventArgs e) => FlipH();
 
     private void button_flipV_Click(object sender, EventArgs e) => FlipV();
+    #endregion
+
+    #region Rotating
+    private void Rotate(bool clockwise)
+    {
+        if (!SelectionVisible) return;
+
+        // Rotating can change the footprint of the selection, so the pixels are lifted the same way as when moving
+        if (SelectedPixels is null)
+        {
+            CloseActionGroup();
+            latestActionGroup = new("Rotate " + (clockwise ? "Clockwise" : "Counter Clockwise"));
+            SelectedPixels = EjectPixels(Selection.Rectangle);
+        }
+
+        SelectedPixels = RotatePixels(SelectedPixels, clockwise);
+        Selection.Rectangle = GetRotatedRectangle(Selection.Rectangle);
+        DrawGFX(); // Redrawing to show Preview
+    }
+
+    private int[,] RotatePixels(int[,] pixels, bool clockwise)
+    {
+        int width = pixels.GetLength(0);
+        int height = pixels.GetLength(1);
+
+        int[,] rotated = new int[height, width];
+
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+            {
+                if (clockwise) rotated[height - y - 1, x] = pixels[x, y];
+                else rotated[y, width - x - 1] = pixels[x, y];
+            }
+
+        return rotated;
+    }
+
+    private Rectangle GetRotatedRectangle(Rectangle region)
+    {
+        // Rotate around the center of the selection
+        int x = region.X + (region.Width - region.Height) / 2;
+        int y = region.Y + (region.Height - region.Width) / 2;
+
+        return new Rectangle(x, y, region.Height, region.Width);
+    }
+
+    private void button_rotateCW_Click(object sender, EventArgs e) => Rotate(clockwise: true);
+
+    private void button_rotateCCW_Click(object sender, EventArgs e) => Rotate(clockwise: false);
     #endregion
 }
