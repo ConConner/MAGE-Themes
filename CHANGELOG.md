@@ -1,3 +1,25 @@
+# [1.25.0](https://github.com/ConConner/MAGE-Themes/compare/v1.24.1...v1.25.0) (2026-11-10)
+
+
+### Bug Fixes
+
+* deleting an oam part does not re-render the frame ([2562143](https://github.com/ConConner/MAGE-Themes/commit/25621433b1920389bc7f2fe05868917c1685f91f)), closes [#121](https://github.com/ConConner/MAGE-Themes/issues/121)
+* mage crashes if project settings are opened with an initialized and unsaved project ([4071d53](https://github.com/ConConner/MAGE-Themes/commit/4071d53abaa2faa8ba77e9f47c4904ed2ae46f62))
+* oam editor does not open if default data was repointed ([270de50](https://github.com/ConConner/MAGE-Themes/commit/270de505ac9c0693d8a90b3bbaef683faa2aa8a1)), closes [#125](https://github.com/ConConner/MAGE-Themes/issues/125)
+* palette editor modiffies unchanged colors ([fea29c2](https://github.com/ConConner/MAGE-Themes/commit/fea29c2325b4359e5fb5a57eecf911a420d35c73))
+* parts snap to other parts on click instead of move ([b74b685](https://github.com/ConConner/MAGE-Themes/commit/b74b685afedc92543b5c582c345414eadd53c23d)), closes [#123](https://github.com/ConConner/MAGE-Themes/issues/123)
+* reordering parts in the oam editor does not shift parts in between ([0d57b94](https://github.com/ConConner/MAGE-Themes/commit/0d57b94fbac58e23af47bd75130e8fb4f1b8159c))
+* shape tool in graphics editor sometimes draws a shape when not selected ([12fea57](https://github.com/ConConner/MAGE-Themes/commit/12fea57f50d27669baee8feee6845aad60ea4a3c)), closes [#122](https://github.com/ConConner/MAGE-Themes/issues/122)
+* warnins settings page crashes mage if no rom is loaded ([3770573](https://github.com/ConConner/MAGE-Themes/commit/37705738990d7235067c5d6b0540878a867025fa)), closes [#126](https://github.com/ConConner/MAGE-Themes/issues/126)
+
+
+### Features
+
+* added samus editor [slop] ([04b5269](https://github.com/ConConner/MAGE-Themes/commit/04b5269777d40bcc5fa39e22901f2bf90db67336))
+* added vibe coded feature flag to preferences ([74c35f3](https://github.com/ConConner/MAGE-Themes/commit/74c35f346b698506196ee187bba63240f4fb6ff0))
+* reorder multiple parts at once in the oam editor ([e5dc037](https://github.com/ConConner/MAGE-Themes/commit/e5dc03779a7e22d0ddf8838688ba4193e8bb48ad))
+* rotation buttons for graphics editor ([607023c](https://github.com/ConConner/MAGE-Themes/commit/607023c6f9003344a0cf9988ce8b69454b5ec595))
+
 ## [1.24.1](https://github.com/ConConner/MAGE-Themes/compare/v1.24.0...v1.24.1) (2026-10-17)
 
 
