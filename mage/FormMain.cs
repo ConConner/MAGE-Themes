@@ -167,6 +167,14 @@ namespace mage
             UpdateTilesetZoom(0);
         }
 
+        /// <summary>
+        /// Shows or hides the menu entries of vibecoded features depending on <see cref="Program.VibecodedFeatures"/>
+        /// </summary>
+        public void UpdateVibecodedFeatures()
+        {
+            menuItem_samusEditor.Visible = Program.VibecodedFeatures;
+        }
+
         #region opening/closing
 
         private void DisplayRecentFiles()
@@ -250,6 +258,7 @@ namespace mage
             menuItem_tooltips.Checked = Settings.Default.tooltips;
             Program.ExperimentalFeaturesEnabled = Settings.Default.experimentalFeatures;
             Program.LegacyEditors = Settings.Default.legacyEditors;
+            Program.VibecodedFeatures = Settings.Default.vibecodedFeatures;
 
             zoom = Settings.Default.zoom;
             if (zoom == 0) { menuItem_zoom100.Checked = true; }
@@ -326,6 +335,7 @@ namespace mage
             Settings.Default.zoom = zoom;
             Settings.Default.experimentalFeatures = Program.ExperimentalFeaturesEnabled;
             Settings.Default.legacyEditors = Program.LegacyEditors;
+            Settings.Default.vibecodedFeatures = Program.VibecodedFeatures;
 
             //Config
             var configOptions = new JsonSerializerOptions()
@@ -940,6 +950,15 @@ namespace mage
             catch (IndexOutOfRangeException)
             {
                 return null;
+            }
+        }
+
+        private void menuItem_samusEditor_Click(object sender, EventArgs e)
+        {
+            if (!FindOpenForm(typeof(FormSamus), false))
+            {
+                FormSamus form = new FormSamus(this);
+                form.Show();
             }
         }
 

@@ -96,6 +96,19 @@ static class Program
             if (Settings.Default.legacyEditors == value) return;
         }
     }
+    private static bool vibecodedFeatures = false;
+    /// <summary>
+    /// Enables features that were largely written by AI and are not fully understood or maintained by the authors.
+    /// </summary>
+    public static bool VibecodedFeatures
+    {
+        get => vibecodedFeatures;
+        set
+        {
+            vibecodedFeatures = value;
+            FormMain.Instance?.UpdateVibecodedFeatures();
+        }
+    }
     public static Config Config { get; set; }
 
     private static void MigrateSettings()

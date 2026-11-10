@@ -94,6 +94,7 @@
             menuItem_tileTableEditor = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_animationEditor = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_oamViewer = new System.Windows.Forms.ToolStripMenuItem();
+            menuItem_samusEditor = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator25 = new System.Windows.Forms.ToolStripSeparator();
             menuItem_spriteEditor = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_spritesetEditor = new System.Windows.Forms.ToolStripMenuItem();
@@ -734,7 +735,7 @@
             // 
             // menuStrip_editors
             // 
-            menuStrip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_headerEditor, menuItem_tilesetEditor, toolStripSeparator24, menuItem_graphicsEditor, menuItem_paletteEditor, menuItem_tileTableEditor, menuItem_animationEditor, menuItem_oamViewer, toolStripSeparator25, menuItem_spriteEditor, menuItem_spritesetEditor, menuItem_minimapEditor, menuItem_connectionEditor, toolStripSeparator26, menuItem_textEditor, menuItem_demoEditor, menuItem_physicsEditor, menuItem_weaponEditor, menuItem_creditsEditor });
+            menuStrip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_headerEditor, menuItem_tilesetEditor, toolStripSeparator24, menuItem_graphicsEditor, menuItem_paletteEditor, menuItem_tileTableEditor, menuItem_animationEditor, menuItem_oamViewer, menuItem_samusEditor, toolStripSeparator25, menuItem_spriteEditor, menuItem_spritesetEditor, menuItem_minimapEditor, menuItem_connectionEditor, toolStripSeparator26, menuItem_textEditor, menuItem_demoEditor, menuItem_physicsEditor, menuItem_weaponEditor, menuItem_creditsEditor });
             menuStrip_editors.Enabled = false;
             menuStrip_editors.Name = "menuStrip_editors";
             menuStrip_editors.Size = new System.Drawing.Size(55, 20);
@@ -800,6 +801,14 @@
             menuItem_oamViewer.Size = new System.Drawing.Size(170, 22);
             menuItem_oamViewer.Text = "OAM Editor";
             menuItem_oamViewer.Click += menuItem_oamViewer_Click;
+            //
+            // menuItem_samusEditor
+            //
+            menuItem_samusEditor.Image = Properties.Resources.toolbar_oam;
+            menuItem_samusEditor.Name = "menuItem_samusEditor";
+            menuItem_samusEditor.Size = new System.Drawing.Size(170, 22);
+            menuItem_samusEditor.Text = "Samus Editor";
+            menuItem_samusEditor.Click += menuItem_samusEditor_Click;
             // 
             // toolStripSeparator25
             // 
@@ -2795,6 +2804,7 @@
         private System.Windows.Forms.ToolStripStatusLabel lbl_spring;
         private System.Windows.Forms.ToolStripDropDownButton statusStrip_theme;
         private System.Windows.Forms.ToolStripMenuItem menuItem_oamViewer;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_samusEditor;
         private System.Windows.Forms.ToolStripMenuItem menuItem_flip_h;
         private System.Windows.Forms.ToolStripMenuItem menuItem_flip_v;
         private System.Windows.Forms.ToolStripSeparator seperator_flip;

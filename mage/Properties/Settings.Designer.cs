@@ -336,6 +336,18 @@ namespace mage.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool vibecodedFeatures {
+            get {
+                return ((bool)(this["vibecodedFeatures"]));
+            }
+            set {
+                this["vibecodedFeatures"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ZMglobalBookmarks {
             get {
