@@ -67,24 +67,24 @@ internal class ScriptExecutor : IScriptRunner
             TaskCreationOptions.RunContinuationsAsynchronously
         );
 
+        // stdout and stderr events arrive on different thread pool threads
         process.OutputDataReceived += (_, e) =>
         {
             if (e.Data is null) return;
-            stdoutLines.Add(e.Data);
+            lock (stdoutLines) stdoutLines.Add(e.Data);
             logLine($"> {e.Data}");
         };
 
         process.ErrorDataReceived += (_, e) =>
         {
             if (e.Data is null) return;
-            stdoutLines.Add(e.Data);
+            lock (stderrLines) stderrLines.Add(e.Data);
             logLine($"[error] {e.Data}");
         };
 
-        process.Exited += (_, _) =>
-            tcs.TrySetResult(process.ExitCode);
+        process.Exited += (_, _) => tcs.TrySetResult(0);
 
-        ct.Register(() =>
+        using var cancelRegistration = ct.Register(() =>
         {
             try { if (!process.HasExited) process.Kill(entireProcessTree: true); }
             catch { }
@@ -94,10 +94,21 @@ internal class ScriptExecutor : IScriptRunner
         process.Start();
         process.BeginOutputReadLine();
         process.BeginErrorReadLine();
-        int exitCode = await tcs.Task;
+        await tcs.Task;
+
+        // Exited can fire before the redirected output has been fully read. The
+        // parameterless WaitForExit waits until both streams hit EOF, so every
+        // OutputDataReceived/ErrorDataReceived has been raised once it returns.
+        await Task.Run(() => process.WaitForExit());
+        int exitCode = process.ExitCode;
+
+        string[] stdoutSnapshot;
+        lock (stdoutLines) stdoutSnapshot = stdoutLines.ToArray();
+        string[] stderrSnapshot;
+        lock (stderrLines) stderrSnapshot = stderrLines.ToArray();
 
         // Parse ROM Path
-        string? romPath = ParseOutputRomPath(stdoutLines);
+        string? romPath = ParseOutputRomPath(stdoutSnapshot);
 
         if (exitCode != 0)
         {
@@ -105,7 +116,7 @@ internal class ScriptExecutor : IScriptRunner
             {
                 Success = false,
                 ExitCode = exitCode,
-                Error = string.Join(Environment.NewLine, stderrLines)
+                Error = string.Join(Environment.NewLine, stderrSnapshot)
             };
         }
 
@@ -140,12 +151,12 @@ internal class ScriptExecutor : IScriptRunner
         };
     }
 
-    private static string? ParseOutputRomPath(List<string> lines)
+    private static string? ParseOutputRomPath(string[] lines)
     {
-        if (lines.Count == 0) return null;
+        if (lines.Length == 0) return null;
 
-        int startSearch = lines.Count - 1;
-        int endSearch = Math.Max(lines.Count - 40, 0);
+        int startSearch = lines.Length - 1;
+        int endSearch = Math.Max(lines.Length - 40, 0);
 
         for (int i = startSearch; i >= endSearch; i--)
         {
