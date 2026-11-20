@@ -405,7 +405,15 @@ namespace mage
             Version.NumOfSpritesets++;
             Version.UpdateProject();
 
-            // fix code
+            WriteSpritesetLimit((byte)(Version.NumOfSpritesets - 1));
+        }
+
+        /// <summary>
+        /// Patches the bounds check of the spriteset loading code so that every spriteset
+        /// above <paramref name="limit"/> is clamped to <paramref name="limit"/>.
+        /// </summary>
+        public static void WriteSpritesetLimit(byte limit)
+        {
             int codeOffset = -1;
             switch (Version.GameCode)
             {
@@ -417,7 +425,7 @@ namespace mage
                     break;
             }
 
-            byte limit = (byte)(Version.NumOfSpritesets - 1);
+            ByteStream romStream = ROM.Stream;
             romStream.Write8(codeOffset, limit);
             romStream.Write16(codeOffset + 4, 0xE003);
             romStream.Write8(codeOffset + 0xE, limit);

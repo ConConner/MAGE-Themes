@@ -173,6 +173,7 @@ namespace mage
         public void UpdateVibecodedFeatures()
         {
             menuItem_samusEditor.Visible = Program.VibecodedFeatures;
+            menuItem_clearRom.Visible = Program.VibecodedFeatures;
         }
 
         #region opening/closing
@@ -1311,6 +1312,56 @@ namespace mage
                 FormPatches form = new FormPatches();
                 form.Show();
             }
+        }
+
+        private void menuItem_clearRom_Click(object sender, EventArgs e)
+        {
+            if (!RomClearer.IsSupported)
+            {
+                MessageBox.Show("Clearing is only supported for Zero Mission (U) and Fusion (U).",
+                    "Clear ROM", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            RomClearer.Asset selection;
+            using (FormClearRom dialog = new FormClearRom())
+            {
+                if (dialog.ShowDialog(this) != DialogResult.OK) return;
+                selection = dialog.Selection;
+                if (dialog.CreateBackup) CreateBackup();
+            }
+
+            // close all editors first, so none of them can write old data after clearing
+            FormCollection fc = Application.OpenForms;
+            for (int i = fc.Count - 1; i >= 0; i--)
+            {
+                if (fc[i] != this) fc[i].Close();
+            }
+            if (Application.OpenForms.Count > 1)
+            {
+                MessageBox.Show("Close all other windows before clearing the ROM.", "Clear ROM", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            RomClearer.Result result;
+            try
+            {
+                result = RomClearer.Clear(selection);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("The ROM could not be cleared. Nothing was changed.\n\n" + ex.Message,
+                    "Clear ROM", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // reload everything that was read from the ROM
+            DoorData.GetData();
+            InitializePart1();
+            ROM.MarkEdited();
+
+            MessageBox.Show("The ROM was cleared. Save the ROM to keep the changes.\n\n" + RomClearer.Summarize(result),
+                "Clear ROM", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // options

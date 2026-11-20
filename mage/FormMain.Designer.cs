@@ -155,6 +155,7 @@
             menuItem_addAnim = new System.Windows.Forms.ToolStripMenuItem();
             tweaksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_patches = new System.Windows.Forms.ToolStripMenuItem();
+            menuItem_clearRom = new System.Windows.Forms.ToolStripMenuItem();
             seperator_flip = new System.Windows.Forms.ToolStripSeparator();
             menuItem_flip_h = new System.Windows.Forms.ToolStripMenuItem();
             menuItem_flip_v = new System.Windows.Forms.ToolStripMenuItem();
@@ -893,7 +894,7 @@
             // 
             // menuStrip_tools
             // 
-            menuStrip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_roomOptions, menuItem_testRoom, menuItem_clipShortcuts, toolStripSeparator28, menuItem_bookmarks, toolStripSeparator2, menuItem_import, menuItem_export, bulkToolStripMenuItem, menuItem_compression, toolStripSeparator23, menuItem_tileBuilder, menuItem_add, tweaksToolStripMenuItem, menuItem_patches, seperator_flip, menuItem_flip_h, menuItem_flip_v });
+            menuStrip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { menuItem_roomOptions, menuItem_testRoom, menuItem_clipShortcuts, toolStripSeparator28, menuItem_bookmarks, toolStripSeparator2, menuItem_import, menuItem_export, bulkToolStripMenuItem, menuItem_compression, toolStripSeparator23, menuItem_tileBuilder, menuItem_add, tweaksToolStripMenuItem, menuItem_patches, menuItem_clearRom, seperator_flip, menuItem_flip_h, menuItem_flip_v });
             menuStrip_tools.Enabled = false;
             menuStrip_tools.Name = "menuStrip_tools";
             menuStrip_tools.Size = new System.Drawing.Size(47, 20);
@@ -1232,6 +1233,14 @@
             menuItem_patches.Size = new System.Drawing.Size(171, 22);
             menuItem_patches.Text = "Patches";
             menuItem_patches.Click += menuItem_patches_Click;
+            // 
+            // menuItem_clearRom
+            // 
+            menuItem_clearRom.Name = "menuItem_clearRom";
+            menuItem_clearRom.Size = new System.Drawing.Size(171, 22);
+            menuItem_clearRom.Text = "Clear ROM...";
+            menuItem_clearRom.Visible = false;
+            menuItem_clearRom.Click += menuItem_clearRom_Click;
             // 
             // seperator_flip
             // 
@@ -2638,6 +2647,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuItem_headerEditor;
         private System.Windows.Forms.ToolStripMenuItem menuStrip_tools;
         private System.Windows.Forms.ToolStripMenuItem menuItem_patches;
+        private System.Windows.Forms.ToolStripMenuItem menuItem_clearRom;
         private System.Windows.Forms.ToolStripMenuItem menuItem_paletteEditor;
         private System.Windows.Forms.ToolStripMenuItem menuItem_spriteEditor;
         private System.Windows.Forms.ToolStripMenuItem menuItem_spritesetEditor;
