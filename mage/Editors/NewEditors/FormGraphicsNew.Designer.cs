@@ -628,7 +628,7 @@
             // 
             toolStrip_shape.Dock = System.Windows.Forms.DockStyle.Fill;
             toolStrip_shape.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_shape.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_shapeRectangle, button_shapeEllipse, button_shapeLine, toolStripSeparator_shape, label_outlineThickness });
+            toolStrip_shape.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_shapeLine, button_shapeRectangle, button_shapeEllipse, toolStripSeparator_shape, label_outlineThickness });
             toolStrip_shape.Location = new System.Drawing.Point(0, 0);
             toolStrip_shape.Name = "toolStrip_shape";
             toolStrip_shape.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -661,6 +661,7 @@
             // button_shapeLine
             // 
             button_shapeLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_shapeLine.Image = Properties.Resources.shape_line;
             button_shapeLine.ImageTransparentColor = System.Drawing.Color.Magenta;
             button_shapeLine.Name = "button_shapeLine";
             button_shapeLine.Size = new System.Drawing.Size(23, 22);
