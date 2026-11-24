@@ -119,8 +119,7 @@ public partial class FormGraphicsNew : Form
 
     private Pen ShapePen = new Pen(Color.Aqua, 1) { DashPattern = DashPattern };
     private Drawable ShapeDrawable;
-    private int[,]? ShapePixels = null; // Preview buffer of the shape being drawn, located at ShapePixelsLocation. -1 = untouched pixel
-    private Point ShapePixelsLocation; // Can differ from ShapeDrawable.Location, e.g. thick lines extend past their end points
+    private int[,]? ShapePixels = null; // Preview buffer of the shape being drawn, located at ShapeDrawable.Location. -1 = untouched pixel
     private int ShapeOutlineColor;
     private int ShapeFillColor;
     private int ShapeOutlineThickness => (int)numericUpDown_outlineThickness.Value;
@@ -711,7 +710,7 @@ public partial class FormGraphicsNew : Form
     {
         Bitmap gfxBitmap = loadedGFX.Draw4bpp(loadedPalette, 0, true);
         if (SelectedPixels is not null) Draw.Draw4bppOntoBitmap(gfxBitmap, Selection.Location, SelectedPixels);
-        if (ShapePixels is not null) Draw.Draw4bppOntoBitmap(gfxBitmap, ShapePixelsLocation, ShapePixels);
+        if (ShapePixels is not null) Draw.Draw4bppOntoBitmap(gfxBitmap, ShapeDrawable.Location, ShapePixels);
 
         tileDisplay_gfx.TileImage = gfxBitmap;
         statusLabel_size.Text = tileDisplay_gfx.TileImage.Width + " x " + tileDisplay_gfx.TileImage.Height;
@@ -832,31 +831,61 @@ public partial class FormGraphicsNew : Form
         return pixels;
     }
 
+    private int LineThickness => Math.Max(1, ShapeOutlineThickness);
+
     /// <summary>
-    /// Rasterizes a line from <paramref name="start"/> to <paramref name="end"/> with a square brush of the outline thickness (at least 1).
-    /// Returns the pixel buffer and its top left position in <paramref name="location"/>. Untouched pixels are -1.
+    /// Gets the range [lo, hi) a line covers on one axis. With <paramref name="snap"/>, an axis the line extends along
+    /// is expanded to full tiles. Ranges narrower than the line thickness are widened around the line so it isn't cut off.
     /// </summary>
-    private int[,] BuildLinePixels(Point start, Point end, int color, out Point location)
+    private static (int lo, int hi) GetLineAxisRange(int a, int b, bool snap, int thickness)
     {
-        int brush = Math.Max(1, ShapeOutlineThickness);
-        int brushOffset = (brush - 1) / 2; // Brush is centered on the line, extra pixel goes right / down for even sizes
+        int lo = Math.Min(a, b);
+        int hi = Math.Max(a, b) + 1;
+        if (snap && a != b) // Straight lines stay on their pixel row / column
+        {
+            lo = MathFunctions.FloorTo(lo, 8);
+            hi = MathFunctions.CeilTo(hi, 8);
+        }
+        if (hi - lo < thickness)
+        {
+            lo -= (thickness - (hi - lo)) / 2;
+            hi = lo + thickness;
+        }
+        return (lo, hi);
+    }
 
-        location = new(Math.Min(start.X, end.X) - brushOffset, Math.Min(start.Y, end.Y) - brushOffset);
-        int w = Math.Abs(end.X - start.X) + brush;
-        int h = Math.Abs(end.Y - start.Y) + brush;
+    private Rectangle GetLineBounds(Point start, Point end, bool snap)
+    {
+        var (left, right) = GetLineAxisRange(start.X, end.X, snap, LineThickness);
+        var (top, bottom) = GetLineAxisRange(start.Y, end.Y, snap, LineThickness);
+        return new Rectangle(left, top, right - left, bottom - top);
+    }
 
-        int[,] pixels = new int[w, h];
-        for (int y = 0; y < h; y++)
-            for (int x = 0; x < w; x++)
+    /// <summary>
+    /// Rasterizes a line from the corner of <paramref name="bounds"/> on <paramref name="start"/>'s side to the opposite corner,
+    /// with a square brush of <see cref="LineThickness"/>. The brush never leaves the bounds. Untouched pixels are -1.
+    /// </summary>
+    private int[,] BuildLinePixels(Rectangle bounds, Point start, Point end, int color)
+    {
+        int brush = LineThickness;
+        int[,] pixels = new int[bounds.Width, bounds.Height];
+        for (int y = 0; y < bounds.Height; y++)
+            for (int x = 0; x < bounds.Width; x++)
                 pixels[x, y] = -1;
 
+        // Top left of the brush travels between these, relative to the bounds
+        bool right = end.X >= start.X;
+        bool down = end.Y >= start.Y;
+        Point from = new(right ? 0 : bounds.Width - brush, down ? 0 : bounds.Height - brush);
+        Point to = new(right ? bounds.Width - brush : 0, down ? bounds.Height - brush : 0);
+
         // Bresenham
-        int dx = Math.Abs(end.X - start.X);
-        int dy = -Math.Abs(end.Y - start.Y);
-        int sx = start.X < end.X ? 1 : -1;
-        int sy = start.Y < end.Y ? 1 : -1;
+        int dx = Math.Abs(to.X - from.X);
+        int dy = -Math.Abs(to.Y - from.Y);
+        int sx = from.X < to.X ? 1 : -1;
+        int sy = from.Y < to.Y ? 1 : -1;
         int err = dx + dy;
-        Point p = start;
+        Point p = from;
         while (true)
         {
             // Stamp the brush
@@ -864,13 +893,13 @@ public partial class FormGraphicsNew : Form
             {
                 for (int bx = 0; bx < brush; bx++)
                 {
-                    Point target = new(p.X - brushOffset + bx, p.Y - brushOffset + by);
-                    if (!IsInSelection(target)) continue;
-                    pixels[target.X - location.X, target.Y - location.Y] = color;
+                    int x = p.X + bx;
+                    int y = p.Y + by;
+                    if (IsInSelection(new Point(bounds.X + x, bounds.Y + y))) pixels[x, y] = color;
                 }
             }
 
-            if (p == end) break;
+            if (p == to) break;
             int e2 = 2 * err;
             if (e2 >= dy) { err += dy; p.X += sx; }
             if (e2 <= dx) { err += dx; p.Y += sy; }
@@ -897,20 +926,38 @@ public partial class FormGraphicsNew : Form
         return new(start.X + Math.Sign(dx) * length, start.Y + Math.Sign(dy) * length);
     }
 
-    /// <param name="shift">Snaps rectangles / ellipses to the tile grid and lines to 45° steps</param>
-    private void UpdateShapePreview(Point start, Point end, bool shift)
+    /// <summary>
+    /// Grows the shorter side of <paramref name="r"/> to match the longer one.
+    /// The side the shape was started from stays fixed, so the square grows toward <paramref name="end"/>.
+    /// </summary>
+    private static Rectangle MakeSquare(Rectangle r, Point start, Point end)
+    {
+        int size = Math.Max(r.Width, r.Height);
+        int x = end.X >= start.X ? r.Left : r.Right - size;
+        int y = end.Y >= start.Y ? r.Top : r.Bottom - size;
+        return new Rectangle(x, y, size, size);
+    }
+
+    /// <param name="shift">Snaps shapes to the tile grid</param>
+    /// <param name="ctrl">Makes rectangles / ellipses square / circular and snaps lines to 45° steps</param>
+    private void UpdateShapePreview(Point start, Point end, bool shift, bool ctrl)
     {
         if (SelectedShape == Shape.Line)
         {
-            if (shift) end = SnapLineEnd(start, end);
-            ShapeDrawable.Rectangle = GetRectangleFromPoints(start, end);
-            ShapePixels = BuildLinePixels(start, end, ShapeOutlineColor, out ShapePixelsLocation);
+            if (ctrl) end = SnapLineEnd(start, end);
+            Rectangle bounds = GetLineBounds(start, end, shift);
+            // Grid snapping can make a 45° line's bounds uneven, square them again so the angle holds
+            bool diagonal = start.X != end.X && start.Y != end.Y;
+            if (ctrl && diagonal) bounds = MakeSquare(bounds, start, end);
+            ShapeDrawable.Rectangle = bounds;
+            ShapePixels = BuildLinePixels(bounds, start, end, ShapeOutlineColor);
         }
         else
         {
             Rectangle bounds = GetRectangleFromPoints(start, end, shift);
+            // Squaring after grid alignment keeps both sides multiples of 8
+            if (ctrl) bounds = MakeSquare(bounds, start, end);
             ShapeDrawable.Rectangle = bounds;
-            ShapePixelsLocation = bounds.Location;
             ShapePixels = BuildShapePixels(bounds, ShapeOutlineColor, ShapeFillColor);
         }
         DrawGFX();
@@ -1058,7 +1105,7 @@ public partial class FormGraphicsNew : Form
                 ShapeOutlineColor = left ? ColorLeft : ColorRight;
                 ShapeFillColor = left ? ColorRight : ColorLeft;
                 ShapeDrawable.Visible = true;
-                UpdateShapePreview(e.PixelPosition, e.PixelPosition, false);
+                UpdateShapePreview(e.PixelPosition, e.PixelPosition, false, false);
                 break;
             case Tool.Eyedropper:
 
@@ -1134,7 +1181,9 @@ public partial class FormGraphicsNew : Form
             case Tool.Shape:
 
                 if (SelectionPivot == null) break;
-                UpdateShapePreview(SelectionPivot.Value, e.PixelPosition, shift);
+                // Shift and Ctrl can be combined here, so check the flags instead of an exact match
+                UpdateShapePreview(SelectionPivot.Value, e.PixelPosition,
+                    ModifierKeys.HasFlag(Keys.Shift), ModifierKeys.HasFlag(Keys.Control));
                 break;
         }
     }
@@ -1169,7 +1218,7 @@ public partial class FormGraphicsNew : Form
 
                 // Commit exactly what the preview shows
                 int[,] shapePixels = ShapePixels;
-                Point shapeLocation = ShapePixelsLocation;
+                Point shapeLocation = ShapeDrawable.Location;
                 ShapePixels = null;
 
                 bool anyPixel = false;
