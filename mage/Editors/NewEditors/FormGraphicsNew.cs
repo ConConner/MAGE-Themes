@@ -118,6 +118,8 @@ public partial class FormGraphicsNew : Form
 
     private Pen ShapePen = new Pen(Color.Aqua, 1) { DashPattern = DashPattern };
     private Drawable ShapeDrawable;
+    private int[,]? ShapePixels = null; // Preview buffer of the shape being drawn, located at ShapeDrawable.Location. -1 = untouched pixel
+    private int ShapeColor;
     private Tool? ActiveStrokeTool; // Tool that received the current mouse down, null if no stroke in progress
 
     private Pen GridPen = new Pen(Color.White, 1);
@@ -660,6 +662,7 @@ public partial class FormGraphicsNew : Form
     {
         Bitmap gfxBitmap = loadedGFX.Draw4bpp(loadedPalette, 0, true);
         if (SelectedPixels is not null) Draw.Draw4bppOntoBitmap(gfxBitmap, Selection.Location, SelectedPixels);
+        if (ShapePixels is not null) Draw.Draw4bppOntoBitmap(gfxBitmap, ShapeDrawable.Location, ShapePixels);
 
         tileDisplay_gfx.TileImage = gfxBitmap;
         statusLabel_size.Text = tileDisplay_gfx.TileImage.Width + " x " + tileDisplay_gfx.TileImage.Height;
@@ -710,6 +713,44 @@ public partial class FormGraphicsNew : Form
         ReachedMovingThreshold = false;
         ActiveStrokeTool = null;
         ShapeDrawable.Visible = false;
+
+        // Remove shape preview if one was still showing
+        if (ShapePixels is not null)
+        {
+            ShapePixels = null;
+            if (loadedGFX is not null) DrawGFX();
+        }
+    }
+
+    /// <summary>
+    /// Check whether each pixel is within the selected shape and adds it to the preview buffer
+    /// </summary>
+    private int[,] BuildShapePixels(Rectangle bounds, int palIndex)
+    {
+        int[,] pixels = new int[bounds.Width, bounds.Height];
+
+        for (int y = 0; y < bounds.Height; y++)
+        {
+            for (int x = 0; x < bounds.Width; x++)
+            {
+                bool inShape = SelectedShape switch
+                {
+                    Shape.Rectangle => true,
+                    _ => false, // default
+                };
+                Point p = new(bounds.X + x, bounds.Y + y);
+                pixels[x, y] = inShape && IsInSelection(p) ? palIndex : -1;
+            }
+        }
+
+        return pixels;
+    }
+
+    private void UpdateShapePreview(Rectangle bounds)
+    {
+        ShapeDrawable.Rectangle = bounds;
+        ShapePixels = BuildShapePixels(bounds, ShapeColor);
+        DrawGFX();
     }
 
     private void HandleFill(TileDisplay.TileDisplayArgs e)
@@ -849,8 +890,9 @@ public partial class FormGraphicsNew : Form
             case Tool.Shape:
 
                 SelectionPivot = e.PixelPosition;
+                ShapeColor = e.Button == MouseButtons.Left ? ColorLeft : ColorRight;
                 ShapeDrawable.Visible = true;
-                ShapeDrawable.Rectangle = new Rectangle(e.PixelPosition, new Size(1, 1));
+                UpdateShapePreview(new Rectangle(e.PixelPosition, new Size(1, 1)));
                 break;
             case Tool.Eyedropper:
 
@@ -926,7 +968,7 @@ public partial class FormGraphicsNew : Form
             case Tool.Shape:
 
                 if (SelectionPivot == null) break;
-                ShapeDrawable.Rectangle = GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition, shift);
+                UpdateShapePreview(GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition, shift));
                 break;
         }
     }
@@ -957,30 +999,25 @@ public partial class FormGraphicsNew : Form
             case Tool.Fill:
                 break;
             case Tool.Shape:
-                if (SelectionPivot is null || !ShapeDrawable.Visible) break;
-                ShapeDrawable.Visible = false;
+                if (SelectionPivot is null || ShapePixels is null) break;
 
-                switch (SelectedShape)
+                // Commit exactly what the preview shows
+                int[,] shapePixels = ShapePixels;
+                Point shapeLocation = ShapeDrawable.Location;
+                ShapePixels = null;
+
+                bool anyPixel = false;
+                foreach (int px in shapePixels) if (px >= 0) { anyPixel = true; break; }
+                if (!anyPixel)
                 {
-                    case Shape.Rectangle:
-                        int _color = e.Button == MouseButtons.Left ? ColorLeft : ColorRight;
-
-                        // Get intersecting area with selection
-                        Rectangle area = ShapeDrawable.Rectangle;
-                        if (SelectionVisible) area = Rectangle.Intersect(area, Selection.Rectangle);
-                        if (area.IsEmpty) break;
-
-                        var rectangleAction = new DrawAreaAction(loadedGFX, area, _color);
-                        AddAction(rectangleAction);
-                        rectangleAction.Do();
-                        DrawGFX();
-                        break;
-
-                    case Shape.Ellipse:
-                        break;
-                    case Shape.Line:
-                        break;
+                    DrawGFX();
+                    break;
                 }
+
+                var shapeAction = new DrawAreaAction(loadedGFX, shapeLocation, shapePixels);
+                AddAction(shapeAction);
+                shapeAction.Do();
+                DrawGFX();
                 break;
         }
 
