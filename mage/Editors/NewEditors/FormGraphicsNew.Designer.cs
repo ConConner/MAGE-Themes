@@ -82,6 +82,8 @@
             toolStrip_shape = new System.Windows.Forms.ToolStrip();
             button_shapeRectangle = new System.Windows.Forms.ToolStripButton();
             button_shapeEllipse = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator_shape = new System.Windows.Forms.ToolStripSeparator();
+            label_outlineThickness = new System.Windows.Forms.ToolStripLabel();
             panel_fillSettings = new System.Windows.Forms.Panel();
             checkBox_gridFill = new System.Windows.Forms.CheckBox();
             checkBox_neighbouring = new System.Windows.Forms.CheckBox();
@@ -625,7 +627,7 @@
             // 
             toolStrip_shape.Dock = System.Windows.Forms.DockStyle.Fill;
             toolStrip_shape.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_shape.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_shapeRectangle, button_shapeEllipse });
+            toolStrip_shape.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_shapeRectangle, button_shapeEllipse, toolStripSeparator_shape, label_outlineThickness });
             toolStrip_shape.Location = new System.Drawing.Point(0, 0);
             toolStrip_shape.Name = "toolStrip_shape";
             toolStrip_shape.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -654,6 +656,17 @@
             button_shapeEllipse.Size = new System.Drawing.Size(23, 22);
             button_shapeEllipse.Text = "Ellipse";
             button_shapeEllipse.Click += button_shapeEllipse_Click;
+            // 
+            // toolStripSeparator_shape
+            // 
+            toolStripSeparator_shape.Name = "toolStripSeparator_shape";
+            toolStripSeparator_shape.Size = new System.Drawing.Size(6, 25);
+            // 
+            // label_outlineThickness
+            // 
+            label_outlineThickness.Name = "label_outlineThickness";
+            label_outlineThickness.Size = new System.Drawing.Size(49, 22);
+            label_outlineThickness.Text = "Outline:";
             // 
             // panel_fillSettings
             // 
@@ -1059,6 +1072,8 @@
         private System.Windows.Forms.ToolStrip toolStrip_shape;
         private System.Windows.Forms.ToolStripButton button_shapeRectangle;
         private System.Windows.Forms.ToolStripButton button_shapeEllipse;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator_shape;
+        private System.Windows.Forms.ToolStripLabel label_outlineThickness;
         private System.Windows.Forms.CheckBox checkBox_gridFill;
         private System.Windows.Forms.CheckBox checkBox_neighbouring;
         private System.Windows.Forms.ToolStripButton button_editPal;

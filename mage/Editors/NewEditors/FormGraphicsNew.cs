@@ -3,6 +3,7 @@ using mage.Actions.GraphicsEditor;
 using mage.Bookmarks;
 using mage.Controls;
 using mage.Theming;
+using mage.Theming.CustomControls;
 using mage.Utility;
 using System;
 using System.Collections.Generic;
@@ -119,7 +120,13 @@ public partial class FormGraphicsNew : Form
     private Pen ShapePen = new Pen(Color.Aqua, 1) { DashPattern = DashPattern };
     private Drawable ShapeDrawable;
     private int[,]? ShapePixels = null; // Preview buffer of the shape being drawn, located at ShapeDrawable.Location. -1 = untouched pixel
-    private int ShapeColor;
+    private int ShapeOutlineColor;
+    private int ShapeFillColor;
+    private int ShapeOutlineThickness => (int)numericUpDown_outlineThickness.Value;
+    private bool ShapeFilled => checkBox_shapeFill.Checked;
+    private CheckBox checkBox_shapeFill;
+    private const int MaxOutlineThickness = 16;
+    private FlatNumericUpDown numericUpDown_outlineThickness;
     private Tool? ActiveStrokeTool; // Tool that received the current mouse down, null if no stroke in progress
 
     private Pen GridPen = new Pen(Color.White, 1);
@@ -273,6 +280,7 @@ public partial class FormGraphicsNew : Form
 
         //Populate toolstrip
         AddPaletteDisplay();
+        AddShapeSettings();
         SelectedTool = Tool.Pen;
 
         LoadData();
@@ -354,6 +362,35 @@ public partial class FormGraphicsNew : Form
 
         var colorHost = new ToolStripControlHost(colorDisplay);
         toolStrip_palette.Items.Insert(0, colorHost);
+    }
+
+    private void AddShapeSettings()
+    {
+        checkBox_shapeFill = new()
+        {
+            Text = "Fill",
+            AutoSize = true,
+            Checked = true,
+        };
+        ThemeSwitcher.ChangeTheme(checkBox_shapeFill);
+        checkBox_shapeFill.Paint += ThemeSwitcher.DrawCheckBox; // InjectPaintOverrides already ran before this control existed
+
+        // The host stretches the checkbox to the strip height minus its margin, and DrawCheckBox paints at the top.
+        // Top margin 4 places it at the same height as the checkboxes in panel_fillSettings (Y = 4 in a 25px panel)
+        var fillHost = new ToolStripControlHost(checkBox_shapeFill) { Margin = new Padding(3, 4, 0, 2) };
+        toolStrip_shape.Items.Insert(toolStrip_shape.Items.IndexOf(label_outlineThickness), fillHost);
+
+        numericUpDown_outlineThickness = new()
+        {
+            Width = 40,
+            Minimum = 0,
+            Maximum = MaxOutlineThickness,
+            Value = 1,
+        };
+        ThemeSwitcher.ChangeTheme(numericUpDown_outlineThickness);
+
+        var thicknessHost = new ToolStripControlHost(numericUpDown_outlineThickness) { ToolTipText = "Outline Thickness" };
+        toolStrip_shape.Items.Add(thicknessHost);
     }
 
     private Rectangle GetRectangleFromPoints(Point p1, Point p2, bool alignToGrid = false)
@@ -729,38 +766,60 @@ public partial class FormGraphicsNew : Form
     }
 
     /// <summary>
-    /// Check whether each pixel is within the selected shape and adds it to the preview buffer
+    /// Check whether each pixel is within the selected shape and adds it to the preview buffer.
+    /// Pixels within <see cref="ShapeOutlineThickness"/> of the shape's edge get the outline color, the rest the fill color.
+    /// Pixels the shape does not touch (or that lie outside the current selection) are -1.
+    /// If <see cref="ShapeFilled"/> is off, the fill area is -1 as well so the existing pixels stay untouched.
     /// </summary>
-    private int[,] BuildShapePixels(Rectangle bounds, int palIndex)
+    private int[,] BuildShapePixels(Rectangle bounds, int outlineColor, int fillColor)
     {
-        int[,] pixels = new int[bounds.Width, bounds.Height];
+        int w = bounds.Width;
+        int h = bounds.Height;
 
-        // Radii of the ellipse inscribed in the bounds
-        double rx = bounds.Width / 2.0;
-        double ry = bounds.Height / 2.0;
-
-        for (int y = 0; y < bounds.Height; y++)
+        // Mask of all pixels inside the shape
+        bool[,] shape = new bool[w, h];
+        double rx = w / 2.0; // Radii of the ellipse inscribed in the bounds
+        double ry = h / 2.0;
+        for (int y = 0; y < h; y++)
         {
-            for (int x = 0; x < bounds.Width; x++)
+            for (int x = 0; x < w; x++)
             {
-                bool inShape;
                 switch (SelectedShape)
                 {
                     case Shape.Rectangle:
-                        inShape = true;
+                        shape[x, y] = true;
                         break;
                     case Shape.Ellipse:
                         // Pixel belongs to the ellipse if its center lies inside it
                         double dx = (x + 0.5 - rx) / rx;
                         double dy = (y + 0.5 - ry) / ry;
-                        inShape = dx * dx + dy * dy <= 1.0;
-                        break;
-                    default:
-                        inShape = false;
+                        shape[x, y] = dx * dx + dy * dy <= 1.0;
                         break;
                 }
+            }
+        }
+
+        // Erode the shape once per outline pixel; whatever survives is the fill.
+        // Eroding with 4-neighbours keeps a thickness of 1 as a thin, 8-connected line.
+        bool[,] fill = (bool[,])shape.Clone();
+        for (int i = 0; i < ShapeOutlineThickness; i++)
+        {
+            bool[,] eroded = new bool[w, h];
+            for (int y = 1; y < h - 1; y++)
+                for (int x = 1; x < w - 1; x++)
+                    eroded[x, y] = fill[x, y] && fill[x - 1, y] && fill[x + 1, y] && fill[x, y - 1] && fill[x, y + 1];
+            fill = eroded;
+        }
+
+        int[,] pixels = new int[w, h];
+        for (int y = 0; y < h; y++)
+        {
+            for (int x = 0; x < w; x++)
+            {
                 Point p = new(bounds.X + x, bounds.Y + y);
-                pixels[x, y] = inShape && IsInSelection(p) ? palIndex : -1;
+                if (!shape[x, y] || !IsInSelection(p)) pixels[x, y] = -1;
+                else if (!fill[x, y]) pixels[x, y] = outlineColor;
+                else pixels[x, y] = ShapeFilled ? fillColor : -1;
             }
         }
 
@@ -770,7 +829,7 @@ public partial class FormGraphicsNew : Form
     private void UpdateShapePreview(Rectangle bounds)
     {
         ShapeDrawable.Rectangle = bounds;
-        ShapePixels = BuildShapePixels(bounds, ShapeColor);
+        ShapePixels = BuildShapePixels(bounds, ShapeOutlineColor, ShapeFillColor);
         DrawGFX();
     }
 
@@ -911,7 +970,10 @@ public partial class FormGraphicsNew : Form
             case Tool.Shape:
 
                 SelectionPivot = e.PixelPosition;
-                ShapeColor = e.Button == MouseButtons.Left ? ColorLeft : ColorRight;
+                // Primary color outlines, secondary color fills. Right click swaps them
+                bool left = e.Button == MouseButtons.Left;
+                ShapeOutlineColor = left ? ColorLeft : ColorRight;
+                ShapeFillColor = left ? ColorRight : ColorLeft;
                 ShapeDrawable.Visible = true;
                 UpdateShapePreview(new Rectangle(e.PixelPosition, new Size(1, 1)));
                 break;
