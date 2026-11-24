@@ -82,6 +82,7 @@
             toolStrip_shape = new System.Windows.Forms.ToolStrip();
             button_shapeRectangle = new System.Windows.Forms.ToolStripButton();
             button_shapeEllipse = new System.Windows.Forms.ToolStripButton();
+            button_shapeLine = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator_shape = new System.Windows.Forms.ToolStripSeparator();
             label_outlineThickness = new System.Windows.Forms.ToolStripLabel();
             panel_fillSettings = new System.Windows.Forms.Panel();
@@ -627,7 +628,7 @@
             // 
             toolStrip_shape.Dock = System.Windows.Forms.DockStyle.Fill;
             toolStrip_shape.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            toolStrip_shape.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_shapeRectangle, button_shapeEllipse, toolStripSeparator_shape, label_outlineThickness });
+            toolStrip_shape.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_shapeRectangle, button_shapeEllipse, button_shapeLine, toolStripSeparator_shape, label_outlineThickness });
             toolStrip_shape.Location = new System.Drawing.Point(0, 0);
             toolStrip_shape.Name = "toolStrip_shape";
             toolStrip_shape.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -656,6 +657,15 @@
             button_shapeEllipse.Size = new System.Drawing.Size(23, 22);
             button_shapeEllipse.Text = "Ellipse";
             button_shapeEllipse.Click += button_shapeEllipse_Click;
+            // 
+            // button_shapeLine
+            // 
+            button_shapeLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_shapeLine.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_shapeLine.Name = "button_shapeLine";
+            button_shapeLine.Size = new System.Drawing.Size(23, 22);
+            button_shapeLine.Text = "Line";
+            button_shapeLine.Click += button_shapeLine_Click;
             // 
             // toolStripSeparator_shape
             // 
@@ -1072,6 +1082,7 @@
         private System.Windows.Forms.ToolStrip toolStrip_shape;
         private System.Windows.Forms.ToolStripButton button_shapeRectangle;
         private System.Windows.Forms.ToolStripButton button_shapeEllipse;
+        private System.Windows.Forms.ToolStripButton button_shapeLine;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator_shape;
         private System.Windows.Forms.ToolStripLabel label_outlineThickness;
         private System.Windows.Forms.CheckBox checkBox_gridFill;

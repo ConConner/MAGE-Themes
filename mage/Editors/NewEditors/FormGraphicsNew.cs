@@ -119,7 +119,8 @@ public partial class FormGraphicsNew : Form
 
     private Pen ShapePen = new Pen(Color.Aqua, 1) { DashPattern = DashPattern };
     private Drawable ShapeDrawable;
-    private int[,]? ShapePixels = null; // Preview buffer of the shape being drawn, located at ShapeDrawable.Location. -1 = untouched pixel
+    private int[,]? ShapePixels = null; // Preview buffer of the shape being drawn, located at ShapePixelsLocation. -1 = untouched pixel
+    private Point ShapePixelsLocation; // Can differ from ShapeDrawable.Location, e.g. thick lines extend past their end points
     private int ShapeOutlineColor;
     private int ShapeFillColor;
     private int ShapeOutlineThickness => (int)numericUpDown_outlineThickness.Value;
@@ -181,6 +182,10 @@ public partial class FormGraphicsNew : Form
 
             button_shapeRectangle.Checked = value == Shape.Rectangle;
             button_shapeEllipse.Checked = value == Shape.Ellipse;
+            button_shapeLine.Checked = value == Shape.Line;
+
+            // Lines have no inside to fill
+            if (checkBox_shapeFill is not null) checkBox_shapeFill.Enabled = value != Shape.Line;
         }
     }
 
@@ -546,6 +551,7 @@ public partial class FormGraphicsNew : Form
 
     private void button_shapeRectangle_Click(object sender, EventArgs e) => SelectedShape = Shape.Rectangle;
     private void button_shapeEllipse_Click(object sender, EventArgs e) => SelectedShape = Shape.Ellipse;
+    private void button_shapeLine_Click(object sender, EventArgs e) => SelectedShape = Shape.Line;
     #endregion
 
     #region Toolbar (other)
@@ -705,7 +711,7 @@ public partial class FormGraphicsNew : Form
     {
         Bitmap gfxBitmap = loadedGFX.Draw4bpp(loadedPalette, 0, true);
         if (SelectedPixels is not null) Draw.Draw4bppOntoBitmap(gfxBitmap, Selection.Location, SelectedPixels);
-        if (ShapePixels is not null) Draw.Draw4bppOntoBitmap(gfxBitmap, ShapeDrawable.Location, ShapePixels);
+        if (ShapePixels is not null) Draw.Draw4bppOntoBitmap(gfxBitmap, ShapePixelsLocation, ShapePixels);
 
         tileDisplay_gfx.TileImage = gfxBitmap;
         statusLabel_size.Text = tileDisplay_gfx.TileImage.Width + " x " + tileDisplay_gfx.TileImage.Height;
@@ -826,10 +832,87 @@ public partial class FormGraphicsNew : Form
         return pixels;
     }
 
-    private void UpdateShapePreview(Rectangle bounds)
+    /// <summary>
+    /// Rasterizes a line from <paramref name="start"/> to <paramref name="end"/> with a square brush of the outline thickness (at least 1).
+    /// Returns the pixel buffer and its top left position in <paramref name="location"/>. Untouched pixels are -1.
+    /// </summary>
+    private int[,] BuildLinePixels(Point start, Point end, int color, out Point location)
     {
-        ShapeDrawable.Rectangle = bounds;
-        ShapePixels = BuildShapePixels(bounds, ShapeOutlineColor, ShapeFillColor);
+        int brush = Math.Max(1, ShapeOutlineThickness);
+        int brushOffset = (brush - 1) / 2; // Brush is centered on the line, extra pixel goes right / down for even sizes
+
+        location = new(Math.Min(start.X, end.X) - brushOffset, Math.Min(start.Y, end.Y) - brushOffset);
+        int w = Math.Abs(end.X - start.X) + brush;
+        int h = Math.Abs(end.Y - start.Y) + brush;
+
+        int[,] pixels = new int[w, h];
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
+                pixels[x, y] = -1;
+
+        // Bresenham
+        int dx = Math.Abs(end.X - start.X);
+        int dy = -Math.Abs(end.Y - start.Y);
+        int sx = start.X < end.X ? 1 : -1;
+        int sy = start.Y < end.Y ? 1 : -1;
+        int err = dx + dy;
+        Point p = start;
+        while (true)
+        {
+            // Stamp the brush
+            for (int by = 0; by < brush; by++)
+            {
+                for (int bx = 0; bx < brush; bx++)
+                {
+                    Point target = new(p.X - brushOffset + bx, p.Y - brushOffset + by);
+                    if (!IsInSelection(target)) continue;
+                    pixels[target.X - location.X, target.Y - location.Y] = color;
+                }
+            }
+
+            if (p == end) break;
+            int e2 = 2 * err;
+            if (e2 >= dy) { err += dy; p.X += sx; }
+            if (e2 <= dx) { err += dx; p.Y += sy; }
+        }
+
+        return pixels;
+    }
+
+    /// <summary>
+    /// Snaps <paramref name="end"/> so the line from <paramref name="start"/> is horizontal, vertical or at 45°
+    /// </summary>
+    private static Point SnapLineEnd(Point start, Point end)
+    {
+        int dx = end.X - start.X;
+        int dy = end.Y - start.Y;
+        int adx = Math.Abs(dx);
+        int ady = Math.Abs(dy);
+
+        // tan(22.5°) ~ 0.414 is the boundary between snapping straight and snapping diagonal
+        if (ady * 1000 <= adx * 414) return new(end.X, start.Y);
+        if (adx * 1000 <= ady * 414) return new(start.X, end.Y);
+
+        int length = Math.Max(adx, ady);
+        return new(start.X + Math.Sign(dx) * length, start.Y + Math.Sign(dy) * length);
+    }
+
+    /// <param name="shift">Snaps rectangles / ellipses to the tile grid and lines to 45° steps</param>
+    private void UpdateShapePreview(Point start, Point end, bool shift)
+    {
+        if (SelectedShape == Shape.Line)
+        {
+            if (shift) end = SnapLineEnd(start, end);
+            ShapeDrawable.Rectangle = GetRectangleFromPoints(start, end);
+            ShapePixels = BuildLinePixels(start, end, ShapeOutlineColor, out ShapePixelsLocation);
+        }
+        else
+        {
+            Rectangle bounds = GetRectangleFromPoints(start, end, shift);
+            ShapeDrawable.Rectangle = bounds;
+            ShapePixelsLocation = bounds.Location;
+            ShapePixels = BuildShapePixels(bounds, ShapeOutlineColor, ShapeFillColor);
+        }
         DrawGFX();
     }
 
@@ -975,7 +1058,7 @@ public partial class FormGraphicsNew : Form
                 ShapeOutlineColor = left ? ColorLeft : ColorRight;
                 ShapeFillColor = left ? ColorRight : ColorLeft;
                 ShapeDrawable.Visible = true;
-                UpdateShapePreview(new Rectangle(e.PixelPosition, new Size(1, 1)));
+                UpdateShapePreview(e.PixelPosition, e.PixelPosition, false);
                 break;
             case Tool.Eyedropper:
 
@@ -1051,7 +1134,7 @@ public partial class FormGraphicsNew : Form
             case Tool.Shape:
 
                 if (SelectionPivot == null) break;
-                UpdateShapePreview(GetRectangleFromPoints(SelectionPivot.Value, e.PixelPosition, shift));
+                UpdateShapePreview(SelectionPivot.Value, e.PixelPosition, shift);
                 break;
         }
     }
@@ -1086,7 +1169,7 @@ public partial class FormGraphicsNew : Form
 
                 // Commit exactly what the preview shows
                 int[,] shapePixels = ShapePixels;
-                Point shapeLocation = ShapeDrawable.Location;
+                Point shapeLocation = ShapePixelsLocation;
                 ShapePixels = null;
 
                 bool anyPixel = false;
