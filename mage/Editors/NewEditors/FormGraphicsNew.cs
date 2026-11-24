@@ -149,7 +149,7 @@ public partial class FormGraphicsNew : Form
                     break;
                 case Tool.Shape:
                     button_toolShape.Checked = true;
-                    //panel_shapeSettings.Visible = true;
+                    panel_shapeSettings.Visible = true;
                     break;
                 case Tool.Eyedropper:
                     button_eyeDropper.Checked = true;
@@ -171,6 +171,9 @@ public partial class FormGraphicsNew : Form
         {
             if (field == value) return;
             field = value;
+
+            button_shapeRectangle.Checked = value == Shape.Rectangle;
+            button_shapeEllipse.Checked = value == Shape.Ellipse;
         }
     }
 
@@ -503,6 +506,9 @@ public partial class FormGraphicsNew : Form
         if (checkBox_neighbouring.Checked) FillToolRestrictions |= FillRestrictions.Neighbouring;
         if (checkBox_gridFill.Checked) FillToolRestrictions |= FillRestrictions.Grid;
     }
+
+    private void button_shapeRectangle_Click(object sender, EventArgs e) => SelectedShape = Shape.Rectangle;
+    private void button_shapeEllipse_Click(object sender, EventArgs e) => SelectedShape = Shape.Ellipse;
     #endregion
 
     #region Toolbar (other)
@@ -729,15 +735,30 @@ public partial class FormGraphicsNew : Form
     {
         int[,] pixels = new int[bounds.Width, bounds.Height];
 
+        // Radii of the ellipse inscribed in the bounds
+        double rx = bounds.Width / 2.0;
+        double ry = bounds.Height / 2.0;
+
         for (int y = 0; y < bounds.Height; y++)
         {
             for (int x = 0; x < bounds.Width; x++)
             {
-                bool inShape = SelectedShape switch
+                bool inShape;
+                switch (SelectedShape)
                 {
-                    Shape.Rectangle => true,
-                    _ => false, // default
-                };
+                    case Shape.Rectangle:
+                        inShape = true;
+                        break;
+                    case Shape.Ellipse:
+                        // Pixel belongs to the ellipse if its center lies inside it
+                        double dx = (x + 0.5 - rx) / rx;
+                        double dy = (y + 0.5 - ry) / ry;
+                        inShape = dx * dx + dy * dy <= 1.0;
+                        break;
+                    default:
+                        inShape = false;
+                        break;
+                }
                 Point p = new(bounds.X + x, bounds.Y + y);
                 pixels[x, y] = inShape && IsInSelection(p) ? palIndex : -1;
             }
@@ -1014,7 +1035,7 @@ public partial class FormGraphicsNew : Form
                     break;
                 }
 
-                var shapeAction = new DrawAreaAction(loadedGFX, shapeLocation, shapePixels);
+                var shapeAction = new DrawAreaAction(loadedGFX, shapeLocation, shapePixels, SelectedShape.ToString());
                 AddAction(shapeAction);
                 shapeAction.Do();
                 DrawGFX();

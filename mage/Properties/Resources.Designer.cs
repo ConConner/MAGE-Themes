@@ -1355,6 +1355,16 @@ namespace mage.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap shape_circle {
+            get {
+                object obj = ResourceManager.GetObject("shape_circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap shape_flip_horizontal {
             get {
                 object obj = ResourceManager.GetObject("shape_flip_horizontal", resourceCulture);

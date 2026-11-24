@@ -79,6 +79,9 @@
             toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             button_editPal = new System.Windows.Forms.ToolStripButton();
             panel_shapeSettings = new System.Windows.Forms.Panel();
+            toolStrip_shape = new System.Windows.Forms.ToolStrip();
+            button_shapeRectangle = new System.Windows.Forms.ToolStripButton();
+            button_shapeEllipse = new System.Windows.Forms.ToolStripButton();
             panel_fillSettings = new System.Windows.Forms.Panel();
             checkBox_gridFill = new System.Windows.Forms.CheckBox();
             checkBox_neighbouring = new System.Windows.Forms.CheckBox();
@@ -118,6 +121,8 @@
             groupBox_image.SuspendLayout();
             panel_imageDisplay.SuspendLayout();
             toolStrip_palette.SuspendLayout();
+            panel_shapeSettings.SuspendLayout();
+            toolStrip_shape.SuspendLayout();
             panel_fillSettings.SuspendLayout();
             toolStrip_gfx.SuspendLayout();
             panel_imageContainer.SuspendLayout();
@@ -608,12 +613,47 @@
             // 
             // panel_shapeSettings
             // 
+            panel_shapeSettings.Controls.Add(toolStrip_shape);
             panel_shapeSettings.Dock = System.Windows.Forms.DockStyle.Top;
             panel_shapeSettings.Location = new System.Drawing.Point(3, 69);
             panel_shapeSettings.Name = "panel_shapeSettings";
             panel_shapeSettings.Size = new System.Drawing.Size(606, 25);
             panel_shapeSettings.TabIndex = 6;
             panel_shapeSettings.Visible = false;
+            // 
+            // toolStrip_shape
+            // 
+            toolStrip_shape.Dock = System.Windows.Forms.DockStyle.Fill;
+            toolStrip_shape.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            toolStrip_shape.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { button_shapeRectangle, button_shapeEllipse });
+            toolStrip_shape.Location = new System.Drawing.Point(0, 0);
+            toolStrip_shape.Name = "toolStrip_shape";
+            toolStrip_shape.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            toolStrip_shape.Size = new System.Drawing.Size(606, 25);
+            toolStrip_shape.TabIndex = 0;
+            toolStrip_shape.Text = "toolStrip_shape";
+            // 
+            // button_shapeRectangle
+            // 
+            button_shapeRectangle.Checked = true;
+            button_shapeRectangle.CheckState = System.Windows.Forms.CheckState.Checked;
+            button_shapeRectangle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_shapeRectangle.Image = Properties.Resources.shape_square;
+            button_shapeRectangle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_shapeRectangle.Name = "button_shapeRectangle";
+            button_shapeRectangle.Size = new System.Drawing.Size(23, 22);
+            button_shapeRectangle.Text = "Rectangle";
+            button_shapeRectangle.Click += button_shapeRectangle_Click;
+            // 
+            // button_shapeEllipse
+            // 
+            button_shapeEllipse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            button_shapeEllipse.Image = Properties.Resources.shape_circle;
+            button_shapeEllipse.ImageTransparentColor = System.Drawing.Color.Magenta;
+            button_shapeEllipse.Name = "button_shapeEllipse";
+            button_shapeEllipse.Size = new System.Drawing.Size(23, 22);
+            button_shapeEllipse.Text = "Ellipse";
+            button_shapeEllipse.Click += button_shapeEllipse_Click;
             // 
             // panel_fillSettings
             // 
@@ -930,6 +970,10 @@
             panel_imageDisplay.ResumeLayout(false);
             toolStrip_palette.ResumeLayout(false);
             toolStrip_palette.PerformLayout();
+            panel_shapeSettings.ResumeLayout(false);
+            panel_shapeSettings.PerformLayout();
+            toolStrip_shape.ResumeLayout(false);
+            toolStrip_shape.PerformLayout();
             panel_fillSettings.ResumeLayout(false);
             panel_fillSettings.PerformLayout();
             toolStrip_gfx.ResumeLayout(false);
@@ -1012,6 +1056,9 @@
         private System.Windows.Forms.ToolStripMenuItem button_pixelGrid;
         private System.Windows.Forms.Panel panel_fillSettings;
         private System.Windows.Forms.Panel panel_shapeSettings;
+        private System.Windows.Forms.ToolStrip toolStrip_shape;
+        private System.Windows.Forms.ToolStripButton button_shapeRectangle;
+        private System.Windows.Forms.ToolStripButton button_shapeEllipse;
         private System.Windows.Forms.CheckBox checkBox_gridFill;
         private System.Windows.Forms.CheckBox checkBox_neighbouring;
         private System.Windows.Forms.ToolStripButton button_editPal;
