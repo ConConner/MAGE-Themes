@@ -1,3 +1,22 @@
+# [1.26.0](https://github.com/ConConner/MAGE-Themes/compare/v1.25.0...v1.26.0) (2026-11-25)
+
+
+### Bug Fixes
+
+* importing small uncompressed graphics overwrites data after the imported rows ([7e61849](https://github.com/ConConner/MAGE-Themes/commit/7e6184936dbadf15226dddea68f1e4934e9a72fb)), closes [#129](https://github.com/ConConner/MAGE-Themes/issues/129)
+* mage can crash if hybrid compilation is interrupted ([a399587](https://github.com/ConConner/MAGE-Themes/commit/a39958718a94d71fead11d675b119b102d8f6e8f))
+* mage crashes if a rom is opened while the update screen is open ([9ac79a3](https://github.com/ConConner/MAGE-Themes/commit/9ac79a312560e2bec70364ed04dda934ad62868c))
+
+
+### Features
+
+* added clear rom button [slop] ([93c2298](https://github.com/ConConner/MAGE-Themes/commit/93c2298ce8e4d08628b5b3dcd93176e1fe604f0d))
+* added ctrl constrain modifier to shape tool in graphics editor ([70618ca](https://github.com/ConConner/MAGE-Themes/commit/70618ca81d42a18c1c51b55758fb807fd2c88967))
+* added line to shape tool in graphics editor ([e862728](https://github.com/ConConner/MAGE-Themes/commit/e8627285baf92ced24156660f317f0014193cd9a))
+* added outline to shape tool in graphics editor ([59f07ff](https://github.com/ConConner/MAGE-Themes/commit/59f07ff09b8a34e3a5da0abe76352666c9442ded))
+* added shape circle to shape tool in graphics editor ([8175105](https://github.com/ConConner/MAGE-Themes/commit/8175105910a7608b1654e7c0f3cbe9649cd8d964))
+* graphics editor shape tool shows a preview of the shape ([d9bd24b](https://github.com/ConConner/MAGE-Themes/commit/d9bd24b4a8a4a16d3886ddf6a881bc0a891e8910))
+
 # [1.25.0](https://github.com/ConConner/MAGE-Themes/compare/v1.24.1...v1.25.0) (2026-11-10)
 
 
