@@ -41,7 +41,10 @@ public sealed class UpdateChecker
             if (newVersion > oldVersion && (!ignoredVersions.Contains(tag) || ignoreIgnoredVersions)
                 && (!Program.Config.OnlyNotifyOnMajor || isNewMajor))
             {
-                _ = Task.Run(() => new FormUpdateAvailable(tag, url, ignoreIgnoredVersions).ShowDialog());
+                // must be shown on the UI thread, otherwise code that iterates or closes Application.OpenForms
+                // (e.g. when loading a rom) touches this form from the wrong thread
+                // it stays modal so it has to be dismissed before anything else (like opening a rom) can happen
+                new FormUpdateAvailable(tag, url, ignoreIgnoredVersions).ShowDialog();
             }
             else if (ignoreIgnoredVersions)
             {

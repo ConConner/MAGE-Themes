@@ -173,6 +173,16 @@ namespace mage.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap cross {
+            get {
+                object obj = ResourceManager.GetObject("cross", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap cut_red {
             get {
                 object obj = ResourceManager.GetObject("cut_red", resourceCulture);
@@ -978,24 +988,6 @@ namespace mage.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to the Samus animation list.
-        /// </summary>
-        public static string MF_U_samusAnims {
-            get {
-                return ResourceManager.GetString("MF_U_samusAnims", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to the Samus animation list.
-        /// </summary>
-        public static string ZM_U_samusAnims {
-            get {
-                return ResourceManager.GetString("ZM_U_samusAnims", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 10=2E6214
         ///11=2E7F70
         ///12=2EB6CC
@@ -1047,6 +1039,32 @@ namespace mage.Properties {
         public static string MF_U_pSpriteOAM {
             get {
                 return ResourceManager.GetString("MF_U_pSpriteOAM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [@Palettes]
+        ///Fusion Suit;28DD7C:0:1,28DE1C:1:1
+        ///Varia Suit;28DD9C:0:1,28DE1C:1:1
+        ///Gravity Suit;28DDBC:0:1,28DE1C:1:1
+        ///SA-X;28DDDC:0:1,28DE1C:1:1
+        ///[Standing]
+        ///Standing Forward Right;28D2BC
+        ///Standing Forward Left;28D2C0
+        ///Standing Diagonal Up Right;28D4D4
+        ///Standing Diagonal Up Left;28D4D8
+        ///Standing Diagonal Down Right;28D4DC
+        ///Standing Diagonal Down Left;28D4E0
+        ///Standing Up Right;28D4E4
+        ///Standing Up Left;28D4E8
+        ///[Turning Around]
+        ///Turning Forward Right;28D2C4
+        ///Turning Forward Left;28D2C8
+        ///Turning Diagonal Up Rig [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string MF_U_samusAnims {
+            get {
+                return ResourceManager.GetString("MF_U_samusAnims", resourceCulture);
             }
         }
         
@@ -1337,6 +1355,16 @@ namespace mage.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap shape_circle {
+            get {
+                object obj = ResourceManager.GetObject("shape_circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap shape_flip_horizontal {
             get {
                 object obj = ResourceManager.GetObject("shape_flip_horizontal", resourceCulture);
@@ -1360,6 +1388,16 @@ namespace mage.Properties {
         public static System.Drawing.Bitmap shape_group {
             get {
                 object obj = ResourceManager.GetObject("shape_group", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap shape_line {
+            get {
+                object obj = ResourceManager.GetObject("shape_line", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2869,6 +2907,34 @@ namespace mage.Properties {
             get {
                 object obj = ResourceManager.GetObject("ZM_U_removeCloseup", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [@Palettes]
+        ///Power Suit;2376A8:0:2
+        ///Varia Suit;237BE8:0:2
+        ///Full Suit;237FA8:0:2
+        ///Gravity Suit;2383C8:0:2
+        ///Suitless;2387E8:0:2
+        ///[Power Suit: Running]
+        ///Right Running;238B74
+        ///Left Running;238B78
+        ///Right Forward Running;238D8C
+        ///Left Forward Running;238D90
+        ///Right Diagonal Up Running;238D94
+        ///Left Diagonal Up Running;238D98
+        ///Right Diagonal Down Running;238D9C
+        ///Left Diagonal Down Running;238DA0
+        ///[Power Suit: Standing]
+        ///Right Standing;238B7C
+        ///Left Standing;238B80
+        ///Right Diagonal Up Standing;238DD4
+        ///Left Diagonal Up S [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string ZM_U_samusAnims {
+            get {
+                return ResourceManager.GetString("ZM_U_samusAnims", resourceCulture);
             }
         }
         

@@ -10,6 +10,7 @@ public class DrawAreaAction : GenericEditorAction
     private Rectangle _area;
     private GFX _gfx;
     private int[,] _data;
+    private string _name = "Rectangle";
 
     public DrawAreaAction(GFX gfx, Rectangle area, int palIndex)
     {
@@ -27,8 +28,9 @@ public class DrawAreaAction : GenericEditorAction
         }
     }
 
-    public DrawAreaAction(GFX gfx, Point point, int[,] data)
+    public DrawAreaAction(GFX gfx, Point point, int[,] data, string name = "Rectangle")
     {
+        _name = name;
         _area = new Rectangle(point.X, point.Y, data.GetLength(0), data.GetLength(1));
         _gfx = gfx;
         _data = data;
@@ -37,7 +39,7 @@ public class DrawAreaAction : GenericEditorAction
 
     public override Rectangle AffectedRegion => _area;
 
-    public override string ActionText => $"Rectangle [{_area.Width}, {_area.Height}]";
+    public override string ActionText => $"{_name} [{_area.Width}, {_area.Height}]";
 
     public override void Do()
     {

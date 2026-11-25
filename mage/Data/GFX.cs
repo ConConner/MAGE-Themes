@@ -372,6 +372,12 @@ namespace mage
             {
                 dst.Write(dataToWrite);
             }
+            else if (!compressed && newLen < origLen)
+            {
+                // uncompressed graphics are commonly partially replaced: only overwrite the
+                // rows provided and leave the rest of the existing data (origLen) untouched
+                dst.CopyFromArray(data, 0, addr, newLen);
+            }
             else
             {
                 dst.Write2(dataToWrite, origLen, ref addr, true);

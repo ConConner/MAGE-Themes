@@ -78,6 +78,7 @@ namespace mage
         private static Dictionary<int, Minimap> editedMinimaps;        // key = AreaID
         private static Dictionary<int, Demo> editedDemos;              // key < 0xFF
         private static Dictionary<int, RoomUndoRedo> undoRedoStacks;       // key = AreaID * 0x100 + RoomID
+        private static bool dataEdited;                                     // ROM data was changed directly (e.g. by clearing the ROM)
 
         #region get and set methods
 
@@ -320,8 +321,17 @@ namespace mage
             if (reset) { ResetEditedLists(); }
         }
 
+        /// <summary>
+        /// Marks the ROM as edited after its data was changed directly, so the user gets asked to save
+        /// </summary>
+        public static void MarkEdited()
+        {
+            dataEdited = true;
+        }
+
         public static bool IsEdited()
         {
+            if (dataEdited) { return true; }
             if (editedBGs.Count > 0) { return true; }
             if (editedSpritesets.Count > 0) { return true; }
             if (editedEnemyLists.Count > 0) { return true; }
@@ -342,6 +352,7 @@ namespace mage
             editedMinimaps = new Dictionary<int, Minimap>();
             editedDemos = new Dictionary<int, Demo>();
             undoRedoStacks = new Dictionary<int, RoomUndoRedo>();
+            dataEdited = false;
         }
 
 

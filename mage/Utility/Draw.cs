@@ -382,6 +382,7 @@ namespace mage
 
                 for (int x = x0; x < x1; x++)
                 {
+                    if (pixels[x, y] < 0) continue; // Negative = no pixel, leave destination untouched
                     int dx = pos.X + x;
                     byte val = (byte)(pixels[x, y] & 0xF);
 

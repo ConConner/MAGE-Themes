@@ -99,6 +99,7 @@
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             Name = "FormScriptOutput";
             Text = "Script Output";
+            FormClosing += FormScriptOutput_FormClosing;
             Shown += FormScriptOutput_Shown;
             pnl_error.ResumeLayout(false);
             pnl_error.PerformLayout();

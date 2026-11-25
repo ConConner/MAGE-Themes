@@ -231,6 +231,10 @@ namespace mage
         public static int DoorsOffset { get { return romStream.ReadPtr(DoorsPtr); } }
         public static int AreaConnectionsOffset { get { return romStream.ReadPtr(AreaConnectionsPtr); } }
         public static int DoorEventsOffset { get { return romStream.ReadPtr(DoorEventsPtr); } }
+        /// <summary>Location of the pointer to the door event table</summary>
+        public static int DoorEventsPointerOffset => DoorEventsPtr;
+        /// <summary>Location of the pointer to the hatch lock event table (or the table of lists for ZM)</summary>
+        public static int HatchLockEventsPointerOffset => HatchLockEventsPtr;
         public static byte NumOfDoorEvents
         {
             get { return romStream.Read8(NumOfDoorEventsOffset); }
