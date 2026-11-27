@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/ConConner/MAGE-Themes/compare/v1.26.0...v1.27.0) (2026-11-27)
+
+
+### Features
+
+* connection editor now uses monospace font ([3f44f26](https://github.com/ConConner/MAGE-Themes/commit/3f44f26d714508913903b7db67235f5a6fabfe6f))
+
 # [1.26.0](https://github.com/ConConner/MAGE-Themes/compare/v1.25.0...v1.26.0) (2026-11-25)
 
 
