@@ -29,963 +29,1119 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormConnection));
-            this.listView_areaConnections = new System.Windows.Forms.ListView();
-            this.columnHeader_src = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader_dst = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.button_areaAdd = new System.Windows.Forms.Button();
-            this.button_areaRemove = new System.Windows.Forms.Button();
-            this.label_areaSource = new System.Windows.Forms.Label();
-            this.label_areaDestination = new System.Windows.Forms.Label();
-            this.comboBox_areaDstArea = new mage.Theming.CustomControls.FlatComboBox();
-            this.comboBox_areaSrcArea = new mage.Theming.CustomControls.FlatComboBox();
-            this.textBox_areaSrcDoor = new mage.Theming.CustomControls.FlatTextBox();
-            this.label_areaDstRoom = new System.Windows.Forms.Label();
-            this.label_areaSrcRoom = new System.Windows.Forms.Label();
-            this.label_areaDstDoor = new System.Windows.Forms.Label();
-            this.button_areaClose = new System.Windows.Forms.Button();
-            this.button_areaApply = new System.Windows.Forms.Button();
-            this.label_areaArea = new System.Windows.Forms.Label();
-            this.label_areaRoom = new System.Windows.Forms.Label();
-            this.label_areaDoor = new System.Windows.Forms.Label();
-            this.tabControl = new mage.Theming.CustomControls.FlatTabControl();
-            this.tabPage_area = new System.Windows.Forms.TabPage();
-            this.tabPage_event = new System.Windows.Forms.TabPage();
-            this.textBox_event = new mage.Theming.CustomControls.FlatTextBox();
-            this.label_event = new System.Windows.Forms.Label();
-            this.textBox_eventDstDoor = new mage.Theming.CustomControls.FlatTextBox();
-            this.label_eventDstArea = new System.Windows.Forms.Label();
-            this.listView_doorEvents = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label_eventDoor = new System.Windows.Forms.Label();
-            this.button_eventAdd = new System.Windows.Forms.Button();
-            this.label_eventRoom = new System.Windows.Forms.Label();
-            this.button_eventRemove = new System.Windows.Forms.Button();
-            this.label_eventArea = new System.Windows.Forms.Label();
-            this.label_eventSource = new System.Windows.Forms.Label();
-            this.button_eventClose = new System.Windows.Forms.Button();
-            this.label_eventDestination = new System.Windows.Forms.Label();
-            this.button_eventApply = new System.Windows.Forms.Button();
-            this.comboBox_eventSrcArea = new mage.Theming.CustomControls.FlatComboBox();
-            this.label_eventSrcRoom = new System.Windows.Forms.Label();
-            this.textBox_eventSrcDoor = new mage.Theming.CustomControls.FlatTextBox();
-            this.label_eventDstRoom = new System.Windows.Forms.Label();
-            this.tabPage_locNames = new System.Windows.Forms.TabPage();
-            this.comboBox_locLanguage = new mage.Theming.CustomControls.FlatComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox_locDstRoom = new mage.Theming.CustomControls.FlatTextBox();
-            this.listView_locNames = new System.Windows.Forms.ListView();
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.button_locAdd = new System.Windows.Forms.Button();
-            this.label_locRoom = new System.Windows.Forms.Label();
-            this.button_locRemove = new System.Windows.Forms.Button();
-            this.label_locArea = new System.Windows.Forms.Label();
-            this.label_locDestination = new System.Windows.Forms.Label();
-            this.button_locClose = new System.Windows.Forms.Button();
-            this.label_locText = new System.Windows.Forms.Label();
-            this.button_locApply = new System.Windows.Forms.Button();
-            this.comboBox_locDstArea = new mage.Theming.CustomControls.FlatComboBox();
-            this.textBox_locText = new mage.Theming.CustomControls.FlatTextBox();
-            this.label_locName = new System.Windows.Forms.Label();
-            this.tabPage_hatchLock = new System.Windows.Forms.TabPage();
-            this.radioButton_lockAfter = new System.Windows.Forms.RadioButton();
-            this.radioButton_lockBefore = new System.Windows.Forms.RadioButton();
-            this.listBox_lockHatches = new System.Windows.Forms.ListBox();
-            this.textBox_lockEvent = new mage.Theming.CustomControls.FlatTextBox();
-            this.label_lockEvent = new System.Windows.Forms.Label();
-            this.textBox_lockRoom = new mage.Theming.CustomControls.FlatTextBox();
-            this.label_lockRoom = new System.Windows.Forms.Label();
-            this.listView_lockHatches = new System.Windows.Forms.ListView();
-            this.columnHeader_lockDst = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader_lockEvent = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader_lockWhen = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader_lockHatches = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.button_lockAdd = new System.Windows.Forms.Button();
-            this.button_lockRemove = new System.Windows.Forms.Button();
-            this.label_lockArea = new System.Windows.Forms.Label();
-            this.button_lockClose = new System.Windows.Forms.Button();
-            this.button_lockApply = new System.Windows.Forms.Button();
-            this.comboBox_lockArea = new mage.Theming.CustomControls.FlatComboBox();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.statusLabel_changes = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tabControl.SuspendLayout();
-            this.tabPage_area.SuspendLayout();
-            this.tabPage_event.SuspendLayout();
-            this.tabPage_locNames.SuspendLayout();
-            this.tabPage_hatchLock.SuspendLayout();
-            this.statusStrip.SuspendLayout();
-            this.SuspendLayout();
+            listView_areaConnections = new System.Windows.Forms.ListView();
+            columnHeader_src = new System.Windows.Forms.ColumnHeader();
+            columnHeader_dst = new System.Windows.Forms.ColumnHeader();
+            button_areaAdd = new System.Windows.Forms.Button();
+            button_areaRemove = new System.Windows.Forms.Button();
+            label_areaSource = new System.Windows.Forms.Label();
+            label_areaDestination = new System.Windows.Forms.Label();
+            comboBox_areaDstArea = new mage.Theming.CustomControls.FlatComboBox();
+            comboBox_areaSrcArea = new mage.Theming.CustomControls.FlatComboBox();
+            textBox_areaSrcDoor = new mage.Theming.CustomControls.FlatTextBox();
+            label_areaDstRoom = new System.Windows.Forms.Label();
+            label_areaSrcRoom = new System.Windows.Forms.Label();
+            label_areaDstDoor = new System.Windows.Forms.Label();
+            button_areaClose = new System.Windows.Forms.Button();
+            button_areaApply = new System.Windows.Forms.Button();
+            label_areaArea = new System.Windows.Forms.Label();
+            label_areaRoom = new System.Windows.Forms.Label();
+            label_areaDoor = new System.Windows.Forms.Label();
+            tabControl = new mage.Theming.CustomControls.FlatTabControl();
+            tabPage_area = new System.Windows.Forms.TabPage();
+            tabPage_event = new System.Windows.Forms.TabPage();
+            textBox_event = new mage.Theming.CustomControls.FlatTextBox();
+            label_event = new System.Windows.Forms.Label();
+            textBox_eventDstDoor = new mage.Theming.CustomControls.FlatTextBox();
+            label_eventDstArea = new System.Windows.Forms.Label();
+            listView_doorEvents = new System.Windows.Forms.ListView();
+            columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            label_eventDoor = new System.Windows.Forms.Label();
+            button_eventAdd = new System.Windows.Forms.Button();
+            label_eventRoom = new System.Windows.Forms.Label();
+            button_eventRemove = new System.Windows.Forms.Button();
+            label_eventArea = new System.Windows.Forms.Label();
+            label_eventSource = new System.Windows.Forms.Label();
+            button_eventClose = new System.Windows.Forms.Button();
+            label_eventDestination = new System.Windows.Forms.Label();
+            button_eventApply = new System.Windows.Forms.Button();
+            comboBox_eventSrcArea = new mage.Theming.CustomControls.FlatComboBox();
+            label_eventSrcRoom = new System.Windows.Forms.Label();
+            textBox_eventSrcDoor = new mage.Theming.CustomControls.FlatTextBox();
+            label_eventDstRoom = new System.Windows.Forms.Label();
+            tabPage_locNames = new System.Windows.Forms.TabPage();
+            comboBox_locLanguage = new mage.Theming.CustomControls.FlatComboBox();
+            label1 = new System.Windows.Forms.Label();
+            textBox_locDstRoom = new mage.Theming.CustomControls.FlatTextBox();
+            listView_locNames = new System.Windows.Forms.ListView();
+            columnHeader4 = new System.Windows.Forms.ColumnHeader();
+            columnHeader5 = new System.Windows.Forms.ColumnHeader();
+            columnHeader6 = new System.Windows.Forms.ColumnHeader();
+            button_locAdd = new System.Windows.Forms.Button();
+            label_locRoom = new System.Windows.Forms.Label();
+            button_locRemove = new System.Windows.Forms.Button();
+            label_locArea = new System.Windows.Forms.Label();
+            label_locDestination = new System.Windows.Forms.Label();
+            button_locClose = new System.Windows.Forms.Button();
+            label_locText = new System.Windows.Forms.Label();
+            button_locApply = new System.Windows.Forms.Button();
+            comboBox_locDstArea = new mage.Theming.CustomControls.FlatComboBox();
+            textBox_locText = new mage.Theming.CustomControls.FlatTextBox();
+            label_locName = new System.Windows.Forms.Label();
+            tabPage_hatchLock = new System.Windows.Forms.TabPage();
+            radioButton_lockAfter = new System.Windows.Forms.RadioButton();
+            radioButton_lockBefore = new System.Windows.Forms.RadioButton();
+            listBox_lockHatches = new System.Windows.Forms.ListBox();
+            textBox_lockEvent = new mage.Theming.CustomControls.FlatTextBox();
+            label_lockEvent = new System.Windows.Forms.Label();
+            textBox_lockRoom = new mage.Theming.CustomControls.FlatTextBox();
+            label_lockRoom = new System.Windows.Forms.Label();
+            listView_lockHatches = new System.Windows.Forms.ListView();
+            columnHeader_lockDst = new System.Windows.Forms.ColumnHeader();
+            columnHeader_lockEvent = new System.Windows.Forms.ColumnHeader();
+            columnHeader_lockWhen = new System.Windows.Forms.ColumnHeader();
+            columnHeader_lockHatches = new System.Windows.Forms.ColumnHeader();
+            button_lockAdd = new System.Windows.Forms.Button();
+            button_lockRemove = new System.Windows.Forms.Button();
+            label_lockArea = new System.Windows.Forms.Label();
+            button_lockClose = new System.Windows.Forms.Button();
+            button_lockApply = new System.Windows.Forms.Button();
+            comboBox_lockArea = new mage.Theming.CustomControls.FlatComboBox();
+            statusStrip = new System.Windows.Forms.StatusStrip();
+            statusLabel_changes = new System.Windows.Forms.ToolStripStatusLabel();
+            tabControl.SuspendLayout();
+            tabPage_area.SuspendLayout();
+            tabPage_event.SuspendLayout();
+            tabPage_locNames.SuspendLayout();
+            tabPage_hatchLock.SuspendLayout();
+            statusStrip.SuspendLayout();
+            SuspendLayout();
             // 
             // listView_areaConnections
             // 
-            this.listView_areaConnections.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader_src,
-            this.columnHeader_dst});
-            this.listView_areaConnections.FullRowSelect = true;
-            this.listView_areaConnections.GridLines = true;
-            this.listView_areaConnections.HideSelection = false;
-            this.listView_areaConnections.Location = new System.Drawing.Point(6, 6);
-            this.listView_areaConnections.MultiSelect = false;
-            this.listView_areaConnections.Name = "listView_areaConnections";
-            this.listView_areaConnections.Size = new System.Drawing.Size(539, 163);
-            this.listView_areaConnections.TabIndex = 0;
-            this.listView_areaConnections.UseCompatibleStateImageBehavior = false;
-            this.listView_areaConnections.View = System.Windows.Forms.View.Details;
-            this.listView_areaConnections.SelectedIndexChanged += new System.EventHandler(this.listView_areaConnections_SelectedIndexChanged);
+            listView_areaConnections.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader_src, columnHeader_dst });
+            listView_areaConnections.FullRowSelect = true;
+            listView_areaConnections.GridLines = true;
+            listView_areaConnections.Location = new System.Drawing.Point(7, 7);
+            listView_areaConnections.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            listView_areaConnections.MultiSelect = false;
+            listView_areaConnections.Name = "listView_areaConnections";
+            listView_areaConnections.Size = new System.Drawing.Size(628, 187);
+            listView_areaConnections.TabIndex = 0;
+            listView_areaConnections.UseCompatibleStateImageBehavior = false;
+            listView_areaConnections.View = System.Windows.Forms.View.Details;
+            listView_areaConnections.SelectedIndexChanged += listView_areaConnections_SelectedIndexChanged;
             // 
             // columnHeader_src
             // 
-            this.columnHeader_src.Text = "Source";
-            this.columnHeader_src.Width = 200;
+            columnHeader_src.Text = "Source";
+            columnHeader_src.Width = 200;
             // 
             // columnHeader_dst
             // 
-            this.columnHeader_dst.Text = "Destination";
-            this.columnHeader_dst.Width = 200;
+            columnHeader_dst.Text = "Destination";
+            columnHeader_dst.Width = 200;
             // 
             // button_areaAdd
             // 
-            this.button_areaAdd.Enabled = false;
-            this.button_areaAdd.Location = new System.Drawing.Point(6, 189);
-            this.button_areaAdd.Name = "button_areaAdd";
-            this.button_areaAdd.Size = new System.Drawing.Size(75, 23);
-            this.button_areaAdd.TabIndex = 1;
-            this.button_areaAdd.Text = "Add";
-            this.button_areaAdd.UseVisualStyleBackColor = true;
-            this.button_areaAdd.Click += new System.EventHandler(this.button_areaAdd_Click);
+            button_areaAdd.Enabled = false;
+            button_areaAdd.Location = new System.Drawing.Point(7, 218);
+            button_areaAdd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_areaAdd.Name = "button_areaAdd";
+            button_areaAdd.Size = new System.Drawing.Size(88, 27);
+            button_areaAdd.TabIndex = 1;
+            button_areaAdd.Text = "Add";
+            button_areaAdd.UseVisualStyleBackColor = true;
+            button_areaAdd.Click += button_areaAdd_Click;
             // 
             // button_areaRemove
             // 
-            this.button_areaRemove.Enabled = false;
-            this.button_areaRemove.Location = new System.Drawing.Point(6, 218);
-            this.button_areaRemove.Name = "button_areaRemove";
-            this.button_areaRemove.Size = new System.Drawing.Size(75, 23);
-            this.button_areaRemove.TabIndex = 2;
-            this.button_areaRemove.Text = "Remove";
-            this.button_areaRemove.UseVisualStyleBackColor = true;
-            this.button_areaRemove.Click += new System.EventHandler(this.button_areaRemove_Click);
+            button_areaRemove.Enabled = false;
+            button_areaRemove.Location = new System.Drawing.Point(7, 252);
+            button_areaRemove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_areaRemove.Name = "button_areaRemove";
+            button_areaRemove.Size = new System.Drawing.Size(88, 27);
+            button_areaRemove.TabIndex = 2;
+            button_areaRemove.Text = "Remove";
+            button_areaRemove.UseVisualStyleBackColor = true;
+            button_areaRemove.Click += button_areaRemove_Click;
             // 
             // label_areaSource
             // 
-            this.label_areaSource.AutoSize = true;
-            this.label_areaSource.Location = new System.Drawing.Point(91, 194);
-            this.label_areaSource.Name = "label_areaSource";
-            this.label_areaSource.Size = new System.Drawing.Size(44, 13);
-            this.label_areaSource.TabIndex = 0;
-            this.label_areaSource.Text = "Source:";
+            label_areaSource.AutoSize = true;
+            label_areaSource.Location = new System.Drawing.Point(106, 224);
+            label_areaSource.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_areaSource.Name = "label_areaSource";
+            label_areaSource.Size = new System.Drawing.Size(46, 15);
+            label_areaSource.TabIndex = 0;
+            label_areaSource.Text = "Source:";
             // 
             // label_areaDestination
             // 
-            this.label_areaDestination.AutoSize = true;
-            this.label_areaDestination.Location = new System.Drawing.Point(91, 221);
-            this.label_areaDestination.Name = "label_areaDestination";
-            this.label_areaDestination.Size = new System.Drawing.Size(63, 13);
-            this.label_areaDestination.TabIndex = 0;
-            this.label_areaDestination.Text = "Destination:";
+            label_areaDestination.AutoSize = true;
+            label_areaDestination.Location = new System.Drawing.Point(106, 255);
+            label_areaDestination.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_areaDestination.Name = "label_areaDestination";
+            label_areaDestination.Size = new System.Drawing.Size(70, 15);
+            label_areaDestination.TabIndex = 0;
+            label_areaDestination.Text = "Destination:";
             // 
             // comboBox_areaDstArea
             // 
-            this.comboBox_areaDstArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_areaDstArea.FormattingEnabled = true;
-            this.comboBox_areaDstArea.Location = new System.Drawing.Point(160, 218);
-            this.comboBox_areaDstArea.Name = "comboBox_areaDstArea";
-            this.comboBox_areaDstArea.Size = new System.Drawing.Size(80, 21);
-            this.comboBox_areaDstArea.TabIndex = 5;
-            this.comboBox_areaDstArea.SelectedIndexChanged += new System.EventHandler(this.control_areaInfo_Changed);
+            comboBox_areaDstArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_areaDstArea.FormattingEnabled = true;
+            comboBox_areaDstArea.Location = new System.Drawing.Point(187, 252);
+            comboBox_areaDstArea.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_areaDstArea.Name = "comboBox_areaDstArea";
+            comboBox_areaDstArea.Size = new System.Drawing.Size(93, 23);
+            comboBox_areaDstArea.TabIndex = 5;
+            comboBox_areaDstArea.SelectedIndexChanged += control_areaInfo_Changed;
             // 
             // comboBox_areaSrcArea
             // 
-            this.comboBox_areaSrcArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_areaSrcArea.FormattingEnabled = true;
-            this.comboBox_areaSrcArea.Location = new System.Drawing.Point(160, 191);
-            this.comboBox_areaSrcArea.Name = "comboBox_areaSrcArea";
-            this.comboBox_areaSrcArea.Size = new System.Drawing.Size(80, 21);
-            this.comboBox_areaSrcArea.TabIndex = 3;
-            this.comboBox_areaSrcArea.SelectedIndexChanged += new System.EventHandler(this.control_areaInfo_Changed);
+            comboBox_areaSrcArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_areaSrcArea.FormattingEnabled = true;
+            comboBox_areaSrcArea.Location = new System.Drawing.Point(187, 220);
+            comboBox_areaSrcArea.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_areaSrcArea.Name = "comboBox_areaSrcArea";
+            comboBox_areaSrcArea.Size = new System.Drawing.Size(93, 23);
+            comboBox_areaSrcArea.TabIndex = 3;
+            comboBox_areaSrcArea.SelectedIndexChanged += control_areaInfo_Changed;
             // 
             // textBox_areaSrcDoor
             // 
-            this.textBox_areaSrcDoor.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
-            this.textBox_areaSrcDoor.Location = new System.Drawing.Point(293, 191);
-            this.textBox_areaSrcDoor.Name = "textBox_areaSrcDoor";
-            this.textBox_areaSrcDoor.Size = new System.Drawing.Size(30, 20);
-            this.textBox_areaSrcDoor.TabIndex = 4;
-            this.textBox_areaSrcDoor.TextChanged += new System.EventHandler(this.control_areaInfo_Changed);
+            textBox_areaSrcDoor.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            textBox_areaSrcDoor.DisplayBorder = true;
+            textBox_areaSrcDoor.HexSanitized = false;
+            textBox_areaSrcDoor.HexSanitizedMaxValue = -1;
+            textBox_areaSrcDoor.Location = new System.Drawing.Point(342, 220);
+            textBox_areaSrcDoor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_areaSrcDoor.MaxLength = 32767;
+            textBox_areaSrcDoor.Multiline = false;
+            textBox_areaSrcDoor.Name = "textBox_areaSrcDoor";
+            textBox_areaSrcDoor.OnTextChanged = null;
+            textBox_areaSrcDoor.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_areaSrcDoor.PlaceholderText = "";
+            textBox_areaSrcDoor.ReadOnly = false;
+            textBox_areaSrcDoor.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_areaSrcDoor.SelectionStart = 0;
+            textBox_areaSrcDoor.Size = new System.Drawing.Size(35, 23);
+            textBox_areaSrcDoor.TabIndex = 4;
+            textBox_areaSrcDoor.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_areaSrcDoor.ValueBox = false;
+            textBox_areaSrcDoor.WordWrap = true;
+            textBox_areaSrcDoor.TextChanged += control_areaInfo_Changed;
             // 
             // label_areaDstRoom
             // 
-            this.label_areaDstRoom.AutoSize = true;
-            this.label_areaDstRoom.Location = new System.Drawing.Point(252, 221);
-            this.label_areaDstRoom.Name = "label_areaDstRoom";
-            this.label_areaDstRoom.Size = new System.Drawing.Size(12, 13);
-            this.label_areaDstRoom.TabIndex = 0;
-            this.label_areaDstRoom.Text = "–";
+            label_areaDstRoom.AutoSize = true;
+            label_areaDstRoom.Location = new System.Drawing.Point(294, 255);
+            label_areaDstRoom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_areaDstRoom.Name = "label_areaDstRoom";
+            label_areaDstRoom.Size = new System.Drawing.Size(13, 15);
+            label_areaDstRoom.TabIndex = 0;
+            label_areaDstRoom.Text = "–";
             // 
             // label_areaSrcRoom
             // 
-            this.label_areaSrcRoom.AutoSize = true;
-            this.label_areaSrcRoom.Location = new System.Drawing.Point(252, 194);
-            this.label_areaSrcRoom.Name = "label_areaSrcRoom";
-            this.label_areaSrcRoom.Size = new System.Drawing.Size(12, 13);
-            this.label_areaSrcRoom.TabIndex = 0;
-            this.label_areaSrcRoom.Text = "–";
+            label_areaSrcRoom.AutoSize = true;
+            label_areaSrcRoom.Location = new System.Drawing.Point(294, 224);
+            label_areaSrcRoom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_areaSrcRoom.Name = "label_areaSrcRoom";
+            label_areaSrcRoom.Size = new System.Drawing.Size(13, 15);
+            label_areaSrcRoom.TabIndex = 0;
+            label_areaSrcRoom.Text = "–";
             // 
             // label_areaDstDoor
             // 
-            this.label_areaDstDoor.AutoSize = true;
-            this.label_areaDstDoor.Location = new System.Drawing.Point(293, 221);
-            this.label_areaDstDoor.Name = "label_areaDstDoor";
-            this.label_areaDstDoor.Size = new System.Drawing.Size(12, 13);
-            this.label_areaDstDoor.TabIndex = 0;
-            this.label_areaDstDoor.Text = "–";
+            label_areaDstDoor.AutoSize = true;
+            label_areaDstDoor.Location = new System.Drawing.Point(342, 255);
+            label_areaDstDoor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_areaDstDoor.Name = "label_areaDstDoor";
+            label_areaDstDoor.Size = new System.Drawing.Size(13, 15);
+            label_areaDstDoor.TabIndex = 0;
+            label_areaDstDoor.Text = "–";
             // 
             // button_areaClose
             // 
-            this.button_areaClose.Location = new System.Drawing.Point(352, 218);
-            this.button_areaClose.Name = "button_areaClose";
-            this.button_areaClose.Size = new System.Drawing.Size(75, 23);
-            this.button_areaClose.TabIndex = 7;
-            this.button_areaClose.Text = "Close";
-            this.button_areaClose.UseVisualStyleBackColor = true;
-            this.button_areaClose.Click += new System.EventHandler(this.button_close_Click);
+            button_areaClose.Location = new System.Drawing.Point(411, 252);
+            button_areaClose.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_areaClose.Name = "button_areaClose";
+            button_areaClose.Size = new System.Drawing.Size(88, 27);
+            button_areaClose.TabIndex = 7;
+            button_areaClose.Text = "Close";
+            button_areaClose.UseVisualStyleBackColor = true;
+            button_areaClose.Click += button_close_Click;
             // 
             // button_areaApply
             // 
-            this.button_areaApply.Enabled = false;
-            this.button_areaApply.Location = new System.Drawing.Point(352, 189);
-            this.button_areaApply.Name = "button_areaApply";
-            this.button_areaApply.Size = new System.Drawing.Size(75, 23);
-            this.button_areaApply.TabIndex = 6;
-            this.button_areaApply.Text = "Apply";
-            this.button_areaApply.UseVisualStyleBackColor = true;
-            this.button_areaApply.Click += new System.EventHandler(this.button_areaApply_Click);
+            button_areaApply.Enabled = false;
+            button_areaApply.Location = new System.Drawing.Point(411, 218);
+            button_areaApply.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_areaApply.Name = "button_areaApply";
+            button_areaApply.Size = new System.Drawing.Size(88, 27);
+            button_areaApply.TabIndex = 6;
+            button_areaApply.Text = "Apply";
+            button_areaApply.UseVisualStyleBackColor = true;
+            button_areaApply.Click += button_areaApply_Click;
             // 
             // label_areaArea
             // 
-            this.label_areaArea.AutoSize = true;
-            this.label_areaArea.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_areaArea.Location = new System.Drawing.Point(157, 175);
-            this.label_areaArea.Name = "label_areaArea";
-            this.label_areaArea.Size = new System.Drawing.Size(29, 13);
-            this.label_areaArea.TabIndex = 0;
-            this.label_areaArea.Text = "Area";
+            label_areaArea.AutoSize = true;
+            label_areaArea.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, 0);
+            label_areaArea.Location = new System.Drawing.Point(183, 202);
+            label_areaArea.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_areaArea.Name = "label_areaArea";
+            label_areaArea.Size = new System.Drawing.Size(29, 13);
+            label_areaArea.TabIndex = 0;
+            label_areaArea.Text = "Area";
             // 
             // label_areaRoom
             // 
-            this.label_areaRoom.AutoSize = true;
-            this.label_areaRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_areaRoom.Location = new System.Drawing.Point(252, 175);
-            this.label_areaRoom.Name = "label_areaRoom";
-            this.label_areaRoom.Size = new System.Drawing.Size(35, 13);
-            this.label_areaRoom.TabIndex = 0;
-            this.label_areaRoom.Text = "Room";
+            label_areaRoom.AutoSize = true;
+            label_areaRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, 0);
+            label_areaRoom.Location = new System.Drawing.Point(294, 202);
+            label_areaRoom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_areaRoom.Name = "label_areaRoom";
+            label_areaRoom.Size = new System.Drawing.Size(35, 13);
+            label_areaRoom.TabIndex = 0;
+            label_areaRoom.Text = "Room";
             // 
             // label_areaDoor
             // 
-            this.label_areaDoor.AutoSize = true;
-            this.label_areaDoor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_areaDoor.Location = new System.Drawing.Point(293, 175);
-            this.label_areaDoor.Name = "label_areaDoor";
-            this.label_areaDoor.Size = new System.Drawing.Size(30, 13);
-            this.label_areaDoor.TabIndex = 0;
-            this.label_areaDoor.Text = "Door";
+            label_areaDoor.AutoSize = true;
+            label_areaDoor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, 0);
+            label_areaDoor.Location = new System.Drawing.Point(342, 202);
+            label_areaDoor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_areaDoor.Name = "label_areaDoor";
+            label_areaDoor.Size = new System.Drawing.Size(30, 13);
+            label_areaDoor.TabIndex = 0;
+            label_areaDoor.Text = "Door";
             // 
             // tabControl
             // 
-            this.tabControl.BorderColor = System.Drawing.Color.Silver;
-            this.tabControl.Controls.Add(this.tabPage_area);
-            this.tabControl.Controls.Add(this.tabPage_event);
-            this.tabControl.Controls.Add(this.tabPage_locNames);
-            this.tabControl.Controls.Add(this.tabPage_hatchLock);
-            this.tabControl.Location = new System.Drawing.Point(12, 12);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(559, 297);
-            this.tabControl.TabIndex = 0;
-            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
+            tabControl.BorderColor = System.Drawing.Color.Silver;
+            tabControl.Controls.Add(tabPage_area);
+            tabControl.Controls.Add(tabPage_event);
+            tabControl.Controls.Add(tabPage_locNames);
+            tabControl.Controls.Add(tabPage_hatchLock);
+            tabControl.Location = new System.Drawing.Point(14, 14);
+            tabControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new System.Drawing.Size(652, 343);
+            tabControl.TabIndex = 0;
+            tabControl.SelectedIndexChanged += tabControl_SelectedIndexChanged;
             // 
             // tabPage_area
             // 
-            this.tabPage_area.Controls.Add(this.listView_areaConnections);
-            this.tabPage_area.Controls.Add(this.label_areaDoor);
-            this.tabPage_area.Controls.Add(this.button_areaAdd);
-            this.tabPage_area.Controls.Add(this.label_areaRoom);
-            this.tabPage_area.Controls.Add(this.button_areaRemove);
-            this.tabPage_area.Controls.Add(this.label_areaArea);
-            this.tabPage_area.Controls.Add(this.label_areaSource);
-            this.tabPage_area.Controls.Add(this.button_areaClose);
-            this.tabPage_area.Controls.Add(this.label_areaDestination);
-            this.tabPage_area.Controls.Add(this.button_areaApply);
-            this.tabPage_area.Controls.Add(this.comboBox_areaDstArea);
-            this.tabPage_area.Controls.Add(this.label_areaDstDoor);
-            this.tabPage_area.Controls.Add(this.comboBox_areaSrcArea);
-            this.tabPage_area.Controls.Add(this.label_areaSrcRoom);
-            this.tabPage_area.Controls.Add(this.textBox_areaSrcDoor);
-            this.tabPage_area.Controls.Add(this.label_areaDstRoom);
-            this.tabPage_area.Location = new System.Drawing.Point(4, 25);
-            this.tabPage_area.Name = "tabPage_area";
-            this.tabPage_area.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_area.Size = new System.Drawing.Size(551, 268);
-            this.tabPage_area.TabIndex = 0;
-            this.tabPage_area.Text = "Area Connections";
+            tabPage_area.Controls.Add(listView_areaConnections);
+            tabPage_area.Controls.Add(label_areaDoor);
+            tabPage_area.Controls.Add(button_areaAdd);
+            tabPage_area.Controls.Add(label_areaRoom);
+            tabPage_area.Controls.Add(button_areaRemove);
+            tabPage_area.Controls.Add(label_areaArea);
+            tabPage_area.Controls.Add(label_areaSource);
+            tabPage_area.Controls.Add(button_areaClose);
+            tabPage_area.Controls.Add(label_areaDestination);
+            tabPage_area.Controls.Add(button_areaApply);
+            tabPage_area.Controls.Add(comboBox_areaDstArea);
+            tabPage_area.Controls.Add(label_areaDstDoor);
+            tabPage_area.Controls.Add(comboBox_areaSrcArea);
+            tabPage_area.Controls.Add(label_areaSrcRoom);
+            tabPage_area.Controls.Add(textBox_areaSrcDoor);
+            tabPage_area.Controls.Add(label_areaDstRoom);
+            tabPage_area.Location = new System.Drawing.Point(4, 25);
+            tabPage_area.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabPage_area.Name = "tabPage_area";
+            tabPage_area.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabPage_area.Size = new System.Drawing.Size(644, 314);
+            tabPage_area.TabIndex = 0;
+            tabPage_area.Text = "Area Connections";
             // 
             // tabPage_event
             // 
-            this.tabPage_event.Controls.Add(this.textBox_event);
-            this.tabPage_event.Controls.Add(this.label_event);
-            this.tabPage_event.Controls.Add(this.textBox_eventDstDoor);
-            this.tabPage_event.Controls.Add(this.label_eventDstArea);
-            this.tabPage_event.Controls.Add(this.listView_doorEvents);
-            this.tabPage_event.Controls.Add(this.label_eventDoor);
-            this.tabPage_event.Controls.Add(this.button_eventAdd);
-            this.tabPage_event.Controls.Add(this.label_eventRoom);
-            this.tabPage_event.Controls.Add(this.button_eventRemove);
-            this.tabPage_event.Controls.Add(this.label_eventArea);
-            this.tabPage_event.Controls.Add(this.label_eventSource);
-            this.tabPage_event.Controls.Add(this.button_eventClose);
-            this.tabPage_event.Controls.Add(this.label_eventDestination);
-            this.tabPage_event.Controls.Add(this.button_eventApply);
-            this.tabPage_event.Controls.Add(this.comboBox_eventSrcArea);
-            this.tabPage_event.Controls.Add(this.label_eventSrcRoom);
-            this.tabPage_event.Controls.Add(this.textBox_eventSrcDoor);
-            this.tabPage_event.Controls.Add(this.label_eventDstRoom);
-            this.tabPage_event.Location = new System.Drawing.Point(4, 25);
-            this.tabPage_event.Name = "tabPage_event";
-            this.tabPage_event.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_event.Size = new System.Drawing.Size(551, 268);
-            this.tabPage_event.TabIndex = 1;
-            this.tabPage_event.Text = "Event Based Connections";
+            tabPage_event.Controls.Add(textBox_event);
+            tabPage_event.Controls.Add(label_event);
+            tabPage_event.Controls.Add(textBox_eventDstDoor);
+            tabPage_event.Controls.Add(label_eventDstArea);
+            tabPage_event.Controls.Add(listView_doorEvents);
+            tabPage_event.Controls.Add(label_eventDoor);
+            tabPage_event.Controls.Add(button_eventAdd);
+            tabPage_event.Controls.Add(label_eventRoom);
+            tabPage_event.Controls.Add(button_eventRemove);
+            tabPage_event.Controls.Add(label_eventArea);
+            tabPage_event.Controls.Add(label_eventSource);
+            tabPage_event.Controls.Add(button_eventClose);
+            tabPage_event.Controls.Add(label_eventDestination);
+            tabPage_event.Controls.Add(button_eventApply);
+            tabPage_event.Controls.Add(comboBox_eventSrcArea);
+            tabPage_event.Controls.Add(label_eventSrcRoom);
+            tabPage_event.Controls.Add(textBox_eventSrcDoor);
+            tabPage_event.Controls.Add(label_eventDstRoom);
+            tabPage_event.Location = new System.Drawing.Point(4, 25);
+            tabPage_event.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabPage_event.Name = "tabPage_event";
+            tabPage_event.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabPage_event.Size = new System.Drawing.Size(644, 314);
+            tabPage_event.TabIndex = 1;
+            tabPage_event.Text = "Event Based Connections";
             // 
             // textBox_event
             // 
-            this.textBox_event.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
-            this.textBox_event.Location = new System.Drawing.Point(160, 245);
-            this.textBox_event.Name = "textBox_event";
-            this.textBox_event.Size = new System.Drawing.Size(30, 20);
-            this.textBox_event.TabIndex = 6;
-            this.textBox_event.TextChanged += new System.EventHandler(this.control_eventInfo_Changed);
+            textBox_event.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            textBox_event.DisplayBorder = true;
+            textBox_event.HexSanitized = false;
+            textBox_event.HexSanitizedMaxValue = -1;
+            textBox_event.Location = new System.Drawing.Point(187, 283);
+            textBox_event.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_event.MaxLength = 32767;
+            textBox_event.Multiline = false;
+            textBox_event.Name = "textBox_event";
+            textBox_event.OnTextChanged = null;
+            textBox_event.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_event.PlaceholderText = "";
+            textBox_event.ReadOnly = false;
+            textBox_event.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_event.SelectionStart = 0;
+            textBox_event.Size = new System.Drawing.Size(35, 23);
+            textBox_event.TabIndex = 6;
+            textBox_event.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_event.ValueBox = false;
+            textBox_event.WordWrap = true;
+            textBox_event.TextChanged += control_eventInfo_Changed;
             // 
             // label_event
             // 
-            this.label_event.AutoSize = true;
-            this.label_event.Location = new System.Drawing.Point(91, 248);
-            this.label_event.Name = "label_event";
-            this.label_event.Size = new System.Drawing.Size(38, 13);
-            this.label_event.TabIndex = 0;
-            this.label_event.Text = "Event:";
+            label_event.AutoSize = true;
+            label_event.Location = new System.Drawing.Point(106, 286);
+            label_event.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_event.Name = "label_event";
+            label_event.Size = new System.Drawing.Size(39, 15);
+            label_event.TabIndex = 0;
+            label_event.Text = "Event:";
             // 
             // textBox_eventDstDoor
             // 
-            this.textBox_eventDstDoor.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
-            this.textBox_eventDstDoor.Location = new System.Drawing.Point(293, 218);
-            this.textBox_eventDstDoor.Name = "textBox_eventDstDoor";
-            this.textBox_eventDstDoor.Size = new System.Drawing.Size(30, 20);
-            this.textBox_eventDstDoor.TabIndex = 5;
-            this.textBox_eventDstDoor.TextChanged += new System.EventHandler(this.control_eventInfo_Changed);
+            textBox_eventDstDoor.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            textBox_eventDstDoor.DisplayBorder = true;
+            textBox_eventDstDoor.HexSanitized = false;
+            textBox_eventDstDoor.HexSanitizedMaxValue = -1;
+            textBox_eventDstDoor.Location = new System.Drawing.Point(342, 252);
+            textBox_eventDstDoor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_eventDstDoor.MaxLength = 32767;
+            textBox_eventDstDoor.Multiline = false;
+            textBox_eventDstDoor.Name = "textBox_eventDstDoor";
+            textBox_eventDstDoor.OnTextChanged = null;
+            textBox_eventDstDoor.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_eventDstDoor.PlaceholderText = "";
+            textBox_eventDstDoor.ReadOnly = false;
+            textBox_eventDstDoor.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_eventDstDoor.SelectionStart = 0;
+            textBox_eventDstDoor.Size = new System.Drawing.Size(35, 23);
+            textBox_eventDstDoor.TabIndex = 5;
+            textBox_eventDstDoor.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_eventDstDoor.ValueBox = false;
+            textBox_eventDstDoor.WordWrap = true;
+            textBox_eventDstDoor.TextChanged += control_eventInfo_Changed;
             // 
             // label_eventDstArea
             // 
-            this.label_eventDstArea.AutoSize = true;
-            this.label_eventDstArea.Location = new System.Drawing.Point(160, 221);
-            this.label_eventDstArea.Name = "label_eventDstArea";
-            this.label_eventDstArea.Size = new System.Drawing.Size(12, 13);
-            this.label_eventDstArea.TabIndex = 0;
-            this.label_eventDstArea.Text = "–";
+            label_eventDstArea.AutoSize = true;
+            label_eventDstArea.Location = new System.Drawing.Point(187, 255);
+            label_eventDstArea.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_eventDstArea.Name = "label_eventDstArea";
+            label_eventDstArea.Size = new System.Drawing.Size(13, 15);
+            label_eventDstArea.TabIndex = 0;
+            label_eventDstArea.Text = "–";
             // 
             // listView_doorEvents
             // 
-            this.listView_doorEvents.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3});
-            this.listView_doorEvents.FullRowSelect = true;
-            this.listView_doorEvents.GridLines = true;
-            this.listView_doorEvents.HideSelection = false;
-            this.listView_doorEvents.Location = new System.Drawing.Point(6, 6);
-            this.listView_doorEvents.MultiSelect = false;
-            this.listView_doorEvents.Name = "listView_doorEvents";
-            this.listView_doorEvents.Size = new System.Drawing.Size(539, 163);
-            this.listView_doorEvents.TabIndex = 0;
-            this.listView_doorEvents.UseCompatibleStateImageBehavior = false;
-            this.listView_doorEvents.View = System.Windows.Forms.View.Details;
-            this.listView_doorEvents.SelectedIndexChanged += new System.EventHandler(this.listView_doorEvents_SelectedIndexChanged);
+            listView_doorEvents.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
+            listView_doorEvents.FullRowSelect = true;
+            listView_doorEvents.GridLines = true;
+            listView_doorEvents.Location = new System.Drawing.Point(7, 7);
+            listView_doorEvents.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            listView_doorEvents.MultiSelect = false;
+            listView_doorEvents.Name = "listView_doorEvents";
+            listView_doorEvents.Size = new System.Drawing.Size(628, 187);
+            listView_doorEvents.TabIndex = 0;
+            listView_doorEvents.UseCompatibleStateImageBehavior = false;
+            listView_doorEvents.View = System.Windows.Forms.View.Details;
+            listView_doorEvents.SelectedIndexChanged += listView_doorEvents_SelectedIndexChanged;
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Source";
-            this.columnHeader1.Width = 180;
+            columnHeader1.Text = "Source";
+            columnHeader1.Width = 225;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "Event";
-            this.columnHeader2.Width = 40;
+            columnHeader2.Text = "Event";
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "Destination";
-            this.columnHeader3.Width = 180;
+            columnHeader3.Text = "Destination";
+            columnHeader3.Width = 225;
             // 
             // label_eventDoor
             // 
-            this.label_eventDoor.AutoSize = true;
-            this.label_eventDoor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_eventDoor.Location = new System.Drawing.Point(293, 175);
-            this.label_eventDoor.Name = "label_eventDoor";
-            this.label_eventDoor.Size = new System.Drawing.Size(30, 13);
-            this.label_eventDoor.TabIndex = 0;
-            this.label_eventDoor.Text = "Door";
+            label_eventDoor.AutoSize = true;
+            label_eventDoor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, 0);
+            label_eventDoor.Location = new System.Drawing.Point(342, 202);
+            label_eventDoor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_eventDoor.Name = "label_eventDoor";
+            label_eventDoor.Size = new System.Drawing.Size(30, 13);
+            label_eventDoor.TabIndex = 0;
+            label_eventDoor.Text = "Door";
             // 
             // button_eventAdd
             // 
-            this.button_eventAdd.Enabled = false;
-            this.button_eventAdd.Location = new System.Drawing.Point(6, 189);
-            this.button_eventAdd.Name = "button_eventAdd";
-            this.button_eventAdd.Size = new System.Drawing.Size(75, 23);
-            this.button_eventAdd.TabIndex = 1;
-            this.button_eventAdd.Text = "Add";
-            this.button_eventAdd.Click += new System.EventHandler(this.button_eventAdd_Click);
+            button_eventAdd.Enabled = false;
+            button_eventAdd.Location = new System.Drawing.Point(7, 218);
+            button_eventAdd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_eventAdd.Name = "button_eventAdd";
+            button_eventAdd.Size = new System.Drawing.Size(88, 27);
+            button_eventAdd.TabIndex = 1;
+            button_eventAdd.Text = "Add";
+            button_eventAdd.Click += button_eventAdd_Click;
             // 
             // label_eventRoom
             // 
-            this.label_eventRoom.AutoSize = true;
-            this.label_eventRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_eventRoom.Location = new System.Drawing.Point(252, 175);
-            this.label_eventRoom.Name = "label_eventRoom";
-            this.label_eventRoom.Size = new System.Drawing.Size(35, 13);
-            this.label_eventRoom.TabIndex = 0;
-            this.label_eventRoom.Text = "Room";
+            label_eventRoom.AutoSize = true;
+            label_eventRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, 0);
+            label_eventRoom.Location = new System.Drawing.Point(294, 202);
+            label_eventRoom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_eventRoom.Name = "label_eventRoom";
+            label_eventRoom.Size = new System.Drawing.Size(35, 13);
+            label_eventRoom.TabIndex = 0;
+            label_eventRoom.Text = "Room";
             // 
             // button_eventRemove
             // 
-            this.button_eventRemove.Enabled = false;
-            this.button_eventRemove.Location = new System.Drawing.Point(6, 218);
-            this.button_eventRemove.Name = "button_eventRemove";
-            this.button_eventRemove.Size = new System.Drawing.Size(75, 23);
-            this.button_eventRemove.TabIndex = 2;
-            this.button_eventRemove.Text = "Remove";
-            this.button_eventRemove.Click += new System.EventHandler(this.button_eventRemove_Click);
+            button_eventRemove.Enabled = false;
+            button_eventRemove.Location = new System.Drawing.Point(7, 252);
+            button_eventRemove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_eventRemove.Name = "button_eventRemove";
+            button_eventRemove.Size = new System.Drawing.Size(88, 27);
+            button_eventRemove.TabIndex = 2;
+            button_eventRemove.Text = "Remove";
+            button_eventRemove.Click += button_eventRemove_Click;
             // 
             // label_eventArea
             // 
-            this.label_eventArea.AutoSize = true;
-            this.label_eventArea.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_eventArea.Location = new System.Drawing.Point(157, 175);
-            this.label_eventArea.Name = "label_eventArea";
-            this.label_eventArea.Size = new System.Drawing.Size(29, 13);
-            this.label_eventArea.TabIndex = 0;
-            this.label_eventArea.Text = "Area";
+            label_eventArea.AutoSize = true;
+            label_eventArea.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, 0);
+            label_eventArea.Location = new System.Drawing.Point(183, 202);
+            label_eventArea.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_eventArea.Name = "label_eventArea";
+            label_eventArea.Size = new System.Drawing.Size(29, 13);
+            label_eventArea.TabIndex = 0;
+            label_eventArea.Text = "Area";
             // 
             // label_eventSource
             // 
-            this.label_eventSource.AutoSize = true;
-            this.label_eventSource.Location = new System.Drawing.Point(91, 194);
-            this.label_eventSource.Name = "label_eventSource";
-            this.label_eventSource.Size = new System.Drawing.Size(44, 13);
-            this.label_eventSource.TabIndex = 0;
-            this.label_eventSource.Text = "Source:";
+            label_eventSource.AutoSize = true;
+            label_eventSource.Location = new System.Drawing.Point(106, 224);
+            label_eventSource.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_eventSource.Name = "label_eventSource";
+            label_eventSource.Size = new System.Drawing.Size(46, 15);
+            label_eventSource.TabIndex = 0;
+            label_eventSource.Text = "Source:";
             // 
             // button_eventClose
             // 
-            this.button_eventClose.Location = new System.Drawing.Point(352, 218);
-            this.button_eventClose.Name = "button_eventClose";
-            this.button_eventClose.Size = new System.Drawing.Size(75, 23);
-            this.button_eventClose.TabIndex = 8;
-            this.button_eventClose.Text = "Close";
-            this.button_eventClose.UseVisualStyleBackColor = true;
-            this.button_eventClose.Click += new System.EventHandler(this.button_close_Click);
+            button_eventClose.Location = new System.Drawing.Point(411, 252);
+            button_eventClose.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_eventClose.Name = "button_eventClose";
+            button_eventClose.Size = new System.Drawing.Size(88, 27);
+            button_eventClose.TabIndex = 8;
+            button_eventClose.Text = "Close";
+            button_eventClose.UseVisualStyleBackColor = true;
+            button_eventClose.Click += button_close_Click;
             // 
             // label_eventDestination
             // 
-            this.label_eventDestination.AutoSize = true;
-            this.label_eventDestination.Location = new System.Drawing.Point(91, 221);
-            this.label_eventDestination.Name = "label_eventDestination";
-            this.label_eventDestination.Size = new System.Drawing.Size(63, 13);
-            this.label_eventDestination.TabIndex = 0;
-            this.label_eventDestination.Text = "Destination:";
+            label_eventDestination.AutoSize = true;
+            label_eventDestination.Location = new System.Drawing.Point(106, 255);
+            label_eventDestination.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_eventDestination.Name = "label_eventDestination";
+            label_eventDestination.Size = new System.Drawing.Size(70, 15);
+            label_eventDestination.TabIndex = 0;
+            label_eventDestination.Text = "Destination:";
             // 
             // button_eventApply
             // 
-            this.button_eventApply.Enabled = false;
-            this.button_eventApply.Location = new System.Drawing.Point(352, 189);
-            this.button_eventApply.Name = "button_eventApply";
-            this.button_eventApply.Size = new System.Drawing.Size(75, 23);
-            this.button_eventApply.TabIndex = 7;
-            this.button_eventApply.Text = "Apply";
-            this.button_eventApply.UseVisualStyleBackColor = true;
-            this.button_eventApply.Click += new System.EventHandler(this.button_eventApply_Click);
+            button_eventApply.Enabled = false;
+            button_eventApply.Location = new System.Drawing.Point(411, 218);
+            button_eventApply.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_eventApply.Name = "button_eventApply";
+            button_eventApply.Size = new System.Drawing.Size(88, 27);
+            button_eventApply.TabIndex = 7;
+            button_eventApply.Text = "Apply";
+            button_eventApply.UseVisualStyleBackColor = true;
+            button_eventApply.Click += button_eventApply_Click;
             // 
             // comboBox_eventSrcArea
             // 
-            this.comboBox_eventSrcArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_eventSrcArea.FormattingEnabled = true;
-            this.comboBox_eventSrcArea.Location = new System.Drawing.Point(160, 191);
-            this.comboBox_eventSrcArea.Name = "comboBox_eventSrcArea";
-            this.comboBox_eventSrcArea.Size = new System.Drawing.Size(80, 21);
-            this.comboBox_eventSrcArea.TabIndex = 3;
-            this.comboBox_eventSrcArea.SelectedIndexChanged += new System.EventHandler(this.control_eventInfo_Changed);
+            comboBox_eventSrcArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_eventSrcArea.FormattingEnabled = true;
+            comboBox_eventSrcArea.Location = new System.Drawing.Point(187, 220);
+            comboBox_eventSrcArea.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_eventSrcArea.Name = "comboBox_eventSrcArea";
+            comboBox_eventSrcArea.Size = new System.Drawing.Size(93, 23);
+            comboBox_eventSrcArea.TabIndex = 3;
+            comboBox_eventSrcArea.SelectedIndexChanged += control_eventInfo_Changed;
             // 
             // label_eventSrcRoom
             // 
-            this.label_eventSrcRoom.AutoSize = true;
-            this.label_eventSrcRoom.Location = new System.Drawing.Point(252, 194);
-            this.label_eventSrcRoom.Name = "label_eventSrcRoom";
-            this.label_eventSrcRoom.Size = new System.Drawing.Size(12, 13);
-            this.label_eventSrcRoom.TabIndex = 0;
-            this.label_eventSrcRoom.Text = "–";
+            label_eventSrcRoom.AutoSize = true;
+            label_eventSrcRoom.Location = new System.Drawing.Point(294, 224);
+            label_eventSrcRoom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_eventSrcRoom.Name = "label_eventSrcRoom";
+            label_eventSrcRoom.Size = new System.Drawing.Size(13, 15);
+            label_eventSrcRoom.TabIndex = 0;
+            label_eventSrcRoom.Text = "–";
             // 
             // textBox_eventSrcDoor
             // 
-            this.textBox_eventSrcDoor.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
-            this.textBox_eventSrcDoor.Location = new System.Drawing.Point(293, 191);
-            this.textBox_eventSrcDoor.Name = "textBox_eventSrcDoor";
-            this.textBox_eventSrcDoor.Size = new System.Drawing.Size(30, 20);
-            this.textBox_eventSrcDoor.TabIndex = 4;
-            this.textBox_eventSrcDoor.TextChanged += new System.EventHandler(this.control_eventInfo_Changed);
+            textBox_eventSrcDoor.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            textBox_eventSrcDoor.DisplayBorder = true;
+            textBox_eventSrcDoor.HexSanitized = false;
+            textBox_eventSrcDoor.HexSanitizedMaxValue = -1;
+            textBox_eventSrcDoor.Location = new System.Drawing.Point(342, 220);
+            textBox_eventSrcDoor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_eventSrcDoor.MaxLength = 32767;
+            textBox_eventSrcDoor.Multiline = false;
+            textBox_eventSrcDoor.Name = "textBox_eventSrcDoor";
+            textBox_eventSrcDoor.OnTextChanged = null;
+            textBox_eventSrcDoor.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_eventSrcDoor.PlaceholderText = "";
+            textBox_eventSrcDoor.ReadOnly = false;
+            textBox_eventSrcDoor.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_eventSrcDoor.SelectionStart = 0;
+            textBox_eventSrcDoor.Size = new System.Drawing.Size(35, 23);
+            textBox_eventSrcDoor.TabIndex = 4;
+            textBox_eventSrcDoor.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_eventSrcDoor.ValueBox = false;
+            textBox_eventSrcDoor.WordWrap = true;
+            textBox_eventSrcDoor.TextChanged += control_eventInfo_Changed;
             // 
             // label_eventDstRoom
             // 
-            this.label_eventDstRoom.AutoSize = true;
-            this.label_eventDstRoom.Location = new System.Drawing.Point(252, 221);
-            this.label_eventDstRoom.Name = "label_eventDstRoom";
-            this.label_eventDstRoom.Size = new System.Drawing.Size(12, 13);
-            this.label_eventDstRoom.TabIndex = 0;
-            this.label_eventDstRoom.Text = "–";
+            label_eventDstRoom.AutoSize = true;
+            label_eventDstRoom.Location = new System.Drawing.Point(294, 255);
+            label_eventDstRoom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_eventDstRoom.Name = "label_eventDstRoom";
+            label_eventDstRoom.Size = new System.Drawing.Size(13, 15);
+            label_eventDstRoom.TabIndex = 0;
+            label_eventDstRoom.Text = "–";
             // 
             // tabPage_locNames
             // 
-            this.tabPage_locNames.Controls.Add(this.comboBox_locLanguage);
-            this.tabPage_locNames.Controls.Add(this.label1);
-            this.tabPage_locNames.Controls.Add(this.textBox_locDstRoom);
-            this.tabPage_locNames.Controls.Add(this.listView_locNames);
-            this.tabPage_locNames.Controls.Add(this.button_locAdd);
-            this.tabPage_locNames.Controls.Add(this.label_locRoom);
-            this.tabPage_locNames.Controls.Add(this.button_locRemove);
-            this.tabPage_locNames.Controls.Add(this.label_locArea);
-            this.tabPage_locNames.Controls.Add(this.label_locDestination);
-            this.tabPage_locNames.Controls.Add(this.button_locClose);
-            this.tabPage_locNames.Controls.Add(this.label_locText);
-            this.tabPage_locNames.Controls.Add(this.button_locApply);
-            this.tabPage_locNames.Controls.Add(this.comboBox_locDstArea);
-            this.tabPage_locNames.Controls.Add(this.textBox_locText);
-            this.tabPage_locNames.Controls.Add(this.label_locName);
-            this.tabPage_locNames.Location = new System.Drawing.Point(4, 25);
-            this.tabPage_locNames.Name = "tabPage_locNames";
-            this.tabPage_locNames.Size = new System.Drawing.Size(551, 268);
-            this.tabPage_locNames.TabIndex = 2;
-            this.tabPage_locNames.Text = "Location Names";
+            tabPage_locNames.Controls.Add(comboBox_locLanguage);
+            tabPage_locNames.Controls.Add(label1);
+            tabPage_locNames.Controls.Add(textBox_locDstRoom);
+            tabPage_locNames.Controls.Add(listView_locNames);
+            tabPage_locNames.Controls.Add(button_locAdd);
+            tabPage_locNames.Controls.Add(label_locRoom);
+            tabPage_locNames.Controls.Add(button_locRemove);
+            tabPage_locNames.Controls.Add(label_locArea);
+            tabPage_locNames.Controls.Add(label_locDestination);
+            tabPage_locNames.Controls.Add(button_locClose);
+            tabPage_locNames.Controls.Add(label_locText);
+            tabPage_locNames.Controls.Add(button_locApply);
+            tabPage_locNames.Controls.Add(comboBox_locDstArea);
+            tabPage_locNames.Controls.Add(textBox_locText);
+            tabPage_locNames.Controls.Add(label_locName);
+            tabPage_locNames.Location = new System.Drawing.Point(4, 25);
+            tabPage_locNames.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabPage_locNames.Name = "tabPage_locNames";
+            tabPage_locNames.Size = new System.Drawing.Size(644, 314);
+            tabPage_locNames.TabIndex = 2;
+            tabPage_locNames.Text = "Location Names";
             // 
             // comboBox_locLanguage
             // 
-            this.comboBox_locLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_locLanguage.FormattingEnabled = true;
-            this.comboBox_locLanguage.Location = new System.Drawing.Point(160, 245);
-            this.comboBox_locLanguage.Name = "comboBox_locLanguage";
-            this.comboBox_locLanguage.Size = new System.Drawing.Size(80, 21);
-            this.comboBox_locLanguage.TabIndex = 26;
-            this.comboBox_locLanguage.SelectedIndexChanged += new System.EventHandler(this.comboBox_locLanguage_SelectedIndexChanged);
+            comboBox_locLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_locLanguage.FormattingEnabled = true;
+            comboBox_locLanguage.Location = new System.Drawing.Point(187, 283);
+            comboBox_locLanguage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_locLanguage.Name = "comboBox_locLanguage";
+            comboBox_locLanguage.Size = new System.Drawing.Size(93, 23);
+            comboBox_locLanguage.TabIndex = 26;
+            comboBox_locLanguage.SelectedIndexChanged += comboBox_locLanguage_SelectedIndexChanged;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(91, 248);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 13);
-            this.label1.TabIndex = 25;
-            this.label1.Text = "Language:";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(106, 286);
+            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(62, 15);
+            label1.TabIndex = 25;
+            label1.Text = "Language:";
             // 
             // textBox_locDstRoom
             // 
-            this.textBox_locDstRoom.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
-            this.textBox_locDstRoom.Location = new System.Drawing.Point(252, 191);
-            this.textBox_locDstRoom.Name = "textBox_locDstRoom";
-            this.textBox_locDstRoom.Size = new System.Drawing.Size(30, 20);
-            this.textBox_locDstRoom.TabIndex = 24;
-            this.textBox_locDstRoom.TextChanged += new System.EventHandler(this.control_locInfo_Changed);
+            textBox_locDstRoom.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            textBox_locDstRoom.DisplayBorder = true;
+            textBox_locDstRoom.HexSanitized = false;
+            textBox_locDstRoom.HexSanitizedMaxValue = -1;
+            textBox_locDstRoom.Location = new System.Drawing.Point(294, 220);
+            textBox_locDstRoom.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_locDstRoom.MaxLength = 32767;
+            textBox_locDstRoom.Multiline = false;
+            textBox_locDstRoom.Name = "textBox_locDstRoom";
+            textBox_locDstRoom.OnTextChanged = null;
+            textBox_locDstRoom.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_locDstRoom.PlaceholderText = "";
+            textBox_locDstRoom.ReadOnly = false;
+            textBox_locDstRoom.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_locDstRoom.SelectionStart = 0;
+            textBox_locDstRoom.Size = new System.Drawing.Size(35, 23);
+            textBox_locDstRoom.TabIndex = 24;
+            textBox_locDstRoom.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_locDstRoom.ValueBox = false;
+            textBox_locDstRoom.WordWrap = true;
+            textBox_locDstRoom.TextChanged += control_locInfo_Changed;
             // 
             // listView_locNames
             // 
-            this.listView_locNames.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader6});
-            this.listView_locNames.FullRowSelect = true;
-            this.listView_locNames.GridLines = true;
-            this.listView_locNames.HideSelection = false;
-            this.listView_locNames.Location = new System.Drawing.Point(6, 6);
-            this.listView_locNames.MultiSelect = false;
-            this.listView_locNames.Name = "listView_locNames";
-            this.listView_locNames.Size = new System.Drawing.Size(539, 163);
-            this.listView_locNames.TabIndex = 8;
-            this.listView_locNames.UseCompatibleStateImageBehavior = false;
-            this.listView_locNames.View = System.Windows.Forms.View.Details;
-            this.listView_locNames.SelectedIndexChanged += new System.EventHandler(this.listView_locNames_SelectedIndexChanged);
+            listView_locNames.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader4, columnHeader5, columnHeader6 });
+            listView_locNames.FullRowSelect = true;
+            listView_locNames.GridLines = true;
+            listView_locNames.Location = new System.Drawing.Point(7, 7);
+            listView_locNames.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            listView_locNames.MultiSelect = false;
+            listView_locNames.Name = "listView_locNames";
+            listView_locNames.Size = new System.Drawing.Size(628, 187);
+            listView_locNames.TabIndex = 8;
+            listView_locNames.UseCompatibleStateImageBehavior = false;
+            listView_locNames.View = System.Windows.Forms.View.Details;
+            listView_locNames.SelectedIndexChanged += listView_locNames_SelectedIndexChanged;
             // 
             // columnHeader4
             // 
-            this.columnHeader4.Text = "Destination";
-            this.columnHeader4.Width = 160;
+            columnHeader4.Text = "Destination";
+            columnHeader4.Width = 160;
             // 
             // columnHeader5
             // 
-            this.columnHeader5.Text = "Text #";
-            this.columnHeader5.Width = 50;
+            columnHeader5.Text = "Text #";
             // 
             // columnHeader6
             // 
-            this.columnHeader6.Text = "Name";
-            this.columnHeader6.Width = 190;
+            columnHeader6.Text = "Name";
+            columnHeader6.Width = 190;
             // 
             // button_locAdd
             // 
-            this.button_locAdd.Enabled = false;
-            this.button_locAdd.Location = new System.Drawing.Point(6, 189);
-            this.button_locAdd.Name = "button_locAdd";
-            this.button_locAdd.Size = new System.Drawing.Size(75, 23);
-            this.button_locAdd.TabIndex = 17;
-            this.button_locAdd.Text = "Add";
-            this.button_locAdd.UseVisualStyleBackColor = true;
-            this.button_locAdd.Click += new System.EventHandler(this.button_locAdd_Click);
+            button_locAdd.Enabled = false;
+            button_locAdd.Location = new System.Drawing.Point(7, 218);
+            button_locAdd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_locAdd.Name = "button_locAdd";
+            button_locAdd.Size = new System.Drawing.Size(88, 27);
+            button_locAdd.TabIndex = 17;
+            button_locAdd.Text = "Add";
+            button_locAdd.UseVisualStyleBackColor = true;
+            button_locAdd.Click += button_locAdd_Click;
             // 
             // label_locRoom
             // 
-            this.label_locRoom.AutoSize = true;
-            this.label_locRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_locRoom.Location = new System.Drawing.Point(252, 175);
-            this.label_locRoom.Name = "label_locRoom";
-            this.label_locRoom.Size = new System.Drawing.Size(35, 13);
-            this.label_locRoom.TabIndex = 10;
-            this.label_locRoom.Text = "Room";
+            label_locRoom.AutoSize = true;
+            label_locRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, 0);
+            label_locRoom.Location = new System.Drawing.Point(294, 202);
+            label_locRoom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_locRoom.Name = "label_locRoom";
+            label_locRoom.Size = new System.Drawing.Size(35, 13);
+            label_locRoom.TabIndex = 10;
+            label_locRoom.Text = "Room";
             // 
             // button_locRemove
             // 
-            this.button_locRemove.Enabled = false;
-            this.button_locRemove.Location = new System.Drawing.Point(6, 218);
-            this.button_locRemove.Name = "button_locRemove";
-            this.button_locRemove.Size = new System.Drawing.Size(75, 23);
-            this.button_locRemove.TabIndex = 18;
-            this.button_locRemove.Text = "Remove";
-            this.button_locRemove.UseVisualStyleBackColor = true;
-            this.button_locRemove.Click += new System.EventHandler(this.button_locRemove_Click);
+            button_locRemove.Enabled = false;
+            button_locRemove.Location = new System.Drawing.Point(7, 252);
+            button_locRemove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_locRemove.Name = "button_locRemove";
+            button_locRemove.Size = new System.Drawing.Size(88, 27);
+            button_locRemove.TabIndex = 18;
+            button_locRemove.Text = "Remove";
+            button_locRemove.UseVisualStyleBackColor = true;
+            button_locRemove.Click += button_locRemove_Click;
             // 
             // label_locArea
             // 
-            this.label_locArea.AutoSize = true;
-            this.label_locArea.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_locArea.Location = new System.Drawing.Point(157, 175);
-            this.label_locArea.Name = "label_locArea";
-            this.label_locArea.Size = new System.Drawing.Size(29, 13);
-            this.label_locArea.TabIndex = 11;
-            this.label_locArea.Text = "Area";
+            label_locArea.AutoSize = true;
+            label_locArea.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, 0);
+            label_locArea.Location = new System.Drawing.Point(183, 202);
+            label_locArea.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_locArea.Name = "label_locArea";
+            label_locArea.Size = new System.Drawing.Size(29, 13);
+            label_locArea.TabIndex = 11;
+            label_locArea.Text = "Area";
             // 
             // label_locDestination
             // 
-            this.label_locDestination.AutoSize = true;
-            this.label_locDestination.Location = new System.Drawing.Point(91, 194);
-            this.label_locDestination.Name = "label_locDestination";
-            this.label_locDestination.Size = new System.Drawing.Size(63, 13);
-            this.label_locDestination.TabIndex = 12;
-            this.label_locDestination.Text = "Destination:";
+            label_locDestination.AutoSize = true;
+            label_locDestination.Location = new System.Drawing.Point(106, 224);
+            label_locDestination.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_locDestination.Name = "label_locDestination";
+            label_locDestination.Size = new System.Drawing.Size(70, 15);
+            label_locDestination.TabIndex = 12;
+            label_locDestination.Text = "Destination:";
             // 
             // button_locClose
             // 
-            this.button_locClose.Location = new System.Drawing.Point(352, 218);
-            this.button_locClose.Name = "button_locClose";
-            this.button_locClose.Size = new System.Drawing.Size(75, 23);
-            this.button_locClose.TabIndex = 23;
-            this.button_locClose.Text = "Close";
-            this.button_locClose.UseVisualStyleBackColor = true;
-            this.button_locClose.Click += new System.EventHandler(this.button_close_Click);
+            button_locClose.Location = new System.Drawing.Point(411, 252);
+            button_locClose.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_locClose.Name = "button_locClose";
+            button_locClose.Size = new System.Drawing.Size(88, 27);
+            button_locClose.TabIndex = 23;
+            button_locClose.Text = "Close";
+            button_locClose.UseVisualStyleBackColor = true;
+            button_locClose.Click += button_close_Click;
             // 
             // label_locText
             // 
-            this.label_locText.AutoSize = true;
-            this.label_locText.Location = new System.Drawing.Point(91, 221);
-            this.label_locText.Name = "label_locText";
-            this.label_locText.Size = new System.Drawing.Size(31, 13);
-            this.label_locText.TabIndex = 13;
-            this.label_locText.Text = "Text:";
+            label_locText.AutoSize = true;
+            label_locText.Location = new System.Drawing.Point(106, 255);
+            label_locText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_locText.Name = "label_locText";
+            label_locText.Size = new System.Drawing.Size(31, 15);
+            label_locText.TabIndex = 13;
+            label_locText.Text = "Text:";
             // 
             // button_locApply
             // 
-            this.button_locApply.Enabled = false;
-            this.button_locApply.Location = new System.Drawing.Point(352, 189);
-            this.button_locApply.Name = "button_locApply";
-            this.button_locApply.Size = new System.Drawing.Size(75, 23);
-            this.button_locApply.TabIndex = 22;
-            this.button_locApply.Text = "Apply";
-            this.button_locApply.UseVisualStyleBackColor = true;
-            this.button_locApply.Click += new System.EventHandler(this.button_locApply_Click);
+            button_locApply.Enabled = false;
+            button_locApply.Location = new System.Drawing.Point(411, 218);
+            button_locApply.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_locApply.Name = "button_locApply";
+            button_locApply.Size = new System.Drawing.Size(88, 27);
+            button_locApply.TabIndex = 22;
+            button_locApply.Text = "Apply";
+            button_locApply.UseVisualStyleBackColor = true;
+            button_locApply.Click += button_locApply_Click;
             // 
             // comboBox_locDstArea
             // 
-            this.comboBox_locDstArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_locDstArea.FormattingEnabled = true;
-            this.comboBox_locDstArea.Location = new System.Drawing.Point(160, 191);
-            this.comboBox_locDstArea.Name = "comboBox_locDstArea";
-            this.comboBox_locDstArea.Size = new System.Drawing.Size(80, 21);
-            this.comboBox_locDstArea.TabIndex = 19;
-            this.comboBox_locDstArea.SelectedIndexChanged += new System.EventHandler(this.control_locInfo_Changed);
+            comboBox_locDstArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_locDstArea.FormattingEnabled = true;
+            comboBox_locDstArea.Location = new System.Drawing.Point(187, 220);
+            comboBox_locDstArea.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_locDstArea.Name = "comboBox_locDstArea";
+            comboBox_locDstArea.Size = new System.Drawing.Size(93, 23);
+            comboBox_locDstArea.TabIndex = 19;
+            comboBox_locDstArea.SelectedIndexChanged += control_locInfo_Changed;
             // 
             // textBox_locText
             // 
-            this.textBox_locText.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
-            this.textBox_locText.Location = new System.Drawing.Point(160, 218);
-            this.textBox_locText.Name = "textBox_locText";
-            this.textBox_locText.Size = new System.Drawing.Size(30, 20);
-            this.textBox_locText.TabIndex = 20;
-            this.textBox_locText.TextChanged += new System.EventHandler(this.control_locInfo_Changed);
+            textBox_locText.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            textBox_locText.DisplayBorder = true;
+            textBox_locText.HexSanitized = false;
+            textBox_locText.HexSanitizedMaxValue = -1;
+            textBox_locText.Location = new System.Drawing.Point(187, 252);
+            textBox_locText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_locText.MaxLength = 32767;
+            textBox_locText.Multiline = false;
+            textBox_locText.Name = "textBox_locText";
+            textBox_locText.OnTextChanged = null;
+            textBox_locText.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_locText.PlaceholderText = "";
+            textBox_locText.ReadOnly = false;
+            textBox_locText.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_locText.SelectionStart = 0;
+            textBox_locText.Size = new System.Drawing.Size(35, 23);
+            textBox_locText.TabIndex = 20;
+            textBox_locText.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_locText.ValueBox = false;
+            textBox_locText.WordWrap = true;
+            textBox_locText.TextChanged += control_locInfo_Changed;
             // 
             // label_locName
             // 
-            this.label_locName.AutoSize = true;
-            this.label_locName.Location = new System.Drawing.Point(196, 221);
-            this.label_locName.Name = "label_locName";
-            this.label_locName.Size = new System.Drawing.Size(12, 13);
-            this.label_locName.TabIndex = 16;
-            this.label_locName.Text = "–";
+            label_locName.AutoSize = true;
+            label_locName.Location = new System.Drawing.Point(229, 255);
+            label_locName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_locName.Name = "label_locName";
+            label_locName.Size = new System.Drawing.Size(13, 15);
+            label_locName.TabIndex = 16;
+            label_locName.Text = "–";
             // 
             // tabPage_hatchLock
             // 
-            this.tabPage_hatchLock.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage_hatchLock.Controls.Add(this.radioButton_lockAfter);
-            this.tabPage_hatchLock.Controls.Add(this.radioButton_lockBefore);
-            this.tabPage_hatchLock.Controls.Add(this.listBox_lockHatches);
-            this.tabPage_hatchLock.Controls.Add(this.textBox_lockEvent);
-            this.tabPage_hatchLock.Controls.Add(this.label_lockEvent);
-            this.tabPage_hatchLock.Controls.Add(this.textBox_lockRoom);
-            this.tabPage_hatchLock.Controls.Add(this.label_lockRoom);
-            this.tabPage_hatchLock.Controls.Add(this.listView_lockHatches);
-            this.tabPage_hatchLock.Controls.Add(this.button_lockAdd);
-            this.tabPage_hatchLock.Controls.Add(this.button_lockRemove);
-            this.tabPage_hatchLock.Controls.Add(this.label_lockArea);
-            this.tabPage_hatchLock.Controls.Add(this.button_lockClose);
-            this.tabPage_hatchLock.Controls.Add(this.button_lockApply);
-            this.tabPage_hatchLock.Controls.Add(this.comboBox_lockArea);
-            this.tabPage_hatchLock.Location = new System.Drawing.Point(4, 25);
-            this.tabPage_hatchLock.Name = "tabPage_hatchLock";
-            this.tabPage_hatchLock.Size = new System.Drawing.Size(551, 268);
-            this.tabPage_hatchLock.TabIndex = 3;
-            this.tabPage_hatchLock.Text = "Hatch Lock Events";
+            tabPage_hatchLock.BackColor = System.Drawing.SystemColors.Control;
+            tabPage_hatchLock.Controls.Add(radioButton_lockAfter);
+            tabPage_hatchLock.Controls.Add(radioButton_lockBefore);
+            tabPage_hatchLock.Controls.Add(listBox_lockHatches);
+            tabPage_hatchLock.Controls.Add(textBox_lockEvent);
+            tabPage_hatchLock.Controls.Add(label_lockEvent);
+            tabPage_hatchLock.Controls.Add(textBox_lockRoom);
+            tabPage_hatchLock.Controls.Add(label_lockRoom);
+            tabPage_hatchLock.Controls.Add(listView_lockHatches);
+            tabPage_hatchLock.Controls.Add(button_lockAdd);
+            tabPage_hatchLock.Controls.Add(button_lockRemove);
+            tabPage_hatchLock.Controls.Add(label_lockArea);
+            tabPage_hatchLock.Controls.Add(button_lockClose);
+            tabPage_hatchLock.Controls.Add(button_lockApply);
+            tabPage_hatchLock.Controls.Add(comboBox_lockArea);
+            tabPage_hatchLock.Location = new System.Drawing.Point(4, 25);
+            tabPage_hatchLock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabPage_hatchLock.Name = "tabPage_hatchLock";
+            tabPage_hatchLock.Size = new System.Drawing.Size(644, 314);
+            tabPage_hatchLock.TabIndex = 3;
+            tabPage_hatchLock.Text = "Hatch Lock Events";
             // 
             // radioButton_lockAfter
             // 
-            this.radioButton_lockAfter.AutoSize = true;
-            this.radioButton_lockAfter.Location = new System.Drawing.Point(171, 247);
-            this.radioButton_lockAfter.Name = "radioButton_lockAfter";
-            this.radioButton_lockAfter.Size = new System.Drawing.Size(47, 17);
-            this.radioButton_lockAfter.TabIndex = 7;
-            this.radioButton_lockAfter.TabStop = true;
-            this.radioButton_lockAfter.Text = "After";
-            this.radioButton_lockAfter.UseVisualStyleBackColor = true;
-            this.radioButton_lockAfter.CheckedChanged += new System.EventHandler(this.control_lockInfo_Changed);
+            radioButton_lockAfter.AutoSize = true;
+            radioButton_lockAfter.Location = new System.Drawing.Point(200, 285);
+            radioButton_lockAfter.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            radioButton_lockAfter.Name = "radioButton_lockAfter";
+            radioButton_lockAfter.Size = new System.Drawing.Size(51, 19);
+            radioButton_lockAfter.TabIndex = 7;
+            radioButton_lockAfter.TabStop = true;
+            radioButton_lockAfter.Text = "After";
+            radioButton_lockAfter.UseVisualStyleBackColor = true;
+            radioButton_lockAfter.CheckedChanged += control_lockInfo_Changed;
             // 
             // radioButton_lockBefore
             // 
-            this.radioButton_lockBefore.AutoSize = true;
-            this.radioButton_lockBefore.Location = new System.Drawing.Point(171, 228);
-            this.radioButton_lockBefore.Name = "radioButton_lockBefore";
-            this.radioButton_lockBefore.Size = new System.Drawing.Size(56, 17);
-            this.radioButton_lockBefore.TabIndex = 6;
-            this.radioButton_lockBefore.TabStop = true;
-            this.radioButton_lockBefore.Text = "Before";
-            this.radioButton_lockBefore.UseVisualStyleBackColor = true;
-            this.radioButton_lockBefore.CheckedChanged += new System.EventHandler(this.control_lockInfo_Changed);
+            radioButton_lockBefore.AutoSize = true;
+            radioButton_lockBefore.Location = new System.Drawing.Point(200, 263);
+            radioButton_lockBefore.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            radioButton_lockBefore.Name = "radioButton_lockBefore";
+            radioButton_lockBefore.Size = new System.Drawing.Size(59, 19);
+            radioButton_lockBefore.TabIndex = 6;
+            radioButton_lockBefore.TabStop = true;
+            radioButton_lockBefore.Text = "Before";
+            radioButton_lockBefore.UseVisualStyleBackColor = true;
+            radioButton_lockBefore.CheckedChanged += control_lockInfo_Changed;
             // 
             // listBox_lockHatches
             // 
-            this.listBox_lockHatches.FormattingEnabled = true;
-            this.listBox_lockHatches.Items.AddRange(new object[] {
-            "Hatch 0",
-            "Hatch 1",
-            "Hatch 2",
-            "Hatch 3",
-            "Hatch 4",
-            "Hatch 5"});
-            this.listBox_lockHatches.Location = new System.Drawing.Point(233, 181);
-            this.listBox_lockHatches.Name = "listBox_lockHatches";
-            this.listBox_lockHatches.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBox_lockHatches.Size = new System.Drawing.Size(106, 82);
-            this.listBox_lockHatches.TabIndex = 8;
-            this.listBox_lockHatches.SelectedIndexChanged += new System.EventHandler(this.control_lockInfo_Changed);
+            listBox_lockHatches.FormattingEnabled = true;
+            listBox_lockHatches.Items.AddRange(new object[] { "Hatch 0", "Hatch 1", "Hatch 2", "Hatch 3", "Hatch 4", "Hatch 5" });
+            listBox_lockHatches.Location = new System.Drawing.Point(272, 209);
+            listBox_lockHatches.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            listBox_lockHatches.Name = "listBox_lockHatches";
+            listBox_lockHatches.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            listBox_lockHatches.Size = new System.Drawing.Size(123, 94);
+            listBox_lockHatches.TabIndex = 8;
+            listBox_lockHatches.SelectedIndexChanged += control_lockInfo_Changed;
             // 
             // textBox_lockEvent
             // 
-            this.textBox_lockEvent.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
-            this.textBox_lockEvent.Location = new System.Drawing.Point(135, 235);
-            this.textBox_lockEvent.Name = "textBox_lockEvent";
-            this.textBox_lockEvent.Size = new System.Drawing.Size(30, 20);
-            this.textBox_lockEvent.TabIndex = 5;
-            this.textBox_lockEvent.TextChanged += new System.EventHandler(this.control_lockInfo_Changed);
+            textBox_lockEvent.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            textBox_lockEvent.DisplayBorder = true;
+            textBox_lockEvent.HexSanitized = false;
+            textBox_lockEvent.HexSanitizedMaxValue = -1;
+            textBox_lockEvent.Location = new System.Drawing.Point(158, 271);
+            textBox_lockEvent.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_lockEvent.MaxLength = 32767;
+            textBox_lockEvent.Multiline = false;
+            textBox_lockEvent.Name = "textBox_lockEvent";
+            textBox_lockEvent.OnTextChanged = null;
+            textBox_lockEvent.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_lockEvent.PlaceholderText = "";
+            textBox_lockEvent.ReadOnly = false;
+            textBox_lockEvent.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_lockEvent.SelectionStart = 0;
+            textBox_lockEvent.Size = new System.Drawing.Size(35, 23);
+            textBox_lockEvent.TabIndex = 5;
+            textBox_lockEvent.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_lockEvent.ValueBox = false;
+            textBox_lockEvent.WordWrap = true;
+            textBox_lockEvent.TextChanged += control_lockInfo_Changed;
             // 
             // label_lockEvent
             // 
-            this.label_lockEvent.AutoSize = true;
-            this.label_lockEvent.Location = new System.Drawing.Point(91, 238);
-            this.label_lockEvent.Name = "label_lockEvent";
-            this.label_lockEvent.Size = new System.Drawing.Size(38, 13);
-            this.label_lockEvent.TabIndex = 0;
-            this.label_lockEvent.Text = "Event:";
+            label_lockEvent.AutoSize = true;
+            label_lockEvent.Location = new System.Drawing.Point(106, 275);
+            label_lockEvent.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_lockEvent.Name = "label_lockEvent";
+            label_lockEvent.Size = new System.Drawing.Size(39, 15);
+            label_lockEvent.TabIndex = 0;
+            label_lockEvent.Text = "Event:";
             // 
             // textBox_lockRoom
             // 
-            this.textBox_lockRoom.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
-            this.textBox_lockRoom.Location = new System.Drawing.Point(135, 208);
-            this.textBox_lockRoom.Name = "textBox_lockRoom";
-            this.textBox_lockRoom.Size = new System.Drawing.Size(30, 20);
-            this.textBox_lockRoom.TabIndex = 4;
-            this.textBox_lockRoom.TextChanged += new System.EventHandler(this.control_lockInfo_Changed);
+            textBox_lockRoom.BorderColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            textBox_lockRoom.DisplayBorder = true;
+            textBox_lockRoom.HexSanitized = false;
+            textBox_lockRoom.HexSanitizedMaxValue = -1;
+            textBox_lockRoom.Location = new System.Drawing.Point(158, 240);
+            textBox_lockRoom.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_lockRoom.MaxLength = 32767;
+            textBox_lockRoom.Multiline = false;
+            textBox_lockRoom.Name = "textBox_lockRoom";
+            textBox_lockRoom.OnTextChanged = null;
+            textBox_lockRoom.Padding = new System.Windows.Forms.Padding(4, 3, 1, 2);
+            textBox_lockRoom.PlaceholderText = "";
+            textBox_lockRoom.ReadOnly = false;
+            textBox_lockRoom.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            textBox_lockRoom.SelectionStart = 0;
+            textBox_lockRoom.Size = new System.Drawing.Size(35, 23);
+            textBox_lockRoom.TabIndex = 4;
+            textBox_lockRoom.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            textBox_lockRoom.ValueBox = false;
+            textBox_lockRoom.WordWrap = true;
+            textBox_lockRoom.TextChanged += control_lockInfo_Changed;
             // 
             // label_lockRoom
             // 
-            this.label_lockRoom.AutoSize = true;
-            this.label_lockRoom.Location = new System.Drawing.Point(91, 211);
-            this.label_lockRoom.Name = "label_lockRoom";
-            this.label_lockRoom.Size = new System.Drawing.Size(38, 13);
-            this.label_lockRoom.TabIndex = 0;
-            this.label_lockRoom.Text = "Room:";
+            label_lockRoom.AutoSize = true;
+            label_lockRoom.Location = new System.Drawing.Point(106, 243);
+            label_lockRoom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_lockRoom.Name = "label_lockRoom";
+            label_lockRoom.Size = new System.Drawing.Size(42, 15);
+            label_lockRoom.TabIndex = 0;
+            label_lockRoom.Text = "Room:";
             // 
             // listView_lockHatches
             // 
-            this.listView_lockHatches.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader_lockDst,
-            this.columnHeader_lockEvent,
-            this.columnHeader_lockWhen,
-            this.columnHeader_lockHatches});
-            this.listView_lockHatches.FullRowSelect = true;
-            this.listView_lockHatches.GridLines = true;
-            this.listView_lockHatches.HideSelection = false;
-            this.listView_lockHatches.Location = new System.Drawing.Point(6, 6);
-            this.listView_lockHatches.MultiSelect = false;
-            this.listView_lockHatches.Name = "listView_lockHatches";
-            this.listView_lockHatches.Size = new System.Drawing.Size(539, 163);
-            this.listView_lockHatches.TabIndex = 0;
-            this.listView_lockHatches.UseCompatibleStateImageBehavior = false;
-            this.listView_lockHatches.View = System.Windows.Forms.View.Details;
-            this.listView_lockHatches.SelectedIndexChanged += new System.EventHandler(this.listView_lockHatches_SelectedIndexChanged);
+            listView_lockHatches.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader_lockDst, columnHeader_lockEvent, columnHeader_lockWhen, columnHeader_lockHatches });
+            listView_lockHatches.FullRowSelect = true;
+            listView_lockHatches.GridLines = true;
+            listView_lockHatches.Location = new System.Drawing.Point(7, 7);
+            listView_lockHatches.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            listView_lockHatches.MultiSelect = false;
+            listView_lockHatches.Name = "listView_lockHatches";
+            listView_lockHatches.Size = new System.Drawing.Size(628, 187);
+            listView_lockHatches.TabIndex = 0;
+            listView_lockHatches.UseCompatibleStateImageBehavior = false;
+            listView_lockHatches.View = System.Windows.Forms.View.Details;
+            listView_lockHatches.SelectedIndexChanged += listView_lockHatches_SelectedIndexChanged;
             // 
             // columnHeader_lockDst
             // 
-            this.columnHeader_lockDst.Text = "Destination";
-            this.columnHeader_lockDst.Width = 180;
+            columnHeader_lockDst.Text = "Destination";
+            columnHeader_lockDst.Width = 180;
             // 
             // columnHeader_lockEvent
             // 
-            this.columnHeader_lockEvent.Text = "Event";
-            this.columnHeader_lockEvent.Width = 40;
+            columnHeader_lockEvent.Text = "Event";
+            columnHeader_lockEvent.Width = 50;
             // 
             // columnHeader_lockWhen
             // 
-            this.columnHeader_lockWhen.Text = "When";
-            this.columnHeader_lockWhen.Width = 50;
+            columnHeader_lockWhen.Text = "When";
             // 
             // columnHeader_lockHatches
             // 
-            this.columnHeader_lockHatches.Text = "Hatches";
-            this.columnHeader_lockHatches.Width = 130;
+            columnHeader_lockHatches.Text = "Hatches";
+            columnHeader_lockHatches.Width = 130;
             // 
             // button_lockAdd
             // 
-            this.button_lockAdd.Enabled = false;
-            this.button_lockAdd.Location = new System.Drawing.Point(6, 189);
-            this.button_lockAdd.Name = "button_lockAdd";
-            this.button_lockAdd.Size = new System.Drawing.Size(75, 23);
-            this.button_lockAdd.TabIndex = 1;
-            this.button_lockAdd.Text = "Add";
-            this.button_lockAdd.Click += new System.EventHandler(this.button_lockAdd_Click);
+            button_lockAdd.Enabled = false;
+            button_lockAdd.Location = new System.Drawing.Point(7, 218);
+            button_lockAdd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_lockAdd.Name = "button_lockAdd";
+            button_lockAdd.Size = new System.Drawing.Size(88, 27);
+            button_lockAdd.TabIndex = 1;
+            button_lockAdd.Text = "Add";
+            button_lockAdd.Click += button_lockAdd_Click;
             // 
             // button_lockRemove
             // 
-            this.button_lockRemove.Enabled = false;
-            this.button_lockRemove.Location = new System.Drawing.Point(6, 218);
-            this.button_lockRemove.Name = "button_lockRemove";
-            this.button_lockRemove.Size = new System.Drawing.Size(75, 23);
-            this.button_lockRemove.TabIndex = 2;
-            this.button_lockRemove.Text = "Remove";
-            this.button_lockRemove.Click += new System.EventHandler(this.button_lockRemove_Click);
+            button_lockRemove.Enabled = false;
+            button_lockRemove.Location = new System.Drawing.Point(7, 252);
+            button_lockRemove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_lockRemove.Name = "button_lockRemove";
+            button_lockRemove.Size = new System.Drawing.Size(88, 27);
+            button_lockRemove.TabIndex = 2;
+            button_lockRemove.Text = "Remove";
+            button_lockRemove.Click += button_lockRemove_Click;
             // 
             // label_lockArea
             // 
-            this.label_lockArea.AutoSize = true;
-            this.label_lockArea.Location = new System.Drawing.Point(91, 184);
-            this.label_lockArea.Name = "label_lockArea";
-            this.label_lockArea.Size = new System.Drawing.Size(32, 13);
-            this.label_lockArea.TabIndex = 0;
-            this.label_lockArea.Text = "Area:";
+            label_lockArea.AutoSize = true;
+            label_lockArea.Location = new System.Drawing.Point(106, 212);
+            label_lockArea.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_lockArea.Name = "label_lockArea";
+            label_lockArea.Size = new System.Drawing.Size(34, 15);
+            label_lockArea.TabIndex = 0;
+            label_lockArea.Text = "Area:";
             // 
             // button_lockClose
             // 
-            this.button_lockClose.Location = new System.Drawing.Point(352, 218);
-            this.button_lockClose.Name = "button_lockClose";
-            this.button_lockClose.Size = new System.Drawing.Size(75, 23);
-            this.button_lockClose.TabIndex = 10;
-            this.button_lockClose.Text = "Close";
-            this.button_lockClose.UseVisualStyleBackColor = true;
-            this.button_lockClose.Click += new System.EventHandler(this.button_close_Click);
+            button_lockClose.Location = new System.Drawing.Point(411, 252);
+            button_lockClose.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_lockClose.Name = "button_lockClose";
+            button_lockClose.Size = new System.Drawing.Size(88, 27);
+            button_lockClose.TabIndex = 10;
+            button_lockClose.Text = "Close";
+            button_lockClose.UseVisualStyleBackColor = true;
+            button_lockClose.Click += button_close_Click;
             // 
             // button_lockApply
             // 
-            this.button_lockApply.Enabled = false;
-            this.button_lockApply.Location = new System.Drawing.Point(352, 189);
-            this.button_lockApply.Name = "button_lockApply";
-            this.button_lockApply.Size = new System.Drawing.Size(75, 23);
-            this.button_lockApply.TabIndex = 9;
-            this.button_lockApply.Text = "Apply";
-            this.button_lockApply.UseVisualStyleBackColor = true;
-            this.button_lockApply.Click += new System.EventHandler(this.button_lockApply_Click);
+            button_lockApply.Enabled = false;
+            button_lockApply.Location = new System.Drawing.Point(411, 218);
+            button_lockApply.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_lockApply.Name = "button_lockApply";
+            button_lockApply.Size = new System.Drawing.Size(88, 27);
+            button_lockApply.TabIndex = 9;
+            button_lockApply.Text = "Apply";
+            button_lockApply.UseVisualStyleBackColor = true;
+            button_lockApply.Click += button_lockApply_Click;
             // 
             // comboBox_lockArea
             // 
-            this.comboBox_lockArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_lockArea.FormattingEnabled = true;
-            this.comboBox_lockArea.Location = new System.Drawing.Point(135, 181);
-            this.comboBox_lockArea.Name = "comboBox_lockArea";
-            this.comboBox_lockArea.Size = new System.Drawing.Size(80, 21);
-            this.comboBox_lockArea.TabIndex = 3;
-            this.comboBox_lockArea.SelectedIndexChanged += new System.EventHandler(this.control_lockInfo_Changed);
+            comboBox_lockArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_lockArea.FormattingEnabled = true;
+            comboBox_lockArea.Location = new System.Drawing.Point(158, 209);
+            comboBox_lockArea.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_lockArea.Name = "comboBox_lockArea";
+            comboBox_lockArea.Size = new System.Drawing.Size(93, 23);
+            comboBox_lockArea.TabIndex = 3;
+            comboBox_lockArea.SelectedIndexChanged += control_lockInfo_Changed;
             // 
             // statusStrip
             // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel_changes});
-            this.statusStrip.Location = new System.Drawing.Point(0, 312);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(577, 22);
-            this.statusStrip.TabIndex = 1;
+            statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { statusLabel_changes });
+            statusStrip.Location = new System.Drawing.Point(0, 363);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
+            statusStrip.Size = new System.Drawing.Size(673, 22);
+            statusStrip.TabIndex = 1;
             // 
             // statusLabel_changes
             // 
-            this.statusLabel_changes.Name = "statusLabel_changes";
-            this.statusLabel_changes.Size = new System.Drawing.Size(12, 17);
-            this.statusLabel_changes.Text = "-";
+            statusLabel_changes.Name = "statusLabel_changes";
+            statusLabel_changes.Size = new System.Drawing.Size(12, 17);
+            statusLabel_changes.Text = "-";
             // 
             // FormConnection
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(577, 334);
-            this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.tabControl);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FormConnection";
-            this.Text = "Connection Editor";
-            this.tabControl.ResumeLayout(false);
-            this.tabPage_area.ResumeLayout(false);
-            this.tabPage_area.PerformLayout();
-            this.tabPage_event.ResumeLayout(false);
-            this.tabPage_event.PerformLayout();
-            this.tabPage_locNames.ResumeLayout(false);
-            this.tabPage_locNames.PerformLayout();
-            this.tabPage_hatchLock.ResumeLayout(false);
-            this.tabPage_hatchLock.PerformLayout();
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            BackColor = System.Drawing.SystemColors.Control;
+            ClientSize = new System.Drawing.Size(673, 385);
+            Controls.Add(statusStrip);
+            Controls.Add(tabControl);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "FormConnection";
+            Text = "Connection Editor";
+            tabControl.ResumeLayout(false);
+            tabPage_area.ResumeLayout(false);
+            tabPage_area.PerformLayout();
+            tabPage_event.ResumeLayout(false);
+            tabPage_event.PerformLayout();
+            tabPage_locNames.ResumeLayout(false);
+            tabPage_locNames.PerformLayout();
+            tabPage_hatchLock.ResumeLayout(false);
+            tabPage_hatchLock.PerformLayout();
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Drawing; // For font
 
 namespace mage
 {
@@ -63,6 +64,13 @@ namespace mage
         {
             InitializeComponent();
 
+            Font monoFont = main.MonoFont(9f);
+
+            listView_areaConnections.Font = monoFont;
+            listView_doorEvents.Font = monoFont;
+            listView_locNames.Font = monoFont;
+            listView_lockHatches.Font = monoFont;
+
             ThemeSwitcher.ChangeTheme(Controls, this);
             ThemeSwitcher.InjectPaintOverrides(Controls);
 
@@ -76,6 +84,19 @@ namespace mage
             tabControl.SelectedIndex = tab;
             InitializeTab(tab);
         }
+
+        private string GetPaddedAreaName(byte area)
+        {
+            int maxLength = 0;
+
+            foreach (string name in areaNames)
+            {
+                if (name.Length > maxLength)
+                    maxLength = name.Length;
+            }
+
+            return areaNames[area].PadRight(maxLength);
+        } // Pad area names for readability (Used ONLY for display purposes; leave it out of logic)
 
         private void InitializeTab(int tab)
         {
@@ -175,13 +196,13 @@ namespace mage
             foreach (AreaConnection ac in areaConnections)
             {
                 Door src = DoorData.GetDoor(ac.srcArea, ac.srcDoor);
-                string area = areaNames[ac.srcArea] + ", ";
+                string area = GetPaddedAreaName(ac.srcArea) + ", ";
                 string room = "Room " + Hex.ToString(src.srcRoom) + ", ";
                 string door = "Door " + Hex.ToString(ac.srcDoor);
                 ListViewItem item = new ListViewItem(area + room + door);
 
                 Door dst = DoorData.GetDoor(ac.dstArea, src.dstDoor);
-                area = areaNames[ac.dstArea] + ", ";
+                area = GetPaddedAreaName(ac.dstArea) + ", ";
                 room = "Room " + Hex.ToString(dst.srcRoom) + ", ";
                 door = "Door " + Hex.ToString(dst.doorNum);
                 item.SubItems.Add(area + room + door);
@@ -217,13 +238,13 @@ namespace mage
 
             // display
             Door src = DoorData.GetDoor(srcArea, srcDoor);
-            string area = areaNames[srcArea] + ", ";
+            string area = GetPaddedAreaName(srcArea) + ", ";
             string room = "Room " + Hex.ToString(src.srcRoom) + ", ";
             string door = "Door " + Hex.ToString(srcDoor);
             ListViewItem item = new ListViewItem(area + room + door);
 
             Door dst = DoorData.GetDoor(dstArea, Hex.ToByte(dstDoor));
-            area = areaNames[dstArea] + ", ";
+            area = GetPaddedAreaName(dstArea) + ", ";
             room = "Room " + Hex.ToString(dst.srcRoom) + ", ";
             door = "Door " + Hex.ToString(dst.doorNum);
             item.SubItems.Add(area + room + door);
@@ -351,7 +372,7 @@ namespace mage
             foreach (DoorEvent de in doorEvents)
             {
                 Door src = DoorData.GetDoor(de.srcArea, de.srcDoor);
-                string area = areaNames[de.srcArea] + ", ";
+                string area = GetPaddedAreaName(de.srcArea) + ", ";
                 string room = "Room " + Hex.ToString(src.srcRoom) + ", ";
                 string door = "Door " + Hex.ToString(de.srcDoor);
                 ListViewItem item = new ListViewItem(area + room + door);
@@ -396,7 +417,7 @@ namespace mage
 
             // display in list view
             Door src = DoorData.GetDoor(srcArea, srcDoor);
-            string area = areaNames[srcArea] + ", ";
+            string area = GetPaddedAreaName(srcArea) + ", ";
             string room = "Room " + Hex.ToString(src.srcRoom) + ", ";
             string door = "Door " + Hex.ToString(srcDoor);
             ListViewItem item = new ListViewItem(area + room + door);
@@ -543,7 +564,7 @@ namespace mage
         {
             foreach (LocationName ln in locationNames)
             {
-                string area = areaNames[ln.dstArea] + ", ";
+                string area = GetPaddedAreaName(ln.dstArea) + ", ";
                 string room = "Room " + Hex.ToString(ln.dstRoom);
                 ListViewItem item = new ListViewItem(area + room);
 
@@ -614,7 +635,7 @@ namespace mage
             locationNames.Add(ln);
 
             // display
-            string area = areaNames[dstArea] + ", ";
+            string area = GetPaddedAreaName(dstArea) + ", ";
             string room = "Room " + Hex.ToString(dstRoom);
             ListViewItem item = new ListViewItem(area + room);
 
@@ -828,7 +849,7 @@ namespace mage
         {
             foreach (HatchLockEvent hle in hatchLockEvents)
             {
-                string area = areaNames[hle.dstArea] + ", ";
+                string area = GetPaddedAreaName(hle.dstArea) + ", ";
                 string room = "Room " + Hex.ToString(hle.dstRoom);
                 ListViewItem item = new ListViewItem(area + room);
 
@@ -899,7 +920,7 @@ namespace mage
             hatchLockEvents.Insert(index, hle);
 
             // display
-            string area = areaNames[dstArea] + ", ";
+            string area = GetPaddedAreaName(dstArea) + ", ";
             string room = "Room " + Hex.ToString(dstRoom);
             ListViewItem item = new ListViewItem(area + room);
 
